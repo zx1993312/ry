@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyChargeMapper">
+    
+    <resultMap type="HyCharge" id="HyChargeResult">
+        <result property="id"    column="id"    />
+        <result property="number"    column="number"    />
+        <result property="state"    column="state"    />
+        <result property="proportion"    column="proportion"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="currentState"    column="current_state"    />
+        <result property="cost"    column="cost"    />
+    </resultMap>
+
+    <sql id="selectHyChargeVo">
+        select id, number, state, proportion, remarks, current_state, cost from hy_charge
+    </sql>
+
+    <select id="selectHyChargeList" parameterType="HyCharge" resultMap="HyChargeResult">
+        <include refid="selectHyChargeVo"/>
+        <where>  
+            <if test="number != null "> and number = #{number}</if>
+            <if test="state != null "> and state = #{state}</if>
+            <if test="proportion != null  and proportion != ''"> and proportion = #{proportion}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="currentState != null  and currentState != ''"> and current_state = #{currentState}</if>
+            <if test="cost != null "> and cost = #{cost}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyChargeById" parameterType="Long" resultMap="HyChargeResult">
+        <include refid="selectHyChargeVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyCharge" parameterType="HyCharge" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_charge
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="number != null">number,</if>
+            <if test="state != null">state,</if>
+            <if test="proportion != null">proportion,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="currentState != null">current_state,</if>
+            <if test="cost != null">cost,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="number != null">#{number},</if>
+            <if test="state != null">#{state},</if>
+            <if test="proportion != null">#{proportion},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="currentState != null">#{currentState},</if>
+            <if test="cost != null">#{cost},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyCharge" parameterType="HyCharge">
+        update hy_charge
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="number != null">number = #{number},</if>
+            <if test="state != null">state = #{state},</if>
+            <if test="proportion != null">proportion = #{proportion},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="currentState != null">current_state = #{currentState},</if>
+            <if test="cost != null">cost = #{cost},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyChargeById" parameterType="Long">
+        delete from hy_charge where id = #{id}
+    </delete>
+
+    <delete id="deleteHyChargeByIds" parameterType="String">
+        delete from hy_charge where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
