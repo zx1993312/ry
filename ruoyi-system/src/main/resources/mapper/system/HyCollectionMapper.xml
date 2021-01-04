@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyCollectionMapper">
+    
+    <resultMap type="HyCollection" id="HyCollectionResult">
+        <result property="id"    column="id"    />
+        <result property="manageProjects"    column="manage_projects"    />
+        <result property="applyTime"    column="apply_time"    />
+        <result property="payee"    column="payee"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="amount"    column="amount"    />
+        <result property="collection"    column="collection"    />
+        <result property="collectionTime"    column="collection_time"    />
+        <result property="collectionPerson"    column="collection_person"    />
+        <result property="bookkeeping"    column="bookkeeping"    />
+        <result property="bookTime"    column="book_time"    />
+        <result property="bookPerson"    column="book_person"    />
+        <result property="brake"    column="brake"    />
+    </resultMap>
+
+    <sql id="selectHyCollectionVo">
+        select id, manage_projects, apply_time, payee, start_time, end_time, amount, collection, collection_time, collection_person, bookkeeping, book_time, book_person, brake from hy_collection
+    </sql>
+
+    <select id="selectHyCollectionList" parameterType="HyCollection" resultMap="HyCollectionResult">
+        <include refid="selectHyCollectionVo"/>
+        <where>  
+            <if test="manageProjects != null  and manageProjects != ''"> and manage_projects = #{manageProjects}</if>
+            <if test="applyTime != null "> and apply_time = #{applyTime}</if>
+            <if test="payee != null  and payee != ''"> and payee = #{payee}</if>
+            <if test="startTime != null "> and start_time = #{startTime}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+            <if test="amount != null "> and amount = #{amount}</if>
+            <if test="collection != null "> and collection = #{collection}</if>
+            <if test="collectionTime != null "> and collection_time = #{collectionTime}</if>
+            <if test="collectionPerson != null  and collectionPerson != ''"> and collection_person = #{collectionPerson}</if>
+            <if test="bookkeeping != null "> and bookkeeping = #{bookkeeping}</if>
+            <if test="bookTime != null "> and book_time = #{bookTime}</if>
+            <if test="bookPerson != null  and bookPerson != ''"> and book_person = #{bookPerson}</if>
+            <if test="brake != null  and brake != ''"> and brake = #{brake}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyCollectionById" parameterType="Long" resultMap="HyCollectionResult">
+        <include refid="selectHyCollectionVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyCollection" parameterType="HyCollection">
+        insert into hy_collection
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="manageProjects != null">manage_projects,</if>
+            <if test="applyTime != null">apply_time,</if>
+            <if test="payee != null">payee,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="amount != null">amount,</if>
+            <if test="collection != null">collection,</if>
+            <if test="collectionTime != null">collection_time,</if>
+            <if test="collectionPerson != null">collection_person,</if>
+            <if test="bookkeeping != null">bookkeeping,</if>
+            <if test="bookTime != null">book_time,</if>
+            <if test="bookPerson != null">book_person,</if>
+            <if test="brake != null">brake,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="manageProjects != null">#{manageProjects},</if>
+            <if test="applyTime != null">#{applyTime},</if>
+            <if test="payee != null">#{payee},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="amount != null">#{amount},</if>
+            <if test="collection != null">#{collection},</if>
+            <if test="collectionTime != null">#{collectionTime},</if>
+            <if test="collectionPerson != null">#{collectionPerson},</if>
+            <if test="bookkeeping != null">#{bookkeeping},</if>
+            <if test="bookTime != null">#{bookTime},</if>
+            <if test="bookPerson != null">#{bookPerson},</if>
+            <if test="brake != null">#{brake},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyCollection" parameterType="HyCollection">
+        update hy_collection
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="manageProjects != null">manage_projects = #{manageProjects},</if>
+            <if test="applyTime != null">apply_time = #{applyTime},</if>
+            <if test="payee != null">payee = #{payee},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="amount != null">amount = #{amount},</if>
+            <if test="collection != null">collection = #{collection},</if>
+            <if test="collectionTime != null">collection_time = #{collectionTime},</if>
+            <if test="collectionPerson != null">collection_person = #{collectionPerson},</if>
+            <if test="bookkeeping != null">bookkeeping = #{bookkeeping},</if>
+            <if test="bookTime != null">book_time = #{bookTime},</if>
+            <if test="bookPerson != null">book_person = #{bookPerson},</if>
+            <if test="brake != null">brake = #{brake},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyCollectionById" parameterType="Long">
+        delete from hy_collection where id = #{id}
+    </delete>
+
+    <delete id="deleteHyCollectionByIds" parameterType="String">
+        delete from hy_collection where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
