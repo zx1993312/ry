@@ -16,7 +16,15 @@
                             </li>
                             <li>
                                 <label>交房状态：</label>
-                                <input type="text" name="state"/>
+                                <select name="state" class="form-control " th:with="type=${@dict.getType('hy_charge_state')}">
+                                <option value="">请选择</option>
+                                <option value="0">未售</option>
+				                <option value="1">已接房</option>
+				                <option value="2">装修</option>
+				                <option value="3">已售未接房</option>
+				                <option value="4">已住</option>
+								<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
                             </li>
                             <li>
                                 <label>收费比例：</label>
@@ -28,7 +36,16 @@
                             </li>
                             <li>
                                 <label>当前交房状态：</label>
-                                <input type="text" name="currentState"/>
+                                <select name="currentState" class="form-control " th:with="type=${@dict.getType('hy_charge_current_state')}">
+				                <option value="">请选择</option>
+				                <option value="0">未售</option>
+				                <option value="1">已接房</option>
+				                <option value="2">装修</option>
+				                <option value="3">已售未接房</option>
+				                <option value="4">已住</option>
+				            	<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+				                
+				            </select>
                             </li>
                             <li>
                                 <label>缴费收费科目：</label>
@@ -89,8 +106,14 @@
                     title: '房屋序号'
                 },
                 {
-                    field: 'state',
-                    title: '交房状态'
+                   field:'state',
+                    title: '交房状态',
+                    formatter:function(state,index){
+                    	console.log(" ````"+state);
+                    	 var actions = [];
+                    	 actions.push('<a href="https://www.baidu.com/">'+state+'</a>');
+                    	 return actions.join('');
+                    }
                 },
                 {
                     field: 'proportion',

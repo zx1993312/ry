@@ -1,6 +1,10 @@
 package com.ruoyi.system.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,20 +14,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.domain.HyCharge;
+import com.ruoyi.system.enums.StateEnum;
 import com.ruoyi.system.service.IHyChargeService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-
-import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
  * 收费比例设置Controller
@@ -57,7 +62,21 @@ public class HyChargeController extends BaseController {
 	public TableDataInfo list(HyCharge hyCharge) {
 		startPage();
 		List<HyCharge> list = hyChargeService.selectHyChargeList(hyCharge);
-		return getDataTable(list);
+		List<Map<String, Object>> reList = new ArrayList<>();
+		for (HyCharge hc : list) {
+			Map<String, Object> map = new HashMap<>();
+			map.put("state", StateEnum.getValue(hc.getState()));
+			map.put("id",hc.getId());
+			map.put("number", hc.getNumber());
+			map.put("proportion", hc.getProportion());
+			map.put("remarks", hc.getRemarks());
+			if(null != hc.getCurrentState()) {
+				map.put("currentState",StateEnum.getValue(Integer.valueOf(hc.getCurrentState())));
+			}
+			map.put("cost", hc.getCost());
+			reList.add(map);
+		}
+		return getDataTable(reList);
 	}
 
 	/**
@@ -80,7 +99,22 @@ public class HyChargeController extends BaseController {
 	 */
 	@ApiOperation("新增收费比例设置")
 	@GetMapping("/add")
-	public String add() {
+	public String add(HyCharge hyCharge) {
+		List<HyCharge> list = hyChargeService.selectHyChargeList(hyCharge);
+		List<Map<String, Object>> reList = new ArrayList<>();
+		for (HyCharge hc : list) {
+			Map<String, Object> map = new HashMap<>();
+			map.put("state", StateEnum.getValue(hc.getState()));
+			map.put("id",hc.getId());
+			map.put("number", hc.getNumber());
+			map.put("proportion", hc.getProportion());
+			map.put("remarks", hc.getRemarks());
+			if(null != hc.getCurrentState()) {
+				map.put("currentState",StateEnum.getValue(Integer.valueOf(hc.getCurrentState())));
+			}
+			map.put("cost", hc.getCost());
+			reList.add(map);
+		}
 		return prefix + "/add";
 	}
 
@@ -94,6 +128,7 @@ public class HyChargeController extends BaseController {
 	@PostMapping("/add")
 	@ResponseBody
 	public AjaxResult addSave(HyCharge hyCharge) {
+		
 		return toAjax(hyChargeService.insertHyCharge(hyCharge));
 	}
 
@@ -105,6 +140,21 @@ public class HyChargeController extends BaseController {
 	public String edit(@PathVariable("id") Long id, ModelMap mmap) {
 		HyCharge hyCharge = hyChargeService.selectHyChargeById(id);
 		mmap.put("hyCharge", hyCharge);
+		List<HyCharge> list = hyChargeService.selectHyChargeList(hyCharge);
+		List<Map<String, Object>> reList = new ArrayList<>();
+		for (HyCharge hc : list) {
+			Map<String, Object> map = new HashMap<>();
+			map.put("state", StateEnum.getValue(hc.getState()));
+			map.put("id",hc.getId());
+			map.put("number", hc.getNumber());
+			map.put("proportion", hc.getProportion());
+			map.put("remarks", hc.getRemarks());
+			if(null != hc.getCurrentState()) {
+				map.put("currentState",StateEnum.getValue(Integer.valueOf(hc.getCurrentState())));
+			}
+			map.put("cost", hc.getCost());
+			reList.add(map);
+		}
 		return prefix + "/edit";
 	}
 
@@ -118,6 +168,21 @@ public class HyChargeController extends BaseController {
 	@PostMapping("/edit")
 	@ResponseBody
 	public AjaxResult editSave(HyCharge hyCharge) {
+		List<HyCharge> list = hyChargeService.selectHyChargeList(hyCharge);
+		List<Map<String, Object>> reList = new ArrayList<>();
+		for (HyCharge hc : list) {
+			Map<String, Object> map = new HashMap<>();
+			map.put("state", StateEnum.getValue(hc.getState()));
+			map.put("id",hc.getId());
+			map.put("number", hc.getNumber());
+			map.put("proportion", hc.getProportion());
+			map.put("remarks", hc.getRemarks());
+			if(null != hc.getCurrentState()) {
+				map.put("currentState",StateEnum.getValue(Integer.valueOf(hc.getCurrentState())));
+			}
+			map.put("cost", hc.getCost());
+			reList.add(map);
+		}
 		return toAjax(hyChargeService.updateHyCharge(hyCharge));
 	}
 
