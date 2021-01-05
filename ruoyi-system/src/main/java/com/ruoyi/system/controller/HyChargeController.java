@@ -34,122 +34,103 @@ import com.ruoyi.common.core.page.TableDataInfo;
 @Controller
 @RequestMapping("/system/charge")
 @Api(tags = "航宇物业，收费比例设置controller")
-public class HyChargeController extends BaseController
-{
-    private String prefix = "system/charge";
+public class HyChargeController extends BaseController {
+	private String prefix = "system/charge";
 
-    @Autowired
-    private IHyChargeService hyChargeService;
+	@Autowired
+	private IHyChargeService hyChargeService;
 
-    @RequiresPermissions("system:charge:view")
-    @GetMapping()
-    public String charge()
-    {
-        return prefix + "/charge";
-    }
+	@RequiresPermissions("system:charge:view")
+	@GetMapping()
+	public String charge() {
+		return prefix + "/charge";
+	}
 
-    /**
-     * 查询收费比例设置列表
-     */
-    @RequiresPermissions("system:charge:list")
-    @ApiOperation("查询收费比例设置列表")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyCharge", value = "项目实体类", required = true),
-	})
-    @PostMapping("/list")
-    @ResponseBody
-    public TableDataInfo list(HyCharge hyCharge)
-    {
-        startPage();
-        List<HyCharge> list = hyChargeService.selectHyChargeList(hyCharge);
-        return getDataTable(list);
-    }
+	/**
+	 * 查询收费比例设置列表
+	 */
+	@RequiresPermissions("system:charge:list")
+	@ApiOperation("查询收费比例设置列表")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyCharge", value = "项目实体类", required = true), })
+	@PostMapping("/list")
+	@ResponseBody
+	public TableDataInfo list(HyCharge hyCharge) {
+		startPage();
+		List<HyCharge> list = hyChargeService.selectHyChargeList(hyCharge);
+		return getDataTable(list);
+	}
 
-    /**
-     * 导出收费比例设置列表
-     */
-    @RequiresPermissions("system:charge:export")
-    @Log(title = "收费比例设置", businessType = BusinessType.EXPORT)
-    @ApiOperation("导出收费比例设置列表")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyCharge", value = "项目实体类", required = true),
-	})
-    @PostMapping("/export")
-    @ResponseBody
-    public AjaxResult export(HyCharge hyCharge)
-    {
-        List<HyCharge> list = hyChargeService.selectHyChargeList(hyCharge);
-        ExcelUtil<HyCharge> util = new ExcelUtil<HyCharge>(HyCharge.class);
-        return util.exportExcel(list, "charge");
-    }
+	/**
+	 * 导出收费比例设置列表
+	 */
+	@RequiresPermissions("system:charge:export")
+	@Log(title = "收费比例设置", businessType = BusinessType.EXPORT)
+	@ApiOperation("导出收费比例设置列表")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyCharge", value = "项目实体类", required = true), })
+	@PostMapping("/export")
+	@ResponseBody
+	public AjaxResult export(HyCharge hyCharge) {
+		List<HyCharge> list = hyChargeService.selectHyChargeList(hyCharge);
+		ExcelUtil<HyCharge> util = new ExcelUtil<HyCharge>(HyCharge.class);
+		return util.exportExcel(list, "charge");
+	}
 
-    /**
-     * 新增收费比例设置
-     */
-    @ApiOperation("新增收费比例设置")
-    @GetMapping("/add")
-    public String add()
-    {
-        return prefix + "/add";
-    }
+	/**
+	 * 新增收费比例设置
+	 */
+	@ApiOperation("新增收费比例设置")
+	@GetMapping("/add")
+	public String add() {
+		return prefix + "/add";
+	}
 
-    /**
-     * 新增保存收费比例设置
-     */
-    @RequiresPermissions("system:charge:add")
-    @Log(title = "收费比例设置", businessType = BusinessType.INSERT)
-    @ApiOperation("新增保存收费比例设置")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyCharge", value = "项目实体类", required = true),
-	})
-    @PostMapping("/add")
-    @ResponseBody
-    public AjaxResult addSave(HyCharge hyCharge)
-    {
-        return toAjax(hyChargeService.insertHyCharge(hyCharge));
-    }
+	/**
+	 * 新增保存收费比例设置
+	 */
+	@RequiresPermissions("system:charge:add")
+	@Log(title = "收费比例设置", businessType = BusinessType.INSERT)
+	@ApiOperation("新增保存收费比例设置")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyCharge", value = "项目实体类", required = true), })
+	@PostMapping("/add")
+	@ResponseBody
+	public AjaxResult addSave(HyCharge hyCharge) {
+		return toAjax(hyChargeService.insertHyCharge(hyCharge));
+	}
 
-    /**
-     * 修改收费比例设置
-     */
-    @ApiOperation("修改收费比例设置")
-    @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Long id, ModelMap mmap)
-    {
-        HyCharge hyCharge = hyChargeService.selectHyChargeById(id);
-        mmap.put("hyCharge", hyCharge);
-        return prefix + "/edit";
-    }
+	/**
+	 * 修改收费比例设置
+	 */
+	@ApiOperation("修改收费比例设置")
+	@GetMapping("/edit/{id}")
+	public String edit(@PathVariable("id") Long id, ModelMap mmap) {
+		HyCharge hyCharge = hyChargeService.selectHyChargeById(id);
+		mmap.put("hyCharge", hyCharge);
+		return prefix + "/edit";
+	}
 
-    /**
-     * 修改保存收费比例设置
-     */
-    @RequiresPermissions("system:charge:edit")
-    @Log(title = "收费比例设置", businessType = BusinessType.UPDATE)
-    @ApiOperation("修改保存收费比例设置")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyCharge", value = "项目实体类", required = true),
-	})
-    @PostMapping("/edit")
-    @ResponseBody
-    public AjaxResult editSave(HyCharge hyCharge)
-    {
-        return toAjax(hyChargeService.updateHyCharge(hyCharge));
-    }
+	/**
+	 * 修改保存收费比例设置
+	 */
+	@RequiresPermissions("system:charge:edit")
+	@Log(title = "收费比例设置", businessType = BusinessType.UPDATE)
+	@ApiOperation("修改保存收费比例设置")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyCharge", value = "项目实体类", required = true), })
+	@PostMapping("/edit")
+	@ResponseBody
+	public AjaxResult editSave(HyCharge hyCharge) {
+		return toAjax(hyChargeService.updateHyCharge(hyCharge));
+	}
 
-    /**
-     * 删除收费比例设置
-     */
-    @RequiresPermissions("system:charge:remove")
-    @Log(title = "收费比例设置", businessType = BusinessType.DELETE)
-    @ApiOperation("删除收费比例设置")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "ids", value = "ids", required = true),
-	})
-    @PostMapping( "/remove")
-    @ResponseBody
-    public AjaxResult remove(String ids)
-    {
-        return toAjax(hyChargeService.deleteHyChargeByIds(ids));
-    }
+	/**
+	 * 删除收费比例设置
+	 */
+	@RequiresPermissions("system:charge:remove")
+	@Log(title = "收费比例设置", businessType = BusinessType.DELETE)
+	@ApiOperation("删除收费比例设置")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "ids", value = "ids", required = true), })
+	@PostMapping("/remove")
+	@ResponseBody
+	public AjaxResult remove(String ids) {
+		return toAjax(hyChargeService.deleteHyChargeByIds(ids));
+	}
 }
