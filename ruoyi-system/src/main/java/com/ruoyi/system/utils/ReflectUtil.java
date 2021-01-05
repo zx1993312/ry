@@ -22,7 +22,6 @@ public class ReflectUtil<T> {
 	 * @param <T>需转换的JavaBean
 	 */
 	public Map<String, Object> convertMap(T t) {
-		log.info("1111111111111111111111111111111111");
 		try {
 			Map<String, Object> map = new HashMap<>();
 			Field[] fields = t.getClass().getFields();
@@ -31,7 +30,7 @@ public class ReflectUtil<T> {
 			}
 			return map;
 		} catch (Exception e) {
-			log.error(e.getMessage(), e);
+			e.printStackTrace();
 		}
 		return null;
 	}
