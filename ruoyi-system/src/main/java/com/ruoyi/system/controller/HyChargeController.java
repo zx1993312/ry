@@ -62,7 +62,6 @@ public class HyChargeController extends BaseController {
 	public TableDataInfo list(HyCharge hyCharge) {
 		startPage();
 		List<HyCharge> list = hyChargeService.selectHyChargeList(hyCharge);
-
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyCharge hc : list) {
 			Map<String, Object> map = new HashMap<>();
@@ -167,4 +166,18 @@ public class HyChargeController extends BaseController {
 	public AjaxResult remove(String ids) {
 		return toAjax(hyChargeService.deleteHyChargeByIds(ids));
 	}
+
+	/**
+	 * 校验房间号
+	 */
+	@PostMapping("/checkNumber")
+	@ResponseBody
+	public String checkNumber(HyCharge hyCharge) {
+		boolean resule = hyChargeService.checkNumber(hyCharge);
+		if (resule) {
+			return "1";
+		}
+		return "0";
+	}
+
 }

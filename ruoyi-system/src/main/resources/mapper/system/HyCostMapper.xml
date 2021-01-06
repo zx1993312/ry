@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyCostMapper">
+    
+    <resultMap type="HyCost" id="HyCostResult">
+        <result property="id"    column="id"    />
+        <result property="costItems"    column="cost_items"    />
+        <result property="expenseType"    column="expense_type"    />
+    </resultMap>
+
+    <sql id="selectHyCostVo">
+        select id, cost_items, expense_type from hy_cost
+    </sql>
+
+    <select id="selectHyCostList" parameterType="HyCost" resultMap="HyCostResult">
+        <include refid="selectHyCostVo"/>
+        <where>  
+            <if test="costItems != null  and costItems != ''"> and cost_items = #{costItems}</if>
+            <if test="expenseType != null  and expenseType != ''"> and expense_type = #{expenseType}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyCostById" parameterType="Long" resultMap="HyCostResult">
+        <include refid="selectHyCostVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyCost" parameterType="HyCost" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_cost
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="costItems != null">cost_items,</if>
+            <if test="expenseType != null">expense_type,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="costItems != null">#{costItems},</if>
+            <if test="expenseType != null">#{expenseType},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyCost" parameterType="HyCost">
+        update hy_cost
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="costItems != null">cost_items = #{costItems},</if>
+            <if test="expenseType != null">expense_type = #{expenseType},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyCostById" parameterType="Long">
+        delete from hy_cost where id = #{id}
+    </delete>
+
+    <delete id="deleteHyCostByIds" parameterType="String">
+        delete from hy_cost where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -64,6 +64,34 @@
         var prefix = ctx + "system/charge";
         $("#form-charge-edit").validate({
             focusCleanup: true
+            rules : {
+				number : {
+					number : true,
+					minlength : 4,
+					maxlength : 4,
+					remote : {
+						url : prefix + "/checkNumber",
+						type : "post",
+						dataType : "json",
+						data : {
+							"number" : function() {
+								return $.common.trim($("#number").val());
+							}
+						},
+						dataFilter : function(data, type) {
+							return $.validate.unique(data);
+						}
+					}
+
+				},
+            },
+            
+            messages : {
+				"number" : {
+					remote : "房屋号已有居住者"
+				},
+            },
+            focusCleanup: true
         });
 
         function submitHandler() {

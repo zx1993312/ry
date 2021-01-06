@@ -1,6 +1,8 @@
 package com.ruoyi.system.mapper;
 
 import java.util.List;
+
+import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.system.domain.HyCharge;
 
 /**
@@ -58,4 +60,12 @@ public interface HyChargeMapper
      * @return 结果
      */
     public int deleteHyChargeByIds(String[] ids);
+    
+    /**
+     * 校验number是否唯一
+     *
+     * @param number
+     * @return 结果
+     */
+    public HyCharge checkNumber(Long number);
 }

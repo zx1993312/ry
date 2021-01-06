@@ -34,6 +34,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectHyChargeVo"/>
         where id = #{id}
     </select>
+    
+    <select id="checkNumber" parameterType="Long" resultMap="HyChargeResult">
+    	select id,number from hy_charge where number=#{number} limit 1
+    </select>
         
     <insert id="insertHyCharge" parameterType="HyCharge" useGeneratedKeys="true" keyProperty="id">
         insert into hy_charge

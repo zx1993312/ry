@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyBillIssuanceMapper">
+    
+    <resultMap type="HyBillIssuance" id="HyBillIssuanceResult">
+        <result property="id"    column="id"    />
+        <result property="billType"    column="bill_type"    />
+        <result property="billNumStr"    column="bill_num_str"    />
+        <result property="billNumEnd"    column="bill_num_end"    />
+        <result property="copies"    column="copies"    />
+        <result property="ticketSampleStr"    column="ticket_sample_str"    />
+        <result property="ticketSampleEnd"    column="ticket_sample_end"    />
+        <result property="community"    column="community"    />
+        <result property="receiver"    column="receiver"    />
+        <result property="user"    column="user"    />
+        <result property="releaseTime"    column="release_time"    />
+        <result property="applicationScope"    column="application_scope"    />
+    </resultMap>
+
+    <sql id="selectHyBillIssuanceVo">
+        select id, bill_type, bill_num_str, bill_num_end, copies, ticket_sample_str, ticket_sample_end, community, receiver, user, release_time, application_scope from hy_bill_issuance
+    </sql>
+
+    <select id="selectHyBillIssuanceList" parameterType="HyBillIssuance" resultMap="HyBillIssuanceResult">
+        <include refid="selectHyBillIssuanceVo"/>
+        <where>  
+            <if test="billType != null  and billType != ''"> and bill_type = #{billType}</if>
+            <if test="billNumStr != null "> and bill_num_str = #{billNumStr}</if>
+            <if test="billNumEnd != null "> and bill_num_end = #{billNumEnd}</if>
+            <if test="copies != null "> and copies = #{copies}</if>
+            <if test="ticketSampleStr != null  and ticketSampleStr != ''"> and ticket_sample_str = #{ticketSampleStr}</if>
+            <if test="ticketSampleEnd != null  and ticketSampleEnd != ''"> and ticket_sample_end = #{ticketSampleEnd}</if>
+            <if test="community != null  and community != ''"> and community = #{community}</if>
+            <if test="receiver != null  and receiver != ''"> and receiver = #{receiver}</if>
+            <if test="user != null  and user != ''"> and user = #{user}</if>
+            <if test="releaseTime != null "> and release_time = #{releaseTime}</if>
+            <if test="applicationScope != null  and applicationScope != ''"> and application_scope = #{applicationScope}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyBillIssuanceById" parameterType="Long" resultMap="HyBillIssuanceResult">
+        <include refid="selectHyBillIssuanceVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyBillIssuance" parameterType="HyBillIssuance">
+        insert into hy_bill_issuance
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="billType != null">bill_type,</if>
+            <if test="billNumStr != null">bill_num_str,</if>
+            <if test="billNumEnd != null">bill_num_end,</if>
+            <if test="copies != null">copies,</if>
+            <if test="ticketSampleStr != null">ticket_sample_str,</if>
+            <if test="ticketSampleEnd != null">ticket_sample_end,</if>
+            <if test="community != null">community,</if>
+            <if test="receiver != null">receiver,</if>
+            <if test="user != null">user,</if>
+            <if test="releaseTime != null">release_time,</if>
+            <if test="applicationScope != null">application_scope,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="billType != null">#{billType},</if>
+            <if test="billNumStr != null">#{billNumStr},</if>
+            <if test="billNumEnd != null">#{billNumEnd},</if>
+            <if test="copies != null">#{copies},</if>
+            <if test="ticketSampleStr != null">#{ticketSampleStr},</if>
+            <if test="ticketSampleEnd != null">#{ticketSampleEnd},</if>
+            <if test="community != null">#{community},</if>
+            <if test="receiver != null">#{receiver},</if>
+            <if test="user != null">#{user},</if>
+            <if test="releaseTime != null">#{releaseTime},</if>
+            <if test="applicationScope != null">#{applicationScope},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyBillIssuance" parameterType="HyBillIssuance">
+        update hy_bill_issuance
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="billType != null">bill_type = #{billType},</if>
+            <if test="billNumStr != null">bill_num_str = #{billNumStr},</if>
+            <if test="billNumEnd != null">bill_num_end = #{billNumEnd},</if>
+            <if test="copies != null">copies = #{copies},</if>
+            <if test="ticketSampleStr != null">ticket_sample_str = #{ticketSampleStr},</if>
+            <if test="ticketSampleEnd != null">ticket_sample_end = #{ticketSampleEnd},</if>
+            <if test="community != null">community = #{community},</if>
+            <if test="receiver != null">receiver = #{receiver},</if>
+            <if test="user != null">user = #{user},</if>
+            <if test="releaseTime != null">release_time = #{releaseTime},</if>
+            <if test="applicationScope != null">application_scope = #{applicationScope},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyBillIssuanceById" parameterType="Long">
+        delete from hy_bill_issuance where id = #{id}
+    </delete>
+
+    <delete id="deleteHyBillIssuanceByIds" parameterType="String">
+        delete from hy_bill_issuance where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
