@@ -22,8 +22,8 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.domain.HyCharge;
-import com.ruoyi.system.enums.StateEnum;
 import com.ruoyi.system.service.IHyChargeService;
+import com.ruoyi.system.utils.ReflectUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -40,6 +40,7 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/system/charge")
 @Api(tags = "航宇物业，收费比例设置controller")
 public class HyChargeController extends BaseController {
+	private static final ReflectUtil<HyCharge> UTIL = new ReflectUtil<>();
 	private String prefix = "system/charge";
 
 	@Autowired
@@ -62,18 +63,11 @@ public class HyChargeController extends BaseController {
 	public TableDataInfo list(HyCharge hyCharge) {
 		startPage();
 		List<HyCharge> list = hyChargeService.selectHyChargeList(hyCharge);
+
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyCharge hc : list) {
 			Map<String, Object> map = new HashMap<>();
-			map.put("state", StateEnum.getValue(hc.getState()));
-			map.put("id",hc.getId());
-			map.put("number", hc.getNumber());
-			map.put("proportion", hc.getProportion());
-			map.put("remarks", hc.getRemarks());
-			if(null != hc.getCurrentState()) {
-				map.put("currentState",StateEnum.getValue(Integer.valueOf(hc.getCurrentState())));
-			}
-			map.put("cost", hc.getCost());
+			map = UTIL.convertMap(hc);
 			reList.add(map);
 		}
 		return getDataTable(reList);
@@ -104,15 +98,7 @@ public class HyChargeController extends BaseController {
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyCharge hc : list) {
 			Map<String, Object> map = new HashMap<>();
-			map.put("state", StateEnum.getValue(hc.getState()));
-			map.put("id",hc.getId());
-			map.put("number", hc.getNumber());
-			map.put("proportion", hc.getProportion());
-			map.put("remarks", hc.getRemarks());
-			if(null != hc.getCurrentState()) {
-				map.put("currentState",StateEnum.getValue(Integer.valueOf(hc.getCurrentState())));
-			}
-			map.put("cost", hc.getCost());
+			map = UTIL.convertMap(hc);
 			reList.add(map);
 		}
 		return prefix + "/add";
@@ -128,7 +114,7 @@ public class HyChargeController extends BaseController {
 	@PostMapping("/add")
 	@ResponseBody
 	public AjaxResult addSave(HyCharge hyCharge) {
-		
+
 		return toAjax(hyChargeService.insertHyCharge(hyCharge));
 	}
 
@@ -144,15 +130,7 @@ public class HyChargeController extends BaseController {
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyCharge hc : list) {
 			Map<String, Object> map = new HashMap<>();
-			map.put("state", StateEnum.getValue(hc.getState()));
-			map.put("id",hc.getId());
-			map.put("number", hc.getNumber());
-			map.put("proportion", hc.getProportion());
-			map.put("remarks", hc.getRemarks());
-			if(null != hc.getCurrentState()) {
-				map.put("currentState",StateEnum.getValue(Integer.valueOf(hc.getCurrentState())));
-			}
-			map.put("cost", hc.getCost());
+			map = UTIL.convertMap(hc);
 			reList.add(map);
 		}
 		return prefix + "/edit";
@@ -172,15 +150,7 @@ public class HyChargeController extends BaseController {
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyCharge hc : list) {
 			Map<String, Object> map = new HashMap<>();
-			map.put("state", StateEnum.getValue(hc.getState()));
-			map.put("id",hc.getId());
-			map.put("number", hc.getNumber());
-			map.put("proportion", hc.getProportion());
-			map.put("remarks", hc.getRemarks());
-			if(null != hc.getCurrentState()) {
-				map.put("currentState",StateEnum.getValue(Integer.valueOf(hc.getCurrentState())));
-			}
-			map.put("cost", hc.getCost());
+			map = UTIL.convertMap(hc);
 			reList.add(map);
 		}
 		return toAjax(hyChargeService.updateHyCharge(hyCharge));
