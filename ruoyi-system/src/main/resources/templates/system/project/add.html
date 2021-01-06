@@ -1,37 +1,60 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:include="include :: header('新增项目列')" />
+<th:block th:include="include :: header('新增项目列')" />
 </head>
 <body class="white-bg">
-    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-project-add">
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">项目名称：</label>
-                <div class="col-sm-8">
-                    <input name="projectName" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">小区id：</label>
-                <div class="col-sm-8">
-                    <input name="villageId" class="form-control" type="text">
-                </div>
-            </div>
-        </form>
-    </div>
-    <th:block th:include="include :: footer" />
-    <script th:inline="javascript">
-        var prefix = ctx + "system/project"
-        $("#form-project-add").validate({
-            focusCleanup: true
-        });
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<form class="form-horizontal m" id="form-project-add">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">项目名称：</label>
+				<div class="col-sm-8">
+					<input name="projectName" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">小区id：</label>
+				<div class="col-sm-8">
+					<input name="villageId" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+	</div>
+	<th:block th:include="include :: footer" />
+	<script th:inline="javascript">
+		var prefix = ctx + "system/project"
 
-        function submitHandler() {
-            if ($.validate.form()) {
-                $.operate.save(prefix + "/add", $('#form-project-add').serialize());
-            }
-        }
-    </script>
+		$("#form-project-add").validate({
+			onkeyup : false,
+			rules : {
+				projectName : {
+					required : true,
+					minlength : 1,
+					maxlength : 100,
+				},
+				villageId : {
+					number : true,
+					minlength : 1,
+					maxlength : 11,
+				},
+			},
+			messages : {
+				"projectName" : {
+					remote : "项目名称长度为100个字符"
+				},
+				"villageId" : {
+					remote : "小区id只能为数字，并且长度在11个字符内"
+				}
+			},
+			focusCleanup : true
+		});
+
+		function submitHandler() {
+			if ($.validate.form()) {
+				$.operate.save(prefix + "/add", $('#form-project-add')
+						.serialize());
+			}
+		}
+	</script>
 </body>
 </html>

@@ -24,9 +24,33 @@
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
         var prefix = ctx + "system/project";
+        
         $("#form-project-edit").validate({
-            focusCleanup: true
-        });
+			onkeyup : false,
+			rules : {
+				projectName : {
+					required : true,
+					minlength : 1,
+					maxlength : 100,
+				},
+				villageId : {
+					required : true,
+					number : true,
+					minlength : 1,
+					maxlength : 11,
+				},
+			},
+			messages : {
+				"projectName" : {
+					remote : "项目名称长度为100个字符"
+				},
+				"villageId" : {
+					remote : "小区id只能为数字，并且长度在11个字符内"
+				}
+			},
+			focusCleanup : true
+		});
+
 
         function submitHandler() {
             if ($.validate.form()) {
