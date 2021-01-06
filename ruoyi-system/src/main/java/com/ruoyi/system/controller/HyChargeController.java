@@ -149,7 +149,7 @@ public class HyChargeController extends BaseController {
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyCharge hc : list) {
 			Map<String, Object> map = new HashMap<>();
-			map = Constants.REFLECT_UTIL.convertMap(hc);
+			map =  Constants.REFLECT_UTIL.convertMap(hc);
 			reList.add(map);
 		}
 		return toAjax(hyChargeService.updateHyCharge(hyCharge));

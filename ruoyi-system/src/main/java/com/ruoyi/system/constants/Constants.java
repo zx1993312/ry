@@ -5,7 +5,7 @@ import com.ruoyi.system.utils.ReflectUtil;
 /**
  * system常量
  * 
- * @author Administrator
+ * @author  Administrator
  *
  */
 public class Constants {

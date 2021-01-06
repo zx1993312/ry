@@ -8,7 +8,7 @@ public enum StateEnum {
 	private int state;// 状态
 	private String value;// 值
 
-	StateEnum(int state, String value) {
+	StateEnum(int state,  String value) {
 		this.state = state;
 		this.value = value;
 	}
