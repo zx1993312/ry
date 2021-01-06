@@ -25,7 +25,7 @@ public class ReflectUtil<T> {
 	 * @param <T>需转换的JavaBean
 	 */
 	public Map<String, Object> convertMap(T t) {
-		log.info("转换javabean");
+		log.info("转换java");
 		try {
 			Map<String, Object> map = new HashMap<>();
 			Field[] fields = t.getClass().getDeclaredFields();
