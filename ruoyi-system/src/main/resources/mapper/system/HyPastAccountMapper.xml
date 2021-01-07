@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyPastAccountMapper">
+    
+    <resultMap type="HyPastAccount" id="HyPastAccountResult">
+        <result property="id"    column="id"    />
+        <result property="manageProjects"    column="manage_projects"    />
+        <result property="customerName"    column="customer_name"    />
+        <result property="houseNum"    column="house_num"    />
+        <result property="parkingNum"    column="parking_num"    />
+        <result property="feeNum"    column="fee_num"    />
+        <result property="feeName"    column="fee_name"    />
+        <result property="feeDate"    column="fee_date"    />
+    </resultMap>
+
+    <sql id="selectHyPastAccountVo">
+        select id, manage_projects, customer_name, house_num, parking_num, fee_num, fee_name, fee_date from hy_past_account
+    </sql>
+
+    <select id="selectHyPastAccountList" parameterType="HyPastAccount" resultMap="HyPastAccountResult">
+        <include refid="selectHyPastAccountVo"/>
+        <where>  
+            <if test="manageProjects != null  and manageProjects != ''"> and manage_projects = #{manageProjects}</if>
+            <if test="customerName != null  and customerName != ''"> and customer_name like concat('%', #{customerName}, '%')</if>
+            <if test="houseNum != null  and houseNum != ''"> and house_num = #{houseNum}</if>
+            <if test="parkingNum != null  and parkingNum != ''"> and parking_num = #{parkingNum}</if>
+            <if test="feeNum != null  and feeNum != ''"> and fee_num = #{feeNum}</if>
+            <if test="feeName != null  and feeName != ''"> and fee_name like concat('%', #{feeName}, '%')</if>
+            <if test="feeDate != null "> and fee_date = #{feeDate}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyPastAccountById" parameterType="Long" resultMap="HyPastAccountResult">
+        <include refid="selectHyPastAccountVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyPastAccount" parameterType="HyPastAccount">
+        insert into hy_past_account
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="manageProjects != null">manage_projects,</if>
+            <if test="customerName != null">customer_name,</if>
+            <if test="houseNum != null">house_num,</if>
+            <if test="parkingNum != null">parking_num,</if>
+            <if test="feeNum != null">fee_num,</if>
+            <if test="feeName != null">fee_name,</if>
+            <if test="feeDate != null">fee_date,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="manageProjects != null">#{manageProjects},</if>
+            <if test="customerName != null">#{customerName},</if>
+            <if test="houseNum != null">#{houseNum},</if>
+            <if test="parkingNum != null">#{parkingNum},</if>
+            <if test="feeNum != null">#{feeNum},</if>
+            <if test="feeName != null">#{feeName},</if>
+            <if test="feeDate != null">#{feeDate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyPastAccount" parameterType="HyPastAccount">
+        update hy_past_account
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="manageProjects != null">manage_projects = #{manageProjects},</if>
+            <if test="customerName != null">customer_name = #{customerName},</if>
+            <if test="houseNum != null">house_num = #{houseNum},</if>
+            <if test="parkingNum != null">parking_num = #{parkingNum},</if>
+            <if test="feeNum != null">fee_num = #{feeNum},</if>
+            <if test="feeName != null">fee_name = #{feeName},</if>
+            <if test="feeDate != null">fee_date = #{feeDate},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyPastAccountById" parameterType="Long">
+        delete from hy_past_account where id = #{id}
+    </delete>
+
+    <delete id="deleteHyPastAccountByIds" parameterType="String">
+        delete from hy_past_account where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
