@@ -9,7 +9,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 票据设置对象 hy_bill_set
  * 
  * @author Administrator
- * @date 2021-01-06
+ * @date 2021-01-06 
  */
 public class HyBillSet extends BaseEntity
 {

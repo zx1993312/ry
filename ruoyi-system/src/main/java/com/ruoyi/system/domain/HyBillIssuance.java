@@ -11,7 +11,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 票据发放对象 hy_bill_issuance
  * 
  * @author Administrator
- * @date 2021-01-06
+ * @date 2021-01-06 
  */
 public class HyBillIssuance extends BaseEntity
 {
