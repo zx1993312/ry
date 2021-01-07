@@ -31,7 +31,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @author Administrator
  * @date 2021-01-06
  */
-@Controller
+@Controller 
 @RequestMapping("/system/parking")
 @Api(tags = "车位资料 Controller")
 public class HyParkingInfController extends BaseController {

@@ -33,7 +33,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  */
 @Controller
 @RequestMapping("/system/set")
-@Api(tags = "票据设置Controller")
+@Api(tags = "票据设置Controller") 
 public class HyBillSetController extends BaseController
 {
     private String prefix = "system/set";

@@ -30,7 +30,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 
  * @author ruoyi
  * @date 2021-01-04
- */
+ */ 
 @Controller
 @RequestMapping("/system/collection")
 @Api(tags = "航宇物业，收款管理 controller")

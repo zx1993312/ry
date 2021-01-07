@@ -29,7 +29,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 票据发放Controller
  * 
  * @author Administrator
- * @date 2021-01-06
+ * @date 2021-01-06 
  */
 @Controller
 @RequestMapping("/system/issuance")

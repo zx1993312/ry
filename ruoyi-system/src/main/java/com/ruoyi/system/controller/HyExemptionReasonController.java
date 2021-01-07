@@ -31,7 +31,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @author Administrator
  * @date 2021-01-06
  */
-@Controller
+@Controller 
 @RequestMapping("/system/reason")
 @Api(tags = "减免原因设置Controller")
 public class HyExemptionReasonController extends BaseController

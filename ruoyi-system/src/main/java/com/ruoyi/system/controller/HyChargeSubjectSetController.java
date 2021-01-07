@@ -30,7 +30,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 
  * @author Administrator
  * @date 2021-01-06
- */
+ */ 
 @Controller
 @RequestMapping("/system/subject")
 @Api(tags = "收费科目设置Controller")

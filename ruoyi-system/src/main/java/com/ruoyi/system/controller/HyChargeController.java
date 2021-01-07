@@ -34,7 +34,7 @@ import io.swagger.annotations.ApiOperation;
  * 收费比例设置Controller
  * 
  * @author ruoyi
- * @date 2021-01-04
+ * @date 2021-01-04 
  */
 @Controller
 @RequestMapping("/system/charge")

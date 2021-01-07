@@ -31,7 +31,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @author Administrator
  * @date 2021-01-04
  */
-@Controller
+@Controller 
 @RequestMapping("/system/project")
 @Api(tags = "航宇物业，项目列表controller")
 public class HyProjectController extends BaseController {

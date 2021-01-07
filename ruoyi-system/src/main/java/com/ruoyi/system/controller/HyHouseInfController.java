@@ -31,7 +31,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @author Administrator
  * @date 2021-01-06
  */
-@Controller
+@Controller 
 @RequestMapping("/system/inf")
 @Api(tags = "房屋登记Controller")
 public class HyHouseInfController extends BaseController
