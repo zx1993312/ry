@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyControlSetMapper">
+    
+    <resultMap type="HyControlSet" id="HyControlSetResult">
+        <result property="id"    column="id"    />
+        <result property="chargeSubjectApproved"    column="charge_subject_approved"    />
+        <result property="deliveryEffectiveTime"    column="delivery_effective_time"    />
+        <result property="depositArrearsAllowed"    column="deposit_arrears_allowed"    />
+        <result property="partialOffsetAllowed"    column="partial_offset_allowed"    />
+        <result property="systemTicketnumNot"    column="system_ticketnum_not"    />
+        <result property="oddCarryForward"    column="odd_carry_forward"    />
+    </resultMap>
+
+    <sql id="selectHyControlSetVo">
+        select id, charge_subject_approved, delivery_effective_time, deposit_arrears_allowed, partial_offset_allowed, system_ticketnum_not, odd_carry_forward from hy_control_set
+    </sql>
+
+    <select id="selectHyControlSetList" parameterType="HyControlSet" resultMap="HyControlSetResult">
+        <include refid="selectHyControlSetVo"/>
+        <where>  
+            <if test="chargeSubjectApproved != null "> and charge_subject_approved = #{chargeSubjectApproved}</if>
+            <if test="deliveryEffectiveTime != null "> and delivery_effective_time = #{deliveryEffectiveTime}</if>
+            <if test="depositArrearsAllowed != null "> and deposit_arrears_allowed = #{depositArrearsAllowed}</if>
+            <if test="partialOffsetAllowed != null "> and partial_offset_allowed = #{partialOffsetAllowed}</if>
+            <if test="systemTicketnumNot != null "> and system_ticketnum_not = #{systemTicketnumNot}</if>
+            <if test="oddCarryForward != null "> and odd_carry_forward = #{oddCarryForward}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyControlSetById" parameterType="Long" resultMap="HyControlSetResult">
+        <include refid="selectHyControlSetVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyControlSet" parameterType="HyControlSet">
+        insert into hy_control_set
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="chargeSubjectApproved != null">charge_subject_approved,</if>
+            <if test="deliveryEffectiveTime != null">delivery_effective_time,</if>
+            <if test="depositArrearsAllowed != null">deposit_arrears_allowed,</if>
+            <if test="partialOffsetAllowed != null">partial_offset_allowed,</if>
+            <if test="systemTicketnumNot != null">system_ticketnum_not,</if>
+            <if test="oddCarryForward != null">odd_carry_forward,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="chargeSubjectApproved != null">#{chargeSubjectApproved},</if>
+            <if test="deliveryEffectiveTime != null">#{deliveryEffectiveTime},</if>
+            <if test="depositArrearsAllowed != null">#{depositArrearsAllowed},</if>
+            <if test="partialOffsetAllowed != null">#{partialOffsetAllowed},</if>
+            <if test="systemTicketnumNot != null">#{systemTicketnumNot},</if>
+            <if test="oddCarryForward != null">#{oddCarryForward},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyControlSet" parameterType="HyControlSet">
+        update hy_control_set
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="chargeSubjectApproved != null">charge_subject_approved = #{chargeSubjectApproved},</if>
+            <if test="deliveryEffectiveTime != null">delivery_effective_time = #{deliveryEffectiveTime},</if>
+            <if test="depositArrearsAllowed != null">deposit_arrears_allowed = #{depositArrearsAllowed},</if>
+            <if test="partialOffsetAllowed != null">partial_offset_allowed = #{partialOffsetAllowed},</if>
+            <if test="systemTicketnumNot != null">system_ticketnum_not = #{systemTicketnumNot},</if>
+            <if test="oddCarryForward != null">odd_carry_forward = #{oddCarryForward},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyControlSetById" parameterType="Long">
+        delete from hy_control_set where id = #{id}
+    </delete>
+
+    <delete id="deleteHyControlSetByIds" parameterType="String">
+        delete from hy_control_set where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

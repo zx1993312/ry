@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+<th:block th:include="include :: header('管控模型设置列表')" />
+</head>
+<body class="gray-bg">
+	<div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li><label>收费科目是否需要审核：</label> <select
+								id="chargeSubjectApproved" name="chargeSubjectApproved"
+								th:with="type=${@dict.getType('hy_control_set')}">
+								<option value="">请选择</option>
+									<option value="1">否</option>
+									<option value="0">是</option>
+							</select></li>
+							<li><label>交房状态修改生效时间：</label> <select
+								id="deliveryEffectiveTime" name="deliveryEffectiveTime"
+								th:with="type=${@dict.getType('hy_control_set')}">
+								<option value="">请选择</option>
+									<option value="3">次月</option>
+									<option value="2">当月</option>
+							</select></li>
+							<li><label>有欠费时是否允许预存：</label> <select
+								id="depositArrearsAllowed" name="depositArrearsAllowed"
+								th:with="type=${@dict.getType('hy_control_set')}">
+								<option value="">请选择</option>
+									<option value="0">是</option>
+									<option value="1">否</option>
+							</select></li>
+							<li><label>预存是否允许部分冲抵：</label> <select
+								id="partialOffsetAllowed" name="partialOffsetAllowed"
+								th:with="type=${@dict.getType('hy_control_set')}">
+								<option value="">请选择</option>
+									<option value="0">是</option>
+									<option value="1">否</option>
+							</select></li>
+							<li><label>票号是否使用系统票号：</label> <select
+								id="systemTicketnumNot" name="systemTicketnumNot"
+								th:with="type=${@dict.getType('hy_control_set')}">
+								<option value="">请选择</option>
+									<option value="1">否</option>
+									<option value="0">是</option>
+							</select></li>
+							<li><label>零头结转取整位数：</label> <select id="oddCarryForward"
+								name="oddCarryForward"
+								th:with="type=${@dict.getType('hy_control_set')}">
+								<option value="">请选择</option>
+									<option value="6">分</option>
+									<option value="4">整</option>
+									<option value="5">角</option>
+							</select></li>
+							<li><a class="btn btn-primary btn-rounded btn-sm"
+								onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm"
+								onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+
+			<div class="btn-group-sm" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.add()"
+					shiro:hasPermission="system:control:add"> <i class="fa fa-plus"></i>
+					添加
+				</a> <a class="btn btn-primary single disabled"
+					onclick="$.operate.edit()"
+					shiro:hasPermission="system:control:edit"> <i
+					class="fa fa-edit"></i> 修改
+				</a> <a class="btn btn-danger multiple disabled"
+					onclick="$.operate.removeAll()"
+					shiro:hasPermission="system:control:remove"> <i
+					class="fa fa-remove"></i> 删除
+				</a> <a class="btn btn-warning" onclick="$.table.exportExcel()"
+					shiro:hasPermission="system:control:export"> <i
+					class="fa fa-download"></i> 导出
+				</a>
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table"></table>
+			</div>
+		</div>
+	</div>
+	<th:block th:include="include :: footer" />
+	<script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:set:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:set:remove')}]];
+        var prefix = ctx + "system/control";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "管控模型设置",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '主键',
+                    visible: false
+                },
+                {
+                    field: 'chargeSubjectApproved',
+                    title: '收费科目是否需要审核'
+                },
+                {
+                    field: 'deliveryEffectiveTime',
+                    title: '交房状态修改生效时间'
+                },
+                {
+                    field: 'depositArrearsAllowed',
+                    title: '有欠费时是否允许预存'
+                },
+                {
+                    field: 'partialOffsetAllowed',
+                    title: '预存是否允许部分冲抵'
+                },
+                {
+                    field: 'systemTicketnumNot',
+                    title: '票号是否使用系统票号'
+                },
+                {
+                    field: 'oddCarryForward',
+                    title: '零头结转取整位数'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

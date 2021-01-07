@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+<th:block th:include="include :: header('新增管控模型设置')" />
+</head>
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<form class="form-horizontal m" id="form-control-add">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">收费科目是否需要审核：</label>
+				<div class="col-sm-8">
+					<select id="chargeSubjectApproved" name="chargeSubjectApproved"
+						class="form-control"
+						th:with="type=${@dict.getType('hy_control_set')}">
+						<option value="1">否</option>
+						<option value="0">是</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">交房状态修改生效时间：</label>
+				<div class="col-sm-8">
+					<select id="deliveryEffectiveTime" name="deliveryEffectiveTime"
+						class="form-control"
+						th:with="type=${@dict.getType('hy_control_set')}">
+						<option value="3">次月</option>
+						<option value="2">当月</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">有欠费时是否允许预存：</label>
+				<div class="col-sm-8">
+					<select id="depositArrearsAllowed" name="depositArrearsAllowed"
+						class="form-control"
+						th:with="type=${@dict.getType('hy_control_set')}">
+						<option value="0">是</option>
+						<option value="1">否</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">预存是否允许部分冲抵：</label>
+				<div class="col-sm-8">
+					<select id="partialOffsetAllowed" name="partialOffsetAllowed"
+						class="form-control"
+						th:with="type=${@dict.getType('hy_control_set')}">
+						<option value="0">是</option>
+						<option value="1">否</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">票号是否使用系统票号：</label>
+				<div class="col-sm-8">
+					<select id="systemTicketnumNot" name="systemTicketnumNot"
+						class="form-control"
+						th:with="type=${@dict.getType('hy_control_set')}">
+						<option value="1">否</option>
+						<option value="0">是</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">零头结转取整位数：</label>
+				<div class="col-sm-8">
+					<select id="oddCarryForward" name="oddCarryForward"
+						class="form-control"
+						th:with="type=${@dict.getType('hy_control_set')}">
+						<option value="6">分</option>
+						<option value="4">整</option>
+						<option value="5">角</option>
+					</select>
+				</div>
+			</div>
+		</form>
+	</div>
+	<th:block th:include="include :: footer" />
+	<script th:inline="javascript">
+		var prefix = ctx + "system/control"
+		$("#form-control-add").validate({
+			focusCleanup : true
+		});
+
+		function submitHandler() {
+			if ($.validate.form()) {
+				$.operate.save(prefix + "/add", $('#form-control-add')
+						.serialize());
+			}
+		}
+	</script>
+</body>
+</html>
