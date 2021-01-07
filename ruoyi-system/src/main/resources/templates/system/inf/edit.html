@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改房屋登记')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-inf-edit" th:object="${hyHouseInf}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">楼宇：</label>
+                <div class="col-sm-8">
+                    <input name="building" th:field="*{building}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">房屋编号：</label>
+                <div class="col-sm-8">
+                    <input name="houseNumber" th:field="*{houseNumber}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">房屋名称：</label>
+                <div class="col-sm-8">
+                    <input name="houseName" th:field="*{houseName}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">建筑面积：</label>
+                <div class="col-sm-8">
+                    <input name="builtUpArea" th:field="*{builtUpArea}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">组团区域：</label>
+                <div class="col-sm-8">
+                    <input name="groupArea" th:field="*{groupArea}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">单元：</label>
+                <div class="col-sm-8">
+                    <input name="unit" th:field="*{unit}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">楼层：</label>
+                <div class="col-sm-8">
+                    <input name="floor" th:field="*{floor}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">同单元同楼层流水号：</label>
+                <div class="col-sm-8">
+                    <input name="sameUnitNumber" th:field="*{sameUnitNumber}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">面积类型：</label>
+                <div class="col-sm-8">
+                    <select name="areaType" class="form-control m-b">
+                        <option value="">所有</option>
+                    </select>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">计费面积：</label>
+                <div class="col-sm-8">
+                    <input name="bilingArea" th:field="*{bilingArea}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">套内面积：</label>
+                <div class="col-sm-8">
+                    <input name="insideArea" th:field="*{insideArea}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">公摊面积：</label>
+                <div class="col-sm-8">
+                    <input name="sharedArea" th:field="*{sharedArea}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">花园面积：</label>
+                <div class="col-sm-8">
+                    <input name="gardenArea" th:field="*{gardenArea}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">地下室面积：</label>
+                <div class="col-sm-8">
+                    <input name="basementArea" th:field="*{basementArea}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">大堂分摊面积：</label>
+                <div class="col-sm-8">
+                    <input name="sharedLobbyArea" th:field="*{sharedLobbyArea}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">层间分摊面积：</label>
+                <div class="col-sm-8">
+                    <input name="sharedLayersArea" th:field="*{sharedLayersArea}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">公摊比例：</label>
+                <div class="col-sm-8">
+                    <input name="shareRatio" th:field="*{shareRatio}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">建筑结构：</label>
+                <div class="col-sm-8">
+                    <input name="buildingStructure" th:field="*{buildingStructure}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">单位面积承重参数：</label>
+                <div class="col-sm-8">
+                    <input name="parametersPer" th:field="*{parametersPer}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">房屋户型：</label>
+                <div class="col-sm-8">
+                    <input name="houseLayout" th:field="*{houseLayout}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">层高：</label>
+                <div class="col-sm-8">
+                    <input name="floorHeight" th:field="*{floorHeight}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">产权性质：</label>
+                <div class="col-sm-8">
+                    <input name="natureProperty" th:field="*{natureProperty}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">使用性质：</label>
+                <div class="col-sm-8">
+                    <input name="natureUse" th:field="*{natureUse}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">使用状态：</label>
+                <div class="col-sm-8">
+                    <div class="radio-box">
+                        <input type="radio" name="usageStatus" value="">
+                        <label th:for="usageStatus" th:text="未知"></label>
+                    </div>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">入住状态：</label>
+                <div class="col-sm-8">
+                    <div class="radio-box">
+                        <input type="radio" name="occupancyStatus" value="">
+                        <label th:for="occupancyStatus" th:text="未知"></label>
+                    </div>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">交房状态：</label>
+                <div class="col-sm-8">
+                    <div class="radio-box">
+                        <input type="radio" name="deliveryStatus" value="">
+                        <label th:for="deliveryStatus" th:text="未知"></label>
+                    </div>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">房屋类型：</label>
+                <div class="col-sm-8">
+                    <select name="houseType" class="form-control m-b">
+                        <option value="">所有</option>
+                    </select>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">销售状态：</label>
+                <div class="col-sm-8">
+                    <div class="radio-box">
+                        <input type="radio" name="salesStatus" value="">
+                        <label th:for="salesStatus" th:text="未知"></label>
+                    </div>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">购房合同号：</label>
+                <div class="col-sm-8">
+                    <input name="purchaseContract" th:field="*{purchaseContract}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">营销编号：</label>
+                <div class="col-sm-8">
+                    <input name="marketingNum" th:field="*{marketingNum}" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/inf";
+        $("#form-inf-edit").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-inf-edit').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

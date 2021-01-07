@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改收费科目设置')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-subject-edit" th:object="${hyChargeSubjectSet}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">费用名称：</label>
+                <div class="col-sm-8">
+                    <input name="feeName" th:field="*{feeName}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">标准编号：</label>
+                <div class="col-sm-8">
+                    <input name="standardNum" th:field="*{standardNum}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">标准名称：</label>
+                <div class="col-sm-8">
+                    <input name="standardName" th:field="*{standardName}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">计算方式：</label>
+                <div class="col-sm-8">
+                    <input name="calculationMethod" th:field="*{calculationMethod}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">通用收费标准：</label>
+                <div class="col-sm-8">
+                    <input name="chargingStanard" th:field="*{chargingStanard}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">标准说明：</label>
+                <div class="col-sm-8">
+                    <input name="descriptionStandard" th:field="*{descriptionStandard}" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/set";
+        $("#form-subject-edit").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-subject-edit').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

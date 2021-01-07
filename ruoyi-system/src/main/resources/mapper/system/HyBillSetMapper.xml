@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyBillSetMapper">
+    
+    <resultMap type="HyBillSet" id="HyBillSetResult">
+        <result property="id"    column="id"    />
+        <result property="billTypes"    column="bill_types"    />
+        <result property="billCategory"    column="bill_category"    />
+        <result property="prefix"    column="prefix"    />
+        <result property="suffix"    column="suffix"    />
+        <result property="digit"    column="digit"    />
+        <result property="billSample"    column="bill_sample"    />
+        <result property="billPanel"    column="bill_panel"    />
+    </resultMap>
+
+    <sql id="selectHyBillSetVo">
+        select id, bill_types, bill_category, prefix, suffix, digit, bill_sample, bill_panel from hy_bill_set
+    </sql>
+
+    <select id="selectHyBillSetList" parameterType="HyBillSet" resultMap="HyBillSetResult">
+        <include refid="selectHyBillSetVo"/>
+        <where>  
+            <if test="billTypes != null  and billTypes != ''"> and bill_types = #{billTypes}</if>
+            <if test="billCategory != null  and billCategory != ''"> and bill_category = #{billCategory}</if>
+            <if test="prefix != null  and prefix != ''"> and prefix = #{prefix}</if>
+            <if test="suffix != null  and suffix != ''"> and suffix = #{suffix}</if>
+            <if test="digit != null  and digit != ''"> and digit = #{digit}</if>
+            <if test="billSample != null  and billSample != ''"> and bill_sample = #{billSample}</if>
+            <if test="billPanel != null  and billPanel != ''"> and bill_panel = #{billPanel}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyBillSetById" parameterType="Long" resultMap="HyBillSetResult">
+        <include refid="selectHyBillSetVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyBillSet" parameterType="HyBillSet">
+        insert into hy_bill_set
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="billTypes != null">bill_types,</if>
+            <if test="billCategory != null">bill_category,</if>
+            <if test="prefix != null">prefix,</if>
+            <if test="suffix != null">suffix,</if>
+            <if test="digit != null">digit,</if>
+            <if test="billSample != null">bill_sample,</if>
+            <if test="billPanel != null">bill_panel,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="billTypes != null">#{billTypes},</if>
+            <if test="billCategory != null">#{billCategory},</if>
+            <if test="prefix != null">#{prefix},</if>
+            <if test="suffix != null">#{suffix},</if>
+            <if test="digit != null">#{digit},</if>
+            <if test="billSample != null">#{billSample},</if>
+            <if test="billPanel != null">#{billPanel},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyBillSet" parameterType="HyBillSet">
+        update hy_bill_set
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="billTypes != null">bill_types = #{billTypes},</if>
+            <if test="billCategory != null">bill_category = #{billCategory},</if>
+            <if test="prefix != null">prefix = #{prefix},</if>
+            <if test="suffix != null">suffix = #{suffix},</if>
+            <if test="digit != null">digit = #{digit},</if>
+            <if test="billSample != null">bill_sample = #{billSample},</if>
+            <if test="billPanel != null">bill_panel = #{billPanel},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyBillSetById" parameterType="Long">
+        delete from hy_bill_set where id = #{id}
+    </delete>
+
+    <delete id="deleteHyBillSetByIds" parameterType="String">
+        delete from hy_bill_set where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

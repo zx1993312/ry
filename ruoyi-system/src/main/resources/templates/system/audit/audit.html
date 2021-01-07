@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('增值税率审核列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>区域名称：</label>
+                                <input type="text" name="areaName"/>
+                            </li>
+                            <li>
+                                <label>项目编号：</label>
+                                <input type="text" name="projectNum"/>
+                            </li>
+                            <li>
+                                <label>项目名称：</label>
+                                <input type="text" name="entryName"/>
+                            </li>
+                            <li>
+                                <label>纳税人规模：</label>
+                                <input type="text" name="taxScale"/>
+                            </li>
+                            <li>
+                                <label>费用科目：</label>
+                                <input type="text" name="expenseAccount"/>
+                            </li>
+                            <li>
+                                <label>税率：</label>
+                                <input type="text" name="taxRate"/>
+                            </li>
+                            <li>
+                                <label>开始时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择开始时间" name="timeStr"/>
+                            </li>
+                            <li>
+                                <label>结束时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择结束时间" name="timeEnd"/>
+                            </li>
+                            <li>
+                                <label>审核状态：</label>
+                                <select name="auditStatus">
+                                    <option value="">所有</option>
+                                    <option value="-1">代码生成请选择字典属性</option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>是否需要不动产备案：</label>
+                                <input type="text" name="estateRecord"/>
+                            </li>
+                            <li>
+                                <label>是否需要合同违约金含税率：</label>
+                                <input type="text" name="taxRateRecord"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:audit:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:audit:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:audit:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:audit:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:audit:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:audit:remove')}]];
+        var prefix = ctx + "system/audit";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "增值税率审核",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '主键',
+                    visible: false
+                },
+                {
+                    field: 'areaName',
+                    title: '区域名称'
+                },
+                {
+                    field: 'projectNum',
+                    title: '项目编号'
+                },
+                {
+                    field: 'entryName',
+                    title: '项目名称'
+                },
+                {
+                    field: 'taxScale',
+                    title: '纳税人规模'
+                },
+                {
+                    field: 'expenseAccount',
+                    title: '费用科目'
+                },
+                {
+                    field: 'taxRate',
+                    title: '税率'
+                },
+                {
+                    field: 'timeStr',
+                    title: '开始时间'
+                },
+                {
+                    field: 'timeEnd',
+                    title: '结束时间'
+                },
+                {
+                    field: 'auditStatus',
+                    title: '审核状态'
+                },
+                {
+                    field: 'estateRecord',
+                    title: '是否需要不动产备案'
+                },
+                {
+                    field: 'taxRateRecord',
+                    title: '是否需要合同违约金含税率'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

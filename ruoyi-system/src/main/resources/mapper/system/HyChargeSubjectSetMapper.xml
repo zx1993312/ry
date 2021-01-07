@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyChargeSubjectSetMapper">
+    
+    <resultMap type="HyChargeSubjectSet" id="HyChargeSubjectSetResult">
+        <result property="id"    column="id"    />
+        <result property="feeName"    column="fee_name"    />
+        <result property="standardNum"    column="standard_num"    />
+        <result property="standardName"    column="standard_name"    />
+        <result property="calculationMethod"    column="calculation_method"    />
+        <result property="chargingStanard"    column="charging_stanard"    />
+        <result property="descriptionStandard"    column="description_standard"    />
+    </resultMap>
+
+    <sql id="selectHyChargeSubjectSetVo">
+        select id, fee_name, standard_num, standard_name, calculation_method, charging_stanard, description_standard from hy_charge_subject_set
+    </sql>
+
+    <select id="selectHyChargeSubjectSetList" parameterType="HyChargeSubjectSet" resultMap="HyChargeSubjectSetResult">
+        <include refid="selectHyChargeSubjectSetVo"/>
+        <where>  
+            <if test="feeName != null  and feeName != ''"> and fee_name like concat('%', #{feeName}, '%')</if>
+            <if test="standardNum != null  and standardNum != ''"> and standard_num = #{standardNum}</if>
+            <if test="standardName != null  and standardName != ''"> and standard_name like concat('%', #{standardName}, '%')</if>
+            <if test="calculationMethod != null  and calculationMethod != ''"> and calculation_method = #{calculationMethod}</if>
+            <if test="chargingStanard != null  and chargingStanard != ''"> and charging_stanard = #{chargingStanard}</if>
+            <if test="descriptionStandard != null  and descriptionStandard != ''"> and description_standard = #{descriptionStandard}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyChargeSubjectSetById" parameterType="Long" resultMap="HyChargeSubjectSetResult">
+        <include refid="selectHyChargeSubjectSetVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyChargeSubjectSet" parameterType="HyChargeSubjectSet">
+        insert into hy_charge_subject_set
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="feeName != null">fee_name,</if>
+            <if test="standardNum != null">standard_num,</if>
+            <if test="standardName != null">standard_name,</if>
+            <if test="calculationMethod != null">calculation_method,</if>
+            <if test="chargingStanard != null">charging_stanard,</if>
+            <if test="descriptionStandard != null">description_standard,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="feeName != null">#{feeName},</if>
+            <if test="standardNum != null">#{standardNum},</if>
+            <if test="standardName != null">#{standardName},</if>
+            <if test="calculationMethod != null">#{calculationMethod},</if>
+            <if test="chargingStanard != null">#{chargingStanard},</if>
+            <if test="descriptionStandard != null">#{descriptionStandard},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyChargeSubjectSet" parameterType="HyChargeSubjectSet">
+        update hy_charge_subject_set
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="feeName != null">fee_name = #{feeName},</if>
+            <if test="standardNum != null">standard_num = #{standardNum},</if>
+            <if test="standardName != null">standard_name = #{standardName},</if>
+            <if test="calculationMethod != null">calculation_method = #{calculationMethod},</if>
+            <if test="chargingStanard != null">charging_stanard = #{chargingStanard},</if>
+            <if test="descriptionStandard != null">description_standard = #{descriptionStandard},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyChargeSubjectSetById" parameterType="Long">
+        delete from hy_charge_subject_set where id = #{id}
+    </delete>
+
+    <delete id="deleteHyChargeSubjectSetByIds" parameterType="String">
+        delete from hy_charge_subject_set where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

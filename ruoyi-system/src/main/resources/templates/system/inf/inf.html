@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('房屋登记列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>楼宇：</label>
+                                <input type="text" name="building"/>
+                            </li>
+                            <li>
+                                <label>房屋编号：</label>
+                                <input type="text" name="houseNumber"/>
+                            </li>
+                            <li>
+                                <label>房屋名称：</label>
+                                <input type="text" name="houseName"/>
+                            </li>
+                            <li>
+                                <label>建筑面积：</label>
+                                <input type="text" name="builtUpArea"/>
+                            </li>
+                            <li>
+                                <label>组团区域：</label>
+                                <input type="text" name="groupArea"/>
+                            </li>
+                            <li>
+                                <label>单元：</label>
+                                <input type="text" name="unit"/>
+                            </li>
+                            <li>
+                                <label>楼层：</label>
+                                <input type="text" name="floor"/>
+                            </li>
+                            <li>
+                                <label>同单元同楼层流水号：</label>
+                                <input type="text" name="sameUnitNumber"/>
+                            </li>
+                            <li>
+                                <label>面积类型：</label>
+                                <select name="areaType">
+                                    <option value="">所有</option>
+                                    <option value="-1">代码生成请选择字典属性</option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>计费面积：</label>
+                                <input type="text" name="bilingArea"/>
+                            </li>
+                            <li>
+                                <label>套内面积：</label>
+                                <input type="text" name="insideArea"/>
+                            </li>
+                            <li>
+                                <label>公摊面积：</label>
+                                <input type="text" name="sharedArea"/>
+                            </li>
+                            <li>
+                                <label>花园面积：</label>
+                                <input type="text" name="gardenArea"/>
+                            </li>
+                            <li>
+                                <label>地下室面积：</label>
+                                <input type="text" name="basementArea"/>
+                            </li>
+                            <li>
+                                <label>大堂分摊面积：</label>
+                                <input type="text" name="sharedLobbyArea"/>
+                            </li>
+                            <li>
+                                <label>层间分摊面积：</label>
+                                <input type="text" name="sharedLayersArea"/>
+                            </li>
+                            <li>
+                                <label>公摊比例：</label>
+                                <input type="text" name="shareRatio"/>
+                            </li>
+                            <li>
+                                <label>建筑结构：</label>
+                                <input type="text" name="buildingStructure"/>
+                            </li>
+                            <li>
+                                <label>单位面积承重参数：</label>
+                                <input type="text" name="parametersPer"/>
+                            </li>
+                            <li>
+                                <label>房屋户型：</label>
+                                <input type="text" name="houseLayout"/>
+                            </li>
+                            <li>
+                                <label>层高：</label>
+                                <input type="text" name="floorHeight"/>
+                            </li>
+                            <li>
+                                <label>产权性质：</label>
+                                <input type="text" name="natureProperty"/>
+                            </li>
+                            <li>
+                                <label>使用性质：</label>
+                                <input type="text" name="natureUse"/>
+                            </li>
+                            <li>
+                                <label>使用状态：</label>
+                                <select name="usageStatus">
+                                    <option value="">所有</option>
+                                    <option value="-1">代码生成请选择字典属性</option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>入住状态：</label>
+                                <select name="occupancyStatus">
+                                    <option value="">所有</option>
+                                    <option value="-1">代码生成请选择字典属性</option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>交房状态：</label>
+                                <select name="deliveryStatus">
+                                    <option value="">所有</option>
+                                    <option value="-1">代码生成请选择字典属性</option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>房屋类型：</label>
+                                <select name="houseType">
+                                    <option value="">所有</option>
+                                    <option value="-1">代码生成请选择字典属性</option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>销售状态：</label>
+                                <select name="salesStatus">
+                                    <option value="">所有</option>
+                                    <option value="-1">代码生成请选择字典属性</option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>购房合同号：</label>
+                                <input type="text" name="purchaseContract"/>
+                            </li>
+                            <li>
+                                <label>营销编号：</label>
+                                <input type="text" name="marketingNum"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:inf:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:inf:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:inf:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:inf:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:inf:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:inf:remove')}]];
+        var prefix = ctx + "system/inf";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "房屋登记",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '主键',
+                    visible: false
+                },
+                {
+                    field: 'building',
+                    title: '楼宇'
+                },
+                {
+                    field: 'houseNumber',
+                    title: '房屋编号'
+                },
+                {
+                    field: 'houseName',
+                    title: '房屋名称'
+                },
+                {
+                    field: 'builtUpArea',
+                    title: '建筑面积'
+                },
+                {
+                    field: 'groupArea',
+                    title: '组团区域'
+                },
+                {
+                    field: 'unit',
+                    title: '单元'
+                },
+                {
+                    field: 'floor',
+                    title: '楼层'
+                },
+                {
+                    field: 'sameUnitNumber',
+                    title: '同单元同楼层流水号'
+                },
+                {
+                    field: 'areaType',
+                    title: '面积类型'
+                },
+                {
+                    field: 'bilingArea',
+                    title: '计费面积'
+                },
+                {
+                    field: 'insideArea',
+                    title: '套内面积'
+                },
+                {
+                    field: 'sharedArea',
+                    title: '公摊面积'
+                },
+                {
+                    field: 'gardenArea',
+                    title: '花园面积'
+                },
+                {
+                    field: 'basementArea',
+                    title: '地下室面积'
+                },
+                {
+                    field: 'sharedLobbyArea',
+                    title: '大堂分摊面积'
+                },
+                {
+                    field: 'sharedLayersArea',
+                    title: '层间分摊面积'
+                },
+                {
+                    field: 'shareRatio',
+                    title: '公摊比例'
+                },
+                {
+                    field: 'buildingStructure',
+                    title: '建筑结构'
+                },
+                {
+                    field: 'parametersPer',
+                    title: '单位面积承重参数'
+                },
+                {
+                    field: 'houseLayout',
+                    title: '房屋户型'
+                },
+                {
+                    field: 'floorHeight',
+                    title: '层高'
+                },
+                {
+                    field: 'natureProperty',
+                    title: '产权性质'
+                },
+                {
+                    field: 'natureUse',
+                    title: '使用性质'
+                },
+                {
+                    field: 'usageStatus',
+                    title: '使用状态'
+                },
+                {
+                    field: 'occupancyStatus',
+                    title: '入住状态'
+                },
+                {
+                    field: 'deliveryStatus',
+                    title: '交房状态'
+                },
+                {
+                    field: 'houseType',
+                    title: '房屋类型'
+                },
+                {
+                    field: 'salesStatus',
+                    title: '销售状态'
+                },
+                {
+                    field: 'purchaseContract',
+                    title: '购房合同号'
+                },
+                {
+                    field: 'marketingNum',
+                    title: '营销编号'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>
