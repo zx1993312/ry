@@ -24,7 +24,11 @@
                             </li>
                             <li>
                                 <label>计算方式：</label>
-                                <input type="text" name="calculationMethod"/>
+                                <select  name="calculationMethod" th:with="type=${@dict.getType('hy_charge_subject_set_calculation_method')}">
+                                   <option value="">请选择</option>   
+                                   <option value="0">计费面积*单价每月</option>   
+                           	       <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
                             </li>
                             <li>
                                 <label>通用收费标准：</label>

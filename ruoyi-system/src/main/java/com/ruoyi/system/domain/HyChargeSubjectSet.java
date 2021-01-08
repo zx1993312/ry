@@ -4,6 +4,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
+import com.ruoyi.system.annotation.EnumAnn;
+import com.ruoyi.system.enums.CalculationMethodEnum;
 
 /**
  * 收费科目设置对象 hy_charge_subject_set
@@ -32,6 +34,7 @@ public class HyChargeSubjectSet extends BaseEntity
 
     /** 计算方式 */
     @Excel(name = "计算方式")
+    @EnumAnn(enumClass=CalculationMethodEnum.class,enumType="String")
     private String calculationMethod;
 
     /** 通用收费标准 */

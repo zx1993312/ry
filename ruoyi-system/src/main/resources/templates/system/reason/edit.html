@@ -25,6 +25,17 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/reason";
         $("#form-reason-edit").validate({
+        	onkeyup:false,
+        	rules:{
+        		exemptionCategory: {
+            		maxlength:50,
+            		required : true,
+    			},
+    			exemptionReason: {
+    				maxlength:50,
+    				required : true,
+    			},
+        	},
             focusCleanup: true
         });
 

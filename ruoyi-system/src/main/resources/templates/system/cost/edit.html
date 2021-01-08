@@ -28,6 +28,18 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/cost";
         $("#form-cost-edit").validate({
+        	
+        	onkeyup:false,
+        	rules:{
+        		costItems: {
+            		maxlength:255,
+            		required : true,
+    			},
+    			expenseType: {
+    				maxlength:255,
+    				required : true,
+    			},
+        	},
             focusCleanup: true
         });
 

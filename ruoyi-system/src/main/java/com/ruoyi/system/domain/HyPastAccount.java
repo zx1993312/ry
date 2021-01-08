@@ -6,6 +6,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
+import com.ruoyi.system.annotation.EnumAnn;
+import com.ruoyi.system.enums.AccountEnum;
 
 /**
  * 往期应收调账对象 hy_past_account
@@ -22,6 +24,7 @@ public class HyPastAccount extends BaseEntity
 
     /** 管理项目 */
     @Excel(name = "管理项目")
+    @EnumAnn(enumClass=AccountEnum.class ,enumType="String")
     private String manageProjects;
 
     /** 客户名称 */

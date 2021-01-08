@@ -1,6 +1,10 @@
 package com.ruoyi.system.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.system.constants.Constants;
+import com.ruoyi.system.domain.HyCharge;
 import com.ruoyi.system.domain.HyPastAccount;
 import com.ruoyi.system.service.IHyPastAccountService;
 
@@ -62,7 +68,13 @@ public class HyPastAccountController extends BaseController
     {
         startPage();
         List<HyPastAccount> list = hyPastAccountService.selectHyPastAccountList(hyPastAccount);
-        return getDataTable(list);
+        List<Map<String, Object>> reList = new ArrayList<>();
+		for (HyPastAccount hpa : list) {
+			Map<String, Object> map = new HashMap<>();
+			map = Constants.REFLECT_UTIL.convertMap(hpa);
+			reList.add(map);
+		}
+        return getDataTable(reList);
     }
 
     /**
@@ -87,8 +99,15 @@ public class HyPastAccountController extends BaseController
      * 新增往期应收调账
      */
     @GetMapping("/add")
-    public String add()
+    public String add(HyPastAccount hyPastAccount)
     {
+        List<HyPastAccount> list = hyPastAccountService.selectHyPastAccountList(hyPastAccount);
+    	   List<Map<String, Object>> reList = new ArrayList<>();
+   		for (HyPastAccount hpa : list) {
+   			Map<String, Object> map = new HashMap<>();
+   			map = Constants.REFLECT_UTIL.convertMap(hpa);
+   			reList.add(map);
+   		}
         return prefix + "/add";
     }
 
@@ -120,6 +139,13 @@ public class HyPastAccountController extends BaseController
     {
         HyPastAccount hyPastAccount = hyPastAccountService.selectHyPastAccountById(id);
         mmap.put("hyPastAccount", hyPastAccount);
+        List<HyPastAccount> list = hyPastAccountService.selectHyPastAccountList(hyPastAccount);
+ 	   List<Map<String, Object>> reList = new ArrayList<>();
+		for (HyPastAccount hpa : list) {
+			Map<String, Object> map = new HashMap<>();
+			map = Constants.REFLECT_UTIL.convertMap(hpa);
+			reList.add(map);
+		}
         return prefix + "/edit";
     }
 
@@ -136,7 +162,14 @@ public class HyPastAccountController extends BaseController
     @ResponseBody
     public AjaxResult editSave(HyPastAccount hyPastAccount)
     {
-        return toAjax(hyPastAccountService.updateHyPastAccount(hyPastAccount));
+    	  List<HyPastAccount> list = hyPastAccountService.selectHyPastAccountList(hyPastAccount);
+   	   List<Map<String, Object>> reList = new ArrayList<>();
+  		for (HyPastAccount hpa : list) {
+  			Map<String, Object> map = new HashMap<>();
+  			map = Constants.REFLECT_UTIL.convertMap(hpa);
+  			reList.add(map);
+  		}
+    	return toAjax(hyPastAccountService.updateHyPastAccount(hyPastAccount));
     }
 
     /**
