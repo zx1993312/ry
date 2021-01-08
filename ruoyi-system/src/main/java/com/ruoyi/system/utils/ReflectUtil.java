@@ -32,6 +32,9 @@ public class ReflectUtil<T> {
 				if (enumAnn != null) {
 					Method method = enumAnn.enumClass().getDeclaredMethod("getValue", int.class);
 					String enumType = enumAnn.enumType();
+					if (null == field.get(t)) {
+						break;
+					}
 					Object s = new Object();
 					if (null != field.get(t)) {
 						switch (enumType) {
