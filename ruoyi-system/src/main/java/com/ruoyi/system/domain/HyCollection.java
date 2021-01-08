@@ -6,6 +6,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
+import com.ruoyi.system.annotation.EnumAnn;
+import com.ruoyi.system.enums.ControlEnum;
+import com.ruoyi.system.enums.StateEnum;
 
 /**
  * 收款管理 Collection management对象 hy_collection
@@ -49,6 +52,7 @@ public class HyCollection extends BaseEntity
 
     /** 是否收款 */
     @Excel(name = "是否收款")
+    @EnumAnn(enumClass = ControlEnum .class, enumType = "Integer")
     private Integer collection;
 
     /** 收款时间 */
@@ -62,6 +66,7 @@ public class HyCollection extends BaseEntity
 
     /** 是否记账 */
     @Excel(name = "是否记账")
+    @EnumAnn(enumClass = ControlEnum .class, enumType = "Integer")
     private Integer bookkeeping;
 
     /** 记账时间 */

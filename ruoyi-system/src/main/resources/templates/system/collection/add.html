@@ -10,7 +10,7 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">管理项目：</label>
                 <div class="col-sm-8">
-                    <input name="manageProjects" class="form-control" type="text">
+                    <input id="manageProjects" name="manageProjects" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
@@ -25,7 +25,7 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">收款人：</label>
                 <div class="col-sm-8">
-                    <input name="payee" class="form-control" type="text">
+                    <input id="payee" name="payee" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
@@ -49,13 +49,18 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">总金额：</label>
                 <div class="col-sm-8">
-                    <input name="amount" class="form-control" type="text">
+                    <input id="amount" name="amount" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">是否收款：</label>
                 <div class="col-sm-8">
-                    <input name="collection" class="form-control" type="text">
+                    <select id="collection" name="collection" class="form-control" 
+                th:with="type=${@dict.getType('hy_collection')}">
+						<option value="">请选择</option>
+						<option value="0">是</option>
+						<option value="1">否</option>
+						</select>
                 </div>
             </div>
             <div class="form-group">    
@@ -70,13 +75,18 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">财务收款人：</label>
                 <div class="col-sm-8">
-                    <input name="collectionPerson" class="form-control" type="text">
+                    <input id="collectionPerson" name="collectionPerson" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">是否记账：</label>
                 <div class="col-sm-8">
-                    <input name="bookkeeping" class="form-control" type="text">
+                    <select id="bookkeeping" name="bookkeeping" class="form-control" 
+                th:with="type=${@dict.getType('hy_collection')}">
+						<option value="">请选择</option>
+						<option value="0">是</option>
+						<option value="1">否</option>
+						</select>
                 </div>
             </div>
             <div class="form-group">    
@@ -91,7 +101,7 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">财务记账人：</label>
                 <div class="col-sm-8">
-                    <input name="bookPerson" class="form-control" type="text">
+                    <input id="bookPerson" name="bookPerson" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
@@ -107,6 +117,24 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/collection"
         $("#form-collection-add").validate({
+        	onkeyup:false,
+        	rules:{
+        		manageProjects:{
+        			required:true,
+        		},
+        		payee:{
+        			required:true,
+        		},
+        		amount:{
+        			required:true,
+        		},
+        		collectionPerson:{
+        			required:true,
+        		},
+        		bookPerson:{
+        			required:true,
+        		},
+        	},
             focusCleanup: true
         });
 

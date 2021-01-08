@@ -36,7 +36,12 @@
                             </li>
                             <li>
                                 <label>是否收款：</label>
-                                <input type="text" name="collection"/>
+                             <select name="collection" class="form-control " th:with="type=${@dict.getType('hy_collection')}">
+                                <option value="">请选择</option>
+                                <option value="0">是</option>
+				                <option value="1">否</option>
+								<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
                             </li>
                             <li>
                                 <label>收款时间：</label>
@@ -48,7 +53,12 @@
                             </li>
                             <li>
                                 <label>是否记账：</label>
-                                <input type="text" name="bookkeeping"/>
+                           <select name="bookkeeping" class="form-control " th:with="type=${@dict.getType('hy_collection')}">
+                                <option value="">请选择</option>
+                                <option value="0">是</option>
+				                <option value="1">否</option>
+								<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
                             </li>
                             <li>
                                 <label>记账时间：</label>
