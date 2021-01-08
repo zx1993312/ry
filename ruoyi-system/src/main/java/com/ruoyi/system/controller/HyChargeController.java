@@ -24,6 +24,7 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.constants.Constants;
 import com.ruoyi.system.domain.HyCharge;
 import com.ruoyi.system.service.IHyChargeService;
+import com.ruoyi.system.service.IHyDataIsExistService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -34,7 +35,7 @@ import io.swagger.annotations.ApiOperation;
  * 收费比例设置Controller
  * 
  * @author ruoyi
- * @date 2021-01-04 
+ * @date 2021-01-04
  */
 @Controller
 @RequestMapping("/system/charge")
@@ -44,6 +45,9 @@ public class HyChargeController extends BaseController {
 
 	@Autowired
 	private IHyChargeService hyChargeService;
+
+	@Autowired
+	private IHyDataIsExistService hyDataIsExistService;
 
 	@RequiresPermissions("system:charge:view")
 	@GetMapping()
@@ -148,7 +152,7 @@ public class HyChargeController extends BaseController {
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyCharge hc : list) {
 			Map<String, Object> map = new HashMap<>();
-			map =  Constants.REFLECT_UTIL.convertMap(hc);
+			map = Constants.REFLECT_UTIL.convertMap(hc);
 			reList.add(map);
 		}
 		return toAjax(hyChargeService.updateHyCharge(hyCharge));
@@ -173,11 +177,11 @@ public class HyChargeController extends BaseController {
 	@PostMapping("/checkNumber")
 	@ResponseBody
 	public String checkNumber(HyCharge hyCharge) {
-		boolean resule = hyChargeService.checkNumber(hyCharge);
-		if (resule) {
-			return "1";
+		Object obj = hyDataIsExistService.selectHyDataIsExist("hy_charge", "number", hyCharge.getNumber());
+		if (null == obj) {
+			return "0";
 		}
-		return "0";
-	}	
+		return "1";
+	}
 
 }
