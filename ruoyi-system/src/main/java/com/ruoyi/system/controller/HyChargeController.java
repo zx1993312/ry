@@ -178,6 +178,6 @@ public class HyChargeController extends BaseController {
 			return "1";
 		}
 		return "0";
-	}
+	}	
 
 }

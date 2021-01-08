@@ -67,4 +67,6 @@ public interface IHyChargeService {
 	 */
 	public boolean checkNumber(HyCharge hyCharge);
 
+
+
 }

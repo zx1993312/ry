@@ -17,7 +17,7 @@
 				<div class="col-sm-8">
 					<select id="state" name="state" class="form-control "
 						th:with="type=${@dict.getType('hy_charge_state')}">
-						<option value="0">请选择</option>
+						<option value="">请选择</option>
 						<option value="0">未售</option>
 						<option value="1">已接房</option>
 						<option value="2">装修</option>
@@ -43,7 +43,7 @@
 				<div class="col-sm-8">
 					<select name="currentState" class="form-control "
 						th:with="type=${@dict.getType('hy_charge_current_state')}">
-						<option value="0">请选择</option>
+						<option value="">请选择</option>
 						<option value="0">未售</option>
 						<option value="1">已接房</option>
 						<option value="2">装修</option>
@@ -68,6 +68,7 @@
 			onkeyup : false,
 			rules : {
 				number : {
+					required:true,
 					number : true,
 					minlength : 1,
 					maxlength : 4,
@@ -83,31 +84,45 @@
 						},
 						dataFilter : function(data, type) {
 							return $.validate.unique(data);
-						}
+						},
 					}
 
 				},
-		
+				state : {
+					required : true,
+				},
+				currentState:{
+					required : true,
+				},
+				cost:{
+					number:true,
+					maxlength:10,
+				},
+				remarks:{
+					maxlength:255,
+				},
+				proportion :{
+					maxlength:25,
+				},
 				
 			},
 			messages : {
 				"number" : {
 					remote : "房屋号已有居住者"
+				},	
+				"cost":{
+					remote:"缴费收费科目只能为数字"
 				},
-				"state":{
-					remote:"请选择交房状态"
-				}
 			},
-			  focusCleanup: true
+			focusCleanup : true
 		});
-		
+
 		function submitHandler() {
 			if ($.validate.form()) {
 				$.operate.save(prefix + "/add", $('#form-charge-add')
 						.serialize());
 			}
 		}
-
 	</script>
 </body>
 </html>

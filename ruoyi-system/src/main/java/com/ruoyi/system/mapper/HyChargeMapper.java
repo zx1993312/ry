@@ -68,4 +68,5 @@ public interface HyChargeMapper
      * @return 结果
      */
     public HyCharge checkNumber(Long number);
+    
 }
