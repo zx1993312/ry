@@ -6,6 +6,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 import com.ruoyi.system.annotation.EnumAnn;
+import com.ruoyi.system.constants.Constants;
 import com.ruoyi.system.enums.StateEnum;
 
 /**
@@ -26,7 +27,7 @@ public class HyCharge extends BaseEntity {
 
 	/** 交房状态 */
 	@Excel(name = "交房状态")
-	@EnumAnn(enumClass = StateEnum.class, enumType = "Integer")
+	@EnumAnn(enumClass = StateEnum.class)
 	private Integer state;
 
 	/** 收费比例 */
@@ -39,7 +40,7 @@ public class HyCharge extends BaseEntity {
 
 	/** 当前交房状态 */
 	@Excel(name = "当前交房状态")
-	@EnumAnn(enumClass = StateEnum.class, enumType = "String")
+	@EnumAnn(enumClass = StateEnum.class, enumType = Constants.STRING)
 	private String currentState;
 
 	/** 缴费收费科目 */
