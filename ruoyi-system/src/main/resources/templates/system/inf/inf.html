@@ -44,9 +44,9 @@
                             </li>
                             <li>
                                 <label>面积类型：</label>
-                                <select name="areaType">
+                                <select name="areaType" class="form-control m-b" th:with="type=${@dict.getType('hy_area_type')}">
                                     <option value="">所有</option>
-                                    <option value="-1">代码生成请选择字典属性</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                                 </select>
                             </li>
                             <li>
@@ -107,23 +107,23 @@
                             </li>
                             <li>
                                 <label>使用状态：</label>
-                                <select name="usageStatus">
-                                    <option value="">所有</option>
-                                    <option value="-1">代码生成请选择字典属性</option>
-                                </select>
+                                <select name="dictLabel" class="form-control m-b" th:with="type=${@dict.getType('hy_use_state')}">
+                                	<option value="">所有</option>
+					                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+					            </select>
                             </li>
                             <li>
                                 <label>入住状态：</label>
-                                <select name="occupancyStatus">
-                                    <option value="">所有</option>
-                                    <option value="-1">代码生成请选择字典属性</option>
-                                </select>
+                                <select name="occupancyStatus" class="form-control m-b" th:with="type=${@dict.getType('hy_check_in')}">
+                                	<option value="">所有</option>
+					                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+					            </select>
                             </li>
                             <li>
                                 <label>交房状态：</label>
-                                <select name="deliveryStatus">
+                                <select name="deliveryStatus" class="form-control m-b" th:with="type=${@dict.getType('hy_area_type')}">
                                     <option value="">所有</option>
-                                    <option value="-1">代码生成请选择字典属性</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                                 </select>
                             </li>
                             <li>
