@@ -74,6 +74,32 @@
 	<script th:inline="javascript">
 		var prefix = ctx + "system/set";
 		$("#form-set-edit").validate({
+			onkeyup : false,
+			rules : {
+				billTypes : {
+					required : true,
+				},
+				billCategory : {
+					required : true,
+					maxlength:50,
+				},
+				prefix : {
+					required : true,
+					maxlength:50,
+				},
+				suffix : {
+					required : true,
+					maxlength:50,
+				},
+				digit : {
+					required : true,
+					maxlength:50,
+				},
+				billSample : {
+					required : true,
+					maxlength:50,
+				},
+			},
 			focusCleanup : true
 		});
 

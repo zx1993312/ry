@@ -1,6 +1,10 @@
 package com.ruoyi.system.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.system.constants.Constants;
 import com.ruoyi.system.domain.HyBillIssuance;
+import com.ruoyi.system.domain.HyBillSet;
 import com.ruoyi.system.service.IHyBillIssuanceService;
 
 import io.swagger.annotations.Api;
@@ -29,129 +35,135 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 票据发放Controller
  * 
  * @author Administrator
- * @date 2021-01-06   
+ * @date 2021-01-06
  */
 @Controller
 @RequestMapping("/system/issuance")
 @Api(tags = "票据发放Controller")
-public class HyBillIssuanceController extends BaseController
-{
-    private String prefix = "system/issuance";
+public class HyBillIssuanceController extends BaseController {
+	private String prefix = "system/issuance";
 
-    @Autowired
-    private IHyBillIssuanceService hyBillIssuanceService;
+	@Autowired
+	private IHyBillIssuanceService hyBillIssuanceService;
 
-    @RequiresPermissions("system:issuance:view")
-    @GetMapping()
-    public String issuance()
-    {
-        return prefix + "/issuance";
-    }
+	@RequiresPermissions("system:issuance:view")
+	@GetMapping()
+	public String issuance() {
+		return prefix + "/issuance";
+	}
 
-    /**
-     * 查询票据发放列表
-     */
-    @ApiOperation("票据发放")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyBillIssuance", value = "项目实体类hyBillIssuance", required = true),
-	})
-    @RequiresPermissions("system:issuance:list")
-    @PostMapping("/list")
-    @ResponseBody
-    public TableDataInfo list(HyBillIssuance hyBillIssuance)
-    {
-        startPage();
-        List<HyBillIssuance> list = hyBillIssuanceService.selectHyBillIssuanceList(hyBillIssuance);
-        return getDataTable(list);
-    }
+	/**
+	 * 查询票据发放列表
+	 */
+	@ApiOperation("票据发放")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyBillIssuance", value = "项目实体类hyBillIssuance", required = true), })
+	@RequiresPermissions("system:issuance:list")
+	@PostMapping("/list")
+	@ResponseBody
+	public TableDataInfo list(HyBillIssuance hyBillIssuance) {
+		startPage();
+		List<HyBillIssuance> list = hyBillIssuanceService.selectHyBillIssuanceList(hyBillIssuance);
+		List<Map<String, Object>> reList = new ArrayList<>();
+		for (HyBillIssuance hbi : list) {
+			Map<String, Object> map = new HashMap<>();
+			map = Constants.REFLECT_UTIL.convertMap(hbi);
+			reList.add(map);
+		}
+		return getDataTable(reList);
+	}
 
-    /**
-     * 导出票据发放列表
-     */
-    @ApiOperation("票据发放")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyBillIssuance", value = "项目实体类hyBillIssuance", required = true),
-	})
-    @RequiresPermissions("system:issuance:export")
-    @Log(title = "票据发放", businessType = BusinessType.EXPORT)
-    @PostMapping("/export")
-    @ResponseBody
-    public AjaxResult export(HyBillIssuance hyBillIssuance)
-    {
-        List<HyBillIssuance> list = hyBillIssuanceService.selectHyBillIssuanceList(hyBillIssuance);
-        ExcelUtil<HyBillIssuance> util = new ExcelUtil<HyBillIssuance>(HyBillIssuance.class);
-        return util.exportExcel(list, "issuance");
-    }
+	/**
+	 * 导出票据发放列表
+	 */
+	@ApiOperation("票据发放")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyBillIssuance", value = "项目实体类hyBillIssuance", required = true), })
+	@RequiresPermissions("system:issuance:export")
+	@Log(title = "票据发放", businessType = BusinessType.EXPORT)
+	@PostMapping("/export")
+	@ResponseBody
+	public AjaxResult export(HyBillIssuance hyBillIssuance) {
+		List<HyBillIssuance> list = hyBillIssuanceService.selectHyBillIssuanceList(hyBillIssuance);
+		ExcelUtil<HyBillIssuance> util = new ExcelUtil<HyBillIssuance>(HyBillIssuance.class);
+		return util.exportExcel(list, "issuance");
+	}
 
-    /**
-     * 新增票据发放
-     */
-    @GetMapping("/add")
-    public String add()
-    {
-        return prefix + "/add";
-    }
+	/**
+	 * 新增票据发放
+	 */
+	@GetMapping("/add")
+	public String add() {
+		return prefix + "/add";
+	}
 
-    /**
-     * 新增保存票据发放
-     */
-    @ApiOperation("票据发放")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyBillIssuance", value = "项目实体类hyBillIssuance", required = true),
-	})
-    @RequiresPermissions("system:issuance:add")
-    @Log(title = "票据发放", businessType = BusinessType.INSERT)
-    @PostMapping("/add")
-    @ResponseBody
-    public AjaxResult addSave(HyBillIssuance hyBillIssuance)
-    {
-        return toAjax(hyBillIssuanceService.insertHyBillIssuance(hyBillIssuance));
-    }
+	/**
+	 * 新增保存票据发放
+	 */
+	@ApiOperation("票据发放")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyBillIssuance", value = "项目实体类hyBillIssuance", required = true), })
+	@RequiresPermissions("system:issuance:add")
+	@Log(title = "票据发放", businessType = BusinessType.INSERT)
+	@PostMapping("/add")
+	@ResponseBody
+	public AjaxResult addSave(HyBillIssuance hyBillIssuance) {
+		List<HyBillIssuance> list = hyBillIssuanceService.selectHyBillIssuanceList(hyBillIssuance);
+		List<Map<String, Object>> reList = new ArrayList<>();
+		for (HyBillIssuance hbi : list) {
+			Map<String, Object> map = new HashMap<>();
+			map = Constants.REFLECT_UTIL.convertMap(hbi);
+			reList.add(map);
+		}
+		return toAjax(hyBillIssuanceService.insertHyBillIssuance(hyBillIssuance));
+	}
 
-    /**
-     * 修改票据发放
-     */
-    @ApiOperation("票据发放")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "id", value = "主键id", required = true),
-	})
-    @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Long id, ModelMap mmap)
-    {
-        HyBillIssuance hyBillIssuance = hyBillIssuanceService.selectHyBillIssuanceById(id);
-        mmap.put("hyBillIssuance", hyBillIssuance);
-        return prefix + "/edit";
-    }
+	/**
+	 * 修改票据发放
+	 */
+	@ApiOperation("票据发放")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "id", value = "主键id", required = true), })
+	@GetMapping("/edit/{id}")
+	public String edit(@PathVariable("id") Long id, ModelMap mmap) {
+		HyBillIssuance hyBillIssuance = hyBillIssuanceService.selectHyBillIssuanceById(id);
+		mmap.put("hyBillIssuance", hyBillIssuance);
+		List<HyBillIssuance> list = hyBillIssuanceService.selectHyBillIssuanceList(hyBillIssuance);
+		List<Map<String, Object>> reList = new ArrayList<>();
+		for (HyBillIssuance hbi : list) {
+			Map<String, Object> map = new HashMap<>();
+			map = Constants.REFLECT_UTIL.convertMap(hbi);
+			reList.add(map);
+		}
+		return prefix + "/edit";
+	}
 
-    /**
-     * 修改保存票据发放
-     */
-    @ApiOperation("票据发放")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyBillIssuance", value = "项目实体类hyBillIssuance", required = true),
-	})
-    @RequiresPermissions("system:issuance:edit")
-    @Log(title = "票据发放", businessType = BusinessType.UPDATE)
-    @PostMapping("/edit")
-    @ResponseBody
-    public AjaxResult editSave(HyBillIssuance hyBillIssuance)
-    {
-        return toAjax(hyBillIssuanceService.updateHyBillIssuance(hyBillIssuance));
-    }
+	/**
+	 * 修改保存票据发放
+	 */
+	@ApiOperation("票据发放")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyBillIssuance", value = "项目实体类hyBillIssuance", required = true), })
+	@RequiresPermissions("system:issuance:edit")
+	@Log(title = "票据发放", businessType = BusinessType.UPDATE)
+	@PostMapping("/edit")
+	@ResponseBody
+	public AjaxResult editSave(HyBillIssuance hyBillIssuance) {
+		List<HyBillIssuance> list = hyBillIssuanceService.selectHyBillIssuanceList(hyBillIssuance);
+		List<Map<String, Object>> reList = new ArrayList<>();
+		for (HyBillIssuance hbi : list) {
+			Map<String, Object> map = new HashMap<>();
+			map = Constants.REFLECT_UTIL.convertMap(hbi);
+			reList.add(map);
+		}
+		return toAjax(hyBillIssuanceService.updateHyBillIssuance(hyBillIssuance));
+	}
 
-    /**
-     * 删除票据发放
-     */
-    @ApiOperation("票据发放")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "ids", value = "ids", required = true),
-	})
-    @RequiresPermissions("system:issuance:remove")
-    @Log(title = "票据发放", businessType = BusinessType.DELETE)
-    @PostMapping( "/remove")
-    @ResponseBody
-    public AjaxResult remove(String ids)
-    {
-        return toAjax(hyBillIssuanceService.deleteHyBillIssuanceByIds(ids));
-    }
+	/**
+	 * 删除票据发放
+	 */
+	@ApiOperation("票据发放")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "ids", value = "ids", required = true), })
+	@RequiresPermissions("system:issuance:remove")
+	@Log(title = "票据发放", businessType = BusinessType.DELETE)
+	@PostMapping("/remove")
+	@ResponseBody
+	public AjaxResult remove(String ids) {
+		return toAjax(hyBillIssuanceService.deleteHyBillIssuanceByIds(ids));
+	}
 }

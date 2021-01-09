@@ -6,6 +6,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
+import com.ruoyi.system.annotation.EnumAnn;
+import com.ruoyi.system.enums.PanelEnum;
 
 /**
  * 票据发放对象 hy_bill_issuance
@@ -22,6 +24,7 @@ public class HyBillIssuance extends BaseEntity
 
     /** 票据种类 */
     @Excel(name = "票据种类")
+    @EnumAnn(enumClass = PanelEnum.class, enumType = "String")
     private String billType;
 
     /** 起号 */
