@@ -1,6 +1,10 @@
 package com.ruoyi.system.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.system.constants.Constants;
 import com.ruoyi.system.domain.HyBillSet;
 import com.ruoyi.system.service.IHyBillSetService;
 
@@ -62,7 +67,13 @@ public class HyBillSetController extends BaseController
     {
         startPage();
         List<HyBillSet> list = hyBillSetService.selectHyBillSetList(hyBillSet);
-        return getDataTable(list);
+        List<Map<String ,Object>> reList=new ArrayList<>();
+        for(HyBillSet hbs:list) {
+        	Map<String ,Object>map=new HashMap<>();
+        	map=Constants.REFLECT_UTIL.convertMap(hbs);
+        	reList.add(map);
+        }
+        return getDataTable(reList);
     }
 
     /**
@@ -105,7 +116,14 @@ public class HyBillSetController extends BaseController
     @ResponseBody
     public AjaxResult addSave(HyBillSet hyBillSet)
     {
-        return toAjax(hyBillSetService.insertHyBillSet(hyBillSet));
+    	  List<HyBillSet> list = hyBillSetService.selectHyBillSetList(hyBillSet);
+          List<Map<String ,Object>> reList=new ArrayList<>();
+          for(HyBillSet hbs:list) {
+          	Map<String ,Object>map=new HashMap<>();
+          	map=Constants.REFLECT_UTIL.convertMap(hbs);
+          	reList.add(map);
+          }
+    	return toAjax(hyBillSetService.insertHyBillSet(hyBillSet));
     }
 
     /**
@@ -120,6 +138,13 @@ public class HyBillSetController extends BaseController
     {
         HyBillSet hyBillSet = hyBillSetService.selectHyBillSetById(id);
         mmap.put("hyBillSet", hyBillSet);
+        List<HyBillSet> list = hyBillSetService.selectHyBillSetList(hyBillSet);
+        List<Map<String ,Object>> reList=new ArrayList<>();
+        for(HyBillSet hbs:list) {
+        	Map<String ,Object>map=new HashMap<>();
+        	map=Constants.REFLECT_UTIL.convertMap(hbs);
+        	reList.add(map);
+        }
         return prefix + "/edit";
     }
 
@@ -136,7 +161,14 @@ public class HyBillSetController extends BaseController
     @ResponseBody
     public AjaxResult editSave(HyBillSet hyBillSet)
     {
-        return toAjax(hyBillSetService.updateHyBillSet(hyBillSet));
+    	  List<HyBillSet> list = hyBillSetService.selectHyBillSetList(hyBillSet);
+          List<Map<String ,Object>> reList=new ArrayList<>();
+          for(HyBillSet hbs:list) {
+          	Map<String ,Object>map=new HashMap<>();
+          	map=Constants.REFLECT_UTIL.convertMap(hbs);
+          	reList.add(map);
+          }
+    	return toAjax(hyBillSetService.updateHyBillSet(hyBillSet));
     }
 
     /**

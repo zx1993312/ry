@@ -4,6 +4,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
+import com.ruoyi.system.annotation.EnumAnn;
+import com.ruoyi.system.enums.PanelEnum;
 
 /**
  * 票据设置对象 hy_bill_set
@@ -20,6 +22,7 @@ public class HyBillSet extends BaseEntity
 
     /** 票据种类 */
     @Excel(name = "票据种类")
+    @EnumAnn(enumClass = PanelEnum.class, enumType = "String")
     private String billTypes;
 
     /** 票据类别 */
@@ -45,91 +48,95 @@ public class HyBillSet extends BaseEntity
     /** 定额票据面板 */
     @Excel(name = "定额票据面板")
     private String billPanel;
+    
+    @Excel(name="定额票据")
+    private String panel;
 
-    public void setId(Long id) 
-    {
-        this.id = id;
-    }
+    
+    
+	public Long getId() {
+		return id;
+	}
 
-    public Long getId() 
-    {
-        return id;
-    }
-    public void setBillTypes(String billTypes) 
-    {
-        this.billTypes = billTypes;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getBillTypes() 
-    {
-        return billTypes;
-    }
-    public void setBillCategory(String billCategory) 
-    {
-        this.billCategory = billCategory;
-    }
+	public String getBillTypes() {
+		return billTypes;
+	}
 
-    public String getBillCategory() 
-    {
-        return billCategory;
-    }
-    public void setPrefix(String prefix) 
-    {
-        this.prefix = prefix;
-    }
+	public void setBillTypes(String billTypes) {
+		this.billTypes = billTypes;
+	}
 
-    public String getPrefix() 
-    {
-        return prefix;
-    }
-    public void setSuffix(String suffix) 
-    {
-        this.suffix = suffix;
-    }
+	public String getBillCategory() {
+		return billCategory;
+	}
 
-    public String getSuffix() 
-    {
-        return suffix;
-    }
-    public void setDigit(String digit) 
-    {
-        this.digit = digit;
-    }
+	public void setBillCategory(String billCategory) {
+		this.billCategory = billCategory;
+	}
 
-    public String getDigit() 
-    {
-        return digit;
-    }
-    public void setBillSample(String billSample) 
-    {
-        this.billSample = billSample;
-    }
+	public String getPrefix() {
+		return prefix;
+	}
 
-    public String getBillSample() 
-    {
-        return billSample;
-    }
-    public void setBillPanel(String billPanel) 
-    {
-        this.billPanel = billPanel;
-    }
+	public void setPrefix(String prefix) {
+		this.prefix = prefix;
+	}
 
-    public String getBillPanel() 
-    {
-        return billPanel;
-    }
+	public String getSuffix() {
+		return suffix;
+	}
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("billTypes", getBillTypes())
-            .append("billCategory", getBillCategory())
-            .append("prefix", getPrefix())
-            .append("suffix", getSuffix())
-            .append("digit", getDigit())
-            .append("billSample", getBillSample())
-            .append("billPanel", getBillPanel())
-            .toString();
-    }
+	public void setSuffix(String suffix) {
+		this.suffix = suffix;
+	}
+
+	public String getDigit() {
+		return digit;
+	}
+
+	public void setDigit(String digit) {
+		this.digit = digit;
+	}
+
+	public String getBillSample() {
+		return billSample;
+	}
+
+	public void setBillSample(String billSample) {
+		this.billSample = billSample;
+	}
+
+	public String getBillPanel() {
+		return billPanel;
+	}
+
+	public void setBillPanel(String billPanel) {
+		this.billPanel = billPanel;
+	}
+
+	public String getPanel() {
+		return panel;
+	}
+
+	public void setPanel(String panel) {
+		this.panel = panel;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	@Override
+	public String toString() {
+		return "HyBillSet [id=" + id + ", billTypes=" + billTypes + ", billCategory=" + billCategory + ", prefix="
+				+ prefix + ", suffix=" + suffix + ", digit=" + digit + ", billSample=" + billSample + ", billPanel="
+				+ billPanel + ", panel=" + panel + "]";
+	}
+
+
+
 }

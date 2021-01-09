@@ -10,7 +10,7 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">业主名称：</label>
                 <div class="col-sm-8">
-                    <input name="ownerName" class="form-control" type="text">
+                    <input id="ownerName" name="ownerName" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
@@ -28,13 +28,13 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">移动电话：</label>
                 <div class="col-sm-8">
-                    <input name="mobilePhone" class="form-control" type="text">
+                    <input id="mobilePhone" name="mobilePhone" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">证件号码：</label>
                 <div class="col-sm-8">
-                    <input name="idCardNum" class="form-control" type="text">
+                    <input id="idCardNum" name="idCardNum" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
@@ -52,19 +52,19 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">出入卡号：</label>
                 <div class="col-sm-8">
-                    <input name="accessNum" class="form-control" type="text">
+                    <input id="accessNum" name="accessNum" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">证件名称：</label>
                 <div class="col-sm-8">
-                    <input name="certificateName" class="form-control" type="text">
+                    <input id="certificateName" name="certificateName" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">客户类别：</label>
                 <div class="col-sm-8">
-                    <input name="customerCategoy" class="form-control" type="text">
+                    <input id="customerCategoy" name="customerCategoy" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
@@ -100,7 +100,7 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">绑定手机户名：</label>
                 <div class="col-sm-8">
-                    <input name="phoneAccount" class="form-control" type="text">
+                    <input id="phoneAccount" name="phoneAccount" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
@@ -230,6 +230,8 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/registration"
         $("#form-registration-add").validate({
+        	
+        	required:true,
             focusCleanup: true
         });
 
