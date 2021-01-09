@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增业主资料登记')" />
+    <th:block th:include="include :: datetimepicker-css" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-registration-add">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">业主名称：</label>
+                <div class="col-sm-8">
+                    <input name="ownerName" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">房屋编号：</label>
+                <div class="col-sm-8">
+                    <input name="houseNum" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">固定电话：</label>
+                <div class="col-sm-8">
+                    <input name="fixedTelephone" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">移动电话：</label>
+                <div class="col-sm-8">
+                    <input name="mobilePhone" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">证件号码：</label>
+                <div class="col-sm-8">
+                    <input name="idCardNum" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">供应商类别：</label>
+                <div class="col-sm-8">
+                    <input name="suplierCategory" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">是否锁定：</label>
+                <div class="col-sm-8">
+                    <input name="lockedNot" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">出入卡号：</label>
+                <div class="col-sm-8">
+                    <input name="accessNum" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">证件名称：</label>
+                <div class="col-sm-8">
+                    <input name="certificateName" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">客户类别：</label>
+                <div class="col-sm-8">
+                    <input name="customerCategoy" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">传真电话：</label>
+                <div class="col-sm-8">
+                    <input name="faxPhone" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">联系地址：</label>
+                <div class="col-sm-8">
+                    <input name="contactAddress" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">邮政编码：</label>
+                <div class="col-sm-8">
+                    <input name="postalCode" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">收件人：</label>
+                <div class="col-sm-8">
+                    <input name="postalPreson" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">电子邮件：</label>
+                <div class="col-sm-8">
+                    <input name="eMail" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">绑定手机户名：</label>
+                <div class="col-sm-8">
+                    <input name="phoneAccount" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">绑定手机号码：</label>
+                <div class="col-sm-8">
+                    <input name="bindingPhoneNum" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">共有业主：</label>
+                <div class="col-sm-8">
+                    <input name="coOwner" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">业主标识：</label>
+                <div class="col-sm-8">
+                    <input name="ownerIdentification" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">姓：</label>
+                <div class="col-sm-8">
+                    <input name="firName" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">名：</label>
+                <div class="col-sm-8">
+                    <input name="secName" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">性别：</label>
+                <div class="col-sm-8">
+                    <input name="gender" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">国籍：</label>
+                <div class="col-sm-8">
+                    <input name="nationality" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">出生日期：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input name="birthDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">工作单位：</label>
+                <div class="col-sm-8">
+                    <input name="workUnit" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">职业：</label>
+                <div class="col-sm-8">
+                    <input name="ownerJob" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">兴趣爱好：</label>
+                <div class="col-sm-8">
+                    <input name="ownerHobby" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">用户名：</label>
+                <div class="col-sm-8">
+                    <input name="ownerId" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">纳税人识别号：</label>
+                <div class="col-sm-8">
+                    <input name="taxpayerNum" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">地址、电话：</label>
+                <div class="col-sm-8">
+                    <input name="ownerAddPhone" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">开户行及账号：</label>
+                <div class="col-sm-8">
+                    <input name="bankAccount" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">托收类别：</label>
+                <div class="col-sm-8">
+                    <input name="collectionCategory" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">银行行别：</label>
+                <div class="col-sm-8">
+                    <select name="bankType" class="form-control m-b">
+                        <option value="">所有</option>
+                    </select>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">开户行行号：</label>
+                <div class="col-sm-8">
+                    <input name="bankNum" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">银行户名：</label>
+                <div class="col-sm-8">
+                    <input name="bankAccountName" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: datetimepicker-js" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/registration"
+        $("#form-registration-add").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-registration-add').serialize());
+            }
+        }
+
+        $("input[name='birthDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+    </script>
+</body>
+</html>
