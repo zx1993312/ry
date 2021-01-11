@@ -62,6 +62,7 @@ public class HyParkingInf extends BaseEntity
 
     /** 当前状态 */
     @Excel(name = "当前状态")
+    @EnumAnn(enumClass=ParkingEnum.class,enumType="String")
     private String currentState;
 
     /** 客户名称 */

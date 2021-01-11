@@ -1,180 +1,133 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('车位资料列表')" />
+<th:block th:include="include :: header('车位资料列表')" />
 </head>
 <body class="gray-bg">
-     <div class="container-div">
-        <div class="row">
-            <div class="col-sm-12 search-collapse">
-                <form id="formId">
-                    <div class="select-list">
-                        <ul>
-                            <li>
-                                <label>车位区域：</label>
-                                <input type="text" name="parkingArea"/>
-                            </li>
-                            <li>
-                                <label>车位类别：</label>
-                                <select name="parkingType">
-                                    <option value="">所有</option>
-                                    <option value="-1">代码生成请选择字典属性</option>
-                                </select>
-                            </li>
-                            <li>
-                                <label>车位类型：</label>
-                                <input type="text" name="parkingClass"/>
-                            </li>
-                            <li>
-                                <label>车位编号：</label>
-                                <input type="text" name="parkingNumber"/>
-                            </li>
-                            <li>
-                                <label>合同交付日期：</label>
-                                <input type="text" class="time-input" placeholder="请选择合同交付日期" name="contractDeliveryDate"/>
-                            </li>
-                            <li>
-                                <label>实际交付日期：</label>
-                                <input type="text" class="time-input" placeholder="请选择实际交付日期" name="actualDeliveryDate"/>
-                            </li>
-                            <li>
-                                <label>接管日期：</label>
-                                <input type="text" class="time-input" placeholder="请选择接管日期" name="takeoverTime"/>
-                            </li>
-                            <li>
-                                <label>收费标准：</label>
-                                <input type="text" name="chargingStandard"/>
-                            </li>
-                            <li>
-                                <label>当前状态：</label>
-                                <input type="text" name="currentState"/>
-                            </li>
-                            <li>
-                                <label>客户名称：</label>
-                                <input type="text" name="ownerName"/>
-                            </li>
-                            <li>
-                                <label>房屋编号：</label>
-                                <input type="text" name="houseNumber"/>
-                            </li>
-                            <li>
-                                <label>房屋名称：</label>
-                                <input type="text" name="houseName"/>
-                            </li>
-                            <li>
-                                <label>房屋产权性质：</label>
-                                <input type="text" name="houseProperty"/>
-                            </li>
-                            <li>
-                                <label>房屋使用性质：</label>
-                                <input type="text" name="houseNature"/>
-                            </li>
-                            <li>
-                                <label>停车卡号：</label>
-                                <input type="text" name="parkingCard"/>
-                            </li>
-                            <li>
-                                <label>车牌号码：</label>
-                                <input type="text" name="licensePlate"/>
-                            </li>
-                            <li>
-                                <label>车辆类型：</label>
-                                <select name="vehicleType">
-                                    <option value="">所有</option>
-                                    <option value="-1">代码生成请选择字典属性</option>
-                                </select>
-                            </li>
-                            <li>
-                                <label>车辆品牌：</label>
-                                <input type="text" name="vehicleBrand"/>
-                            </li>
-                            <li>
-                                <label>排量：</label>
-                                <input type="text" name="displacement"/>
-                            </li>
-                            <li>
-                                <label>车辆颜色：</label>
-                                <input type="text" name="vehicleColor"/>
-                            </li>
-                            <li>
-                                <label>是否收取其他费用：</label>
-                                <select id="otherExpenses" name="otherExpenses" class="form-control m-b"
-                    th:with="type=${@dict.getType('hy_parking_inf')}">
-                       	<option value="">请选择</option>
-						<option value="0">是</option>
-						<option value="1">否</option>
-                    </select>
-                            <li>
-                                <label>是否挂牌：</label>
-                                 <select id="licensePlateNot" name="licensePlateNot" class="form-control m-b"
-                    th:with="type=${@dict.getType('hy_parking_inf')}">
-                       	<option value="">请选择</option>
-						<option value="0">是</option>
-						<option value="1">否</option>
-                    </select>
-                            </li>
-                            <li>
-                                <label>挂牌时间：</label>
-                                <input type="text" class="time-input" placeholder="请选择挂牌时间" name="licensePlateTime"/>
-                            </li>
-                            <li>
-                                <label>使用状态：</label>
-                                   <select name="usageStatus" class="form-control m-b" th:with="type=${@dict.getType('hy_parking_inf')}">
-		              <option value="">请选择</option>
-						<option value="0">使用</option>
-						<option value="1">未使用</option>		           </select>
-                              
-                            </li>
-                            <li>
-                                <label>车位产权性质：</label>
-                                <input type="text" name="parkingProperty"/>
-                            </li>
-                            <li>
-                                <label>办理时间：</label>
-                                <input type="text" class="time-input" placeholder="请选择办理时间" name="timeProcessing"/>
-                            </li>
-                            <li>
-                                <label>开始时间：</label>
-                                <input type="text" class="time-input" placeholder="请选择开始时间" name="timeStr"/>
-                            </li>
-                            <li>
-                                <label>结束时间：</label>
-                                <input type="text" class="time-input" placeholder="请选择结束时间" name="timeEnd"/>
-                            </li>
-                            <li>
-                                <label>计费周期：</label>
-                                <input type="text" name="bilingCycle"/>
-                            </li>
-                            <li>
-                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
-                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
-                            </li>
-                        </ul>
-                    </div>
-                </form>
-            </div>
+	<div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li><label>车位区域：</label> <input type="text"
+								name="parkingArea" /></li>
+							<li><label>车位类别：</label> <input type="text"
+								name="parkingType" /></li>
+							<li><label>车位类型：</label> <input type="text"
+								name="parkingClass" /></li>
+							<li><label>车位编号：</label> <input type="text"
+								name="parkingNumber" /></li>
+							<li><label>合同交付日期：</label> <input type="text"
+								class="time-input" placeholder="请选择合同交付日期"
+								name="contractDeliveryDate" /></li>
+							<li><label>实际交付日期：</label> <input type="text"
+								class="time-input" placeholder="请选择实际交付日期"
+								name="actualDeliveryDate" /></li>
+							<li><label>接管日期：</label> <input type="text"
+								class="time-input" placeholder="请选择接管日期" name="takeoverTime" />
+							</li>
+							<li><label>收费标准：</label> <input type="text"
+								name="chargingStandard" /></li>
+							<li><label>当前状态：</label> <select name="currentState"
+								class="form-control m-b"
+								th:with="type=${@dict.getType('hy_use_state')}">
+									<option value="">请选择</option>
+									<option value="0">使用</option>
+									<option value="1">未使用</option>
+							</select></li>
+							<li><label>客户名称：</label> <input type="text" name="ownerName" />
+							</li>
+							<li><label>房屋编号：</label> <input type="text"
+								name="houseNumber" /></li>
+							<li><label>房屋名称：</label> <input type="text" name="houseName" />
+							</li>
+							<li><label>房屋产权性质：</label> <input type="text"
+								name="houseProperty" /></li>
+							<li><label>房屋使用性质：</label> <input type="text"
+								name="houseNature" /></li>
+							<li><label>停车卡号：</label> <input type="text"
+								name="parkingCard" /></li>
+							<li><label>车牌号码：</label> <input type="text"
+								name="licensePlate" /></li>
+							<li><label>车辆类型：</label> <input type="text"
+								name="vehicleType" /></li>
+							<li><label>车辆品牌：</label> <input type="text"
+								name="vehicleBrand" /></li>
+							<li><label>排量：</label> <input type="text"
+								name="displacement" /></li>
+							<li><label>车辆颜色：</label> <input type="text"
+								name="vehicleColor" /></li>
+							<li><label>是否收取其他费用：</label> <select id="otherExpenses"
+								name="otherExpenses" class="form-control m-b"
+								th:with="type=${@dict.getType('hy_parking_inf')}">
+									<option value="">请选择</option>
+									<option value="0">是</option>
+									<option value="1">否</option>
+							</select>
+							<li><label>是否挂牌：</label> <select id="licensePlateNot"
+								name="licensePlateNot" class="form-control m-b"
+								th:with="type=${@dict.getType('hy_parking_inf')}">
+									<option value="">请选择</option>
+									<option value="0">是</option>
+									<option value="1">否</option>
+							</select></li>
+							<li><label>挂牌时间：</label> <input type="text"
+								class="time-input" placeholder="请选择挂牌时间" name="licensePlateTime" />
+							</li>
+							<li><label>使用状态：</label> <select name="usageStatus"
+								class="form-control m-b"
+								th:with="type=${@dict.getType('hy_use_state')}">
+									<option value="">请选择</option>
+									<option value="0">使用</option>
+									<option value="1">未使用</option>
+							</select></li>
+							<li><label>车位产权性质：</label> <input type="text"
+								name="parkingProperty" /></li>
+							<li><label>办理时间：</label> <input type="text"
+								class="time-input" placeholder="请选择办理时间" name="timeProcessing" />
+							</li>
+							<li><label>开始时间：</label> <input type="text"
+								class="time-input" placeholder="请选择开始时间" name="timeStr" /></li>
+							<li><label>结束时间：</label> <input type="text"
+								class="time-input" placeholder="请选择结束时间" name="timeEnd" /></li>
+							<li><label>计费周期：</label> <input type="text"
+								name="bilingCycle" /></li>
+							<li><a class="btn btn-primary btn-rounded btn-sm"
+								onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm"
+								onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
 
-            <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:parking:add">
-                    <i class="fa fa-plus"></i> 添加
-                </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:parking:edit">
-                    <i class="fa fa-edit"></i> 修改
-                </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:parking:remove">
-                    <i class="fa fa-remove"></i> 删除
-                </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:parking:export">
-                    <i class="fa fa-download"></i> 导出
-                </a>
-            </div>
-            <div class="col-sm-12 select-table table-striped">
-                <table id="bootstrap-table"></table>
-            </div>
-        </div>
-    </div>
-    <th:block th:include="include :: footer" />
-    <script th:inline="javascript">
+			<div class="btn-group-sm" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.add()"
+					shiro:hasPermission="system:parking:add"> <i class="fa fa-plus"></i>
+					添加
+				</a> <a class="btn btn-primary single disabled"
+					onclick="$.operate.edit()"
+					shiro:hasPermission="system:parking:edit"> <i
+					class="fa fa-edit"></i> 修改
+				</a> <a class="btn btn-danger multiple disabled"
+					onclick="$.operate.removeAll()"
+					shiro:hasPermission="system:parking:remove"> <i
+					class="fa fa-remove"></i> 删除
+				</a> <a class="btn btn-warning" onclick="$.table.exportExcel()"
+					shiro:hasPermission="system:parking:export"> <i
+					class="fa fa-download"></i> 导出
+				</a>
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table"></table>
+			</div>
+		</div>
+	</div>
+	<th:block th:include="include :: footer" />
+	<script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('system:parking:edit')}]];
         var removeFlag = [[${@permission.hasPermi('system:parking:remove')}]];
         var prefix = ctx + "system/parking";
