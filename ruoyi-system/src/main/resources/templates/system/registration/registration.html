@@ -1,188 +1,130 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('业主资料登记列表')" />
+<th:block th:include="include :: header('业主资料登记列表')" />
 </head>
 <body class="gray-bg">
-     <div class="container-div">
-        <div class="row">
-            <div class="col-sm-12 search-collapse">
-                <form id="formId">
-                    <div class="select-list">
-                        <ul>
-                            <li>
-                                <label>业主名称：</label>
-                                <input type="text" name="ownerName"/>
-                            </li>
-                            <li>
-                                <label>房屋编号：</label>
-                                <input type="text" name="houseNum"/>
-                            </li>
-                            <li>
-                                <label>固定电话：</label>
-                                <input type="text" name="fixedTelephone"/>
-                            </li>
-                            <li>
-                                <label>移动电话：</label>
-                                <input type="text" name="mobilePhone"/>
-                            </li>
-                            <li>
-                                <label>证件号码：</label>
-                                <input type="text" name="idCardNum"/>
-                            </li>
-                            <li>
-                                <label>供应商类别：</label>
-                                <input type="text" name="suplierCategory"/>
-                            </li>
-                            <li>
-                                <label>是否锁定：</label>
-                                <input type="text" name="lockedNot"/>
-                            </li>
-                            <li>
-                                <label>出入卡号：</label>
-                                <input type="text" name="accessNum"/>
-                            </li>
-                            <li>
-                                <label>证件名称：</label>
-                                <input type="text" name="certificateName"/>
-                            </li>
-                            <li>
-                                <label>客户类别：</label>
-                                <input type="text" name="customerCategoy"/>
-                            </li>
-                            <li>
-                                <label>传真电话：</label>
-                                <input type="text" name="faxPhone"/>
-                            </li>
-                            <li>
-                                <label>联系地址：</label>
-                                <input type="text" name="contactAddress"/>
-                            </li>
-                            <li>
-                                <label>邮政编码：</label>
-                                <input type="text" name="postalCode"/>
-                            </li>
-                            <li>
-                                <label>收件人：</label>
-                                <input type="text" name="postalPreson"/>
-                            </li>
-                            <li>
-                                <label>电子邮件：</label>
-                                <input type="text" name="eMail"/>
-                            </li>
-                            <li>
-                                <label>绑定手机户名：</label>
-                                <input type="text" name="phoneAccount"/>
-                            </li>
-                            <li>
-                                <label>绑定手机号码：</label>
-                                <input type="text" name="bindingPhoneNum"/>
-                            </li>
-                            <li>
-                                <label>共有业主：</label>
-                                <input type="text" name="coOwner"/>
-                            </li>
-                            <li>
-                                <label>业主标识：</label>
-                                <input type="text" name="ownerIdentification"/>
-                            </li>
-                            <li>
-                                <label>姓：</label>
-                                <input type="text" name="firName"/>
-                            </li>
-                            <li>
-                                <label>名：</label>
-                                <input type="text" name="secName"/>
-                            </li>
-                            <li>
-                                <label>性别：</label>
-                                <input type="text" name="gender"/>
-                            </li>
-                            <li>
-                                <label>国籍：</label>
-                                <input type="text" name="nationality"/>
-                            </li>
-                            <li>
-                                <label>出生日期：</label>
-                                <input type="text" class="time-input" placeholder="请选择出生日期" name="birthDate"/>
-                            </li>
-                            <li>
-                                <label>工作单位：</label>
-                                <input type="text" name="workUnit"/>
-                            </li>
-                            <li>
-                                <label>职业：</label>
-                                <input type="text" name="ownerJob"/>
-                            </li>
-                            <li>
-                                <label>兴趣爱好：</label>
-                                <input type="text" name="ownerHobby"/>
-                            </li>
-                            <li>
-                                <label>用户名：</label>
-                                <input type="text" name="ownerId"/>
-                            </li>
-                            <li>
-                                <label>纳税人识别号：</label>
-                                <input type="text" name="taxpayerNum"/>
-                            </li>
-                            <li>
-                                <label>地址、电话：</label>
-                                <input type="text" name="ownerAddPhone"/>
-                            </li>
-                            <li>
-                                <label>开户行及账号：</label>
-                                <input type="text" name="bankAccount"/>
-                            </li>
-                            <li>
-                                <label>托收类别：</label>
-                                <input type="text" name="collectionCategory"/>
-                            </li>
-                            <li>
-                                <label>银行行别：</label>
-                                <select name="bankType">
-                                    <option value="">所有</option>
-                                    <option value="-1">代码生成请选择字典属性</option>
-                                </select>
-                            </li>
-                            <li>
-                                <label>开户行行号：</label>
-                                <input type="text" name="bankNum"/>
-                            </li>
-                            <li>
-                                <label>银行户名：</label>
-                                <input type="text" name="bankAccountName"/>
-                            </li>
-                            <li>
-                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
-                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
-                            </li>
-                        </ul>
-                    </div>
-                </form>
-            </div>
+	<div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li><label>业主名称：</label> <input type="text" name="ownerName" />
+							</li>
+							<li><label>房屋编号：</label> <input type="text" name="houseNum" />
+							</li>
+							<li><label>固定电话：</label> <input type="text"
+								name="fixedTelephone" /></li>
+							<li><label>移动电话：</label> <input type="text"
+								name="mobilePhone" /></li>
+							<li><label>证件号码：</label> <input type="text" name="idCardNum" />
+							</li>
+							<li><label>供应商类别：</label> <input type="text"
+								name="suplierCategory" /></li>
+							<li><label>是否锁定：</label> <select name="lockedNot"
+								class="form-control "
+								th:with="type=${@dict.getType('sys_yes_no')}">
+									<option value="">请选择</option>
+									<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+										th:value="${dict.dictValue}"></option>
+							</select></li>
+							<li><label>出入卡号：</label> <input type="text" name="accessNum" />
+							</li>
+							<li><label>证件名称：</label> <input type="text"
+								name="certificateName" /></li>
+							<li><label>客户类别：</label> <input type="text"
+								name="customerCategoy" /></li>
+							<li><label>传真电话：</label> <input type="text" name="faxPhone" />
+							</li>
+							<li><label>联系地址：</label> <input type="text"
+								name="contactAddress" /></li>
+							<li><label>邮政编码：</label> <input type="text"
+								name="postalCode" /></li>
+							<li><label>收件人：</label> <input type="text"
+								name="postalPreson" /></li>
+							<li><label>电子邮件：</label> <input type="text" name="eMail" />
+							</li>
+							<li><label>绑定手机户名：</label> <input type="text"
+								name="phoneAccount" /></li>
+							<li><label>绑定手机号码：</label> <input type="text"
+								name="bindingPhoneNum" /></li>
+							<li><label>共有业主：</label> <input type="text" name="coOwner" />
+							</li>
+							<li><label>业主标识：</label> <input type="text"
+								name="ownerIdentification" /></li>
+							<li><label>姓：</label> <input type="text" name="firName" /></li>
+							<li><label>名：</label> <input type="text" name="secName" /></li>
+							<li><label>性别：</label> <select id="gender" name="gender"
+								class="form-control "
+								th:with="type=${@dict.getType('sys_user_sex')}">
+									<option value="">请选择</option>
+									<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+										th:value="${dict.dictValue}"></option>
+							</select></li>
+							<li><label>国籍：</label> <input type="text" name="nationality" />
+							</li>
+							<li><label>出生日期：</label> <input type="text"
+								class="time-input" placeholder="请选择出生日期" name="birthDate" /></li>
+							<li><label>工作单位：</label> <input type="text" name="workUnit" />
+							</li>
+							<li><label>职业：</label> <input type="text" name="ownerJob" />
+							</li>
+							<li><label>兴趣爱好：</label> <input type="text"
+								name="ownerHobby" /></li>
+							<li><label>用户名：</label> <input type="text" name="ownerId" />
+							</li>
+							<li><label>纳税人识别号：</label> <input type="text"
+								name="taxpayerNum" /></li>
+							<li><label>地址、电话：</label> <input type="text"
+								name="ownerAddPhone" /></li>
+							<li><label>开户行及账号：</label> <input type="text"
+								name="bankAccount" /></li>
+							<li><label>托收类别：</label> <input type="text"
+								name="collectionCategory" /></li>
+							<li><label>银行行别：</label> <select name="bankType">
+									<option value="">所有</option>
+									<option value="-1">代码生成请选择字典属性</option>
+							</select></li>
+							<li><label>开户行行号：</label> <input type="text" name="bankNum" />
+							</li>
+							<li><label>银行户名：</label> <input type="text"
+								name="bankAccountName" /></li>
+							<li><a class="btn btn-primary btn-rounded btn-sm"
+								onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm"
+								onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
 
-            <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:registration:add">
-                    <i class="fa fa-plus"></i> 添加
-                </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:registration:edit">
-                    <i class="fa fa-edit"></i> 修改
-                </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:registration:remove">
-                    <i class="fa fa-remove"></i> 删除
-                </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:registration:export">
-                    <i class="fa fa-download"></i> 导出
-                </a>
-            </div>
-            <div class="col-sm-12 select-table table-striped">
-                <table id="bootstrap-table"></table>
-            </div>
-        </div>
-    </div>
-    <th:block th:include="include :: footer" />
-    <script th:inline="javascript">
+			<div class="btn-group-sm" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.add()"
+					shiro:hasPermission="system:registration:add"> <i
+					class="fa fa-plus"></i> 添加
+				</a> <a class="btn btn-primary single disabled"
+					onclick="$.operate.edit()"
+					shiro:hasPermission="system:registration:edit"> <i
+					class="fa fa-edit"></i> 修改
+				</a> <a class="btn btn-danger multiple disabled"
+					onclick="$.operate.removeAll()"
+					shiro:hasPermission="system:registration:remove"> <i
+					class="fa fa-remove"></i> 删除
+				</a> <a class="btn btn-warning" onclick="$.table.exportExcel()"
+					shiro:hasPermission="system:registration:export"> <i
+					class="fa fa-download"></i> 导出
+				</a>
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table"></table>
+			</div>
+		</div>
+	</div>
+	<th:block th:include="include :: footer" />
+	<script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('system:registration:edit')}]];
         var removeFlag = [[${@permission.hasPermi('system:registration:remove')}]];
         var prefix = ctx + "system/registration";

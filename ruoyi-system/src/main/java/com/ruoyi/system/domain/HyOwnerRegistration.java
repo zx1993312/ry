@@ -6,6 +6,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
+import com.ruoyi.system.annotation.EnumAnn;
+import com.ruoyi.system.enums.ControlEnum;
+import com.ruoyi.system.enums.SexEnum;
 
 /**
  * 业主资料登记对象 hy_owner_registration
@@ -46,6 +49,7 @@ public class HyOwnerRegistration extends BaseEntity
 
     /** 是否锁定 */
     @Excel(name = "是否锁定")
+    @EnumAnn(enumClass=ControlEnum.class)
     private Integer lockedNot;
 
     /** 出入卡号 */
@@ -106,6 +110,7 @@ public class HyOwnerRegistration extends BaseEntity
 
     /** 性别 */
     @Excel(name = "性别")
+    @EnumAnn(enumClass=SexEnum.class)
     private Integer gender;
 
     /** 国籍 */
