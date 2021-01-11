@@ -7,6 +7,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
+import com.ruoyi.system.annotation.EnumAnn;
+import com.ruoyi.system.enums.ControlEnum;
+import com.ruoyi.system.enums.ParkingEnum;
 
 /**
  * 车位资料
@@ -107,10 +110,12 @@ public class HyParkingInf extends BaseEntity
 
     /** 是否收取其他费用 */
     @Excel(name = "是否收取其他费用")
+    @EnumAnn(enumClass=ControlEnum.class)
     private Integer otherExpenses;
 
     /** 是否挂牌 */
     @Excel(name = "是否挂牌")
+    @EnumAnn(enumClass=ControlEnum.class)
     private Integer licensePlateNot;
 
     /** 挂牌时间 */
@@ -120,6 +125,7 @@ public class HyParkingInf extends BaseEntity
 
     /** 使用状态 */
     @Excel(name = "使用状态")
+    @EnumAnn(enumClass=ParkingEnum.class,enumType="Integer")
     private Integer usageStatus;
 
     /** 车位产权性质 */

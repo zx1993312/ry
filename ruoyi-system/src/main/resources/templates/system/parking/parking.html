@@ -98,11 +98,20 @@
                             </li>
                             <li>
                                 <label>是否收取其他费用：</label>
-                                <input type="text" name="otherExpenses"/>
-                            </li>
+                                <select id="otherExpenses" name="otherExpenses" class="form-control m-b"
+                    th:with="type=${@dict.getType('hy_parking_inf')}">
+                       	<option value="">请选择</option>
+						<option value="0">是</option>
+						<option value="1">否</option>
+                    </select>
                             <li>
                                 <label>是否挂牌：</label>
-                                <input type="text" name="licensePlateNot"/>
+                                 <select id="licensePlateNot" name="licensePlateNot" class="form-control m-b"
+                    th:with="type=${@dict.getType('hy_parking_inf')}">
+                       	<option value="">请选择</option>
+						<option value="0">是</option>
+						<option value="1">否</option>
+                    </select>
                             </li>
                             <li>
                                 <label>挂牌时间：</label>
@@ -110,10 +119,11 @@
                             </li>
                             <li>
                                 <label>使用状态：</label>
-                                <select name="usageStatus">
-                                    <option value="">所有</option>
-                                    <option value="-1">代码生成请选择字典属性</option>
-                                </select>
+                                   <select name="usageStatus" class="form-control m-b" th:with="type=${@dict.getType('hy_parking_inf')}">
+		              <option value="">请选择</option>
+						<option value="0">使用</option>
+						<option value="1">未使用</option>		           </select>
+                              
                             </li>
                             <li>
                                 <label>车位产权性质：</label>

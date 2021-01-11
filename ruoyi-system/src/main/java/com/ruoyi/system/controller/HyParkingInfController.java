@@ -1,6 +1,10 @@
 package com.ruoyi.system.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.system.constants.Constants;
 import com.ruoyi.system.domain.HyParkingInf;
 import com.ruoyi.system.service.IHyParkingInfService;
 
@@ -57,7 +62,13 @@ public class HyParkingInfController extends BaseController {
 	public TableDataInfo list(HyParkingInf hyParkingInf) {
 		startPage();
 		List<HyParkingInf> list = hyParkingInfService.selectHyParkingInfList(hyParkingInf);
-		return getDataTable(list);
+		List<Map<String , Object>>reList=new ArrayList<>();
+		for (HyParkingInf hpi:list) {
+			Map<String,Object> map=new HashMap<>();
+			map=Constants.REFLECT_UTIL.convertMap(hpi);
+			reList.add(map);
+		}
+		return getDataTable(reList);
 	}
 
 	/**
@@ -80,7 +91,15 @@ public class HyParkingInfController extends BaseController {
 	 * 
 	 */
 	@GetMapping("/add")
-	public String add() {
+	public String add(HyParkingInf hyParkingInf) {
+		
+		List<HyParkingInf> list = hyParkingInfService.selectHyParkingInfList(hyParkingInf);
+		List<Map<String , Object>>reList=new ArrayList<>();
+		for (HyParkingInf hpi:list) {
+			Map<String,Object> map=new HashMap<>();
+			map=Constants.REFLECT_UTIL.convertMap(hpi);
+			reList.add(map);
+		}
 		return prefix + "/add";
 	}
 
@@ -108,6 +127,13 @@ public class HyParkingInfController extends BaseController {
 	public String edit(@PathVariable("id") Long id, ModelMap mmap) {
 		HyParkingInf hyParkingInf = hyParkingInfService.selectHyParkingInfById(id);
 		mmap.put("hyParkingInf", hyParkingInf);
+		List<HyParkingInf> list = hyParkingInfService.selectHyParkingInfList(hyParkingInf);
+		List<Map<String , Object>>reList=new ArrayList<>();
+		for (HyParkingInf hpi:list) {
+			Map<String,Object> map=new HashMap<>();
+			map=Constants.REFLECT_UTIL.convertMap(hpi);
+			reList.add(map);
+		}
 		return prefix + "/edit";
 	}
 
@@ -122,6 +148,13 @@ public class HyParkingInfController extends BaseController {
 	@PostMapping("/edit")
 	@ResponseBody
 	public AjaxResult editSave(HyParkingInf hyParkingInf) {
+		List<HyParkingInf> list = hyParkingInfService.selectHyParkingInfList(hyParkingInf);
+		List<Map<String , Object>>reList=new ArrayList<>();
+		for (HyParkingInf hpi:list) {
+			Map<String,Object> map=new HashMap<>();
+			map=Constants.REFLECT_UTIL.convertMap(hpi);
+			reList.add(map);
+		}
 		return toAjax(hyParkingInfService.updateHyParkingInf(hyParkingInf));
 	}
 
