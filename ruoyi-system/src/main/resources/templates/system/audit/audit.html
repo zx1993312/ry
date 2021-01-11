@@ -34,10 +34,20 @@
 									<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
 										th:value="${dict.dictValue}"></option>
 							</select></li>
-							<li><label>是否需要不动产备案：</label> <input type="text"
-								name="estateRecord" /></li>
-							<li><label>是否需要合同违约金含税率：</label> <input type="text"
-								name="taxRateRecord" /></li>
+							<li><label>是否需要不动产备案：</label> <select id="estateRecord"
+								name="estateRecord" class="form-control "
+								th:with="type=${@dict.getType('hy_vat_audit')}">
+									<option value="">请选择</option>
+									<option value="0">是</option>
+									<option value="1">否</option>
+							</select></li>
+							<li><label>是否需要合同违约金含税率：</label> <select id="taxRateRecord"
+								name="taxRateRecord" class="form-control "
+								th:with="type=${@dict.getType('hy_vat_audit')}">
+									<option value="">请选择</option>
+									<option value="0">是</option>
+									<option value="1">否</option>
+							</select></li>
 							<li><a class="btn btn-primary btn-rounded btn-sm"
 								onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
 								<a class="btn btn-warning btn-rounded btn-sm"

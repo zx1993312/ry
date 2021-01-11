@@ -10,7 +10,7 @@
 				<label class="col-sm-3 control-label">票据种类：</label>
 				<div class="col-sm-8">
 					<select id="billTypes" name="billTypes" class="form-control "
-						th:with="type=${@dict.getType('hy_bill_set')}">
+						th:with="type=${@dict.getType('hy_bill_set')}" onchange="ChangeSelect()">
 						<option value="">请选择</option>
 						<option value="0">收据</option>
 						<option value="1">发票</option>
@@ -34,7 +34,7 @@
 			<div class="form-group">
 				<label class="col-sm-3 control-label">后缀：</label>
 				<div class="col-sm-8">
-					<input id="suffix" name="suffix" class="form-control" type="text">
+					<input id="suffix" name="suffix" class="form-control" type="text" >
 				</div>
 			</div>
 			<div class="form-group">
@@ -53,12 +53,12 @@
 			<div class="form-group">
 				<label class="col-sm-3 control-label">是否定额票据：</label>
 				<div class="col-sm-8">
-					<label><input type="checkbox" name="panel" value="0">定额票据</label>
+					<label><input type="checkbox" name="panel" value="0" >定额票据</label>
 				</div>
 			</div>
-			<div class="form-group">
+			<div class="form-group" th:if="#{billTypes}!=‘" hidden="true">
 				<label class="col-sm-3 control-label">定额票据面板：</label>
-				<div class="col-sm-8">
+				<div class="col-sm-8" >
 					<input id="billPanel" name="billPanel" class="form-control"
 						type="text">
 				</div>
@@ -98,6 +98,11 @@
 
 			focusCleanup : true
 		});
+		
+		function ChangeSelect(){
+			billTypes = $("#billTypes").val();	
+			console.log(billTypes);
+		}
 
 		function submitHandler() {
 			if ($.validate.form()) {

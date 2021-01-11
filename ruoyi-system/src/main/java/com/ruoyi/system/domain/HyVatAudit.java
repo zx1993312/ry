@@ -6,6 +6,10 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
+import com.ruoyi.system.annotation.EnumAnn;
+import com.ruoyi.system.constants.Constants;
+import com.ruoyi.system.enums.AuditEnum;
+import com.ruoyi.system.enums.ControlEnum;
 
 /**
  * 增值税率审核对象 hy_vat_audit
@@ -56,14 +60,17 @@ public class HyVatAudit extends BaseEntity
 
     /** 审核状态 */
     @Excel(name = "审核状态")
+    @EnumAnn(enumClass=AuditEnum.class)
     private Integer auditStatus;
 
     /** 是否需要不动产备案 */
     @Excel(name = "是否需要不动产备案")
+    @EnumAnn(enumClass=ControlEnum.class)
     private Integer estateRecord;
 
     /** 是否需要合同违约金含税率 */
     @Excel(name = "是否需要合同违约金含税率")
+    @EnumAnn(enumClass=ControlEnum.class)
     private Integer taxRateRecord;
 
     public void setId(Long id) 

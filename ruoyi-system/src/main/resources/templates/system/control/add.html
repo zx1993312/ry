@@ -85,6 +85,27 @@
 	<script th:inline="javascript">
 		var prefix = ctx + "system/control"
 		$("#form-control-add").validate({
+			onkeyup : false,
+			rules : {
+				chargeSubjectApproved : {
+						required : true,
+					},
+					deliveryEffectiveTime : {
+						required : true,
+					},
+					depositArrearsAllowed : {
+						required : true,
+					},
+					partialOffsetAllowed : {
+						required : true,
+					},
+					systemTicketnumNot : {
+						required : true,
+					},
+					oddCarryForward : {
+						required : true,
+					},
+			},
 			focusCleanup : true
 		});
 
