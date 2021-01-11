@@ -151,7 +151,7 @@
                 <label class="col-sm-3 control-label">使用状态：</label>
                 <div class="col-sm-8">
                    <select name="dictLabel" class="form-control m-b" th:with="type=${@dict.getType('hy_use_state')}">
-		               <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{dictLabel}"></option>
+		               <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 		           </select>
                 </div>
             </div>
