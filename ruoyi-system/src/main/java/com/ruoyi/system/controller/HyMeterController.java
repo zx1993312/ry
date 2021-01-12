@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.system.domain.HyMeter;
+import com.ruoyi.system.domain.HyMeterCase;
 import com.ruoyi.system.service.IHyMeterService;
 
 import io.swagger.annotations.Api;

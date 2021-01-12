@@ -1,146 +1,85 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('抄设置列表')" />
+<th:block th:include="include :: header('抄设置列表')" />
 </head>
 <body class="gray-bg">
-     <div class="container-div">
-        <div class="row">
-            <div class="col-sm-12 search-collapse">
-                <form id="formId">
-                    <div class="select-list">
-                        <ul>
-                            <li>
-                                <label>房屋编号：</label>
-                                <input type="text" name="houseNum"/>
-                            </li>
-                            <li>
-                                <label>表计类型：</label>
-                                <select name="meterType">
-                                    <option value="">所有</option>
-                                    <option value="-1">代码生成请选择字典属性</option>
-                                </select>
-                            </li>
-                            <li>
-                                <label>表计序号：</label>
-                                <input type="text" name="meterSerialNum"/>
-                            </li>
-                            <li>
-                                <label>表计名称：</label>
-                                <input type="text" name="meterName"/>
-                            </li>
-                            <li>
-                                <label>初始读数：</label>
-                                <input type="text" name="initialRead"/>
-                            </li>
-                            <li>
-                                <label>起数：</label>
-                                <input type="text" name="meterStrNum"/>
-                            </li>
-                            <li>
-                                <label>止数：</label>
-                                <input type="text" name="meterEndNum"/>
-                            </li>
-                            <li>
-                                <label>变比：</label>
-                                <input type="text" name="transfRatio"/>
-                            </li>
-                            <li>
-                                <label>是否反向：</label>
-                                <input type="text" name="reverseNot"/>
-                            </li>
-                            <li>
-                                <label>计量表类型：</label>
-                                <select name="strappingType">
-                                    <option value="">所有</option>
-                                    <option value="-1">代码生成请选择字典属性</option>
-                                </select>
-                            </li>
-                            <li>
-                                <label>抄表日期：</label>
-                                <input type="text" class="time-input" placeholder="请选择抄表日期" name="meterReadDate"/>
-                            </li>
-                            <li>
-                                <label>倍率：</label>
-                                <input type="text" name="magnification"/>
-                            </li>
-                            <li>
-                                <label>现用量：</label>
-                                <input type="text" name="newMeterConsumption"/>
-                            </li>
-                            <li>
-                                <label>旧表用量：</label>
-                                <input type="text" name="oldMeterConsumption"/>
-                            </li>
-                            <li>
-                                <label>损耗：</label>
-                                <input type="text" name="attritionRate"/>
-                            </li>
-                            <li>
-                                <label>单价：</label>
-                                <input type="text" name="unitPrice"/>
-                            </li>
-                            <li>
-                                <label>金额：</label>
-                                <input type="text" name="amountPrice"/>
-                            </li>
-                            <li>
-                                <label>异常提示：</label>
-                                <input type="text" name="abnormalPrompt"/>
-                            </li>
-                            <li>
-                                <label>客户名称：</label>
-                                <input type="text" name="customerName"/>
-                            </li>
-                            <li>
-                                <label>是否冻结：</label>
-                                <input type="text" name="freezeNot"/>
-                            </li>
-                            <li>
-                                <label>抄表来源：</label>
-                                <input type="text" name="sourceMeter"/>
-                            </li>
-                            <li>
-                                <label>抄表人：</label>
-                                <input type="text" name="meterReader"/>
-                            </li>
-                            <li>
-                                <label>录入时间：</label>
-                                <input type="text" class="time-input" placeholder="请选择录入时间" name="inputTime"/>
-                            </li>
-                            <li>
-                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
-                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
-                            </li>
-                        </ul>
-                    </div>
-                </form>
-            </div>
+	<div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li><label>表计序号：</label> <input type="text"
+								name="meterSerialNum" /></li>
 
-            <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:meter:add">
-                    <i class="fa fa-plus"></i> 添加
-                </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:meter:edit">
-                    <i class="fa fa-edit"></i> 修改
-                </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:meter:remove">
-                    <i class="fa fa-remove"></i> 删除
-                </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:meter:export">
-                    <i class="fa fa-download"></i> 导出
-                </a>
-            </div>
-            <div class="col-sm-12 select-table table-striped">
-                <table id="bootstrap-table"></table>
-            </div>
-        </div>
-    </div>
-    <th:block th:include="include :: footer" />
-    <script th:inline="javascript">
+							<li><label>表计名称：</label> <input type="text" name="meterName" />
+							</li>
+							<li><label>表箱名称：</label> <input type="text"
+								name="meterCaseName" /></li>
+							<li><label>安装位置：</label> <input type="text"
+								name="meterCasePosition" /></li>
+							<li><label>表计类型：</label> <select name="meterType">
+									<option value="">所有</option>
+									<option value="-1">代码生成请选择字典属性</option>
+							</select></li>
+							<li><label>初始读数：</label> <input type="text"
+								name="initialRead" /></li>
+							<li><label>倍率：</label> <input type="text"
+								name="magnification" /></li>
+
+
+							<li><label>单价：</label> <input type="text" name="unitPrice" />
+							</li>
+ <li>
+   <label>表箱：</label>
+   <input type="button" name="hyMeterCase" onclick="meterCase()"/>
+  </li>
+
+							<li><a class="btn btn-primary btn-rounded btn-sm"
+								onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm"
+								onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+
+			<div class="btn-group-sm" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.add()"
+					shiro:hasPermission="system:meter:add"> <i class="fa fa-plus"></i>
+					添加
+				</a> <a class="btn btn-primary single disabled"
+					onclick="$.operate.edit()" shiro:hasPermission="system:meter:edit">
+					<i class="fa fa-edit"></i> 修改
+				</a> <a class="btn btn-danger multiple disabled"
+					onclick="$.operate.removeAll()"
+					shiro:hasPermission="system:meter:remove"> <i
+					class="fa fa-remove"></i> 删除
+				</a> <a class="btn btn-warning" onclick="$.table.exportExcel()"
+					shiro:hasPermission="system:meter:export"> <i
+					class="fa fa-download"></i> 导出
+				</a>
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table"></table>
+			</div>
+		</div>
+	</div>
+	<th:block th:include="include :: footer" />
+	<script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('system:meter:edit')}]];
         var removeFlag = [[${@permission.hasPermi('system:meter:remove')}]];
         var prefix = ctx + "system/meter";
+        
+        function meterCase(){
+        	$("#formId").attr("action","/system/case");
+        	$("#formId").submit();
+        	
+        }
+        
 
         $(function() {
             var options = {
@@ -157,15 +96,7 @@
                     field: 'id',
                     title: '主键',
                     visible: false
-                },
-                {
-                    field: 'houseNum',
-                    title: '房屋编号'
-                },
-                {
-                    field: 'meterType',
-                    title: '表计类型'
-                },
+                }, 
                 {
                     field: 'meterSerialNum',
                     title: '表计序号'
@@ -175,81 +106,32 @@
                     title: '表计名称'
                 },
                 {
+                	field:"meterCaseName",
+                	title:"表箱名称",
+                },
+                {
+                	field:"meterCasePosition",
+                	title:"安装位置",
+                },
+                {
+                    field: 'meterType',
+                    title: '表计类型'
+                },
+         
+                {
                     field: 'initialRead',
                     title: '初始读数'
-                },
-                {
-                    field: 'meterStrNum',
-                    title: '起数'
-                },
-                {
-                    field: 'meterEndNum',
-                    title: '止数'
-                },
-                {
-                    field: 'transfRatio',
-                    title: '变比'
-                },
-                {
-                    field: 'reverseNot',
-                    title: '是否反向'
-                },
-                {
-                    field: 'strappingType',
-                    title: '计量表类型'
-                },
-                {
-                    field: 'meterReadDate',
-                    title: '抄表日期'
                 },
                 {
                     field: 'magnification',
                     title: '倍率'
                 },
-                {
-                    field: 'newMeterConsumption',
-                    title: '现用量'
-                },
-                {
-                    field: 'oldMeterConsumption',
-                    title: '旧表用量'
-                },
-                {
-                    field: 'attritionRate',
-                    title: '损耗'
-                },
+        
                 {
                     field: 'unitPrice',
                     title: '单价'
                 },
-                {
-                    field: 'amountPrice',
-                    title: '金额'
-                },
-                {
-                    field: 'abnormalPrompt',
-                    title: '异常提示'
-                },
-                {
-                    field: 'customerName',
-                    title: '客户名称'
-                },
-                {
-                    field: 'freezeNot',
-                    title: '是否冻结'
-                },
-                {
-                    field: 'sourceMeter',
-                    title: '抄表来源'
-                },
-                {
-                    field: 'meterReader',
-                    title: '抄表人'
-                },
-                {
-                    field: 'inputTime',
-                    title: '录入时间'
-                },
+             
                 {
                     title: '操作',
                     align: 'center',

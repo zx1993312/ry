@@ -41,18 +41,7 @@
                     <input name="initialRead" th:field="*{initialRead}" class="form-control" type="text">
                 </div>
             </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">起数：</label>
-                <div class="col-sm-8">
-                    <input name="meterStrNum" th:field="*{meterStrNum}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">止数：</label>
-                <div class="col-sm-8">
-                    <input name="meterEndNum" th:field="*{meterEndNum}" class="form-control" type="text">
-                </div>
-            </div>
+           
             <div class="form-group">    
                 <label class="col-sm-3 control-label">变比：</label>
                 <div class="col-sm-8">
@@ -74,90 +63,14 @@
                     <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
                 </div>
             </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">抄表日期：</label>
-                <div class="col-sm-8">
-                    <div class="input-group date">
-                        <input name="meterReadDate" th:value="${#dates.format(hyMeter.meterReadDate, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">倍率：</label>
-                <div class="col-sm-8">
-                    <input name="magnification" th:field="*{magnification}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">现用量：</label>
-                <div class="col-sm-8">
-                    <input name="newMeterConsumption" th:field="*{newMeterConsumption}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">旧表用量：</label>
-                <div class="col-sm-8">
-                    <input name="oldMeterConsumption" th:field="*{oldMeterConsumption}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">损耗：</label>
-                <div class="col-sm-8">
-                    <input name="attritionRate" th:field="*{attritionRate}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">单价：</label>
-                <div class="col-sm-8">
-                    <input name="unitPrice" th:field="*{unitPrice}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">金额：</label>
-                <div class="col-sm-8">
-                    <input name="amountPrice" th:field="*{amountPrice}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">异常提示：</label>
-                <div class="col-sm-8">
-                    <input name="abnormalPrompt" th:field="*{abnormalPrompt}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">客户名称：</label>
-                <div class="col-sm-8">
-                    <input name="customerName" th:field="*{customerName}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">是否冻结：</label>
-                <div class="col-sm-8">
-                    <input name="freezeNot" th:field="*{freezeNot}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">抄表来源：</label>
-                <div class="col-sm-8">
-                    <input name="sourceMeter" th:field="*{sourceMeter}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">抄表人：</label>
-                <div class="col-sm-8">
-                    <input name="meterReader" th:field="*{meterReader}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">录入时间：</label>
-                <div class="col-sm-8">
-                    <div class="input-group date">
-                        <input name="inputTime" th:value="${#dates.format(hyMeter.inputTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    </div>
-                </div>
-            </div>
+            
+             <div class="form-group">
+   <label class="col-sm-3 control-label">表箱：</label>
+   <div class="col-sm-8">
+   <button name="hyMeterCase" class="form-control"  onclick="meterCase()"></button>
+   
+   </div>
+   </div>
         </form>
     </div>
     <th:block th:include="include :: footer" />
@@ -168,6 +81,13 @@
             focusCleanup: true
         });
 
+        function meterCase(){
+        	$("#form-meter-edit").attr("action","/system/case/edit");
+        	$("#form-meter-edit").submit();
+        	
+        }
+        
+        
         function submitHandler() {
             if ($.validate.form()) {
                 $.operate.save(prefix + "/edit", $('#form-meter-edit').serialize());
