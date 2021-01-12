@@ -232,7 +232,20 @@
                 },
                 {
                     field: 'areaType',
-                    title: '面积类型'
+                    title: '面积类型',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case 0 : value =  "建筑面积";break;
+	                    	case 1 : value =  "计费面积";break;
+	                    	case 2 : value =  "套内面积";break;
+	                    	case 3 : value =  "公摊面积";break;
+	                    	case 4 : value =  "花园面积";break;
+	                    	case 5 : value =  "地下室面积";break;
+	                    	case 6 : value =  "大堂分摊面积";break;
+	                    	case 7 : value =  "层间分摊面积";break;
+	                	}
+		            	return value;
+		            }
                 },
                 {
                     field: 'bilingArea',
@@ -292,19 +305,56 @@
                 },
                 {
                     field: 'usageStatus',
-                    title: '使用状态'
+                    title: '使用状态',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case '0' : value =  "已使用";break;
+	                    	case '1' : value =  "未使用";break;
+	                	}
+		            	return value;
+		            }
                 },
                 {
                     field: 'occupancyStatus',
-                    title: '入住状态'
+                    title: '入住状态',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case '0' : value =  "常住";break;
+	                    	case '1' : value =  "未入住";break;
+	                    	case '2' : value =  "非常住";break;
+	                    	case '3' : value =  "一般常住";break;
+	                	}
+		            	return value;
+		            }
                 },
                 {
                     field: 'deliveryStatus',
-                    title: '交房状态'
+                    title: '交房状态',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case '0' : value =  "已售未接房";break;
+	                    	case '1' : value =  "未售";break;
+	                    	case '2' : value =  "已接房";break;
+	                    	case '3' : value =  "装修";break;
+	                    	case '4' : value =  "入住";break;
+	                    	case '5' : value =  "已售空置";break;
+	                    	case '6' : value =  "未售空置";break;
+	                	}
+		            	return value;
+		            }
                 },
                 {
                     field: 'houseType',
-                    title: '房屋类型'
+                    title: '房屋类型',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case '0' : value =  "销售房屋";break;
+	                    	case '1' : value =  "自持房屋";break;
+	                    	case '2' : value =  "物业用房";break;
+	                    	case '3' : value =  "公共区域";break;
+	                	}
+		            	return value;
+		            }
                 },
                 {
                     field: 'salesStatus',
