@@ -99,7 +99,10 @@
                             </li>
                             <li>
                                 <label>产权性质：</label>
-                                <input type="text" name="natureProperty"/>
+                                <select name="natureProperty" class="form-control m-b" th:with="type=${@dict.getType('hy_property_nature')}">
+                                	<option value="">所有</option>
+					                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+					            </select>
                             </li>
                             <li>
                                 <label>使用性质：</label>
@@ -121,24 +124,21 @@
                             </li>
                             <li>
                                 <label>交房状态：</label>
-                                <select name="deliveryStatus" class="form-control m-b" th:with="type=${@dict.getType('hy_area_type')}">
+                                <select name="deliveryStatus" class="form-control m-b" th:with="type=${@dict.getType('hy_delivery_status')}">
                                     <option value="">所有</option>
                                     <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                                 </select>
                             </li>
                             <li>
                                 <label>房屋类型：</label>
-                                <select name="houseType">
+                                <select name="houseType" class="form-control m-b" th:with="type=${@dict.getType('hy_house_type')}">
                                     <option value="">所有</option>
-                                    <option value="-1">代码生成请选择字典属性</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                                 </select>
                             </li>
                             <li>
                                 <label>销售状态：</label>
-                                <select name="salesStatus">
-                                    <option value="">所有</option>
-                                    <option value="-1">代码生成请选择字典属性</option>
-                                </select>
+                                <input type="text" name="salesStatus"/>
                             </li>
                             <li>
                                 <label>购房合同号：</label>
