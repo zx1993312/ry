@@ -7,6 +7,8 @@ import java.util.Map;
 
 import com.ruoyi.system.annotation.EnumAnn;
 
+import lombok.extern.log4j.Log4j2;
+
 /**
  * 转换工具累
  * 
@@ -14,6 +16,7 @@ import com.ruoyi.system.annotation.EnumAnn;
  *
  * @param <T>
  */
+@Log4j2
 public class ReflectUtil<T> {
 
 	/**
@@ -54,6 +57,7 @@ public class ReflectUtil<T> {
 			}
 			return map;
 		} catch (Exception e) {
+			log.error(e.getMessage(), e);
 		}
 		return null;
 	}

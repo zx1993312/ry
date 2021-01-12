@@ -57,10 +57,10 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">面积类型：</label>
                 <div class="col-sm-8">
-                    <select name="areaType" class="form-control m-b">
-                        <option value="">所有</option>
-                    </select>
-                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                     <select name="areaType" class="form-control m-b" th:with="type=${@dict.getType('hy_area_type')}">
+                         <option value="">所有</option>
+                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                     </select>
                 </div>
             </div>
             <div class="form-group">    
@@ -138,7 +138,10 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">产权性质：</label>
                 <div class="col-sm-8">
-                    <input name="natureProperty" class="form-control" type="text">
+                    <select name="natureProperty" class="form-control m-b" th:with="type=${@dict.getType('hy_property_nature')}">
+                        <option value="">所有</option>
+		                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+		            </select>
                 </div>
             </div>
             <div class="form-group">    
@@ -151,6 +154,7 @@
                 <label class="col-sm-3 control-label">使用状态：</label>
                 <div class="col-sm-8">
                    <select name="dictLabel" class="form-control m-b" th:with="type=${@dict.getType('hy_use_state')}">
+		               <option value="">所有</option>
 		               <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 		           </select>
                 </div>
@@ -158,40 +162,34 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">入住状态：</label>
                 <div class="col-sm-8">
-                    <div class="radio-box">
-                        <input type="radio" name="occupancyStatus" value="">
-                        <label th:for="occupancyStatus" th:text="未知"></label>
-                    </div>
-                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                    <select name="occupancyStatus" class="form-control m-b" th:with="type=${@dict.getType('hy_check_in')}">
+                        <option value="">所有</option>
+		                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+		            </select>
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">交房状态：</label>
                 <div class="col-sm-8">
-                    <div class="radio-box">
-                        <input type="radio" name="deliveryStatus" value="">
-                        <label th:for="deliveryStatus" th:text="未知"></label>
-                    </div>
-                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                    <select name="deliveryStatus" class="form-control m-b" th:with="type=${@dict.getType('hy_delivery_status')}">
+                        <option value="">所有</option>
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                    </select>
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">房屋类型：</label>
                 <div class="col-sm-8">
-                    <select name="houseType" class="form-control m-b">
+                    <select name="houseType" class="form-control m-b" th:with="type=${@dict.getType('hy_house_type')}">
                         <option value="">所有</option>
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                     </select>
-                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">销售状态：</label>
                 <div class="col-sm-8">
-                    <div class="radio-box">
-                        <input type="radio" name="salesStatus" value="">
-                        <label th:for="salesStatus" th:text="未知"></label>
-                    </div>
-                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                    <input name="salesStatus" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
@@ -311,98 +309,6 @@
 				},
 				marketingNum : {
 					maxlength : 50,
-				},
-			},
-			messages : {
-				"building" : {
-					remote : "楼宇长度为50个字符"
-				},
-				"houseNumber" : {
-					remote : "房屋编号长度为50个字符"
-				},
-				"houseName" : {
-					remote : "房屋名称长度为50个字符"
-				},
-				"builtUpArea" : {
-					remote : "建筑面积长度为50个字符"
-				},
-				"groupArea" : {
-					remote : "组团区域长度为50个字符"
-				},
-				"unit" : {
-					remote : "单元长度为50个字符"
-				},
-				"floor" : {
-					remote : "楼层长度为5个字符"
-				},
-				"sameUnitNumber" : {
-					remote : "同单元同楼层流水号长度为20个字符"
-				},
-				"areaType" : {
-					remote : "面积类型长度为2个字符"
-				},
-				"bilingArea" : {
-					remote : "计费面积长度为50个字符"
-				},
-				"insideArea" : {
-					remote : "套内面积长度为50个字符"
-				},
-				"sharedArea" : {
-					remote : "公摊面积长度为50个字符"
-				},
-				"gardenArea" : {
-					remote : "花园面积长度为50个字符"
-				},
-				"basementArea" : {
-					remote : "地下室面积长度为50个字符"
-				},
-				"sharedLobbyArea" : {
-					remote : "大堂分摊面积长度为50个字符"
-				},
-				"sharedLayersArea" : {
-					remote : "层间分摊面积长度为50个字符"
-				},
-				"shareRatio" : {
-					remote : "公摊比例长度为50个字符"
-				},
-				"buildingStructure" : {
-					remote : "建筑结构长度为50个字符"
-				},
-				"parametersPer" : {
-					remote : "单位面积承重参数长度为50个字符"
-				},
-				"houseLayout" : {
-					remote : "房屋户型长度为50个字符"
-				},
-				"floorHeight" : {
-					remote : "层高长度为50个字符"
-				},
-				"natureProperty" : {
-					remote : "产权性质长度为50个字符"
-				},
-				"natureUse" : {
-					remote : "使用性质长度为50个字符"
-				},
-				"usageStatus" : {
-					remote : "使用状态长度为50个字符"
-				},
-				"occupancyStatus" : {
-					remote : "入住状态长度为50个字符"
-				},
-				"deliveryStatus" : {
-					remote : "交房状态长度为50个字符"
-				},
-				"houseType" : {
-					remote : "房屋类型长度为50个字符"
-				},
-				"salesStatus" : {
-					remote : "销售状态长度为50个字符"
-				},
-				"purchaseContract" : {
-					remote : "购房合同号长度为50个字符"
-				},
-				"marketingNum" : {
-					remote : "营销编号长度为50个字符"
 				},
 			},
 			focusCleanup : true
