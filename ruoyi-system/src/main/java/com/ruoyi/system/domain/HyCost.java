@@ -25,6 +25,9 @@ public class HyCost extends BaseEntity
     /** 费用类型 */
     @Excel(name = "费用类型")
     private String expenseType;
+    
+    @Excel(name = "父类id")
+    private Integer parentId;
 
     public void setId(Long id) 
     {
@@ -54,7 +57,16 @@ public class HyCost extends BaseEntity
         return expenseType;
     }
 
-    @Override
+    
+    public Integer getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(Integer parentId) {
+		this.parentId = parentId;
+	}
+
+	@Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
