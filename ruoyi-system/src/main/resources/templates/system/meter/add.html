@@ -74,11 +74,30 @@
         </form>
     </div>
     <th:block th:include="include :: footer" />
+    <script th:src="@{/js/jquery.form.min.js}"></script>
     <th:block th:include="include :: datetimepicker-js" />
     <script th:inline="javascript">
         var prefix = ctx + "system/meter"
         
         function meterCase(){
+        	$('#form-meter-add').ajaxSubmit({
+      	      type: 'post', // 提交方式 get/post
+              url: '/system/case/add', // 需要提交的 url
+              data: {
+                  'houseNum': $('#houseNum').val(),
+                  'meterType':$('#meterType').val(),
+                  'meterSerialNum':$('#meterSerialNum').val(),
+                  'meterName':$('#meterName').val(),
+                  'initialRead':$('#initialRead').val(),
+                  'transfRatio':$('#transfRatio').val(),
+                  'reverseNot':$('#reverseNot').val(),
+                  'strappingType':$('strappingType').val(),
+                  'meterCaseName':$('#meterCaseName').val(),
+                  'meterCasePosition':$('meterCasePosition').val(),
+                  'meterSerial':$('#meterSerial').val(),
+              },
+    	});
+        	
         	$("#form-meter-add").attr("action","/system/case/add");
         	$("#form-meter-add").submit();
         	
