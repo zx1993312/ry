@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyMeterMapper">
+    
+    <resultMap type="HyMeter" id="HyMeterResult">
+        <result property="id"    column="id"    />
+        <result property="houseNum"    column="house_num"    />
+        <result property="meterType"    column="meter_type"    />
+        <result property="meterSerialNum"    column="meter_serial_num"    />
+        <result property="meterName"    column="meter_name"    />
+        <result property="initialRead"    column="initial_read"    />
+        <result property="meterStrNum"    column="meter_str_num"    />
+        <result property="meterEndNum"    column="meter_end_num"    />
+        <result property="transfRatio"    column="transf_ratio"    />
+        <result property="reverseNot"    column="reverse_not"    />
+        <result property="strappingType"    column="strapping_type"    />
+        <result property="meterReadDate"    column="meter_read_date"    />
+        <result property="magnification"    column="magnification"    />
+        <result property="newMeterConsumption"    column="new_meter_consumption"    />
+        <result property="oldMeterConsumption"    column="old_meter_consumption"    />
+        <result property="attritionRate"    column="attrition_rate"    />
+        <result property="unitPrice"    column="unit_price"    />
+        <result property="amountPrice"    column="amount_price"    />
+        <result property="abnormalPrompt"    column="abnormal_prompt"    />
+        <result property="customerName"    column="customer_name"    />
+        <result property="freezeNot"    column="freeze_not"    />
+        <result property="sourceMeter"    column="source_meter"    />
+        <result property="meterReader"    column="meter_reader"    />
+        <result property="inputTime"    column="input_time"    />
+    </resultMap>
+
+    <sql id="selectHyMeterVo">
+        select id, house_num, meter_type, meter_serial_num, meter_name, initial_read, meter_str_num, meter_end_num, transf_ratio, reverse_not, strapping_type, meter_read_date, magnification, new_meter_consumption, old_meter_consumption, attrition_rate, unit_price, amount_price, abnormal_prompt, customer_name, freeze_not, source_meter, meter_reader, input_time from hy_meter
+    </sql>
+
+    <select id="selectHyMeterList" parameterType="HyMeter" resultMap="HyMeterResult">
+        <include refid="selectHyMeterVo"/>
+        <where>  
+            <if test="houseNum != null  and houseNum != ''"> and house_num = #{houseNum}</if>
+            <if test="meterType != null "> and meter_type = #{meterType}</if>
+            <if test="meterSerialNum != null "> and meter_serial_num = #{meterSerialNum}</if>
+            <if test="meterName != null  and meterName != ''"> and meter_name like concat('%', #{meterName}, '%')</if>
+            <if test="initialRead != null "> and initial_read = #{initialRead}</if>
+            <if test="meterStrNum != null "> and meter_str_num = #{meterStrNum}</if>
+            <if test="meterEndNum != null "> and meter_end_num = #{meterEndNum}</if>
+            <if test="transfRatio != null "> and transf_ratio = #{transfRatio}</if>
+            <if test="reverseNot != null "> and reverse_not = #{reverseNot}</if>
+            <if test="strappingType != null "> and strapping_type = #{strappingType}</if>
+            <if test="meterReadDate != null "> and meter_read_date = #{meterReadDate}</if>
+            <if test="magnification != null "> and magnification = #{magnification}</if>
+            <if test="newMeterConsumption != null "> and new_meter_consumption = #{newMeterConsumption}</if>
+            <if test="oldMeterConsumption != null "> and old_meter_consumption = #{oldMeterConsumption}</if>
+            <if test="attritionRate != null  and attritionRate != ''"> and attrition_rate = #{attritionRate}</if>
+            <if test="unitPrice != null "> and unit_price = #{unitPrice}</if>
+            <if test="amountPrice != null "> and amount_price = #{amountPrice}</if>
+            <if test="abnormalPrompt != null  and abnormalPrompt != ''"> and abnormal_prompt = #{abnormalPrompt}</if>
+            <if test="customerName != null  and customerName != ''"> and customer_name like concat('%', #{customerName}, '%')</if>
+            <if test="freezeNot != null "> and freeze_not = #{freezeNot}</if>
+            <if test="sourceMeter != null  and sourceMeter != ''"> and source_meter = #{sourceMeter}</if>
+            <if test="meterReader != null  and meterReader != ''"> and meter_reader = #{meterReader}</if>
+            <if test="inputTime != null "> and input_time = #{inputTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyMeterById" parameterType="Long" resultMap="HyMeterResult">
+        <include refid="selectHyMeterVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyMeter" parameterType="HyMeter" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_meter
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="houseNum != null">house_num,</if>
+            <if test="meterType != null">meter_type,</if>
+            <if test="meterSerialNum != null">meter_serial_num,</if>
+            <if test="meterName != null">meter_name,</if>
+            <if test="initialRead != null">initial_read,</if>
+            <if test="meterStrNum != null">meter_str_num,</if>
+            <if test="meterEndNum != null">meter_end_num,</if>
+            <if test="transfRatio != null">transf_ratio,</if>
+            <if test="reverseNot != null">reverse_not,</if>
+            <if test="strappingType != null">strapping_type,</if>
+            <if test="meterReadDate != null">meter_read_date,</if>
+            <if test="magnification != null">magnification,</if>
+            <if test="newMeterConsumption != null">new_meter_consumption,</if>
+            <if test="oldMeterConsumption != null">old_meter_consumption,</if>
+            <if test="attritionRate != null">attrition_rate,</if>
+            <if test="unitPrice != null">unit_price,</if>
+            <if test="amountPrice != null">amount_price,</if>
+            <if test="abnormalPrompt != null">abnormal_prompt,</if>
+            <if test="customerName != null">customer_name,</if>
+            <if test="freezeNot != null">freeze_not,</if>
+            <if test="sourceMeter != null">source_meter,</if>
+            <if test="meterReader != null">meter_reader,</if>
+            <if test="inputTime != null">input_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="houseNum != null">#{houseNum},</if>
+            <if test="meterType != null">#{meterType},</if>
+            <if test="meterSerialNum != null">#{meterSerialNum},</if>
+            <if test="meterName != null">#{meterName},</if>
+            <if test="initialRead != null">#{initialRead},</if>
+            <if test="meterStrNum != null">#{meterStrNum},</if>
+            <if test="meterEndNum != null">#{meterEndNum},</if>
+            <if test="transfRatio != null">#{transfRatio},</if>
+            <if test="reverseNot != null">#{reverseNot},</if>
+            <if test="strappingType != null">#{strappingType},</if>
+            <if test="meterReadDate != null">#{meterReadDate},</if>
+            <if test="magnification != null">#{magnification},</if>
+            <if test="newMeterConsumption != null">#{newMeterConsumption},</if>
+            <if test="oldMeterConsumption != null">#{oldMeterConsumption},</if>
+            <if test="attritionRate != null">#{attritionRate},</if>
+            <if test="unitPrice != null">#{unitPrice},</if>
+            <if test="amountPrice != null">#{amountPrice},</if>
+            <if test="abnormalPrompt != null">#{abnormalPrompt},</if>
+            <if test="customerName != null">#{customerName},</if>
+            <if test="freezeNot != null">#{freezeNot},</if>
+            <if test="sourceMeter != null">#{sourceMeter},</if>
+            <if test="meterReader != null">#{meterReader},</if>
+            <if test="inputTime != null">#{inputTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyMeter" parameterType="HyMeter">
+        update hy_meter
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="houseNum != null">house_num = #{houseNum},</if>
+            <if test="meterType != null">meter_type = #{meterType},</if>
+            <if test="meterSerialNum != null">meter_serial_num = #{meterSerialNum},</if>
+            <if test="meterName != null">meter_name = #{meterName},</if>
+            <if test="initialRead != null">initial_read = #{initialRead},</if>
+            <if test="meterStrNum != null">meter_str_num = #{meterStrNum},</if>
+            <if test="meterEndNum != null">meter_end_num = #{meterEndNum},</if>
+            <if test="transfRatio != null">transf_ratio = #{transfRatio},</if>
+            <if test="reverseNot != null">reverse_not = #{reverseNot},</if>
+            <if test="strappingType != null">strapping_type = #{strappingType},</if>
+            <if test="meterReadDate != null">meter_read_date = #{meterReadDate},</if>
+            <if test="magnification != null">magnification = #{magnification},</if>
+            <if test="newMeterConsumption != null">new_meter_consumption = #{newMeterConsumption},</if>
+            <if test="oldMeterConsumption != null">old_meter_consumption = #{oldMeterConsumption},</if>
+            <if test="attritionRate != null">attrition_rate = #{attritionRate},</if>
+            <if test="unitPrice != null">unit_price = #{unitPrice},</if>
+            <if test="amountPrice != null">amount_price = #{amountPrice},</if>
+            <if test="abnormalPrompt != null">abnormal_prompt = #{abnormalPrompt},</if>
+            <if test="customerName != null">customer_name = #{customerName},</if>
+            <if test="freezeNot != null">freeze_not = #{freezeNot},</if>
+            <if test="sourceMeter != null">source_meter = #{sourceMeter},</if>
+            <if test="meterReader != null">meter_reader = #{meterReader},</if>
+            <if test="inputTime != null">input_time = #{inputTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyMeterById" parameterType="Long">
+        delete from hy_meter where id = #{id}
+    </delete>
+
+    <delete id="deleteHyMeterByIds" parameterType="String">
+        delete from hy_meter where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
