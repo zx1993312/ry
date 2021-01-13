@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改费用减免')" />
+    <th:block th:include="include :: datetimepicker-css" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-remission-edit" th:object="${hyFeeRemission}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">减免业务类型：</label>
+                <div class="col-sm-8">
+                    <select name="businessExemptedType" class="form-control m-b">
+                        <option value="">所有</option>
+                    </select>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">费用名称：</label>
+                <div class="col-sm-8">
+                    <input name="feeName" th:field="*{feeName}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">减免类型：</label>
+                <div class="col-sm-8">
+                    <input name="reliefTypes" th:field="*{reliefTypes}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">减免总金额：</label>
+                <div class="col-sm-8">
+                    <input name="totalAmountDeduction" th:field="*{totalAmountDeduction}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">已减免金额：</label>
+                <div class="col-sm-8">
+                    <input name="reducedAmount" th:field="*{reducedAmount}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">取消减免金额：</label>
+                <div class="col-sm-8">
+                    <input name="cancellationCreditAmount" th:field="*{cancellationCreditAmount}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">每月减免金额：</label>
+                <div class="col-sm-8">
+                    <input name="monthlyDeductionAmount" th:field="*{monthlyDeductionAmount}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">减免比例：</label>
+                <div class="col-sm-8">
+                    <input name="reductionRatio" th:field="*{reductionRatio}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">均摊减免总金额：</label>
+                <div class="col-sm-8">
+                    <input name="sharingTotalDeduction" th:field="*{sharingTotalDeduction}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">开始时间：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input name="timeStr" th:value="${#dates.format(hyFeeRemission.timeStr, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">结束时间：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input name="timeEnd" th:value="${#dates.format(hyFeeRemission.timeEnd, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">减免原因：</label>
+                <div class="col-sm-8">
+                    <input name="exemptionReason" th:field="*{exemptionReason}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">备注：</label>
+                <div class="col-sm-8">
+                    <input name="remarks" th:field="*{remarks}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">是否冲抵修改记录：</label>
+                <div class="col-sm-8">
+                    <input name="offsetModificationRecord" th:field="*{offsetModificationRecord}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">审核状态：</label>
+                <div class="col-sm-8">
+                    <div class="radio-box">
+                        <input type="radio" name="auditStatus" value="">
+                        <label th:for="auditStatus" th:text="未知"></label>
+                    </div>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">税率：</label>
+                <div class="col-sm-8">
+                    <input name="taxRate" th:field="*{taxRate}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">费用日期：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input name="feeDate" th:value="${#dates.format(hyFeeRemission.feeDate, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">应收日期：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input name="dueDate" th:value="${#dates.format(hyFeeRemission.dueDate, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">减免年份：</label>
+                <div class="col-sm-8">
+                    <input name="remissionYear" th:field="*{remissionYear}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">减免月份：</label>
+                <div class="col-sm-8">
+                    <input name="remissionMonth" th:field="*{remissionMonth}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">减免登记人：</label>
+                <div class="col-sm-8">
+                    <input name="exemptionRegistrant" th:field="*{exemptionRegistrant}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">登记时间：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input name="registrationTime" th:value="${#dates.format(hyFeeRemission.registrationTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">是否减免：</label>
+                <div class="col-sm-8">
+                    <input name="reduceNot" th:field="*{reduceNot}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">未减免金额：</label>
+                <div class="col-sm-8">
+                    <input name="amountNotRemitted" th:field="*{amountNotRemitted}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">含税金额：</label>
+                <div class="col-sm-8">
+                    <input name="amountTaxInc" th:field="*{amountTaxInc}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">税费：</label>
+                <div class="col-sm-8">
+                    <input name="taxation" th:field="*{taxation}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">不含税金额：</label>
+                <div class="col-sm-8">
+                    <input name="amountExcludingTax" th:field="*{amountExcludingTax}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">冲抵时间：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input name="offsetTime" th:value="${#dates.format(hyFeeRemission.offsetTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">撤销时间：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input name="cancellationTime" th:value="${#dates.format(hyFeeRemission.cancellationTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">撤销人：</label>
+                <div class="col-sm-8">
+                    <input name="revocation" th:field="*{revocation}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">是否冲销：</label>
+                <div class="col-sm-8">
+                    <input name="writeoffOnt" th:field="*{writeoffOnt}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">冲销时间：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input name="writeoffTime" th:value="${#dates.format(hyFeeRemission.writeoffTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: datetimepicker-js" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/remission";
+        $("#form-remission-edit").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-remission-edit').serialize());
+            }
+        }
+
+        $("input[name='timeStr']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='timeEnd']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='feeDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='dueDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='registrationTime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='offsetTime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='cancellationTime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='writeoffTime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+    </script>
+</body>
+</html>

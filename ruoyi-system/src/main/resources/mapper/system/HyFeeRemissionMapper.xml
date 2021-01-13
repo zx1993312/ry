@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyFeeRemissionMapper">
+    
+    <resultMap type="HyFeeRemission" id="HyFeeRemissionResult">
+        <result property="id"    column="id"    />
+        <result property="businessExemptedType"    column="business_exempted_type"    />
+        <result property="feeName"    column="fee_name"    />
+        <result property="reliefTypes"    column="relief_types"    />
+        <result property="totalAmountDeduction"    column="total_amount_deduction"    />
+        <result property="reducedAmount"    column="reduced_amount"    />
+        <result property="cancellationCreditAmount"    column="cancellation_credit_amount"    />
+        <result property="monthlyDeductionAmount"    column="monthly_deduction_amount"    />
+        <result property="reductionRatio"    column="reduction_ratio"    />
+        <result property="sharingTotalDeduction"    column="sharing_total_deduction"    />
+        <result property="timeStr"    column="time_str"    />
+        <result property="timeEnd"    column="time_end"    />
+        <result property="exemptionReason"    column="exemption_reason"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="offsetModificationRecord"    column="offset_modification_record"    />
+        <result property="auditStatus"    column="audit_status"    />
+        <result property="taxRate"    column="tax_rate"    />
+        <result property="feeDate"    column="fee_date"    />
+        <result property="dueDate"    column="due_date"    />
+        <result property="remissionYear"    column="remission_year"    />
+        <result property="remissionMonth"    column="remission_month"    />
+        <result property="exemptionRegistrant"    column="exemption_registrant"    />
+        <result property="registrationTime"    column="registration_time"    />
+        <result property="reduceNot"    column="reduce_not"    />
+        <result property="amountNotRemitted"    column="amount_not_remitted"    />
+        <result property="amountTaxInc"    column="amount_tax_inc"    />
+        <result property="taxation"    column="taxation"    />
+        <result property="amountExcludingTax"    column="amount_excluding_tax"    />
+        <result property="offsetTime"    column="offset_time"    />
+        <result property="cancellationTime"    column="cancellation_time"    />
+        <result property="revocation"    column="revocation"    />
+        <result property="writeoffOnt"    column="writeoff_ont"    />
+        <result property="writeoffTime"    column="writeoff_time"    />
+    </resultMap>
+
+    <sql id="selectHyFeeRemissionVo">
+        select id, business_exempted_type, fee_name, relief_types, total_amount_deduction, reduced_amount, cancellation_credit_amount, monthly_deduction_amount, reduction_ratio, sharing_total_deduction, time_str, time_end, exemption_reason, remarks, offset_modification_record, audit_status, tax_rate, fee_date, due_date, remission_year, remission_month, exemption_registrant, registration_time, reduce_not, amount_not_remitted, amount_tax_inc, taxation, amount_excluding_tax, offset_time, cancellation_time, revocation, writeoff_ont, writeoff_time from hy_fee_remission
+    </sql>
+
+    <select id="selectHyFeeRemissionList" parameterType="HyFeeRemission" resultMap="HyFeeRemissionResult">
+        <include refid="selectHyFeeRemissionVo"/>
+        <where>  
+            <if test="businessExemptedType != null "> and business_exempted_type = #{businessExemptedType}</if>
+            <if test="feeName != null  and feeName != ''"> and fee_name like concat('%', #{feeName}, '%')</if>
+            <if test="reliefTypes != null "> and relief_types = #{reliefTypes}</if>
+            <if test="totalAmountDeduction != null "> and total_amount_deduction = #{totalAmountDeduction}</if>
+            <if test="reducedAmount != null "> and reduced_amount = #{reducedAmount}</if>
+            <if test="cancellationCreditAmount != null "> and cancellation_credit_amount = #{cancellationCreditAmount}</if>
+            <if test="monthlyDeductionAmount != null "> and monthly_deduction_amount = #{monthlyDeductionAmount}</if>
+            <if test="reductionRatio != null "> and reduction_ratio = #{reductionRatio}</if>
+            <if test="sharingTotalDeduction != null "> and sharing_total_deduction = #{sharingTotalDeduction}</if>
+            <if test="timeStr != null "> and time_str = #{timeStr}</if>
+            <if test="timeEnd != null "> and time_end = #{timeEnd}</if>
+            <if test="exemptionReason != null  and exemptionReason != ''"> and exemption_reason = #{exemptionReason}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="offsetModificationRecord != null  and offsetModificationRecord != ''"> and offset_modification_record = #{offsetModificationRecord}</if>
+            <if test="auditStatus != null "> and audit_status = #{auditStatus}</if>
+            <if test="taxRate != null "> and tax_rate = #{taxRate}</if>
+            <if test="feeDate != null "> and fee_date = #{feeDate}</if>
+            <if test="dueDate != null "> and due_date = #{dueDate}</if>
+            <if test="remissionYear != null  and remissionYear != ''"> and remission_year = #{remissionYear}</if>
+            <if test="remissionMonth != null  and remissionMonth != ''"> and remission_month = #{remissionMonth}</if>
+            <if test="exemptionRegistrant != null  and exemptionRegistrant != ''"> and exemption_registrant = #{exemptionRegistrant}</if>
+            <if test="registrationTime != null "> and registration_time = #{registrationTime}</if>
+            <if test="reduceNot != null "> and reduce_not = #{reduceNot}</if>
+            <if test="amountNotRemitted != null "> and amount_not_remitted = #{amountNotRemitted}</if>
+            <if test="amountTaxInc != null "> and amount_tax_inc = #{amountTaxInc}</if>
+            <if test="taxation != null "> and taxation = #{taxation}</if>
+            <if test="amountExcludingTax != null "> and amount_excluding_tax = #{amountExcludingTax}</if>
+            <if test="offsetTime != null "> and offset_time = #{offsetTime}</if>
+            <if test="cancellationTime != null "> and cancellation_time = #{cancellationTime}</if>
+            <if test="revocation != null  and revocation != ''"> and revocation = #{revocation}</if>
+            <if test="writeoffOnt != null "> and writeoff_ont = #{writeoffOnt}</if>
+            <if test="writeoffTime != null "> and writeoff_time = #{writeoffTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyFeeRemissionById" parameterType="Long" resultMap="HyFeeRemissionResult">
+        <include refid="selectHyFeeRemissionVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyFeeRemission" parameterType="HyFeeRemission" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_fee_remission
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="businessExemptedType != null">business_exempted_type,</if>
+            <if test="feeName != null">fee_name,</if>
+            <if test="reliefTypes != null">relief_types,</if>
+            <if test="totalAmountDeduction != null">total_amount_deduction,</if>
+            <if test="reducedAmount != null">reduced_amount,</if>
+            <if test="cancellationCreditAmount != null">cancellation_credit_amount,</if>
+            <if test="monthlyDeductionAmount != null">monthly_deduction_amount,</if>
+            <if test="reductionRatio != null">reduction_ratio,</if>
+            <if test="sharingTotalDeduction != null">sharing_total_deduction,</if>
+            <if test="timeStr != null">time_str,</if>
+            <if test="timeEnd != null">time_end,</if>
+            <if test="exemptionReason != null">exemption_reason,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="offsetModificationRecord != null">offset_modification_record,</if>
+            <if test="auditStatus != null">audit_status,</if>
+            <if test="taxRate != null">tax_rate,</if>
+            <if test="feeDate != null">fee_date,</if>
+            <if test="dueDate != null">due_date,</if>
+            <if test="remissionYear != null">remission_year,</if>
+            <if test="remissionMonth != null">remission_month,</if>
+            <if test="exemptionRegistrant != null">exemption_registrant,</if>
+            <if test="registrationTime != null">registration_time,</if>
+            <if test="reduceNot != null">reduce_not,</if>
+            <if test="amountNotRemitted != null">amount_not_remitted,</if>
+            <if test="amountTaxInc != null">amount_tax_inc,</if>
+            <if test="taxation != null">taxation,</if>
+            <if test="amountExcludingTax != null">amount_excluding_tax,</if>
+            <if test="offsetTime != null">offset_time,</if>
+            <if test="cancellationTime != null">cancellation_time,</if>
+            <if test="revocation != null">revocation,</if>
+            <if test="writeoffOnt != null">writeoff_ont,</if>
+            <if test="writeoffTime != null">writeoff_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="businessExemptedType != null">#{businessExemptedType},</if>
+            <if test="feeName != null">#{feeName},</if>
+            <if test="reliefTypes != null">#{reliefTypes},</if>
+            <if test="totalAmountDeduction != null">#{totalAmountDeduction},</if>
+            <if test="reducedAmount != null">#{reducedAmount},</if>
+            <if test="cancellationCreditAmount != null">#{cancellationCreditAmount},</if>
+            <if test="monthlyDeductionAmount != null">#{monthlyDeductionAmount},</if>
+            <if test="reductionRatio != null">#{reductionRatio},</if>
+            <if test="sharingTotalDeduction != null">#{sharingTotalDeduction},</if>
+            <if test="timeStr != null">#{timeStr},</if>
+            <if test="timeEnd != null">#{timeEnd},</if>
+            <if test="exemptionReason != null">#{exemptionReason},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="offsetModificationRecord != null">#{offsetModificationRecord},</if>
+            <if test="auditStatus != null">#{auditStatus},</if>
+            <if test="taxRate != null">#{taxRate},</if>
+            <if test="feeDate != null">#{feeDate},</if>
+            <if test="dueDate != null">#{dueDate},</if>
+            <if test="remissionYear != null">#{remissionYear},</if>
+            <if test="remissionMonth != null">#{remissionMonth},</if>
+            <if test="exemptionRegistrant != null">#{exemptionRegistrant},</if>
+            <if test="registrationTime != null">#{registrationTime},</if>
+            <if test="reduceNot != null">#{reduceNot},</if>
+            <if test="amountNotRemitted != null">#{amountNotRemitted},</if>
+            <if test="amountTaxInc != null">#{amountTaxInc},</if>
+            <if test="taxation != null">#{taxation},</if>
+            <if test="amountExcludingTax != null">#{amountExcludingTax},</if>
+            <if test="offsetTime != null">#{offsetTime},</if>
+            <if test="cancellationTime != null">#{cancellationTime},</if>
+            <if test="revocation != null">#{revocation},</if>
+            <if test="writeoffOnt != null">#{writeoffOnt},</if>
+            <if test="writeoffTime != null">#{writeoffTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyFeeRemission" parameterType="HyFeeRemission">
+        update hy_fee_remission
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="businessExemptedType != null">business_exempted_type = #{businessExemptedType},</if>
+            <if test="feeName != null">fee_name = #{feeName},</if>
+            <if test="reliefTypes != null">relief_types = #{reliefTypes},</if>
+            <if test="totalAmountDeduction != null">total_amount_deduction = #{totalAmountDeduction},</if>
+            <if test="reducedAmount != null">reduced_amount = #{reducedAmount},</if>
+            <if test="cancellationCreditAmount != null">cancellation_credit_amount = #{cancellationCreditAmount},</if>
+            <if test="monthlyDeductionAmount != null">monthly_deduction_amount = #{monthlyDeductionAmount},</if>
+            <if test="reductionRatio != null">reduction_ratio = #{reductionRatio},</if>
+            <if test="sharingTotalDeduction != null">sharing_total_deduction = #{sharingTotalDeduction},</if>
+            <if test="timeStr != null">time_str = #{timeStr},</if>
+            <if test="timeEnd != null">time_end = #{timeEnd},</if>
+            <if test="exemptionReason != null">exemption_reason = #{exemptionReason},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="offsetModificationRecord != null">offset_modification_record = #{offsetModificationRecord},</if>
+            <if test="auditStatus != null">audit_status = #{auditStatus},</if>
+            <if test="taxRate != null">tax_rate = #{taxRate},</if>
+            <if test="feeDate != null">fee_date = #{feeDate},</if>
+            <if test="dueDate != null">due_date = #{dueDate},</if>
+            <if test="remissionYear != null">remission_year = #{remissionYear},</if>
+            <if test="remissionMonth != null">remission_month = #{remissionMonth},</if>
+            <if test="exemptionRegistrant != null">exemption_registrant = #{exemptionRegistrant},</if>
+            <if test="registrationTime != null">registration_time = #{registrationTime},</if>
+            <if test="reduceNot != null">reduce_not = #{reduceNot},</if>
+            <if test="amountNotRemitted != null">amount_not_remitted = #{amountNotRemitted},</if>
+            <if test="amountTaxInc != null">amount_tax_inc = #{amountTaxInc},</if>
+            <if test="taxation != null">taxation = #{taxation},</if>
+            <if test="amountExcludingTax != null">amount_excluding_tax = #{amountExcludingTax},</if>
+            <if test="offsetTime != null">offset_time = #{offsetTime},</if>
+            <if test="cancellationTime != null">cancellation_time = #{cancellationTime},</if>
+            <if test="revocation != null">revocation = #{revocation},</if>
+            <if test="writeoffOnt != null">writeoff_ont = #{writeoffOnt},</if>
+            <if test="writeoffTime != null">writeoff_time = #{writeoffTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyFeeRemissionById" parameterType="Long">
+        delete from hy_fee_remission where id = #{id}
+    </delete>
+
+    <delete id="deleteHyFeeRemissionByIds" parameterType="String">
+        delete from hy_fee_remission where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

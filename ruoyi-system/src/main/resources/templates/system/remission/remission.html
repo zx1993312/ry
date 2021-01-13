@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('费用减免列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>减免业务类型：</label>
+                                <select name="businessExemptedType">
+                                    <option value="">所有</option>
+                                    <option value="-1">代码生成请选择字典属性</option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>费用名称：</label>
+                                <input type="text" name="feeName"/>
+                            </li>
+                            <li>
+                                <label>减免类型：</label>
+                                <input type="text" name="reliefTypes"/>
+                            </li>
+                            <li>
+                                <label>减免总金额：</label>
+                                <input type="text" name="totalAmountDeduction"/>
+                            </li>
+                            <li>
+                                <label>已减免金额：</label>
+                                <input type="text" name="reducedAmount"/>
+                            </li>
+                            <li>
+                                <label>取消减免金额：</label>
+                                <input type="text" name="cancellationCreditAmount"/>
+                            </li>
+                            <li>
+                                <label>每月减免金额：</label>
+                                <input type="text" name="monthlyDeductionAmount"/>
+                            </li>
+                            <li>
+                                <label>减免比例：</label>
+                                <input type="text" name="reductionRatio"/>
+                            </li>
+                            <li>
+                                <label>均摊减免总金额：</label>
+                                <input type="text" name="sharingTotalDeduction"/>
+                            </li>
+                            <li>
+                                <label>开始时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择开始时间" name="timeStr"/>
+                            </li>
+                            <li>
+                                <label>结束时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择结束时间" name="timeEnd"/>
+                            </li>
+                            <li>
+                                <label>减免原因：</label>
+                                <input type="text" name="exemptionReason"/>
+                            </li>
+                            <li>
+                                <label>备注：</label>
+                                <input type="text" name="remarks"/>
+                            </li>
+                            <li>
+                                <label>是否冲抵修改记录：</label>
+                                <input type="text" name="offsetModificationRecord"/>
+                            </li>
+                            <li>
+                                <label>审核状态：</label>
+                                <select name="auditStatus">
+                                    <option value="">所有</option>
+                                    <option value="-1">代码生成请选择字典属性</option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>税率：</label>
+                                <input type="text" name="taxRate"/>
+                            </li>
+                            <li>
+                                <label>费用日期：</label>
+                                <input type="text" class="time-input" placeholder="请选择费用日期" name="feeDate"/>
+                            </li>
+                            <li>
+                                <label>应收日期：</label>
+                                <input type="text" class="time-input" placeholder="请选择应收日期" name="dueDate"/>
+                            </li>
+                            <li>
+                                <label>减免年份：</label>
+                                <input type="text" name="remissionYear"/>
+                            </li>
+                            <li>
+                                <label>减免月份：</label>
+                                <input type="text" name="remissionMonth"/>
+                            </li>
+                            <li>
+                                <label>减免登记人：</label>
+                                <input type="text" name="exemptionRegistrant"/>
+                            </li>
+                            <li>
+                                <label>登记时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择登记时间" name="registrationTime"/>
+                            </li>
+                            <li>
+                                <label>是否减免：</label>
+                                <input type="text" name="reduceNot"/>
+                            </li>
+                            <li>
+                                <label>未减免金额：</label>
+                                <input type="text" name="amountNotRemitted"/>
+                            </li>
+                            <li>
+                                <label>含税金额：</label>
+                                <input type="text" name="amountTaxInc"/>
+                            </li>
+                            <li>
+                                <label>税费：</label>
+                                <input type="text" name="taxation"/>
+                            </li>
+                            <li>
+                                <label>不含税金额：</label>
+                                <input type="text" name="amountExcludingTax"/>
+                            </li>
+                            <li>
+                                <label>冲抵时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择冲抵时间" name="offsetTime"/>
+                            </li>
+                            <li>
+                                <label>撤销时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择撤销时间" name="cancellationTime"/>
+                            </li>
+                            <li>
+                                <label>撤销人：</label>
+                                <input type="text" name="revocation"/>
+                            </li>
+                            <li>
+                                <label>是否冲销：</label>
+                                <input type="text" name="writeoffOnt"/>
+                            </li>
+                            <li>
+                                <label>冲销时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择冲销时间" name="writeoffTime"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:remission:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:remission:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:remission:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:remission:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:remission:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:remission:remove')}]];
+        var prefix = ctx + "system/remission";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "费用减免",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '主键',
+                    visible: false
+                },
+                {
+                    field: 'businessExemptedType',
+                    title: '减免业务类型'
+                },
+                {
+                    field: 'feeName',
+                    title: '费用名称'
+                },
+                {
+                    field: 'reliefTypes',
+                    title: '减免类型'
+                },
+                {
+                    field: 'totalAmountDeduction',
+                    title: '减免总金额'
+                },
+                {
+                    field: 'reducedAmount',
+                    title: '已减免金额'
+                },
+                {
+                    field: 'cancellationCreditAmount',
+                    title: '取消减免金额'
+                },
+                {
+                    field: 'monthlyDeductionAmount',
+                    title: '每月减免金额'
+                },
+                {
+                    field: 'reductionRatio',
+                    title: '减免比例'
+                },
+                {
+                    field: 'sharingTotalDeduction',
+                    title: '均摊减免总金额'
+                },
+                {
+                    field: 'timeStr',
+                    title: '开始时间'
+                },
+                {
+                    field: 'timeEnd',
+                    title: '结束时间'
+                },
+                {
+                    field: 'exemptionReason',
+                    title: '减免原因'
+                },
+                {
+                    field: 'remarks',
+                    title: '备注'
+                },
+                {
+                    field: 'offsetModificationRecord',
+                    title: '是否冲抵修改记录'
+                },
+                {
+                    field: 'auditStatus',
+                    title: '审核状态'
+                },
+                {
+                    field: 'taxRate',
+                    title: '税率'
+                },
+                {
+                    field: 'feeDate',
+                    title: '费用日期'
+                },
+                {
+                    field: 'dueDate',
+                    title: '应收日期'
+                },
+                {
+                    field: 'remissionYear',
+                    title: '减免年份'
+                },
+                {
+                    field: 'remissionMonth',
+                    title: '减免月份'
+                },
+                {
+                    field: 'exemptionRegistrant',
+                    title: '减免登记人'
+                },
+                {
+                    field: 'registrationTime',
+                    title: '登记时间'
+                },
+                {
+                    field: 'reduceNot',
+                    title: '是否减免'
+                },
+                {
+                    field: 'amountNotRemitted',
+                    title: '未减免金额'
+                },
+                {
+                    field: 'amountTaxInc',
+                    title: '含税金额'
+                },
+                {
+                    field: 'taxation',
+                    title: '税费'
+                },
+                {
+                    field: 'amountExcludingTax',
+                    title: '不含税金额'
+                },
+                {
+                    field: 'offsetTime',
+                    title: '冲抵时间'
+                },
+                {
+                    field: 'cancellationTime',
+                    title: '撤销时间'
+                },
+                {
+                    field: 'revocation',
+                    title: '撤销人'
+                },
+                {
+                    field: 'writeoffOnt',
+                    title: '是否冲销'
+                },
+                {
+                    field: 'writeoffTime',
+                    title: '冲销时间'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>
