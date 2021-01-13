@@ -3,7 +3,7 @@ package com.ruoyi.system.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ruoyi.system.mapper.HyDataIsExistMapper;
+import com.ruoyi.system.mapper.HyCommonMapper;
 import com.ruoyi.system.service.IHyDataIsExistService;
 import com.ruoyi.system.utils.HyDataUtil;
 
@@ -17,7 +17,7 @@ import com.ruoyi.system.utils.HyDataUtil;
 public class IHyDataIsExistServiceImpl implements IHyDataIsExistService {
 
 	@Autowired
-	private HyDataIsExistMapper hyDataIsExistMapper;
+	private HyCommonMapper hyCommonMapper;
 
 	/**
 	 * 校验数据是否重复
@@ -29,7 +29,7 @@ public class IHyDataIsExistServiceImpl implements IHyDataIsExistService {
 	 */
 	@Override
 	public Object selectHyDataIsExist(String tableName, String fieldName, Object param) {
-		return hyDataIsExistMapper.selectHyDataIsExist(HyDataUtil.setData(tableName, fieldName, param));
+		return hyCommonMapper.selectHyDataIsExist(HyDataUtil.setData(tableName, fieldName, param));
 	}
 
 }

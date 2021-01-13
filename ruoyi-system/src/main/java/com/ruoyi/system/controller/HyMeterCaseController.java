@@ -28,8 +28,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 /**
- * 箱
-Controller
+ * 箱 Controller
  * 
  * @author Administrator
  * @date 2021-01-12
@@ -37,131 +36,108 @@ Controller
 @Controller
 @RequestMapping("/system/case")
 @Api(tags = "箱Controller")
-public class HyMeterCaseController extends BaseController
-{
-    private String prefix = "system/case";
+public class HyMeterCaseController extends BaseController {
+	private String prefix = "system/case";
 
-    @Autowired
-    private IHyMeterCaseService hyMeterCaseService;
+	@Autowired
+	private IHyMeterCaseService hyMeterCaseService;
 
-    @RequiresPermissions("system:case:view")
-    @GetMapping()
-    public String cases()
-    {
-        return prefix + "/case";
-    }
+	@RequiresPermissions("system:case:view")
+	@GetMapping()
+	public String cases() {
+		return prefix + "/case";
+	}
 
-    /**
-     * 查询箱
-列表
-     */
-    @ApiOperation("箱")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyMeterCase", value = "项目实体类hyMeterCase", required = true),
-	})
-    @RequiresPermissions("system:case:list")
-    @PostMapping("/list")
-    @ResponseBody
-    public TableDataInfo list(HyMeterCase hyMeterCase)
-    {
-        startPage();
-        List<HyMeterCase> list = hyMeterCaseService.selectHyMeterCaseList(hyMeterCase);
-        return getDataTable(list);
-    }
+	/**
+	 * 查询箱 列表
+	 */
+	@ApiOperation("箱")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyMeterCase", value = "项目实体类hyMeterCase", required = true), })
+	@RequiresPermissions("system:case:list")
+	@PostMapping("/list")
+	@ResponseBody
+	public TableDataInfo list(HyMeterCase hyMeterCase) {
+		startPage();
+		List<HyMeterCase> list = hyMeterCaseService.selectHyMeterCaseList(hyMeterCase);
+		return getDataTable(list);
+	}
 
-    /**
-     * 导出箱
-列表
-     */
-    @ApiOperation("箱")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyMeterCase", value = "项目实体类hyMeterCase", required = true),
-	})
-    @RequiresPermissions("system:case:export")
-    @Log(title = "箱", businessType = BusinessType.EXPORT)
-    @PostMapping("/export")
-    @ResponseBody
-    public AjaxResult export(HyMeterCase hyMeterCase)
-    {
-        List<HyMeterCase> list = hyMeterCaseService.selectHyMeterCaseList(hyMeterCase);
-        ExcelUtil<HyMeterCase> util = new ExcelUtil<HyMeterCase>(HyMeterCase.class);
-        return util.exportExcel(list, "case");
-    }
+	/**
+	 * 导出箱 列表
+	 */
+	@ApiOperation("箱")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyMeterCase", value = "项目实体类hyMeterCase", required = true), })
+	@RequiresPermissions("system:case:export")
+	@Log(title = "箱", businessType = BusinessType.EXPORT)
+	@PostMapping("/export")
+	@ResponseBody
+	public AjaxResult export(HyMeterCase hyMeterCase) {
+		List<HyMeterCase> list = hyMeterCaseService.selectHyMeterCaseList(hyMeterCase);
+		ExcelUtil<HyMeterCase> util = new ExcelUtil<HyMeterCase>(HyMeterCase.class);
+		return util.exportExcel(list, "case");
+	}
 
-    /**
-     * 新增箱
+	/**
+	 * 新增箱
+	 * 
+	 */
+	@GetMapping("/add")
+	public String add(MeterAndCase meterAndCase) {
+		return prefix + "/add";
+	}
 
-     */
-    @GetMapping("/add")
-    public String add(MeterAndCase meterAndCase)
-    {
-        return prefix + "/add";
-    }
+	/**
+	 * 新增保存箱
+	 * 
+	 */
+	@ApiOperation("箱")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyMeterCase", value = "项目实体类hyMeterCase", required = true), })
+	@RequiresPermissions("system:case:add")
+	@Log(title = "箱", businessType = BusinessType.INSERT)
+	@PostMapping("/add")
+	@ResponseBody
+	public AjaxResult addSave(MeterAndCase meterAndCase) {
+		return toAjax(hyMeterCaseService.insertHyMeterCase(meterAndCase));
+	}
 
-    /**
-     * 新增保存箱
+	/**
+	 * 修改箱
+	 * 
+	 */
+	@ApiOperation("箱")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "id", value = "主键id", required = true), })
+	@GetMapping("/edit/{id}")
+	public String edit(@PathVariable("id") Long id, ModelMap mmap) {
+		HyMeterCase hyMeterCase = hyMeterCaseService.selectHyMeterCaseById(id);
+		mmap.put("hyMeterCase", hyMeterCase);
+		return prefix + "/edit";
+	}
 
-     */
-    @ApiOperation("箱")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyMeterCase", value = "项目实体类hyMeterCase", required = true),
-	})
-    @RequiresPermissions("system:case:add")
-    @Log(title = "箱", businessType = BusinessType.INSERT)
-    @PostMapping("/add")
-    @ResponseBody
-    public AjaxResult addSave(MeterAndCase meterAndCase)
-    {
-        return toAjax(hyMeterCaseService.insertHyMeterCase(meterAndCase));
-    }
+	/**
+	 * 修改保存箱
+	 * 
+	 */
+	@ApiOperation("箱")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyMeterCase", value = "项目实体类hyMeterCase", required = true), })
+	@RequiresPermissions("system:case:edit")
+	@Log(title = "箱", businessType = BusinessType.UPDATE)
+	@RequestMapping("/edit")
+	@ResponseBody
+	public AjaxResult editSave(HyMeterCase hyMeterCase) {
+		return toAjax(hyMeterCaseService.updateHyMeterCase(hyMeterCase));
+	}
 
-    /**
-     * 修改箱
-
-     */
-    @ApiOperation("箱")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "id", value = "主键id", required = true),
-	})
-    @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Long id, ModelMap mmap)
-    {
-        HyMeterCase hyMeterCase = hyMeterCaseService.selectHyMeterCaseById(id);
-        mmap.put("hyMeterCase", hyMeterCase);
-        return prefix + "/edit";
-    }
-
-    /**
-     * 修改保存箱
-
-     */
-    @ApiOperation("箱")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyMeterCase", value = "项目实体类hyMeterCase", required = true),
-	})
-    @RequiresPermissions("system:case:edit")
-    @Log(title = "箱", businessType = BusinessType.UPDATE)
-    @RequestMapping("/edit")
-    @ResponseBody
-    public AjaxResult editSave(HyMeterCase hyMeterCase)
-    {
-        return toAjax(hyMeterCaseService.updateHyMeterCase(hyMeterCase));
-    }
-
-    /**
-     * 删除箱
-
-     */
-    @ApiOperation("箱")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "ids", value = "ids", required = true),
-	})
-    @RequiresPermissions("system:case:remove")
-    @Log(title = "箱", businessType = BusinessType.DELETE)
-    @PostMapping( "/remove")
-    @ResponseBody
-    public AjaxResult remove(String ids)
-    {
-        return toAjax(hyMeterCaseService.deleteHyMeterCaseByIds(ids));
-    }
+	/**
+	 * 删除箱
+	 * 
+	 */
+	@ApiOperation("箱")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "ids", value = "ids", required = true), })
+	@RequiresPermissions("system:case:remove")
+	@Log(title = "箱", businessType = BusinessType.DELETE)
+	@PostMapping("/remove")
+	@ResponseBody
+	public AjaxResult remove(String ids) {
+		return toAjax(hyMeterCaseService.deleteHyMeterCaseByIds(ids));
+	}
 }

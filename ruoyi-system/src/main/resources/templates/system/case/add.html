@@ -6,7 +6,7 @@
 </head>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-case-add">
+        <form class="form-horizontal m" id="form-case-add" th:object="${meterAndCase}">
             <div class="form-group">    
                 <label class="col-sm-3 control-label">表箱名称：</label>
                 <div class="col-sm-8">
@@ -25,6 +25,18 @@
                     <input name="meterSerial" class="form-control" type="text" hidden="meterSerial">
                 </div>
             </div>
+            <input name="houseNum" th:field="*{houseNum}" class="form-control" type="hidden" >
+            <input name="meterType" th:field="*{meterType}"  class="form-control" type="hidden" >
+            <input name="meterSerialNum" th:field="*{meterSerialNum}" class="form-control" type="hidden" >
+            <input name="meterName" th:field="*{meterName}" class="form-control" type="hidden" >
+            <input name="initialRead" th:field="*{initialRead}" class="form-control" type="hidden" >
+            <input name="transfRatio" th:field="*{transfRatio}" class="form-control" type="hidden" >
+            <input name="reverseNot" th:field="*{reverseNot}" class="form-control" type="hidden" >
+            <input name="strappingType" th:field="*{strappingType}" class="form-control" type="hidden" >
+            <input name="meterCaseName" th:field="*{meterCaseName}" class="form-control" type="hidden" >
+            <input name="meterCasePosition" th:field="*{meterCasePosition}" class="form-control" type="hidden" >
+            <input name="meterSerial" th:field="*{meterSerial}" class="form-control" type="hidden" >
+           
         </form>
     </div>
     <th:block th:include="include :: footer" />

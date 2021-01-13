@@ -80,23 +80,17 @@
         var prefix = ctx + "system/meter"
         
         function meterCase(){
-        	$('#form-meter-add').ajaxSubmit({
-      	      type: 'post', // 提交方式 get/post
-              url: '/system/case/add', // 需要提交的 url
-              data: {
-                  'houseNum': $('#houseNum').val(),
-                  'meterType':$('#meterType').val(),
-                  'meterSerialNum':$('#meterSerialNum').val(),
-                  'meterName':$('#meterName').val(),
-                  'initialRead':$('#initialRead').val(),
-                  'transfRatio':$('#transfRatio').val(),
-                  'reverseNot':$('#reverseNot').val(),
-                  'strappingType':$('strappingType').val(),
-                  'meterCaseName':$('#meterCaseName').val(),
-                  'meterCasePosition':$('meterCasePosition').val(),   
-                  'meterSerial':$('#meterSerial').val(),
-              },
-    	});
+        	$("#form-meter-add").attr("houseNum", $('#houseNum').val());
+        	$("#form-meter-add").attr("meterType",$('#meterType').val());
+        	$("#form-meter-add").attr("meterSerialNum",$('#meterSerialNum').val());
+        	$("#form-meter-add").attr("meterName",$('#meterName').val());
+        	$("#form-meter-add").attr("initialRead",$('#initialRead').val());
+        	$("#form-meter-add").attr("transfRatio",$('#transfRatio').val());
+        	$("#form-meter-add").attr("reverseNot",$('#reverseNot').val());
+        	$("#form-meter-add").attr("strappingType",$('strappingType').val());
+        	$("#form-meter-add").attr("meterCaseName",$('#meterCaseName').val());
+        	$("#form-meter-add").attr("meterCasePosition",$('meterCasePosition').val());
+        	$("#form-meter-add").attr("meterSerial",$('#meterSerial').val());
         	
         	$("#form-meter-add").attr("action","/system/case/add");
         	$("#form-meter-add").submit();

@@ -3,8 +3,11 @@ package com.ruoyi.system.service.impl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.ruoyi.system.mapper.HyCommonMapper;
 import com.ruoyi.system.mapper.HyMeterCaseMapper;
 import com.ruoyi.system.mapper.HyMeterMapper;
+import com.ruoyi.system.constants.Constants;
 import com.ruoyi.system.domain.HyMeter;
 import com.ruoyi.system.domain.HyMeterCase;
 import com.ruoyi.system.domain.MeterAndCase;
@@ -24,6 +27,9 @@ public class HyMeterCaseServiceImpl implements IHyMeterCaseService {
 
 	@Autowired
 	private HyMeterMapper hyMeterMapper;
+
+	@Autowired
+	private HyCommonMapper hyCommonMapper;
 
 	/**
 	 * 查询箱
@@ -61,21 +67,17 @@ public class HyMeterCaseServiceImpl implements IHyMeterCaseService {
 	 */
 	@Override
 	public int insertHyMeterCase(MeterAndCase meterAndCase) {
+
 		HyMeter hyMeter = new HyMeter();
-		hyMeter.setHouseNum(meterAndCase.getHouseNum());
-		hyMeter.setMeterType(meterAndCase.getMeterType());
-		hyMeter.setMeterSerialNum(meterAndCase.getMeterSerialNum());
-		hyMeter.setMeterName(meterAndCase.getMeterName());
-		hyMeter.setInitialRead(meterAndCase.getInitialRead());
-		hyMeter.setTransfRatio(meterAndCase.getTransfRatio());
-		hyMeter.setReverseNot(meterAndCase.getReverseNot());
-		hyMeter.setStrappingType(meterAndCase.getStrappingType());
+		HyMeter getHyMeter = (HyMeter) Constants.REFLECT_UTIL.convertBean(hyMeter, meterAndCase);
+
 		HyMeterCase hyMeterCase = new HyMeterCase();
-		hyMeterCase.setMeterCaseName(meterAndCase.getMeterCaseName());
-		hyMeterCase.setMeterCasePosition(meterAndCase.getMeterCasePosition());
-		hyMeterCase.setMeterSerial(meterAndCase.getMeterCasePosition());
-		if (hyMeterMapper.insertHyMeter(hyMeter) >= 1) {
-			return hyMeterCaseMapper.insertHyMeterCase(hyMeterCase);
+		HyMeterCase getHyMeterCase = (HyMeterCase) Constants.REFLECT_UTIL.convertBean(hyMeterCase, meterAndCase);
+		String value = hyCommonMapper.selectNextValue("hy_database", "hy_meter");
+		getHyMeterCase.setCaseId(Integer.valueOf(value));
+
+		if (hyMeterMapper.insertHyMeter(getHyMeter) >= 1) {
+			return hyMeterCaseMapper.insertHyMeterCase(getHyMeterCase);
 		}
 		return -1;
 	}

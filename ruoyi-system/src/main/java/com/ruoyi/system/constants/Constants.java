@@ -1,5 +1,7 @@
 package com.ruoyi.system.constants;
 
+import java.text.SimpleDateFormat;
+
 import com.ruoyi.system.utils.ReflectUtil;
 
 /**
@@ -29,5 +31,13 @@ public class Constants {
 	public static final String CHARACTER = "Character";
 
 	public static final String STRING = "String";
+
+	public static final SimpleDateFormat TIME_ALL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 时间转换年月日时分秒
+
+	public static final SimpleDateFormat TIME_YEAR_MONTH_DAY = new SimpleDateFormat("yyyy-MM-dd");// 时间转换年月日
+
+	public static final SimpleDateFormat TIME_HOUR_MINUTE_SECOND = new SimpleDateFormat("HH:mm:ss");// 时间转换时分秒
+
+	public static final SimpleDateFormat TIME_HOUR_MINUTE = new SimpleDateFormat("HH:mm");// 时间转换时分
 
 }
