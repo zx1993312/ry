@@ -2,9 +2,8 @@ package com.ruoyi.system.domain;
 
 import java.math.BigDecimal;
 import java.util.Date;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 import com.ruoyi.system.annotation.EnumAnn;
@@ -151,311 +150,292 @@ public class HyParkingInf extends BaseEntity
     /** 计费周期 */
     @Excel(name = "计费周期")
     private String bilingCycle;
+    
+    @Excel(name="车位名称")
+    private String parkingName;
 
-    public void setId(Long id) 
-    {
-        this.id = id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public Long getId() 
-    {
-        return id;
-    }
-    public void setParkingArea(String parkingArea) 
-    {
-        this.parkingArea = parkingArea;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getParkingArea() 
-    {
-        return parkingArea;
-    }
-    public void setParkingType(String parkingType) 
-    {
-        this.parkingType = parkingType;
-    }
+	public String getParkingArea() {
+		return parkingArea;
+	}
 
-    public String getParkingType() 
-    {
-        return parkingType;
-    }
-    public void setParkingClass(String parkingClass) 
-    {
-        this.parkingClass = parkingClass;
-    }
+	public void setParkingArea(String parkingArea) {
+		this.parkingArea = parkingArea;
+	}
 
-    public String getParkingClass() 
-    {
-        return parkingClass;
-    }
-    public void setParkingNumber(String parkingNumber) 
-    {
-        this.parkingNumber = parkingNumber;
-    }
+	public String getParkingType() {
+		return parkingType;
+	}
 
-    public String getParkingNumber() 
-    {
-        return parkingNumber;
-    }
-    public void setContractDeliveryDate(Date contractDeliveryDate) 
-    {
-        this.contractDeliveryDate = contractDeliveryDate;
-    }
+	public void setParkingType(String parkingType) {
+		this.parkingType = parkingType;
+	}
 
-    public Date getContractDeliveryDate() 
-    {
-        return contractDeliveryDate;
-    }
-    public void setActualDeliveryDate(Date actualDeliveryDate) 
-    {
-        this.actualDeliveryDate = actualDeliveryDate;
-    }
+	public String getParkingClass() {
+		return parkingClass;
+	}
 
-    public Date getActualDeliveryDate() 
-    {
-        return actualDeliveryDate;
-    }
-    public void setTakeoverTime(Date takeoverTime) 
-    {
-        this.takeoverTime = takeoverTime;
-    }
+	public void setParkingClass(String parkingClass) {
+		this.parkingClass = parkingClass;
+	}
 
-    public Date getTakeoverTime() 
-    {
-        return takeoverTime;
-    }
-    public void setChargingStandard(String chargingStandard) 
-    {
-        this.chargingStandard = chargingStandard;
-    }
+	public String getParkingNumber() {
+		return parkingNumber;
+	}
 
-    public String getChargingStandard() 
-    {
-        return chargingStandard;
-    }
-    public void setCurrentState(String currentState) 
-    {
-        this.currentState = currentState;
-    }
+	public void setParkingNumber(String parkingNumber) {
+		this.parkingNumber = parkingNumber;
+	}
 
-    public String getCurrentState() 
-    {
-        return currentState;
-    }
-    public void setOwnerName(String ownerName) 
-    {
-        this.ownerName = ownerName;
-    }
+	public Date getContractDeliveryDate() {
+		return contractDeliveryDate;
+	}
 
-    public String getOwnerName() 
-    {
-        return ownerName;
-    }
-    public void setHouseNumber(String houseNumber) 
-    {
-        this.houseNumber = houseNumber;
-    }
+	public void setContractDeliveryDate(Date contractDeliveryDate) {
+		this.contractDeliveryDate = contractDeliveryDate;
+	}
 
-    public String getHouseNumber() 
-    {
-        return houseNumber;
-    }
-    public void setHouseName(String houseName) 
-    {
-        this.houseName = houseName;
-    }
+	public Date getActualDeliveryDate() {
+		return actualDeliveryDate;
+	}
 
-    public String getHouseName() 
-    {
-        return houseName;
-    }
-    public void setHouseProperty(Integer houseProperty) 
-    {
-        this.houseProperty = houseProperty;
-    }
+	public void setActualDeliveryDate(Date actualDeliveryDate) {
+		this.actualDeliveryDate = actualDeliveryDate;
+	}
 
-    public Integer getHouseProperty() 
-    {
-        return houseProperty;
-    }
-    public void setHouseNature(Integer houseNature) 
-    {
-        this.houseNature = houseNature;
-    }
+	public Date getTakeoverTime() {
+		return takeoverTime;
+	}
 
-    public Integer getHouseNature() 
-    {
-        return houseNature;
-    }
-    public void setParkingCard(String parkingCard) 
-    {
-        this.parkingCard = parkingCard;
-    }
+	public void setTakeoverTime(Date takeoverTime) {
+		this.takeoverTime = takeoverTime;
+	}
 
-    public String getParkingCard() 
-    {
-        return parkingCard;
-    }
-    public void setLicensePlate(String licensePlate) 
-    {
-        this.licensePlate = licensePlate;
-    }
+	public String getChargingStandard() {
+		return chargingStandard;
+	}
 
-    public String getLicensePlate() 
-    {
-        return licensePlate;
-    }
-    public void setVehicleType(String vehicleType) 
-    {
-        this.vehicleType = vehicleType;
-    }
+	public void setChargingStandard(String chargingStandard) {
+		this.chargingStandard = chargingStandard;
+	}
 
-    public String getVehicleType() 
-    {
-        return vehicleType;
-    }
-    public void setVehicleBrand(String vehicleBrand) 
-    {
-        this.vehicleBrand = vehicleBrand;
-    }
+	public String getCurrentState() {
+		return currentState;
+	}
 
-    public String getVehicleBrand() 
-    {
-        return vehicleBrand;
-    }
-    public void setDisplacement(BigDecimal displacement) 
-    {
-        this.displacement = displacement;
-    }
+	public void setCurrentState(String currentState) {
+		this.currentState = currentState;
+	}
 
-    public BigDecimal getDisplacement() 
-    {
-        return displacement;
-    }
-    public void setVehicleColor(String vehicleColor) 
-    {
-        this.vehicleColor = vehicleColor;
-    }
+	public String getOwnerName() {
+		return ownerName;
+	}
 
-    public String getVehicleColor() 
-    {
-        return vehicleColor;
-    }
-    public void setOtherExpenses(Integer otherExpenses) 
-    {
-        this.otherExpenses = otherExpenses;
-    }
+	public void setOwnerName(String ownerName) {
+		this.ownerName = ownerName;
+	}
 
-    public Integer getOtherExpenses() 
-    {
-        return otherExpenses;
-    }
-    public void setLicensePlateNot(Integer licensePlateNot) 
-    {
-        this.licensePlateNot = licensePlateNot;
-    }
+	public String getHouseNumber() {
+		return houseNumber;
+	}
 
-    public Integer getLicensePlateNot() 
-    {
-        return licensePlateNot;
-    }
-    public void setLicensePlateTime(Date licensePlateTime) 
-    {
-        this.licensePlateTime = licensePlateTime;
-    }
+	public void setHouseNumber(String houseNumber) {
+		this.houseNumber = houseNumber;
+	}
 
-    public Date getLicensePlateTime() 
-    {
-        return licensePlateTime;
-    }
-    public void setUsageStatus(Integer usageStatus) 
-    {
-        this.usageStatus = usageStatus;
-    }
+	public String getHouseName() {
+		return houseName;
+	}
 
-    public Integer getUsageStatus() 
-    {
-        return usageStatus;
-    }
-    public void setParkingProperty(String parkingProperty) 
-    {
-        this.parkingProperty = parkingProperty;
-    }
+	public void setHouseName(String houseName) {
+		this.houseName = houseName;
+	}
 
-    public String getParkingProperty() 
-    {
-        return parkingProperty;
-    }
-    public void setTimeProcessing(Date timeProcessing) 
-    {
-        this.timeProcessing = timeProcessing;
-    }
+	public Integer getHouseProperty() {
+		return houseProperty;
+	}
 
-    public Date getTimeProcessing() 
-    {
-        return timeProcessing;
-    }
-    public void setTimeStr(Date timeStr) 
-    {
-        this.timeStr = timeStr;
-    }
+	public void setHouseProperty(Integer houseProperty) {
+		this.houseProperty = houseProperty;
+	}
 
-    public Date getTimeStr() 
-    {
-        return timeStr;
-    }
-    public void setTimeEnd(Date timeEnd) 
-    {
-        this.timeEnd = timeEnd;
-    }
+	public Integer getHouseNature() {
+		return houseNature;
+	}
 
-    public Date getTimeEnd() 
-    {
-        return timeEnd;
-    }
-    public void setBilingCycle(String bilingCycle) 
-    {
-        this.bilingCycle = bilingCycle;
-    }
+	public void setHouseNature(Integer houseNature) {
+		this.houseNature = houseNature;
+	}
 
-    public String getBilingCycle() 
-    {
-        return bilingCycle;
-    }
+	public String getParkingCard() {
+		return parkingCard;
+	}
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("parkingArea", getParkingArea())
-            .append("parkingType", getParkingType())
-            .append("parkingClass", getParkingClass())
-            .append("parkingNumber", getParkingNumber())
-            .append("contractDeliveryDate", getContractDeliveryDate())
-            .append("actualDeliveryDate", getActualDeliveryDate())
-            .append("takeoverTime", getTakeoverTime())
-            .append("chargingStandard", getChargingStandard())
-            .append("currentState", getCurrentState())
-            .append("ownerName", getOwnerName())
-            .append("houseNumber", getHouseNumber())
-            .append("houseName", getHouseName())
-            .append("houseProperty", getHouseProperty())
-            .append("houseNature", getHouseNature())
-            .append("parkingCard", getParkingCard())
-            .append("licensePlate", getLicensePlate())
-            .append("vehicleType", getVehicleType())
-            .append("vehicleBrand", getVehicleBrand())
-            .append("displacement", getDisplacement())
-            .append("vehicleColor", getVehicleColor())
-            .append("otherExpenses", getOtherExpenses())
-            .append("licensePlateNot", getLicensePlateNot())
-            .append("licensePlateTime", getLicensePlateTime())
-            .append("usageStatus", getUsageStatus())
-            .append("parkingProperty", getParkingProperty())
-            .append("timeProcessing", getTimeProcessing())
-            .append("timeStr", getTimeStr())
-            .append("timeEnd", getTimeEnd())
-            .append("bilingCycle", getBilingCycle())
-            .toString();
-    }
+	public void setParkingCard(String parkingCard) {
+		this.parkingCard = parkingCard;
+	}
+
+	public String getLicensePlate() {
+		return licensePlate;
+	}
+
+	public void setLicensePlate(String licensePlate) {
+		this.licensePlate = licensePlate;
+	}
+
+	public String getVehicleType() {
+		return vehicleType;
+	}
+
+	public void setVehicleType(String vehicleType) {
+		this.vehicleType = vehicleType;
+	}
+
+	public String getVehicleBrand() {
+		return vehicleBrand;
+	}
+
+	public void setVehicleBrand(String vehicleBrand) {
+		this.vehicleBrand = vehicleBrand;
+	}
+
+	public BigDecimal getDisplacement() {
+		return displacement;
+	}
+
+	public void setDisplacement(BigDecimal displacement) {
+		this.displacement = displacement;
+	}
+
+	public String getVehicleColor() {
+		return vehicleColor;
+	}
+
+	public void setVehicleColor(String vehicleColor) {
+		this.vehicleColor = vehicleColor;
+	}
+
+	public Integer getOtherExpenses() {
+		return otherExpenses;
+	}
+
+	public void setOtherExpenses(Integer otherExpenses) {
+		this.otherExpenses = otherExpenses;
+	}
+
+	public Integer getLicensePlateNot() {
+		return licensePlateNot;
+	}
+
+	public void setLicensePlateNot(Integer licensePlateNot) {
+		this.licensePlateNot = licensePlateNot;
+	}
+
+	public Date getLicensePlateTime() {
+		return licensePlateTime;
+	}
+
+	public void setLicensePlateTime(Date licensePlateTime) {
+		this.licensePlateTime = licensePlateTime;
+	}
+
+	public Integer getUsageStatus() {
+		return usageStatus;
+	}
+
+	public void setUsageStatus(Integer usageStatus) {
+		this.usageStatus = usageStatus;
+	}
+
+	public String getParkingProperty() {
+		return parkingProperty;
+	}
+
+	public void setParkingProperty(String parkingProperty) {
+		this.parkingProperty = parkingProperty;
+	}
+
+	public Date getTimeProcessing() {
+		return timeProcessing;
+	}
+
+	public void setTimeProcessing(Date timeProcessing) {
+		this.timeProcessing = timeProcessing;
+	}
+
+	public Date getTimeStr() {
+		return timeStr;
+	}
+
+	public void setTimeStr(Date timeStr) {
+		this.timeStr = timeStr;
+	}
+
+	public Date getTimeEnd() {
+		return timeEnd;
+	}
+
+	public void setTimeEnd(Date timeEnd) {
+		this.timeEnd = timeEnd;
+	}
+
+	public String getBilingCycle() {
+		return bilingCycle;
+	}
+
+	public void setBilingCycle(String bilingCycle) {
+		this.bilingCycle = bilingCycle;
+	}
+
+	public String getParkingName() {
+		return parkingName;
+	}
+
+	public void setParkingName(String parkingName) {
+		this.parkingName = parkingName;
+	}
+
+	@Override
+	public String toString() {
+		return "HyParkingInf [id=" + id + ", parkingArea=" + parkingArea + ", parkingType=" + parkingType
+				+ ", parkingClass=" + parkingClass + ", parkingNumber=" + parkingNumber + ", contractDeliveryDate="
+				+ contractDeliveryDate + ", actualDeliveryDate=" + actualDeliveryDate + ", takeoverTime=" + takeoverTime
+				+ ", chargingStandard=" + chargingStandard + ", currentState=" + currentState + ", ownerName="
+				+ ownerName + ", houseNumber=" + houseNumber + ", houseName=" + houseName + ", houseProperty="
+				+ houseProperty + ", houseNature=" + houseNature + ", parkingCard=" + parkingCard + ", licensePlate="
+				+ licensePlate + ", vehicleType=" + vehicleType + ", vehicleBrand=" + vehicleBrand + ", displacement="
+				+ displacement + ", vehicleColor=" + vehicleColor + ", otherExpenses=" + otherExpenses
+				+ ", licensePlateNot=" + licensePlateNot + ", licensePlateTime=" + licensePlateTime + ", usageStatus="
+				+ usageStatus + ", parkingProperty=" + parkingProperty + ", timeProcessing=" + timeProcessing
+				+ ", timeStr=" + timeStr + ", timeEnd=" + timeEnd + ", bilingCycle=" + bilingCycle + ", parkingName="
+				+ parkingName + ", getId()=" + getId() + ", getParkingArea()=" + getParkingArea()
+				+ ", getParkingType()=" + getParkingType() + ", getParkingClass()=" + getParkingClass()
+				+ ", getParkingNumber()=" + getParkingNumber() + ", getContractDeliveryDate()="
+				+ getContractDeliveryDate() + ", getActualDeliveryDate()=" + getActualDeliveryDate()
+				+ ", getTakeoverTime()=" + getTakeoverTime() + ", getChargingStandard()=" + getChargingStandard()
+				+ ", getCurrentState()=" + getCurrentState() + ", getOwnerName()=" + getOwnerName()
+				+ ", getHouseNumber()=" + getHouseNumber() + ", getHouseName()=" + getHouseName()
+				+ ", getHouseProperty()=" + getHouseProperty() + ", getHouseNature()=" + getHouseNature()
+				+ ", getParkingCard()=" + getParkingCard() + ", getLicensePlate()=" + getLicensePlate()
+				+ ", getVehicleType()=" + getVehicleType() + ", getVehicleBrand()=" + getVehicleBrand()
+				+ ", getDisplacement()=" + getDisplacement() + ", getVehicleColor()=" + getVehicleColor()
+				+ ", getOtherExpenses()=" + getOtherExpenses() + ", getLicensePlateNot()=" + getLicensePlateNot()
+				+ ", getLicensePlateTime()=" + getLicensePlateTime() + ", getUsageStatus()=" + getUsageStatus()
+				+ ", getParkingProperty()=" + getParkingProperty() + ", getTimeProcessing()=" + getTimeProcessing()
+				+ ", getTimeStr()=" + getTimeStr() + ", getTimeEnd()=" + getTimeEnd() + ", getBilingCycle()="
+				+ getBilingCycle() + ", getParkingName()=" + getParkingName() + ", getSearchValue()=" + getSearchValue()
+				+ ", getCreateBy()=" + getCreateBy() + ", getCreateTime()=" + getCreateTime() + ", getUpdateBy()="
+				+ getUpdateBy() + ", getUpdateTime()=" + getUpdateTime() + ", getRemark()=" + getRemark()
+				+ ", getParams()=" + getParams() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
+	}
+
+ 
 }

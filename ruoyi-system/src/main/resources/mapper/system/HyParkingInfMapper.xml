@@ -35,10 +35,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="timeStr"    column="time_str"    />
         <result property="timeEnd"    column="time_end"    />
         <result property="bilingCycle"    column="biling_cycle"    />
+        <result property="parkingName"    column="parking_name"    />
+        
     </resultMap>
 
     <sql id="selectHyParkingInfVo">
-        select id, parking_area, parking_type, parking_class, parking_number, contract_delivery_date, actual_delivery_date, takeover_time, charging_standard, current_state, owner_name, house_number, house_name, house_property, house_nature, parking_card, license_plate, vehicle_type, vehicle_brand, displacement, vehicle_color, other_expenses, license_plate_not, license_plate_time, usage_status, parking_property, time_processing, time_str, time_end, biling_cycle from hy_parking_inf
+        select id, parking_area, parking_type, parking_class, parking_number, contract_delivery_date, actual_delivery_date, takeover_time, charging_standard, current_state, owner_name, house_number, house_name, house_property, house_nature, parking_card, license_plate, vehicle_type, vehicle_brand, displacement, vehicle_color, other_expenses, license_plate_not, license_plate_time, usage_status, parking_property, time_processing, time_str, time_end, biling_cycle,parking_name from hy_parking_inf
     </sql>
 
     <select id="selectHyParkingInfList" parameterType="HyParkingInf" resultMap="HyParkingInfResult">
@@ -72,6 +74,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="timeProcessing != null "> and time_processing = #{timeProcessing}</if>
             <if test="timeStr != null "> and time_str = #{timeStr}</if>
             <if test="timeEnd != null "> and time_end = #{timeEnd}</if>
+            <if test="parkingName!= null  and parkingName != '' "> and parking_name = #{parkingName}</if>
             <if test="bilingCycle != null  and bilingCycle != ''"> and biling_cycle = #{bilingCycle}</if>
         </where>
     </select>
@@ -113,6 +116,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="timeStr != null">time_str,</if>
             <if test="timeEnd != null">time_end,</if>
             <if test="bilingCycle != null">biling_cycle,</if>
+            <if test="parkingName != null">parking_name,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="parkingArea != null">#{parkingArea},</if>
@@ -144,6 +148,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="timeStr != null">#{timeStr},</if>
             <if test="timeEnd != null">#{timeEnd},</if>
             <if test="bilingCycle != null">#{bilingCycle},</if>
+            <if test="parkingName != null">#{parkingName},</if>
          </trim>
     </insert>
 
@@ -179,11 +184,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="timeStr != null">time_str = #{timeStr},</if>
             <if test="timeEnd != null">time_end = #{timeEnd},</if>
             <if test="bilingCycle != null">biling_cycle = #{bilingCycle},</if>
+            <if test="parkingName != null">parking_name = #{parkingName},</if>
         </trim>
         where id = #{id}
     </update>
 
-    <delete id="deleteHyParkingInfById" parameterType="Long">
+    <delete id="deleteHyParkingInfById" parameterType="Long">s
         delete from hy_parking_inf where id = #{id}
     </delete>
 

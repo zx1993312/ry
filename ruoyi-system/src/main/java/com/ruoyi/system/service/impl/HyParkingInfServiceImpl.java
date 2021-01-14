@@ -48,7 +48,11 @@ ID
     @Override
     public List<HyParkingInf> selectHyParkingInfList(HyParkingInf hyParkingInf)
     {
-        return hyParkingInfMapper.selectHyParkingInfList(hyParkingInf);
+    	List<HyParkingInf>  list = hyParkingInfMapper.selectHyParkingInfList(hyParkingInf);
+    	for(HyParkingInf inf : list) {
+    		System.out.println(inf.toString());
+    	}
+        return list;
     }
 
     /**
