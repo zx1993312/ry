@@ -29,6 +29,8 @@ public class HyMeterCase extends BaseEntity
     @Excel(name = "表箱序号")
     private String meterSerial;
     
+    /** 父id */
+    @Excel(name = "表箱序号")
     private Integer caseId;
 
 	public Long getId() {

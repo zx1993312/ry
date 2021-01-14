@@ -1,5 +1,7 @@
 package com.ruoyi.system.domain;
 
+import java.io.Serializable;
+
 import lombok.Data;
 
 /**
@@ -9,7 +11,12 @@ import lombok.Data;
  *
  */
 @Data
-public class HyDataIsExist {
+public class HyDataIsExist implements Serializable {
+
+	/**
+	 * Serializable id
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private String tableName;// 表名
 
