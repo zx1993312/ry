@@ -107,7 +107,6 @@ public class ReflectUtil<T> {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			log.error(e.getMessage(), e);
 			return null;
 		}
@@ -157,7 +156,6 @@ public class ReflectUtil<T> {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			log.error(e.getMessage(), e);
 		}
 	}
