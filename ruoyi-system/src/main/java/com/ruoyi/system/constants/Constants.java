@@ -40,4 +40,8 @@ public class Constants {
 
 	public static final SimpleDateFormat TIME_HOUR_MINUTE = new SimpleDateFormat("HH:mm");// 时间转换时分
 
+	public static final String[] HY_DATA_IS_EXIST = new String[] { "tableName", "fieldName", "param" };// 设置需要赋值的字段名HyDataIsExist
+
+	public static final String[] HY_METER = new String[] { "houseNum", "meterType", "meterSerialNum", "meterName",
+			"initialRead", "transfRatio", "reverseNot", "strappingType" };// 设置需要赋值的字段名HyMeter
 }

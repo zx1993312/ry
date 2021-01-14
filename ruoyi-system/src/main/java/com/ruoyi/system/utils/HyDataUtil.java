@@ -1,6 +1,7 @@
 package com.ruoyi.system.utils;
 
 import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.system.constants.Constants;
 import com.ruoyi.system.domain.HyDataIsExist;
 import com.ruoyi.system.domain.HyMeter;
 
@@ -34,7 +35,7 @@ public class HyDataUtil {
 					}
 				}
 				HyDataIsExist hyDataIsExist = (HyDataIsExist) obj;
-				String[] fieldNames = new String[] { "tableName", "fieldName", "param" };// 设置需要赋值的字段名
+				String[] fieldNames = Constants.HY_DATA_IS_EXIST;
 
 				for (int i = 0; i < fieldNames.length; i++) {
 					SetFieldUtil.setFieldValueByFieldName(fieldNames[i], hyDataIsExist, params[i]);
@@ -42,8 +43,8 @@ public class HyDataUtil {
 				return hyDataIsExist;
 			}
 			if (obj instanceof HyMeter) {// 校验对象类型
-				String[] fieldNames = new String[] { "houseNum", "meterType", "meterSerialNum", "meterName",
-						"initialRead", "transfRatio", "reverseNot", "strappingType" };// 设置需要赋值的字段名
+				String[] fieldNames = Constants.HY_METER;
+
 				HyMeter hyMeter = (HyMeter) obj;
 
 				for (int i = 0; i < fieldNames.length; i++) {
