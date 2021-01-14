@@ -11,13 +11,91 @@
 				<form id="formId">
 					<div class="select-list">
 						<ul>
+							<li><label>车位名称：</label> <input type="text"
+								name="parkingName" /></li>
 							<li><label>车位区域：</label> <input type="text"
 								name="parkingArea" /></li>
+							<li><label>车位类别：</label> <input type="text"
+								name="parkingType" /></li>
+							<li><label>车位类型：</label> <input type="text"
+								name="parkingClass" /></li>
+							<li><label>车位编号：</label> <input type="text"
+								name="parkingNumber" /></li>
+							<li><label>合同交付日期：</label> <input type="text"
+								class="time-input" placeholder="请选择合同交付日期"
+								name="contractDeliveryDate" /></li>
+							<li><label>实际交付日期：</label> <input type="text"
+								class="time-input" placeholder="请选择实际交付日期"
+								name="actualDeliveryDate" /></li>
+							<li><label>接管日期：</label> <input type="text"
+								class="time-input" placeholder="请选择接管日期" name="takeoverTime" />
+							</li>
+							<li><label>收费标准：</label> <input type="text"
+								name="chargingStandard" /></li>
+							<li><label>当前状态：</label> <select name="currentState"
+								class="form-control m-b"
+								th:with="type=${@dict.getType('hy_use_state')}">
+									<option value="">请选择</option>
+									<option value="0">使用</option>
+									<option value="1">未使用</option>
+							</select></li>
+							<li><label>客户名称：</label> <input type="text" name="ownerName" />
+							</li>
+							<li><label>房屋编号：</label> <input type="text"
+								name="houseNumber" /></li>
+							<li><label>房屋名称：</label> <input type="text" name="houseName" />
+							</li>
+							<li><label>房屋产权性质：</label> <input type="text"
+								name="houseProperty" /></li>
+							<li><label>房屋使用性质：</label> <input type="text"
+								name="houseNature" /></li>
 							<li><label>停车卡号：</label> <input type="text"
 								name="parkingCard" /></li>
 							<li><label>车牌号码：</label> <input type="text"
 								name="licensePlate" /></li>
-
+							<li><label>车辆类型：</label> <input type="text"
+								name="vehicleType" /></li>
+							<li><label>车辆品牌：</label> <input type="text"
+								name="vehicleBrand" /></li>
+							<li><label>排量：</label> <input type="text"
+								name="displacement" /></li>
+							<li><label>车辆颜色：</label> <input type="text"
+								name="vehicleColor" /></li>
+							<li><label>是否收取其他费用：</label> <select id="otherExpenses"
+								name="otherExpenses" class="form-control m-b"
+								th:with="type=${@dict.getType('hy_parking_inf')}">
+									<option value="">请选择</option>
+									<option value="0">是</option>
+									<option value="1">否</option>
+							</select></li>
+							<li><label>是否挂牌：</label> <select id="licensePlateNot"
+								name="licensePlateNot" class="form-control m-b"
+								th:with="type=${@dict.getType('hy_parking_inf')}">
+									<option value="">请选择</option>
+									<option value="0">是</option>
+									<option value="1">否</option>
+							</select></li>
+							<li><label>挂牌时间：</label> <input type="text"
+								class="time-input" placeholder="请选择挂牌时间" name="licensePlateTime" />
+							</li>
+							<li><label>使用状态：</label> <select name="usageStatus"
+								class="form-control m-b"
+								th:with="type=${@dict.getType('hy_use_state')}">
+									<option value="">请选择</option>
+									<option value="0">使用</option>
+									<option value="1">未使用</option>
+							</select></li>
+							<li><label>车位产权性质：</label> <input type="text"
+								name="parkingProperty" /></li>
+							<li><label>办理时间：</label> <input type="text"
+								class="time-input" placeholder="请选择办理时间" name="timeProcessing" />
+							</li>
+							<li><label>开始时间：</label> <input type="text"
+								class="time-input" placeholder="请选择开始时间" name="timeStr" /></li>
+							<li><label>结束时间：</label> <input type="text"
+								class="time-input" placeholder="请选择结束时间" name="timeEnd" /></li>
+							<li><label>计费周期：</label> <input type="text"
+								name="bilingCycle" /></li>
 							<li><a class="btn btn-primary btn-rounded btn-sm"
 								onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
 								<a class="btn btn-warning btn-rounded btn-sm"
@@ -73,16 +151,124 @@
                     visible: false
                 },
                 {
+                    field: 'parkingName',
+                    title: '车位名称'
+                },
+                {
                     field: 'parkingArea',
                     title: '车位区域'
+                },
+                {
+                    field: 'parkingType',
+                    title: '车位类别'
+                },
+                {
+                    field: 'parkingClass',
+                    title: '车位类型'
+                },
+                {
+                    field: 'parkingNumber',
+                    title: '车位编号'
+                },
+                {
+                    field: 'contractDeliveryDate',
+                    title: '合同交付日期'
+                },
+                {
+                    field: 'actualDeliveryDate',
+                    title: '实际交付日期'
+                },
+                {
+                    field: 'takeoverTime',
+                    title: '接管日期'
+                },
+                {
+                    field: 'chargingStandard',
+                    title: '收费标准'
+                },
+                {
+                    field: 'currentState',
+                    title: '当前状态'
+                },
+                {
+                    field: 'ownerName',
+                    title: '客户名称'
+                },
+                {
+                    field: 'houseNumber',
+                    title: '房屋编号'
+                },
+                {
+                    field: 'houseName',
+                    title: '房屋名称'
+                },
+                {
+                    field: 'houseProperty',
+                    title: '房屋产权性质'
+                },
+                {
+                    field: 'houseNature',
+                    title: '房屋使用性质'
+                },
+                {
+                    field: 'parkingCard',
+                    title: '停车卡号'
                 },
                 {
                     field: 'licensePlate',
                     title: '车牌号码'
                 },
                 {
-                    field: 'parkingCard',
-                    title: '停车卡号'
+                    field: 'vehicleType',
+                    title: '车辆类型'
+                },
+                {
+                    field: 'vehicleBrand',
+                    title: '车辆品牌'
+                },
+                {
+                    field: 'displacement',
+                    title: '排量'
+                },
+                {
+                    field: 'vehicleColor',
+                    title: '车辆颜色'
+                },
+                {
+                    field: 'otherExpenses',
+                    title: '是否收取其他费用'
+                },
+                {
+                    field: 'licensePlateNot',
+                    title: '是否挂牌'
+                },
+                {
+                    field: 'licensePlateTime',
+                    title: '挂牌时间'
+                },
+                {
+                    field: 'usageStatus',
+                    title: '使用状态'
+                },
+                {
+                    field: 'parkingProperty',
+                    title: '车位产权性质'
+                },
+                {
+                    field: 'timeProcessing',
+                    title: '办理时间'
+                },
+                {
+                    field: 'timeStr',
+                    title: '开始时间'
+                },
+                {
+                    field: 'timeEnd',
+                    title: '结束时间'
+                },
+                {
+                    field: 'bilingCycle',
+                    title: '计费周期'
                 },
                 {
                     title: '操作',

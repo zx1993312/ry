@@ -37,10 +37,10 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @date 2021-01-06
  */
 @Controller 
-@RequestMapping("/system/parkingSetUp")
+@RequestMapping("/system/parking")
 @Api(tags = "车位资料 Controller")
-public class HyParkingInfController extends BaseController {
-	private String prefix = "system/parkingSetUp";
+public class HyParkingController extends BaseController {
+	private String prefix = "system/parking";
 
 	@Autowired
 	private IHyParkingInfService hyParkingInfService;

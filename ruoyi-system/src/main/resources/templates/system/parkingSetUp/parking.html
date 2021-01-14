@@ -11,27 +11,12 @@
 				<form id="formId">
 					<div class="select-list">
 						<ul>
-
+							<li><label>车位区域：</label> <input type="text"
+								name="parkingArea" /></li>
+							<li><label>停车卡号：</label> <input type="text"
+								name="parkingCard" /></li>
 							<li><label>车牌号码：</label> <input type="text"
 								name="licensePlate" /></li>
-							<li><label>车辆类型：</label> <input type="text"
-								name="vehicleType" /></li>
-							<li><label>车辆品牌：</label> <input type="text"
-								name="vehicleBrand" /></li>
-							<li><label>排量：</label> <input type="text"
-								name="displacement" /></li>
-							<li><label>车辆颜色：</label> <input type="text"
-								name="vehicleColor" /></li>
-							<li><label>房屋名称：</label> <input type="text" name="houseName" />
-							</li>
-
-							<li><label>客户名称：</label> <input type="text" name="ownerName" />
-							</li>
-							<li><label>车位名称：</label> <input type="text"
-								name="parkingName" /></li>
-
-
-
 
 							<li><a class="btn btn-primary btn-rounded btn-sm"
 								onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -44,11 +29,11 @@
 			</div>
 
 			<div class="btn-group-sm" id="toolbar" role="group">
-				<a class="btn btn-primary single disabled"
+				 <a class="btn btn-primary single disabled"
 					onclick="$.operate.edit()"
 					shiro:hasPermission="system:parking:edit"> <i
 					class="fa fa-edit"></i> 修改
-				</a> <a class="btn btn-warning" onclick="$.table.exportExcel()"
+				</a><a class="btn btn-warning" onclick="$.table.exportExcel()"
 					shiro:hasPermission="system:parking:export"> <i
 					class="fa fa-download"></i> 导出
 				</a>
@@ -62,7 +47,7 @@
 	<script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('system:parking:edit')}]];
         var removeFlag = [[${@permission.hasPermi('system:parking:remove')}]];
-        var prefix = ctx + "system/vehicleInformation";
+        var prefix = ctx + "system/parkingSetUp";
 
         $(function() {
             var options = {
@@ -80,41 +65,17 @@
                     title: '主键',
                     visible: false
                 },
-               
                 {
-                    field: 'ownerName',
-                    title: '客户名称'
+                    field: 'parkingArea',
+                    title: '车位区域'
                 },
-     
-                {
-                    field: 'houseName',
-                    title: '房屋名称'
-                },
-              
                 {
                     field: 'licensePlate',
                     title: '车牌号码'
                 },
                 {
-                    field: 'vehicleType',
-                    title: '车辆类型'
-                },
-                {
-                    field: 'vehicleBrand',
-                    title: '车辆品牌'
-                },
-                {
-                    field: 'displacement',
-                    title: '排量'
-                },
-                {
-                    field: 'vehicleColor',
-                    title: '车辆颜色'
-                },
-             
-                {
-                    field: 'parkingName',
-                    title: '车位名称'
+                    field: 'parkingCard',
+                    title: '停车卡号'
                 },
                 {
                     title: '操作',
