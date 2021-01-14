@@ -6,9 +6,6 @@ import com.ruoyi.common.annotation.Excel;
 
 public class MeterAndCase {
 
-	@SuppressWarnings("unused")
-	private static final long serialVersionUID = 1L;
-
 	/** 主键 */
 	private Long id;
 

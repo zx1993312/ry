@@ -34,7 +34,6 @@ public class HyMeterCaseServiceImpl implements IHyMeterCaseService {
 	/**
 	 * 查询箱
 	 * 
-	 * 
 	 * @param id 箱 ID
 	 * @return 箱
 	 * 

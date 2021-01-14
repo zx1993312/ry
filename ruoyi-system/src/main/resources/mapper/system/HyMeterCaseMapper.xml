@@ -3,70 +3,77 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.system.mapper.HyMeterCaseMapper">
-    
-    <resultMap type="HyMeterCase" id="HyMeterCaseResult">
-        <result property="id"    column="id"    />
-        <result property="meterCaseName"    column="meter_case_name"    />
-        <result property="meterCasePosition"    column="meter_case_position"    />
-        <result property="meterSerial"    column="meter_serial"    />
-    <result property="caseId" column="caes_id"  />
-    </resultMap>
 
-    <sql id="selectHyMeterCaseVo">
-        select id, meter_case_name, meter_case_position, meter_serial,case_id from hy_meter_case
-    </sql>
+	<resultMap type="HyMeterCase" id="HyMeterCaseResult">
+		<result property="id" column="id" />
+		<result property="meterCaseName" column="meter_case_name" />
+		<result property="meterCasePosition"
+			column="meter_case_position" />
+		<result property="meterSerial" column="meter_serial" />
+		<result property="caseId" column="caes_id" />
+	</resultMap>
 
-    <select id="selectHyMeterCaseList" parameterType="HyMeterCase" resultMap="HyMeterCaseResult">
-        <include refid="selectHyMeterCaseVo"/>
-        <where>  
-            <if test="meterCaseName != null  and meterCaseName != ''"> and meter_case_name like concat('%', #{meterCaseName}, '%')</if>
-            <if test="meterCasePosition != null  and meterCasePosition != ''"> and meter_case_position = #{meterCasePosition}</if>
-            <if test="meterSerial != null  and meterSerial != ''"> and meter_serial = #{meterSerial}</if>
-            <if test="caseId != null  and caseId != ''"> and case_id = #{caseId}</if>
-        </where>
-    </select>
-    
-    <select id="selectHyMeterCaseById" parameterType="Long" resultMap="HyMeterCaseResult">
-        <include refid="selectHyMeterCaseVo"/>
-        where id = #{id}
-    </select>
-        
-    <insert id="insertHyMeterCase" parameterType="HyMeterCase" useGeneratedKeys="true" keyProperty="id">
-        insert into hy_meter_case
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="meterCaseName != null">meter_case_name,</if>
-            <if test="meterCasePosition != null">meter_case_position,</if>
-            <if test="meterSerial != null">meter_serial,</if>
-            <if test="caseId != null">case_id,</if>
-         </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="meterCaseName != null">#{meterCaseName},</if>
-            <if test="meterCasePosition != null">#{meterCasePosition},</if>
-            <if test="meterSerial != null">#{meterSerial},</if>
-            <if test="caseId != null">#{caseId},</if>
-         </trim>
-    </insert>
+	<sql id="selectHyMeterCaseVo">
+		select id, meter_case_name, meter_case_position, meter_serial,case_id from
+		hy_meter_case
+	</sql>
 
-    <update id="updateHyMeterCase" parameterType="HyMeterCase">
-        update hy_meter_case
-        <trim prefix="SET" suffixOverrides=",">
-            <if test="meterCaseName != null">meter_case_name = #{meterCaseName},</if>
-            <if test="meterCasePosition != null">meter_case_position = #{meterCasePosition},</if>
-            <if test="meterSerial != null">meter_serial = #{meterSerial},</if>
-            <if test="caseId != null">case_id = #{caseId},</if>
-        </trim>
-        where id = #{id}
-    </update>
+	<select id="selectHyMeterCaseList" parameterType="HyMeterCase"
+		resultMap="HyMeterCaseResult">
+		<include refid="selectHyMeterCaseVo" />
+		<where>
+			<if test="meterCaseName != null  and meterCaseName != ''"> and meter_case_name like concat('%', #{meterCaseName},
+				'%')</if>
+			<if test="meterCasePosition != null  and meterCasePosition != ''"> and meter_case_position = #{meterCasePosition}</if>
+			<if test="meterSerial != null  and meterSerial != ''"> and meter_serial = #{meterSerial}</if>
+			<if test="caseId != null  and caseId != ''"> and case_id = #{caseId}</if>
+		</where>
+	</select>
 
-    <delete id="deleteHyMeterCaseById" parameterType="Long">
-        delete from hy_meter_case where id = #{id}
-    </delete>
+	<select id="selectHyMeterCaseById" parameterType="Long"
+		resultMap="HyMeterCaseResult">
+		<include refid="selectHyMeterCaseVo" />
+		where case_id = #{id}
+	</select>
 
-    <delete id="deleteHyMeterCaseByIds" parameterType="String">
-        delete from hy_meter_case where id in 
-        <foreach item="id" collection="array" open="(" separator="," close=")">
-            #{id}
-        </foreach>
-    </delete>
+	<insert id="insertHyMeterCase" parameterType="HyMeterCase"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into hy_meter_case
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="meterCaseName != null">meter_case_name,</if>
+			<if test="meterCasePosition != null">meter_case_position,</if>
+			<if test="meterSerial != null">meter_serial,</if>
+			<if test="caseId != null">case_id,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="meterCaseName != null">#{meterCaseName},</if>
+			<if test="meterCasePosition != null">#{meterCasePosition},</if>
+			<if test="meterSerial != null">#{meterSerial},</if>
+			<if test="caseId != null">#{caseId},</if>
+		</trim>
+	</insert>
+
+	<update id="updateHyMeterCase" parameterType="HyMeterCase">
+		update hy_meter_case
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="meterCaseName != null">meter_case_name = #{meterCaseName},</if>
+			<if test="meterCasePosition != null">meter_case_position = #{meterCasePosition},</if>
+			<if test="meterSerial != null">meter_serial = #{meterSerial},</if>
+			<if test="caseId != null">case_id = #{caseId},</if>
+		</trim>
+		where id = #{id}
+	</update>
+
+	<delete id="deleteHyMeterCaseById" parameterType="Long">
+		delete from hy_meter_case where id = #{id}
+	</delete>
+
+	<delete id="deleteHyMeterCaseByIds" parameterType="String">
+		delete from hy_meter_case where id in
+		<foreach item="id" collection="array" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
 
 </mapper>

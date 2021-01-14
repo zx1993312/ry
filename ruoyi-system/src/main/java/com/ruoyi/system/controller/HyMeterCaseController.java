@@ -2,6 +2,7 @@ package com.ruoyi.system.controller;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,9 +19,12 @@ import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.system.domain.HyMeter;
 import com.ruoyi.system.domain.HyMeterCase;
 import com.ruoyi.system.domain.MeterAndCase;
 import com.ruoyi.system.service.IHyMeterCaseService;
+import com.ruoyi.system.service.IHyMeterService;
+import com.ruoyi.system.utils.HyDataUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -28,19 +32,22 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 /**
- * 箱 Controller
+ * 表箱 Controller
  * 
  * @author Administrator
  * @date 2021-01-12
  */
 @Controller
 @RequestMapping("/system/case")
-@Api(tags = "箱Controller")
+@Api(tags = "表箱Controller")
 public class HyMeterCaseController extends BaseController {
 	private String prefix = "system/case";
 
 	@Autowired
 	private IHyMeterCaseService hyMeterCaseService;
+
+	@Autowired
+	private IHyMeterService hyMeterService;
 
 	@RequiresPermissions("system:case:view")
 	@GetMapping()
@@ -51,7 +58,7 @@ public class HyMeterCaseController extends BaseController {
 	/**
 	 * 查询箱 列表
 	 */
-	@ApiOperation("箱")
+	@ApiOperation("表箱")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "hyMeterCase", value = "项目实体类hyMeterCase", required = true), })
 	@RequiresPermissions("system:case:list")
 	@PostMapping("/list")
@@ -65,10 +72,10 @@ public class HyMeterCaseController extends BaseController {
 	/**
 	 * 导出箱 列表
 	 */
-	@ApiOperation("箱")
+	@ApiOperation("表箱")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "hyMeterCase", value = "项目实体类hyMeterCase", required = true), })
 	@RequiresPermissions("system:case:export")
-	@Log(title = "箱", businessType = BusinessType.EXPORT)
+	@Log(title = "表箱", businessType = BusinessType.EXPORT)
 	@PostMapping("/export")
 	@ResponseBody
 	public AjaxResult export(HyMeterCase hyMeterCase) {
@@ -78,7 +85,7 @@ public class HyMeterCaseController extends BaseController {
 	}
 
 	/**
-	 * 新增箱
+	 * 新增表箱
 	 * 
 	 */
 	@GetMapping("/add")
@@ -87,13 +94,13 @@ public class HyMeterCaseController extends BaseController {
 	}
 
 	/**
-	 * 新增保存箱
+	 * 新增保存表箱
 	 * 
 	 */
-	@ApiOperation("箱")
+	@ApiOperation("表箱")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "hyMeterCase", value = "项目实体类hyMeterCase", required = true), })
 	@RequiresPermissions("system:case:add")
-	@Log(title = "箱", businessType = BusinessType.INSERT)
+	@Log(title = "表箱", businessType = BusinessType.INSERT)
 	@PostMapping("/add")
 	@ResponseBody
 	public AjaxResult addSave(MeterAndCase meterAndCase) {
@@ -104,37 +111,46 @@ public class HyMeterCaseController extends BaseController {
 	 * 修改箱
 	 * 
 	 */
-	@ApiOperation("箱")
+	@ApiOperation("表箱")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "id", value = "主键id", required = true), })
 	@GetMapping("/edit/{id}")
-	public String edit(@PathVariable("id") Long id, ModelMap mmap) {
-		HyMeterCase hyMeterCase = hyMeterCaseService.selectHyMeterCaseById(id);
-		mmap.put("hyMeterCase", hyMeterCase);
+	public String edit(@PathVariable("id") Long id, @Param("houseNum") String houseNum,
+			@Param("meterType") String meterType, @Param("meterSerialNum") String meterSerialNum,
+			@Param("meterName") String meterName, @Param("initialRead") String initialRead,
+			@Param("transfRatio") String transfRatio, @Param("reverseNot") String reverseNot,
+			@Param("strappingType") String strappingType, @Param("hyMeterCase") String hyMeterCase, ModelMap mmap) {
+
+		HyMeter hyMeter = (HyMeter) HyDataUtil.setData(HyMeter.class, houseNum, meterType, meterSerialNum, meterName,
+				initialRead, transfRatio, reverseNot, strappingType, hyMeterCase);
+		hyMeter.setId(id);
+		hyMeterService.updateHyMeter(hyMeter);
+		HyMeterCase rehyMeterCase = hyMeterCaseService.selectHyMeterCaseById(id);
+		mmap.put("hyMeterCase", rehyMeterCase);
 		return prefix + "/edit";
 	}
 
 	/**
-	 * 修改保存箱
+	 * 修改保存表箱
 	 * 
 	 */
-	@ApiOperation("箱")
+	@ApiOperation("表箱")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "hyMeterCase", value = "项目实体类hyMeterCase", required = true), })
 	@RequiresPermissions("system:case:edit")
-	@Log(title = "箱", businessType = BusinessType.UPDATE)
-	@RequestMapping("/edit")
+	@Log(title = "表箱", businessType = BusinessType.UPDATE)
+	@PostMapping("/edit")
 	@ResponseBody
 	public AjaxResult editSave(HyMeterCase hyMeterCase) {
 		return toAjax(hyMeterCaseService.updateHyMeterCase(hyMeterCase));
 	}
 
 	/**
-	 * 删除箱
+	 * 删除表箱
 	 * 
 	 */
-	@ApiOperation("箱")
+	@ApiOperation("表箱")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "ids", value = "ids", required = true), })
 	@RequiresPermissions("system:case:remove")
-	@Log(title = "箱", businessType = BusinessType.DELETE)
+	@Log(title = "表箱", businessType = BusinessType.DELETE)
 	@PostMapping("/remove")
 	@ResponseBody
 	public AjaxResult remove(String ids) {
