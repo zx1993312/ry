@@ -109,7 +109,7 @@
 	<script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('system:parking:edit')}]];
         var removeFlag = [[${@permission.hasPermi('system:parking:remove')}]];
-        var prefix = ctx + "system/parking";
+        var prefix = ctx + "system/parkingInformation";
 
         $(function() {
             var options = {

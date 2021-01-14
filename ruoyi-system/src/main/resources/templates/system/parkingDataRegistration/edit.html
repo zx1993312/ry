@@ -1,286 +1,163 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:include="include :: header('修改车位资料
+<th:block th:include="include :: header('修改车位资料
 ')" />
-    <th:block th:include="include :: datetimepicker-css" />
+<th:block th:include="include :: datetimepicker-css" />
 </head>
 <body class="white-bg">
-    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-parking-edit" th:object="${hyParkingInf}">
-            <input name="id" th:field="*{id}" type="hidden">
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">车位区域：</label>
-                <div class="col-sm-8">
-                    <input name="parkingArea" th:field="*{parkingArea}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">车位类别：</label>
-                <div class="col-sm-8">
-                    <input name="parkingType" th:field="*{parkingType}" class="form-control m-b" type="text"/>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">车位类型：</label>
-                <div class="col-sm-8">
-                    <input name="parkingClass" th:field="*{parkingClass}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">车位编号：</label>
-                <div class="col-sm-8">
-                    <input name="parkingNumber" th:field="*{parkingNumber}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">合同交付日期：</label>
-                <div class="col-sm-8">
-                    <div class="input-group date">
-                        <input name="contractDeliveryDate" th:value="${#dates.format(hyParkingInf.contractDeliveryDate, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">实际交付日期：</label>
-                <div class="col-sm-8">
-                    <div class="input-group date">
-                        <input name="actualDeliveryDate" th:value="${#dates.format(hyParkingInf.actualDeliveryDate, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">接管日期：</label>
-                <div class="col-sm-8">
-                    <div class="input-group date">
-                        <input name="takeoverTime" th:value="${#dates.format(hyParkingInf.takeoverTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">收费标准：</label>
-                <div class="col-sm-8">
-                    <input name="chargingStandard" th:field="*{chargingStandard}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">当前状态：</label>
-                <div class="col-sm-8">
-               <select name="currentState" th:field="*{currentState}" class="form-control m-b" th:with="type=${@dict.getType('hy_use_state')}">
-		              <option value="">请选择</option>
-		               <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-		           </select>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">客户名称：</label>
-                <div class="col-sm-8">
-                    <input name="ownerName" th:field="*{ownerName}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">房屋编号：</label>
-                <div class="col-sm-8">
-                    <input name="houseNumber" th:field="*{houseNumber}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">房屋名称：</label>
-                <div class="col-sm-8">
-                    <input name="houseName" th:field="*{houseName}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">房屋产权性质：</label>
-                <div class="col-sm-8">
-                    <input name="houseProperty" th:field="*{houseProperty}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">房屋使用性质：</label>
-                <div class="col-sm-8">
-                    <input name="houseNature" th:field="*{houseNature}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">停车卡号：</label>
-                <div class="col-sm-8">
-                    <input name="parkingCard" th:field="*{parkingCard}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">车牌号码：</label>
-                <div class="col-sm-8">
-                    <input name="licensePlate" th:field="*{licensePlate}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">车辆类型：</label>
-                <div class="col-sm-8">
-                    <input name="vehicleType" th:field="*{vehicleType}" class="form-control m-b" type="text"/>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">车辆品牌：</label>
-                <div class="col-sm-8">
-                    <input name="vehicleBrand" th:field="*{vehicleBrand}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">排量：</label>
-                <div class="col-sm-8">
-                    <input name="displacement" th:field="*{displacement}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">车辆颜色：</label>
-                <div class="col-sm-8">
-                    <input name="vehicleColor" th:field="*{vehicleColor}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">是否收取其他费用：</label>
-                <div class="col-sm-8">
-                <select id="otherExpenses" name="otherExpenses" th:field="*{otherExpenses}" class="form-control m-b"
-                    th:with="type=${@dict.getType('hy_parking_inf')}">
-                       	<option value="">请选择</option>
-						<option value="0">是</option>
-						<option value="1">否</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">是否挂牌：</label>
-                <div class="col-sm-8">
-                <select id="licensePlateNot" name="licensePlateNot" th:field="*{licensePlateNot}" class="form-control m-b"
-                    th:with="type=${@dict.getType('hy_parking_inf')}">
-                       	<option value="">请选择</option>
-						<option value="0">是</option>
-						<option value="1">否</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">挂牌时间：</label>
-                <div class="col-sm-8">
-                    <div class="input-group date">
-                        <input name="licensePlateTime" th:value="${#dates.format(hyParkingInf.licensePlateTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">使用状态：</label>
-                <div class="col-sm-8">
-                                      <select name="usageStatus" class="form-control m-b" th:with="type=${@dict.getType('hy_use_state')}">
-		               <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-		           </select>
- 
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<form class="form-horizontal m" id="form-parking-edit"
+			th:object="${hyParkingInf}">
+			<input name="id" th:field="*{id}" type="hidden">
 
+			<div class="form-group">
+				<label class="col-sm-3 control-label">客户名称：</label>
+				<div class="col-sm-8">
+					<input name="ownerName" th:field="*{ownerName}"
+						class="form-control" type="text">
+				</div>
+			</div>
 
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">车位产权性质：</label>
-                <div class="col-sm-8">
-                    <input name="parkingProperty" th:field="*{parkingProperty}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">办理时间：</label>
-                <div class="col-sm-8">
-                    <div class="input-group date">
-                        <input name="timeProcessing" th:value="${#dates.format(hyParkingInf.timeProcessing, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">开始时间：</label>
-                <div class="col-sm-8">
-                    <div class="input-group date">
-                        <input name="timeStr" th:value="${#dates.format(hyParkingInf.timeStr, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">结束时间：</label>
-                <div class="col-sm-8">
-                    <div class="input-group date">
-                        <input name="timeEnd" th:value="${#dates.format(hyParkingInf.timeEnd, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">计费周期：</label>
-                <div class="col-sm-8">
-                    <input name="bilingCycle" th:field="*{bilingCycle}" class="form-control" type="text">
-                </div>
-            </div>
-        </form>
-    </div>
-    <th:block th:include="include :: footer" />
-    <th:block th:include="include :: datetimepicker-js" />
-    <script th:inline="javascript">
-        var prefix = ctx + "system/parking";
-        $("#form-parking-edit").validate({
-        	
-        	
-            focusCleanup: true
-        });
+			<div class="form-group">
+				<label class="col-sm-3 control-label">房屋名称：</label>
+				<div class="col-sm-8">
+					<input name="houseName" th:field="*{houseName}"
+						class="form-control" type="text">
+				</div>
+			</div>
 
-        function submitHandler() {
-            if ($.validate.form()) {
-                $.operate.save(prefix + "/edit", $('#form-parking-edit').serialize());
-            }
-        }
+			<div class="form-group">
+				<label class="col-sm-3 control-label">车牌号码：</label>
+				<div class="col-sm-8">
+					<input name="licensePlate" th:field="*{licensePlate}"
+						class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">车辆类型：</label>
+				<div class="col-sm-8">
+					<input name="vehicleType" th:field="*{vehicleType}"
+						class="form-control m-b" type="text" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">车辆品牌：</label>
+				<div class="col-sm-8">
+					<input name="vehicleBrand" th:field="*{vehicleBrand}"
+						class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">排量：</label>
+				<div class="col-sm-8">
+					<input name="displacement" th:field="*{displacement}"
+						class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">车辆颜色：</label>
+				<div class="col-sm-8">
+					<input name="vehicleColor" th:field="*{vehicleColor}"
+						class="form-control" type="text">
+				</div>
+			</div>
 
-        $("input[name='contractDeliveryDate']").datetimepicker({
-            format: "yyyy-mm-dd",
-            minView: "month",
-            autoclose: true
-        });
+		</form>
+	</div>
+	<th:block th:include="include :: footer" />
+	<th:block th:include="include :: datetimepicker-js" />
+	<script th:inline="javascript">
+		var prefix = ctx + "system/parking";
+		$("#form-parking-edit").validate({
+			onkeyup : false,
+			rules : {
 
-        $("input[name='actualDeliveryDate']").datetimepicker({
-            format: "yyyy-mm-dd",
-            minView: "month",
-            autoclose: true
-        });
+				ownerName : {
+					required : true,
+					maxlength : 50,
+				},
 
-        $("input[name='takeoverTime']").datetimepicker({
-            format: "yyyy-mm-dd",
-            minView: "month",
-            autoclose: true
-        });
+				houseName : {
+					required : true,
+					maxlength : 50,
+				},
 
-        $("input[name='licensePlateTime']").datetimepicker({
-            format: "yyyy-mm-dd",
-            minView: "month",
-            autoclose: true
-        });
+				licensePlate : {
+					required : true,
+					maxlength : 8,
+				},
+				vehicleType : {
+					required : true,
+					maxlength : 30,
+				},
+				/*
+						vehicleBrand:{
+							required : true,
+							maxlength:50,
+						},*/
+				displacement : {
+					required : true,
+					number : true,
+					maxlength : 5,
+				},
+				vehicleColor : {
+					required : true,
+					maxlength : 30,
+				},
+			},
 
-        $("input[name='timeProcessing']").datetimepicker({
-            format: "yyyy-mm-dd",
-            minView: "month",
-            autoclose: true
-        });
+			focusCleanup : true
+		});
 
-        $("input[name='timeStr']").datetimepicker({
-            format: "yyyy-mm-dd",
-            minView: "month",
-            autoclose: true
-        });
+		function submitHandler() {
+			if ($.validate.form()) {
+				$.operate.save(prefix + "/edit", $('#form-parking-edit')
+						.serialize());
+			}
+		}
 
-        $("input[name='timeEnd']").datetimepicker({
-            format: "yyyy-mm-dd",
-            minView: "month",
-            autoclose: true
-        });
-    </script>
+		$("input[name='contractDeliveryDate']").datetimepicker({
+			format : "yyyy-mm-dd",
+			minView : "month",
+			autoclose : true
+		});
+
+		$("input[name='actualDeliveryDate']").datetimepicker({
+			format : "yyyy-mm-dd",
+			minView : "month",
+			autoclose : true
+		});
+
+		$("input[name='takeoverTime']").datetimepicker({
+			format : "yyyy-mm-dd",
+			minView : "month",
+			autoclose : true
+		});
+
+		$("input[name='licensePlateTime']").datetimepicker({
+			format : "yyyy-mm-dd",
+			minView : "month",
+			autoclose : true
+		});
+
+		$("input[name='timeProcessing']").datetimepicker({
+			format : "yyyy-mm-dd",
+			minView : "month",
+			autoclose : true
+		});
+
+		$("input[name='timeStr']").datetimepicker({
+			format : "yyyy-mm-dd",
+			minView : "month",
+			autoclose : true
+		});
+
+		$("input[name='timeEnd']").datetimepicker({
+			format : "yyyy-mm-dd",
+			minView : "month",
+			autoclose : true
+		});
+	</script>
 </body>
 </html>
