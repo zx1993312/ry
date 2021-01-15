@@ -44,4 +44,7 @@ public class Constants {
 
 	public static final String[] HY_METER = new String[] { "houseNum", "meterType", "meterSerialNum", "meterName",
 			"initialRead", "transfRatio", "reverseNot", "strappingType" };// 设置需要赋值的字段名HyMeter
+
+	public static final String[] HY_METER_CASE = new String[] { "meterCaseName", "meterCasePosition", "meterSerial" };// 设置需要赋值的字段名HyMeterCase
+
 }

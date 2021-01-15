@@ -53,7 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		m.input_time, c.meter_case_name,c.meter_case_position,
 		c.meter_serial,c.case_id
 		from hy_meter m left join hy_meter_case c on
-		m.id=c.case_id
+		m.id=c.case_id where 1=1
 	</sql>
 
 	<select id="selectHyMeterList" parameterType="HyMeter"

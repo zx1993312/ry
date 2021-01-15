@@ -4,6 +4,7 @@ import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.constants.Constants;
 import com.ruoyi.system.domain.HyDataIsExist;
 import com.ruoyi.system.domain.HyMeter;
+import com.ruoyi.system.domain.HyMeterCase;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -42,6 +43,7 @@ public class HyDataUtil {
 				}
 				return hyDataIsExist;
 			}
+
 			if (obj instanceof HyMeter) {// 校验对象类型
 				String[] fieldNames = Constants.HY_METER;
 
@@ -54,6 +56,20 @@ public class HyDataUtil {
 					SetFieldUtil.setFieldValueByFieldName(fieldNames[i], hyMeter, params[i]);
 				}
 				return hyMeter;
+			}
+
+			if (obj instanceof HyMeterCase) {// 校验对象类型
+				String[] fieldNames = Constants.HY_METER_CASE;
+
+				HyMeterCase hyMeterCase = (HyMeterCase) obj;
+
+				for (int i = 0; i < fieldNames.length; i++) {
+					if (StringUtils.isNull(params[i]) || params[i].equals("")) {
+						continue;
+					}
+					SetFieldUtil.setFieldValueByFieldName(fieldNames[i], hyMeterCase, params[i]);
+				}
+				return hyMeterCase;
 			}
 		} catch (InstantiationException e) {
 			log.error(e.getMessage(), e);
