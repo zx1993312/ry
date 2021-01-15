@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.system.domain.HyMeter;
+import com.ruoyi.system.mapper.HyMeterCaseMapper;
 import com.ruoyi.system.mapper.HyMeterMapper;
 import com.ruoyi.system.service.IHyMeterService;
 
@@ -20,6 +21,9 @@ import com.ruoyi.system.service.IHyMeterService;
 public class HyMeterServiceImpl implements IHyMeterService {
 	@Autowired
 	private HyMeterMapper hyMeterMapper;
+
+	@Autowired
+	private HyMeterCaseMapper hyMeterCaseMapper;
 
 	/**
 	 * 查询抄设置
@@ -73,7 +77,11 @@ public class HyMeterServiceImpl implements IHyMeterService {
 	 */
 	@Override
 	public int deleteHyMeterByIds(String ids) {
-		return hyMeterMapper.deleteHyMeterByIds(Convert.toStrArray(ids));
+		int result = hyMeterMapper.deleteHyMeterByIds(Convert.toStrArray(ids));
+		if (result > 0) {
+			result = hyMeterCaseMapper.deleteHyMeterCaseByIds(Convert.toStrArray(ids));
+		}
+		return result;
 	}
 
 	/**
@@ -84,7 +92,11 @@ public class HyMeterServiceImpl implements IHyMeterService {
 	 */
 	@Override
 	public int deleteHyMeterById(Long id) {
-		return hyMeterMapper.deleteHyMeterById(id);
+		int result = hyMeterMapper.deleteHyMeterById(id);
+		if (result > 0) {
+			result = hyMeterCaseMapper.deleteHyMeterCaseById(id);
+		}
+		return result;
 	}
 
 }
