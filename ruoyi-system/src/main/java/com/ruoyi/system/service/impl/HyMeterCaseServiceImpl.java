@@ -12,6 +12,7 @@ import com.ruoyi.system.domain.HyMeter;
 import com.ruoyi.system.domain.HyMeterCase;
 import com.ruoyi.system.domain.MeterAndCase;
 import com.ruoyi.system.service.IHyMeterCaseService;
+import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.text.Convert;
 
 /**
@@ -71,6 +72,16 @@ public class HyMeterCaseServiceImpl implements IHyMeterCaseService {
 		HyMeter getHyMeter = (HyMeter) Constants.REFLECT_UTIL.convertBean(hyMeter, meterAndCase);
 
 		HyMeterCase hyMeterCase = new HyMeterCase();
+
+		if (meterAndCase.getMeterCaseName().indexOf(",") > 0) {
+			String[] meterCaseNames = meterAndCase.getMeterCaseName().split(",");
+		}
+		if (meterAndCase.getMeterCasePosition().indexOf(",") > 0) {
+			String[] meterCasePositions = meterAndCase.getMeterCasePosition().split(",");
+		}
+		if (meterAndCase.getMeterSerial().indexOf(",") > 0) {
+			String[] meterSerials = meterAndCase.getMeterSerial().split(",");
+		}
 		HyMeterCase getHyMeterCase = (HyMeterCase) Constants.REFLECT_UTIL.convertBean(hyMeterCase, meterAndCase);
 		String value = hyCommonMapper.selectNextValue("hy_database", "hy_meter");
 		getHyMeterCase.setCaseId(Integer.valueOf(value));
