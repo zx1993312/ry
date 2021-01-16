@@ -40,15 +40,30 @@ public class HyMeter extends BaseEntity {
 	@Excel(name = "初始读数")
 	private BigDecimal initialRead;
 
-	/** 起数 */
+	/** 新起数 */
 	@Excel(name = "起数")
 	private BigDecimal meterStrNum;
 
-	/** 止数 */
+	/** 新止数 */
 	@Excel(name = "止数")
 	private BigDecimal meterEndNum;
+	
+	
+	/**
+	 * 原起数
+	 */
+	private BigDecimal ometerEndNum;
+	/**
+	 * 原止数
+	 */
+	private BigDecimal ometerStrNum;
+	
+	/**
+	 * 原变比
+	 */
+	private BigDecimal otransfRatio;
 
-	/** 变比 */
+	/** 新变比 */
 	@Excel(name = "变比")
 	private BigDecimal transfRatio;
 
@@ -77,17 +92,30 @@ public class HyMeter extends BaseEntity {
 	@Excel(name = "旧表用量")
 	private BigDecimal oldMeterConsumption;
 
-	/** 损耗 */
+	/** 新损耗 */
 	@Excel(name = "损耗")
 	private String attritionRate;
+	/**
+	 * 原损耗
+	 */
+	private String oattritionRate;
 
-	/** 单价 */
+	/** 新单价 */
 	@Excel(name = "单价")
 	private BigDecimal unitPrice;
+	
+	/**
+	 * 原单价
+	 */
+	private BigDecimal ounitPrice;
 
-	/** 金额 */
+	/** 新金额 */
 	@Excel(name = "金额")
 	private BigDecimal amountPrice;
+	/**
+	 * 原金额
+	 */
+	private BigDecimal oamountPrice;
 
 	/** 异常提示 */
 	@Excel(name = "异常提示")
@@ -135,6 +163,54 @@ public class HyMeter extends BaseEntity {
 
 	public void setMeterType(Integer meterType) {
 		this.meterType = meterType;
+	}
+
+	public BigDecimal getOmeterEndNum() {
+		return ometerEndNum;
+	}
+
+	public void setOmeterEndNum(BigDecimal ometerEndNum) {
+		this.ometerEndNum = ometerEndNum;
+	}
+
+	public BigDecimal getOmeterStrNum() {
+		return ometerStrNum;
+	}
+
+	public void setOmeterStrNum(BigDecimal ometerStrNum) {
+		this.ometerStrNum = ometerStrNum;
+	}
+
+	public BigDecimal getOtransfRatio() {
+		return otransfRatio;
+	}
+
+	public void setOtransfRatio(BigDecimal otransfRatio) {
+		this.otransfRatio = otransfRatio;
+	}
+
+	public String getOattritionRate() {
+		return oattritionRate;
+	}
+
+	public void setOattritionRate(String oattritionRate) {
+		this.oattritionRate = oattritionRate;
+	}
+
+	public BigDecimal getOunitPrice() {
+		return ounitPrice;
+	}
+
+	public void setOunitPrice(BigDecimal ounitPrice) {
+		this.ounitPrice = ounitPrice;
+	}
+
+	public BigDecimal getOamountPrice() {
+		return oamountPrice;
+	}
+
+	public void setOamountPrice(BigDecimal oamountPrice) {
+		this.oamountPrice = oamountPrice;
 	}
 
 	public Integer getMeterType() {
@@ -319,18 +395,37 @@ public class HyMeter extends BaseEntity {
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("id", getId())
-				.append("houseNum", getHouseNum()).append("meterType", getMeterType())
-				.append("meterSerialNum", getMeterSerialNum()).append("meterName", getMeterName())
-				.append("initialRead", getInitialRead()).append("meterStrNum", getMeterStrNum())
-				.append("meterEndNum", getMeterEndNum()).append("transfRatio", getTransfRatio())
-				.append("reverseNot", getReverseNot()).append("strappingType", getStrappingType())
-				.append("meterReadDate", getMeterReadDate()).append("magnification", getMagnification())
-				.append("newMeterConsumption", getNewMeterConsumption())
-				.append("oldMeterConsumption", getOldMeterConsumption()).append("attritionRate", getAttritionRate())
-				.append("unitPrice", getUnitPrice()).append("amountPrice", getAmountPrice())
-				.append("abnormalPrompt", getAbnormalPrompt()).append("customerName", getCustomerName())
-				.append("freezeNot", getFreezeNot()).append("sourceMeter", getSourceMeter())
-				.append("meterReader", getMeterReader()).append("inputTime", getInputTime()).toString();
+		return "HyMeter [id=" + id + ", houseNum=" + houseNum + ", meterType=" + meterType + ", meterSerialNum="
+				+ meterSerialNum + ", meterName=" + meterName + ", initialRead=" + initialRead + ", meterStrNum="
+				+ meterStrNum + ", meterEndNum=" + meterEndNum + ", ometerEndNum=" + ometerEndNum + ", ometerStrNum="
+				+ ometerStrNum + ", otransfRatio=" + otransfRatio + ", transfRatio=" + transfRatio + ", reverseNot="
+				+ reverseNot + ", strappingType=" + strappingType + ", meterReadDate=" + meterReadDate
+				+ ", magnification=" + magnification + ", newMeterConsumption=" + newMeterConsumption
+				+ ", oldMeterConsumption=" + oldMeterConsumption + ", attritionRate=" + attritionRate
+				+ ", oattritionRate=" + oattritionRate + ", unitPrice=" + unitPrice + ", ounitPrice=" + ounitPrice
+				+ ", amountPrice=" + amountPrice + ", oamountPrice=" + oamountPrice + ", abnormalPrompt="
+				+ abnormalPrompt + ", customerName=" + customerName + ", freezeNot=" + freezeNot + ", sourceMeter="
+				+ sourceMeter + ", meterReader=" + meterReader + ", inputTime=" + inputTime + ", hyMeterCase="
+				+ hyMeterCase + ", getId()=" + getId() + ", getHouseNum()=" + getHouseNum() + ", getOmeterEndNum()="
+				+ getOmeterEndNum() + ", getOmeterStrNum()=" + getOmeterStrNum() + ", getOtransfRatio()="
+				+ getOtransfRatio() + ", getOattritionRate()=" + getOattritionRate() + ", getOunitPrice()="
+				+ getOunitPrice() + ", getOamountPrice()=" + getOamountPrice() + ", getMeterType()=" + getMeterType()
+				+ ", getMeterSerialNum()=" + getMeterSerialNum() + ", getMeterName()=" + getMeterName()
+				+ ", getInitialRead()=" + getInitialRead() + ", getMeterStrNum()=" + getMeterStrNum()
+				+ ", getMeterEndNum()=" + getMeterEndNum() + ", getTransfRatio()=" + getTransfRatio()
+				+ ", getReverseNot()=" + getReverseNot() + ", getStrappingType()=" + getStrappingType()
+				+ ", getMeterReadDate()=" + getMeterReadDate() + ", getMagnification()=" + getMagnification()
+				+ ", getNewMeterConsumption()=" + getNewMeterConsumption() + ", getOldMeterConsumption()="
+				+ getOldMeterConsumption() + ", getAttritionRate()=" + getAttritionRate() + ", getUnitPrice()="
+				+ getUnitPrice() + ", getAmountPrice()=" + getAmountPrice() + ", getAbnormalPrompt()="
+				+ getAbnormalPrompt() + ", getCustomerName()=" + getCustomerName() + ", getFreezeNot()="
+				+ getFreezeNot() + ", getSourceMeter()=" + getSourceMeter() + ", getMeterReader()=" + getMeterReader()
+				+ ", getInputTime()=" + getInputTime() + ", getHyMeterCase()=" + getHyMeterCase()
+				+ ", getSearchValue()=" + getSearchValue() + ", getCreateBy()=" + getCreateBy() + ", getCreateTime()="
+				+ getCreateTime() + ", getUpdateBy()=" + getUpdateBy() + ", getUpdateTime()=" + getUpdateTime()
+				+ ", getRemark()=" + getRemark() + ", getParams()=" + getParams() + ", getClass()=" + getClass()
+				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
 	}
+
+	
 }

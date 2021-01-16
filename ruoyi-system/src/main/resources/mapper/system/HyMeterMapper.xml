@@ -13,7 +13,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="initialRead" column="initial_read" />
 		<result property="meterStrNum" column="meter_str_num" />
 		<result property="meterEndNum" column="meter_end_num" />
+		
+		<result property="ometerEndNum" column="ometer_end_num" />
+		<result property="ometerStrNum" column="ometer_str_num" />
+		
 		<result property="transfRatio" column="transf_ratio" />
+		<result property="otransfRatio" column="otransf_ratio" />
+		
 		<result property="reverseNot" column="reverse_not" />
 		<result property="strappingType" column="strapping_type" />
 		<result property="meterReadDate" column="meter_read_date" />
@@ -23,8 +29,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="oldMeterConsumption"
 			column="old_meter_consumption" />
 		<result property="attritionRate" column="attrition_rate" />
-		<result property="unitPrice" column="unit_price" />
+		<result property="oattritionRate" column="oattrition_rate" />
+		
+		<result property="unitPrice" column="unit_price" /> 
+		<result property="ounitPrice" column="ounit_price" /> 
+		
 		<result property="amountPrice" column="amount_price" />
+		<result property="oamountPrice" column="oamount_price" />
+		
 		<result property="abnormalPrompt" column="abnormal_prompt" />
 		<result property="customerName" column="customer_name" />
 		<result property="freezeNot" column="freeze_not" />
