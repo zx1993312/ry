@@ -104,35 +104,35 @@ public class HyCostServiceImpl implements IHyCostService {
 	}
 
 	/**
-	 * 对象转部门树
+	 * 对象转费用项目列表树
 	 *
 	 * @param deptList 部门列表
 	 * @return 树结构列表
 	 */
-	public List<Ztree> initZtree(List<HyCost> deptList) {
-		return initZtree(deptList, null);
+	public List<Ztree> initZtree(List<HyCost> hyCostList) {
+		return initZtree(hyCostList, null);
 	}
 
 	/**
-	 * 对象转部门树
+	 * 对象转费用项目列表树
 	 *
 	 * @param deptList     部门列表
 	 * @param roleDeptList 角色已存在菜单列表
 	 * @return 树结构列表
 	 */
-	public List<Ztree> initZtree(List<HyCost> deptList, List<String> roleDeptList) {
+	public List<Ztree> initZtree(List<HyCost> hyCostList, List<String> roleDeptList) {
 
 		List<Ztree> ztrees = new ArrayList<Ztree>();
 		boolean isCheck = StringUtils.isNotNull(roleDeptList);
-		for (HyCost dept : deptList) {
+		for (HyCost hyCost : hyCostList) {
 			if (UserConstants.DEPT_NORMAL.equals("0")) {
 				Ztree ztree = new Ztree();
-				ztree.setId(dept.getId());
-				ztree.setpId(Long.valueOf(null == dept.getParentId() ? -1l : dept.getParentId()));
-				ztree.setName(dept.getCostItems());
-				ztree.setTitle(dept.getCostItems());
+				ztree.setId(hyCost.getId());
+				ztree.setpId(Long.valueOf(null == hyCost.getParentId() ? -1l : hyCost.getParentId()));
+				ztree.setName(hyCost.getCostItems());
+				ztree.setTitle(hyCost.getCostItems());
 				if (isCheck) {
-					ztree.setChecked(roleDeptList.contains(dept.getId() + dept.getCostItems()));
+					ztree.setChecked(roleDeptList.contains(hyCost.getId() + hyCost.getCostItems()));
 				}
 				ztrees.add(ztree);
 			}

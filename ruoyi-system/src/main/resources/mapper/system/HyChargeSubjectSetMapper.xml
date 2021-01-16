@@ -12,10 +12,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="calculationMethod"    column="calculation_method"    />
         <result property="chargingStanard"    column="charging_stanard"    />
         <result property="descriptionStandard"    column="description_standard"    />
+        <result property="costId"    column="cost_id"    />
     </resultMap>
 
     <sql id="selectHyChargeSubjectSetVo">
-        select id, fee_name, standard_num, standard_name, calculation_method, charging_stanard, description_standard from hy_charge_subject_set
+        select id, fee_name, standard_num, standard_name, calculation_method, charging_stanard, description_standard,cost_id from hy_charge_subject_set
     </sql>
 
     <select id="selectHyChargeSubjectSetList" parameterType="HyChargeSubjectSet" resultMap="HyChargeSubjectSetResult">
@@ -27,6 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="calculationMethod != null  and calculationMethod != ''"> and calculation_method = #{calculationMethod}</if>
             <if test="chargingStanard != null  and chargingStanard != ''"> and charging_stanard = #{chargingStanard}</if>
             <if test="descriptionStandard != null  and descriptionStandard != ''"> and description_standard = #{descriptionStandard}</if>
+            <if test="costId != null  and costId != ''"> and (cost_id = #{costId} or cost_id in (select id from hy_cost where FIND_IN_SET(#{costId},ancestors)))</if>
         </where>
     </select>
     

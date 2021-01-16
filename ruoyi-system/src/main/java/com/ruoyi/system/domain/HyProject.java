@@ -11,55 +11,69 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * @author ruoyi
  * @date 2021-01-04
  */
-public class HyProject extends BaseEntity
-{
-    private static final long serialVersionUID = 1L;
+public class HyProject extends BaseEntity {
+	private static final long serialVersionUID = 1L;
 
-    /** 主键 */
-    private Long id;
+	/** 主键 */
+	private Long id;
 
-    /** 项目名称 */
-    @Excel(name = "项目名称")
-    private String projectName;
+	/** 项目名称 */
+	@Excel(name = "项目名称")
+	private String projectName;
 
-    /** 小区id */
-    @Excel(name = "小区id")
-    private Long villageId;
+	/** 小区id */
+	@Excel(name = "小区id")
+	private Long villageId;
 
-    public void setId(Long id) 
-    {
-        this.id = id;
-    }
+	@Excel(name = "父id")
+	private Integer parentId;
 
-    public Long getId() 
-    {
-        return id;
-    }
-    public void setProjectName(String projectName) 
-    {
-        this.projectName = projectName;
-    }
+	@Excel(name = "")
+	private String ancestors;
 
-    public String getProjectName() 
-    {
-        return projectName;
-    }
-    public void setVillageId(Long villageId) 
-    {
-        this.villageId = villageId;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public Long getVillageId() 
-    {
-        return villageId;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("projectName", getProjectName())
-            .append("villageId", getVillageId())
-            .toString();
-    }
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
+
+	public String getProjectName() {
+		return projectName;
+	}
+
+	public void setVillageId(Long villageId) {
+		this.villageId = villageId;
+	}
+
+	public Long getVillageId() {
+		return villageId;
+	}
+
+	public Integer getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(Integer parentId) {
+		this.parentId = parentId;
+	}
+
+	public String getAncestors() {
+		return ancestors;
+	}
+
+	public void setAncestors(String ancestors) {
+		this.ancestors = ancestors;
+	}
+
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("id", getId())
+				.append("projectName", getProjectName()).append("villageId", getVillageId()).toString();
+	}
 }

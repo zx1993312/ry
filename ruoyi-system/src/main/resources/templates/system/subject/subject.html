@@ -29,8 +29,7 @@
 	        <div class="row">
 	            <div class="col-sm-12 search-collapse">
 	                <form id="formId">
-	                	<input type="hidden" id="id" name="id">
-		                <input type="hidden" id="parentId" name="parentId">
+		                <input type="hidden" id="costId" name="costId">
 		                
 	                    <div class="select-list">
 	                        <ul>
@@ -169,7 +168,6 @@
 	                }]
 	            };
 	            $.table.init(options);
-		    $.table.init(options);
 		}
 		
 		function queryDeptTree()
@@ -183,10 +181,8 @@
 			$.tree.init(options);
 			
 			function zOnClick(event, treeId, treeNode) {
-				console.log(prefix + "/list");
-				$("#formId").submit({
-					url: prefix + "/list",
-				})
+				$("#costId").val(treeNode.id);
+				$.table.search();
 			}
 		}
 		

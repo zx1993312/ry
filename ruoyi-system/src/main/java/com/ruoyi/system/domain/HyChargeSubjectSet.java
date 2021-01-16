@@ -2,9 +2,11 @@ package com.ruoyi.system.domain;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 import com.ruoyi.system.annotation.EnumAnn;
+import com.ruoyi.system.constants.Constants;
 import com.ruoyi.system.enums.CalculationMethodEnum;
 
 /**
@@ -13,112 +15,111 @@ import com.ruoyi.system.enums.CalculationMethodEnum;
  * @author Administrator
  * @date 2021-01-06
  */
-public class HyChargeSubjectSet extends BaseEntity
-{
-    private static final long serialVersionUID = 1L;
+public class HyChargeSubjectSet extends BaseEntity {
+	private static final long serialVersionUID = 1L;
 
-    /** 主键 */
-    private Long id;
+	/** 主键 */
+	private Long id;
 
-    /** 费用名称 */
-    @Excel(name = "费用名称")
-    private String feeName;
+	/** 费用名称 */
+	@Excel(name = "费用名称")
+	private String feeName;
 
-    /** 标准编号 */
-    @Excel(name = "标准编号")
-    private String standardNum;
+	/** 标准编号 */
+	@Excel(name = "标准编号")
+	private String standardNum;
 
-    /** 标准名称 */
-    @Excel(name = "标准名称")
-    private String standardName;
+	/** 标准名称 */
+	@Excel(name = "标准名称")
+	private String standardName;
 
-    /** 计算方式 */
-    @Excel(name = "计算方式")
-    @EnumAnn(enumClass=CalculationMethodEnum.class,enumType="String")
-    private String calculationMethod;
+	/** 计算方式 */
+	@Excel(name = "计算方式")
+	@EnumAnn(enumClass = CalculationMethodEnum.class, enumType = Constants.STRING)
+	private String calculationMethod;
 
-    /** 通用收费标准 */
-    @Excel(name = "通用收费标准")
-    private String chargingStanard;
+	/** 通用收费标准 */
+	@Excel(name = "通用收费标准")
+	private String chargingStanard;
 
-    /** 标准说明 */
-    @Excel(name = "标准说明")
-    private String descriptionStandard;
+	/** 标准说明 */
+	@Excel(name = "标准说明")
+	private String descriptionStandard;
 
-    public void setId(Long id) 
-    {
-        this.id = id;
-    }
+	/** 费用项目id */
+	@Excel(name = "费用项目id")
+	private String costId;
 
-    public Long getId() 
-    {
-        return id;
-    }
-    public void setFeeName(String feeName) 
-    {
-        this.feeName = feeName;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getFeeName() 
-    {
-        return feeName;
-    }
-    public void setStandardNum(String standardNum) 
-    {
-        this.standardNum = standardNum;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public String getStandardNum() 
-    {
-        return standardNum;
-    }
-    public void setStandardName(String standardName) 
-    {
-        this.standardName = standardName;
-    }
+	public void setFeeName(String feeName) {
+		this.feeName = feeName;
+	}
 
-    public String getStandardName() 
-    {
-        return standardName;
-    }
-    public void setCalculationMethod(String calculationMethod) 
-    {
-        this.calculationMethod = calculationMethod;
-    }
+	public String getFeeName() {
+		return feeName;
+	}
 
-    public String getCalculationMethod() 
-    {
-        return calculationMethod;
-    }
-    public void setChargingStanard(String chargingStanard) 
-    {
-        this.chargingStanard = chargingStanard;
-    }
+	public void setStandardNum(String standardNum) {
+		this.standardNum = standardNum;
+	}
 
-    public String getChargingStanard() 
-    {
-        return chargingStanard;
-    }
-    public void setDescriptionStandard(String descriptionStandard) 
-    {
-        this.descriptionStandard = descriptionStandard;
-    }
+	public String getStandardNum() {
+		return standardNum;
+	}
 
-    public String getDescriptionStandard() 
-    {
-        return descriptionStandard;
-    }
+	public void setStandardName(String standardName) {
+		this.standardName = standardName;
+	}
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("feeName", getFeeName())
-            .append("standardNum", getStandardNum())
-            .append("standardName", getStandardName())
-            .append("calculationMethod", getCalculationMethod())
-            .append("chargingStanard", getChargingStanard())
-            .append("descriptionStandard", getDescriptionStandard())
-            .toString();
-    }
+	public String getStandardName() {
+		return standardName;
+	}
+
+	public void setCalculationMethod(String calculationMethod) {
+		this.calculationMethod = calculationMethod;
+	}
+
+	public String getCalculationMethod() {
+		return calculationMethod;
+	}
+
+	public void setChargingStanard(String chargingStanard) {
+		this.chargingStanard = chargingStanard;
+	}
+
+	public String getChargingStanard() {
+		return chargingStanard;
+	}
+
+	public void setDescriptionStandard(String descriptionStandard) {
+		this.descriptionStandard = descriptionStandard;
+	}
+
+	public String getDescriptionStandard() {
+		return descriptionStandard;
+	}
+
+	public String getCostId() {
+		return costId;
+	}
+
+	public void setCostId(String costId) {
+		this.costId = costId;
+	}
+
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("id", getId())
+				.append("feeName", getFeeName()).append("standardNum", getStandardNum())
+				.append("standardName", getStandardName()).append("calculationMethod", getCalculationMethod())
+				.append("chargingStanard", getChargingStanard()).append("descriptionStandard", getDescriptionStandard())
+				.toString();
+	}
 }
