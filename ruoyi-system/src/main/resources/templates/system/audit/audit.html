@@ -11,18 +11,27 @@
 				<form id="formId">
 					<div class="select-list">
 						<ul>
-							<li><label>项目名称：</label> <input type="text" name="entryName" />
+							<li>
+								<label>项目名称：</label> 
+								<input type="text" name="entryName" />
 							</li>
-							<li><label>纳税人规模：</label> <input type="text" name="taxScale" />
+							<li>
+								<label>纳税人规模：</label> 
+								<input type="text" name="taxScale" />
 							</li>
-							<li><label>费用科目：</label> <input type="text"
-								name="expenseAccount" /></li>
-							<li><label>税率：</label> <input type="text" name="taxRate" />
+							<li>
+								<label>费用科目：</label> 
+								<input type="text" name="expenseAccount" /></li>
+							<li>
+								<label>税率：</label> 
+								<input type="text" name="taxRate" />
 							</li>
-							<li><label>开始时间：</label> <input type="text" 
-								class="time-input" placeholder="请选择开始时间" name="timeStr" /></li>
-							<li><label>结束时间：</label> <input type="text"
-								class="time-input" placeholder="请选择结束时间" name="timeEnd" /></li>
+							<li>
+								<label>开始时间：</label> 
+								<input type="text" class="time-input" placeholder="请选择开始时间" name="timeStr" /></li>
+							<li>
+								<label>结束时间：</label> 
+								<input type="text" class="time-input" placeholder="请选择结束时间" name="timeEnd" /></li>
 							<!-- <li><label>审核状态：</label> <select name="auditStatus"
 								class="form-control m-b"
 								th:with="type=${@dict.getType('hy_examine_type')}">
@@ -30,24 +39,27 @@
 									<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
 										th:value="${dict.dictValue}"></option>
 							</select></li> -->
-							<li><label>是否需要不动产备案：</label> <select id="estateRecord"
-								name="estateRecord" class="form-control "
-								th:with="type=${@dict.getType('hy_vat_audit')}">
-									<option value="">请选择</option>
-									<option value="0">是</option>
-									<option value="1">否</option>
-							</select></li>
-							<li><label>是否需要合同违约金含税率：</label> <select id="taxRateRecord"
-								name="taxRateRecord" class="form-control"
-								th:with="type=${@dict.getType('hy_vat_audit')}">
-									<option value="">请选择</option>
-									<option value="0">是</option>
-									<option value="1">否</option>
-							</select></li>
-							<li><a class="btn btn-primary btn-rounded btn-sm"
-								onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
-								<a class="btn btn-warning btn-rounded btn-sm"
-								onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							<li>
+								<label>是否需要不动产备案：</label> 
+								<select id="estateRecord" name="estateRecord" class="form-control " th:with="type=${@dict.getType('sys_yes_no')}">
+										<option value="">请选择</option>
+										<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+								</select>
+							</li>
+							<li>
+							<label>是否需要合同违约金含税率：</label> 
+								<select id="taxRateRecord" name="taxRateRecord" class="form-control" th:with="type=${@dict.getType('sys_yes_no')}">
+										<option value="">请选择</option>
+										<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+								</select>
+							</li>
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()">
+								<i class="fa fa-search"></i>&nbsp;搜索
+							</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()">
+								<i class="fa fa-refresh"></i>&nbsp;重置
+							</a>
 							</li>
 						</ul>
 					</div>
@@ -55,19 +67,17 @@
 			</div>
 
 			<div class="btn-group-sm" id="toolbar" role="group">
-				<a class="btn btn-success" onclick="$.operate.add()"
-					shiro:hasPermission="system:audit:add"> <i class="fa fa-plus"></i>
-					添加
-				</a> <a class="btn btn-primary single disabled"
-					onclick="$.operate.edit()" shiro:hasPermission="system:audit:edit">
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:audit:add"> 
+					<i class="fa fa-plus"></i> 添加
+				</a> 
+				<a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:audit:edit">
 					<i class="fa fa-edit"></i> 修改
-				</a> <a class="btn btn-danger multiple disabled"
-					onclick="$.operate.removeAll()"
-					shiro:hasPermission="system:audit:remove"> <i
-					class="fa fa-remove"></i> 删除
-				</a> <a class="btn btn-warning" onclick="$.table.exportExcel()"
-					shiro:hasPermission="system:audit:export"> <i
-					class="fa fa-download"></i> 导出
+				</a> 
+				<a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:audit:remove"> 
+					<i class="fa fa-remove"></i> 删除
+				</a> 
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:audit:export"> 
+					<i class="fa fa-download"></i> 导出
 				</a>
 			</div>
 			<div class="col-sm-12 select-table table-striped">
