@@ -46,6 +46,7 @@ public class ReflectUtil<T> {
 						switch (enumType) {
 						case "String":
 							String fieldString = (String) field.get(t);
+							System.out.println(fieldString);
 							s = method.invoke(enumAnn.enumClass(), Integer.valueOf(fieldString));
 							break;
 						case "Integer":

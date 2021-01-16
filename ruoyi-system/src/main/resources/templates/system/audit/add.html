@@ -1,34 +1,17 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
-    <th:block th:include="include :: header('新增增值税率审核')" />
+    <th:block th:include="include :: header('新增增值税税率')" />
     <th:block th:include="include :: datetimepicker-css" />
 </head>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
         <form class="form-horizontal m" id="form-audit-add">
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">区域名称：</label>
-                <div class="col-sm-8">
-                    <input id="areaName" name="areaName" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">项目编号：</label>
-                <div class="col-sm-8">
-                    <input id="projectNum" name="projectNum" class="form-control" type="text">
-                </div>
-            </div>
+            
             <div class="form-group">    
                 <label class="col-sm-3 control-label">项目名称：</label>
                 <div class="col-sm-8">
                     <input id="entryName" name="entryName" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">纳税人规模：</label>
-                <div class="col-sm-8">
-                    <input name="taxScale" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
@@ -38,9 +21,29 @@
                 </div>
             </div>
             <div class="form-group">    
+                <label class="col-sm-3 control-label">纳税人规模：</label>
+                <div class="col-sm-8">
+               		<select id="taxScale"
+								name="taxScale" class="form-control">
+               		<option value="2">一般纳税人</option>
+               		<option value="3">小规模纳税人</option>
+               		</select>
+               
+                </div>
+            </div>
+            <div class="form-group">    
                 <label class="col-sm-3 control-label">税率：</label>
                 <div class="col-sm-8">
-                    <input name="taxRate" class="form-control" type="text">
+                	<select id="taxRate"
+								name="taxRate" class="form-control">
+               		<option value="0%">0%</option>
+               		<option value="3%">3%</option>
+               		<option value="5%">5%</option>
+               		<option value="6%">6%</option>
+               		<option value="9%">9%</option>
+               		<option value="13%">13%</option>
+               		<option value="15%">15%</option>
+               		</select>
                 </div>
             </div>
             <div class="form-group">    
@@ -61,39 +64,20 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">审核状态：</label>
-                <div class="col-sm-8">
-                    <div class="radio-box">
-                        <input type="radio" name="auditStatus" value="0">
-                        <label th:for="auditStatus" th:text="已审核"></label>                        
-                    </div>
-                    <div class="radio-box">
-                        <input type="radio" name="auditStatus" value="1">
-                        <label th:for="auditStatus" th:text="未审核"></label>         
-                    </div>
-                </div>
-            </div>
+          
             <div class="form-group">    
                 <label class="col-sm-3 control-label">是否需要不动产备案：</label>
                 <div class="col-sm-8">
-               <select id="estateRecord" name="estateRecord" class="form-control "
-						th:with="type=${@dict.getType('hy_vat_audit')}">
-						<option value="">请选择</option>
-						<option value="0">是</option>
-						<option value="1">否</option>
-					</select>
+                <input name="estateRecord" type="checkbox"
+						th:with="type=${@dict.getType('hy_vat_audit')}" value="0"/>
+              
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">是否需要合同违约金含税率：</label>
+                <label class="col-sm-3 control-label">是否需要合同违约金税率：</label>
                 <div class="col-sm-8">
-                   <select id="taxRateRecord" name="taxRateRecord" class="form-control "
-						th:with="type=${@dict.getType('hy_vat_audit')}">
-						<option value="">请选择</option>
-						<option value="0">是</option>
-						<option value="1">否</option>
-					</select>
+                <input name="taxRateRecord" type="checkbox"
+						th:with="type=${@dict.getType('hy_vat_audit')}" value="0"/>
                 </div>
             </div>
         </form>
@@ -130,12 +114,7 @@
 				auditStatus: {
 					maxlength:50,
 				},
-				estateRecord: {
-					required : true,
-				},
-				taxRateRecord: {
-					required : true,
-				},
+		
 				
 			},
         	

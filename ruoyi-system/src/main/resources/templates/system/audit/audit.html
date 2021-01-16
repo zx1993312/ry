@@ -11,10 +11,6 @@
 				<form id="formId">
 					<div class="select-list">
 						<ul>
-							<li><label>区域名称：</label> <input type="text" name="areaName" />
-							</li>
-							<li><label>项目编号：</label> <input type="text"
-								name="projectNum" /></li>
 							<li><label>项目名称：</label> <input type="text" name="entryName" />
 							</li>
 							<li><label>纳税人规模：</label> <input type="text" name="taxScale" />
@@ -23,17 +19,17 @@
 								name="expenseAccount" /></li>
 							<li><label>税率：</label> <input type="text" name="taxRate" />
 							</li>
-							<li><label>开始时间：</label> <input type="text"
+							<li><label>开始时间：</label> <input type="text" 
 								class="time-input" placeholder="请选择开始时间" name="timeStr" /></li>
 							<li><label>结束时间：</label> <input type="text"
 								class="time-input" placeholder="请选择结束时间" name="timeEnd" /></li>
-							<li><label>审核状态：</label> <select name="auditStatus"
+							<!-- <li><label>审核状态：</label> <select name="auditStatus"
 								class="form-control m-b"
 								th:with="type=${@dict.getType('hy_examine_type')}">
 									<option value="">所有</option>
 									<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
 										th:value="${dict.dictValue}"></option>
-							</select></li>
+							</select></li> -->
 							<li><label>是否需要不动产备案：</label> <select id="estateRecord"
 								name="estateRecord" class="form-control "
 								th:with="type=${@dict.getType('hy_vat_audit')}">
@@ -42,7 +38,7 @@
 									<option value="1">否</option>
 							</select></li>
 							<li><label>是否需要合同违约金含税率：</label> <select id="taxRateRecord"
-								name="taxRateRecord" class="form-control "
+								name="taxRateRecord" class="form-control"
 								th:with="type=${@dict.getType('hy_vat_audit')}">
 									<option value="">请选择</option>
 									<option value="0">是</option>
@@ -101,14 +97,14 @@
                     title: '主键',
                     visible: false
                 },
-                {
+               /*  {
                     field: 'areaName',
                     title: '区域名称'
                 },
                 {
                     field: 'projectNum',
                     title: '项目编号'
-                },
+                }, */
                 {
                     field: 'entryName',
                     title: '项目名称'
@@ -133,10 +129,10 @@
                     field: 'timeEnd',
                     title: '结束时间'
                 },
-                {
+               /*  {
                     field: 'auditStatus',
                     title: '审核状态'
-                },
+                }, */
                 {
                     field: 'estateRecord',
                     title: '是否需要不动产备案'
