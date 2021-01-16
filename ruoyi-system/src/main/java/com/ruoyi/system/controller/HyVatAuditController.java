@@ -123,7 +123,6 @@ public class HyVatAuditController extends BaseController {
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") Long id, ModelMap mmap) {
 		HyVatAudit hyVatAudit = hyVatAuditService.selectHyVatAuditById(id);
-		System.out.println(hyVatAudit.getEstateRecord());
 		mmap.put("hyVatAudit", hyVatAudit);
 		return prefix + "/edit";
 	}

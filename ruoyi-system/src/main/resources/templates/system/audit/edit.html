@@ -6,45 +6,38 @@
 </head>
 <body class="white-bg">
 	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
-		<form class="form-horizontal m" id="form-audit-edit"
-			th:object="${hyVatAudit}">
+		<form class="form-horizontal m" id="form-audit-edit" th:object="${hyVatAudit}">
 			<input name="id" th:field="*{id}" type="hidden">
 
 			<div class="form-group">
 				<label class="col-sm-3 control-label">项目名称：</label>
 				<div class="col-sm-8">
-					<input name="entryName" th:field="*{entryName}"
-						class="form-control" type="text">
+					<input name="entryName" th:field="*{entryName}" class="form-control" type="text">
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-3 control-label">纳税人规模：</label>
 				<div class="col-sm-8">
-					<input name="taxScale" th:field="*{taxScale}" class="form-control"
-						type="text">
+					<input name="taxScale" th:field="*{taxScale}" class="form-control" type="text">
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-3 control-label">费用科目：</label>
 				<div class="col-sm-8">
-					<input name="expenseAccount" th:field="*{expenseAccount}"
-						class="form-control" type="text">
+					<input name="expenseAccount" th:field="*{expenseAccount}" class="form-control" type="text">
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-3 control-label">税率：</label>
 				<div class="col-sm-8">
-					<input name="taxRate" th:field="*{taxRate}" class="form-control"
-						type="text">
+					<input name="taxRate" th:field="*{taxRate}" class="form-control" type="text">
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-3 control-label">开始时间：</label>
 				<div class="col-sm-8">
 					<div class="input-group date">
-						<input name="timeStr"
-							th:value="${#dates.format(hyVatAudit.timeStr, 'yyyy-MM-dd')}"
-							class="form-control" placeholder="yyyy-MM-dd" type="text">
+						<input name="timeStr" th:value="${#dates.format(hyVatAudit.timeStr, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
 						<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 					</div>
 				</div>
@@ -53,9 +46,7 @@
 				<label class="col-sm-3 control-label">结束时间：</label>
 				<div class="col-sm-8">
 					<div class="input-group date">
-						<input name="timeEnd"
-							th:value="${#dates.format(hyVatAudit.timeEnd, 'yyyy-MM-dd')}"
-							class="form-control" placeholder="yyyy-MM-dd" type="text">
+						<input name="timeEnd" th:value="${#dates.format(hyVatAudit.timeEnd, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
 						<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 					</div>
 				</div>
@@ -64,16 +55,19 @@
 			<div class="form-group">
 				<label class="col-sm-3 control-label">是否需要不动产备案：</label>
 				<div class="col-sm-8">
-					<input id="estateRecord" name="estateRecord" type="checkbox" th:field="*{estateRecord}"
-					 onchange="changValue()" value="1"/>
+                    <label class="check-box">
+                        <input type="radio" value="0" name="estateRecord" id="estateRecord" th:field="*{estateRecord}">是</label>
+                    <label class="check-box">
+                        <input type="radio" value="1" name="estateRecord" id="estateRecord" th:field="*{estateRecord}">否</label>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-3 control-label">是否需要合同违约金含税率：</label>
 				<div class="col-sm-8">
-					<input id="taxRateRecord" name="taxRateRecord" type="checkbox"
-						th:field="*{taxRateRecord}"
-						th:with="type=${@dict.getType('hy_vat_audit')}" value="0" />
+					 <label class="check-box">
+                         <input type="radio" value="0" name="taxRateRecord" id="taxRateRecord" th:field="*{taxRateRecord}">是</label>
+                     <label class="check-box">
+                         <input type="radio" value="1" name="taxRateRecord" id="taxRateRecord" th:field="*{taxRateRecord}">否</label>
 				</div>
 			</div>
 		</form>
@@ -82,17 +76,6 @@
 	<th:block th:include="include :: datetimepicker-js" />
 	<script th:inline="javascript">
 		var prefix = ctx + "system/audit";
-		
-		function changValue(){
-			if($('#estateRecord').checked == true) {
-				$('#estateRecord').val("0");
-				console.log($('#estateRecord').val())
-            }else{
-            	$('#estateRecord').val("1");
-            	console.log($('#estateRecord').val())
-            }
-		}
-		 
 		 
 		$("#form-audit-edit").validate({
 			focusCleanup : true
@@ -100,8 +83,7 @@
 
 		function submitHandler() {
 			if ($.validate.form()) {
-				$.operate.save(prefix + "/edit", $('#form-audit-edit')
-						.serialize());
+				$.operate.save(prefix + "/edit", $('#form-audit-edit').serialize());
 			}
 		}
 

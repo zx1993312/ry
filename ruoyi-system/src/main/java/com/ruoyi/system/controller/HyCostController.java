@@ -63,7 +63,7 @@ public class HyCostController extends BaseController {
 	}
 
 	/**
-	 * 加载部门列表树
+	 * 加载费用项目列表树
 	 */
 	@ApiOperation("费用项目")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "hyCost", value = "项目实体类hyCost", required = true), })
@@ -75,7 +75,7 @@ public class HyCostController extends BaseController {
 		return hyCost;
 	}
 
-	/**
+	/** 
 	 * 导出费用项目列表
 	 */
 	@ApiOperation("费用项目")

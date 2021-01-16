@@ -3,62 +3,68 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.system.mapper.HyProjectMapper">
-    
-    <resultMap type="HyProject" id="HyProjectResult">
-        <result property="id"    column="id"    />
-        <result property="projectName"    column="project_name"    />
-        <result property="villageId"    column="village_id"    />
-    </resultMap>
 
-    <sql id="selectHyProjectVo">
-        select id, project_name, village_id from hy_project
-    </sql>
+	<resultMap type="HyProject" id="HyProjectResult">
+		<result property="id" column="id" />
+		<result property="projectName" column="project_name" />
+		<result property="villageId" column="village_id" />
+		<result property="parentId" column="parent_id" />
+		<result property="ancestors" column="ancestors" />
+	</resultMap>
 
-    <select id="selectHyProjectList" parameterType="HyProject" resultMap="HyProjectResult">
-        <include refid="selectHyProjectVo"/>
-        <where>  
-            <if test="projectName != null  and projectName != ''"> and project_name like concat('%', #{projectName}, '%')</if>
-            <if test="villageId != null "> and village_id = #{villageId}</if>
-        </where>
-    </select>
-    
-    <select id="selectHyProjectById" parameterType="Long" resultMap="HyProjectResult">
-        <include refid="selectHyProjectVo"/>
-        where id = #{id}
-    </select>
-        
-    <insert id="insertHyProject" parameterType="HyProject">
-        insert into hy_project
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">id,</if>
-            <if test="projectName != null">project_name,</if>
-            <if test="villageId != null">village_id,</if>
-         </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">#{id},</if>
-            <if test="projectName != null">#{projectName},</if>
-            <if test="villageId != null">#{villageId},</if>
-         </trim>
-    </insert>
+	<sql id="selectHyProjectVo">
+		select id, project_name, village_id,parent_id,ancestors from hy_project
+	</sql>
 
-    <update id="updateHyProject" parameterType="HyProject">
-        update hy_project
-        <trim prefix="SET" suffixOverrides=",">
-            <if test="projectName != null">project_name = #{projectName},</if>
-            <if test="villageId != null">village_id = #{villageId},</if>
-        </trim>
-        where id = #{id}
-    </update>
+	<select id="selectHyProjectList" parameterType="HyProject"
+		resultMap="HyProjectResult">
+		<include refid="selectHyProjectVo" />
+		<where>
+			<if test="projectName != null  and projectName != ''"> and project_name like concat('%', #{projectName}, '%')
+			</if>
+			<if test="villageId != null "> and village_id = #{villageId}</if>
+		</where>
+	</select>
 
-    <delete id="deleteHyProjectById" parameterType="Long">
-        delete from hy_project where id = #{id}
-    </delete>
+	<select id="selectHyProjectById" parameterType="Long"
+		resultMap="HyProjectResult">
+		<include refid="selectHyProjectVo" />
+		where id = #{id}
+	</select>
 
-    <delete id="deleteHyProjectByIds" parameterType="String">
-        delete from hy_project where id in 
-        <foreach item="id" collection="array" open="(" separator="," close=")">
-            #{id}
-        </foreach>
-    </delete>
+	<insert id="insertHyProject" parameterType="HyProject">
+		insert into hy_project
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">id,</if>
+			<if test="projectName != null">project_name,</if>
+			<if test="villageId != null">village_id,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">#{id},</if>
+			<if test="projectName != null">#{projectName},</if>
+			<if test="villageId != null">#{villageId},</if>
+		</trim>
+	</insert>
+
+	<update id="updateHyProject" parameterType="HyProject">
+		update hy_project
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="projectName != null">project_name = #{projectName},</if>
+			<if test="villageId != null">village_id = #{villageId},</if>
+		</trim>
+		where id = #{id}
+	</update>
+
+	<delete id="deleteHyProjectById" parameterType="Long">
+		delete from hy_project where id = #{id}
+	</delete>
+
+	<delete id="deleteHyProjectByIds" parameterType="String">
+		delete from hy_project where id in
+		<foreach item="id" collection="array" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
 
 </mapper>
