@@ -36,7 +36,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @author Administrator
  * @date 2021-01-06
  */
-@Controller 
+@Controller
 @RequestMapping("/system/parkingData")
 @Api(tags = "车位资料 Controller")
 public class HyParkingDataInfController extends BaseController {
@@ -62,10 +62,10 @@ public class HyParkingDataInfController extends BaseController {
 	public TableDataInfo list(HyParkingInf hyParkingInf) {
 		startPage();
 		List<HyParkingInf> list = hyParkingInfService.selectHyParkingInfList(hyParkingInf);
-		List<Map<String , Object>>reList=new ArrayList<>();
-		for (HyParkingInf hpi:list) {
-			Map<String,Object> map=new HashMap<>();
-			map=Constants.REFLECT_UTIL.convertMap(hpi);
+		List<Map<String, Object>> reList = new ArrayList<>();
+		for (HyParkingInf hpi : list) {
+			Map<String, Object> map = new HashMap<>();
+			map = Constants.REFLECT_UTIL.convertMap(hpi);
 			reList.add(map);
 		}
 		return getDataTable(reList);
@@ -92,12 +92,12 @@ public class HyParkingDataInfController extends BaseController {
 	 */
 	@GetMapping("/add")
 	public String add(HyParkingInf hyParkingInf) {
-		
+
 		List<HyParkingInf> list = hyParkingInfService.selectHyParkingInfList(hyParkingInf);
-		List<Map<String , Object>>reList=new ArrayList<>();
-		for (HyParkingInf hpi:list) {
-			Map<String,Object> map=new HashMap<>();
-			map=Constants.REFLECT_UTIL.convertMap(hpi);
+		List<Map<String, Object>> reList = new ArrayList<>();
+		for (HyParkingInf hpi : list) {
+			Map<String, Object> map = new HashMap<>();
+			map = Constants.REFLECT_UTIL.convertMap(hpi);
 			reList.add(map);
 		}
 		return prefix + "/add";
@@ -128,10 +128,10 @@ public class HyParkingDataInfController extends BaseController {
 		HyParkingInf hyParkingInf = hyParkingInfService.selectHyParkingInfById(id);
 		mmap.put("hyParkingInf", hyParkingInf);
 		List<HyParkingInf> list = hyParkingInfService.selectHyParkingInfList(hyParkingInf);
-		List<Map<String , Object>>reList=new ArrayList<>();
-		for (HyParkingInf hpi:list) {
-			Map<String,Object> map=new HashMap<>();
-			map=Constants.REFLECT_UTIL.convertMap(hpi);
+		List<Map<String, Object>> reList = new ArrayList<>();
+		for (HyParkingInf hpi : list) {
+			Map<String, Object> map = new HashMap<>();
+			map = Constants.REFLECT_UTIL.convertMap(hpi);
 			reList.add(map);
 		}
 		return prefix + "/edit";
@@ -149,10 +149,10 @@ public class HyParkingDataInfController extends BaseController {
 	@ResponseBody
 	public AjaxResult editSave(HyParkingInf hyParkingInf) {
 		List<HyParkingInf> list = hyParkingInfService.selectHyParkingInfList(hyParkingInf);
-		List<Map<String , Object>>reList=new ArrayList<>();
-		for (HyParkingInf hpi:list) {
-			Map<String,Object> map=new HashMap<>();
-			map=Constants.REFLECT_UTIL.convertMap(hpi);
+		List<Map<String, Object>> reList = new ArrayList<>();
+		for (HyParkingInf hpi : list) {
+			Map<String, Object> map = new HashMap<>();
+			map = Constants.REFLECT_UTIL.convertMap(hpi);
 			reList.add(map);
 		}
 		return toAjax(hyParkingInfService.updateHyParkingInf(hyParkingInf));
