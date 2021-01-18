@@ -35,7 +35,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 
  * @author ruoyi
  * @date 2021-01-04
- */ 
+ */
 @Controller
 @RequestMapping("/system/collection")
 @Api(tags = "航宇物业，收款管理 controller")
@@ -62,11 +62,11 @@ public class HyCollectionController extends BaseController {
 	public TableDataInfo list(HyCollection hyCollection) {
 		startPage();
 		List<HyCollection> list = hyCollectionService.selectHyCollectionList(hyCollection);
-		List<Map<String ,Object>> reList=new ArrayList<>();
-		for(HyCollection hc:list) {
-			Map<String,Object>map=new HashMap<>();
-		map=Constants.REFLECT_UTIL.convertMap(hc);
-		reList.add(map);
+		List<Map<String, Object>> reList = new ArrayList<>();
+		for (HyCollection hc : list) {
+			Map<String, Object> map = new HashMap<>();
+			map = Constants.REFLECT_UTIL.convertMap(hc);
+			reList.add(map);
 		}
 		return getDataTable(reList);
 	}

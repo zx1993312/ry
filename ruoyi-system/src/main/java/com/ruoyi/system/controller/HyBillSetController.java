@@ -38,152 +38,131 @@ import com.ruoyi.common.core.page.TableDataInfo;
  */
 @Controller
 @RequestMapping("/system/set")
-@Api(tags = "票据设置Controller") 
-public class HyBillSetController extends BaseController
-{
-    private String prefix = "system/set";
+@Api(tags = "票据设置Controller")
+public class HyBillSetController extends BaseController {
+	private String prefix = "system/set";
 
-    @Autowired
-    private IHyBillSetService hyBillSetService;
+	@Autowired
+	private IHyBillSetService hyBillSetService;
 
-    @RequiresPermissions("system:set:view")
-    @GetMapping()
-    public String set()
-    {
-        return prefix + "/set";
-    }
+	@RequiresPermissions("system:set:view")
+	@GetMapping()
+	public String set() {
+		return prefix + "/set";
+	}
 
-    /**
-     * 查询票据设置列表
-     */
-    @ApiOperation("票据设置")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyBillSet", value = "项目实体类hyBillSet", required = true),
-	})
-    @RequiresPermissions("system:set:list")
-    @PostMapping("/list")
-    @ResponseBody
-    public TableDataInfo list(HyBillSet hyBillSet)
-    {
-        startPage();
-        List<HyBillSet> list = hyBillSetService.selectHyBillSetList(hyBillSet);
-        List<Map<String ,Object>> reList=new ArrayList<>();
-        for(HyBillSet hbs:list) {
-        	Map<String ,Object>map=new HashMap<>();
-        	map=Constants.REFLECT_UTIL.convertMap(hbs);
-        	reList.add(map);
-        }
-        return getDataTable(reList);
-    }
+	/**
+	 * 查询票据设置列表
+	 */
+	@ApiOperation("票据设置")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyBillSet", value = "项目实体类hyBillSet", required = true), })
+	@RequiresPermissions("system:set:list")
+	@PostMapping("/list")
+	@ResponseBody
+	public TableDataInfo list(HyBillSet hyBillSet) {
+		startPage();
+		List<HyBillSet> list = hyBillSetService.selectHyBillSetList(hyBillSet);
+		List<Map<String, Object>> reList = new ArrayList<>();
+		for (HyBillSet hbs : list) {
+			Map<String, Object> map = new HashMap<>();
+			map = Constants.REFLECT_UTIL.convertMap(hbs);
+			reList.add(map);
+		}
+		return getDataTable(reList);
+	}
 
-    /**
-     * 导出票据设置列表
-     */
-    @ApiOperation("票据设置")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyBillSet", value = "项目实体类hyBillSet", required = true),
-	})
-    @RequiresPermissions("system:set:export")
-    @Log(title = "票据设置", businessType = BusinessType.EXPORT)
-    @PostMapping("/export")
-    @ResponseBody
-    public AjaxResult export(HyBillSet hyBillSet)
-    {
-        List<HyBillSet> list = hyBillSetService.selectHyBillSetList(hyBillSet);
-        ExcelUtil<HyBillSet> util = new ExcelUtil<HyBillSet>(HyBillSet.class);
-        return util.exportExcel(list, "set");
-    }
+	/**
+	 * 导出票据设置列表
+	 */
+	@ApiOperation("票据设置")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyBillSet", value = "项目实体类hyBillSet", required = true), })
+	@RequiresPermissions("system:set:export")
+	@Log(title = "票据设置", businessType = BusinessType.EXPORT)
+	@PostMapping("/export")
+	@ResponseBody
+	public AjaxResult export(HyBillSet hyBillSet) {
+		List<HyBillSet> list = hyBillSetService.selectHyBillSetList(hyBillSet);
+		ExcelUtil<HyBillSet> util = new ExcelUtil<HyBillSet>(HyBillSet.class);
+		return util.exportExcel(list, "set");
+	}
 
-    /**
-     * 新增票据设置
-     */
-    @GetMapping("/add")
-    public String add()
-    {
-        return prefix + "/add";
-    }
+	/**
+	 * 新增票据设置
+	 */
+	@GetMapping("/add")
+	public String add() {
+		return prefix + "/add";
+	}
 
-    /**
-     * 新增保存票据设置
-     */
-    @ApiOperation("票据设置")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyBillSet", value = "项目实体类hyBillSet", required = true),
-	})
-    @RequiresPermissions("system:set:add")
-    @Log(title = "票据设置", businessType = BusinessType.INSERT)
-    @PostMapping("/add")
-    @ResponseBody
-    public AjaxResult addSave(HyBillSet hyBillSet)
-    {
-    	  List<HyBillSet> list = hyBillSetService.selectHyBillSetList(hyBillSet);
-          List<Map<String ,Object>> reList=new ArrayList<>();
-          for(HyBillSet hbs:list) {
-          	Map<String ,Object>map=new HashMap<>();
-          	map=Constants.REFLECT_UTIL.convertMap(hbs);
-          	reList.add(map);
-          }
-    	return toAjax(hyBillSetService.insertHyBillSet(hyBillSet));
-    }
+	/**
+	 * 新增保存票据设置
+	 */
+	@ApiOperation("票据设置")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyBillSet", value = "项目实体类hyBillSet", required = true), })
+	@RequiresPermissions("system:set:add")
+	@Log(title = "票据设置", businessType = BusinessType.INSERT)
+	@PostMapping("/add")
+	@ResponseBody
+	public AjaxResult addSave(HyBillSet hyBillSet) {
+		List<HyBillSet> list = hyBillSetService.selectHyBillSetList(hyBillSet);
+		List<Map<String, Object>> reList = new ArrayList<>();
+		for (HyBillSet hbs : list) {
+			Map<String, Object> map = new HashMap<>();
+			map = Constants.REFLECT_UTIL.convertMap(hbs);
+			reList.add(map);
+		}
+		return toAjax(hyBillSetService.insertHyBillSet(hyBillSet));
+	}
 
-    /**
-     * 修改票据设置
-     */
-    @ApiOperation("票据设置")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "id", value = "主键id", required = true),
-	})
-    @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Long id, ModelMap mmap)
-    {
-        HyBillSet hyBillSet = hyBillSetService.selectHyBillSetById(id);
-        mmap.put("hyBillSet", hyBillSet);
-        List<HyBillSet> list = hyBillSetService.selectHyBillSetList(hyBillSet);
-        List<Map<String ,Object>> reList=new ArrayList<>();
-        for(HyBillSet hbs:list) {
-        	Map<String ,Object>map=new HashMap<>();
-        	map=Constants.REFLECT_UTIL.convertMap(hbs);
-        	reList.add(map);
-        }
-        return prefix + "/edit";
-    }
+	/**
+	 * 修改票据设置
+	 */
+	@ApiOperation("票据设置")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "id", value = "主键id", required = true), })
+	@GetMapping("/edit/{id}")
+	public String edit(@PathVariable("id") Long id, ModelMap mmap) {
+		HyBillSet hyBillSet = hyBillSetService.selectHyBillSetById(id);
+		mmap.put("hyBillSet", hyBillSet);
+		List<HyBillSet> list = hyBillSetService.selectHyBillSetList(hyBillSet);
+		List<Map<String, Object>> reList = new ArrayList<>();
+		for (HyBillSet hbs : list) {
+			Map<String, Object> map = new HashMap<>();
+			map = Constants.REFLECT_UTIL.convertMap(hbs);
+			reList.add(map);
+		}
+		return prefix + "/edit";
+	}
 
-    /**
-     * 修改保存票据设置
-     */
-    @ApiOperation("票据设置")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyBillSet", value = "项目实体类hyBillSet", required = true),
-	})
-    @RequiresPermissions("system:set:edit")
-    @Log(title = "票据设置", businessType = BusinessType.UPDATE)
-    @PostMapping("/edit")
-    @ResponseBody
-    public AjaxResult editSave(HyBillSet hyBillSet)
-    {
-    	  List<HyBillSet> list = hyBillSetService.selectHyBillSetList(hyBillSet);
-          List<Map<String ,Object>> reList=new ArrayList<>();
-          for(HyBillSet hbs:list) {
-          	Map<String ,Object>map=new HashMap<>();
-          	map=Constants.REFLECT_UTIL.convertMap(hbs);
-          	reList.add(map);
-          }
-    	return toAjax(hyBillSetService.updateHyBillSet(hyBillSet));
-    }
+	/**
+	 * 修改保存票据设置
+	 */
+	@ApiOperation("票据设置")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyBillSet", value = "项目实体类hyBillSet", required = true), })
+	@RequiresPermissions("system:set:edit")
+	@Log(title = "票据设置", businessType = BusinessType.UPDATE)
+	@PostMapping("/edit")
+	@ResponseBody
+	public AjaxResult editSave(HyBillSet hyBillSet) {
+		List<HyBillSet> list = hyBillSetService.selectHyBillSetList(hyBillSet);
+		List<Map<String, Object>> reList = new ArrayList<>();
+		for (HyBillSet hbs : list) {
+			Map<String, Object> map = new HashMap<>();
+			map = Constants.REFLECT_UTIL.convertMap(hbs);
+			reList.add(map);
+		}
+		return toAjax(hyBillSetService.updateHyBillSet(hyBillSet));
+	}
 
-    /**
-     * 删除票据设置
-     */
-    @ApiOperation("票据设置")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "ids", value = "ids", required = true),
-	})
-    @RequiresPermissions("system:set:remove")
-    @Log(title = "票据设置", businessType = BusinessType.DELETE)
-    @PostMapping( "/remove")
-    @ResponseBody
-    public AjaxResult remove(String ids)
-    {
-        return toAjax(hyBillSetService.deleteHyBillSetByIds(ids));
-    }
+	/**
+	 * 删除票据设置
+	 */
+	@ApiOperation("票据设置")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "ids", value = "ids", required = true), })
+	@RequiresPermissions("system:set:remove")
+	@Log(title = "票据设置", businessType = BusinessType.DELETE)
+	@PostMapping("/remove")
+	@ResponseBody
+	public AjaxResult remove(String ids) {
+		return toAjax(hyBillSetService.deleteHyBillSetByIds(ids));
+	}
 }
