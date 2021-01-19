@@ -7,6 +7,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
+import com.ruoyi.system.annotation.EnumAnn;
+import com.ruoyi.system.enums.AuditEnum;
 
 /**
  * 费用减免对象 hy_fee_remission
@@ -81,6 +83,7 @@ public class HyFeeRemission extends BaseEntity
 
     /** 审核状态 */
     @Excel(name = "审核状态")
+    @EnumAnn(enumClass=AuditEnum.class,enumType="Integer")
     private Integer auditStatus;
 
     /** 税率 */
@@ -156,8 +159,50 @@ public class HyFeeRemission extends BaseEntity
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Excel(name = "冲销时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date writeoffTime;
+    
+    private String houseNumber;
+    
+    private String houseName;
+    
+    private Integer parkingNumber;
+    
+    private String ownerName;
+    
+    private String meterName;
 
-    public void setId(Long id) 
+    private HyOwnerRegistration hyOwnerRegistration;
+    
+    private HyHouseInf hyHouseInf;
+    
+    private HyParkingInf hyParkingInf;
+    
+    private HyMeter hyMeter;
+    
+    public HyHouseInf getHyHouseInf() {
+		return hyHouseInf;
+	}
+
+	public void setHyHouseInf(HyHouseInf hyHouseInf) {
+		this.hyHouseInf = hyHouseInf;
+	}
+
+	public HyParkingInf getHyParkingInf() {
+		return hyParkingInf;
+	}
+
+	public void setHyParkingInf(HyParkingInf hyParkingInf) {
+		this.hyParkingInf = hyParkingInf;
+	}
+
+	public HyMeter getHyMeter() {
+		return hyMeter;
+	}
+
+	public void setHyMeter(HyMeter hyMeter) {
+		this.hyMeter = hyMeter;
+	}
+
+	public void setId(Long id) 
     {
         this.id = id;
     }
@@ -455,42 +500,96 @@ public class HyFeeRemission extends BaseEntity
         return writeoffTime;
     }
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("businessExemptedType", getBusinessExemptedType())
-            .append("feeName", getFeeName())
-            .append("reliefTypes", getReliefTypes())
-            .append("totalAmountDeduction", getTotalAmountDeduction())
-            .append("reducedAmount", getReducedAmount())
-            .append("cancellationCreditAmount", getCancellationCreditAmount())
-            .append("monthlyDeductionAmount", getMonthlyDeductionAmount())
-            .append("reductionRatio", getReductionRatio())
-            .append("sharingTotalDeduction", getSharingTotalDeduction())
-            .append("timeStr", getTimeStr())
-            .append("timeEnd", getTimeEnd())
-            .append("exemptionReason", getExemptionReason())
-            .append("remarks", getRemarks())
-            .append("offsetModificationRecord", getOffsetModificationRecord())
-            .append("auditStatus", getAuditStatus())
-            .append("taxRate", getTaxRate())
-            .append("feeDate", getFeeDate())
-            .append("dueDate", getDueDate())
-            .append("remissionYear", getRemissionYear())
-            .append("remissionMonth", getRemissionMonth())
-            .append("exemptionRegistrant", getExemptionRegistrant())
-            .append("registrationTime", getRegistrationTime())
-            .append("reduceNot", getReduceNot())
-            .append("amountNotRemitted", getAmountNotRemitted())
-            .append("amountTaxInc", getAmountTaxInc())
-            .append("taxation", getTaxation())
-            .append("amountExcludingTax", getAmountExcludingTax())
-            .append("offsetTime", getOffsetTime())
-            .append("cancellationTime", getCancellationTime())
-            .append("revocation", getRevocation())
-            .append("writeoffOnt", getWriteoffOnt())
-            .append("writeoffTime", getWriteoffTime())
-            .toString();
-    }
+    public String getHouseName() {
+		return houseName;
+	}
+
+	public void setHouseName(String houseName) {
+		this.houseName = houseName;
+	}
+
+	public Integer getParkingNumber() {
+		return parkingNumber;
+	}
+
+	public void setParkingNumber(Integer parkingNumber) {
+		this.parkingNumber = parkingNumber;
+	}
+
+	public String getOwnerName() {
+		return ownerName;
+	}
+
+	public void setOwnerName(String ownerName) {
+		this.ownerName = ownerName;
+	}
+
+	public String getMeterName() {
+		return meterName;
+	}
+
+	public void setMeterName(String meterName) {
+		this.meterName = meterName;
+	}
+
+	public HyOwnerRegistration getHyOwnerRegistration() {
+		return hyOwnerRegistration;
+	}
+
+	public void setHyOwnerRegistration(HyOwnerRegistration hyOwnerRegistration) {
+		this.hyOwnerRegistration = hyOwnerRegistration;
+	}
+
+	public String getHouseNumber() {
+		return houseNumber;
+	}
+
+	public void setHouseNumber(String houseNumber) {
+		this.houseNumber = houseNumber;
+	}
+
+	@Override
+	public String toString() {
+		return "HyFeeRemission [id=" + id + ", businessExemptedType=" + businessExemptedType + ", feeName=" + feeName
+				+ ", reliefTypes=" + reliefTypes + ", totalAmountDeduction=" + totalAmountDeduction + ", reducedAmount="
+				+ reducedAmount + ", cancellationCreditAmount=" + cancellationCreditAmount + ", monthlyDeductionAmount="
+				+ monthlyDeductionAmount + ", reductionRatio=" + reductionRatio + ", sharingTotalDeduction="
+				+ sharingTotalDeduction + ", timeStr=" + timeStr + ", timeEnd=" + timeEnd + ", exemptionReason="
+				+ exemptionReason + ", remarks=" + remarks + ", offsetModificationRecord=" + offsetModificationRecord
+				+ ", auditStatus=" + auditStatus + ", taxRate=" + taxRate + ", feeDate=" + feeDate + ", dueDate="
+				+ dueDate + ", remissionYear=" + remissionYear + ", remissionMonth=" + remissionMonth
+				+ ", exemptionRegistrant=" + exemptionRegistrant + ", registrationTime=" + registrationTime
+				+ ", reduceNot=" + reduceNot + ", amountNotRemitted=" + amountNotRemitted + ", amountTaxInc="
+				+ amountTaxInc + ", taxation=" + taxation + ", amountExcludingTax=" + amountExcludingTax
+				+ ", offsetTime=" + offsetTime + ", cancellationTime=" + cancellationTime + ", revocation=" + revocation
+				+ ", writeoffOnt=" + writeoffOnt + ", writeoffTime=" + writeoffTime + ", houseNumber=" + houseNumber
+				+ ", houseName=" + houseName + ", parkingNumber=" + parkingNumber + ", ownerName=" + ownerName
+				+ ", meterName=" + meterName + ", hyOwnerRegistration=" + hyOwnerRegistration + ", hyHouseInf="
+				+ hyHouseInf + ", hyParkingInf=" + hyParkingInf + ", hyMeter=" + hyMeter + ", getHyHouseInf()="
+				+ getHyHouseInf() + ", getHyParkingInf()=" + getHyParkingInf() + ", getHyMeter()=" + getHyMeter()
+				+ ", getId()=" + getId() + ", getBusinessExemptedType()=" + getBusinessExemptedType()
+				+ ", getFeeName()=" + getFeeName() + ", getReliefTypes()=" + getReliefTypes()
+				+ ", getTotalAmountDeduction()=" + getTotalAmountDeduction() + ", getReducedAmount()="
+				+ getReducedAmount() + ", getCancellationCreditAmount()=" + getCancellationCreditAmount()
+				+ ", getMonthlyDeductionAmount()=" + getMonthlyDeductionAmount() + ", getReductionRatio()="
+				+ getReductionRatio() + ", getSharingTotalDeduction()=" + getSharingTotalDeduction() + ", getTimeStr()="
+				+ getTimeStr() + ", getTimeEnd()=" + getTimeEnd() + ", getExemptionReason()=" + getExemptionReason()
+				+ ", getRemarks()=" + getRemarks() + ", getOffsetModificationRecord()=" + getOffsetModificationRecord()
+				+ ", getAuditStatus()=" + getAuditStatus() + ", getTaxRate()=" + getTaxRate() + ", getFeeDate()="
+				+ getFeeDate() + ", getDueDate()=" + getDueDate() + ", getRemissionYear()=" + getRemissionYear()
+				+ ", getRemissionMonth()=" + getRemissionMonth() + ", getExemptionRegistrant()="
+				+ getExemptionRegistrant() + ", getRegistrationTime()=" + getRegistrationTime() + ", getReduceNot()="
+				+ getReduceNot() + ", getAmountNotRemitted()=" + getAmountNotRemitted() + ", getAmountTaxInc()="
+				+ getAmountTaxInc() + ", getTaxation()=" + getTaxation() + ", getAmountExcludingTax()="
+				+ getAmountExcludingTax() + ", getOffsetTime()=" + getOffsetTime() + ", getCancellationTime()="
+				+ getCancellationTime() + ", getRevocation()=" + getRevocation() + ", getWriteoffOnt()="
+				+ getWriteoffOnt() + ", getWriteoffTime()=" + getWriteoffTime() + ", getHouseName()=" + getHouseName()
+				+ ", getParkingNumber()=" + getParkingNumber() + ", getOwnerName()=" + getOwnerName()
+				+ ", getMeterName()=" + getMeterName() + ", getHyOwnerRegistration()=" + getHyOwnerRegistration()
+				+ ", getHouseNumber()=" + getHouseNumber() + "]";
+	}
+
+	
+
+
 }

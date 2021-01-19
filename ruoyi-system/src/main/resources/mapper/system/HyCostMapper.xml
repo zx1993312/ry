@@ -9,10 +9,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="costItems"    column="cost_items"    />
         <result property="expenseType"    column="expense_type"    />
         <result property="parentId"    column="parent_id"    />
+        <result property="ancestors"    column="ancestors"    />
+        <result property="standardName"    column="standard_name"    />
+        <result property="chargingStandard"    column="charging_standard"    />
+        <result property="calculationMehod"    column="calculation_mehod"    />
+        <result property="standardDescription"    column="standard_description"    />
+        <result property="standardState"    column="standard_state"    />
+        <result property="proportionDamags"    column="proportion_damags"    />
+        <result property="projectModification"    column="project_modification"    />
+        <result property="billingCycle"    column="billing_cycle"    />
+        <result property="bilingStartDate"    column="biling_start_date"    />
+        <result property="auditResultsReason"    column="audit_results_reason"    />
+        
     </resultMap>
 
     <sql id="selectHyCostVo">
-        select id, cost_items, expense_type,parent_id from hy_cost
+        select
+        c.id, c.cost_items, c.expense_type,
+        c.parent_id,c.ancestors,c.standard_name,c.charging_standard,
+       c. calculation_mehod,c.standard_description,c.standard_state,
+        c.proportion_damags,c.project_modification,c.billing_cycle,
+        c.biling_start_date,c.audit_results_reason,
+        o.owner_name,
+        h.group_area,h.building,
+        p.parking_number
+        from 
+        hy_cost c
+        left join hy_owner_registration o on c.id=o.house_num
+        left join hy_house_inf h on o.house_num=h.house_number
+        left join hy_parking_inf p on h.house_number=p.house_number where 1=1;
     </sql>
 
     <select id="selectHyCostList" parameterType="HyCost" resultMap="HyCostResult">

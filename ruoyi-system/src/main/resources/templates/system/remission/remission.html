@@ -10,6 +10,26 @@
                 <form id="formId">
                     <div class="select-list">
                         <ul>
+                             <li>
+                                <label>业主名称：</label>
+                                <input type="text" name="ownerName"/>
+                            </li>
+                             <li>
+                                <label>房屋编号：</label>
+                                <input type="text" name="houseNumber"/>
+                            </li>
+                             <li>
+                                <label>房屋名称：</label>
+                                <input type="text" name="houseName"/>
+                            </li>
+                             <li>
+                                <label>车位编号：</label>
+                                <input type="text" name="parkingNumber"/>
+                            </li>
+                             <li>
+                                <label>表计名称：</label>
+                                <input type="text" name="meterName"/>
+                            </li>
                             <li>
                                 <label>减免业务类型：</label>
                                 <select name="businessExemptedType">
@@ -71,9 +91,10 @@
                             </li>
                             <li>
                                 <label>审核状态：</label>
-                                <select name="auditStatus">
-                                    <option value="">所有</option>
-                                    <option value="-1">代码生成请选择字典属性</option>
+                                <select name="auditStatus" th:with="type=${@dict.getType('hy_examine_type')}">
+                                    <option value="">请选择</option>
+                                    <option value="0">已审核</option>
+                                    <option value="1">未审核</option>
                                 </select>
                             </li>
                             <li>
@@ -193,6 +214,26 @@
                     field: 'id',
                     title: '主键',
                     visible: false
+                },
+                {
+                    field: 'hyOwnerRegistration.ownerName',
+                    title: '客户名称'
+                },
+                {
+                    field: 'houseNumber',
+                    title: '房屋编号'
+                },
+                {
+                    field: 'hyHouseInf.houseName',
+                    title: '房屋名称'
+                },
+                {
+                    field: 'hyParkingInf.parkingNumber',
+                    title: '车位编号'
+                },
+                {
+                    field: 'hyMeter.meterName',
+                    title: '表计名称'
                 },
                 {
                     field: 'businessExemptedType',
