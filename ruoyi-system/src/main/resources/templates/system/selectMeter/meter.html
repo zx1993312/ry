@@ -97,19 +97,16 @@
 			</div>
 
 			<div class="btn-group-sm" id="toolbar" role="group">
-				<a class="btn btn-success" onclick="$.operate.add()"
-					shiro:hasPermission="system:meter:add"> <i class="fa fa-plus"></i>
-					添加
-				</a> <a class="btn btn-primary single disabled"
-					onclick="$.operate.edit()" shiro:hasPermission="system:meter:edit">
-					<i class="fa fa-edit"></i> 修改
-				</a> <a class="btn btn-danger multiple disabled"
-					onclick="$.operate.removeAll()"
-					shiro:hasPermission="system:meter:remove"> <i
-					class="fa fa-remove"></i> 删除
-				</a> <a class="btn btn-warning" onclick="$.table.exportExcel()"
-					shiro:hasPermission="system:meter:export"> <i
-					class="fa fa-download"></i> 导出
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:meter:add"> 
+					<i class="fa fa-plus"></i> 添加
+				</a> 
+			 	
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:meter:export"> 
+					<i class="fa fa-download"></i> 导出
+				</a>
+				
+				<a class="btn btn-danger" shiro:hasPermission="system:meter:print" onclick="printPage()">
+	                <i class="fa fa-print"></i> 打印
 				</a>
 			</div>
 			<div class="col-sm-12 select-table table-striped">
@@ -236,6 +233,10 @@
             };
             $.table.init(options);
         });
+        
+        function printPage() {
+            window.print();
+        }
     </script>
 </body>
 </html>
