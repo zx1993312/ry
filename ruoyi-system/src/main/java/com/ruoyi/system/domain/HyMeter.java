@@ -144,6 +144,9 @@ public class HyMeter extends BaseEntity {
 
 	@Excel(name = "表箱")
 	private HyMeterCase hyMeterCase;
+	
+	@Excel(name="房屋表")
+	private HyHouseInf hyHouseInf;
 
 	public void setId(Long id) {
 		this.id = id;
@@ -391,6 +394,14 @@ public class HyMeter extends BaseEntity {
 
 	public void setHyMeterCase(HyMeterCase hyMeterCase) {
 		this.hyMeterCase = hyMeterCase;
+	}
+
+	public HyHouseInf getHyHouseInf() {
+		return hyHouseInf;
+	}
+
+	public void setHyHouseInf(HyHouseInf hyHouseInf) {
+		this.hyHouseInf = hyHouseInf;
 	}
 
 	@Override

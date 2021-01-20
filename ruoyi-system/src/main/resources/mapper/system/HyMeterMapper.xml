@@ -54,6 +54,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="caseId" column="caes_id" />
 	</resultMap>
 	
+  <resultMap type="HyHouseInf" id="HyHouseInfResult">
+        <result property="id"    column="id"    />
+        <result property="building"    column="building"    />
+        <result property="houseNumber"    column="house_number"    />
+        <result property="houseName"    column="house_name"    />
+        <result property="builtUpArea"    column="built_up_area"    />
+        <result property="groupArea"    column="group_area"    />
+        <result property="unit"    column="unit"    />
+        <result property="floor"    column="floor"    />
+        <result property="sameUnitNumber"    column="same_unit_number"    />
+        <result property="areaType"    column="area_type"    />
+        <result property="bilingArea"    column="biling_area"    />
+        <result property="insideArea"    column="inside_area"    />
+        <result property="sharedArea"    column="shared_area"    />
+        <result property="gardenArea"    column="garden_area"    />
+        <result property="basementArea"    column="basement_area"    />
+        <result property="sharedLobbyArea"    column="shared_lobby_area"    />
+        <result property="sharedLayersArea"    column="shared_layers_area"    />
+        <result property="shareRatio"    column="share_ratio"    />
+        <result property="buildingStructure"    column="building_structure"    />
+        <result property="parametersPer"    column="parameters_per"    />
+        <result property="houseLayout"    column="house_layout"    />
+        <result property="floorHeight"    column="floor_height"    />
+        <result property="natureProperty"    column="nature_property"    />
+        <result property="natureUse"    column="nature_use"    />
+        <result property="usageStatus"    column="usage_status"    />
+        <result property="occupancyStatus"    column="occupancy_status"    />
+        <result property="deliveryStatus"    column="delivery_status"    />
+        <result property="houseType"    column="house_type"    />
+        <result property="salesStatus"    column="sales_status"    />
+        <result property="purchaseContract"    column="purchase_contract"    />
+        <result property="marketingNum"    column="marketing_num"    />
+    </resultMap>
 
 	<sql id="selectHyMeterVo">
 		select m.id, m.house_num, m.meter_type, m.meter_serial_num,
@@ -63,9 +96,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		m.attrition_rate, m.unit_price, m.amount_price,m.abnormal_prompt,
 		m.customer_name, m.freeze_not, m.source_meter,m.meter_reader,
 		m.input_time, c.meter_case_name,c.meter_case_position,
-		c.meter_serial,c.case_id
-		from hy_meter m left join hy_meter_case c on
-		m.id=c.case_id where 1=1
+		c.meter_serial,c.case_id,
+		h.house_number,h.house_name
+		from 
+		hy_meter m 
+		left join hy_meter_case c on
+		m.id=c.case_id 
+		
+		
+		LEFT JOIN 
+		hy_house_inf h on
+		m.house_num = h.house_number 
+		
+		
+		where 1=1
 	</sql>
 
 	<select id="selectHyMeterList" parameterType="HyMeter"
