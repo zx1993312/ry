@@ -42,9 +42,83 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="bankNum"    column="bank_num"    />
         <result property="bankAccountName"    column="bank_account_name"    />
     </resultMap>
-
+    
+  <resultMap type="HyHouseInf" id="HyHouseInfResult">
+        <result property="id"    column="id"    />
+        <result property="building"    column="building"    />
+        <result property="houseNumber"    column="house_number"    />
+        <result property="houseName"    column="house_name"    />
+        <result property="builtUpArea"    column="built_up_area"    />
+        <result property="groupArea"    column="group_area"    />
+        <result property="unit"    column="unit"    />
+        <result property="floor"    column="floor"    />
+        <result property="sameUnitNumber"    column="same_unit_number"    />
+        <result property="areaType"    column="area_type"    />
+        <result property="bilingArea"    column="biling_area"    />
+        <result property="insideArea"    column="inside_area"    />
+        <result property="sharedArea"    column="shared_area"    />
+        <result property="gardenArea"    column="garden_area"    />
+        <result property="basementArea"    column="basement_area"    />
+        <result property="sharedLobbyArea"    column="shared_lobby_area"    />
+        <result property="sharedLayersArea"    column="shared_layers_area"    />
+        <result property="shareRatio"    column="share_ratio"    />
+        <result property="buildingStructure"    column="building_structure"    />
+        <result property="parametersPer"    column="parameters_per"    />
+        <result property="houseLayout"    column="house_layout"    />
+        <result property="floorHeight"    column="floor_height"    />
+        <result property="natureProperty"    column="nature_property"    />
+        <result property="natureUse"    column="nature_use"    />
+        <result property="usageStatus"    column="usage_status"    />
+        <result property="occupancyStatus"    column="occupancy_status"    />
+        <result property="deliveryStatus"    column="delivery_status"    />
+        <result property="houseType"    column="house_type"    />
+        <result property="salesStatus"    column="sales_status"    />
+        <result property="purchaseContract"    column="purchase_contract"    />
+        <result property="marketingNum"    column="marketing_num"    />
+    </resultMap>
     <sql id="selectHyOwnerRegistrationVo">
-        select id, owner_name, house_num, fixed_telephone, mobile_phone, id_card_num, suplier_category, locked_not, access_num, certificate_name, customer_categoy, fax_phone, contact_address, postal_code, postal_preson, e_mail, phone_account, binding_phone_num, co_owner, owner_identification, fir_name, sec_name, gender, nationality, birth_date, work_unit, owner_job, owner_hobby, owner_id, taxpayer_num, owner_add_phone, bank_account, collection_category, bank_type, bank_num, bank_account_name from hy_owner_registration
+        select 
+        o.id, 
+        o.owner_name, 
+        o.house_num, 
+        o.fixed_telephone, 
+        o.mobile_phone, 
+        o.id_card_num, 
+        o.suplier_category, 
+        o.locked_not, 
+        o.access_num, 
+        o.certificate_name, 
+        o.customer_categoy, 
+        o.fax_phone, 
+        o.contact_address, 
+        o.postal_code,
+         o.postal_preson, 
+         o.e_mail, phone_account,
+         o. binding_phone_num, 
+          o.co_owner, 
+          o.owner_identification, 
+          o.fir_name, 
+          o.sec_name, 
+          o.gender, 
+          o.nationality, 
+          o.birth_date, 
+          o.work_unit, 
+          o.owner_job, 
+          o.owner_hobby, 
+          o.owner_id, 
+          o.taxpayer_num, 
+          o.owner_add_phone, 
+          o.bank_account, 
+          o.collection_category, 
+          o.bank_type, 
+          o.bank_num, 
+          o.bank_account_name ,
+          h.house_number,
+          h.house_name
+          from 
+          hy_owner_registration o
+          LEFT JOIN hy_house_inf h ON o.house_num = h.house_number 
+          where 1=1
     </sql>
 
     <select id="selectHyOwnerRegistrationList" parameterType="HyOwnerRegistration" resultMap="HyOwnerRegistrationResult">

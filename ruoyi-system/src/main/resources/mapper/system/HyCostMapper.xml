@@ -219,6 +219,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		h.group_area,
 		h.building,
 		h.house_name,
+		h.built_up_area,
 		p.parking_number
 		FROM
 		hy_cost c

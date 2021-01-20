@@ -2,7 +2,7 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org"
 	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-<th:block th:include="include :: header('应收冻结')" />
+<th:block th:include="include :: header('费用项目列表')" />
 </head>
 <body class="gray-bg">
 	<div class="container-div">
@@ -11,6 +11,11 @@
 				<form id="formId">
 					<div class="select-list">
 						<ul>
+							<li><label>操作日期：</label> <input type="text"
+								class="time-input" placeholder="请选择操作时间" name="operationDate" />
+							</li>
+							<li><label>操作人：</label> <input type="text"
+								name="operationUser" /></li>
 							<li><label>客户名称：</label> <input type="text" name="ownerName" />
 							</li>
 							<li><label>房屋编号：</label> <input type="text" name="houseNum" />
@@ -20,6 +25,9 @@
 							</li>
 							<li><label>费用项目：</label> <input type="text" name="costItems" />
 							</li>
+							<li><label>房屋面积：</label> <input type="text"
+								name="builtUpArea" /></li>
+
 							<li><a class="btn btn-primary btn-rounded btn-sm"
 								onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
 								<a class="btn btn-warning btn-rounded btn-sm"
@@ -31,17 +39,7 @@
 			</div>
 
 			<div class="btn-group-sm" id="toolbar" role="group">
-				<a class="btn btn-success" onclick="$.operate.add()"
-					shiro:hasPermission="system:cost:add"> <i class="fa fa-plus"></i>
-					添加
-				</a> <a class="btn btn-primary single disabled"
-					onclick="$.operate.edit()" shiro:hasPermission="system:cost:edit">
-					<i class="fa fa-edit"></i> 修改
-				</a> <a class="btn btn-danger multiple disabled"
-					onclick="$.operate.removeAll()"
-					shiro:hasPermission="system:cost:remove"> <i
-					class="fa fa-remove"></i> 删除
-				</a> <a class="btn btn-warning" onclick="$.table.exportExcel()"
+				<a class="btn btn-warning" onclick="$.table.exportExcel()"
 					shiro:hasPermission="system:cost:export"> <i
 					class="fa fa-download"></i> 导出
 				</a>
@@ -55,7 +53,7 @@
 	<script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('system:cost:edit')}]];
         var removeFlag = [[${@permission.hasPermi('system:cost:remove')}]];
-        var prefix = ctx + "system/receivableFrozen";
+        var prefix = ctx + "system/changeReceivable";
 
         $(function() {
             var options = {
@@ -68,15 +66,28 @@
                 columns: [{
                     checkbox: true
                 },
-                {
+         {
                     field: 'id',
                     title: '主键',
                     visible: false
                 },
-       
+               
+                {
+                    field: 'hyOwnerRegistration.ownerName',
+                    title: '客户名称'
+                },
                 {
                     field: 'hyOwnerRegistration.houseNum',
                     title: '房屋编号'
+                },
+                {
+                    field: 'hyHouseInf.houseName',
+                    title: '房屋名称'
+                },
+                   
+                {
+                    field: 'hyHouseInf.builtUpArea',
+                    title: '房屋面积'
                 },
                    
                 
@@ -85,63 +96,47 @@
                     title: '费用项目'
                 },
                 {
+                    field: 'operationDate',
+                    title: '操作日期'
+                },
+                {
+                    field: 'operationUser',
+                    title: '操作人'
+                },
+                {
+                    field: 'operationType',
+                    title: '操作类别'
+                },
+                {
                     field: 'feeDateOld',
-                    title: '费用日期'
+                    title: '原费用日期'
+                },
+                {
+                    field: 'feeDate',
+                    title: '现费用日期'
+                },
+                {
+                    field: 'dueDateOld',
+                    title: '原应收日期'
                 },
                 {
                     field: 'dueDate',
-                    title: '应收日期'
+                    title: '现应收日期'
                 },
                 {
-                    field: 'bilingStartDate',
-                    title: '开始日期'
-                },
-                {
-                    field: 'bilingEndDate',
-                    title: '结束日期'
+                    field: 'amountReceivableOld',
+                    title: '原应收金额'
                 },
                 {
                     field: 'amountReceivable',
-                    title: '应收金额'
-                },
-      
- 
-                {
-                    field: 'amountArrears',
-                    title: '欠收金额'
-                },
-       
-                {
-                    field: 'frozenState',
-                    title: '冻结状态'
-                },
-     
-                {
-                    field: 'deliveryStatus',
-                    title: '预交状态'
+                    title: '现应收金额'
                 },
                 {
-                    field: 'frozenPerson',
-                    title: '冻结人'
-                },
-                {
-                    field: 'frozenDate',
-                    title: '冻结日期'
-                },
-                {
-                    field: 'frozenReason',
-                    title: '冻结原因'
-                },
-                {
-                    title: '操作',
-                    align: 'center',
-                    formatter: function(value, row, index) {
-                        var actions = [];
-                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
-                        return actions.join('');
-                    }
-                }]
+                    field: 'remarks',
+                    title: '备注'
+                }   
+                
+]
             };
             $.table.init(options);
         });

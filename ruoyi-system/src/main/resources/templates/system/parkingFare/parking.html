@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+<th:block th:include="include :: header('车位资料列表')" />
+</head>
+<body class="gray-bg">
+	<div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li><label>车位区域：</label> <input type="text"
+								name="parkingArea" /></li>
+							
+							<li><label>车位类型：</label> <input type="text"
+								name="parkingClass" /></li>
+							<li><label>车位编号：</label> <input type="text"
+								name="parkingNumber" /></li>
+
+							<li><label>客户名称：</label> <input type="text" name="ownerName" />
+							</li>
+							<li><label>房屋编号：</label> <input type="text"
+								name="houseNumber" /></li>
+					
+							<li><label>房屋编号：</label> <input type="text"
+								name="houseName" /></li>
+					
+							
+							
+							<li><a class="btn btn-primary btn-rounded btn-sm"
+								onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索
+
+							</a> <a class="btn btn-warning btn-rounded btn-sm"
+								onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置
+
+							</a></li>
+						</ul>
+					</div>
+				</form>
+			</div>
+
+			<div class="btn-group-sm" id="toolbar" role="group">
+				 <a class="btn btn-warning" onclick="$.table.exportExcel()"
+					shiro:hasPermission="system:parking:export"> <i
+					class="fa fa-download"></i> 导出
+				</a>
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table"></table>
+			</div>
+		</div>
+	</div>
+	<th:block th:include="include :: footer" />
+	<script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:parking:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:parking:remove')}]];
+        var prefix = ctx + "system/parkingFare";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "车位资料",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '主键',
+                    visible: false
+                },
+                {
+                    field: 'parkingArea',
+                    title: '车位区域'
+                },
+              
+                {
+                    field: 'parkingClass',
+                    title: '车位类型'
+                },
+                {
+                    field: 'parkingNumber',
+                    title: '车位编号'
+                },
+              
+                {
+                    field: 'ownerName',
+                    title: '客户名称'
+                },
+                {
+                    field: 'houseNumber',
+                    title: '房屋编号'
+                },
+                {
+                    field: 'houseName',
+                    title: '房屋编名称'
+                }
+              
+                ]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

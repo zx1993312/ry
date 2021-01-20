@@ -165,6 +165,9 @@ public class HyOwnerRegistration extends BaseEntity
     /** 银行户名 */
     @Excel(name = "银行户名")
     private String bankAccountName;
+    
+    @Excel(name="房屋类")
+    private HyHouseInf hyHouseInf;
 
     public void setId(Long id) 
     {
@@ -491,7 +494,15 @@ public class HyOwnerRegistration extends BaseEntity
         return bankAccountName;
     }
 
-    @Override
+    public HyHouseInf getHyHouseInf() {
+		return hyHouseInf;
+	}
+
+	public void setHyHouseInf(HyHouseInf hyHouseInf) {
+		this.hyHouseInf = hyHouseInf;
+	}
+
+	@Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
