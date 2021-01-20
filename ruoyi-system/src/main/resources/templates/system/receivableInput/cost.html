@@ -10,14 +10,33 @@
                 <form id="formId">
                     <div class="select-list">
                         <ul>
+                               <li>
+                                <label>客户名称：</label>
+                                <input type="text" name="ownerName"/>
+                            </li>
+                            
+                                <li>
+                                <label>房屋编号：</label>
+                                <input type="text" name="houseNum"/>
+                            </li>
+                            
+                                <li>
+                                <label>房屋名称：</label>
+                                <input type="text" name="houseName"/>
+                            </li>
+                                <li>
+                                <label>车位名称：</label>
+                                <input type="text" name="parkingNumber"/>
+                            </li>
                             <li>
                                 <label>费用项目：</label>
                                 <input type="text" name="costItems"/>
                             </li>
                             <li>
-                                <label>费用类型：</label>
-                                <input type="text" name="expenseType"/>
+                                <label>费用日期：</label>
+                                <input type="text" name="feeDateOld"/>
                             </li>
+                           
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                                 <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
@@ -50,7 +69,7 @@
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('system:cost:edit')}]];
         var removeFlag = [[${@permission.hasPermi('system:cost:remove')}]];
-        var prefix = ctx + "system/cost";
+        var prefix = ctx + "system/receivableInput";
 
         $(function() {
             var options = {
@@ -69,12 +88,85 @@
                     visible: false
                 },
                 {
+                    field: 'hyOwnerRegistration.ownerName',
+                    title: '客户名称'
+                },
+                
+                {
+                    field: 'hyOwnerRegistration.houseNum',
+                    title: '房屋编号'
+                },
+                
+                {
+                    field: 'hyHouseInf.houseName',
+                    title: '房屋名称'
+                },
+                
+                {
+                    field: 'hyParkingInf.parkingNumber',
+                    title: '车位编号'
+                },
+                
+                
+                {
                     field: 'costItems',
                     title: '费用项目'
                 },
                 {
-                    field: 'expenseType',
-                    title: '费用类型'
+                    field: 'feeDateOld',
+                    title: '费用日期'
+                },
+                {
+                    field: 'dueDate',
+                    title: '应收日期'
+                },
+                {
+                    field: 'bilingStartDate',
+                    title: '开始日期'
+                },
+                {
+                    field: 'bilingEndDate',
+                    title: '结束日期'
+                },
+                {
+                    field: 'amountReceivable',
+                    title: '应收金额'
+                },
+                {
+                    field: 'amountActually',
+                    title: '实收金额'
+                },
+                {
+                    field: 'advancePaymetnOffset',
+                    title: '预交冲抵'
+                },
+                {
+                    field: 'writeOff',
+                    title: '减免冲销'
+                },
+                {
+                    field: 'refundAmount',
+                    title: '退款金额'
+                },
+                {
+                    field: 'amountArrears',
+                    title: '欠收金额'
+                },
+                {
+                    field: 'collectionStatus',
+                    title: '托收状态'
+                },
+                {
+                    field: 'frozenState',
+                    title: '冻结状态'
+                },
+                {
+                    field: 'advanceStatus',
+                    title: '垫付状态'
+                },
+                {
+                    field: 'deliveryStatus',
+                    title: '预交状态'
                 },
                 {
                     title: '操作',
