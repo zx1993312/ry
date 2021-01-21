@@ -171,6 +171,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="cancellationTime != null "> and f.cancellation_time = #{cancellationTime}</if>
 		<if test="revocation != null  and revocation != ''"> and f.revocation = #{revocation}</if>
 		<if test="writeoffOnt != null "> and f.writeoff_ont = #{writeoffOnt}</if>
+		
+		<if test="writeoffOnt != null "> and f.writeoff_ont = #{writeoffOnt}</if>
+		<if test="ownerName != null and ownerName != ''"> and o.owner_name = #{ownerName}</if>
 	</select>
 
 	<select id="selectHyFeeRemissionById" parameterType="Long"
