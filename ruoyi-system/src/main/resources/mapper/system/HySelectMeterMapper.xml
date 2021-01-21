@@ -25,6 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="amountPrice" column="amount_price" />
 		<result property="customerName" column="customer_name" />
 		<result property="ownerTenant" column="owner_tenant" />
+		<result property="standardName" column="standard_name" />
 		<association property="hyHouseInf" column="id" javaType="HyHouseInf" resultMap="HyHouseInfResult" />
 	</resultMap>
 
@@ -82,6 +83,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		m.amount_price,
 		m.customer_name,
 		m.owner_tenant,
+		m.standard_name,
 		i.house_name
 		from hy_meter m left join hy_house_inf i on m.house_num = i.house_number where 1=1
 	</sql>

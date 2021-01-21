@@ -51,6 +51,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="frozenReason" column="frozen_reason" />
 		<result property="advanceStatus" column="advance_status" />
 		<result property="deliveryStatus" column="delivery_status" />
+		<result property="transferTenants" column="transfer_tenants" />
+		<result property="changeDate" column="change_date" />
 		
 		
 		<association property="hyHouseInf" column="id" javaType="HyHouseInf" resultMap="HyHouseInfResult" />
@@ -215,6 +217,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		c.advance_status,
 		c.delivery_status,
 		c.billing_cycle,
+		c.transfer_tenants,
+		c.change_date,
 		o.owner_name,
 		h.group_area,
 		h.building,

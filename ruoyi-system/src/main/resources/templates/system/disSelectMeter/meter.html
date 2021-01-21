@@ -12,10 +12,6 @@
 					<div class="select-list">
 						<ul>
 							<li>
-								<label>楼宇名称：</label> 
-								<input type="text" name="buildingName" />
-							</li>
-							<li>
 								<label>房屋编号：</label> 
 								<input type="text" name="houseNum" />
 							</li>
@@ -32,56 +28,12 @@
 								<input type="text" name="meterName" />
 							</li>
 							<li>
-								<label>表箱名称：</label> 
-								<input type="text"name="meterCaseName" />
-							</li>
-							<li>
-								<label>起数：</label> 
-								<input type="text"name="meterStrNum" />
-							</li>
-							<li>
-								<label>止数：</label> 
-								<input type="text"name="meterEndNum" />
-							</li>
-							<li>
-								<label>变比：</label> 
-								<input type="text"name="transfRatio" />
-							</li>
-							<li>
-								<label>计量表类型：</label> 
-								<input type="text"name="strappingType" />
-							</li>
-							<li>
-								<label>抄表日期：</label> 
-								<input type="text"name="meterReadDate" />
-							</li>
-							<li>
-								<label>现用量：</label> 
-								<input type="text"name="newMeterConsumption" />
-							</li>
-							<li>
-								<label>旧表用量：</label> 
-								<input type="text"name="oldMeterConsumption" />
-							</li>
-							<li>
-								<label>损耗：</label> 
-								<input type="text"name="attritionRate" />
-							</li>
-							<li>
 								<label>单价：</label> 
 								<input type="text"name="unitPrice" />
 							</li>
 							<li>
-								<label>金额：</label> 
-								<input type="text"name="amountPrice" />
-							</li>
-							<li>
-								<label>客户名称：</label> 
-								<input type="text"name="customerName" />
-							</li>
-							<li>
-								<label>业主/租户：</label> 
-								<input type="text"name="ownerTenant" />
+								<label>标准名称：</label> 
+								<input type="text"name="standardName" />
 							</li>
 							<li>
 								<label>房屋名称：</label> 
@@ -140,82 +92,39 @@
                     title: '主键',
                     visible: false
                 }, 
-                {
-                    field: 'buildingName',
-                    title: '楼宇名称'
-                },
+      
                 {
                     field: 'houseNum',
                     title: '房屋编号'
                 },
                 {
-                    field: 'meterType',
-                    title: '表计类型'
+                    field: 'hyHouseInf.houseName',
+                    title: '房屋名称'
                 },
                 {
                     field: 'meterSerialNum',
-                    title: '表计序号'
+                    title: '表计编号'
                 },
                 {
                     field: 'meterName',
                     title: '表计名称'
                 },
                 {
-                    field: 'initialRead',
-                    title: '起始读数'
+                    field: 'meterType',
+                    title: '表计类型'
                 },
+       
                 {
-                    field: 'meterStrNum',
-                    title: '起数'
-                },
-                {
-                    field: 'meterEndNum',
-                    title: '止数'
-                },
-                {
-                    field: 'transfRatio',
-                    title: '变比'
-                },
-                {
-                    field: 'strappingType',
-                    title: '计量表类型'
-                },
-                {
-                    field: 'meterReadDate',
-                    title: '抄表日期'
-                },
-                {
-                    field: 'newMeterConsumption',
-                    title: '现用量'
-                },
-                {
-                    field: 'oldMeterConsumption',
-                    title: '旧表用量'
-                },
-                {
-                    field: 'attritionRate',
-                    title: '耗损'
+                    field: 'standardName',
+                    title: '标准名称'
                 },
                 {
                     field: 'unitPrice',
                     title: '单价'
-                },
-                {
-                    field: 'amountPrice',
-                    title: '金额'
-                },
-                {
-                    field: 'customerName',
-                    title: '客户名称'
-                },
-                {
-                    field: 'ownerTenant',
-                    title: '业主/租户'
-                },
-                {
-                    field: 'hyHouseInf.houseName',
-                    title: '房屋名称'
                 }
+               
+         
+         
                 
          /*        {
                     title: '操作',

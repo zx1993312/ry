@@ -141,6 +141,12 @@ public class HyMeter extends BaseEntity {
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Excel(name = "录入时间", width = 30, dateFormat = "yyyy-MM-dd")
 	private Date inputTime;
+	
+	/**
+	 * 
+	 */
+	@Excel(name="标准名称")
+	private String standardName;
 
 	@Excel(name = "表箱")
 	private HyMeterCase hyMeterCase;
@@ -402,6 +408,14 @@ public class HyMeter extends BaseEntity {
 
 	public void setHyHouseInf(HyHouseInf hyHouseInf) {
 		this.hyHouseInf = hyHouseInf;
+	}
+
+	public String getStandardName() {
+		return standardName;
+	}
+
+	public void setStandardName(String standardName) {
+		this.standardName = standardName;
 	}
 
 	@Override

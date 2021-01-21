@@ -213,6 +213,16 @@ public class HyCost extends BaseEntity {
 	 */
 	@Excel(name = "预交状态")
 	private Integer deliveryStatus;
+	/**
+	 * 出租时自动转移租户
+	 */
+	@Excel(name="出租时自动转移租户")
+	private Integer transferTenants;
+	/**
+	 * 变更时间
+	 */
+	@Excel(name="变更时间")
+	private Date changeDate;
 
 	private HyParkingInf hyParkingInf;
 
@@ -578,6 +588,22 @@ public class HyCost extends BaseEntity {
 
 	public void setStandardDescription(String standardDescription) {
 		this.standardDescription = standardDescription;
+	}
+
+	public Integer getTransferTenants() {
+		return transferTenants;
+	}
+
+	public void setTransferTenants(Integer transferTenants) {
+		this.transferTenants = transferTenants;
+	}
+
+	public Date getChangeDate() {
+		return changeDate;
+	}
+
+	public void setChangeDate(Date changeDate) {
+		this.changeDate = changeDate;
 	}
 
 	@Override

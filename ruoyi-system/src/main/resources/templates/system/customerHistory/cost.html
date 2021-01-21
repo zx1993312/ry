@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('费用项目列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>客户名称：</label>
+                                <input type="text" name="ownerName"/>
+                            </li>
+                            <li>
+                                <label>房屋编号：</label>
+                                <input type="text" name="houseNum"/>
+                            </li>
+                            <li>
+                                <label>房屋名称：</label>
+                                <input type="text" name="houseName"/>
+                            </li>
+                            <li>
+                                <label>费用名称：</label>
+                                <input type="text" name="costItems"/>
+                            </li>
+                  
+                            <li>
+                                <label>标准名称：</label>
+                                <input type="text" name="standardName"/>
+                            </li>
+                         
+                            <li>
+                                <label>通用收费标准：</label>
+                                <input type="text" name="chargingStandard"/>
+                            </li>
+                            <li>
+                                <label>计费周期：</label>
+                                <input type="text" name="billingCycle"/>
+                            </li>
+                            <li>
+                                <label>计算方式：</label>
+                                <input type="text" name="calculationMehod"/>
+                            </li>
+                  
+                            <li>
+                                <label>标准说明：</label>
+                                <input type="text" name="standardDescription"/>
+                            </li>
+                       
+                            <li>
+                                <label>计费开始日期：</label>
+                                <input type="text" class="time-input" placeholder="请选择计费开始日期" name="bilingStartDate"/>
+                            </li>
+           
+                            <li>
+                                <label>出租时自动转移租户：</label>
+                                <select id="transferTenants" name="transferTenants" class="form-control " th:with="type=${@dict.getType('sys_yes_no')}" >
+                                <option value="">请选择</option>
+								<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>变更时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择变更时间" name="changeDate"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:cost:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:cost:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:cost:remove')}]];
+        var prefix = ctx + "system/cost";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "费用项目",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '主键',
+                    visible: false
+                },
+                {
+                    field: 'hyOwnerRegistration.ownerName',
+                    title: '客户名称'
+                },
+                {
+                    field: 'hyHouseInf.houseName',
+                    title: '房屋名称'
+                },
+                {
+                    field: 'houseNum',
+                    title: '房屋编号'
+                },
+                {
+                    field: 'costItems',
+                    title: '费用名称'
+                },
+                {
+                    field: 'standardName',
+                    title: '标准名称'
+                },
+                {
+                    field: 'chargingStandard',
+                    title: '通用收费标准'
+                },
+                {
+                    field: 'billingCycle',
+                    title: '计费周期'
+                },
+                {
+                    field: 'calculationMehod',
+                    title: '计算方式'
+                },
+                {
+                    field: 'standardDescription',
+                    title: '标准说明'
+                },
+                {
+                    field: 'bilingStartDate',
+                    title: '计费开始日期'
+                },
+     
+                {
+                    field: 'transferTenants',
+                    title: '出租时自动转移租户',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case 0 : value =  "是";break;
+	                    	case 1 : value =  "否";break;
+	          
+	                	}
+		            	return value;
+		            }
+                },
+                {
+                    field: 'changeDate',
+                    title: '变更时间'
+                }
+              ]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>
