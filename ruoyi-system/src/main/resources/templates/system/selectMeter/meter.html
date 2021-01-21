@@ -117,13 +117,6 @@
         var removeFlag = [[${@permission.hasPermi('system:meter:remove')}]];
         var prefix = ctx + "system/selectMeter";
         
-        function meterCase(){
-        	$("#formId").attr("action","/system/case");
-        	$("#formId").submit();
-        	
-        }
-        
-
         $(function() {
             var options = {
                 url: prefix + "/list",
@@ -150,7 +143,16 @@
                 },
                 {
                     field: 'meterType',
-                    title: '表计类型'
+                    title: '表计类型',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case "0" : value =  "水";break;
+	                    	case "1" : value =  "电";break;
+	                    	case "2" : value =  "气";break;
+	                    	case "3" : value =  "暖气";break;
+	                	}
+		            	return value;
+		            }
                 },
                 {
                     field: 'meterSerialNum',
@@ -178,7 +180,16 @@
                 },
                 {
                     field: 'strappingType',
-                    title: '计量表类型'
+                    title: '计量表类型',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case "0" : value =  "商业";break;
+	                    	case "1" : value =  "外协";break;
+	                    	case "2" : value =  "住宅";break;
+	                    	case "3" : value =  "其他";break;
+	                	}
+		            	return value;
+		            }
                 },
                 {
                     field: 'meterReadDate',
@@ -215,19 +226,7 @@
                 {
                     field: 'hyHouseInf.houseName',
                     title: '房屋名称'
-                }
-                
-         /*        {
-                    title: '操作',
-                    align: 'center',
-                    formatter: function(value, row, index) {
-                        var actions = [];
-                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
-                        return actions.join('');
-                    }
-                } */
-                ]
+                }]
             };
             $.table.init(options);
         });

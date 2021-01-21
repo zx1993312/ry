@@ -8,6 +8,12 @@
 	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
 		<form class="form-horizontal m" id="form-meter-add">
 			<div class="form-group">
+				<label class="col-sm-3 control-label">楼宇名称：</label>
+				<div class="col-sm-8">
+					<input name="buildingName" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
 				<label class="col-sm-3 control-label">房屋编号：</label>
 				<div class="col-sm-8">
 					<input name="houseNum" class="form-control" type="text">
@@ -16,10 +22,9 @@
 			<div class="form-group">
 				<label class="col-sm-3 control-label">表计类型：</label>
 				<div class="col-sm-8">
-					<select id="meterType" name="meterType" class="form-control" th:with="type=${@dict.getType('hy_meter_type')}">
+					<select name="meterType" class="form-control" th:with="type=${@dict.getType('hy_meter_type')}">
 						<option value="">请选择</option>
-						<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
-							th:value="${dict.dictValue}"></option>
+						<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 					</select>
 				</div>
 			</div>
@@ -43,15 +48,27 @@
 			</div>
 
 			<div class="form-group">
+				<label class="col-sm-3 control-label">起数：</label>
+				<div class="col-sm-8">
+					<input name="meterStrNum" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">止数：</label>
+				<div class="col-sm-8">
+					<input name="meterEndNum" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
 				<label class="col-sm-3 control-label">变比：</label>
 				<div class="col-sm-8">
 					<input name="transfRatio" class="form-control" type="text">
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-3 control-label">是否反向：</label>
+				<label class="col-sm-3 control-label">计量表类型：</label>
 				<div class="col-sm-8">
-					<select id="reverseNot" name="reverseNot" class="form-control" th:with="type=${@dict.getType('sys_yes_no')}">
+					<select id="strappingType" name="strappingType" class="form-control" th:with="type=${@dict.getType('hy_metering_type')}">
 						<option value="">请选择</option>
 						<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
 							th:value="${dict.dictValue}"></option>
@@ -59,20 +76,77 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-3 control-label">计量表类型：</label>
+				<label class="col-sm-3 control-label">抄表日期：</label>
 				<div class="col-sm-8">
-					<select id="strappingType" name="meterType" class="form-control" th:with="type=${@dict.getType('hy_metering_type')}">
-						<option value="">请选择</option>
-						<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
-							th:value="${dict.dictValue}"></option>
-					</select>
+					<div class="input-group date">
+						<input name="meterReadDate" class="form-control" placeholder="yyyy-MM-dd" type="text"> 
+						<span class="input-group-addon">
+							<i class="fa fa-calendar"></i>
+						</span>
+					</div>
 				</div>
 			</div>
 			<div>
 				<div class="form-group">
-					<label class="col-sm-3 control-label">表箱：</label>
+					<label class="col-sm-3 control-label">现用量：</label>
 					<div class="col-sm-8">
-						<input name="hyMeterCase" class="form-control" type="text" onclick="meterCase()">
+						<input name="newMeterConsumption" class="form-control" type="text" >
+					</div>
+				</div>
+			</div>
+			<div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">旧表用量：</label>
+					<div class="col-sm-8">
+						<input name="oldMeterConsumption" class="form-control" type="text" >
+					</div>
+				</div>
+			</div>
+			<div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">损耗：</label>
+					<div class="col-sm-8">
+						<input name="attritionRate" class="form-control" type="text" >
+					</div>
+				</div>
+			</div>
+			<div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">单价：</label>
+					<div class="col-sm-8">
+						<input name="unitPrice" class="form-control" type="text" >
+					</div>
+				</div>
+			</div>
+			<div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">金额：</label>
+					<div class="col-sm-8">
+						<input name="amountPrice" class="form-control" type="text" >
+					</div>
+				</div>
+			</div>
+			<div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">客户名称：</label>
+					<div class="col-sm-8">
+						<input name="customerName" class="form-control" type="text" >
+					</div>
+				</div>
+			</div>
+			<div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">业主/租户：</label>
+					<div class="col-sm-8">
+						<input name="ownerTenant" class="form-control" type="text" >
+					</div>
+				</div>
+			</div>
+			<div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">房屋名称：</label>
+					<div class="col-sm-8">
+						<input name="houseName" class="form-control" type="text" >
 					</div>
 				</div>
 			</div>
@@ -82,46 +156,69 @@
 	<script th:src="@{/js/jquery.form.min.js}"></script>
 	<th:block th:include="include :: datetimepicker-js" />
 	<script th:inline="javascript">
-		var prefix = ctx + "system/meter"
-
-		function meterCase() {
-			$("#form-meter-add").attr("houseNum", $('#houseNum').val());
-			$("#form-meter-add").attr("meterType", $('#meterType').val());
-			$("#form-meter-add").attr("meterSerialNum",$('#meterSerialNum').val());
-			$("#form-meter-add").attr("meterName", $('#meterName').val());
-			$("#form-meter-add").attr("initialRead", $('#initialRead').val());
-			$("#form-meter-add").attr("transfRatio", $('#transfRatio').val());
-			$("#form-meter-add").attr("reverseNot", $('#reverseNot').val());
-			$("#form-meter-add").attr("strappingType", $('strappingType').val());
-			$("#form-meter-add").attr("meterCaseName", $('#meterCaseName').val());
-			$("#form-meter-add").attr("meterCasePosition", $('meterCasePosition').val());
-			$("#form-meter-add").attr("meterSerial", $('#meterSerial').val());
-
-			$("#form-meter-add").attr("action", "/system/case/add");
-			$("#form-meter-add").submit();
-
-		}
+		var prefix = ctx + "system/selectMeter"
 
 		$("#form-meter-add").validate({
 			onkeyup : false,
 			rules : {
+				buildingName : {
+					maxlength : 20,
+				},
 				houseNum : {
-					required : true,
 					maxlength : 20,
 				},
 				meterSerialNum : {
+					number : true,
 					maxlength : 3,
 				},
 				meterName : {
-					required : true,
 					maxlength : 50,
 				},
 				initialRead : {
 					number : true,
 					maxlength : 11,
 				},
+				meterStrNum : {
+					number : true,
+					maxlength : 11,
+				},
+				meterEndNum : {
+					number : true,
+					maxlength : 11,
+				},
 				transfRatio : {
 					number : true,
+					maxlength : 11,
+				},
+				meterReadDate : {
+					date:true,
+				},
+				newMeterConsumption : {
+					number : true,
+					maxlength : 11,
+				},
+				oldMeterConsumption : {
+					number : true,
+					maxlength : 11,
+				},
+				attritionRate : {
+					maxlength : 50,
+				},
+				unitPrice : {
+					number : true,
+					maxlength : 11,
+				},
+				amountPrice : {
+					number : true,
+					maxlength : 11,
+				},
+				customerName : {
+					maxlength : 50,
+				},
+				ownerTenant : {
+					maxlength : 20,
+				},
+				houseName : {
 					maxlength : 50,
 				},
 			},
@@ -142,11 +239,6 @@
 			autoclose : true
 		});
 
-		$("input[name='inputTime']").datetimepicker({
-			format : "yyyy-mm-dd",
-			minView : "month",
-			autoclose : true
-		});
 	</script>
 </body>
 </html>

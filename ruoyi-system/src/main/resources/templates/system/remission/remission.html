@@ -10,64 +10,13 @@
                 <form id="formId">
                     <div class="select-list">
                         <ul>
-                             <li>
+                            <li>
                                 <label>业主名称：</label>
                                 <input type="text" name="ownerName"/>
                             </li>
-                             <li>
+                            <li>
                                 <label>房屋编号：</label>
                                 <input type="text" name="houseNumber"/>
-                            </li>
-                             <li>
-                                <label>房屋名称：</label>
-                                <input type="text" name="houseName"/>
-                            </li>
-                             <li>
-                                <label>车位编号：</label>
-                                <input type="text" name="parkingNumber"/>
-                            </li>
-                             <li>
-                                <label>表计名称：</label>
-                                <input type="text" name="meterName"/>
-                            </li>
-                            <li>
-                                <label>减免业务类型：</label>
-                                <select name="businessExemptedType">
-                                    <option value="">所有</option>
-                                    <option value="-1">代码生成请选择字典属性</option>
-                                </select>
-                            </li>
-                            <li>
-                                <label>费用名称：</label>
-                                <input type="text" name="feeName"/>
-                            </li>
-                            <li>
-                                <label>减免类型：</label>
-                                <input type="text" name="reliefTypes"/>
-                            </li>
-                            <li>
-                                <label>减免总金额：</label>
-                                <input type="text" name="totalAmountDeduction"/>
-                            </li>
-                            <li>
-                                <label>已减免金额：</label>
-                                <input type="text" name="reducedAmount"/>
-                            </li>
-                            <li>
-                                <label>取消减免金额：</label>
-                                <input type="text" name="cancellationCreditAmount"/>
-                            </li>
-                            <li>
-                                <label>每月减免金额：</label>
-                                <input type="text" name="monthlyDeductionAmount"/>
-                            </li>
-                            <li>
-                                <label>减免比例：</label>
-                                <input type="text" name="reductionRatio"/>
-                            </li>
-                            <li>
-                                <label>均摊减免总金额：</label>
-                                <input type="text" name="sharingTotalDeduction"/>
                             </li>
                             <li>
                                 <label>开始时间：</label>
@@ -82,88 +31,12 @@
                                 <input type="text" name="exemptionReason"/>
                             </li>
                             <li>
-                                <label>备注：</label>
-                                <input type="text" name="remarks"/>
-                            </li>
-                            <li>
-                                <label>是否冲抵修改记录：</label>
-                                <input type="text" name="offsetModificationRecord"/>
-                            </li>
-                            <li>
                                 <label>审核状态：</label>
                                 <select name="auditStatus" th:with="type=${@dict.getType('hy_examine_type')}">
                                     <option value="">请选择</option>
                                     <option value="0">已审核</option>
                                     <option value="1">未审核</option>
                                 </select>
-                            </li>
-                            <li>
-                                <label>税率：</label>
-                                <input type="text" name="taxRate"/>
-                            </li>
-                            <li>
-                                <label>费用日期：</label>
-                                <input type="text" class="time-input" placeholder="请选择费用日期" name="feeDate"/>
-                            </li>
-                            <li>
-                                <label>应收日期：</label>
-                                <input type="text" class="time-input" placeholder="请选择应收日期" name="dueDate"/>
-                            </li>
-                            <li>
-                                <label>减免年份：</label>
-                                <input type="text" name="remissionYear"/>
-                            </li>
-                            <li>
-                                <label>减免月份：</label>
-                                <input type="text" name="remissionMonth"/>
-                            </li>
-                            <li>
-                                <label>减免登记人：</label>
-                                <input type="text" name="exemptionRegistrant"/>
-                            </li>
-                            <li>
-                                <label>登记时间：</label>
-                                <input type="text" class="time-input" placeholder="请选择登记时间" name="registrationTime"/>
-                            </li>
-                            <li>
-                                <label>是否减免：</label>
-                                <input type="text" name="reduceNot"/>
-                            </li>
-                            <li>
-                                <label>未减免金额：</label>
-                                <input type="text" name="amountNotRemitted"/>
-                            </li>
-                            <li>
-                                <label>含税金额：</label>
-                                <input type="text" name="amountTaxInc"/>
-                            </li>
-                            <li>
-                                <label>税费：</label>
-                                <input type="text" name="taxation"/>
-                            </li>
-                            <li>
-                                <label>不含税金额：</label>
-                                <input type="text" name="amountExcludingTax"/>
-                            </li>
-                            <li>
-                                <label>冲抵时间：</label>
-                                <input type="text" class="time-input" placeholder="请选择冲抵时间" name="offsetTime"/>
-                            </li>
-                            <li>
-                                <label>撤销时间：</label>
-                                <input type="text" class="time-input" placeholder="请选择撤销时间" name="cancellationTime"/>
-                            </li>
-                            <li>
-                                <label>撤销人：</label>
-                                <input type="text" name="revocation"/>
-                            </li>
-                            <li>
-                                <label>是否冲销：</label>
-                                <input type="text" name="writeoffOnt"/>
-                            </li>
-                            <li>
-                                <label>冲销时间：</label>
-                                <input type="text" class="time-input" placeholder="请选择冲销时间" name="writeoffTime"/>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -175,11 +48,8 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:remission:add">
-                    <i class="fa fa-plus"></i> 添加
-                </a>
                 <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:remission:edit">
-                    <i class="fa fa-edit"></i> 修改
+                    <i class="fa fa-edit"></i> 减免登记
                 </a>
                 <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:remission:remove">
                     <i class="fa fa-remove"></i> 删除

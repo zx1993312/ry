@@ -3,202 +3,253 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.system.mapper.HyHouseInfMapper">
-    
-    <resultMap type="HyHouseInf" id="HyHouseInfResult">
-        <result property="id"    column="id"    />
-        <result property="building"    column="building"    />
-        <result property="houseNumber"    column="house_number"    />
-        <result property="houseName"    column="house_name"    />
-        <result property="builtUpArea"    column="built_up_area"    />
-        <result property="groupArea"    column="group_area"    />
-        <result property="unit"    column="unit"    />
-        <result property="floor"    column="floor"    />
-        <result property="sameUnitNumber"    column="same_unit_number"    />
-        <result property="areaType"    column="area_type"    />
-        <result property="bilingArea"    column="biling_area"    />
-        <result property="insideArea"    column="inside_area"    />
-        <result property="sharedArea"    column="shared_area"    />
-        <result property="gardenArea"    column="garden_area"    />
-        <result property="basementArea"    column="basement_area"    />
-        <result property="sharedLobbyArea"    column="shared_lobby_area"    />
-        <result property="sharedLayersArea"    column="shared_layers_area"    />
-        <result property="shareRatio"    column="share_ratio"    />
-        <result property="buildingStructure"    column="building_structure"    />
-        <result property="parametersPer"    column="parameters_per"    />
-        <result property="houseLayout"    column="house_layout"    />
-        <result property="floorHeight"    column="floor_height"    />
-        <result property="natureProperty"    column="nature_property"    />
-        <result property="natureUse"    column="nature_use"    />
-        <result property="usageStatus"    column="usage_status"    />
-        <result property="occupancyStatus"    column="occupancy_status"    />
-        <result property="deliveryStatus"    column="delivery_status"    />
-        <result property="houseType"    column="house_type"    />
-        <result property="salesStatus"    column="sales_status"    />
-        <result property="purchaseContract"    column="purchase_contract"    />
-        <result property="marketingNum"    column="marketing_num"    />
-    </resultMap>
+
+	<resultMap type="HyHouseInf" id="HyHouseInfResult">
+		<result property="id" column="id" />
+		<result property="building" column="building" />
+		<result property="houseNumber" column="house_number" />
+		<result property="houseName" column="house_name" />
+		<result property="builtUpArea" column="built_up_area" />
+		<result property="groupArea" column="group_area" />
+		<result property="unit" column="unit" />
+		<result property="floor" column="floor" />
+		<result property="sameUnitNumber" column="same_unit_number" />
+		<result property="areaType" column="area_type" />
+		<result property="bilingArea" column="biling_area" />
+		<result property="insideArea" column="inside_area" />
+		<result property="sharedArea" column="shared_area" />
+		<result property="gardenArea" column="garden_area" />
+		<result property="basementArea" column="basement_area" />
+		<result property="sharedLobbyArea" column="shared_lobby_area" />
+		<result property="sharedLayersArea" column="shared_layers_area" />
+		<result property="shareRatio" column="share_ratio" />
+		<result property="buildingStructure"
+			column="building_structure" />
+		<result property="parametersPer" column="parameters_per" />
+		<result property="houseLayout" column="house_layout" />
+		<result property="floorHeight" column="floor_height" />
+		<result property="natureProperty" column="nature_property" />
+		<result property="natureUse" column="nature_use" />
+		<result property="usageStatus" column="usage_status" />
+		<result property="occupancyStatus" column="occupancy_status" />
+		<result property="deliveryStatus" column="delivery_status" />
+		<result property="houseType" column="house_type" />
+		<result property="salesStatus" column="sales_status" />
+		<result property="purchaseContract" column="purchase_contract" />
+		<result property="marketingNum" column="marketing_num" />
+	</resultMap>
 
 
 
-    <sql id="selectHyHouseInfVo">
-        select id, building, house_number, house_name, built_up_area, group_area, unit, floor, same_unit_number, area_type, biling_area, inside_area, shared_area, garden_area, basement_area, shared_lobby_area, shared_layers_area, share_ratio, building_structure, parameters_per, house_layout, floor_height, nature_property, nature_use, usage_status, occupancy_status, delivery_status, house_type, sales_status, purchase_contract, marketing_num from hy_house_inf
-    </sql>
+	<sql id="selectHyHouseInfVo">
+		select id, building, house_number, house_name, built_up_area, group_area,
+		unit, floor, same_unit_number, area_type, biling_area, inside_area,
+		shared_area, garden_area, basement_area, shared_lobby_area,
+		shared_layers_area, share_ratio, building_structure, parameters_per,
+		house_layout, floor_height, nature_property, nature_use, usage_status,
+		occupancy_status, delivery_status, house_type, sales_status,
+		purchase_contract, marketing_num from hy_house_inf
+	</sql>
 
-    <select id="selectHyHouseInfList" parameterType="HyHouseInf" resultMap="HyHouseInfResult">
-        <include refid="selectHyHouseInfVo"/>
-        <where>  
-            <if test="building != null  and building != ''"> and building = #{building}</if>
-            <if test="houseNumber != null  and houseNumber != ''"> and house_number = #{houseNumber}</if>
-            <if test="houseName != null  and houseName != ''"> and house_name like concat('%', #{houseName}, '%')</if>
-            <if test="builtUpArea != null  and builtUpArea != ''"> and built_up_area = #{builtUpArea}</if>
-            <if test="groupArea != null  and groupArea != ''"> and group_area = #{groupArea}</if>
-            <if test="unit != null  and unit != ''"> and unit = #{unit}</if>
-            <if test="floor != null  and floor != ''"> and floor = #{floor}</if>
-            <if test="sameUnitNumber != null "> and same_unit_number = #{sameUnitNumber}</if>
-            <if test="areaType != null "> and area_type = #{areaType}</if>
-            <if test="bilingArea != null  and bilingArea != ''"> and biling_area = #{bilingArea}</if>
-            <if test="insideArea != null  and insideArea != ''"> and inside_area = #{insideArea}</if>
-            <if test="sharedArea != null  and sharedArea != ''"> and shared_area = #{sharedArea}</if>
-            <if test="gardenArea != null  and gardenArea != ''"> and garden_area = #{gardenArea}</if>
-            <if test="basementArea != null  and basementArea != ''"> and basement_area = #{basementArea}</if>
-            <if test="sharedLobbyArea != null  and sharedLobbyArea != ''"> and shared_lobby_area = #{sharedLobbyArea}</if>
-            <if test="sharedLayersArea != null  and sharedLayersArea != ''"> and shared_layers_area = #{sharedLayersArea}</if>
-            <if test="shareRatio != null  and shareRatio != ''"> and share_ratio = #{shareRatio}</if>
-            <if test="buildingStructure != null  and buildingStructure != ''"> and building_structure = #{buildingStructure}</if>
-            <if test="parametersPer != null  and parametersPer != ''"> and parameters_per = #{parametersPer}</if>
-            <if test="houseLayout != null  and houseLayout != ''"> and house_layout = #{houseLayout}</if>
-            <if test="floorHeight != null  and floorHeight != ''"> and floor_height = #{floorHeight}</if>
-            <if test="natureProperty != null  and natureProperty != ''"> and nature_property = #{natureProperty}</if>
-            <if test="natureUse != null  and natureUse != ''"> and nature_use = #{natureUse}</if>
-            <if test="usageStatus != null  and usageStatus != ''"> and usage_status = #{usageStatus}</if>
-            <if test="occupancyStatus != null  and occupancyStatus != ''"> and occupancy_status = #{occupancyStatus}</if>
-            <if test="deliveryStatus != null  and deliveryStatus != ''"> and delivery_status = #{deliveryStatus}</if>
-            <if test="houseType != null  and houseType != ''"> and house_type = #{houseType}</if>
-            <if test="salesStatus != null  and salesStatus != ''"> and sales_status = #{salesStatus}</if>
-            <if test="purchaseContract != null  and purchaseContract != ''"> and purchase_contract = #{purchaseContract}</if>
-            <if test="marketingNum != null  and marketingNum != ''"> and marketing_num = #{marketingNum}</if>
-        </where>
-    </select>
-    
-    <select id="selectHyHouseInfById" parameterType="Long" resultMap="HyHouseInfResult">
-        <include refid="selectHyHouseInfVo"/>
-        where id = #{id}
-    </select>
-        
-    <insert id="insertHyHouseInf" parameterType="HyHouseInf" useGeneratedKeys="true" keyProperty="id">
-        insert into hy_house_inf
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="building != null">building,</if>
-            <if test="houseNumber != null">house_number,</if>
-            <if test="houseName != null">house_name,</if>
-            <if test="builtUpArea != null">built_up_area,</if>
-            <if test="groupArea != null">group_area,</if>
-            <if test="unit != null">unit,</if>
-            <if test="floor != null">floor,</if>
-            <if test="sameUnitNumber != null">same_unit_number,</if>
-            <if test="areaType != null">area_type,</if>
-            <if test="bilingArea != null">biling_area,</if>
-            <if test="insideArea != null">inside_area,</if>
-            <if test="sharedArea != null">shared_area,</if>
-            <if test="gardenArea != null">garden_area,</if>
-            <if test="basementArea != null">basement_area,</if>
-            <if test="sharedLobbyArea != null">shared_lobby_area,</if>
-            <if test="sharedLayersArea != null">shared_layers_area,</if>
-            <if test="shareRatio != null">share_ratio,</if>
-            <if test="buildingStructure != null">building_structure,</if>
-            <if test="parametersPer != null">parameters_per,</if>
-            <if test="houseLayout != null">house_layout,</if>
-            <if test="floorHeight != null">floor_height,</if>
-            <if test="natureProperty != null">nature_property,</if>
-            <if test="natureUse != null">nature_use,</if>
-            <if test="usageStatus != null">usage_status,</if>
-            <if test="occupancyStatus != null">occupancy_status,</if>
-            <if test="deliveryStatus != null">delivery_status,</if>
-            <if test="houseType != null">house_type,</if>
-            <if test="salesStatus != null">sales_status,</if>
-            <if test="purchaseContract != null">purchase_contract,</if>
-            <if test="marketingNum != null">marketing_num,</if>
-         </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="building != null">#{building},</if>
-            <if test="houseNumber != null">#{houseNumber},</if>
-            <if test="houseName != null">#{houseName},</if>
-            <if test="builtUpArea != null">#{builtUpArea},</if>
-            <if test="groupArea != null">#{groupArea},</if>
-            <if test="unit != null">#{unit},</if>
-            <if test="floor != null">#{floor},</if>
-            <if test="sameUnitNumber != null">#{sameUnitNumber},</if>
-            <if test="areaType != null">#{areaType},</if>
-            <if test="bilingArea != null">#{bilingArea},</if>
-            <if test="insideArea != null">#{insideArea},</if>
-            <if test="sharedArea != null">#{sharedArea},</if>
-            <if test="gardenArea != null">#{gardenArea},</if>
-            <if test="basementArea != null">#{basementArea},</if>
-            <if test="sharedLobbyArea != null">#{sharedLobbyArea},</if>
-            <if test="sharedLayersArea != null">#{sharedLayersArea},</if>
-            <if test="shareRatio != null">#{shareRatio},</if>
-            <if test="buildingStructure != null">#{buildingStructure},</if>
-            <if test="parametersPer != null">#{parametersPer},</if>
-            <if test="houseLayout != null">#{houseLayout},</if>
-            <if test="floorHeight != null">#{floorHeight},</if>
-            <if test="natureProperty != null">#{natureProperty},</if>
-            <if test="natureUse != null">#{natureUse},</if>
-            <if test="usageStatus != null">#{usageStatus},</if>
-            <if test="occupancyStatus != null">#{occupancyStatus},</if>
-            <if test="deliveryStatus != null">#{deliveryStatus},</if>
-            <if test="houseType != null">#{houseType},</if>
-            <if test="salesStatus != null">#{salesStatus},</if>
-            <if test="purchaseContract != null">#{purchaseContract},</if>
-            <if test="marketingNum != null">#{marketingNum},</if>
-         </trim>
-    </insert>
+	<select id="selectHyHouseInfList" parameterType="HyHouseInf"
+		resultMap="HyHouseInfResult">
+		<include refid="selectHyHouseInfVo" />
+		<where>
+			<if test="building != null  and building != ''"> and building = #{building}</if>
+			<if test="houseNumber != null  and houseNumber != ''"> and house_number = #{houseNumber}</if>
+			<if test="houseName != null  and houseName != ''"> and house_name like concat('%', #{houseName}, '%')</if>
+			<if test="builtUpArea != null  and builtUpArea != ''"> and built_up_area = #{builtUpArea}</if>
+			<if test="groupArea != null  and groupArea != ''"> and group_area = #{groupArea}</if>
+			<if test="unit != null  and unit != ''"> and unit = #{unit}</if>
+			<if test="floor != null  and floor != ''"> and floor = #{floor}</if>
+			<if test="sameUnitNumber != null "> and same_unit_number = #{sameUnitNumber}</if>
+			<if test="areaType != null "> and area_type = #{areaType}</if>
+			<if test="bilingArea != null  and bilingArea != ''"> and biling_area = #{bilingArea}</if>
+			<if test="insideArea != null  and insideArea != ''"> and inside_area = #{insideArea}</if>
+			<if test="sharedArea != null  and sharedArea != ''"> and shared_area = #{sharedArea}</if>
+			<if test="gardenArea != null  and gardenArea != ''"> and garden_area = #{gardenArea}</if>
+			<if test="basementArea != null  and basementArea != ''"> and basement_area = #{basementArea}</if>
+			<if test="sharedLobbyArea != null  and sharedLobbyArea != ''"> and shared_lobby_area = #{sharedLobbyArea}</if>
+			<if test="sharedLayersArea != null  and sharedLayersArea != ''"> and shared_layers_area = #{sharedLayersArea}</if>
+			<if test="shareRatio != null  and shareRatio != ''"> and share_ratio = #{shareRatio}</if>
+			<if test="buildingStructure != null  and buildingStructure != ''"> and building_structure = #{buildingStructure}</if>
+			<if test="parametersPer != null  and parametersPer != ''"> and parameters_per = #{parametersPer}</if>
+			<if test="houseLayout != null  and houseLayout != ''"> and house_layout = #{houseLayout}</if>
+			<if test="floorHeight != null  and floorHeight != ''"> and floor_height = #{floorHeight}</if>
+			<if test="natureProperty != null  and natureProperty != ''"> and nature_property = #{natureProperty}</if>
+			<if test="natureUse != null  and natureUse != ''"> and nature_use = #{natureUse}</if>
+			<if test="usageStatus != null  and usageStatus != ''"> and usage_status = #{usageStatus}</if>
+			<if test="occupancyStatus != null  and occupancyStatus != ''"> and occupancy_status = #{occupancyStatus}</if>
+			<if test="deliveryStatus != null  and deliveryStatus != ''"> and delivery_status = #{deliveryStatus}</if>
+			<if test="houseType != null  and houseType != ''"> and house_type = #{houseType}</if>
+			<if test="salesStatus != null  and salesStatus != ''"> and sales_status = #{salesStatus}</if>
+			<if test="purchaseContract != null  and purchaseContract != ''"> and purchase_contract = #{purchaseContract}</if>
+			<if test="marketingNum != null  and marketingNum != ''"> and marketing_num = #{marketingNum}</if>
+		</where>
+	</select>
 
-    <update id="updateHyHouseInf" parameterType="HyHouseInf">
-        update hy_house_inf
-        <trim prefix="SET" suffixOverrides=",">
-            <if test="building != null">building = #{building},</if>
-            <if test="houseNumber != null">house_number = #{houseNumber},</if>
-            <if test="houseName != null">house_name = #{houseName},</if>
-            <if test="builtUpArea != null">built_up_area = #{builtUpArea},</if>
-            <if test="groupArea != null">group_area = #{groupArea},</if>
-            <if test="unit != null">unit = #{unit},</if>
-            <if test="floor != null">floor = #{floor},</if>
-            <if test="sameUnitNumber != null">same_unit_number = #{sameUnitNumber},</if>
-            <if test="areaType != null">area_type = #{areaType},</if>
-            <if test="bilingArea != null">biling_area = #{bilingArea},</if>
-            <if test="insideArea != null">inside_area = #{insideArea},</if>
-            <if test="sharedArea != null">shared_area = #{sharedArea},</if>
-            <if test="gardenArea != null">garden_area = #{gardenArea},</if>
-            <if test="basementArea != null">basement_area = #{basementArea},</if>
-            <if test="sharedLobbyArea != null">shared_lobby_area = #{sharedLobbyArea},</if>
-            <if test="sharedLayersArea != null">shared_layers_area = #{sharedLayersArea},</if>
-            <if test="shareRatio != null">share_ratio = #{shareRatio},</if>
-            <if test="buildingStructure != null">building_structure = #{buildingStructure},</if>
-            <if test="parametersPer != null">parameters_per = #{parametersPer},</if>
-            <if test="houseLayout != null">house_layout = #{houseLayout},</if>
-            <if test="floorHeight != null">floor_height = #{floorHeight},</if>
-            <if test="natureProperty != null">nature_property = #{natureProperty},</if>
-            <if test="natureUse != null">nature_use = #{natureUse},</if>
-            <if test="usageStatus != null">usage_status = #{usageStatus},</if>
-            <if test="occupancyStatus != null">occupancy_status = #{occupancyStatus},</if>
-            <if test="deliveryStatus != null">delivery_status = #{deliveryStatus},</if>
-            <if test="houseType != null">house_type = #{houseType},</if>
-            <if test="salesStatus != null">sales_status = #{salesStatus},</if>
-            <if test="purchaseContract != null">purchase_contract = #{purchaseContract},</if>
-            <if test="marketingNum != null">marketing_num = #{marketingNum},</if>
-        </trim>
-        where id = #{id}
-    </update>
+	<select id="selectHyHouseInfById" parameterType="Long"
+		resultMap="HyHouseInfResult">
+		<include refid="selectHyHouseInfVo" />
+		where id = #{id}
+	</select>
 
-    <delete id="deleteHyHouseInfById" parameterType="Long">
-        delete from hy_house_inf where id = #{id}
-    </delete>
+	<insert id="insertHyHouseInf" parameterType="HyHouseInf"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into hy_house_inf
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="building != null">building,</if>
+			<if test="houseNumber != null">house_number,</if>
+			<if test="houseName != null">house_name,</if>
+			<if test="builtUpArea != null">built_up_area,</if>
+			<if test="groupArea != null">group_area,</if>
+			<if test="unit != null">unit,</if>
+			<if test="floor != null">floor,</if>
+			<if test="sameUnitNumber != null">same_unit_number,</if>
+			<if test="areaType != null">area_type,</if>
+			<if test="bilingArea != null">biling_area,</if>
+			<if test="insideArea != null">inside_area,</if>
+			<if test="sharedArea != null">shared_area,</if>
+			<if test="gardenArea != null">garden_area,</if>
+			<if test="basementArea != null">basement_area,</if>
+			<if test="sharedLobbyArea != null">shared_lobby_area,</if>
+			<if test="sharedLayersArea != null">shared_layers_area,</if>
+			<if test="shareRatio != null">share_ratio,</if>
+			<if test="buildingStructure != null">building_structure,</if>
+			<if test="parametersPer != null">parameters_per,</if>
+			<if test="houseLayout != null">house_layout,</if>
+			<if test="floorHeight != null">floor_height,</if>
+			<if test="natureProperty != null">nature_property,</if>
+			<if test="natureUse != null">nature_use,</if>
+			<if test="usageStatus != null">usage_status,</if>
+			<if test="occupancyStatus != null">occupancy_status,</if>
+			<if test="deliveryStatus != null">delivery_status,</if>
+			<if test="houseType != null">house_type,</if>
+			<if test="salesStatus != null">sales_status,</if>
+			<if test="purchaseContract != null">purchase_contract,</if>
+			<if test="marketingNum != null">marketing_num,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="building != null">#{building},</if>
+			<if test="houseNumber != null">#{houseNumber},</if>
+			<if test="houseName != null">#{houseName},</if>
+			<if test="builtUpArea != null">#{builtUpArea},</if>
+			<if test="groupArea != null">#{groupArea},</if>
+			<if test="unit != null">#{unit},</if>
+			<if test="floor != null">#{floor},</if>
+			<if test="sameUnitNumber != null">#{sameUnitNumber},</if>
+			<if test="areaType != null">#{areaType},</if>
+			<if test="bilingArea != null">#{bilingArea},</if>
+			<if test="insideArea != null">#{insideArea},</if>
+			<if test="sharedArea != null">#{sharedArea},</if>
+			<if test="gardenArea != null">#{gardenArea},</if>
+			<if test="basementArea != null">#{basementArea},</if>
+			<if test="sharedLobbyArea != null">#{sharedLobbyArea},</if>
+			<if test="sharedLayersArea != null">#{sharedLayersArea},</if>
+			<if test="shareRatio != null">#{shareRatio},</if>
+			<if test="buildingStructure != null">#{buildingStructure},</if>
+			<if test="parametersPer != null">#{parametersPer},</if>
+			<if test="houseLayout != null">#{houseLayout},</if>
+			<if test="floorHeight != null">#{floorHeight},</if>
+			<if test="natureProperty != null">#{natureProperty},</if>
+			<if test="natureUse != null">#{natureUse},</if>
+			<if test="usageStatus != null">#{usageStatus},</if>
+			<if test="occupancyStatus != null">#{occupancyStatus},</if>
+			<if test="deliveryStatus != null">#{deliveryStatus},</if>
+			<if test="houseType != null">#{houseType},</if>
+			<if test="salesStatus != null">#{salesStatus},</if>
+			<if test="purchaseContract != null">#{purchaseContract},</if>
+			<if test="marketingNum != null">#{marketingNum},</if>
+		</trim>
+	</insert>
 
-    <delete id="deleteHyHouseInfByIds" parameterType="String">
-        delete from hy_house_inf where id in 
-        <foreach item="id" collection="array" open="(" separator="," close=")">
-            #{id}
-        </foreach>
-    </delete>
+	<update id="updateHyHouseInf" parameterType="HyHouseInf">
+		update hy_house_inf
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="building != null">building = #{building},</if>
+			<if test="houseNumber != null">house_number = #{houseNumber},</if>
+			<if test="houseName != null">house_name = #{houseName},</if>
+			<if test="builtUpArea != null">built_up_area = #{builtUpArea},</if>
+			<if test="groupArea != null">group_area = #{groupArea},</if>
+			<if test="unit != null">unit = #{unit},</if>
+			<if test="floor != null">floor = #{floor},</if>
+			<if test="sameUnitNumber != null">same_unit_number = #{sameUnitNumber},</if>
+			<if test="areaType != null">area_type = #{areaType},</if>
+			<if test="bilingArea != null">biling_area = #{bilingArea},</if>
+			<if test="insideArea != null">inside_area = #{insideArea},</if>
+			<if test="sharedArea != null">shared_area = #{sharedArea},</if>
+			<if test="gardenArea != null">garden_area = #{gardenArea},</if>
+			<if test="basementArea != null">basement_area = #{basementArea},</if>
+			<if test="sharedLobbyArea != null">shared_lobby_area = #{sharedLobbyArea},</if>
+			<if test="sharedLayersArea != null">shared_layers_area = #{sharedLayersArea},</if>
+			<if test="shareRatio != null">share_ratio = #{shareRatio},</if>
+			<if test="buildingStructure != null">building_structure = #{buildingStructure},</if>
+			<if test="parametersPer != null">parameters_per = #{parametersPer},</if>
+			<if test="houseLayout != null">house_layout = #{houseLayout},</if>
+			<if test="floorHeight != null">floor_height = #{floorHeight},</if>
+			<if test="natureProperty != null">nature_property = #{natureProperty},</if>
+			<if test="natureUse != null">nature_use = #{natureUse},</if>
+			<if test="usageStatus != null">usage_status = #{usageStatus},</if>
+			<if test="occupancyStatus != null">occupancy_status = #{occupancyStatus},</if>
+			<if test="deliveryStatus != null">delivery_status = #{deliveryStatus},</if>
+			<if test="houseType != null">house_type = #{houseType},</if>
+			<if test="salesStatus != null">sales_status = #{salesStatus},</if>
+			<if test="purchaseContract != null">purchase_contract = #{purchaseContract},</if>
+			<if test="marketingNum != null">marketing_num = #{marketingNum},</if>
+		</trim>
+		where id = #{id}
+	</update>
+
+	<update id="updateHyHouseInfByHouseNumber" parameterType="HyHouseInf">
+		update hy_house_inf
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="building != null">building = #{building},</if>
+			<if test="houseName != null">house_name = #{houseName},</if>
+			<if test="builtUpArea != null">built_up_area = #{builtUpArea},</if>
+			<if test="groupArea != null">group_area = #{groupArea},</if>
+			<if test="unit != null">unit = #{unit},</if>
+			<if test="floor != null">floor = #{floor},</if>
+			<if test="sameUnitNumber != null">same_unit_number = #{sameUnitNumber},</if>
+			<if test="areaType != null">area_type = #{areaType},</if>
+			<if test="bilingArea != null">biling_area = #{bilingArea},</if>
+			<if test="insideArea != null">inside_area = #{insideArea},</if>
+			<if test="sharedArea != null">shared_area = #{sharedArea},</if>
+			<if test="gardenArea != null">garden_area = #{gardenArea},</if>
+			<if test="basementArea != null">basement_area = #{basementArea},</if>
+			<if test="sharedLobbyArea != null">shared_lobby_area = #{sharedLobbyArea},</if>
+			<if test="sharedLayersArea != null">shared_layers_area = #{sharedLayersArea},</if>
+			<if test="shareRatio != null">share_ratio = #{shareRatio},</if>
+			<if test="buildingStructure != null">building_structure = #{buildingStructure},</if>
+			<if test="parametersPer != null">parameters_per = #{parametersPer},</if>
+			<if test="houseLayout != null">house_layout = #{houseLayout},</if>
+			<if test="floorHeight != null">floor_height = #{floorHeight},</if>
+			<if test="natureProperty != null">nature_property = #{natureProperty},</if>
+			<if test="natureUse != null">nature_use = #{natureUse},</if>
+			<if test="usageStatus != null">usage_status = #{usageStatus},</if>
+			<if test="occupancyStatus != null">occupancy_status = #{occupancyStatus},</if>
+			<if test="deliveryStatus != null">delivery_status = #{deliveryStatus},</if>
+			<if test="houseType != null">house_type = #{houseType},</if>
+			<if test="salesStatus != null">sales_status = #{salesStatus},</if>
+			<if test="purchaseContract != null">purchase_contract = #{purchaseContract},</if>
+			<if test="marketingNum != null">marketing_num = #{marketingNum},</if>
+		</trim>
+		where house_number = #{houseNumber}
+	</update>
+
+	<delete id="deleteHyHouseInfById" parameterType="Long">
+		delete from hy_house_inf where id = #{id}
+	</delete>
+	
+	<delete id="deleteHyHouseInfByHoserNumber" parameterType="Long">
+		delete from hy_house_inf where house_number = #{houseNumber}
+	</delete>
+
+	<delete id="deleteHyHouseInfByIds" parameterType="String">
+		delete from hy_house_inf where id in
+		<foreach item="id" collection="array" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
 
 </mapper>

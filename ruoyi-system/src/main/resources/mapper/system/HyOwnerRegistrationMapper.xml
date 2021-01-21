@@ -2,302 +2,364 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ruoyi.system.mapper.HyOwnerRegistrationMapper">
-    
-    <resultMap type="HyOwnerRegistration" id="HyOwnerRegistrationResult">
-        <result property="id"    column="id"    />
-        <result property="ownerName"    column="owner_name"    />
-        <result property="houseNum"    column="house_num"    />
-        <result property="fixedTelephone"    column="fixed_telephone"    />
-        <result property="mobilePhone"    column="mobile_phone"    />
-        <result property="idCardNum"    column="id_card_num"    />
-        <result property="suplierCategory"    column="suplier_category"    />
-        <result property="lockedNot"    column="locked_not"    />
-        <result property="accessNum"    column="access_num"    />
-        <result property="certificateName"    column="certificate_name"    />
-        <result property="customerCategoy"    column="customer_categoy"    />
-        <result property="faxPhone"    column="fax_phone"    />
-        <result property="contactAddress"    column="contact_address"    />
-        <result property="postalCode"    column="postal_code"    />
-        <result property="postalPreson"    column="postal_preson"    />
-        <result property="eMail"    column="e_mail"    />
-        <result property="phoneAccount"    column="phone_account"    />
-        <result property="bindingPhoneNum"    column="binding_phone_num"    />
-        <result property="coOwner"    column="co_owner"    />
-        <result property="ownerIdentification"    column="owner_identification"    />
-        <result property="firName"    column="fir_name"    />
-        <result property="secName"    column="sec_name"    />
-        <result property="gender"    column="gender"    />
-        <result property="nationality"    column="nationality"    />
-        <result property="birthDate"    column="birth_date"    />
-        <result property="workUnit"    column="work_unit"    />
-        <result property="ownerJob"    column="owner_job"    />
-        <result property="ownerHobby"    column="owner_hobby"    />
-        <result property="ownerId"    column="owner_id"    />
-        <result property="taxpayerNum"    column="taxpayer_num"    />
-        <result property="ownerAddPhone"    column="owner_add_phone"    />
-        <result property="bankAccount"    column="bank_account"    />
-        <result property="collectionCategory"    column="collection_category"    />
-        <result property="bankType"    column="bank_type"    />
-        <result property="bankNum"    column="bank_num"    />
-        <result property="bankAccountName"    column="bank_account_name"    />
-    </resultMap>
-    
-  <resultMap type="HyHouseInf" id="HyHouseInfResult">
-        <result property="id"    column="id"    />
-        <result property="building"    column="building"    />
-        <result property="houseNumber"    column="house_number"    />
-        <result property="houseName"    column="house_name"    />
-        <result property="builtUpArea"    column="built_up_area"    />
-        <result property="groupArea"    column="group_area"    />
-        <result property="unit"    column="unit"    />
-        <result property="floor"    column="floor"    />
-        <result property="sameUnitNumber"    column="same_unit_number"    />
-        <result property="areaType"    column="area_type"    />
-        <result property="bilingArea"    column="biling_area"    />
-        <result property="insideArea"    column="inside_area"    />
-        <result property="sharedArea"    column="shared_area"    />
-        <result property="gardenArea"    column="garden_area"    />
-        <result property="basementArea"    column="basement_area"    />
-        <result property="sharedLobbyArea"    column="shared_lobby_area"    />
-        <result property="sharedLayersArea"    column="shared_layers_area"    />
-        <result property="shareRatio"    column="share_ratio"    />
-        <result property="buildingStructure"    column="building_structure"    />
-        <result property="parametersPer"    column="parameters_per"    />
-        <result property="houseLayout"    column="house_layout"    />
-        <result property="floorHeight"    column="floor_height"    />
-        <result property="natureProperty"    column="nature_property"    />
-        <result property="natureUse"    column="nature_use"    />
-        <result property="usageStatus"    column="usage_status"    />
-        <result property="occupancyStatus"    column="occupancy_status"    />
-        <result property="deliveryStatus"    column="delivery_status"    />
-        <result property="houseType"    column="house_type"    />
-        <result property="salesStatus"    column="sales_status"    />
-        <result property="purchaseContract"    column="purchase_contract"    />
-        <result property="marketingNum"    column="marketing_num"    />
-    </resultMap>
-    <sql id="selectHyOwnerRegistrationVo">
-        select 
-        o.id, 
-        o.owner_name, 
-        o.house_num, 
-        o.fixed_telephone, 
-        o.mobile_phone, 
-        o.id_card_num, 
-        o.suplier_category, 
-        o.locked_not, 
-        o.access_num, 
-        o.certificate_name, 
-        o.customer_categoy, 
-        o.fax_phone, 
-        o.contact_address, 
-        o.postal_code,
-         o.postal_preson, 
-         o.e_mail, phone_account,
-         o. binding_phone_num, 
-          o.co_owner, 
-          o.owner_identification, 
-          o.fir_name, 
-          o.sec_name, 
-          o.gender, 
-          o.nationality, 
-          o.birth_date, 
-          o.work_unit, 
-          o.owner_job, 
-          o.owner_hobby, 
-          o.owner_id, 
-          o.taxpayer_num, 
-          o.owner_add_phone, 
-          o.bank_account, 
-          o.collection_category, 
-          o.bank_type, 
-          o.bank_num, 
-          o.bank_account_name ,
-          h.house_number,
-          h.house_name
-          from 
-          hy_owner_registration o
-          LEFT JOIN hy_house_inf h ON o.house_num = h.house_number 
-          where 1=1
-    </sql>
+<mapper
+	namespace="com.ruoyi.system.mapper.HyOwnerRegistrationMapper">
 
-    <select id="selectHyOwnerRegistrationList" parameterType="HyOwnerRegistration" resultMap="HyOwnerRegistrationResult">
-        <include refid="selectHyOwnerRegistrationVo"/>
-        <where>  
-            <if test="ownerName != null  and ownerName != ''"> and owner_name like concat('%', #{ownerName}, '%')</if>
-            <if test="houseNum != null  and houseNum != ''"> and house_num = #{houseNum}</if>
-            <if test="fixedTelephone != null "> and fixed_telephone = #{fixedTelephone}</if>
-            <if test="mobilePhone != null "> and mobile_phone = #{mobilePhone}</if>
-            <if test="idCardNum != null  and idCardNum != ''"> and id_card_num = #{idCardNum}</if>
-            <if test="suplierCategory != null "> and suplier_category = #{suplierCategory}</if>
-            <if test="lockedNot != null "> and locked_not = #{lockedNot}</if>
-            <if test="accessNum != null "> and access_num = #{accessNum}</if>
-            <if test="certificateName != null  and certificateName != ''"> and certificate_name like concat('%', #{certificateName}, '%')</if>
-            <if test="customerCategoy != null "> and customer_categoy = #{customerCategoy}</if>
-            <if test="faxPhone != null "> and fax_phone = #{faxPhone}</if>
-            <if test="contactAddress != null  and contactAddress != ''"> and contact_address = #{contactAddress}</if>
-            <if test="postalCode != null "> and postal_code = #{postalCode}</if>
-            <if test="postalPreson != null  and postalPreson != ''"> and postal_preson = #{postalPreson}</if>
-            <if test="eMail != null  and eMail != ''"> and e_mail = #{eMail}</if>
-            <if test="phoneAccount != null  and phoneAccount != ''"> and phone_account = #{phoneAccount}</if>
-            <if test="bindingPhoneNum != null "> and binding_phone_num = #{bindingPhoneNum}</if>
-            <if test="coOwner != null  and coOwner != ''"> and co_owner = #{coOwner}</if>
-            <if test="ownerIdentification != null "> and owner_identification = #{ownerIdentification}</if>
-            <if test="firName != null  and firName != ''"> and fir_name like concat('%', #{firName}, '%')</if>
-            <if test="secName != null  and secName != ''"> and sec_name like concat('%', #{secName}, '%')</if>
-            <if test="gender != null "> and gender = #{gender}</if>
-            <if test="nationality != null  and nationality != ''"> and nationality = #{nationality}</if>
-            <if test="birthDate != null "> and birth_date = #{birthDate}</if>
-            <if test="workUnit != null  and workUnit != ''"> and work_unit = #{workUnit}</if>
-            <if test="ownerJob != null  and ownerJob != ''"> and owner_job = #{ownerJob}</if>
-            <if test="ownerHobby != null  and ownerHobby != ''"> and owner_hobby = #{ownerHobby}</if>
-            <if test="ownerId != null  and ownerId != ''"> and owner_id = #{ownerId}</if>
-            <if test="taxpayerNum != null  and taxpayerNum != ''"> and taxpayer_num = #{taxpayerNum}</if>
-            <if test="ownerAddPhone != null  and ownerAddPhone != ''"> and owner_add_phone = #{ownerAddPhone}</if>
-            <if test="bankAccount != null  and bankAccount != ''"> and bank_account = #{bankAccount}</if>
-            <if test="collectionCategory != null "> and collection_category = #{collectionCategory}</if>
-            <if test="bankType != null "> and bank_type = #{bankType}</if>
-            <if test="bankNum != null "> and bank_num = #{bankNum}</if>
-            <if test="bankAccountName != null  and bankAccountName != ''"> and bank_account_name like concat('%', #{bankAccountName}, '%')</if>
-        </where>
-    </select>
-    
-    <select id="selectHyOwnerRegistrationById" parameterType="Long" resultMap="HyOwnerRegistrationResult">
-        <include refid="selectHyOwnerRegistrationVo"/>
-        where id = #{id}
-    </select>
-        
-    <insert id="insertHyOwnerRegistration" parameterType="HyOwnerRegistration">
-        insert into hy_owner_registration
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">id,</if>
-            <if test="ownerName != null">owner_name,</if>
-            <if test="houseNum != null">house_num,</if>
-            <if test="fixedTelephone != null">fixed_telephone,</if>
-            <if test="mobilePhone != null">mobile_phone,</if>
-            <if test="idCardNum != null">id_card_num,</if>
-            <if test="suplierCategory != null">suplier_category,</if>
-            <if test="lockedNot != null">locked_not,</if>
-            <if test="accessNum != null">access_num,</if>
-            <if test="certificateName != null">certificate_name,</if>
-            <if test="customerCategoy != null">customer_categoy,</if>
-            <if test="faxPhone != null">fax_phone,</if>
-            <if test="contactAddress != null">contact_address,</if>
-            <if test="postalCode != null">postal_code,</if>
-            <if test="postalPreson != null">postal_preson,</if>
-            <if test="eMail != null">e_mail,</if>
-            <if test="phoneAccount != null">phone_account,</if>
-            <if test="bindingPhoneNum != null">binding_phone_num,</if>
-            <if test="coOwner != null">co_owner,</if>
-            <if test="ownerIdentification != null">owner_identification,</if>
-            <if test="firName != null">fir_name,</if>
-            <if test="secName != null">sec_name,</if>
-            <if test="gender != null">gender,</if>
-            <if test="nationality != null">nationality,</if>
-            <if test="birthDate != null">birth_date,</if>
-            <if test="workUnit != null">work_unit,</if>
-            <if test="ownerJob != null">owner_job,</if>
-            <if test="ownerHobby != null">owner_hobby,</if>
-            <if test="ownerId != null">owner_id,</if>
-            <if test="taxpayerNum != null">taxpayer_num,</if>
-            <if test="ownerAddPhone != null">owner_add_phone,</if>
-            <if test="bankAccount != null">bank_account,</if>
-            <if test="collectionCategory != null">collection_category,</if>
-            <if test="bankType != null">bank_type,</if>
-            <if test="bankNum != null">bank_num,</if>
-            <if test="bankAccountName != null">bank_account_name,</if>
-         </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">#{id},</if>
-            <if test="ownerName != null">#{ownerName},</if>
-            <if test="houseNum != null">#{houseNum},</if>
-            <if test="fixedTelephone != null">#{fixedTelephone},</if>
-            <if test="mobilePhone != null">#{mobilePhone},</if>
-            <if test="idCardNum != null">#{idCardNum},</if>
-            <if test="suplierCategory != null">#{suplierCategory},</if>
-            <if test="lockedNot != null">#{lockedNot},</if>
-            <if test="accessNum != null">#{accessNum},</if>
-            <if test="certificateName != null">#{certificateName},</if>
-            <if test="customerCategoy != null">#{customerCategoy},</if>
-            <if test="faxPhone != null">#{faxPhone},</if>
-            <if test="contactAddress != null">#{contactAddress},</if>
-            <if test="postalCode != null">#{postalCode},</if>
-            <if test="postalPreson != null">#{postalPreson},</if>
-            <if test="eMail != null">#{eMail},</if>
-            <if test="phoneAccount != null">#{phoneAccount},</if>
-            <if test="bindingPhoneNum != null">#{bindingPhoneNum},</if>
-            <if test="coOwner != null">#{coOwner},</if>
-            <if test="ownerIdentification != null">#{ownerIdentification},</if>
-            <if test="firName != null">#{firName},</if>
-            <if test="secName != null">#{secName},</if>
-            <if test="gender != null">#{gender},</if>
-            <if test="nationality != null">#{nationality},</if>
-            <if test="birthDate != null">#{birthDate},</if>
-            <if test="workUnit != null">#{workUnit},</if>
-            <if test="ownerJob != null">#{ownerJob},</if>
-            <if test="ownerHobby != null">#{ownerHobby},</if>
-            <if test="ownerId != null">#{ownerId},</if>
-            <if test="taxpayerNum != null">#{taxpayerNum},</if>
-            <if test="ownerAddPhone != null">#{ownerAddPhone},</if>
-            <if test="bankAccount != null">#{bankAccount},</if>
-            <if test="collectionCategory != null">#{collectionCategory},</if>
-            <if test="bankType != null">#{bankType},</if>
-            <if test="bankNum != null">#{bankNum},</if>
-            <if test="bankAccountName != null">#{bankAccountName},</if>
-         </trim>
-    </insert>
+	<resultMap type="HyOwnerRegistration"
+		id="HyOwnerRegistrationResult">
+		<result property="id" column="id" />
+		<result property="ownerName" column="owner_name" />
+		<result property="houseNum" column="house_num" />
+		<result property="fixedTelephone" column="fixed_telephone" />
+		<result property="mobilePhone" column="mobile_phone" />
+		<result property="idCardNum" column="id_card_num" />
+		<result property="suplierCategory" column="suplier_category" />
+		<result property="lockedNot" column="locked_not" />
+		<result property="accessNum" column="access_num" />
+		<result property="certificateName" column="certificate_name" />
+		<result property="customerCategoy" column="customer_categoy" />
+		<result property="faxPhone" column="fax_phone" />
+		<result property="contactAddress" column="contact_address" />
+		<result property="postalCode" column="postal_code" />
+		<result property="postalPreson" column="postal_preson" />
+		<result property="eMail" column="e_mail" />
+		<result property="phoneAccount" column="phone_account" />
+		<result property="bindingPhoneNum" column="binding_phone_num" />
+		<result property="coOwner" column="co_owner" />
+		<result property="ownerIdentification"
+			column="owner_identification" />
+		<result property="firName" column="fir_name" />
+		<result property="secName" column="sec_name" />
+		<result property="gender" column="gender" />
+		<result property="nationality" column="nationality" />
+		<result property="birthDate" column="birth_date" />
+		<result property="workUnit" column="work_unit" />
+		<result property="ownerJob" column="owner_job" />
+		<result property="ownerHobby" column="owner_hobby" />
+		<result property="ownerId" column="owner_id" />
+		<result property="taxpayerNum" column="taxpayer_num" />
+		<result property="ownerAddPhone" column="owner_add_phone" />
+		<result property="bankAccount" column="bank_account" />
+		<result property="collectionCategory"
+			column="collection_category" />
+		<result property="bankType" column="bank_type" />
+		<result property="bankNum" column="bank_num" />
+		<result property="bankAccountName" column="bank_account_name" />
+	</resultMap>
 
-    <update id="updateHyOwnerRegistration" parameterType="HyOwnerRegistration">
-        update hy_owner_registration
-        <trim prefix="SET" suffixOverrides=",">
-            <if test="ownerName != null">owner_name = #{ownerName},</if>
-            <if test="houseNum != null">house_num = #{houseNum},</if>
-            <if test="fixedTelephone != null">fixed_telephone = #{fixedTelephone},</if>
-            <if test="mobilePhone != null">mobile_phone = #{mobilePhone},</if>
-            <if test="idCardNum != null">id_card_num = #{idCardNum},</if>
-            <if test="suplierCategory != null">suplier_category = #{suplierCategory},</if>
-            <if test="lockedNot != null">locked_not = #{lockedNot},</if>
-            <if test="accessNum != null">access_num = #{accessNum},</if>
-            <if test="certificateName != null">certificate_name = #{certificateName},</if>
-            <if test="customerCategoy != null">customer_categoy = #{customerCategoy},</if>
-            <if test="faxPhone != null">fax_phone = #{faxPhone},</if>
-            <if test="contactAddress != null">contact_address = #{contactAddress},</if>
-            <if test="postalCode != null">postal_code = #{postalCode},</if>
-            <if test="postalPreson != null">postal_preson = #{postalPreson},</if>
-            <if test="eMail != null">e_mail = #{eMail},</if>
-            <if test="phoneAccount != null">phone_account = #{phoneAccount},</if>
-            <if test="bindingPhoneNum != null">binding_phone_num = #{bindingPhoneNum},</if>
-            <if test="coOwner != null">co_owner = #{coOwner},</if>
-            <if test="ownerIdentification != null">owner_identification = #{ownerIdentification},</if>
-            <if test="firName != null">fir_name = #{firName},</if>
-            <if test="secName != null">sec_name = #{secName},</if>
-            <if test="gender != null">gender = #{gender},</if>
-            <if test="nationality != null">nationality = #{nationality},</if>
-            <if test="birthDate != null">birth_date = #{birthDate},</if>
-            <if test="workUnit != null">work_unit = #{workUnit},</if>
-            <if test="ownerJob != null">owner_job = #{ownerJob},</if>
-            <if test="ownerHobby != null">owner_hobby = #{ownerHobby},</if>
-            <if test="ownerId != null">owner_id = #{ownerId},</if>
-            <if test="taxpayerNum != null">taxpayer_num = #{taxpayerNum},</if>
-            <if test="ownerAddPhone != null">owner_add_phone = #{ownerAddPhone},</if>
-            <if test="bankAccount != null">bank_account = #{bankAccount},</if>
-            <if test="collectionCategory != null">collection_category = #{collectionCategory},</if>
-            <if test="bankType != null">bank_type = #{bankType},</if>
-            <if test="bankNum != null">bank_num = #{bankNum},</if>
-            <if test="bankAccountName != null">bank_account_name = #{bankAccountName},</if>
-        </trim>
-        where id = #{id}
-    </update>
+	<resultMap type="HyHouseInf" id="HyHouseInfResult">
+		<result property="id" column="id" />
+		<result property="building" column="building" />
+		<result property="houseNumber" column="house_number" />
+		<result property="houseName" column="house_name" />
+		<result property="builtUpArea" column="built_up_area" />
+		<result property="groupArea" column="group_area" />
+		<result property="unit" column="unit" />
+		<result property="floor" column="floor" />
+		<result property="sameUnitNumber" column="same_unit_number" />
+		<result property="areaType" column="area_type" />
+		<result property="bilingArea" column="biling_area" />
+		<result property="insideArea" column="inside_area" />
+		<result property="sharedArea" column="shared_area" />
+		<result property="gardenArea" column="garden_area" />
+		<result property="basementArea" column="basement_area" />
+		<result property="sharedLobbyArea" column="shared_lobby_area" />
+		<result property="sharedLayersArea" column="shared_layers_area" />
+		<result property="shareRatio" column="share_ratio" />
+		<result property="buildingStructure"
+			column="building_structure" />
+		<result property="parametersPer" column="parameters_per" />
+		<result property="houseLayout" column="house_layout" />
+		<result property="floorHeight" column="floor_height" />
+		<result property="natureProperty" column="nature_property" />
+		<result property="natureUse" column="nature_use" />
+		<result property="usageStatus" column="usage_status" />
+		<result property="occupancyStatus" column="occupancy_status" />
+		<result property="deliveryStatus" column="delivery_status" />
+		<result property="houseType" column="house_type" />
+		<result property="salesStatus" column="sales_status" />
+		<result property="purchaseContract" column="purchase_contract" />
+		<result property="marketingNum" column="marketing_num" />
+	</resultMap>
+	<sql id="selectHyOwnerRegistrationVo">
+		select
+		o.id,
+		o.owner_name,
+		o.house_num,
+		o.fixed_telephone,
+		o.mobile_phone,
+		o.id_card_num,
+		o.suplier_category,
+		o.locked_not,
+		o.access_num,
+		o.certificate_name,
+		o.customer_categoy,
+		o.fax_phone,
+		o.contact_address,
+		o.postal_code,
+		o.postal_preson,
+		o.e_mail,
+		phone_account,
+		o. binding_phone_num,
+		o.co_owner,
+		o.owner_identification,
+		o.fir_name,
+		o.sec_name,
+		o.gender,
+		o.nationality,
+		o.birth_date,
+		o.work_unit,
+		o.owner_job,
+		o.owner_hobby,
+		o.owner_id,
+		o.taxpayer_num,
+		o.owner_add_phone,
+		o.bank_account,
+		o.collection_category,
+		o.bank_type,
+		o.bank_num,
+		o.bank_account_name ,
+		h.house_number,
+		h.house_name
+		from
+		hy_owner_registration o
+		LEFT JOIN hy_house_inf h ON o.house_num =
+		h.house_number
+		where 1=1
+	</sql>
 
-    <delete id="deleteHyOwnerRegistrationById" parameterType="Long">
-        delete from hy_owner_registration where id = #{id}
-    </delete>
+	<select id="selectHyOwnerRegistrationList"
+		parameterType="HyOwnerRegistration"
+		resultMap="HyOwnerRegistrationResult">
+		<include refid="selectHyOwnerRegistrationVo" />
+		<if test="ownerName != null  and ownerName != ''"> and o.owner_name like concat('%', #{ownerName}, '%')</if>
+		<if test="houseNum != null  and houseNum != ''"> and o.house_num = #{houseNum}</if>
+		<if test="fixedTelephone != null "> and o.fixed_telephone = #{fixedTelephone}</if>
+		<if test="mobilePhone != null "> and o.mobile_phone = #{mobilePhone}</if>
+		<if test="idCardNum != null  and idCardNum != ''"> and o.id_card_num = #{idCardNum}</if>
+		<if test="suplierCategory != null "> and o.suplier_category = #{suplierCategory}</if>
+		<if test="lockedNot != null "> and o.locked_not = #{lockedNot}</if>
+		<if test="accessNum != null "> and o.access_num = #{accessNum}</if>
+		<if test="certificateName != null  and certificateName != ''"> and o.certificate_name like concat('%',
+			#{certificateName}, '%')</if>
+		<if test="customerCategoy != null "> and o.customer_categoy = #{customerCategoy}</if>
+		<if test="faxPhone != null "> and o.fax_phone = #{faxPhone}</if>
+		<if test="contactAddress != null  and contactAddress != ''"> and o.contact_address = #{contactAddress}</if>
+		<if test="postalCode != null "> and o.postal_code = #{postalCode}</if>
+		<if test="postalPreson != null  and postalPreson != ''"> and o.postal_preson = #{postalPreson}</if>
+		<if test="eMail != null  and eMail != ''"> and o.e_mail = #{eMail}</if>
+		<if test="phoneAccount != null  and phoneAccount != ''"> and o.phone_account = #{phoneAccount}</if>
+		<if test="bindingPhoneNum != null "> and o.binding_phone_num = #{bindingPhoneNum}</if>
+		<if test="coOwner != null  and coOwner != ''"> and o.co_owner = #{coOwner}</if>
+		<if test="ownerIdentification != null "> and o.owner_identification = #{ownerIdentification}</if>
+		<if test="firName != null  and firName != ''"> and o.fir_name like concat('%', #{firName}, '%')</if>
+		<if test="secName != null  and secName != ''"> and o.sec_name like concat('%', #{secName}, '%')</if>
+		<if test="gender != null "> and o.gender = #{gender}</if>
+		<if test="nationality != null  and nationality != ''"> and o.nationality = #{nationality}</if>
+		<if test="birthDate != null "> and o.birth_date = #{birthDate}</if>
+		<if test="workUnit != null  and workUnit != ''"> and o.work_unit = #{workUnit}</if>
+		<if test="ownerJob != null  and ownerJob != ''"> and o.owner_job = #{ownerJob}</if>
+		<if test="ownerHobby != null  and ownerHobby != ''"> o.and owner_hobby = #{ownerHobby}</if>
+		<if test="ownerId != null  and ownerId != ''"> and o.owner_id = #{ownerId}</if>
+		<if test="taxpayerNum != null  and taxpayerNum != ''"> and o.taxpayer_num = #{taxpayerNum}</if>
+		<if test="ownerAddPhone != null  and ownerAddPhone != ''"> and o.owner_add_phone = #{ownerAddPhone}</if>
+		<if test="bankAccount != null  and bankAccount != ''"> and o.bank_account = #{bankAccount}</if>
+		<if test="collectionCategory != null "> and o.collection_category = #{collectionCategory}</if>
+		<if test="bankType != null "> and o.bank_type = #{bankType}</if>
+		<if test="bankNum != null "> and o.bank_num = #{bankNum}</if>
+		<if test="bankAccountName != null  and bankAccountName != ''"> and o.bank_account_name like concat('%',
+			#{bankAccountName}, '%')</if>
+	</select>
 
-    <delete id="deleteHyOwnerRegistrationByIds" parameterType="String">
-        delete from hy_owner_registration where id in 
-        <foreach item="id" collection="array" open="(" separator="," close=")">
-            #{id}
-        </foreach>
-    </delete>
+	<select id="selectHyOwnerRegistrationById" parameterType="Long"
+		resultMap="HyOwnerRegistrationResult">
+		<include refid="selectHyOwnerRegistrationVo" />
+		where o.id = #{id}
+	</select>
+
+	<insert id="insertHyOwnerRegistration"
+		parameterType="HyOwnerRegistration">
+		insert into hy_owner_registration
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">id,</if>
+			<if test="ownerName != null">owner_name,</if>
+			<if test="houseNum != null">house_num,</if>
+			<if test="fixedTelephone != null">fixed_telephone,</if>
+			<if test="mobilePhone != null">mobile_phone,</if>
+			<if test="idCardNum != null">id_card_num,</if>
+			<if test="suplierCategory != null">suplier_category,</if>
+			<if test="lockedNot != null">locked_not,</if>
+			<if test="accessNum != null">access_num,</if>
+			<if test="certificateName != null">certificate_name,</if>
+			<if test="customerCategoy != null">customer_categoy,</if>
+			<if test="faxPhone != null">fax_phone,</if>
+			<if test="contactAddress != null">contact_address,</if>
+			<if test="postalCode != null">postal_code,</if>
+			<if test="postalPreson != null">postal_preson,</if>
+			<if test="eMail != null">e_mail,</if>
+			<if test="phoneAccount != null">phone_account,</if>
+			<if test="bindingPhoneNum != null">binding_phone_num,</if>
+			<if test="coOwner != null">co_owner,</if>
+			<if test="ownerIdentification != null">owner_identification,</if>
+			<if test="firName != null">fir_name,</if>
+			<if test="secName != null">sec_name,</if>
+			<if test="gender != null">gender,</if>
+			<if test="nationality != null">nationality,</if>
+			<if test="birthDate != null">birth_date,</if>
+			<if test="workUnit != null">work_unit,</if>
+			<if test="ownerJob != null">owner_job,</if>
+			<if test="ownerHobby != null">owner_hobby,</if>
+			<if test="ownerId != null">owner_id,</if>
+			<if test="taxpayerNum != null">taxpayer_num,</if>
+			<if test="ownerAddPhone != null">owner_add_phone,</if>
+			<if test="bankAccount != null">bank_account,</if>
+			<if test="collectionCategory != null">collection_category,</if>
+			<if test="bankType != null">bank_type,</if>
+			<if test="bankNum != null">bank_num,</if>
+			<if test="bankAccountName != null">bank_account_name,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">#{id},</if>
+			<if test="ownerName != null">#{ownerName},</if>
+			<if test="houseNum != null">#{houseNum},</if>
+			<if test="fixedTelephone != null">#{fixedTelephone},</if>
+			<if test="mobilePhone != null">#{mobilePhone},</if>
+			<if test="idCardNum != null">#{idCardNum},</if>
+			<if test="suplierCategory != null">#{suplierCategory},</if>
+			<if test="lockedNot != null">#{lockedNot},</if>
+			<if test="accessNum != null">#{accessNum},</if>
+			<if test="certificateName != null">#{certificateName},</if>
+			<if test="customerCategoy != null">#{customerCategoy},</if>
+			<if test="faxPhone != null">#{faxPhone},</if>
+			<if test="contactAddress != null">#{contactAddress},</if>
+			<if test="postalCode != null">#{postalCode},</if>
+			<if test="postalPreson != null">#{postalPreson},</if>
+			<if test="eMail != null">#{eMail},</if>
+			<if test="phoneAccount != null">#{phoneAccount},</if>
+			<if test="bindingPhoneNum != null">#{bindingPhoneNum},</if>
+			<if test="coOwner != null">#{coOwner},</if>
+			<if test="ownerIdentification != null">#{ownerIdentification},</if>
+			<if test="firName != null">#{firName},</if>
+			<if test="secName != null">#{secName},</if>
+			<if test="gender != null">#{gender},</if>
+			<if test="nationality != null">#{nationality},</if>
+			<if test="birthDate != null">#{birthDate},</if>
+			<if test="workUnit != null">#{workUnit},</if>
+			<if test="ownerJob != null">#{ownerJob},</if>
+			<if test="ownerHobby != null">#{ownerHobby},</if>
+			<if test="ownerId != null">#{ownerId},</if>
+			<if test="taxpayerNum != null">#{taxpayerNum},</if>
+			<if test="ownerAddPhone != null">#{ownerAddPhone},</if>
+			<if test="bankAccount != null">#{bankAccount},</if>
+			<if test="collectionCategory != null">#{collectionCategory},</if>
+			<if test="bankType != null">#{bankType},</if>
+			<if test="bankNum != null">#{bankNum},</if>
+			<if test="bankAccountName != null">#{bankAccountName},</if>
+		</trim>
+	</insert>
+
+	<update id="updateHyOwnerRegistration"
+		parameterType="HyOwnerRegistration">
+		update hy_owner_registration
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="ownerName != null">owner_name = #{ownerName},</if>
+			<if test="houseNum != null">house_num = #{houseNum},</if>
+			<if test="fixedTelephone != null">fixed_telephone = #{fixedTelephone},</if>
+			<if test="mobilePhone != null">mobile_phone = #{mobilePhone},</if>
+			<if test="idCardNum != null">id_card_num = #{idCardNum},</if>
+			<if test="suplierCategory != null">suplier_category = #{suplierCategory},</if>
+			<if test="lockedNot != null">locked_not = #{lockedNot},</if>
+			<if test="accessNum != null">access_num = #{accessNum},</if>
+			<if test="certificateName != null">certificate_name = #{certificateName},</if>
+			<if test="customerCategoy != null">customer_categoy = #{customerCategoy},</if>
+			<if test="faxPhone != null">fax_phone = #{faxPhone},</if>
+			<if test="contactAddress != null">contact_address = #{contactAddress},</if>
+			<if test="postalCode != null">postal_code = #{postalCode},</if>
+			<if test="postalPreson != null">postal_preson = #{postalPreson},</if>
+			<if test="eMail != null">e_mail = #{eMail},</if>
+			<if test="phoneAccount != null">phone_account = #{phoneAccount},</if>
+			<if test="bindingPhoneNum != null">binding_phone_num = #{bindingPhoneNum},</if>
+			<if test="coOwner != null">co_owner = #{coOwner},</if>
+			<if test="ownerIdentification != null">owner_identification = #{ownerIdentification},</if>
+			<if test="firName != null">fir_name = #{firName},</if>
+			<if test="secName != null">sec_name = #{secName},</if>
+			<if test="gender != null">gender = #{gender},</if>
+			<if test="nationality != null">nationality = #{nationality},</if>
+			<if test="birthDate != null">birth_date = #{birthDate},</if>
+			<if test="workUnit != null">work_unit = #{workUnit},</if>
+			<if test="ownerJob != null">owner_job = #{ownerJob},</if>
+			<if test="ownerHobby != null">owner_hobby = #{ownerHobby},</if>
+			<if test="ownerId != null">owner_id = #{ownerId},</if>
+			<if test="taxpayerNum != null">taxpayer_num = #{taxpayerNum},</if>
+			<if test="ownerAddPhone != null">owner_add_phone = #{ownerAddPhone},</if>
+			<if test="bankAccount != null">bank_account = #{bankAccount},</if>
+			<if test="collectionCategory != null">collection_category = #{collectionCategory},</if>
+			<if test="bankType != null">bank_type = #{bankType},</if>
+			<if test="bankNum != null">bank_num = #{bankNum},</if>
+			<if test="bankAccountName != null">bank_account_name = #{bankAccountName},</if>
+		</trim>
+		where id = #{id}
+	</update>
+
+	<update id="updateHyOwnerRegistrationByHouseNumber"
+		parameterType="HyOwnerRegistration">
+		update hy_owner_registration
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="ownerName != null">owner_name = #{ownerName},</if>
+			<if test="fixedTelephone != null">fixed_telephone = #{fixedTelephone},</if>
+			<if test="mobilePhone != null">mobile_phone = #{mobilePhone},</if>
+			<if test="idCardNum != null">id_card_num = #{idCardNum},</if>
+			<if test="suplierCategory != null">suplier_category = #{suplierCategory},</if>
+			<if test="lockedNot != null">locked_not = #{lockedNot},</if>
+			<if test="accessNum != null">access_num = #{accessNum},</if>
+			<if test="certificateName != null">certificate_name = #{certificateName},</if>
+			<if test="customerCategoy != null">customer_categoy = #{customerCategoy},</if>
+			<if test="faxPhone != null">fax_phone = #{faxPhone},</if>
+			<if test="contactAddress != null">contact_address = #{contactAddress},</if>
+			<if test="postalCode != null">postal_code = #{postalCode},</if>
+			<if test="postalPreson != null">postal_preson = #{postalPreson},</if>
+			<if test="eMail != null">e_mail = #{eMail},</if>
+			<if test="phoneAccount != null">phone_account = #{phoneAccount},</if>
+			<if test="bindingPhoneNum != null">binding_phone_num = #{bindingPhoneNum},</if>
+			<if test="coOwner != null">co_owner = #{coOwner},</if>
+			<if test="ownerIdentification != null">owner_identification = #{ownerIdentification},</if>
+			<if test="firName != null">fir_name = #{firName},</if>
+			<if test="secName != null">sec_name = #{secName},</if>
+			<if test="gender != null">gender = #{gender},</if>
+			<if test="nationality != null">nationality = #{nationality},</if>
+			<if test="birthDate != null">birth_date = #{birthDate},</if>
+			<if test="workUnit != null">work_unit = #{workUnit},</if>
+			<if test="ownerJob != null">owner_job = #{ownerJob},</if>
+			<if test="ownerHobby != null">owner_hobby = #{ownerHobby},</if>
+			<if test="ownerId != null">owner_id = #{ownerId},</if>
+			<if test="taxpayerNum != null">taxpayer_num = #{taxpayerNum},</if>
+			<if test="ownerAddPhone != null">owner_add_phone = #{ownerAddPhone},</if>
+			<if test="bankAccount != null">bank_account = #{bankAccount},</if>
+			<if test="collectionCategory != null">collection_category = #{collectionCategory},</if>
+			<if test="bankType != null">bank_type = #{bankType},</if>
+			<if test="bankNum != null">bank_num = #{bankNum},</if>
+			<if test="bankAccountName != null">bank_account_name = #{bankAccountName},</if>
+		</trim>
+		where house_num = #{houseNum}
+	</update>
+
+	<delete id="deleteHyOwnerRegistrationById" parameterType="Long">
+		delete
+		from hy_owner_registration where id = #{id}
+	</delete>
+	
+	<delete id="deleteHyOwnerRegistrationByHoserNumber" parameterType="Long">
+		delete
+		from hy_owner_registration where house_num = #{houseNum}
+	</delete>
+
+	<delete id="deleteHyOwnerRegistrationByIds"
+		parameterType="String">
+		delete from hy_owner_registration where id in
+		<foreach item="id" collection="array" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
 
 </mapper>

@@ -80,81 +80,103 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
 	<sql id="selectHyFeeRemissionVo">
-		select f.id, f.business_exempted_type, f.fee_name,
-		f.relief_types,f.total_amount_deduction,f.reduced_amount,f.cancellation_credit_amount,f.monthly_deduction_amount,f.reduction_ratio,f.sharing_total_deduction,f.time_str,f.time_end,f.exemption_reason,f.remarks,f.offset_modification_record,f.audit_status,
-		f.tax_rate,f.house_number,
-		f.fee_date,
-		f.due_date,f.remission_year,f.remission_month,
-		f.exemption_registrant,f.registration_time,f.reduce_not,
-		f.amount_not_remitted,f.amount_tax_inc,f.taxation,
-		f.amount_excluding_tax,f.offset_time,f.cancellation_time,
-		f.revocation,f.writeoff_ont,f.writeoff_time,
-		o.owner_name,h.house_name,
-		p.parking_number,m.meter_name
-		from
-		hy_fee_remission f
-		left join hy_owner_registration o on
-		f.house_number=o.house_num
-		left join hy_house_inf h on
-		h.house_number=o.house_num
-		left join hy_parking_inf p on
-		p.house_number= h.house_number
-		left join
-		hy_meter m on
-		m.house_num=p.house_number where 1=1
+		SELECT
+			f.id,
+			f.business_exempted_type,
+			f.fee_name,
+			f.relief_types,
+			f.total_amount_deduction,
+			f.reduced_amount,
+			f.cancellation_credit_amount,
+			f.monthly_deduction_amount,
+			f.reduction_ratio,
+			f.sharing_total_deduction,
+			f.time_str,
+			f.time_end,
+			f.exemption_reason,
+			f.remarks,
+			f.offset_modification_record,
+			f.audit_status,
+			f.tax_rate,
+			f.house_number,
+			f.fee_date,
+			f.due_date,
+			f.remission_year,
+			f.remission_month,
+			f.exemption_registrant,
+			f.registration_time,
+			f.reduce_not,
+			f.amount_not_remitted,
+			f.amount_tax_inc,
+			f.taxation,
+			f.amount_excluding_tax,
+			f.offset_time,
+			f.cancellation_time,
+			f.revocation,
+			f.writeoff_ont,
+			f.writeoff_time,
+			o.owner_name,
+			h.house_name,
+			p.parking_number,
+			m.meter_name 
+		FROM
+			hy_fee_remission f
+			LEFT JOIN hy_owner_registration o ON f.house_number = o.house_num
+			LEFT JOIN hy_house_inf h ON h.house_number = o.house_num
+			LEFT JOIN hy_parking_inf p ON p.house_number = h.house_number
+			LEFT JOIN hy_meter m ON m.house_num = p.house_number 
+		WHERE
+			1 = 1
 	</sql>
 
 	<select id="selectHyFeeRemissionList"
 		parameterType="HyFeeRemission" resultMap="HyFeeRemissionResult">
 		<include refid="selectHyFeeRemissionVo" />
-		<if test="businessExemptedType != null "> and business_exempted_type = #{businessExemptedType}
+		<if test="businessExemptedType != null "> and f.business_exempted_type = #{businessExemptedType}
 		</if>
-		<if test="feeName != null  and feeName != ''"> and fee_name like concat('%', #{feeName}, '%')</if>
-		<if test="reliefTypes != null "> and relief_types = #{reliefTypes}</if>
-		<if test="totalAmountDeduction != null "> and total_amount_deduction = #{totalAmountDeduction}
+		<if test="feeName != null  and feeName != ''"> and f.fee_name like concat('%', #{feeName}, '%')</if>
+		<if test="reliefTypes != null "> and f.relief_types = #{reliefTypes}</if>
+		<if test="totalAmountDeduction != null "> and f.total_amount_deduction = #{totalAmountDeduction}
 		</if>
-		<if test="reducedAmount != null "> and reduced_amount = #{reducedAmount}</if>
-		<if test="houseNumber != null and houseNumber != ''"> and house_number = #{houseNumber}</if>
-		<if test="cancellationCreditAmount != null "> and cancellation_credit_amount =
+		<if test="reducedAmount != null "> and f.reduced_amount = #{reducedAmount}</if>
+		<if test="houseNumber != null and houseNumber != ''"> and f.house_number = #{houseNumber}</if>
+		<if test="cancellationCreditAmount != null "> and f.cancellation_credit_amount =
 			#{cancellationCreditAmount}
 		</if>
-		<if test="monthlyDeductionAmount != null "> and monthly_deduction_amount = #{monthlyDeductionAmount}
+		<if test="monthlyDeductionAmount != null "> and f.monthly_deduction_amount = #{monthlyDeductionAmount}
 		</if>
-		<if test="reductionRatio != null "> and reduction_ratio = #{reductionRatio}</if>
-		<if test="sharingTotalDeduction != null "> and sharing_total_deduction = #{sharingTotalDeduction}
+		<if test="reductionRatio != null "> and f.reduction_ratio = #{reductionRatio}</if>
+		<if test="sharingTotalDeduction != null "> and f.sharing_total_deduction = #{sharingTotalDeduction}
 		</if>
-		<if test="timeStr != null "> and time_str = #{timeStr}</if>
-		<if test="timeEnd != null "> and time_end = #{timeEnd}</if>
-		<if test="exemptionReason != null  and exemptionReason != ''"> and exemption_reason = #{exemptionReason}</if>
-		<if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
-		<if
-			test="offsetModificationRecord != null  and offsetModificationRecord != ''"> and offset_modification_record = #{offsetModificationRecord}
+		<if test="timeStr != null "> and f.time_str = #{timeStr}</if>
+		<if test="timeEnd != null "> and f.time_end = #{timeEnd}</if>
+		<if test="exemptionReason != null  and exemptionReason != ''"> and f.exemption_reason = #{exemptionReason}</if>
+		<if test="remarks != null  and remarks != ''"> and f.remarks = #{remarks}</if>
+		<if test="offsetModificationRecord != null  and offsetModificationRecord != ''"> and f.offset_modification_record = #{offsetModificationRecord}
 		</if>
-		<if test="auditStatus != null "> and audit_status = #{auditStatus}</if>
-		<if test="taxRate != null "> and tax_rate = #{taxRate}</if>
-		<if test="feeDate != null "> and fee_date = #{feeDate}</if>
-		<if test="dueDate != null "> and due_date = #{dueDate}</if>
-		<if test="remissionYear != null  and remissionYear != ''"> and remission_year = #{remissionYear}</if>
-		<if test="remissionMonth != null  and remissionMonth != ''"> and remission_month = #{remissionMonth}</if>
-		<if
-			test="exemptionRegistrant != null  and exemptionRegistrant != ''"> and exemption_registrant = #{exemptionRegistrant}</if>
-		<if test="registrationTime != null "> and registration_time = #{registrationTime}</if>
-		<if test="reduceNot != null "> and reduce_not = #{reduceNot}</if>
-		<if test="amountNotRemitted != null "> and amount_not_remitted = #{amountNotRemitted}</if>
-		<if test="amountTaxInc != null "> and amount_tax_inc = #{amountTaxInc}</if>
-		<if test="taxation != null "> and taxation = #{taxation}</if>
-		<if test="amountExcludingTax != null "> and amount_excluding_tax = #{amountExcludingTax}</if>
-		<if test="offsetTime != null "> and offset_time = #{offsetTime}</if>
-		<if test="cancellationTime != null "> and cancellation_time = #{cancellationTime}</if>
-		<if test="revocation != null  and revocation != ''"> and revocation = #{revocation}</if>
-		<if test="writeoffOnt != null "> and writeoff_ont = #{writeoffOnt}</if>
-
+		<if test="auditStatus != null "> and f.audit_status = #{auditStatus}</if>
+		<if test="taxRate != null "> and f.tax_rate = #{taxRate}</if>
+		<if test="feeDate != null "> and f.fee_date = #{feeDate}</if>
+		<if test="dueDate != null "> and f.due_date = #{dueDate}</if>
+		<if test="remissionYear != null  and remissionYear != ''"> and f.remission_year = #{remissionYear}</if>
+		<if test="remissionMonth != null  and remissionMonth != ''"> and f.remission_month = #{remissionMonth}</if>
+		<if test="exemptionRegistrant != null  and exemptionRegistrant != ''"> and f.exemption_registrant = #{exemptionRegistrant}</if>
+		<if test="registrationTime != null "> and f.registration_time = #{registrationTime}</if>
+		<if test="reduceNot != null "> and f.reduce_not = #{reduceNot}</if>
+		<if test="amountNotRemitted != null "> and f.amount_not_remitted = #{amountNotRemitted}</if>
+		<if test="amountTaxInc != null "> and f.amount_tax_inc = #{amountTaxInc}</if>
+		<if test="taxation != null "> and f.taxation = #{taxation}</if>
+		<if test="amountExcludingTax != null "> and f.amount_excluding_tax = #{amountExcludingTax}</if>
+		<if test="offsetTime != null "> and f.offset_time = #{offsetTime}</if>
+		<if test="cancellationTime != null "> and f.cancellation_time = #{cancellationTime}</if>
+		<if test="revocation != null  and revocation != ''"> and f.revocation = #{revocation}</if>
+		<if test="writeoffOnt != null "> and f.writeoff_ont = #{writeoffOnt}</if>
 	</select>
 
 	<select id="selectHyFeeRemissionById" parameterType="Long"
 		resultMap="HyFeeRemissionResult">
 		<include refid="selectHyFeeRemissionVo" />
-		and id = #{id}
+		and f.id = #{id}
 	</select>
 
 	<insert id="insertHyFeeRemission" parameterType="HyFeeRemission"
@@ -199,39 +221,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				<if test="meterName != null "> meter_name ,</if> -->
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="businessExemptedType != null">#{businessExemptedType},</if>
-			<if test="feeName != null">#{feeName},</if>
-			<if test="reliefTypes != null">#{reliefTypes},</if>
-			<if test="totalAmountDeduction != null">#{totalAmountDeduction},</if>
-			<if test="reducedAmount != null">#{reducedAmount},</if>
-			<if test="cancellationCreditAmount != null">#{cancellationCreditAmount},</if>
-			<if test="monthlyDeductionAmount != null">#{monthlyDeductionAmount},</if>
-			<if test="reductionRatio != null">#{reductionRatio},</if>
-			<if test="sharingTotalDeduction != null">#{sharingTotalDeduction},</if>
-			<if test="timeStr != null">#{timeStr},</if>
-			<if test="timeEnd != null">#{timeEnd},</if>
-			<if test="houseNumber != null">#{houseNumber},</if>
-			<if test="exemptionReason != null">#{exemptionReason},</if>
-			<if test="remarks != null">#{remarks},</if>
-			<if test="offsetModificationRecord != null">#{offsetModificationRecord},</if>
-			<if test="auditStatus != null">#{auditStatus},</if>
-			<if test="taxRate != null">#{taxRate},</if>
-			<if test="feeDate != null">#{feeDate},</if>
-			<if test="dueDate != null">#{dueDate},</if>
-			<if test="remissionYear != null">#{remissionYear},</if>
-			<if test="remissionMonth != null">#{remissionMonth},</if>
-			<if test="exemptionRegistrant != null">#{exemptionRegistrant},</if>
-			<if test="registrationTime != null">#{registrationTime},</if>
-			<if test="reduceNot != null">#{reduceNot},</if>
-			<if test="amountNotRemitted != null">#{amountNotRemitted},</if>
-			<if test="amountTaxInc != null">#{amountTaxInc},</if>
-			<if test="taxation != null">#{taxation},</if>
-			<if test="amountExcludingTax != null">#{amountExcludingTax},</if>
-			<if test="offsetTime != null">#{offsetTime},</if>
-			<if test="cancellationTime != null">#{cancellationTime},</if>
-			<if test="revocation != null">#{revocation},</if>
-			<if test="writeoffOnt != null">#{writeoffOnt},</if>
-			<if test="writeoffTime != null">#{writeoffTime},</if>
+			<if test="businessExemptedType != null and businessExemptedType !=''">#{businessExemptedType},</if>
+			<if test="feeName != null and feeName != ''">#{feeName},</if>
+			<if test="reliefTypes != null and reliefTypes != ''">#{reliefTypes},</if>
+			<if test="totalAmountDeduction != null and totalAmountDeduction != ''">#{totalAmountDeduction},</if>
+			<if test="reducedAmount != null and reducedAmount != ''">#{reducedAmount},</if>
+			<if test="cancellationCreditAmount != null and cancellationCreditAmount != '' ">#{cancellationCreditAmount},</if>
+			<if test="monthlyDeductionAmount != null and monthlyDeductionAmount != ''">#{monthlyDeductionAmount},</if>
+			<if test="reductionRatio != null and reductionRatio != ''">#{reductionRatio},</if>
+			<if test="sharingTotalDeduction != null and sharingTotalDeduction != ''">#{sharingTotalDeduction},</if>
+			<if test="timeStr != null and timeStr != ''">#{timeStr},</if>
+			<if test="timeEnd != null and timeEnd != ''">#{timeEnd},</if>
+			<if test="exemptionReason != null and exemptionReason != ''">#{exemptionReason},</if>
+			<if test="remarks != null and remarks != ''">#{remarks},</if>
+			<if test="offsetModificationRecord != null and offsetModificationRecord !=''">#{offsetModificationRecord},</if>
+			<if test="auditStatus != null and auditStatus !=''">#{auditStatus},</if>
+			<if test="taxRate != null and taxRate !=''">#{taxRate},</if>
+			<if test="feeDate != null and feeDate != ''">#{feeDate},</if>
+			<if test="dueDate != null and dueDate !=''">#{dueDate},</if>
+			<if test="houseNumber != null and houseNumber != ''">#{houseNumber},</if>
+			<if test="remissionYear != null and remissionYear !=''">#{remissionYear},</if>
+			<if test="remissionMonth != null and remissionMonth !=''">#{remissionMonth},</if>
+			<if test="exemptionRegistrant != null and exemptionRegistrant != ''">#{exemptionRegistrant},</if>
+			<if test="registrationTime != null and registrationTime != ''">#{registrationTime},</if>
+			<if test="reduceNot != null and reduceNot != '' ">#{reduceNot},</if>
+			<if test="amountNotRemitted != null and amountNotRemitted !=  ''">#{amountNotRemitted},</if>
+			<if test="amountTaxInc != null and amountTaxInc != ''">#{amountTaxInc},</if>
+			<if test="taxation != null and taxation != ''">#{taxation},</if>
+			<if test="amountExcludingTax != null and amountExcludingTax !=''">#{amountExcludingTax},</if>
+			<if test="offsetTime != null and offsetTime != '' ">#{offsetTime},</if>
+			<if test="cancellationTime != null and cancellationTime !=  ''">#{cancellationTime},</if>
+			<if test="revocation != null and revocation != revocation !=  '' ">#{revocation},</if>
+			<if test="writeoffOnt != null and writeoffOnt != ''">#{writeoffOnt},</if>
+			<if test="writeoffTime != null and writeoffTime !=  '' ">#{writeoffTime},</if>
 			<!-- <if test="ownerName != null "> #{ownerName}, </if> <if test="houseName 
 				!= null "> #{houseName},</if> <if test="parkingNumber != null "> #{parkingNumber},</if> 
 				<if test="meterName != null "> #{meterName} ,</if> -->
@@ -246,10 +268,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="reliefTypes != null">relief_types = #{reliefTypes},</if>
 			<if test="totalAmountDeduction != null">total_amount_deduction = #{totalAmountDeduction},</if>
 			<if test="reducedAmount != null">reduced_amount = #{reducedAmount},</if>
-			<if test="cancellationCreditAmount != null">cancellation_credit_amount = #{cancellationCreditAmount},
-			</if>
-			<if test="monthlyDeductionAmount != null">monthly_deduction_amount = #{monthlyDeductionAmount},
-			</if>
+			<if test="cancellationCreditAmount != null">cancellation_credit_amount = #{cancellationCreditAmount},</if>
+			<if test="monthlyDeductionAmount != null">monthly_deduction_amount = #{monthlyDeductionAmount},</if>
 			<if test="reductionRatio != null">reduction_ratio = #{reductionRatio},</if>
 			<if test="sharingTotalDeduction != null">sharing_total_deduction = #{sharingTotalDeduction},</if>
 			<if test="timeStr != null">time_str = #{timeStr},</if>
@@ -257,8 +277,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="houseNumber != null">house_number = #{houseNumber},</if>
 			<if test="exemptionReason != null">exemption_reason = #{exemptionReason},</if>
 			<if test="remarks != null">remarks = #{remarks},</if>
-			<if test="offsetModificationRecord != null">offset_modification_record = #{offsetModificationRecord},
-			</if>
+			<if test="offsetModificationRecord != null">offset_modification_record = #{offsetModificationRecord},</if>
 			<if test="auditStatus != null">audit_status = #{auditStatus},</if>
 			<if test="taxRate != null">tax_rate = #{taxRate},</if>
 			<if test="feeDate != null">fee_date = #{feeDate},</if>
@@ -277,7 +296,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="revocation != null">revocation = #{revocation},</if>
 			<if test="writeoffOnt != null">writeoff_ont = #{writeoffOnt},</if>
 			<if test="writeoffTime != null">writeoff_time = #{writeoffTime},</if>
-
 		</trim>
 		where id = #{id}
 	</update>

@@ -113,7 +113,7 @@ public class HySelectMeterController extends BaseController {
 	 * 修改保存抄表设置
 	 */
 	@ApiOperation("抄表设置")
-	@ApiImplicitParams({ @ApiImplicitParam(name = "hyMeter", value = "项目实体类hyMeter", required = true), })
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hySelectMeter", value = "项目实体类hySelectMeter", required = true), })
 	@RequiresPermissions("system:selectMeter:edit")
 	@Log(title = "抄表设置", businessType = BusinessType.UPDATE)
 	@PostMapping("/edit")
