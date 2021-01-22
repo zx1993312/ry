@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+<th:block th:include="include :: header('票据设置列表')" />
+</head>
+<body class="gray-bg">
+	<div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li><label>票据日期：</label> <input type="text"
+							class="time-input" placeholder="请选择票据时间"  name="billDate" /></li>
+							<li><label>客户名称：</label> <input type="text" name="ownerName" /></li>
+							<li><label>房屋编号：</label> <input type="text"
+								name="houseNum" /></li>
+							<li><label>票据号码：</label> <input type="text"
+								name="billNumber" /></li>
+							<li><label>收款人：</label> <input type="text"
+								name="paymentPerson" /></li>
+							<li><label>修改人：</label> <input type="text"
+								name="modifyPerson" /></li>
+							<li><a class="btn btn-primary btn-rounded btn-sm"
+								onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm"
+								onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+
+			<div class="btn-group-sm" id="toolbar" role="group">
+		 <a class="btn btn-warning" onclick="$.table.exportExcel()"
+					shiro:hasPermission="system:set:export"> <i
+					class="fa fa-download"></i> 导出
+				</a>
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table"></table>
+			</div>
+		</div>
+	</div>
+	<th:block th:include="include :: footer" />
+	<script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:set:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:set:remove')}]];
+        var prefix = ctx + "system/billSet";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "票据设置",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '主键',
+                    visible: false
+                },
+                {
+                    field: 'billNumber',
+                    title: '票据号码'
+                },
+                {
+                    field: 'billDate',
+                    title: '票据日期'
+                },
+                {
+                    field: 'paymentMethod',
+                    title: '收款方式'
+                },
+                {
+                    field: 'paymentMethodNew',
+                    title: '新收款方式'
+                },
+                {
+                    field: 'modifyPerson',
+                    title: '修改人'
+                },
+                {
+                    field: 'modifyTime',
+                    title: '修改时间'
+                }
+            
+              ]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

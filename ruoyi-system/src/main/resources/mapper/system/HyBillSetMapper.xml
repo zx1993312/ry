@@ -6,19 +6,137 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<resultMap type="HyBillSet" id="HyBillSetResult">
 		<result property="id" column="id" />
+		<result property="houseNum" column="house_num" />
 		<result property="billTypes" column="bill_types" />
+		<result property="billNumber" column="bill_number" />
+		<result property="invoiceNumber" column="invoice_number" />
+		
 		<result property="billCategory" column="bill_category" />
+		<result property="billDate" column="bill_date" />
+		<result property="billDateNew" column="bill_date_new" />
 		<result property="prefix" column="prefix" />
 		<result property="suffix" column="suffix" />
 		<result property="digit" column="digit" />
+		<result property="paymentMethodNew" column="payment_method_new" />
+		<result property="paymentMethod" column="payment_method" />
+		<result property="paymentPerson" column="payment_person" />
+		<result property="paymentDate" column="payment_date" />
+		<result property="modifyPerson" column="modify_person" />
+		<result property="modifyTime" column="modify_time" />
 		<result property="billSample" column="bill_sample" />
 		<result property="billPanel" column="bill_panel" />
 		<result property="panel" column="panel" />
+		<association property="hyHouseInf" column="id" javaType="HyHouseInf" resultMap="HyHouseInfResult" />
+		<association property="hyOwnerRegistration" column="id" javaType="HyOwnerRegistration" resultMap="HyOwnerRegistrationResult" />
 	</resultMap>
 
+	<resultMap type="HyOwnerRegistration"
+		id="HyOwnerRegistrationResult">
+		<result property="id" column="id" />
+		<result property="ownerName" column="owner_name" />
+		<result property="houseNum" column="house_num" />
+		<result property="fixedTelephone" column="fixed_telephone" />
+		<result property="mobilePhone" column="mobile_phone" />
+		<result property="idCardNum" column="id_card_num" />
+		<result property="suplierCategory" column="suplier_category" />
+		<result property="lockedNot" column="locked_not" />
+		<result property="accessNum" column="access_num" />
+		<result property="certificateName" column="certificate_name" />
+		<result property="customerCategoy" column="customer_categoy" />
+		<result property="faxPhone" column="fax_phone" />
+		<result property="contactAddress" column="contact_address" />
+		<result property="postalCode" column="postal_code" />
+		<result property="postalPreson" column="postal_preson" />
+		<result property="eMail" column="e_mail" />
+		<result property="phoneAccount" column="phone_account" />
+		<result property="bindingPhoneNum" column="binding_phone_num" />
+		<result property="coOwner" column="co_owner" />
+		<result property="ownerIdentification"
+			column="owner_identification" />
+		<result property="firName" column="fir_name" />
+		<result property="secName" column="sec_name" />
+		<result property="gender" column="gender" />
+		<result property="nationality" column="nationality" />
+		<result property="birthDate" column="birth_date" />
+		<result property="workUnit" column="work_unit" />
+		<result property="ownerJob" column="owner_job" />
+		<result property="ownerHobby" column="owner_hobby" />
+		<result property="ownerId" column="owner_id" />
+		<result property="taxpayerNum" column="taxpayer_num" />
+		<result property="ownerAddPhone" column="owner_add_phone" />
+		<result property="bankAccount" column="bank_account" />
+		<result property="collectionCategory"
+			column="collection_category" />
+		<result property="bankType" column="bank_type" />
+		<result property="bankNum" column="bank_num" />
+		<result property="bankAccountName" column="bank_account_name" />
+	</resultMap>
+
+
+<resultMap type="HyHouseInf" id="HyHouseInfResult">
+		<result property="id" column="id" />
+		<result property="building" column="building" />
+		<result property="houseNumber" column="house_number" />
+		<result property="houseName" column="house_name" />
+		<result property="builtUpArea" column="built_up_area" />
+		<result property="groupArea" column="group_area" />
+		<result property="unit" column="unit" />
+		<result property="floor" column="floor" />
+		<result property="sameUnitNumber" column="same_unit_number" />
+		<result property="areaType" column="area_type" />
+		<result property="bilingArea" column="biling_area" />
+		<result property="insideArea" column="inside_area" />
+		<result property="sharedArea" column="shared_area" />
+		<result property="gardenArea" column="garden_area" />
+		<result property="basementArea" column="basement_area" />
+		<result property="sharedLobbyArea" column="shared_lobby_area" />
+		<result property="sharedLayersArea" column="shared_layers_area" />
+		<result property="shareRatio" column="share_ratio" />
+		<result property="buildingStructure"
+			column="building_structure" />
+		<result property="parametersPer" column="parameters_per" />
+		<result property="houseLayout" column="house_layout" />
+		<result property="floorHeight" column="floor_height" />
+		<result property="natureProperty" column="nature_property" />
+		<result property="natureUse" column="nature_use" />
+		<result property="usageStatus" column="usage_status" />
+		<result property="occupancyStatus" column="occupancy_status" />
+		<result property="deliveryStatus" column="delivery_status" />
+		<result property="houseType" column="house_type" />
+		<result property="salesStatus" column="sales_status" />
+		<result property="purchaseContract" column="purchase_contract" />
+		<result property="marketingNum" column="marketing_num" />
+	</resultMap>
 	<sql id="selectHyBillSetVo">
-		select id, bill_types, bill_category, prefix, suffix, digit, bill_sample,
-		bill_panel, panel from hy_bill_set
+		select
+		b.id,
+		b.house_num,
+		b.bill_types,
+		b.bill_number,
+		b.invoice_number,
+		b.bill_category,
+		b.bill_date,
+		b.bill_date_new,
+		b.prefix,
+		b.suffix,
+		b.digit,
+		b.payment_method_new,
+		b.payment_method,
+		b.payment_person,
+		b.payment_date,modify_person,
+		b.modify_time,
+		b.bill_sample,
+		b.bill_panel,
+		b.panel,
+		o.owner_name,
+		h.house_name
+		from 
+		hy_bill_set b 
+		left join  
+		hy_owner_registration o on b.house_num=o.house_num
+		left join
+		hy_house_inf h on b.house_num=h.house_number
+		where 1=1
 	</sql>
 
 	<select id="selectHyBillSetList" parameterType="HyBillSet"
@@ -84,7 +202,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 
 	<delete id="deleteHyBillSetById" parameterType="Long">
-		delete from hy_bill_set where id = #{id}
+		delete from
+		hy_bill_set where id = #{id}
 	</delete>
 
 	<delete id="deleteHyBillSetByIds" parameterType="String">

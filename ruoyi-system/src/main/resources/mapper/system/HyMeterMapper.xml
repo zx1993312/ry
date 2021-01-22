@@ -99,7 +99,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		m.magnification,m.new_meter_consumption,m.old_meter_consumption,
 		m.attrition_rate, m.unit_price, m.amount_price,m.abnormal_prompt,
 		m.customer_name, m.freeze_not, m.source_meter,m.meter_reader,
-		m.input_time,m.meter_read_date, c.meter_case_name,c.meter_case_position,
+		m.input_time,m.meter_read_date,
+		c.meter_case_name,c.meter_case_position,
 		c.meter_serial,c.case_id,
 		h.house_number,h.house_name
 		from
@@ -107,10 +108,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		left join hy_meter_case c on
 		m.id=c.case_id
 
+		LEFT JOIN
+		hy_owner_registration o on o.house_num=m.house_num
 
 		LEFT JOIN
 		hy_house_inf h on
-		m.house_num = h.house_number
+		m.house_num =
+		h.house_number
 
 
 		where 1=1
@@ -295,14 +299,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</trim>
 		where house_num = #{houseNum}
 	</update>
-	
+
 	<delete id="deleteHyMeterById" parameterType="Long">
 		delete from
 		hy_meter where id = #{id}
 	</delete>
-	
+
 	<delete id="deleteHyMeterByHoserNumber" parameterType="Long">
-		delete from
+		delete
+		from
 		hy_meter where house_num = #{houseNum}
 	</delete>
 

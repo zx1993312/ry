@@ -157,6 +157,9 @@ public class HyMeter extends BaseEntity {
 	@Excel(name = "表箱")
 	private HyMeterCase hyMeterCase;
 	
+	@Excel(name="业主表")
+	private HyOwnerRegistration hyOwnerRegistration;
+	
 	@Excel(name="房屋表")
 	private HyHouseInf hyHouseInf;
 
@@ -430,6 +433,14 @@ public class HyMeter extends BaseEntity {
 
 	public void setOmeterReadDate(Date ometerReadDate) {
 		this.ometerReadDate = ometerReadDate;
+	}
+
+	public HyOwnerRegistration getHyOwnerRegistration() {
+		return hyOwnerRegistration;
+	}
+
+	public void setHyOwnerRegistration(HyOwnerRegistration hyOwnerRegistration) {
+		this.hyOwnerRegistration = hyOwnerRegistration;
 	}
 
 	@Override
