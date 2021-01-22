@@ -13,12 +13,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="initialRead" column="initial_read" />
 		<result property="meterStrNum" column="meter_str_num" />
 		<result property="meterEndNum" column="meter_end_num" />
-<<<<<<< HEAD
 		<result property="meterReadDate" column="meter_read_date" />
-		
-=======
 
->>>>>>> branch 'master' of https://github.com/zx1993312/ry.git
 		<result property="ometerEndNum" column="ometer_end_num" />
 		<result property="ometerStrNum" column="ometer_str_num" />
 
