@@ -18,6 +18,6 @@ public interface IHyProjectSelService {
 	 * @param hyProjectSel
 	 * @return
 	 */
-	public List<HyProjectSel> selectProjectSelList(HyProjectSel hyProjectSel);
+	public List<HyProjectSel>  selectProjectSelList(HyProjectSel hyProjectSel);
 
 }

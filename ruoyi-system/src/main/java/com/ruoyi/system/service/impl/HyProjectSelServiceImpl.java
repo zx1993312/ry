@@ -26,7 +26,7 @@ public class HyProjectSelServiceImpl implements IHyProjectSelService {
 	 */
 	@Override
 	public List<HyProjectSel> selectProjectSelList(HyProjectSel hyProjectSel) {
-		return hyProjectMapper.selectProjectSelList(hyProjectSel);
+		return  hyProjectMapper.selectProjectSelList(hyProjectSel);
 	}
 
 }

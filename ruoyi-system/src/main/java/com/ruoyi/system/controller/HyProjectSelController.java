@@ -38,7 +38,7 @@ public class HyProjectSelController extends BaseController {
 	@RequiresPermissions("system:projectSel:view")
 	@GetMapping()
 	public String cost() {
-		return prefix + "/project";
+		return prefix +  "/project";
 	}
 
 	/**

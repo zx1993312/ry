@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
 	<sql id="selectHyProjectVo">
-		select id, project_name, village_id,parent_id,ancestors from hy_project
+		select id, project_name, village_id, parent_id,ancestors from hy_project
 	</sql>
 
 	<select id="selectHyProjectList" parameterType="HyProject"
