@@ -44,6 +44,14 @@ public interface HyMeterMapper {
 	public int updateHyMeter(HyMeter hyMeter);
 
 	/**
+	 * 修改抄设置
+	 * 
+	 * @param hyMeter 抄设置
+	 * @return 结果
+	 */
+	public int updateHyMeterByHouseNumber(HyMeter hyMeter);
+
+	/**
 	 * 删除抄设置
 	 * 
 	 * @param id 抄设置ID
@@ -52,10 +60,19 @@ public interface HyMeterMapper {
 	public int deleteHyMeterById(Long id);
 
 	/**
+	 * 删除抄设置
+	 * 
+	 * @param id 抄设置ID
+	 * @return 结果
+	 */
+	public int deleteHyMeterByHoserNumber(Long id);
+
+	/**
 	 * 批量删除抄设置
 	 * 
 	 * @param ids 需要删除的数据ID
 	 * @return 结果
 	 */
 	public int deleteHyMeterByIds(String[] ids);
+
 }

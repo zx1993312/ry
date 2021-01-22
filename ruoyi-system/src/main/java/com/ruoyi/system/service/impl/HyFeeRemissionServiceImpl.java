@@ -1,27 +1,23 @@
 package com.ruoyi.system.service.impl;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ruoyi.system.mapper.HyCommonMapper;
-import com.ruoyi.system.mapper.HyFeeRemissionMapper;
-import com.ruoyi.system.mapper.HyHouseInfMapper;
-import com.ruoyi.system.mapper.HyMeterCaseMapper;
-import com.ruoyi.system.mapper.HyMeterMapper;
-import com.ruoyi.system.mapper.HyOwnerRegistrationMapper;
-import com.ruoyi.system.mapper.HyParkingInfMapper;
-import com.ruoyi.system.constants.Constants;
-import com.ruoyi.system.domain.HyDataIsExist;
+import com.ruoyi.common.core.text.Convert;
+import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.domain.HyFeeRemission;
 import com.ruoyi.system.domain.HyHouseInf;
 import com.ruoyi.system.domain.HyMeter;
-import com.ruoyi.system.domain.HyMeterCase;
 import com.ruoyi.system.domain.HyOwnerRegistration;
 import com.ruoyi.system.domain.HyParkingInf;
-import com.ruoyi.system.service.IHyDataIsExistService;
+import com.ruoyi.system.mapper.HyFeeRemissionMapper;
+import com.ruoyi.system.mapper.HyHouseInfMapper;
+import com.ruoyi.system.mapper.HyMeterMapper;
+import com.ruoyi.system.mapper.HyOwnerRegistrationMapper;
+import com.ruoyi.system.mapper.HyParkingInfMapper;
 import com.ruoyi.system.service.IHyFeeRemissionService;
-import com.ruoyi.common.core.text.Convert;
 
 /**
  * 费用减免Service业务层处理
@@ -31,6 +27,7 @@ import com.ruoyi.common.core.text.Convert;
  */
 @Service
 public class HyFeeRemissionServiceImpl implements IHyFeeRemissionService {
+
 	@Autowired
 	private HyFeeRemissionMapper hyFeeRemissionMapper;
 
@@ -45,10 +42,7 @@ public class HyFeeRemissionServiceImpl implements IHyFeeRemissionService {
 
 	@Autowired
 	private HyParkingInfMapper hyParkingInfMapper;
-	
-	@Autowired
-	private HyCommonMapper hyCommonMapper;
-	
+
 	/**
 	 * 查询费用减免
 	 * 
@@ -79,30 +73,6 @@ public class HyFeeRemissionServiceImpl implements IHyFeeRemissionService {
 	 */
 	@Override
 	public int insertHyFeeRemission(HyFeeRemission hyFeeRemission) {
-		String hy=hyCommonMapper.selectNextValue("hy_database","hy_fee_remission");
-		hyFeeRemission.setId(Long.valueOf(hy));
-	
-		HyOwnerRegistration hyOwnerRegistration = new HyOwnerRegistration();
-		hyOwnerRegistration.setHouseNum(String.valueOf(hyFeeRemission.getId()));
-		hyOwnerRegistration.setOwnerName(hyFeeRemission.getHyOwnerRegistration().getOwnerName());
-		hyOwnerRegistrationMapper.insertHyOwnerRegistration((HyOwnerRegistration) Constants.REFLECT_UTIL
-				.convertBean(hyOwnerRegistration, hyFeeRemission.getHyOwnerRegistration()));
-
-		HyHouseInf hyHouseInf = new HyHouseInf();
-		hyHouseInf.setHouseNumber(String.valueOf(hyFeeRemission.getId()));
-		hyHouseInf.setHouseName(hyFeeRemission.getHouseName());
-		hyHouseInfMapper.insertHyHouseInf(hyHouseInf);
-
-		HyParkingInf hyParkingInf = new HyParkingInf();
-		hyParkingInf.setHouseNumber(hyHouseInf.getHouseNumber());
-		hyParkingInf.setParkingNumber(String.valueOf(hyFeeRemission.getParkingNumber()));
-		hyParkingInfMapper.insertHyParkingInf(hyParkingInf);
-
-		HyMeter hyMeter = new HyMeter();
-		hyMeter.setHouseNum(hyParkingInf.getHouseNumber());
-		hyMeter.setMeterName(hyFeeRemission.getMeterName());
-		hyMeterMapper.insertHyMeter(hyMeter);
-
 		return hyFeeRemissionMapper.insertHyFeeRemission(hyFeeRemission);
 
 	}
@@ -115,33 +85,50 @@ public class HyFeeRemissionServiceImpl implements IHyFeeRemissionService {
 	 */
 	@Override
 	public int updateHyFeeRemission(HyFeeRemission hyFeeRemission) {
-		
-		String hy=hyCommonMapper.selectNextValue("hy_database","hy_fee_remission");
-		hyFeeRemission.setId(Long.valueOf(hy));
-	
+		hyFeeRemission.setRegistrationMark(1);// 将减免登记标识设置为1
+		int result = hyFeeRemissionMapper.updateHyFeeRemission(hyFeeRemission);
+
 		HyOwnerRegistration hyOwnerRegistration = new HyOwnerRegistration();
-		hyOwnerRegistration.setHouseNum(String.valueOf(hyFeeRemission.getId()));
+		hyOwnerRegistration.setHouseNum(hyFeeRemission.getHouseNumber());
+		List<?> ownerList = hyOwnerRegistrationMapper.selectHyOwnerRegistrationList(hyOwnerRegistration);// 根据houseNum查询数据是否存在
 		hyOwnerRegistration.setOwnerName(hyFeeRemission.getOwnerName());
-		hyOwnerRegistrationMapper.insertHyOwnerRegistration((HyOwnerRegistration) Constants.REFLECT_UTIL
-				.convertBean(hyOwnerRegistration, hyFeeRemission.getHyOwnerRegistration()));
+		if (StringUtils.isNull(ownerList) || ownerList.size() == 0) {// 数据存在，插入新数据
+			result = hyOwnerRegistrationMapper.insertHyOwnerRegistration(hyOwnerRegistration);
+		} else {
+			result = hyOwnerRegistrationMapper.updateHyOwnerRegistrationByHouseNumber(hyOwnerRegistration);
+		}
 
 		HyHouseInf hyHouseInf = new HyHouseInf();
-		hyHouseInf.setHouseNumber(String.valueOf(hyFeeRemission.getId()));
+		hyHouseInf.setHouseNumber(hyFeeRemission.getHouseNumber());
+		List<?> houseList = hyHouseInfMapper.selectHyHouseInfList(hyHouseInf);
 		hyHouseInf.setHouseName(hyFeeRemission.getHouseName());
-		hyHouseInfMapper.insertHyHouseInf(hyHouseInf);
+		if (StringUtils.isNull(houseList) || houseList.size() == 0) {
+			result = hyHouseInfMapper.insertHyHouseInf(hyHouseInf);
+		} else {
+			result = hyHouseInfMapper.updateHyHouseInfByHouseNumber(hyHouseInf);
+		}
 
 		HyParkingInf hyParkingInf = new HyParkingInf();
-		hyParkingInf.setHouseNumber(hyHouseInf.getHouseNumber());
 		hyParkingInf.setParkingNumber(String.valueOf(hyFeeRemission.getParkingNumber()));
-		hyParkingInfMapper.insertHyParkingInf(hyParkingInf);
+		List<?> parkingList = hyParkingInfMapper.selectHyParkingInfList(hyParkingInf);
+		hyParkingInf.setHouseNumber(hyFeeRemission.getHouseNumber());
+		if (StringUtils.isNull(parkingList) || parkingList.size() == 0) {
+			result = hyParkingInfMapper.insertHyParkingInf(hyParkingInf);
+		} else {
+			result = hyParkingInfMapper.updateHyParkingInfByHouseNumber(hyParkingInf);
+		}
 
 		HyMeter hyMeter = new HyMeter();
-		hyMeter.setHouseNum(hyParkingInf.getHouseNumber());
+		hyMeter.setHouseNum(hyFeeRemission.getHouseNumber());
+		List<?> meterList = hyMeterMapper.selectHyMeterList(hyMeter);
 		hyMeter.setMeterName(hyFeeRemission.getMeterName());
-		hyMeterMapper.insertHyMeter(hyMeter);
+		if (StringUtils.isNull(meterList) || meterList.size() == 0) {
+			result = hyMeterMapper.insertHyMeter(hyMeter);
+		} else {
+			result = hyMeterMapper.updateHyMeterByHouseNumber(hyMeter);
+		}
 
-		
-		return hyFeeRemissionMapper.updateHyFeeRemission(hyFeeRemission);
+		return result;
 	}
 
 	/**
@@ -152,6 +139,15 @@ public class HyFeeRemissionServiceImpl implements IHyFeeRemissionService {
 	 */
 	@Override
 	public int deleteHyFeeRemissionByIds(String ids) {
+		String[] idss = Convert.toStrArray(ids);
+		for (String id : idss) {
+			HyFeeRemission hyFeeRemission = hyFeeRemissionMapper.selectHyFeeRemissionById(Long.valueOf(id));
+			hyOwnerRegistrationMapper
+					.deleteHyOwnerRegistrationByHoserNumber(Long.valueOf(hyFeeRemission.getHouseNumber()));
+			hyHouseInfMapper.deleteHyHouseInfByHoserNumber(Long.valueOf(hyFeeRemission.getHouseNumber()));
+			hyParkingInfMapper.deleteHyParkingInfByHoserNumber(Long.valueOf(hyFeeRemission.getHouseNumber()));
+			hyMeterMapper.deleteHyMeterByHoserNumber(Long.valueOf(hyFeeRemission.getHouseNumber()));
+		}
 		return hyFeeRemissionMapper.deleteHyFeeRemissionByIds(Convert.toStrArray(ids));
 	}
 
@@ -163,6 +159,13 @@ public class HyFeeRemissionServiceImpl implements IHyFeeRemissionService {
 	 */
 	@Override
 	public int deleteHyFeeRemissionById(Long id) {
-		return hyFeeRemissionMapper.deleteHyFeeRemissionById(id);
+		int result = hyFeeRemissionMapper.deleteHyFeeRemissionById(id);
+		HyFeeRemission hyFeeRemission = hyFeeRemissionMapper.selectHyFeeRemissionById(Long.valueOf(id));
+		result = hyOwnerRegistrationMapper
+				.deleteHyOwnerRegistrationByHoserNumber(Long.valueOf(hyFeeRemission.getHouseNumber()));
+		result = hyHouseInfMapper.deleteHyHouseInfByHoserNumber(Long.valueOf(hyFeeRemission.getHouseNumber()));
+		result = hyParkingInfMapper.deleteHyParkingInfByHoserNumber(Long.valueOf(hyFeeRemission.getHouseNumber()));
+		result = hyMeterMapper.deleteHyMeterByHoserNumber(Long.valueOf(hyFeeRemission.getHouseNumber()));
+		return result;
 	}
 }

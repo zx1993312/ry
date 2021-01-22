@@ -77,11 +77,12 @@ public class HyMeterServiceImpl implements IHyMeterService {
 	 */
 	@Override
 	public int deleteHyMeterByIds(String ids) {
-		int result = hyMeterMapper.deleteHyMeterByIds(Convert.toStrArray(ids));
-		if (result > 0) {
-			result = hyMeterCaseMapper.deleteHyMeterCaseByIds(Convert.toStrArray(ids));
+		int delMeterResult = hyMeterMapper.deleteHyMeterByIds(Convert.toStrArray(ids));
+		int delCaseResult = hyMeterCaseMapper.deleteHyMeterCaseByIds(Convert.toStrArray(ids));
+		if (delMeterResult > 0 || delCaseResult > 0) {
+			return 1;
 		}
-		return result;
+		return 0;
 	}
 
 	/**
