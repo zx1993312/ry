@@ -229,6 +229,8 @@ public class HyCost extends BaseEntity {
 	private HyHouseInf hyHouseInf;
 
 	private HyOwnerRegistration hyOwnerRegistration;
+	
+	private HyMeter hyMeter;
 
 	public void setId(Long id) {
 		this.id = id;
@@ -604,6 +606,14 @@ public class HyCost extends BaseEntity {
 
 	public void setChangeDate(Date changeDate) {
 		this.changeDate = changeDate;
+	}
+
+	public HyMeter getHyMeter() {
+		return hyMeter;
+	}
+
+	public void setHyMeter(HyMeter hyMeter) {
+		this.hyMeter = hyMeter;
 	}
 
 	@Override

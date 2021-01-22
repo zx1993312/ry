@@ -174,7 +174,49 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="parkingName" column="parking_name" />
 
 	</resultMap>
+<resultMap type="HyMeter" id="HyMeterResult">
+		<id property="id" column="id" />
+		<result property="houseNum" column="house_num" />
+		<result property="meterType" column="meter_type" />
+		<result property="meterSerialNum" column="meter_serial_num" />
+		<result property="meterName" column="meter_name" />
+		<result property="initialRead" column="initial_read" />
+		<result property="meterStrNum" column="meter_str_num" />
+		<result property="meterEndNum" column="meter_end_num" />
+		<result property="meterReadDate" column="meter_read_date" />
 
+		<result property="ometerEndNum" column="ometer_end_num" />
+		<result property="ometerStrNum" column="ometer_str_num" />
+
+		<result property="transfRatio" column="transf_ratio" />
+		<result property="otransfRatio" column="otransf_ratio" />
+
+		<result property="reverseNot" column="reverse_not" />
+		<result property="strappingType" column="strapping_type" />
+		<result property="meterReadDate" column="meter_read_date" />
+		<result property="magnification" column="magnification" />
+		<result property="newMeterConsumption"
+			column="new_meter_consumption" />
+		<result property="oldMeterConsumption"
+			column="old_meter_consumption" />
+		<result property="attritionRate" column="attrition_rate" />
+		<result property="oattritionRate" column="oattrition_rate" />
+
+		<result property="unitPrice" column="unit_price" />
+		<result property="ounitPrice" column="ounit_price" />
+
+		<result property="amountPrice" column="amount_price" />
+		<result property="oamountPrice" column="oamount_price" />
+
+		<result property="abnormalPrompt" column="abnormal_prompt" />
+		<result property="customerName" column="customer_name" />
+		<result property="freezeNot" column="freeze_not" />
+		<result property="sourceMeter" column="source_meter" />
+		<result property="meterReader" column="meter_reader" />
+		<result property="inputTime" column="input_time" />
+		<association property="hyMeterCase" column="id"
+			javaType="HyMeterCase" resultMap="HyMeterCaseResult" />
+	</resultMap>
 	<sql id="selectHyCostVo">
 		SELECT
 		c.id,
@@ -222,14 +264,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		o.owner_name,
 		h.group_area,
 		h.building,
+		h.delivery_status,
 		h.house_name,
 		h.built_up_area,
-		p.parking_number
+		p.parking_number,
+		m.meter_name
 		FROM
 		hy_cost c
 		LEFT JOIN hy_owner_registration o ON c.house_num=o.house_num
 		LEFT JOIN hy_house_inf h ON o.house_num=h.house_number
 		LEFT JOIN hy_parking_inf p ON h.house_number=p.house_number
+		LEFT JOIN hy_meter m on m.house_num=c.house_num
 		WHERE
 		1=1
 	</sql>
