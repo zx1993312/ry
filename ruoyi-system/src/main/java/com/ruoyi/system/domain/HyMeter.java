@@ -75,7 +75,7 @@ public class HyMeter extends BaseEntity {
 	@Excel(name = "计量表类型")
 	private Integer strappingType;
 
-	/** 抄表日期 */
+	/** 新抄表日期 */
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Excel(name = "抄表日期", width = 30, dateFormat = "yyyy-MM-dd")
 	private Date meterReadDate;
@@ -143,10 +143,16 @@ public class HyMeter extends BaseEntity {
 	private Date inputTime;
 	
 	/**
-	 * 
+	 * 标准名称
 	 */
 	@Excel(name="标准名称")
 	private String standardName;
+	/**
+	 * 原抄表日期
+	 */
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	@Excel(name = "原抄表日期", width = 30, dateFormat = "yyyy-MM-dd")
+	private Date ometerReadDate;
 
 	@Excel(name = "表箱")
 	private HyMeterCase hyMeterCase;
@@ -416,6 +422,14 @@ public class HyMeter extends BaseEntity {
 
 	public void setStandardName(String standardName) {
 		this.standardName = standardName;
+	}
+
+	public Date getOmeterReadDate() {
+		return ometerReadDate;
+	}
+
+	public void setOmeterReadDate(Date ometerReadDate) {
+		this.ometerReadDate = ometerReadDate;
 	}
 
 	@Override

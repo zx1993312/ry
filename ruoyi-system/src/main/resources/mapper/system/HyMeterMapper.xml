@@ -13,6 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="initialRead" column="initial_read" />
 		<result property="meterStrNum" column="meter_str_num" />
 		<result property="meterEndNum" column="meter_end_num" />
+		<result property="meterReadDate" column="meter_read_date" />
 		
 		<result property="ometerEndNum" column="ometer_end_num" />
 		<result property="ometerStrNum" column="ometer_str_num" />
@@ -95,7 +96,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		m.magnification,m.new_meter_consumption,m.old_meter_consumption,
 		m.attrition_rate, m.unit_price, m.amount_price,m.abnormal_prompt,
 		m.customer_name, m.freeze_not, m.source_meter,m.meter_reader,
-		m.input_time, c.meter_case_name,c.meter_case_position,
+		m.input_time,m.meter_read_date, c.meter_case_name,c.meter_case_position,
 		c.meter_serial,c.case_id,
 		h.house_number,h.house_name
 		from 
