@@ -11,15 +11,11 @@
 				<form id="formId">
 					<div class="select-list">
 						<ul>
-							
-						
 							<li><label>票据日期：</label> <input type="text"
-							class="time-input" placeholder="请选择票据时间"  name="billDate" /></li>
+								class="time-input" placeholder="请选择票据时间" name="billDate" /></li>
 							<li><label>新票据日期：</label> <input type="text"
-							class="time-input" placeholder="请选择票据时间"  name="billDateNew" /></li>
-							<li><label>客户名称：</label> <input type="text" name="ownerName" /></li>
-							<li><label>房屋编号：</label> <input type="text"
-								name="houseNum" /></li>
+								class="time-input" placeholder="请选择票据时间" name="billDateNew" /></li>
+							<li><label>房屋编号：</label> <input type="text" name="houseNum" /></li>
 							<li><label>票据号码：</label> <input type="text"
 								name="billNumber" /></li>
 							<li><a class="btn btn-primary btn-rounded btn-sm"
@@ -33,7 +29,7 @@
 			</div>
 
 			<div class="btn-group-sm" id="toolbar" role="group">
-		 <a class="btn btn-warning" onclick="$.table.exportExcel()"
+				<a class="btn btn-warning" onclick="$.table.exportExcel()"
 					shiro:hasPermission="system:set:export"> <i
 					class="fa fa-download"></i> 导出
 				</a>

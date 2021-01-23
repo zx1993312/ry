@@ -10,7 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="billTypes" column="bill_types" />
 		<result property="billNumber" column="bill_number" />
 		<result property="invoiceNumber" column="invoice_number" />
-		
+
 		<result property="billCategory" column="bill_category" />
 		<result property="billDate" column="bill_date" />
 		<result property="billDateNew" column="bill_date_new" />
@@ -26,8 +26,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="billSample" column="bill_sample" />
 		<result property="billPanel" column="bill_panel" />
 		<result property="panel" column="panel" />
-		<association property="hyHouseInf" column="id" javaType="HyHouseInf" resultMap="HyHouseInfResult" />
-		<association property="hyOwnerRegistration" column="id" javaType="HyOwnerRegistration" resultMap="HyOwnerRegistrationResult" />
+		<association property="hyHouseInf" column="id"
+			javaType="HyHouseInf" resultMap="HyHouseInfResult" />
+		<association property="hyOwnerRegistration" column="id"
+			javaType="HyOwnerRegistration" resultMap="HyOwnerRegistrationResult" />
 	</resultMap>
 
 	<resultMap type="HyOwnerRegistration"
@@ -73,7 +75,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
 
-<resultMap type="HyHouseInf" id="HyHouseInfResult">
+	<resultMap type="HyHouseInf" id="HyHouseInfResult">
 		<result property="id" column="id" />
 		<result property="building" column="building" />
 		<result property="houseNumber" column="house_number" />
@@ -107,6 +109,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="purchaseContract" column="purchase_contract" />
 		<result property="marketingNum" column="marketing_num" />
 	</resultMap>
+	
 	<sql id="selectHyBillSetVo">
 		select
 		b.id,
@@ -130,29 +133,50 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		b.panel,
 		o.owner_name,
 		h.house_name
-		from 
-		hy_bill_set b 
-		left join  
-		hy_owner_registration o on b.house_num=o.house_num
+		from
+		hy_bill_set b
 		left join
-		hy_house_inf h on b.house_num=h.house_number
+		hy_owner_registration o on
+		b.house_num=o.house_num
+		left join
+		hy_house_inf h on
+		b.house_num=h.house_number
 		where 1=1
 	</sql>
 
 	<select id="selectHyBillSetList" parameterType="HyBillSet"
 		resultMap="HyBillSetResult">
 		<include refid="selectHyBillSetVo" />
-		<where>
-			<if test="billTypes != null  and billTypes != ''"> and bill_types = #{billTypes}</if>
-			<if test="billCategory != null  and billCategory != ''"> and bill_category = #{billCategory}</if>
-			<if test="prefix != null  and prefix != ''"> and prefix = #{prefix}</if>
-			<if test="suffix != null  and suffix != ''"> and suffix = #{suffix}</if>
-			<if test="digit != null  and digit != ''"> and digit = #{digit}</if>
-			<if test="billSample != null  and billSample != ''"> and bill_sample = #{billSample}</if>
-			<if test="billPanel != null  and billPanel != ''"> and bill_panel = #{billPanel}</if>
-			<if test="panel!=null and panel!=' '"> and panel=#{panel}</if>
-		</where>
+		<if test="billTypes != null  and billTypes != ''"> and b.bill_types = #{billTypes}</if>
+		<if test="billCategory != null  and billCategory != ''"> and b.bill_category = #{billCategory}</if>
+		<if test="prefix != null  and prefix != ''"> and b.prefix = #{prefix}</if>
+		<if test="suffix != null  and suffix != ''"> and b.suffix = #{suffix}</if>
+		<if test="digit != null  and digit != ''"> and b.digit = #{digit}</if>
+		<if test="billSample != null  and billSample != ''"> and b.bill_sample = #{billSample}</if>
+		<if test="billPanel != null  and billPanel != ''"> and b.bill_panel = #{billPanel}</if>
+		<if test="panel!=null and panel!=''"> and b.panel=#{panel}</if>
+		<if test="billDate!=null "> and b.bill_date=#{billDate}</if>
+		<if test="billNumber!=null and billNumber!= ''"> and b.bill_number = #{billNumber}</if>
+		<if test="houseNum!=null and houseNum!= ''"> and b.house_num = #{houseNum}</if>
 	</select>
+	
+	<select id="selectHyBillSetListByDate" parameterType="HyBillSet"
+		resultMap="HyBillSetResult">
+		<include refid="selectHyBillSetVo" />
+		<if test="billTypes != null  and billTypes != ''"> and b.bill_types = #{billTypes}</if>
+		<if test="billCategory != null  and billCategory != ''"> and b.bill_category = #{billCategory}</if>
+		<if test="prefix != null  and prefix != ''"> and b.prefix = #{prefix}</if>
+		<if test="suffix != null  and suffix != ''"> and b.suffix = #{suffix}</if>
+		<if test="digit != null  and digit != ''"> and b.digit = #{digit}</if>
+		<if test="billSample != null  and billSample != ''"> and b.bill_sample = #{billSample}</if>
+		<if test="billPanel != null  and billPanel != ''"> and b.bill_panel = #{billPanel}</if>
+		<if test="panel!=null and panel!=''"> and b.panel=#{panel}</if>
+		<if test="billNumber!=null and billNumber!= ''"> and b.bill_number = #{billNumber}</if>
+		<if test="houseNum!=null and houseNum!= ''"> and b.house_num = #{houseNum}</if>
+		<if test="billDate!=null "> and b.bill_date between #{startTime} and #{endTime}</if>
+		<if test="billDateNew!=null "> and b.bill_date_new between #{startTimeNew} and #{endTimeNew}</if>
+	</select>
+	
 
 	<select id="selectHyBillSetById" parameterType="Long"
 		resultMap="HyBillSetResult">

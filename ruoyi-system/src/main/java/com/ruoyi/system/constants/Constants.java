@@ -34,6 +34,12 @@ public class Constants {
 
 	public static final SimpleDateFormat TIME_ALL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 时间转换年月日时分秒
 
+	public static final SimpleDateFormat TIME_YEAR = new SimpleDateFormat("yyyy");// 时间转换年
+
+	public static final SimpleDateFormat TIME_MONTH = new SimpleDateFormat("MM");// 时间转换月
+
+	public static final SimpleDateFormat TIME_DAY = new SimpleDateFormat("dd");// 时间转换日
+
 	public static final SimpleDateFormat TIME_YEAR_MONTH_DAY = new SimpleDateFormat("yyyy-MM-dd");// 时间转换年月日
 
 	public static final SimpleDateFormat TIME_HOUR_MINUTE_SECOND = new SimpleDateFormat("HH:mm:ss");// 时间转换时分秒
