@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyProportionSetMapper">
+    
+    <resultMap type="HyProportionSet" id="HyProportionSetResult">
+        <result property="id"    column="id"    />
+        <result property="serialNum"    column="serial_num"    />
+        <result property="deliveryStatus"    column="delivery_status"    />
+        <result property="chargeRatio"    column="charge_ratio"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="deliveryCurrentStatus"    column="delivery_current_status"    />
+        <result property="chargeSubject"    column="charge_subject"    />
+    </resultMap>
+
+    <sql id="selectHyProportionSetVo">
+        select id, serial_num, delivery_status, charge_ratio, remarks, delivery_current_status, charge_subject from hy_proportion_set
+    </sql>
+
+    <select id="selectHyProportionSetList" parameterType="HyProportionSet" resultMap="HyProportionSetResult">
+        <include refid="selectHyProportionSetVo"/>
+        <where>  
+            <if test="serialNum != null "> and serial_num = #{serialNum}</if>
+            <if test="deliveryStatus != null "> and delivery_status = #{deliveryStatus}</if>
+            <if test="chargeRatio != null  and chargeRatio != ''"> and charge_ratio = #{chargeRatio}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="deliveryCurrentStatus != null "> and delivery_current_status = #{deliveryCurrentStatus}</if>
+            <if test="chargeSubject != null  and chargeSubject != ''"> and charge_subject = #{chargeSubject}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyProportionSetById" parameterType="Long" resultMap="HyProportionSetResult">
+        <include refid="selectHyProportionSetVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyProportionSet" parameterType="HyProportionSet">
+        insert into hy_proportion_set
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="serialNum != null">serial_num,</if>
+            <if test="deliveryStatus != null">delivery_status,</if>
+            <if test="chargeRatio != null">charge_ratio,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="deliveryCurrentStatus != null">delivery_current_status,</if>
+            <if test="chargeSubject != null">charge_subject,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="serialNum != null">#{serialNum},</if>
+            <if test="deliveryStatus != null">#{deliveryStatus},</if>
+            <if test="chargeRatio != null">#{chargeRatio},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="deliveryCurrentStatus != null">#{deliveryCurrentStatus},</if>
+            <if test="chargeSubject != null">#{chargeSubject},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyProportionSet" parameterType="HyProportionSet">
+        update hy_proportion_set
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="serialNum != null">serial_num = #{serialNum},</if>
+            <if test="deliveryStatus != null">delivery_status = #{deliveryStatus},</if>
+            <if test="chargeRatio != null">charge_ratio = #{chargeRatio},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="deliveryCurrentStatus != null">delivery_current_status = #{deliveryCurrentStatus},</if>
+            <if test="chargeSubject != null">charge_subject = #{chargeSubject},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyProportionSetById" parameterType="Long">
+        delete from hy_proportion_set where id = #{id}
+    </delete>
+
+    <delete id="deleteHyProportionSetByIds" parameterType="String">
+        delete from hy_proportion_set where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

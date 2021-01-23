@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyEntryMapper">
+    
+    <resultMap type="HyEntry" id="HyEntryResult">
+        <result property="id"    column="id"    />
+        <result property="entryType"    column="entry_type"    />
+        <result property="entryDate"    column="entry_date"    />
+        <result property="entryPerson"    column="entry_person"    />
+        <result property="entryRange"    column="entry_range"    />
+        <result property="entryDateStr"    column="entry_date_str"    />
+        <result property="entryDateEnd"    column="entry_date_end"    />
+        <result property="entryAmount"    column="entry_amount"    />
+        <result property="houseNum"    column="house_num"    />
+    </resultMap>
+
+    <sql id="selectHyEntryVo">
+        select id, entry_type, entry_date, entry_person, entry_range, entry_date_str, entry_date_end, entry_amount, house_num from hy_entry
+    </sql>
+
+    <select id="selectHyEntryList" parameterType="HyEntry" resultMap="HyEntryResult">
+        <include refid="selectHyEntryVo"/>
+        <where>  
+            <if test="entryType != null "> and entry_type = #{entryType}</if>
+            <if test="entryDate != null "> and entry_date = #{entryDate}</if>
+            <if test="entryPerson != null  and entryPerson != ''"> and entry_person = #{entryPerson}</if>
+            <if test="entryRange != null  and entryRange != ''"> and entry_range = #{entryRange}</if>
+            <if test="entryDateStr != null "> and entry_date_str = #{entryDateStr}</if>
+            <if test="entryDateEnd != null "> and entry_date_end = #{entryDateEnd}</if>
+            <if test="entryAmount != null  and entryAmount != ''"> and entry_amount = #{entryAmount}</if>
+            <if test="houseNum != null  and houseNum != ''"> and house_num = #{houseNum}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyEntryById" parameterType="Long" resultMap="HyEntryResult">
+        <include refid="selectHyEntryVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyEntry" parameterType="HyEntry" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_entry
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="entryType != null">entry_type,</if>
+            <if test="entryDate != null">entry_date,</if>
+            <if test="entryPerson != null">entry_person,</if>
+            <if test="entryRange != null">entry_range,</if>
+            <if test="entryDateStr != null">entry_date_str,</if>
+            <if test="entryDateEnd != null">entry_date_end,</if>
+            <if test="entryAmount != null">entry_amount,</if>
+            <if test="houseNum != null">house_num,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="entryType != null">#{entryType},</if>
+            <if test="entryDate != null">#{entryDate},</if>
+            <if test="entryPerson != null">#{entryPerson},</if>
+            <if test="entryRange != null">#{entryRange},</if>
+            <if test="entryDateStr != null">#{entryDateStr},</if>
+            <if test="entryDateEnd != null">#{entryDateEnd},</if>
+            <if test="entryAmount != null">#{entryAmount},</if>
+            <if test="houseNum != null">#{houseNum},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyEntry" parameterType="HyEntry">
+        update hy_entry
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="entryType != null">entry_type = #{entryType},</if>
+            <if test="entryDate != null">entry_date = #{entryDate},</if>
+            <if test="entryPerson != null">entry_person = #{entryPerson},</if>
+            <if test="entryRange != null">entry_range = #{entryRange},</if>
+            <if test="entryDateStr != null">entry_date_str = #{entryDateStr},</if>
+            <if test="entryDateEnd != null">entry_date_end = #{entryDateEnd},</if>
+            <if test="entryAmount != null">entry_amount = #{entryAmount},</if>
+            <if test="houseNum != null">house_num = #{houseNum},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyEntryById" parameterType="Long">
+        delete from hy_entry where id = #{id}
+    </delete>
+
+    <delete id="deleteHyEntryByIds" parameterType="String">
+        delete from hy_entry where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

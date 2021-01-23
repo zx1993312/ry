@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyAuditManagementMapper">
+    
+    <resultMap type="HyAuditManagement" id="HyAuditManagementResult">
+        <result property="id"    column="id"    />
+        <result property="houseNum"    column="house_num"    />
+        <result property="auditProcess"    column="audit_process"    />
+        <result property="auditStatus"    column="audit_status"    />
+    </resultMap>
+
+    <sql id="selectHyAuditManagementVo">
+        select id, house_num, audit_process, audit_status from hy_audit_management
+    </sql>
+
+    <select id="selectHyAuditManagementList" parameterType="HyAuditManagement" resultMap="HyAuditManagementResult">
+        <include refid="selectHyAuditManagementVo"/>
+        <where>  
+            <if test="houseNum != null  and houseNum != ''"> and house_num = #{houseNum}</if>
+            <if test="auditProcess != null  and auditProcess != ''"> and audit_process = #{auditProcess}</if>
+            <if test="auditStatus != null "> and audit_status = #{auditStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyAuditManagementById" parameterType="Long" resultMap="HyAuditManagementResult">
+        <include refid="selectHyAuditManagementVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyAuditManagement" parameterType="HyAuditManagement" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_audit_management
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="houseNum != null">house_num,</if>
+            <if test="auditProcess != null">audit_process,</if>
+            <if test="auditStatus != null">audit_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="houseNum != null">#{houseNum},</if>
+            <if test="auditProcess != null">#{auditProcess},</if>
+            <if test="auditStatus != null">#{auditStatus},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyAuditManagement" parameterType="HyAuditManagement">
+        update hy_audit_management
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="houseNum != null">house_num = #{houseNum},</if>
+            <if test="auditProcess != null">audit_process = #{auditProcess},</if>
+            <if test="auditStatus != null">audit_status = #{auditStatus},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyAuditManagementById" parameterType="Long">
+        delete from hy_audit_management where id = #{id}
+    </delete>
+
+    <delete id="deleteHyAuditManagementByIds" parameterType="String">
+        delete from hy_audit_management where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
