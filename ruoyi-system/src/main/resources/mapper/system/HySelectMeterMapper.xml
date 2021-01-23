@@ -122,7 +122,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="meterEndNum != null  and meterEndNum != ''"> and m.meter_end_num = #{meterEndNum}</if>
 		<if test="transfRatio != null  and transfRatio != ''"> and m.transf_ratio = #{transfRatio}</if>
 		<if test="strappingType != null  and strappingType != ''"> and m.strapping_type = #{strappingType}</if>
-		<if test="meterReadDate != null  and meterReadDate != ''"> and m.meter_read_date = #{meterReadDate}</if>
+		<if test="meterReadDate != null  and meterReadDate != ''"> and m.meter_read_date like '%${meterReadDate}%' </if>
 		<if test="newMeterConsumption != null  and newMeterConsumption != ''"> and m.new_meter_consumption = #{newMeterConsumption}</if>
 		<if test="oldMeterConsumption != null  and oldMeterConsumption != ''"> and m.old_meter_consumption = #{oldMeterConsumption}</if>
 		<if test="attritionRate != null  and attritionRate != ''"> and m.attrition_rate = #{attritionRate}</if>
