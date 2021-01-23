@@ -37,6 +37,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="salesStatus" column="sales_status" />
 		<result property="purchaseContract" column="purchase_contract" />
 		<result property="marketingNum" column="marketing_num" />
+		<result property="deliveryStatusBefore" column="delivery_status_before" />
+		<result property="changeDate" column="change_date" />
+		<result property="changePerson" column="change_person" />
+		<result property="remark" column="remark" />
 	</resultMap>
 
 
@@ -45,9 +49,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select id, building, house_number, house_name, built_up_area, group_area,
 		unit, floor, same_unit_number, area_type, biling_area, inside_area,
 		shared_area, garden_area, basement_area, shared_lobby_area,
-		shared_layers_area, share_ratio, building_structure, parameters_per,
-		house_layout, floor_height, nature_property, nature_use, usage_status,
-		occupancy_status, delivery_status, house_type, sales_status,
+		shared_layers_area, share_ratio, building_structure, parameters_per,change_person,
+		house_layout, floor_height, nature_property, nature_use, usage_status,change_date,
+		occupancy_status,remark, delivery_status, house_type,delivery_status_before, sales_status,
 		purchase_contract, marketing_num from hy_house_inf
 	</sql>
 

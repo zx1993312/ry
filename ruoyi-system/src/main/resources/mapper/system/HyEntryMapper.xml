@@ -14,10 +14,90 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="entryDateEnd"    column="entry_date_end"    />
         <result property="entryAmount"    column="entry_amount"    />
         <result property="houseNum"    column="house_num"    />
+        <association property="hyCost" column="id" javaType="HyCost" resultMap="HyCostResult" />
+		<association property="hyAuditManagement" column="id" javaType="HyAuditManagement" resultMap="HyAuditManagementResult" />
+        
+    </resultMap>
+    
+    <resultMap type="HyCost" id="HyCostResult">
+		<result property="id" column="id" />
+		<result property="houseNum" column="house_num" />
+		<result property="costItems" column="cost_items" />
+		<result property="expenseType" column="expense_type" />
+		<result property="parentId" column="parent_id" />
+		<result property="ancestors" column="ancestors" />
+		<result property="standardName" column="standard_name" />
+		<result property="feeNum" column="fee_num" />
+		<result property="chargingStandard" column="charging_standard" />
+		<result property="calculationMehod" column="calculation_mehod" />
+		<result property="standardDescription"
+			column="standard_description" />
+		<result property="standardState" column="standard_state" />
+		<result property="proportionDamags" column="proportion_damags" />
+		<result property="projectModification"
+			column="project_modification" />
+		<result property="billingCycle" column="billing_cycle" />
+		<result property="bilingStartDate" column="biling_start_date" />
+		<result property="bilingEndDate" column="biling_end_date" />
+		<result property="auditResultsReason"
+			column="audit_results_reason" />
+		<result property="feeDateOld" column="fee_date_old" />
+		<result property="feeDate" column="fee_date" />
+		<result property="dueDateOld" column="due_date_old" />
+		<result property="dueDate" column="due_date" />
+		<result property="amountReceivableOld"
+			column="amount_receivable_old" />
+		<result property="amountReceivable" column="amount_receivable" />
+		<result property="amountActually" column="amount_actually" />
+		<result property="remarks" column="remarks" />
+		<result property="operationDate" column="operation_date" />
+		<result property="operationUser" column="operation_user" />
+		<result property="operationType" column="operation_type" />
+		<result property="deleteReason" column="delete_reason" />
+		<result property="advancePaymetnOffset"
+			column="advance_paymetn_offset" />
+		<result property="writeOff" column="write_off" />
+		<result property="refundAmount" column="refund_amount" />
+		<result property="amountArrears" column="amount_arrears" />
+		<result property="collectionStatus" column="collection_status" />
+		<result property="frozenPerson" column="frozen_person" />
+		<result property="frozenState" column="frozen_state" />
+		<result property="frozenDate" column="frozen_date" />
+		<result property="frozenReason" column="frozen_reason" />
+		<result property="advanceStatus" column="advance_status" />
+		<result property="deliveryStatus" column="delivery_status" />
+		<result property="transferTenants" column="transfer_tenants" />
+		<result property="changeDate" column="change_date" />
+
+	</resultMap>
+    
+		
+    <resultMap type="HyAuditManagement" id="HyAuditManagementResult">
+        <result property="id"    column="id"    />
+        <result property="houseNum"    column="house_num"    />
+        <result property="auditProcess"    column="audit_process"    />
+        <result property="auditStatus"    column="audit_status"    />
     </resultMap>
 
     <sql id="selectHyEntryVo">
-        select id, entry_type, entry_date, entry_person, entry_range, entry_date_str, entry_date_end, entry_amount, house_num from hy_entry
+        select 
+        e.id, 
+        e.entry_type, 
+        e.entry_date, 
+        e.entry_person, 
+        e.entry_range, 
+        e.entry_date_str, 
+        e.entry_date_end, 
+        e.entry_amount, 
+        e.house_num,
+        c.amount_receivable,
+        c.cost_items,
+        a.audit_process,
+        a.audit_status
+        from hy_entry e 
+        left join hy_audit_management a on e.house_num=a.house_num
+        left join hy_cost c on e.house_num=c.house_num
+        where 1=1
     </sql>
 
     <select id="selectHyEntryList" parameterType="HyEntry" resultMap="HyEntryResult">

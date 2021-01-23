@@ -168,6 +168,8 @@ public class HyOwnerRegistration extends BaseEntity
     
     @Excel(name="房屋类")
     private HyHouseInf hyHouseInf;
+    
+    private HyEntry hyEntry;
 
     public void setId(Long id) 
     {
@@ -500,6 +502,14 @@ public class HyOwnerRegistration extends BaseEntity
 
 	public void setHyHouseInf(HyHouseInf hyHouseInf) {
 		this.hyHouseInf = hyHouseInf;
+	}
+
+	public HyEntry getHyEntry() {
+		return hyEntry;
+	}
+
+	public void setHyEntry(HyEntry hyEntry) {
+		this.hyEntry = hyEntry;
 	}
 
 	@Override

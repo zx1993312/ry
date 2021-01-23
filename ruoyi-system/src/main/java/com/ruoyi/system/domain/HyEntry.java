@@ -6,6 +6,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
+import com.ruoyi.system.annotation.EnumAnn;
+import com.ruoyi.system.enums.EntryEnum;
 
 /**
  * 入账处理对象 hy_entry
@@ -22,6 +24,7 @@ public class HyEntry extends BaseEntity
 
     /** 入账类别 */
     @Excel(name = "入账类别")
+    @EnumAnn(enumClass=EntryEnum.class)
     private Integer entryType;
 
     /** 入账时间 */
@@ -54,6 +57,14 @@ public class HyEntry extends BaseEntity
     /** 房屋编号 */
     @Excel(name = "房屋编号")
     private String houseNum;
+    /**
+     * 审核表
+     */
+  private HyAuditManagement hyAuditManagement;
+    /**
+     * 费用项目表
+     */
+    private HyCost hyCost;
 
     public void setId(Long id) 
     {
@@ -137,7 +148,24 @@ public class HyEntry extends BaseEntity
         return houseNum;
     }
 
-    @Override
+   
+	public HyCost getHyCost() {
+		return hyCost;
+	}
+
+	public void setHyCost(HyCost hyCost) {
+		this.hyCost = hyCost;
+	}
+
+	public HyAuditManagement getHyAuditManagement() {
+		return hyAuditManagement;
+	}
+
+	public void setHyAuditManagement(HyAuditManagement hyAuditManagement) {
+		this.hyAuditManagement = hyAuditManagement;
+	}
+
+	@Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())

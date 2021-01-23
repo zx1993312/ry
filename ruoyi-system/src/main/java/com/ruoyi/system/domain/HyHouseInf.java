@@ -1,5 +1,7 @@
 package com.ruoyi.system.domain;
 
+import java.util.Date;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
@@ -117,10 +119,31 @@ public class HyHouseInf extends BaseEntity
     /** 入住状态 */
     @Excel(name = "入住状态")
     private String occupancyStatus;
+    /**
+     * 变更前交房状态
+     */
+    @Excel(name="变更前交房状态")
+    private String deliveryStatusBefore;
 
     /** 交房状态 */
     @Excel(name = "交房状态")
     private String deliveryStatus;
+    /**
+     * 变更时间
+     */
+    @Excel(name = "变更时间")
+
+    private Date changeDate;
+    /**
+     * 变更人
+     */
+    @Excel(name = "变更人")
+    private String changePerson;
+    /**
+     * 备注
+     */
+    @Excel(name = "备注")
+    private String remark;
 
     /** 房屋类型 */
     @Excel(name = "房屋类型")
@@ -137,6 +160,8 @@ public class HyHouseInf extends BaseEntity
     /** 营销编号 */
     @Excel(name = "营销编号")
     private String marketingNum;
+    
+    private HyOwnerRegistration hyOwnerRegistration;
 
     public void setId(Long id) 
     {
@@ -418,7 +443,47 @@ public class HyHouseInf extends BaseEntity
         return marketingNum;
     }
 
-    @Override
+    public String getDeliveryStatusBefore() {
+		return deliveryStatusBefore;
+	}
+
+	public void setDeliveryStatusBefore(String deliveryStatusBefore) {
+		this.deliveryStatusBefore = deliveryStatusBefore;
+	}
+
+	public Date getChangeDate() {
+		return changeDate;
+	}
+
+	public void setChangeDate(Date changeDate) {
+		this.changeDate = changeDate;
+	}
+
+	public String getChangePerson() {
+		return changePerson;
+	}
+
+	public void setChangePerson(String changePerson) {
+		this.changePerson = changePerson;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public HyOwnerRegistration getHyOwnerRegistration() {
+		return hyOwnerRegistration;
+	}
+
+	public void setHyOwnerRegistration(HyOwnerRegistration hyOwnerRegistration) {
+		this.hyOwnerRegistration = hyOwnerRegistration;
+	}
+
+	@Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())

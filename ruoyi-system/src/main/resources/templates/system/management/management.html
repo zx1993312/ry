@@ -21,9 +21,11 @@
                             </li>
                             <li>
                                 <label>审核状态：</label>
-                                <select name="auditStatus">
-                                    <option value="">所有</option>
-                                    <option value="-1">代码生成请选择字典属性</option>
+                            
+                                  <select name="auditStatus" class="form-control " th:with="type=${@dict.getType('hy_examine_type')}">
+                                <option value="">请选择</option>
+                               
+								<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                                 </select>
                             </li>
                             <li>

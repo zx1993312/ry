@@ -45,7 +45,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="bankType" column="bank_type" />
 		<result property="bankNum" column="bank_num" />
 		<result property="bankAccountName" column="bank_account_name" />
+		<association property="hyHouseInf" column="id" javaType="HyHouseInf" resultMap="HyHouseInfResult" />
+		<association property="hyEntry" column="id" javaType="HyEntry" resultMap="HyEntryResult" />
+		
 	</resultMap>
+
+   <resultMap type="HyEntry" id="HyEntryResult">
+        <result property="id"    column="id"    />
+        <result property="entryType"    column="entry_type"    />
+        <result property="entryDate"    column="entry_date"    />
+        <result property="entryPerson"    column="entry_person"    />
+        <result property="entryRange"    column="entry_range"    />
+        <result property="entryDateStr"    column="entry_date_str"    />
+        <result property="entryDateEnd"    column="entry_date_end"    />
+        <result property="entryAmount"    column="entry_amount"    />
+        <result property="houseNum"    column="house_num"    />
+       
+    </resultMap>
 
 	<resultMap type="HyHouseInf" id="HyHouseInfResult">
 		<result property="id" column="id" />
@@ -80,6 +96,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="salesStatus" column="sales_status" />
 		<result property="purchaseContract" column="purchase_contract" />
 		<result property="marketingNum" column="marketing_num" />
+		<result property="deliveryStatusBefore" column="delivery_status_before" />
+		<result property="changeDate" column="change_date" />
+		<result property="changePerson" column="change_person" />
+		<result property="remark" column="remark" />
 	</resultMap>
 	<sql id="selectHyOwnerRegistrationVo">
 		select
@@ -99,7 +119,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		o.postal_code,
 		o.postal_preson,
 		o.e_mail,
-		phone_account,
+		o.phone_account,
 		o. binding_phone_num,
 		o.co_owner,
 		o.owner_identification,
@@ -119,12 +139,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		o.bank_type,
 		o.bank_num,
 		o.bank_account_name ,
+		h.delivery_status_before,
+		h.delivery_status,
+		h.change_person,
+		h.change_date,
+		h.remark,
 		h.house_number,
-		h.house_name
+		h.house_name,
+		a.audit_process,
+		a.audit_status
 		from
 		hy_owner_registration o
-		LEFT JOIN hy_house_inf h ON o.house_num =
-		h.house_number
+		LEFT JOIN hy_house_inf h ON o.house_num =h.house_number
+		LEFT JOIN hy_audit_management a ON o.house_num=a.house_num
 		where 1=1
 	</sql>
 
@@ -347,10 +374,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete
 		from hy_owner_registration where id = #{id}
 	</delete>
-	
-	<delete id="deleteHyOwnerRegistrationByHoserNumber" parameterType="Long">
+
+	<delete id="deleteHyOwnerRegistrationByHoserNumber"
+		parameterType="Long">
 		delete
-		from hy_owner_registration where house_num = #{houseNum}
+		from hy_owner_registration where house_num =
+		#{houseNum}
 	</delete>
 
 	<delete id="deleteHyOwnerRegistrationByIds"

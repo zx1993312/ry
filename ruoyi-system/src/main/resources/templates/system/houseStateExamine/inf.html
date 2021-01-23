@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('房屋登记列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                         
+                            <li>
+                                <label>房屋编号：</label>
+                                <input type="text" name="houseNumber"/>
+                            </li>
+                            <li>
+                                <label>房屋名称：</label>
+                                <input type="text" name="houseName"/>
+                            </li>
+                            <li>
+                                <label>变更前交房状态：</label>
+                            <select id="deliveryStatusBefore" name="deliveryStatusBefore" class="form-control" th:with="type=${@dict.getType('hy_delivery_status')}" > 
+									<option value="">请选择</option>
+									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+								</select> 
+                            </li>
+                            <li>
+                                <label>变更后交房状态：</label>
+                                 <select id="deliveryStatus" name="deliveryStatus" class="form-control" th:with="type=${@dict.getType('hy_delivery_status')}" > 
+									<option value="">请选择</option>
+									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+								</select> 
+                            </li>
+                            <li>
+                                <label>变更人：</label>
+                                <input type="text" name="changePerson"/>
+                            </li>
+                         
+                            <li>
+                                <label>变更日期：</label>
+                                <input type="text" class="time-input" placeholder="请选择变更日期" name="changeDate"/>
+                            </li>
+                            <li>
+                                <label>当前业主：</label>
+                                <input type="text" name="ownerName"/>
+                            </li>
+                            <li>
+                                <label>审核流程：</label>
+                                <input type="text" name="auditProcess"/>
+                            </li>
+                            <li>
+                                <label>审核状态：</label>
+                                <select id="auditStatus" name="auditStatus" class="form-control" th:with="type=${@dict.getType('hy_examine_type')}" > 
+									<option value="">请选择</option>
+									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+								</select> 
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+       
+                <a class="btn btn-warning" onclick="disp_alert()" >
+                        确认审核
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:inf:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:inf:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:inf:remove')}]];
+        var prefix = ctx + "system/houseStateExamine";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "房屋登记",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '主键',
+                    visible: false
+                },
+          
+                {
+                    field: 'hyOwnerRegistration.ownerName',
+                    title: '当前业主'
+                },
+                {
+                    field: 'deliveryStatusBefore',
+                    title: '变更前交房状态',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case 0 : value =  "已售未接房";break;
+	                    	case 1 : value =  "未售";break;
+	                    	case 2 : value =  "已接房";break;
+	                    	case 3 : value =  "装修";break;
+	                    	case 4 : value =  "入住";break;
+	                    	case 5 : value =  "已售空置";break;
+	                    	case 6 : value =  "未售空置";break;
+	                	}
+		            	return value;
+		            }
+                },
+                {
+                    field: 'deliveryStatus',
+                    title: '变更后交房状态',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case 0 : value =  "已售未接房";break;
+	                    	case 1 : value =  "未售";break;
+	                    	case 2 : value =  "已接房";break;
+	                    	case 3 : value =  "装修";break;
+	                    	case 4 : value =  "入住";break;
+	                    	case 5 : value =  "已售空置";break;
+	                    	case 6 : value =  "未售空置";break;
+	                	}
+		            	return value;
+		            }
+                },
+                {
+                    field: 'changePerson',
+                    title: '变更人 '
+                },
+                {
+                    field: 'changeDate',
+                    title: '变更日期'
+                },
+                {
+                    field: 'reamrk',
+                    title: '备注'
+                },
+                {
+                    field: 'hyEntry.auditProcess',
+                    title: '审核流程'
+                },
+                
+                {
+                    field: 'hyEntry.auditStatus',
+                    title: '审核状态',
+                    	 formatter: function(value, item, index) {
+                    			switch(value){
+     	                    	case 0 : value =  "未审核";break;
+     	                    	case 1 : value =  "已审核";break;
+     	                
+     	                	}
+     		            	return value;
+     		            }
+                }]
+            };
+            $.table.init(options);
+        });
+        function disp_alert()
+        {
+        	 $.modal.alertWarning("审核需要审核人提交审核资质！");
+     
+        }
+    </script>
+</body>
+</html>

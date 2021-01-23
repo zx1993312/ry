@@ -1,6 +1,10 @@
 package com.ruoyi.system.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.system.constants.Constants;
 import com.ruoyi.system.domain.HyEntry;
 import com.ruoyi.system.service.IHyEntryService;
 
@@ -62,7 +67,13 @@ public class HyEntryController extends BaseController
     {
         startPage();
         List<HyEntry> list = hyEntryService.selectHyEntryList(hyEntry);
-        return getDataTable(list);
+        List<Map<String ,Object>>reList=new ArrayList<>();
+        for(HyEntry he:list) {
+        	Map<String , Object> map=new HashMap<>();
+        	map=Constants.REFLECT_UTIL.convertMap(he);
+        	reList.add(map);
+        }
+        return getDataTable(reList);
     }
 
     /**
