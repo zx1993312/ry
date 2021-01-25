@@ -176,7 +176,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 
-	<select id="selectHyBillSetById" parameterType="Long"
+	<select id="selectHyBillSetById" parameterType="Long" 
 		resultMap="HyBillSetResult">
 		<include refid="selectHyBillSetVo" />
 		where id = #{id}
