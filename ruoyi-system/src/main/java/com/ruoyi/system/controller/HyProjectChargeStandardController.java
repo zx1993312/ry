@@ -45,7 +45,7 @@ public class HyProjectChargeStandardController extends BaseController {
 	@RequiresPermissions("system:cost:view")
 	@GetMapping()
 	public String cost() {
-		return prefix + "/cost";
+		return prefix + "/cost"; 
 	}
 
 	/**
