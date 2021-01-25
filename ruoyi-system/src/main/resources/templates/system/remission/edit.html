@@ -51,15 +51,19 @@
 			<div class="form-group">
 				<label class="col-sm-3 control-label">减免业务类型：</label>
 				<div class="col-sm-8">
-					<input name="businessExemptedType" th:field="*{businessExemptedType}" class="form-control"
+					<input name="businessExemptedType"
+						th:field="*{businessExemptedType}" class="form-control"
 						type="text">
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-3 control-label">费用名称：</label>
 				<div class="col-sm-8">
-					<input name="feeName" th:field="*{feeName}" class="form-control"
-						type="text">
+					<select name="feeName" th:field="*{feeName}" class="form-control"
+						th:with="type=${@dict.getType('hy_fee_name')}">
+						<option value="">请选择</option>
+						<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+					</select>
 				</div>
 			</div>
 			<div class="form-group">
@@ -154,19 +158,23 @@
 			<div class="form-group">
 				<label class="col-sm-3 control-label">是否冲抵修改记录：</label>
 				<div class="col-sm-8">
-					<input name="offsetModificationRecord"
-						th:field="*{offsetModificationRecord}" class="form-control"
-						type="text">
+				
+							<select name="offsetModificationRecord" th:field="*{offsetModificationRecord}" class="form-control"
+						th:with="type=${@dict.getType('sys_yes_no')}">
+						<option value="">请选择</option>
+						<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+					</select>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-3 control-label">审核状态：</label>
 				<div class="col-sm-8">
-					<div class="col-sm-8"	>
-	                    <label class="check-box">
-	                        <input type="radio" value="0" name="auditStatus" id="auditStatus" th:field="*{auditStatus}">是</label>
-	                    <label class="check-box">
-	                        <input type="radio" value="1" name="auditStatus" id="auditStatus" th:field="*{auditStatus}">否</label>
+					<div class="col-sm-8">
+						<label class="check-box"> <input type="radio" value="0"
+							name="auditStatus" id="auditStatus" th:field="*{auditStatus}">已审核
+						</label> <label class="check-box"> <input type="radio" value="1"
+							name="auditStatus" id="auditStatus" th:field="*{auditStatus}">未审核
+						</label>
 					</div>
 				</div>
 			</div>
@@ -234,8 +242,12 @@
 			<div class="form-group">
 				<label class="col-sm-3 control-label">是否减免：</label>
 				<div class="col-sm-8">
-					<input name="reduceNot" th:field="*{reduceNot}"
-						class="form-control" type="text">
+					
+						<select name="reduceNot" th:field="*{reduceNot}" class="form-control"
+						th:with="type=${@dict.getType('sys_yes_no')}">
+						<option value="">请选择</option>
+						<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+					</select>
 				</div>
 			</div>
 			<div class="form-group">
@@ -298,8 +310,12 @@
 			<div class="form-group">
 				<label class="col-sm-3 control-label">是否冲销：</label>
 				<div class="col-sm-8">
-					<input name="writeoffOnt" th:field="*{writeoffOnt}"
-						class="form-control" type="text">
+					
+						<select name="writeoffOnt" th:field="*{writeoffOnt}" class="form-control"
+						th:with="type=${@dict.getType('sys_yes_no')}">
+						<option value="">请选择</option>
+						<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+					</select>
 				</div>
 			</div>
 			<div class="form-group">

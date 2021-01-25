@@ -16,13 +16,9 @@
                             </li>
                             <li>
                                 <label>交房状态：</label>
-                                <select name="state" class="form-control " th:with="type=${@dict.getType('hy_charge_state')}">
+                                <select name="state" class="form-control " th:with="type=${@dict.getType('hy_delivery_status')}">
                                 <option value="">请选择</option>
-                                <option value="0">未售</option>
-				                <option value="1">已接房</option>
-				                <option value="2">装修</option>
-				                <option value="3">已售未接房</option>
-				                <option value="4">已住</option>
+                               
 								<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                                 </select>
                             </li>
@@ -36,13 +32,9 @@
                             </li>
                             <li>
                                 <label>当前交房状态：</label>
-                                <select name="currentState" class="form-control " th:with="type=${@dict.getType('hy_charge_current_state')}">
+                                <select name="currentState" class="form-control " th:with="type=${@dict.getType('hy_delivery_status')}">
 				                <option value="">请选择</option>
-				                <option value="0">未售</option>
-				                <option value="1">已接房</option>
-				                <option value="2">装修</option>
-				                <option value="3">已售未接房</option>
-				                <option value="4">已住</option>
+				               
 				            	<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 				                
 				            </select>

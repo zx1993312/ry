@@ -47,9 +47,8 @@
 	                            </li>
 	                            <li>
 	                                <label>计算方式：</label>
-	                                <select  name="calculationMethod" th:with="type=${@dict.getType('hy_charge_subject_set_calculation_method')}">
+	                                <select  name="calculationMethod" th:with="type=${@dict.getType('hy_subject_type')}">
 	                                   <option value="">请选择</option>   
-	                                   <option value="0">计费面积*单价每月</option>   
 	                           	       <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 	                                </select>
 	                            </li>
@@ -150,7 +149,19 @@
 	                },
 	                {
 	                    field: 'chargingStanard',
-	                    title: '通用收费标准'
+	                    title: '通用收费标准',
+	                    formatter: function(value, item, index) {
+	                    	switch(value){
+		                    	case 0 : value =  "按计费面积*单价每月计算";break;
+		                    	case 1 : value =  "按计费面积*单价每季计算";break;
+		                    	case 1 : value =  "按计费面积*单价每年计算";break;
+		                    	case 1 : value =  "按定额每月计算";break;
+		                    	case 1 : value =  "按定额每季计算";break;
+		                    	case 1 : value =  "按定额每年计算";break;
+		          
+		                	}
+			            	return value;
+			            }
 	                },
 	                {
 	                    field: 'descriptionStandard',

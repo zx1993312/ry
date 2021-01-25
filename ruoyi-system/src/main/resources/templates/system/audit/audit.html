@@ -17,7 +17,11 @@
 							</li>
 							<li>
 								<label>纳税人规模：</label> 
-								<input type="text" name="taxScale" />
+							
+								<select name="taxScale" th:with="type=${@dict.getType('hy_taxpayper_type')}">
+											<option value="">请选择</option>
+											<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+									</select>
 							</li>
 							<li>
 								<label>费用科目：</label> 
