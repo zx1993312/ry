@@ -1,6 +1,10 @@
 package com.ruoyi.system.service;
 
+import java.util.Date;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.ruoyi.system.domain.HyPaymentOffset;
 
 /**
@@ -27,6 +31,9 @@ public interface IHyPaymentOffsetService
      */
     public List<HyPaymentOffset> selectHyPaymentOffsetList(HyPaymentOffset hyPaymentOffset);
 
+    public List<?> selectHyPaymentOffsetListTy(Date startTime, Date endTime, String auditStatus);
+
+    
     /**
      * 新增预交冲抵
      * 

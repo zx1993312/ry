@@ -35,10 +35,10 @@ import io.swagger.annotations.ApiOperation;
  * @date 2021-01-25
  */
 @Controller
-@RequestMapping("/system/offset")
+@RequestMapping("/system/paymentOffset")
 @Api(tags = "预交冲抵Controller")
-public class HyPaymentOffsetController extends BaseController {
-	private String prefix = "system/offset";
+public class HyPaymentController extends BaseController {
+	private String prefix = "system/paymentOffset";
 
 	@Autowired
 	private IHyPaymentOffsetService hyPaymentOffsetService;

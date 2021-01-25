@@ -13,156 +13,176 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * @author Administrator
  * @date 2021-01-25
  */
-public class HyPaymentOffset extends BaseEntity
-{
-    private static final long serialVersionUID = 1L;
+public class HyPaymentOffset extends BaseEntity {
+	private static final long serialVersionUID = 1L;
 
-    /** 主键 */
-    private Long id;
+	/** 主键 */
+	private Long id;
 
-    /** 房屋编号 */
-    @Excel(name = "房屋编号")
-    private String houseNum;
+	/** 房屋编号 */
+	@Excel(name = "房屋编号")
+	private String houseNum;
 
-    /** 冲抵类别 */
-    @Excel(name = "冲抵类别")
-    private Integer offsetCategory;
+	/** 冲抵类别 */
+	@Excel(name = "冲抵类别")
+	private Integer offsetCategory;
 
-    /** 冲抵人 */
-    @Excel(name = "冲抵人")
-    private String offsetPreson;
+	/** 冲抵人 */
+	@Excel(name = "冲抵人")
+	private String offsetPreson;
 
-    /** 冲抵操作时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "冲抵操作时间", width = 30, dateFormat = "yyyy-MM-dd")
-    private Date offsetOperationDate;
+	/** 冲抵操作时间 */
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	@Excel(name = "冲抵操作时间", width = 30, dateFormat = "yyyy-MM-dd")
+	private Date offsetOperationDate;
 
-    /** 冲抵范围 */
-    @Excel(name = "冲抵范围")
-    private String offsetRange;
+	/** 冲抵范围 */
+	@Excel(name = "冲抵范围")
+	private String offsetRange;
 
-    /** 冲抵抵用时间 */
-    @Excel(name = "冲抵抵用时间")
-    private String offsetDate;
+	/** 冲抵抵用时间 */
+	@Excel(name = "冲抵抵用时间")
+	private String offsetDate;
 
-    /** 导入人 */
-    @Excel(name = "导入人")
-    private String importPerson;
+	/** 导入人 */
+	@Excel(name = "导入人")
+	private String importPerson;
 
-    /** 导入时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "导入时间", width = 30, dateFormat = "yyyy-MM-dd")
-    private Date importTime;
+	/** 导入时间 */
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	@Excel(name = "导入时间", width = 30, dateFormat = "yyyy-MM-dd")
+	private Date importTime;
 
-    /** 预交时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "预交时间", width = 30, dateFormat = "yyyy-MM-dd")
-    private Date advaneTime;
+	/** 预交时间 */
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	@Excel(name = "预交时间", width = 30, dateFormat = "yyyy-MM-dd")
+	private Date advanceTime;
+	/**
+	 * 审核表
+	 */
+	@Excel(name = "审核表")
+	private HyAuditManagement hyAuditManagement;
+	/**
+	 * 费用项目表
+	 */
+	@Excel(name = "费用项目表")
+	private HyCost hyCost;
 
-    public void setId(Long id) 
-    {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public Long getId() 
-    {
-        return id;
-    }
-    public void setHouseNum(String houseNum) 
-    {
-        this.houseNum = houseNum;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public String getHouseNum() 
-    {
-        return houseNum;
-    }
-    public void setOffsetCategory(Integer offsetCategory) 
-    {
-        this.offsetCategory = offsetCategory;
-    }
+	public void setHouseNum(String houseNum) {
+		this.houseNum = houseNum;
+	}
 
-    public Integer getOffsetCategory() 
-    {
-        return offsetCategory;
-    }
-    public void setOffsetPreson(String offsetPreson) 
-    {
-        this.offsetPreson = offsetPreson;
-    }
+	public String getHouseNum() {
+		return houseNum;
+	}
 
-    public String getOffsetPreson() 
-    {
-        return offsetPreson;
-    }
-    public void setOffsetOperationDate(Date offsetOperationDate) 
-    {
-        this.offsetOperationDate = offsetOperationDate;
-    }
+	public void setOffsetCategory(Integer offsetCategory) {
+		this.offsetCategory = offsetCategory;
+	}
 
-    public Date getOffsetOperationDate() 
-    {
-        return offsetOperationDate;
-    }
-    public void setOffsetRange(String offsetRange) 
-    {
-        this.offsetRange = offsetRange;
-    }
+	public Integer getOffsetCategory() {
+		return offsetCategory;
+	}
 
-    public String getOffsetRange() 
-    {
-        return offsetRange;
-    }
-    public void setOffsetDate(String offsetDate) 
-    {
-        this.offsetDate = offsetDate;
-    }
+	public void setOffsetPreson(String offsetPreson) {
+		this.offsetPreson = offsetPreson;
+	}
 
-    public String getOffsetDate() 
-    {
-        return offsetDate;
-    }
-    public void setImportPerson(String importPerson) 
-    {
-        this.importPerson = importPerson;
-    }
+	public String getOffsetPreson() {
+		return offsetPreson;
+	}
 
-    public String getImportPerson() 
-    {
-        return importPerson;
-    }
-    public void setImportTime(Date importTime) 
-    {
-        this.importTime = importTime;
-    }
+	public void setOffsetOperationDate(Date offsetOperationDate) {
+		this.offsetOperationDate = offsetOperationDate;
+	}
 
-    public Date getImportTime() 
-    {
-        return importTime;
-    }
-    public void setAdvaneTime(Date advaneTime) 
-    {
-        this.advaneTime = advaneTime;
-    }
+	public Date getOffsetOperationDate() {
+		return offsetOperationDate;
+	}
 
-    public Date getAdvaneTime() 
-    {
-        return advaneTime;
-    }
+	public void setOffsetRange(String offsetRange) {
+		this.offsetRange = offsetRange;
+	}
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("houseNum", getHouseNum())
-            .append("offsetCategory", getOffsetCategory())
-            .append("offsetPreson", getOffsetPreson())
-            .append("offsetOperationDate", getOffsetOperationDate())
-            .append("offsetRange", getOffsetRange())
-            .append("offsetDate", getOffsetDate())
-            .append("importPerson", getImportPerson())
-            .append("importTime", getImportTime())
-            .append("advaneTime", getAdvaneTime())
-            .toString();
-    }
+	public String getOffsetRange() {
+		return offsetRange;
+	}
+
+	public void setOffsetDate(String offsetDate) {
+		this.offsetDate = offsetDate;
+	}
+
+	public String getOffsetDate() {
+		return offsetDate;
+	}
+
+	public void setImportPerson(String importPerson) {
+		this.importPerson = importPerson;
+	}
+
+	public String getImportPerson() {
+		return importPerson;
+	}
+
+	public void setImportTime(Date importTime) {
+		this.importTime = importTime;
+	}
+
+	public Date getImportTime() {
+		return importTime;
+	}
+
+
+
+	public Date getAdvanceTime() {
+		return advanceTime;
+	}
+
+	public void setAdvanceTime(Date advanceTime) {
+		this.advanceTime = advanceTime;
+	}
+
+	public HyAuditManagement getHyAuditManagement() {
+		return hyAuditManagement;
+	}
+
+	public void setHyAuditManagement(HyAuditManagement hyAuditManagement) {
+		this.hyAuditManagement = hyAuditManagement;
+	}
+
+	public HyCost getHyCost() {
+		return hyCost;
+	}
+
+	public void setHyCost(HyCost hyCost) {
+		this.hyCost = hyCost;
+	}
+
+	@Override
+	public String toString() {
+		return "HyPaymentOffset [id=" + id + ", houseNum=" + houseNum + ", offsetCategory=" + offsetCategory
+				+ ", offsetPreson=" + offsetPreson + ", offsetOperationDate=" + offsetOperationDate + ", offsetRange="
+				+ offsetRange + ", offsetDate=" + offsetDate + ", importPerson=" + importPerson + ", importTime="
+				+ importTime + ", advanceTime=" + advanceTime + ", hyAuditManagement=" + hyAuditManagement + ", hyCost="
+				+ hyCost + ", getId()=" + getId() + ", getHouseNum()=" + getHouseNum() + ", getOffsetCategory()="
+				+ getOffsetCategory() + ", getOffsetPreson()=" + getOffsetPreson() + ", getOffsetOperationDate()="
+				+ getOffsetOperationDate() + ", getOffsetRange()=" + getOffsetRange() + ", getOffsetDate()="
+				+ getOffsetDate() + ", getImportPerson()=" + getImportPerson() + ", getImportTime()=" + getImportTime()
+				+ ", getAdvanceTime()=" + getAdvanceTime() + ", getHyAuditManagement()=" + getHyAuditManagement()
+				+ ", getHyCost()=" + getHyCost() + ", getSearchValue()=" + getSearchValue() + ", getCreateBy()="
+				+ getCreateBy() + ", getCreateTime()=" + getCreateTime() + ", getUpdateBy()=" + getUpdateBy()
+				+ ", getUpdateTime()=" + getUpdateTime() + ", getRemark()=" + getRemark() + ", getParams()="
+				+ getParams() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
+				+ super.toString() + "]";
+	}
+
+
 }

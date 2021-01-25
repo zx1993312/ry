@@ -48,7 +48,7 @@
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('system:offset:edit')}]];
         var removeFlag = [[${@permission.hasPermi('system:offset:remove')}]];
-        var prefix = ctx + "system/offset";
+        var prefix = ctx + "system/paymentOffset";
 
         $(function() {
             var options = {
@@ -68,45 +68,26 @@
                 },
           
                 {
-                    field: 'importPerson',
-                    title: '导入人'
+                    field: 'offsetCategory',
+                    title: '冲抵类别'
                 },
                 {
-                    field: 'importTime',
-                    title: '导入时间'
+                    field: 'offsetPreson',
+                    title: '冲抵人'
                 },
                 {
-                    field: 'advaneTime',
-                    title: '预交时间'
+                    field: 'offsetOperationDate',
+                    title: '冲抵操作时间'
                 },
                 {
-                    field: 'hyCost.costItems',
-                    title: '费用名称',
-                    formatter: function(value, item, index) {
-                    	switch(value){
-                        	case 0 : value =  "高层物业服务费";break;
-                        	case 1 : value =  "商铺物业服务费";break;
-                        	case 2 : value =  "车位物业管理服务费";break;
-                        	case 3 : value =  "公寓物业服务费";break;
-                        	case 4 : value =  "居民用电";break;
-                        	case 5 : value =  "现场类资源";break;
-                        	case 6 : value =  "居民用水";break;
-                        	case 7 : value =  "代办类";break;
-                        	case 8 : value =  "建渣清运费";break;
-                        	case 9 : value =  "有偿服务费";break;
-                        	case 10 : value =  "门禁卡";break;
-                        	case 11 : value =  "其他卡证工本费";break;
-                        	case 12 : value =  "其他";break;
-                        	case 13 : value =  "其他保证金及押金";break;
-                        	case 14 : value =  "车位取暖费";break;
-                        	case 15 : value =  "居民用电";break;
-                        	case 16 : value =  "代办";break;
-                        	case 17 : value =  "到家服务";break;
-                        	case 18 : value =  "广告类资源";break;
-                    	}
-    	            	return value;
-    	            }
+                    field: 'offsetRange',
+                    title: '冲抵范围'
                 },
+                {
+                    field: 'offsetDate',
+                    title: '冲抵抵用时间'
+                },
+               
                 {
                     field: 'hyAuditManagement.auditProcess',
                     title: '审核流程'
