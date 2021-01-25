@@ -1,69 +1,99 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:include="include :: header('新增收费比例设置')" />
+<th:block th:include="include :: header('新增收费比例设置')" />
 </head>
 <body class="white-bg">
-    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-set-add">
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">序号：</label>
-                <div class="col-sm-8">
-                    <input name="serialNum" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">交房状态：</label>
-                <div class="col-sm-8">
-                    <div class="radio-box">
-                        <input type="radio" name="deliveryStatus" value="">
-                        <label th:for="deliveryStatus" th:text="未知"></label>
-                    </div>
-                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">收费比例：</label>
-                <div class="col-sm-8">
-                    <input name="chargeRatio" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">备注：</label>
-                <div class="col-sm-8">
-                    <input name="remarks" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">当前交房状态：</label>
-                <div class="col-sm-8">
-                    <div class="radio-box">
-                        <input type="radio" name="deliveryCurrentStatus" value="">
-                        <label th:for="deliveryCurrentStatus" th:text="未知"></label>
-                    </div>
-                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">缴纳收费科目：</label>
-                <div class="col-sm-8">
-                    <input name="chargeSubject" class="form-control" type="text">
-                </div>
-            </div>
-        </form>
-    </div>
-    <th:block th:include="include :: footer" />
-    <script th:inline="javascript">
-        var prefix = ctx + "system/proportionSet"
-        $("#form-set-add").validate({
-            focusCleanup: true
-        });
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<form class="form-horizontal m" id="form-set-add">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">序号：</label>
+				<div class="col-sm-8">
+					<input name="serialNum" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">交房状态：</label>
+				<div class="col-sm-8">
+					<select name="deliveryStatus" class="form-control "
+						th:with="type=${@dict.getType('hy_delivery_status')}">
+						<option value="">请选择</option>
 
-        function submitHandler() {
-            if ($.validate.form()) {
-                $.operate.save(prefix + "/add", $('#form-set-add').serialize());
-            }
-        }
-    </script>
+						<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+							th:value="${dict.dictValue}"></option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">收费比例：</label>
+				<div class="col-sm-8">
+					<input name="chargeRatio" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">备注：</label>
+				<div class="col-sm-8">
+					<input name="remarks" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">当前交房状态：</label>
+				<div class="col-sm-8">
+					<select name="deliveryCurrentStatus" class="form-control "
+						th:with="type=${@dict.getType('hy_delivery_status')}">
+						<option value="">请选择</option>
+						<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+							th:value="${dict.dictValue}"></option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">缴纳收费科目：</label>
+				<div class="col-sm-8">
+					<input name="chargeSubject" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+	</div>
+	<th:block th:include="include :: footer" />
+	<script th:inline="javascript">
+		var prefix = ctx + "system/proportionSet"
+		$("#form-set-add").validate({
+
+			rules : {
+				serialNum : {
+					maxlength : 20,
+					required : true,
+				},
+				remarks : {
+					maxlength : 100,
+					required : true,
+				},
+				deliveryStatus : {
+					maxlength : 2,
+					required : true,
+				},
+				chargeRatio : {
+					maxlength : 20,
+					required : true,
+				},
+				deliveryCurrentStatus : {
+					maxlength : 2,
+					required : true,
+				},
+				chargeSubject : {
+					maxlength : 20,
+					required : true,
+				},
+			},
+			focusCleanup : true
+		});
+
+		function submitHandler() {
+			if ($.validate.form()) {
+				$.operate.save(prefix + "/add", $('#form-set-add').serialize());
+			}
+		}
+	</script>
 </body>
 </html>

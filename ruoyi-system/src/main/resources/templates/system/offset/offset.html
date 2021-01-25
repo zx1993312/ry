@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('收费比例设置列表')" />
+    <th:block th:include="include :: header('预交冲抵列表')" />
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -11,37 +11,40 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                <label>房屋序号：</label>
-                                <input type="text" name="number"/>
+                                <label>房屋编号：</label>
+                                <input type="text" name="houseNum"/>
                             </li>
                             <li>
-                                <label>交房状态：</label>
-                                <select name="state" class="form-control " th:with="type=${@dict.getType('hy_delivery_status')}">
-                                <option value="">请选择</option>
-                               
-								<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                                </select>
+                                <label>冲抵类别：</label>
+                                <input type="text" name="offsetCategory"/>
                             </li>
                             <li>
-                                <label>收费比例：</label>
-                                <input type="text" name="proportion"/>
+                                <label>冲抵人：</label>
+                                <input type="text" name="offsetPreson"/>
                             </li>
                             <li>
-                                <label>备注：</label>
-                                <input type="text" name="remarks"/>
+                                <label>冲抵操作时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择冲抵操作时间" name="offsetOperationDate"/>
                             </li>
                             <li>
-                                <label>当前交房状态：</label>
-                                <select name="currentState" class="form-control " th:with="type=${@dict.getType('hy_delivery_status')}">
-				                <option value="">请选择</option>
-				               
-				            	<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-				                
-				            </select>
+                                <label>冲抵范围：</label>
+                                <input type="text" name="offsetRange"/>
                             </li>
                             <li>
-                                <label>缴费收费科目：</label>
-                                <input type="text" name="cost"/>
+                                <label>冲抵抵用时间：</label>
+                                <input type="text" name="offsetDate"/>
+                            </li>
+                            <li>
+                                <label>导入人：</label>
+                                <input type="text" name="importPerson"/>
+                            </li>
+                            <li>
+                                <label>导入时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择导入时间" name="importTime"/>
+                            </li>
+                            <li>
+                                <label>预交时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择预交时间" name="advaneTime"/>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -53,16 +56,16 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:charge:add">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:offset:add">
                     <i class="fa fa-plus"></i> 添加
                 </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:charge:edit">
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:offset:edit">
                     <i class="fa fa-edit"></i> 修改
                 </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:charge:remove">
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:offset:remove">
                     <i class="fa fa-remove"></i> 删除
                 </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:charge:export">
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:offset:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
             </div>
@@ -73,9 +76,9 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('system:charge:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('system:charge:remove')}]];
-        var prefix = ctx + "system/charge";
+        var editFlag = [[${@permission.hasPermi('system:offset:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:offset:remove')}]];
+        var prefix = ctx + "system/offset";
 
         $(function() {
             var options = {
@@ -84,44 +87,50 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "收费比例设置",
+                modalName: "预交冲抵",
                 columns: [{
                     checkbox: true
                 },
                 {
                     field: 'id',
-                    title: ' 房屋id',
+                    title: '主键',
                     visible: false
                 },
                 {
-                    field: 'number',
-                    title: '房屋序号'
+                    field: 'houseNum',
+                    title: '房屋编号'
                 },
                 {
-                   field:'state',
-                    title: '交房状态',
-                    formatter:function(state,index){
-                    	console.log(" ````"+state);
-                    	 var actions = [];
-                    	 actions.push('<a href="https://www.baidu.com/">'+state+'</a>');
-                    	 return actions.join('');
-                    }
+                    field: 'offsetCategory',
+                    title: '冲抵类别'
                 },
                 {
-                    field: 'proportion',
-                    title: '收费比例'
+                    field: 'offsetPreson',
+                    title: '冲抵人'
                 },
                 {
-                    field: 'remarks',
-                    title: '备注'
+                    field: 'offsetOperationDate',
+                    title: '冲抵操作时间'
                 },
                 {
-                    field: 'currentState',
-                    title: '当前交房状态'
+                    field: 'offsetRange',
+                    title: '冲抵范围'
                 },
                 {
-                    field: 'cost',
-                    title: '缴费收费科目'
+                    field: 'offsetDate',
+                    title: '冲抵抵用时间'
+                },
+                {
+                    field: 'importPerson',
+                    title: '导入人'
+                },
+                {
+                    field: 'importTime',
+                    title: '导入时间'
+                },
+                {
+                    field: 'advaneTime',
+                    title: '预交时间'
                 },
                 {
                     title: '操作',

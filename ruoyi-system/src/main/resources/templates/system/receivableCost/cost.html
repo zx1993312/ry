@@ -17,7 +17,10 @@
 							</li>
 							<li><label>房屋名称：</label> <input type="text" name="houseName" />
 							</li>
-							<li><label>费用名称：</label> <input type="text" name="costItems" />
+							<li><label>费用名称：</label>   <select name="costItems" th:with="type=${@dict.getType('hy_fee_name')}">
+											<option value="">请选择</option>
+											<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+									</select>
 							</li>
 							<li><label>费用日期：</label> <input type="text"
 								class="time-input" placeholder="请选择费用日期" name="feeDate" /></li>
@@ -87,7 +90,31 @@
                 },
                 {
                     field: 'costItems',
-                    title: '费用名称'
+                    title: '费用名称',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+                        	case "0" : value =  "高层物业服务费";break;
+                        	case "1" : value =  "商铺物业服务费";break;
+                        	case "2" : value =  "车位物业管理服务费";break;
+                        	case "3" : value =  "公寓物业服务费";break;
+                        	case "4" : value =  "居民用电";break;
+                        	case "5" : value =  "现场类资源";break;
+                        	case "6" : value =  "居民用水";break;
+                        	case "7" : value =  "代办类";break;
+                        	case "8" : value =  "建渣清运费";break;
+                        	case "9" : value =  "有偿服务费";break;
+                        	case "10" : value =  "门禁卡";break;
+                        	case "11" : value =  "其他卡证工本费";break;
+                        	case "12" : value =  "其他";break;
+                        	case "13" : value =  "其他保证金及押金";break;
+                        	case "14" : value =  "车位取暖费";break;
+                        	case "15" : value =  "居民用电";break;
+                        	case "16" : value =  "代办";break;
+                        	case "17" : value =  "到家服务";break;
+                        	case "18" : value =  "广告类资源";break;
+                    	}
+    	            	return value;
+    	            }
                 },
                
                 {

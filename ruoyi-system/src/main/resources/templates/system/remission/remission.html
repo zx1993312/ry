@@ -34,8 +34,7 @@
                                 <label>审核状态：</label>
                                 <select name="auditStatus" th:with="type=${@dict.getType('hy_examine_type')}">
                                     <option value="">请选择</option>
-                                    <option value="0">已审核</option>
-                                    <option value="1">未审核</option>
+                      <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                                 </select>
                             </li>
                             <li>
@@ -111,7 +110,31 @@
                 },
                 {
                     field: 'feeName',
-                    title: '费用名称'
+                    title: '费用名称',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case "0" : value =  "高层物业服务费";break;
+	                    	case "1" : value =  "商铺物业服务费";break;
+	                    	case "2" : value =  "车位物业管理服务费";break;
+	                    	case "3" : value =  "公寓物业服务费";break;
+	                    	case "4" : value =  "居民用电";break;
+	                    	case "5" : value =  "现场类资源";break;
+	                    	case "6" : value =  "居民用水";break;
+	                    	case "7" : value =  "代办类";break;
+	                    	case "8" : value =  "建渣清运费";break;
+	                    	case "9" : value =  "有偿服务费";break;
+	                    	case "10" : value =  "门禁卡";break;
+	                    	case "11" : value =  "其他卡证工本费";break;
+	                    	case "12" : value =  "其他";break;
+	                    	case "13" : value =  "其他保证金及押金";break;
+	                    	case "14" : value =  "车位取暖费";break;
+	                    	case "15" : value =  "居民用电";break;
+	                    	case "16" : value =  "代办";break;
+	                    	case "17" : value =  "到家服务";break;
+	                    	case "18" : value =  "广告类资源";break;
+	                	}
+		            	return value;
+		            }
                 },
                 {
                     field: 'reliefTypes',
@@ -159,11 +182,25 @@
                 },
                 {
                     field: 'offsetModificationRecord',
-                    title: '是否冲抵修改记录'
+                    title: '是否冲抵修改记录',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case 0 : value =  "是";break;
+	                    	case 1 : value =  "否";break;
+	                	}
+		            	return value;
+		            }
                 },
                 {
                     field: 'auditStatus',
-                    title: '审核状态'
+                    title: '审核状态',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case "0" : value =  "已审核";break;
+	                    	case "1" : value =  "未审核";break;
+	                	}
+		            	return value;
+		            }
                 },
                 {
                     field: 'taxRate',
@@ -195,7 +232,14 @@
                 },
                 {
                     field: 'reduceNot',
-                    title: '是否减免'
+                    title: '是否减免',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case 0 : value =  "是";break;
+	                    	case 1 : value =  "否";break;
+	                	}
+		            	return value;
+		            }
                 },
                 {
                     field: 'amountNotRemitted',
@@ -227,7 +271,14 @@
                 },
                 {
                     field: 'writeoffOnt',
-                    title: '是否冲销'
+                    title: '是否冲销',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case 0 : value =  "是";break;
+	                    	case 1 : value =  "否";break;
+	                	}
+		            	return value;
+		            }
                 },
                 {
                     field: 'writeoffTime',

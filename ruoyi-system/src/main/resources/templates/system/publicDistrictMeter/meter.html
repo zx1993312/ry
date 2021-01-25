@@ -14,7 +14,13 @@
 				
 							<li>
 								<label>表计类型：</label> 
-								<input type="text" name="meterType" />
+								<select name="meterType"
+								class="form-control "
+								th:with="type=${@dict.getType('hy_meter_type')}">
+									<option value="">请选择</option>
+									<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+										th:value="${dict.dictValue}"></option>
+							</select>
 							</li>
 							<li>
 								<label>表计序号：</label> 
@@ -27,7 +33,11 @@
 	
 							<li>
 								<label>计量表类型：</label> 
-								<input type="text" name="strappingType" />
+								  <select name="strappingType" class="form-control " th:with="type=${@dict.getType('hy_metering_type')}">
+                                <option value="">请选择</option>
+                               
+								<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
 							</li>
 							<li>
 								<label>抄表日期：</label> 
@@ -128,7 +138,16 @@
                 },
                 {
                     field: 'meterType',
-                    title: '表计类型'
+                    title: '表计类型',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case "0" : value =  "水";break;
+	                    	case "1" : value =  "电";break;
+	                    	case "2" : value =  "气";break;
+	                    	case "3" : value =  "暖气";break;
+	                	}
+		            	return value;
+		            }
                 },
                 
                 {
