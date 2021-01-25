@@ -171,8 +171,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="billSample != null  and billSample != ''"> and b.bill_sample = #{billSample}</if>
 		<if test="billPanel != null  and billPanel != ''"> and b.bill_panel = #{billPanel}</if>
 		<if test="panel!=null and panel!=''"> and b.panel=#{panel}</if>
-		<if test="billNumber!=null and billNumber!= ''"> and b.bill_number = #{billNumber}</if>
-		<if test="houseNum!=null and houseNum!= ''"> and b.house_num = #{houseNum}</if>
 		<if test="billDate!=null "> and b.bill_date between #{startTime} and #{endTime}</if>
 		<if test="billDateNew!=null "> and b.bill_date_new between #{startTimeNew} and #{endTimeNew}</if>
 	</select>
