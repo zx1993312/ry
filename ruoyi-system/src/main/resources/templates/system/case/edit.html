@@ -32,7 +32,23 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/case";
         $("#form-case-edit").validate({
-            focusCleanup: true
+        	onkeyup : false,
+			rules : {
+				meterCaseName : {
+					required : true,
+					maxlength : 50,
+				},
+				meterCasePosition : {
+					required : true,
+					maxlength : 50,
+				},
+				meterSerial : {
+					required : true,
+					maxlength : 50,
+				},
+			},
+
+			focusCleanup : true
         });
 
         function submitHandler() {

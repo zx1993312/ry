@@ -27,6 +27,14 @@ public interface IHyCostService {
 	 * @return 费用项目集合
 	 */
 	public List<HyCost> selectHyCostList(HyCost hyCost);
+	
+	/**
+	 * 查询费用项目列表
+	 * 
+	 * @param hyCost 费用项目
+	 * @return 费用项目集合
+	 */
+	public List<HyCost> selectHyCostListDistinct(HyCost hyCost);
 
 	/**
 	 * 查询费用项目列表

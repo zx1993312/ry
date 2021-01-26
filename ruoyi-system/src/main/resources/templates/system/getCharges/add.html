@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('项目列列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/getCharges";
+
+        $(function() {
+            var options = {
+        		url: prefix + "/list",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '主键',
+                    visible: false
+                },
+                {
+                    field: 'costItems',
+                    title: '费用项目'
+                },
+                {
+                    field: 'expenseType',
+                    title: '费用类型'
+                }]
+            };
+            $.table.init(options);
+        });
+         
+        function submitHandler() {
+        	var fieldRow  = $.table.selectColumns('expenseType');
+        	if(fieldRow == ''){
+        		$.modal.alertWarning("请至少选择一条记录");
+        	}else{
+        		$("#standardName",window.parent.document).val(fieldRow);
+            	$.modal.close();
+        	}
+        }
+        
+    </script>
+</body>
+</html>

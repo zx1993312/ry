@@ -26,6 +26,14 @@ public interface HyCostMapper
      * @return 费用项目集合
      */
     public List<HyCost> selectHyCostList(HyCost hyCost);
+    
+    /**
+     * 查询费用项目列表
+     * 
+     * @param hyCost 费用项目
+     * @return 费用项目集合
+     */
+	public List<HyCost> selectHyCostListDistinct(HyCost hyCost);
 
     /**
      * 新增费用项目
@@ -58,4 +66,5 @@ public interface HyCostMapper
      * @return 结果
      */
     public int deleteHyCostByIds(String[] ids);
+
 }

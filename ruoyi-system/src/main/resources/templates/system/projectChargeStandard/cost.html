@@ -12,15 +12,21 @@
                         <ul> 
                             <li> 
                                 <label>费用项目：</label>
-                                <input type="text" name="costItems"/>
+                                <select id="costItems" name="costItems" class="form-control" th:with="type=${@cost.getCost()}" onchange="changeStandardName()"> 
+									<option value="">请选择</option>
+									<option th:each="data : ${type}" th:text="${data.costItems}" th:value="${data.costItems}"></option>
+								</select> 
                             </li>
                             <li>
-                                <label>费用类型：</label>
-                                <input type="text" name="expenseType"/>
+                                <label>收费标准：</label>
+								<input type="text" id="standardName" class="fa fa-search" name="standardName" onclick="getStandardName()" 
+									style="background-image: url(../img/user.png);background-repeat: no-repeat;
+										   background-size: 15px 15px; background-position: 170px 5px ;　
+										   border:1px solid #ddd;" readonly="readonly"/>
                             </li>
                             <li>
                                 <label>是否允许项目修改标准：</label>
-                            <select id="projectModification" name="projectModification" class="form-control" th:with="type=${@dict.getType('sys_yes_no')}" > 
+                            	<select id="projectModification" name="projectModification" class="form-control" th:with="type=${@dict.getType('sys_yes_no')}" > 
 									<option value="">请选择</option>
 									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 								</select> 
@@ -98,6 +104,25 @@
             };
             $.table.init(options);
         });
+        
+        function changeStandardName(){
+        	var costItems = $("#costItems").val();
+        	if(costItems == ''){
+        		$("#standardName").attr("readonly",true);
+        	}else{
+        		$("#standardName").removeAttr("readonly");
+        	}
+        }
+        
+        function getStandardName(){
+        	var costItems = $("#costItems").val();
+        	if(costItems == ''){
+        		$.modal.alertWarning("费用项目未选择");
+        	}else{
+        		$.modal.open("收费标准详细列表","/system/getCharges?costItems=" + costItems);
+        	}
+        	
+        }
     </script>
 </body>
 </html>
