@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyRevokeMapper">
+    
+    <resultMap type="HyRevoke" id="HyRevokeResult">
+        <result property="id"    column="id"    />
+        <result property="houseNum"    column="house_num"    />
+        <result property="revokeDate"    column="revoke_date"    />
+        <result property="revokeReason"    column="revoke_reason"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectHyRevokeVo">
+        select id, house_num, revoke_date, revoke_reason, remark from hy_revoke
+    </sql>
+
+    <select id="selectHyRevokeList" parameterType="HyRevoke" resultMap="HyRevokeResult">
+        <include refid="selectHyRevokeVo"/>
+        <where>  
+            <if test="houseNum != null  and houseNum != ''"> and house_num = #{houseNum}</if>
+            <if test="revokeDate != null "> and revoke_date = #{revokeDate}</if>
+            <if test="revokeReason != null  and revokeReason != ''"> and revoke_reason = #{revokeReason}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyRevokeById" parameterType="Long" resultMap="HyRevokeResult">
+        <include refid="selectHyRevokeVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyRevoke" parameterType="HyRevoke" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_revoke
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="houseNum != null">house_num,</if>
+            <if test="revokeDate != null">revoke_date,</if>
+            <if test="revokeReason != null">revoke_reason,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="houseNum != null">#{houseNum},</if>
+            <if test="revokeDate != null">#{revokeDate},</if>
+            <if test="revokeReason != null">#{revokeReason},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyRevoke" parameterType="HyRevoke">
+        update hy_revoke
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="houseNum != null">house_num = #{houseNum},</if>
+            <if test="revokeDate != null">revoke_date = #{revokeDate},</if>
+            <if test="revokeReason != null">revoke_reason = #{revokeReason},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyRevokeById" parameterType="Long">
+        delete from hy_revoke where id = #{id}
+    </delete>
+
+    <delete id="deleteHyRevokeByIds" parameterType="String">
+        delete from hy_revoke where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

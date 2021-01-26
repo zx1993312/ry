@@ -154,6 +154,21 @@ public class HyBillSet extends BaseEntity {
 	 */
 	@Excel(name = "业主表")
 	private HyOwnerRegistration hyOwnerRegistration;
+	/**
+	 * 费用项目表
+	 */
+	@Excel(name = "费用项目表")
+	private HyCost hyCost;
+	/**
+	 * 撤销对象表
+	 */
+	@Excel(name = "撤销对象表")
+	private HyRevoke hyRevoke;
+	/**
+	 * 预交冲抵表
+	 */
+	@Excel(name = "预交冲抵表")
+	private HyPaymentOffset hyPaymentOffset;
 
 	public Long getId() {
 		return id;
@@ -333,6 +348,86 @@ public class HyBillSet extends BaseEntity {
 
 	public void setHyOwnerRegistration(HyOwnerRegistration hyOwnerRegistration) {
 		this.hyOwnerRegistration = hyOwnerRegistration;
+	}
+
+	public Integer getBusinessType() {
+		return businessType;
+	}
+
+	public void setBusinessType(Integer businessType) {
+		this.businessType = businessType;
+	}
+
+	public BigDecimal getPaymentAmount() {
+		return paymentAmount;
+	}
+
+	public void setPaymentAmount(BigDecimal paymentAmount) {
+		this.paymentAmount = paymentAmount;
+	}
+
+	public Integer getCancelNot() {
+		return cancelNot;
+	}
+
+	public void setCancelNot(Integer cancelNot) {
+		this.cancelNot = cancelNot;
+	}
+
+	public Integer getWriteNot() {
+		return writeNot;
+	}
+
+	public void setWriteNot(Integer writeNot) {
+		this.writeNot = writeNot;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public String getDraftCheckNumber() {
+		return draftCheckNumber;
+	}
+
+	public void setDraftCheckNumber(String draftCheckNumber) {
+		this.draftCheckNumber = draftCheckNumber;
+	}
+
+	public HyCost getHyCost() {
+		return hyCost;
+	}
+
+	public void setHyCost(HyCost hyCost) {
+		this.hyCost = hyCost;
+	}
+
+	public HyRevoke getHyRevoke() {
+		return hyRevoke;
+	}
+
+	public void setHyRevoke(HyRevoke hyRevoke) {
+		this.hyRevoke = hyRevoke;
+	}
+
+	public BigDecimal getBillAmount() {
+		return billAmount;
+	}
+
+	public void setBillAmount(BigDecimal billAmount) {
+		this.billAmount = billAmount;
+	}
+
+	public HyPaymentOffset getHyPaymentOffset() {
+		return hyPaymentOffset;
+	}
+
+	public void setHyPaymentOffset(HyPaymentOffset hyPaymentOffset) {
+		this.hyPaymentOffset = hyPaymentOffset;
 	}
 
 	@Override

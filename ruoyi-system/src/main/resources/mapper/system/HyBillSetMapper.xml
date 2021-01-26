@@ -33,13 +33,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="writeNot" column="write_not" />
 		<result property="remark" column="remark" />
 		<result property="draftCheckNumber" column="draft_check_number" />
-		
-		
-		
+
+
+
 		<association property="hyHouseInf" column="id"
 			javaType="HyHouseInf" resultMap="HyHouseInfResult" />
 		<association property="hyOwnerRegistration" column="id"
 			javaType="HyOwnerRegistration" resultMap="HyOwnerRegistrationResult" />
+
+		<association property="hyCost" column="id"
+			javaType="HyCost" resultMap="HyCostResult" />
+		<association property="hyRevoke" column="id"
+			javaType="HyRevoke" resultMap="HyRevokeResult" />
+		<association property="hyPaymentOffset" column="id"
+			javaType="HyPaymentOffset" resultMap="HyPaymentOffsetResult" />
 	</resultMap>
 
 	<resultMap type="HyOwnerRegistration"
@@ -119,7 +126,80 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="purchaseContract" column="purchase_contract" />
 		<result property="marketingNum" column="marketing_num" />
 	</resultMap>
-	
+
+	<resultMap type="HyCost" id="HyCostResult">
+		<result property="id" column="id" />
+		<result property="houseNum" column="house_num" />
+		<result property="costItems" column="cost_items" />
+		<result property="expenseType" column="expense_type" />
+		<result property="parentId" column="parent_id" />
+		<result property="ancestors" column="ancestors" />
+		<result property="standardName" column="standard_name" />
+		<result property="feeNum" column="fee_num" />
+		<result property="chargingStandard" column="charging_standard" />
+		<result property="calculationMehod" column="calculation_mehod" />
+		<result property="standardDescription"
+			column="standard_description" />
+		<result property="standardState" column="standard_state" />
+		<result property="proportionDamags" column="proportion_damags" />
+		<result property="projectModification"
+			column="project_modification" />
+		<result property="billingCycle" column="billing_cycle" />
+		<result property="bilingStartDate" column="biling_start_date" />
+		<result property="bilingEndDate" column="biling_end_date" />
+		<result property="auditResultsReason"
+			column="audit_results_reason" />
+		<result property="feeDateOld" column="fee_date_old" />
+		<result property="feeDate" column="fee_date" />
+		<result property="dueDateOld" column="due_date_old" />
+		<result property="dueDate" column="due_date" />
+		<result property="amountReceivableOld"
+			column="amount_receivable_old" />
+		<result property="amountReceivable" column="amount_receivable" />
+		<result property="amountActually" column="amount_actually" />
+		<result property="remarks" column="remarks" />
+		<result property="operationDate" column="operation_date" />
+		<result property="operationUser" column="operation_user" />
+		<result property="operationType" column="operation_type" />
+		<result property="deleteReason" column="delete_reason" />
+		<result property="advancePaymetnOffset"
+			column="advance_paymetn_offset" />
+		<result property="writeOff" column="write_off" />
+		<result property="refundAmount" column="refund_amount" />
+		<result property="amountArrears" column="amount_arrears" />
+		<result property="collectionStatus" column="collection_status" />
+		<result property="frozenPerson" column="frozen_person" />
+		<result property="frozenState" column="frozen_state" />
+		<result property="frozenDate" column="frozen_date" />
+		<result property="frozenReason" column="frozen_reason" />
+		<result property="advanceStatus" column="advance_status" />
+		<result property="deliveryStatus" column="delivery_status" />
+		<result property="transferTenants" column="transfer_tenants" />
+		<result property="changeDate" column="change_date" />
+	</resultMap>
+	<resultMap type="HyRevoke" id="HyRevokeResult">
+		<result property="id" column="id" />
+		<result property="houseNum" column="house_num" />
+		<result property="revokeDate" column="revoke_date" />
+		<result property="revokeReason" column="revoke_reason" />
+		<result property="remark" column="remark" />
+	</resultMap>
+
+	<resultMap type="HyPaymentOffset" id="HyPaymentOffsetResult">
+		<result property="id" column="id" />
+		<result property="houseNum" column="house_num" />
+		<result property="offsetCategory" column="offset_category" />
+		<result property="offsetPreson" column="offset_preson" />
+		<result property="offsetOperationDate"
+			column="offset_operation_date" />
+		<result property="offsetRange" column="offset_range" />
+		<result property="offsetDate" column="offset_date" />
+		<result property="importPerson" column="import_person" />
+		<result property="importTime" column="import_time" />
+		<result property="advanceTime" column="advance_time" />
+
+	</resultMap>
+
 	<sql id="selectHyBillSetVo">
 		select
 		b.id,
@@ -143,22 +223,42 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		b.bill_sample,
 		b.bill_panel,
 		b.panel,
-		bill_amount,
+		b.bill_amount,
 		b.cancel_not,
 		b.write_not,
 		b.remark,
 		b.draft_check_number,
 		b.draft_check_number,
 		o.owner_name,
-		h.house_name
+		h.house_name,
+		c.fee_date,
+		c.biling_start_date,
+		c.biling_end_date,
+		c.standard_name,
+		c.penalty_contract,
+		r.revoke_date,
+		r.revoke_reason,
+		r.remark,
+		p.advance_time,
+		p.offset_expense,
+		p.advance_amount
 		from
 		hy_bill_set b
-		left join
+		left
+		join
 		hy_owner_registration o on
 		b.house_num=o.house_num
 		left join
 		hy_house_inf h on
 		b.house_num=h.house_number
+		left join
+		hy_cost c on
+		b.house_num=c.house_num
+		left join 
+		hy_revoke r on b.house_num=r.house_num
+		left join
+		hy_payment_offset p on
+		b.house_num=p.house_num
 		where 1=1
 	</sql>
 
@@ -177,7 +277,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="billNumber!=null and billNumber!= ''"> and b.bill_number = #{billNumber}</if>
 		<if test="houseNum!=null and houseNum!= ''"> and b.house_num = #{houseNum}</if>
 	</select>
-	
+
 	<select id="selectHyBillSetListByDate" parameterType="HyBillSet"
 		resultMap="HyBillSetResult">
 		<include refid="selectHyBillSetVo" />
@@ -190,11 +290,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="billPanel != null  and billPanel != ''"> and b.bill_panel = #{billPanel}</if>
 		<if test="panel!=null and panel!=''"> and b.panel=#{panel}</if>
 		<if test="billDate!=null "> and b.bill_date between #{startTime} and #{endTime}</if>
-		<if test="billDateNew!=null "> and b.bill_date_new between #{startTimeNew} and #{endTimeNew}</if>
+		<if test="billDateNew!=null "> and b.bill_date_new between #{startTimeNew} and
+			#{endTimeNew}</if>
 	</select>
-	
 
-	<select id="selectHyBillSetById" parameterType="Long"  
+
+	<select id="selectHyBillSetById" parameterType="Long"
 		resultMap="HyBillSetResult">
 		<include refid="selectHyBillSetVo" />
 		where id = #{id}
