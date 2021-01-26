@@ -7,7 +7,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap type="HyBillSet" id="HyBillSetResult">
 		<result property="id" column="id" />
 		<result property="houseNum" column="house_num" />
-		<result property="businessType" column="business_type" />
 		<result property="billTypes" column="bill_types" />
 		<result property="billNumber" column="bill_number" />
 		<result property="invoiceNumber" column="invoice_number" />
@@ -21,13 +20,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="paymentMethodNew" column="payment_method_new" />
 		<result property="paymentMethod" column="payment_method" />
 		<result property="paymentPerson" column="payment_person" />
-		<result property="paymentAmount" column="payment_amount" />
 		<result property="paymentDate" column="payment_date" />
 		<result property="modifyPerson" column="modify_person" />
 		<result property="modifyTime" column="modify_time" />
 		<result property="billSample" column="bill_sample" />
 		<result property="billPanel" column="bill_panel" />
 		<result property="panel" column="panel" />
+
 		<result property="billAmount" column="bill_amount" />
 		<result property="cancelNot" column="cancel_not" />
 		<result property="writeNot" column="write_not" />
@@ -204,7 +203,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select
 		b.id,
 		b.house_num,
-		b.business_type,
 		b.bill_types,
 		b.bill_number,
 		b.invoice_number,
@@ -217,18 +215,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		b.payment_method_new,
 		b.payment_method,
 		b.payment_person,
-		b.payment_amount,
 		b.payment_date,modify_person,
 		b.modify_time,
 		b.bill_sample,
 		b.bill_panel,
 		b.panel,
+
 		b.bill_amount,
 		b.cancel_not,
 		b.write_not,
 		b.remark,
 		b.draft_check_number,
 		b.draft_check_number,
+
 		o.owner_name,
 		h.house_name,
 		c.fee_date,

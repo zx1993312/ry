@@ -24,12 +24,6 @@ public class HyBillSet extends BaseEntity {
 	 */
 	@Excel(name = "房屋编号")
 	private String houseNum;
-	/**
-	 * 业务类型
-	 */
-	@Excel(name = "业务类型")
-	private Integer businessType;
-	
 	/** 票据种类 */
 	@Excel(name = "票据种类")
 	@EnumAnn(enumClass = PanelEnum.class, enumType = "String")
@@ -86,12 +80,6 @@ public class HyBillSet extends BaseEntity {
 	@Excel(name = "收款人")
 	private String paymentPerson;
 	/**
-	 * 收款金额
-	 */
-	@Excel(name = "收款金额")
-	private BigDecimal paymentAmount;
-
-	/**
 	 * 收款时间
 	 */
 	@Excel(name = "收款时间")
@@ -114,36 +102,9 @@ public class HyBillSet extends BaseEntity {
 	/** 定额票据面板 */
 	@Excel(name = "定额票据面板")
 	private String billPanel;
-/**
- * 定额票据
- */
+
 	@Excel(name = "定额票据")
 	private String panel;
-	/**
-	 * 收/退款金额
-	 */
-	@Excel(name = "收/退款金额")
-	private BigDecimal billAmount;
-	/**
-	 * 是否撤销
-	 */
-	@Excel(name = "是否撤销")
-	private Integer cancelNot;
-	/**
-	 * 是否冲销
-	 */
-	@Excel(name = "是否冲销")
-	private Integer writeNot;
-	/**
-	 * 备注
-	 */
-	@Excel(name="备注")
-	private String remark;
-	/**
-	 * 支/汇票号
-	 */
-	@Excel(name="支/汇票号")
-	private String draftCheckNumber;
 	/**
 	 * 房屋表
 	 */
@@ -169,6 +130,20 @@ public class HyBillSet extends BaseEntity {
 	 */
 	@Excel(name = "预交冲抵表")
 	private HyPaymentOffset hyPaymentOffset;
+
+	private Integer businessType;
+
+	private BigDecimal paymentAmount;
+
+	private Integer cancelNot;
+
+	private Integer writeNot;
+
+	private String remark;
+
+	private String draftCheckNumber;
+
+	private BigDecimal billAmount;
 
 	public Long getId() {
 		return id;
