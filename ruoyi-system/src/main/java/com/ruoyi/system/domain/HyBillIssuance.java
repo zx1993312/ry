@@ -1,5 +1,6 @@
 package com.ruoyi.system.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -67,6 +68,26 @@ public class HyBillIssuance extends BaseEntity
     /** 使用范围 */
     @Excel(name = "使用范围")
     private String applicationScope;
+    /**
+     * 房屋编号
+     */
+    @Excel(name = "房屋编号")
+    private String houseNum;
+    /**
+     * 金额
+     */
+    @Excel(name = "金额")
+    private BigDecimal amountMoney;
+    /**
+     * 已用数
+     */
+    @Excel(name = "已用数")
+    private Integer amountUsed;
+    /**
+     * 未用数
+     */
+    @Excel(name = "未用数")
+    private Integer unusedNum;
 
     public void setId(Long id) 
     {
@@ -177,7 +198,39 @@ public class HyBillIssuance extends BaseEntity
         return applicationScope;
     }
 
-    @Override
+    public String getHouseNum() {
+		return houseNum;
+	}
+
+	public void setHouseNum(String houseNum) {
+		this.houseNum = houseNum;
+	}
+
+	public BigDecimal getAmountMoney() {
+		return amountMoney;
+	}
+
+	public void setAmountMoney(BigDecimal amountMoney) {
+		this.amountMoney = amountMoney;
+	}
+
+	public Integer getAmountUsed() {
+		return amountUsed;
+	}
+
+	public void setAmountUsed(Integer amountUsed) {
+		this.amountUsed = amountUsed;
+	}
+
+	public Integer getUnusedNum() {
+		return unusedNum;
+	}
+
+	public void setUnusedNum(Integer unusedNum) {
+		this.unusedNum = unusedNum;
+	}
+
+	@Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())

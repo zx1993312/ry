@@ -16,11 +16,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="receiver"    column="receiver"    />
         <result property="user"    column="user"    />
         <result property="releaseTime"    column="release_time"    />
+        <result property="houseNum"    column="house_num"    />
+        <result property="amountMoney"    column="amount_money"    />
+        <result property="amountUsed"    column="amount_used"    />
+        <result property="unusedNum"    column="unused_num"    />
         <result property="applicationScope"    column="application_scope"    />
     </resultMap>
 
     <sql id="selectHyBillIssuanceVo">
-        select id, bill_type, bill_num_str, bill_num_end, copies, ticket_sample_str, ticket_sample_end, community, receiver, user, release_time, application_scope from hy_bill_issuance
+        select id, bill_type, bill_num_str, bill_num_end,amount_money,unused_num,amount_used, copies,house_num, ticket_sample_str, ticket_sample_end, community, receiver, user, release_time, application_scope from hy_bill_issuance
     </sql>
 
     <select id="selectHyBillIssuanceList" parameterType="HyBillIssuance" resultMap="HyBillIssuanceResult">

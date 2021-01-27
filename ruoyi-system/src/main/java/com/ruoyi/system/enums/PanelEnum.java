@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public enum PanelEnum {
 	
-	INVOICE(0,"发票"),RECEIPT(1,"收据"),CREDENTIAL(2,"凭据");
+	INVOICE(0,"收据"),RECEIPT(1,"发票"),CREDENTIAL(2,"凭据");
 	
 	private int panel;
 	private String value;
