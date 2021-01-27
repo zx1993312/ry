@@ -1593,7 +1593,7 @@ $(function () {
                         playInterval: 3000,
                         left: '10%',
                         right: '10%',
-                        bottom: '3%',
+                        bottom: '-2%',
                         width: '80%',
                         //  height: null,
                         label: {
@@ -1706,23 +1706,23 @@ $(function () {
 
 
                             [{
-                                text: '物流平台',
+                                text: '航宇物业平台',
                                 subtext: '   ',
                                 left: '35%',
                                 top: '15%',
                                 textStyle: {
                                     color: '#fff',
-                                    fontSize: 25
+                                    fontSize: 15
                                 }
                             },
                                 {
                                     id: 'statistic',
                                     text: year[n] + "数据统计情况",
                                     left: '75%',
-                                    top: '8%',
+                                    top: '5%',
                                     textStyle: {
                                         color: '#fff',
-                                        fontSize: 25
+                                        fontSize: 12
                                     }
                                 }
                             ],
