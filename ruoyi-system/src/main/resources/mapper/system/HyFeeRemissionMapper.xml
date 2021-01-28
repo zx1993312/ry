@@ -48,6 +48,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="writeoffOnt" column="writeoff_ont" />
 		<result property="writeoffTime" column="writeoff_time" />
 		<result property="houseNumber" column="house_number" />
+		<result property="reductionExemption" column="reduction_exemption" />
+		<result property="deductionBase" column="deduction_base" />
+		<result property="closingDate" column="closing_date" />
+		<result property="exemptionRegistration" column="exemption_registration" />
 		<association property="hyOwnerRegistration" column="id"
 			javaType="HyOwnerRegistration" resultMap="HyOwnerRegistrationResult" />
 		<association property="hyHouseInf" column="id"
@@ -56,6 +60,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			javaType="HyParkingInf" resultMap="HyParkingInfResult" />
 		<association property="hyMeter" column="id"
 			javaType="HyMeter" resultMap="HyMeterResult" />
+		<association property="hyCost" column="id"
+			javaType="HyCost" resultMap="HyCostResult" />
 	</resultMap>
 
 	<resultMap type="HyOwnerRegistration"
@@ -77,6 +83,60 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap type="HyMeter" id="HyMeterResult">
 		<result property="houseNum" column="house_num" />
 		<result property="meterName" column="meter_name" />
+	</resultMap>
+
+<resultMap type="HyCost" id="HyCostResult">
+		<result property="id" column="id" />
+		<result property="houseNum" column="house_num" />
+		<result property="costItems" column="cost_items" />
+		<result property="expenseType" column="expense_type" />
+		<result property="parentId" column="parent_id" />
+		<result property="ancestors" column="ancestors" />
+		<result property="standardName" column="standard_name" />
+		<result property="feeNum" column="fee_num" />
+		<result property="chargingStandard" column="charging_standard" />
+		<result property="calculationMehod" column="calculation_mehod" />
+		<result property="standardDescription"
+			column="standard_description" />
+		<result property="standardState" column="standard_state" />
+		<result property="proportionDamags" column="proportion_damags" />
+		<result property="projectModification"
+			column="project_modification" />
+		<result property="billingCycle" column="billing_cycle" />
+		<result property="bilingStartDate" column="biling_start_date" />
+		<result property="bilingEndDate" column="biling_end_date" />
+		<result property="auditResultsReason"
+			column="audit_results_reason" />
+		<result property="feeDateOld" column="fee_date_old" />
+		<result property="feeDate" column="fee_date" />
+		<result property="dueDateOld" column="due_date_old" />
+		<result property="dueDate" column="due_date" />
+		<result property="amountReceivableOld"
+			column="amount_receivable_old" />
+		<result property="amountReceivable" column="amount_receivable" />
+		<result property="amountActually" column="amount_actually" />
+		<result property="remarks" column="remarks" />
+		<result property="operationDate" column="operation_date" />
+		<result property="operationUser" column="operation_user" />
+		<result property="operationType" column="operation_type" />
+		<result property="deleteReason" column="delete_reason" />
+		<result property="advancePaymetnOffset"
+			column="advance_paymetn_offset" />
+		<result property="writeOff" column="write_off" />
+		<result property="refundAmount" column="refund_amount" />
+		<result property="amountArrears" column="amount_arrears" />
+		<result property="collectionStatus" column="collection_status" />
+		<result property="frozenPerson" column="frozen_person" />
+		<result property="frozenState" column="frozen_state" />
+		<result property="frozenDate" column="frozen_date" />
+		<result property="frozenReason" column="frozen_reason" />
+		<result property="advanceStatus" column="advance_status" />
+		<result property="deliveryStatus" column="delivery_status" />
+		<result property="transferTenants" column="transfer_tenants" />
+		<result property="changeDate" column="change_date" />
+		
+		
+		
 	</resultMap>
 
 	<sql id="selectHyFeeRemissionVo">
@@ -115,9 +175,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			f.revocation,
 			f.writeoff_ont,
 			f.writeoff_time,
+			f.reduction_exemption,
+			f.deduction_base,
+			f.closing_date,
+			f.exemption_registration,
 			o.owner_name,
 			h.house_name,
 			p.parking_number,
+			c.operation_date,
+			c.biling_start_date,
+			c.biling_end_date,
 			m.meter_name 
 		FROM
 			hy_fee_remission f
@@ -125,6 +192,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			LEFT JOIN hy_house_inf h ON h.house_number = o.house_num
 			LEFT JOIN hy_parking_inf p ON p.house_number = h.house_number
 			LEFT JOIN hy_meter m ON m.house_num = p.house_number 
+			left join hy_cost c on f.house_number = c.house_num
 		WHERE
 			1 = 1
 	</sql>

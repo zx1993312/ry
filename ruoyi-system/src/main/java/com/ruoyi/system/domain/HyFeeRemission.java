@@ -157,6 +157,14 @@ public class HyFeeRemission extends BaseEntity {
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Excel(name = "冲销时间", width = 30, dateFormat = "yyyy-MM-dd")
 	private Date writeoffTime;
+	
+	private Integer reductionExemption;
+	
+	private String deductionBase;
+	
+	private Date closingDate;
+	
+	private Date exemptionRegistration;
 
 	private String houseNumber;
 
@@ -177,6 +185,8 @@ public class HyFeeRemission extends BaseEntity {
 	private HyParkingInf hyParkingInf;
 
 	private HyMeter hyMeter;
+	
+	private HyCost hyCost;
 
 	public HyHouseInf getHyHouseInf() {
 		return hyHouseInf;
@@ -520,6 +530,46 @@ public class HyFeeRemission extends BaseEntity {
 
 	public void setHouseNumber(String houseNumber) {
 		this.houseNumber = houseNumber;
+	}
+
+	public HyCost getHyCost() {
+		return hyCost;
+	}
+
+	public void setHyCost(HyCost hyCost) {
+		this.hyCost = hyCost;
+	}
+
+	public Integer getReductionExemption() {
+		return reductionExemption;
+	}
+
+	public void setReductionExemption(Integer reductionExemption) {
+		this.reductionExemption = reductionExemption;
+	}
+
+	public String getDeductionBase() {
+		return deductionBase;
+	}
+
+	public void setDeductionBase(String deductionBase) {
+		this.deductionBase = deductionBase;
+	}
+
+	public Date getClosingDate() {
+		return closingDate;
+	}
+
+	public void setClosingDate(Date closingDate) {
+		this.closingDate = closingDate;
+	}
+
+	public Date getExemptionRegistration() {
+		return exemptionRegistration;
+	}
+
+	public void setExemptionRegistration(Date exemptionRegistration) {
+		this.exemptionRegistration = exemptionRegistration;
 	}
 
 	@Override
