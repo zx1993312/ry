@@ -62,6 +62,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			javaType="HyMeter" resultMap="HyMeterResult" />
 		<association property="hyCost" column="id"
 			javaType="HyCost" resultMap="HyCostResult" />
+		<association property="hyDamages" column="id"
+			javaType="HyDamages" resultMap="HyDamagesResult" />
 	</resultMap>
 
 	<resultMap type="HyOwnerRegistration"
@@ -134,10 +136,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="deliveryStatus" column="delivery_status" />
 		<result property="transferTenants" column="transfer_tenants" />
 		<result property="changeDate" column="change_date" />
-		
-		
-		
 	</resultMap>
+
+<resultMap type="HyDamages" id="HyDamagesResult">
+        <result property="id"    column="id"    />
+        <result property="contractDamagesDelay"    column="contract_damages_delay"    />
+        <result property="contractDamagesProportion"    column="contract_damages_proportion"    />
+        <result property="paymentDeadlinStrTime"    column="payment_deadlin_str_time"    />
+        <result property="houseNum"    column="house_num"    />
+    </resultMap>
 
 	<sql id="selectHyFeeRemissionVo">
 		SELECT
@@ -184,7 +191,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			p.parking_number,
 			c.operation_date,
 			c.biling_start_date,
+			c.amount_arrears,
 			c.biling_end_date,
+			d.contract_damages_delay,
+			d.contract_damages_proportion,
+			d.payment_deadlin_str_time,
 			m.meter_name 
 		FROM
 			hy_fee_remission f
@@ -193,6 +204,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			LEFT JOIN hy_parking_inf p ON p.house_number = h.house_number
 			LEFT JOIN hy_meter m ON m.house_num = p.house_number 
 			left join hy_cost c on f.house_number = c.house_num
+			left join hy_damages d on f.house_number=d.house_num
 		WHERE
 			1 = 1
 	</sql>

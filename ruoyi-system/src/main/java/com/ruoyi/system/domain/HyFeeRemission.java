@@ -187,6 +187,8 @@ public class HyFeeRemission extends BaseEntity {
 	private HyMeter hyMeter;
 	
 	private HyCost hyCost;
+	
+	private HyDamages hyDamages;
 
 	public HyHouseInf getHyHouseInf() {
 		return hyHouseInf;
@@ -570,6 +572,14 @@ public class HyFeeRemission extends BaseEntity {
 
 	public void setExemptionRegistration(Date exemptionRegistration) {
 		this.exemptionRegistration = exemptionRegistration;
+	}
+
+	public HyDamages getHyDamages() {
+		return hyDamages;
+	}
+
+	public void setHyDamages(HyDamages hyDamages) {
+		this.hyDamages = hyDamages;
 	}
 
 	@Override

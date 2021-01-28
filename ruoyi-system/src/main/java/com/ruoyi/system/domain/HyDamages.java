@@ -32,6 +32,11 @@ public class HyDamages extends BaseEntity
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Excel(name = "应缴日期", width = 30, dateFormat = "yyyy-MM-dd")
     private Date paymentDeadlinStrTime;
+    /**
+     * 房屋编号
+     */
+    @Excel(name = "房屋编号")
+    private Integer houseNum;
 
     public void setId(Long id) 
     {
@@ -70,13 +75,26 @@ public class HyDamages extends BaseEntity
         return paymentDeadlinStrTime;
     }
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("contractDamagesDelay", getContractDamagesDelay())
-            .append("contractDamagesProportion", getContractDamagesProportion())
-            .append("paymentDeadlinStrTime", getPaymentDeadlinStrTime())
-            .toString();
-    }
+    public Integer getHouseNum() {
+		return houseNum;
+	}
+
+	public void setHouseNum(Integer houseNum) {
+		this.houseNum = houseNum;
+	}
+
+	@Override
+	public String toString() {
+		return "HyDamages [id=" + id + ", contractDamagesDelay=" + contractDamagesDelay + ", contractDamagesProportion="
+				+ contractDamagesProportion + ", paymentDeadlinStrTime=" + paymentDeadlinStrTime + ", houseNum="
+				+ houseNum + ", getId()=" + getId() + ", getContractDamagesDelay()=" + getContractDamagesDelay()
+				+ ", getContractDamagesProportion()=" + getContractDamagesProportion() + ", getPaymentDeadlinStrTime()="
+				+ getPaymentDeadlinStrTime() + ", getHouseNum()=" + getHouseNum() + ", getSearchValue()="
+				+ getSearchValue() + ", getCreateBy()=" + getCreateBy() + ", getCreateTime()=" + getCreateTime()
+				+ ", getUpdateBy()=" + getUpdateBy() + ", getUpdateTime()=" + getUpdateTime() + ", getRemark()="
+				+ getRemark() + ", getParams()=" + getParams() + ", getClass()=" + getClass() + ", hashCode()="
+				+ hashCode() + ", toString()=" + super.toString() + "]";
+	}
+
+
 }

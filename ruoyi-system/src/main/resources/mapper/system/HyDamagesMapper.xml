@@ -9,10 +9,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="contractDamagesDelay"    column="contract_damages_delay"    />
         <result property="contractDamagesProportion"    column="contract_damages_proportion"    />
         <result property="paymentDeadlinStrTime"    column="payment_deadlin_str_time"    />
+        <result property="houseNum"    column="house_num"    />
     </resultMap>
 
     <sql id="selectHyDamagesVo">
-        select id, contract_damages_delay, contract_damages_proportion, payment_deadlin_str_time from hy_damages
+        select id, contract_damages_delay,house_num, contract_damages_proportion, payment_deadlin_str_time from hy_damages
     </sql>
 
     <select id="selectHyDamagesList" parameterType="HyDamages" resultMap="HyDamagesResult">
