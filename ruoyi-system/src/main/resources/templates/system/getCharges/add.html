@@ -43,11 +43,12 @@
         });
          
         function submitHandler() {
-        	var fieldRow  = $.table.selectColumns('expenseType');
-        	if(fieldRow == ''){
+        	var costItems = $.table.selectColumns('costItems');
+        	var expenseType  = $.table.selectColumns('expenseType');
+        	if(costItems == ''){
         		$.modal.alertWarning("请至少选择一条记录");
         	}else{
-        		$("#standardName",window.parent.document).val(fieldRow);
+        		$("#standardName",window.parent.document).val(expenseType);
             	$.modal.close();
         	}
         }

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+<th:block th:include="include :: header('费用项目列表')" />
+</head>
+<body class="gray-bg">
+	<div class="container-div">
+		<div class="row">
+
+			<div class="col-sm-12 select-table table-striped">
+				<div class="select-list">
+					<h5>基础报表列表</h5>
+				</div>
+				<div class="col-md-6" style="width: 30%">
+					<div class="form-group">
+						<h5>一、应收报表</h5>
+						<a href="">（1）实际应收统计报表</a><br/><br/>
+						<a href="">（2）理论应收统计报表</a>
+					</div>
+					<div class="form-group">
+						<h5>二、收款报表</h5>
+						<a href="">（1）按收款方式统计</a><br/><br/>
+						<a href="">（2）按费用月份/季度/年度统计</a><br/><br/>
+						<a href="">（3）按费用期间统计</a><br/><br/>
+						<a href="">（4）按票据明细统计</a><br/><br/>
+						<a href="">（5）按票据类别统计</a><br/><br/>
+					</div>
+				</div>
+				<div class="col-md-6" style="width: 30%">
+					<div class="form-group">
+						<h5>三、退款报表</h5>
+						<a href="">（1）退款统计报表</a>
+					</div>
+					<div class="form-group">
+						<h5>四、缴款报表</h5>
+						<a href="">（1）项目缴款报表</a>
+					</div>
+					<div class="form-group">
+						<h5>五、综合报表</h5>
+						<a href="">（1）综合统计报表</a>
+					</div>
+					<div class="form-group">
+						<h5>六、收费率报表</h5>
+						<a href="">（1）收费率报表(按期间)</a><br/><br/>
+						<a href="">（2）收费率报表(按年月)</a><br/><br/>
+						<a href="">（3）收费率报表(按管家)</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<th:block th:include="include :: footer" />
+</body>
+</html>

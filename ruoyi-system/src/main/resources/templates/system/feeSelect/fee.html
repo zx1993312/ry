@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+<th:block th:include="include :: header('费用项目列表')" />
+</head>
+<body class="gray-bg">
+	<div class="container-div">
+		<div class="row">
+
+			<div class="col-sm-12 select-table table-striped">
+				<div class="select-list">
+					<h5>基础查询列表</h5>
+				</div>
+				<div class="col-md-6" style="width: 30%">
+					<div class="form-group">
+						<h5>1、收费标准查询</h5>
+						<a href="">（1）项目收费标准查询</a><br/><br/>
+						<a href="">（2）项目佣金标准查询</a><br/><br/>
+						<a href="">（3）项目收费比例查询</a><br/><br/>
+						<a href="">（4）客户当前标准查询</a><br/><br/>
+						<a href="">（5）客户历史标准查询</a><br/><br/>
+						<a href="">（6）未设物管费房屋查询</a><br/><br/>
+						<a href="">（7）未设水电费表计查询</a><br/><br/>
+						<a href="">（8）未设车位费车位查询</a>
+					</div>
+					<div class="form-group">
+						<h5>2、应收费用查询</h5>
+						<a href="">（1）应收费用查询</a><br/><br/>
+						<a href="">（2）添加/修改应收费用查询</a><br/><br/>
+						<a href="">（3）撤销应收费用查询</a><br/><br/>
+						<a href="">（4）未生成应收费用查询</a>
+					</div>
+				</div>
+				<div class="col-md-6" style="width: 30%">
+					<div class="form-group">
+						<h5>3、实收费用查询</h5>
+						<a href="">（1）实收/预存费用查询</a><br/><br/>
+						<a href="">（2）修改收款时间查询</a><br/><br/>
+						<a href="">（3）修改收款方式查询</a><br/><br/>
+						<a href="">（4）收款截止时间查询</a>
+					</div>
+					<div class="form-group">
+						<h5>4、欠收费用查询</h5>
+						<a href="">（1）客户欠费明细记录查询</a><br/><br/>
+						<a href="">（2）按客户、费项欠费查询</a><br/><br/>
+						<a href="">（3）按费项、账龄欠费查询</a><br/><br/>
+						<a href="">（4）欠费账龄明细查询</a>
+					</div>
+				</div>
+				<div class="col-md-6" style="width: 30%">
+					<div class="form-group">
+						<h5>5、退款费用查询</h5>
+						<a href="">（1）已退款费用查询</a><br/><br/>
+						<a href="">（2）未退款费用查询</a>
+					</div>
+					<div class="form-group">
+						<h5>6、减免费用查询</h5>
+						<a href="">（1）本金减免冲抵查询</a><br/><br/>
+						<a href="">（2）违约金减免查询</a>
+					</div>
+					<div class="form-group">
+						<h5>7、预交费用查询</h5>
+						<a href="">（1）当前预交余额查询</a><br/><br/>
+						<a href="">（2）截点预交余额查询</a><br/><br/>
+						<a href="">（3）预交冲抵费用查询</a><br/><br/>
+						<a href="">（4）撤销预交冲抵查询</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<th:block th:include="include :: footer" />
+</body>
+</html>
