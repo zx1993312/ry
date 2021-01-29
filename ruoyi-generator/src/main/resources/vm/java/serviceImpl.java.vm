@@ -66,9 +66,7 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service
      * @param ${className} ${functionName}
      * @return 结果
      */
-#if($table.sub)
     @Transactional
-#end
     @Override
     public int insert${ClassName}(${ClassName} ${className})
     {
@@ -92,9 +90,7 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service
      * @param ${className} ${functionName}
      * @return 结果
      */
-#if($table.sub)
     @Transactional
-#end
     @Override
     public int update${ClassName}(${ClassName} ${className})
     {
@@ -116,9 +112,7 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service
      * @param ids 需要删除的数据ID
      * @return 结果
      */
-#if($table.sub)
     @Transactional
-#end
     @Override
     public int delete${ClassName}ByIds(String ids)
     {
