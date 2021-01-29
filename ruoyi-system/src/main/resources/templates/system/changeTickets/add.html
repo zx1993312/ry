@@ -9,7 +9,7 @@
 		<form class="form-horizontal m" id="form-issuance-add">
 			<ul>
 				<li style="list-style-type: none;"><label>使用说明：</label> <select
-					id="billType" name="billType">
+					id="billTypes" name="billTypes">
 						<option value="">请选择</option>
 						<option value="0">换票</option>
 						<option value="1">其他</option>
@@ -48,7 +48,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-3 control-label">票据金额：</label>
+				<label class="col-sm-3 ">票据金额：</label>
 				<div class="col-sm-8">
 					<input id="amountMoney" name="amountMoney" class="form-control"
 						type="text">
@@ -56,11 +56,59 @@
 			</div>
 
 			<div align="center">
-				<button class="btn btn-success btn-sm" type="submit" formaction="">选择收据</button>
+				<input class="btn btn-success btn-sm" type="button" value="选择收据" onclick="bt()" />
 			</div>
 
 
 			<table id="bootstrap-table"></table>
+
+				<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		
+			<div class="form-group">
+				<label class="col-sm-3 control-label">收据金额：</label>
+				<div class="col-sm-8">
+					<input id="amountMoney" name="amountMoney" class="form-control"
+						type="text">
+				</div>
+			</div>
+			
+				<div class="form-group">
+				<label class="col-sm-3 control-label">已开发票金额：</label>
+				<div class="col-sm-8">
+					<input id="paymentAmount" name="paymentAmount" class="form-control"
+						type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">使用人：</label>
+				<div class="col-sm-8">
+					<input id="user" name="user" class="form-control"
+						type="text">
+				</div>
+			</div>
+		
+			<div class="form-group">
+				<label class="col-sm-3 control-label">使用时间：</label>
+				<div class="col-sm-8">
+					<input id="releaseTime" name="releaseTime" class="form-control"
+						type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">备注：</label>
+				<div class="col-sm-8">
+					<input id="remark" name="remark" class="form-control"
+						type="text">
+				</div>
+			</div>	
+
+			<div align="center">
+				<button class="btn btn-success btn-sm" type="submit" formaction="">保存</button>
+				<button class="btn btn-success btn-sm" type="submit" formaction="">返回</button>
+			</div>	
+			
+			
+</div>
 
 		</form>
 	</div>
@@ -131,10 +179,16 @@
 			autoclose : true
 		});
 		
+function bt(){
+	window.location.href="/system/changeTickets/set"
+}
+		
 		var editFlag = [[${@permission.hasPermi('system:issuance:edit')}]];
         var removeFlag = [[${@permission.hasPermi('system:issuance:remove')}]];
         var prefix = ctx + "system/changeTickets";
 
+
+        
         $(function() {
             var options = {
                 /* updateUrl: prefix + "/edit/{id}", */   
@@ -186,6 +240,7 @@
             };
             $.table.init(options);
         });
+      
 	</script>
 </body>
 </html>

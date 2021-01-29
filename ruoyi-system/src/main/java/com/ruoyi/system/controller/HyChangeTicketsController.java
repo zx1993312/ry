@@ -71,6 +71,21 @@ public class HyChangeTicketsController extends BaseController {
 		return getDataTable(reList);
 	}
 
+	
+
+	/**
+	 * 查询票据发放列表
+	 */
+	@ApiOperation("票据发放")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyBillIssuance", value = "项目实体类hyBillIssuance", required = true), })
+	@RequiresPermissions("system:issuance:set")
+	@GetMapping("/set")
+	public String relist(HyBillIssuance hyBillIssuance) {
+		
+		return prefix +"/set";
+	}
+
+	
 	/**
 	 * 导出票据发放列表
 	 */
