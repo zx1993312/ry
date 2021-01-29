@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.system.constants.Constants;
@@ -68,6 +69,7 @@ public class HyMeterCaseServiceImpl implements IHyMeterCaseService {
 	 * @return 结果
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int insertHyMeterCase(MeterAndCase meterAndCase) {
 
 		HyMeter hyMeter = new HyMeter();
@@ -95,6 +97,7 @@ public class HyMeterCaseServiceImpl implements IHyMeterCaseService {
 	 * @return 结果
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int updateHyMeterCase(HyMeterCase hyMeterCase) {
 		return hyMeterCaseMapper.updateHyMeterCase(hyMeterCase);
 	}
@@ -106,6 +109,7 @@ public class HyMeterCaseServiceImpl implements IHyMeterCaseService {
 	 * @return 结果
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int deleteHyMeterCaseByIds(String ids) {
 		return hyMeterCaseMapper.deleteHyMeterCaseByIds(Convert.toStrArray(ids));
 	}
@@ -117,6 +121,7 @@ public class HyMeterCaseServiceImpl implements IHyMeterCaseService {
 	 * @return 结果
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int deleteHyMeterCaseById(Long id) {
 		return hyMeterCaseMapper.deleteHyMeterCaseById(id);
 	}

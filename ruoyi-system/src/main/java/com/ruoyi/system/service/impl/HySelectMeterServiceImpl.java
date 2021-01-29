@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.system.domain.HySelectMeter;
@@ -42,6 +43,7 @@ public class HySelectMeterServiceImpl implements IHySelectMeterService {
 	 * 修改房间表
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int updateHySelMeter(HySelectMeter hySelectMeter) {
 		return hySelMeterMapper.updateHySelMeter(hySelectMeter);
 	}
@@ -50,6 +52,7 @@ public class HySelectMeterServiceImpl implements IHySelectMeterService {
 	 * 添加房间表
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int addHySelMeter(HySelectMeter hySelectMeter) {
 		return hySelMeterMapper.addHySelMeter(hySelectMeter);
 	}
@@ -58,6 +61,7 @@ public class HySelectMeterServiceImpl implements IHySelectMeterService {
 	 * 删除房间表（批量）
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int deleteHySelMeterByIds(String ids) {
 		return hySelMeterMapper.delectHySelMeterByIds(Convert.toStrArray(ids));
 	}
@@ -66,6 +70,7 @@ public class HySelectMeterServiceImpl implements IHySelectMeterService {
 	 * 删除房间表
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int deleteHySelMeterById(Long id) {
 		return hySelMeterMapper.deleteHySelMeterById(id);
 	}

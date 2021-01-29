@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.system.domain.HyPaymentOffset;
@@ -61,6 +62,7 @@ public class HyPaymentOffsetServiceImpl implements IHyPaymentOffsetService {
 	 * @return 结果
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int insertHyPaymentOffset(HyPaymentOffset hyPaymentOffset) {
 		return hyPaymentOffsetMapper.insertHyPaymentOffset(hyPaymentOffset);
 	}
@@ -72,6 +74,7 @@ public class HyPaymentOffsetServiceImpl implements IHyPaymentOffsetService {
 	 * @return 结果
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int updateHyPaymentOffset(HyPaymentOffset hyPaymentOffset) {
 		return hyPaymentOffsetMapper.updateHyPaymentOffset(hyPaymentOffset);
 	}
@@ -83,6 +86,7 @@ public class HyPaymentOffsetServiceImpl implements IHyPaymentOffsetService {
 	 * @return 结果
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int deleteHyPaymentOffsetByIds(String ids) {
 		return hyPaymentOffsetMapper.deleteHyPaymentOffsetByIds(Convert.toStrArray(ids));
 	}
@@ -94,6 +98,7 @@ public class HyPaymentOffsetServiceImpl implements IHyPaymentOffsetService {
 	 * @return 结果
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int deleteHyPaymentOffsetById(Long id) {
 		return hyPaymentOffsetMapper.deleteHyPaymentOffsetById(id);
 	}

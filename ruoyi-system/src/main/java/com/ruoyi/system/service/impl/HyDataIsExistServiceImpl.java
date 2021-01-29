@@ -15,7 +15,7 @@ import com.ruoyi.system.utils.HyDataUtil;
  *
  */
 @Service
-public class IHyDataIsExistServiceImpl implements IHyDataIsExistService {
+public class HyDataIsExistServiceImpl implements IHyDataIsExistService {
 
 	@Autowired
 	private HyCommonMapper hyCommonMapper;

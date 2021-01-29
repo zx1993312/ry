@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.Ztree;
@@ -54,6 +55,7 @@ public class HyProjectServiceImpl implements IHyProjectService {
 	 * @return 结果
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int insertHyProject(HyProject hyProject) {
 		return hyProjectMapper.insertHyProject(hyProject);
 	}
@@ -65,6 +67,7 @@ public class HyProjectServiceImpl implements IHyProjectService {
 	 * @return 结果
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int updateHyProject(HyProject hyProject) {
 		return hyProjectMapper.updateHyProject(hyProject);
 	}
@@ -76,6 +79,7 @@ public class HyProjectServiceImpl implements IHyProjectService {
 	 * @return 结果
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int deleteHyProjectByIds(String ids) {
 		return hyProjectMapper.deleteHyProjectByIds(Convert.toStrArray(ids));
 	}
@@ -87,6 +91,7 @@ public class HyProjectServiceImpl implements IHyProjectService {
 	 * @return 结果
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int deleteHyProjectById(Long id) {
 		return hyProjectMapper.deleteHyProjectById(id);
 	}
