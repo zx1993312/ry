@@ -171,7 +171,15 @@
                 },
                 {
                     field: 'lockedNot',
-                    title: '是否锁定'
+                    title: '是否锁定',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case "0" : value =  "是";break;
+	                    	case "1" : value =  "否";break;
+	                    	
+	                	}
+		            	return value;
+		            }
                 },
                 {
                     field: 'accessNum',

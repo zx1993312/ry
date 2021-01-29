@@ -33,7 +33,7 @@
 								name="chargingStandard" /></li>
 							<li><label>当前状态：</label> <select name="currentState"
 								class="form-control m-b"
-								th:with="type=${@dict.getType('hy_use_state')}">
+								>
 									<option value="">请选择</option>
 									<option value="0">使用</option>
 									<option value="1">未使用</option>
@@ -49,14 +49,14 @@
 								name="houseNature" /></li>
 							<li><label>是否收取其他费用：</label> <select id="otherExpenses"
 								name="otherExpenses" class="form-control m-b"
-								th:with="type=${@dict.getType('hy_parking_inf')}">
+								>
 									<option value="">请选择</option>
 									<option value="0">是</option>
 									<option value="1">否</option>
 							</select>
 							<li><label>是否挂牌：</label> <select id="licensePlateNot"
 								name="licensePlateNot" class="form-control m-b"
-								th:with="type=${@dict.getType('hy_parking_inf')}">
+								>
 									<option value="">请选择</option>
 									<option value="0">是</option>
 									<option value="1">否</option>

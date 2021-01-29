@@ -56,10 +56,9 @@
                 <label class="col-sm-3 control-label">是否收款：</label>
                 <div class="col-sm-8">
                     <select id="collection" name="collection" class="form-control" 
-                th:with="type=${@dict.getType('hy_collection')}">
+                th:with="type=${@dict.getType('sys_yes_no')}">
 						<option value="">请选择</option>
-						<option value="0">是</option>
-						<option value="1">否</option>
+						
 						</select>
                 </div>
             </div>
@@ -82,10 +81,9 @@
                 <label class="col-sm-3 control-label">是否记账：</label>
                 <div class="col-sm-8">
                     <select id="bookkeeping" name="bookkeeping" class="form-control" 
-                th:with="type=${@dict.getType('hy_collection')}">
+                th:with="type=${@dict.getType('sys_yes_no')}">
 						<option value="">请选择</option>
-						<option value="0">是</option>
-						<option value="1">否</option>
+						
 						</select>
                 </div>
             </div>

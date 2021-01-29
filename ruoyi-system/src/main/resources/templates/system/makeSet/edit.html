@@ -12,7 +12,7 @@
 				<label class="col-sm-3 control-label">票据种类：</label>
 				<div class="col-sm-8">
 					<select id="billTypes" name="billTypes" th:field="*{billTypes}" class="form-control "
-						th:with="type=${@dict.getType('hy_bill_set')}">
+						>
 						<option value="">请选择</option>
 						<option value="0">收据</option>
 						<option value="1">发票</option>

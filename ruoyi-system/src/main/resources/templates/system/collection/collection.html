@@ -36,10 +36,9 @@
                             </li>
                             <li>
                                 <label>是否收款：</label>
-                             <select name="collection" class="form-control " th:with="type=${@dict.getType('hy_collection')}">
+                             <select name="collection" class="form-control " th:with="type=${@dict.getType('sys_yes_no')}">
                                 <option value="">请选择</option>
-                                <option value="0">是</option>
-				                <option value="1">否</option>
+                             
 								<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                                 </select>
                             </li>
@@ -53,10 +52,9 @@
                             </li>
                             <li>
                                 <label>是否记账：</label>
-                           <select name="bookkeeping" class="form-control " th:with="type=${@dict.getType('hy_collection')}">
+                           <select name="bookkeeping" class="form-control " th:with="type=${@dict.getType('sys_yes_no')}">
                                 <option value="">请选择</option>
-                                <option value="0">是</option>
-				                <option value="1">否</option>
+                              
 								<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                                 </select>
                             </li>
@@ -148,7 +146,15 @@
                 },
                 {
                     field: 'collection',
-                    title: '是否收款'
+                    title: '是否收款',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case "0" : value =  "是";break;
+	                    	case "1" : value =  "否";break;
+	                  
+	                	}
+		            	return value;
+		            }
                 },
                 {
                     field: 'collectionTime',
@@ -160,7 +166,15 @@
                 },
                 {
                     field: 'bookkeeping',
-                    title: '是否记账'
+                    title: '是否记账',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case "0" : value =  "是";break;
+	                    	case "1" : value =  "否";break;
+	                  
+	                	}
+		            	return value;
+		            }
                 },
                 {
                     field: 'bookTime',

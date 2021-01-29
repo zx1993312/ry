@@ -106,7 +106,7 @@
                 <label class="col-sm-3 control-label">是否收取其他费用：</label>
                 <div class="col-sm-8">
                 <select id="otherExpenses" name="otherExpenses" th:field="*{otherExpenses}" class="form-control m-b"
-                    th:with="type=${@dict.getType('hy_parking_inf')}">
+                   >
                        	<option value="">请选择</option>
 						<option value="0">是</option>
 						<option value="1">否</option>
@@ -117,7 +117,7 @@
                 <label class="col-sm-3 control-label">是否挂牌：</label>
                 <div class="col-sm-8">
                 <select id="licensePlateNot" name="licensePlateNot" th:field="*{licensePlateNot}" class="form-control m-b"
-                    th:with="type=${@dict.getType('hy_parking_inf')}">
+                >
                        	<option value="">请选择</option>
 						<option value="0">是</option>
 						<option value="1">否</option>

@@ -68,10 +68,9 @@
 				<div class="col-sm-8">
 					<select name="collection" th:field="*{collection}"
 						class="form-control"
-						th:with="type=${@dict.getType('hy_collection')}">
+						th:with="type=${@dict.getType('sys_yes_no')}">
 						<option value="">请选择</option>
-						<option value="0">是</option>
-						<option value="1">否</option>
+						
 					</select>
 				</div>
 			</div>
@@ -98,10 +97,9 @@
 				<div class="col-sm-8">
 					<select name="bookkeeping" th:field="*{bookkeeping}"
 						class="form-control"
-						th:with="type=${@dict.getType('hy_collection')}">
+						th:with="type=${@dict.getType('sys_yes_no')}">
 						<option value="">请选择</option>
-						<option value="0">是</option>
-						<option value="1">否</option>
+					
 					</select>
 				</div>
 			</div>
