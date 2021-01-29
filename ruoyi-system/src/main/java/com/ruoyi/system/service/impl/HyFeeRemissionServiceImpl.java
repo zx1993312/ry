@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.common.utils.StringUtils;
@@ -72,6 +73,7 @@ public class HyFeeRemissionServiceImpl implements IHyFeeRemissionService {
 	 * @return 结果
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int insertHyFeeRemission(HyFeeRemission hyFeeRemission) {
 		return hyFeeRemissionMapper.insertHyFeeRemission(hyFeeRemission);
 
@@ -84,6 +86,7 @@ public class HyFeeRemissionServiceImpl implements IHyFeeRemissionService {
 	 * @return 结果
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int updateHyFeeRemission(HyFeeRemission hyFeeRemission) {
 		hyFeeRemission.setRegistrationMark(1);// 将减免登记标识设置为1
 		int result = hyFeeRemissionMapper.updateHyFeeRemission(hyFeeRemission);
@@ -138,6 +141,7 @@ public class HyFeeRemissionServiceImpl implements IHyFeeRemissionService {
 	 * @return 结果
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int deleteHyFeeRemissionByIds(String ids) {
 		String[] idss = Convert.toStrArray(ids);
 		for (String id : idss) {
@@ -158,6 +162,7 @@ public class HyFeeRemissionServiceImpl implements IHyFeeRemissionService {
 	 * @return 结果
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int deleteHyFeeRemissionById(Long id) {
 		int result = hyFeeRemissionMapper.deleteHyFeeRemissionById(id);
 		HyFeeRemission hyFeeRemission = hyFeeRemissionMapper.selectHyFeeRemissionById(Long.valueOf(id));

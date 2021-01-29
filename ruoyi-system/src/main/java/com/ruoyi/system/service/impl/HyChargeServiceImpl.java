@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.common.utils.StringUtils;
@@ -51,6 +52,7 @@ public class HyChargeServiceImpl implements IHyChargeService {
 	 * @return 结果
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int insertHyCharge(HyCharge hyCharge) {
 		return hyChargeMapper.insertHyCharge(hyCharge);
 	}
@@ -62,6 +64,7 @@ public class HyChargeServiceImpl implements IHyChargeService {
 	 * @return 结果
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int updateHyCharge(HyCharge hyCharge) {
 		return hyChargeMapper.updateHyCharge(hyCharge);
 	}
@@ -73,6 +76,7 @@ public class HyChargeServiceImpl implements IHyChargeService {
 	 * @return 结果
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int deleteHyChargeByIds(String ids) {
 		return hyChargeMapper.deleteHyChargeByIds(Convert.toStrArray(ids));
 	}
@@ -84,6 +88,7 @@ public class HyChargeServiceImpl implements IHyChargeService {
 	 * @return 结果
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int deleteHyChargeById(Long id) {
 		return hyChargeMapper.deleteHyChargeById(id);
 	}
@@ -92,6 +97,7 @@ public class HyChargeServiceImpl implements IHyChargeService {
 	 * 验证房屋是否存在
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public boolean checkNumber(HyCharge hyCharge) {
 		Long id = StringUtils.isNull(hyCharge.getNumber()) ? -1L : hyCharge.getNumber();
 		HyCharge info = hyChargeMapper.checkNumber(hyCharge.getNumber());

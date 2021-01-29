@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.Ztree;
@@ -54,6 +55,7 @@ public class HyCostServiceImpl implements IHyCostService {
 	 * @return 费用项目
 	 */
 	@Override
+	
 	public List<HyCost> selectHyCostListDistinct(HyCost hyCost) {
 		return hyCostMapper.selectHyCostListDistinct(hyCost);
 	}
@@ -65,6 +67,7 @@ public class HyCostServiceImpl implements IHyCostService {
 	 * @return 费用项目
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public List<Ztree> selectHyCostListTree(HyCost hyCost) {
 		List<Ztree> ztrees = initZtree(hyCostMapper.selectHyCostList(hyCost));
 		return ztrees;
@@ -77,6 +80,7 @@ public class HyCostServiceImpl implements IHyCostService {
 	 * @return 结果
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int insertHyCost(HyCost hyCost) {
 		return hyCostMapper.insertHyCost(hyCost);
 	}
@@ -88,6 +92,7 @@ public class HyCostServiceImpl implements IHyCostService {
 	 * @return 结果
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int updateHyCost(HyCost hyCost) {
 		return hyCostMapper.updateHyCost(hyCost);
 	}
@@ -99,6 +104,7 @@ public class HyCostServiceImpl implements IHyCostService {
 	 * @return 结果
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int deleteHyCostByIds(String ids) {
 		return hyCostMapper.deleteHyCostByIds(Convert.toStrArray(ids));
 	}
@@ -110,6 +116,7 @@ public class HyCostServiceImpl implements IHyCostService {
 	 * @return 结果
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int deleteHyCostById(Long id) {
 		return hyCostMapper.deleteHyCostById(id);
 	}

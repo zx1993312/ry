@@ -3,6 +3,8 @@ package com.ruoyi.system.service.impl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.ruoyi.system.mapper.HyControlSetMapper;
 import com.ruoyi.system.domain.HyControlSet;
 import com.ruoyi.system.service.IHyControlSetService;
@@ -51,6 +53,7 @@ public class HyControlSetServiceImpl implements IHyControlSetService
      * @return 结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int insertHyControlSet(HyControlSet hyControlSet)
     {
         return hyControlSetMapper.insertHyControlSet(hyControlSet);
@@ -63,6 +66,7 @@ public class HyControlSetServiceImpl implements IHyControlSetService
      * @return 结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int updateHyControlSet(HyControlSet hyControlSet)
     {
         return hyControlSetMapper.updateHyControlSet(hyControlSet);
@@ -75,6 +79,7 @@ public class HyControlSetServiceImpl implements IHyControlSetService
      * @return 结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteHyControlSetByIds(String ids)
     {
         return hyControlSetMapper.deleteHyControlSetByIds(Convert.toStrArray(ids));
@@ -87,6 +92,7 @@ public class HyControlSetServiceImpl implements IHyControlSetService
      * @return 结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteHyControlSetById(Long id)
     {
         return hyControlSetMapper.deleteHyControlSetById(id);

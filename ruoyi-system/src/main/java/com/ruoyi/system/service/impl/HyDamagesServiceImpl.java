@@ -3,6 +3,8 @@ package com.ruoyi.system.service.impl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.ruoyi.system.mapper.HyDamagesMapper;
 import com.ruoyi.system.domain.HyDamages;
 import com.ruoyi.system.service.IHyDamagesService;
@@ -51,6 +53,7 @@ public class HyDamagesServiceImpl implements IHyDamagesService
      * @return 结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int insertHyDamages(HyDamages hyDamages)
     {
         return hyDamagesMapper.insertHyDamages(hyDamages);
@@ -63,6 +66,7 @@ public class HyDamagesServiceImpl implements IHyDamagesService
      * @return 结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int updateHyDamages(HyDamages hyDamages)
     {
         return hyDamagesMapper.updateHyDamages(hyDamages);
@@ -75,6 +79,7 @@ public class HyDamagesServiceImpl implements IHyDamagesService
      * @return 结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteHyDamagesByIds(String ids)
     {
         return hyDamagesMapper.deleteHyDamagesByIds(Convert.toStrArray(ids));
@@ -87,6 +92,7 @@ public class HyDamagesServiceImpl implements IHyDamagesService
      * @return 结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteHyDamagesById(Long id)
     {
         return hyDamagesMapper.deleteHyDamagesById(id);

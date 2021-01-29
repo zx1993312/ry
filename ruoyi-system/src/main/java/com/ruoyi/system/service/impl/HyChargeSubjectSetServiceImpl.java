@@ -3,6 +3,8 @@ package com.ruoyi.system.service.impl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.ruoyi.system.mapper.HyChargeSubjectSetMapper;
 import com.ruoyi.system.domain.HyChargeSubjectSet;
 import com.ruoyi.system.service.IHyChargeSubjectSetService;
@@ -48,6 +50,7 @@ public class HyChargeSubjectSetServiceImpl implements IHyChargeSubjectSetService
 	 * @return 结果
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int insertHyChargeSubjectSet(HyChargeSubjectSet hyChargeSubjectSet) {
 		return hyChargeSubjectSetMapper.insertHyChargeSubjectSet(hyChargeSubjectSet);
 	}
@@ -59,6 +62,7 @@ public class HyChargeSubjectSetServiceImpl implements IHyChargeSubjectSetService
 	 * @return 结果
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int updateHyChargeSubjectSet(HyChargeSubjectSet hyChargeSubjectSet) {
 		return hyChargeSubjectSetMapper.updateHyChargeSubjectSet(hyChargeSubjectSet);
 	}
@@ -70,6 +74,7 @@ public class HyChargeSubjectSetServiceImpl implements IHyChargeSubjectSetService
 	 * @return 结果
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int deleteHyChargeSubjectSetByIds(String ids) {
 		return hyChargeSubjectSetMapper.deleteHyChargeSubjectSetByIds(Convert.toStrArray(ids));
 	}
@@ -81,6 +86,7 @@ public class HyChargeSubjectSetServiceImpl implements IHyChargeSubjectSetService
 	 * @return 结果
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int deleteHyChargeSubjectSetById(Long id) {
 		return hyChargeSubjectSetMapper.deleteHyChargeSubjectSetById(id);
 	}

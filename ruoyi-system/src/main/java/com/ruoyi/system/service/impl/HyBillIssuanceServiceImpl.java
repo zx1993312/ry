@@ -3,6 +3,8 @@ package com.ruoyi.system.service.impl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.ruoyi.system.mapper.HyBillIssuanceMapper;
 import com.ruoyi.system.domain.HyBillIssuance;
 import com.ruoyi.system.service.IHyBillIssuanceService;
@@ -51,6 +53,7 @@ public class HyBillIssuanceServiceImpl implements IHyBillIssuanceService
      * @return 结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int insertHyBillIssuance(HyBillIssuance hyBillIssuance)
     {
         return hyBillIssuanceMapper.insertHyBillIssuance(hyBillIssuance);
@@ -63,6 +66,7 @@ public class HyBillIssuanceServiceImpl implements IHyBillIssuanceService
      * @return 结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int updateHyBillIssuance(HyBillIssuance hyBillIssuance)
     {
         return hyBillIssuanceMapper.updateHyBillIssuance(hyBillIssuance);
@@ -75,6 +79,7 @@ public class HyBillIssuanceServiceImpl implements IHyBillIssuanceService
      * @return 结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteHyBillIssuanceByIds(String ids)
     {
         return hyBillIssuanceMapper.deleteHyBillIssuanceByIds(Convert.toStrArray(ids));
@@ -87,6 +92,7 @@ public class HyBillIssuanceServiceImpl implements IHyBillIssuanceService
      * @return 结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteHyBillIssuanceById(Long id)
     {
         return hyBillIssuanceMapper.deleteHyBillIssuanceById(id);

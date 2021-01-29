@@ -3,6 +3,8 @@ package com.ruoyi.system.service.impl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.ruoyi.system.mapper.HyHouseInfMapper;
 import com.ruoyi.system.domain.HyHouseInf;
 import com.ruoyi.system.service.IHyHouseInfService;
@@ -51,6 +53,7 @@ public class HyHouseInfServiceImpl implements IHyHouseInfService
      * @return 结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int insertHyHouseInf(HyHouseInf hyHouseInf)
     {
         return hyHouseInfMapper.insertHyHouseInf(hyHouseInf);
@@ -63,6 +66,7 @@ public class HyHouseInfServiceImpl implements IHyHouseInfService
      * @return 结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int updateHyHouseInf(HyHouseInf hyHouseInf)
     {
         return hyHouseInfMapper.updateHyHouseInf(hyHouseInf);
@@ -75,6 +79,7 @@ public class HyHouseInfServiceImpl implements IHyHouseInfService
      * @return 结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteHyHouseInfByIds(String ids)
     {
         return hyHouseInfMapper.deleteHyHouseInfByIds(Convert.toStrArray(ids));
@@ -87,6 +92,7 @@ public class HyHouseInfServiceImpl implements IHyHouseInfService
      * @return 结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteHyHouseInfById(Long id)
     {
         return hyHouseInfMapper.deleteHyHouseInfById(id);

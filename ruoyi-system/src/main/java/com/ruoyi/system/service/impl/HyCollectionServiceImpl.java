@@ -3,6 +3,8 @@ package com.ruoyi.system.service.impl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.ruoyi.system.mapper.HyCollectionMapper;
 import com.ruoyi.system.domain.HyCollection;
 import com.ruoyi.system.service.IHyCollectionService;
@@ -51,6 +53,7 @@ public class HyCollectionServiceImpl implements IHyCollectionService
      * @return 结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int insertHyCollection(HyCollection hyCollection)
     {
         return hyCollectionMapper.insertHyCollection(hyCollection);
@@ -63,6 +66,7 @@ public class HyCollectionServiceImpl implements IHyCollectionService
      * @return 结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int updateHyCollection(HyCollection hyCollection)
     {
         return hyCollectionMapper.updateHyCollection(hyCollection);
@@ -75,6 +79,7 @@ public class HyCollectionServiceImpl implements IHyCollectionService
      * @return 结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteHyCollectionByIds(String ids)
     {
         return hyCollectionMapper.deleteHyCollectionByIds(Convert.toStrArray(ids));
@@ -87,6 +92,7 @@ public class HyCollectionServiceImpl implements IHyCollectionService
      * @return 结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteHyCollectionById(Long id)
     {
         return hyCollectionMapper.deleteHyCollectionById(id);

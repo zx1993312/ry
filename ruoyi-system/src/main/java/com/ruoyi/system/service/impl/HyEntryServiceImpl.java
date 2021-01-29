@@ -3,6 +3,8 @@ package com.ruoyi.system.service.impl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.ruoyi.system.mapper.HyEntryMapper;
 import com.ruoyi.system.domain.HyEntry;
 import com.ruoyi.system.service.IHyEntryService;
@@ -51,6 +53,7 @@ public class HyEntryServiceImpl implements IHyEntryService
      * @return 结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int insertHyEntry(HyEntry hyEntry)
     {
         return hyEntryMapper.insertHyEntry(hyEntry);
@@ -63,6 +66,7 @@ public class HyEntryServiceImpl implements IHyEntryService
      * @return 结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int updateHyEntry(HyEntry hyEntry)
     {
         return hyEntryMapper.updateHyEntry(hyEntry);
@@ -75,6 +79,7 @@ public class HyEntryServiceImpl implements IHyEntryService
      * @return 结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteHyEntryByIds(String ids)
     {
         return hyEntryMapper.deleteHyEntryByIds(Convert.toStrArray(ids));
@@ -87,6 +92,7 @@ public class HyEntryServiceImpl implements IHyEntryService
      * @return 结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteHyEntryById(Long id)
     {
         return hyEntryMapper.deleteHyEntryById(id);

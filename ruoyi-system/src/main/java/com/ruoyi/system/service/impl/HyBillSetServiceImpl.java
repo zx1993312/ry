@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.system.domain.HyBillSet;
@@ -93,6 +94,7 @@ public class HyBillSetServiceImpl implements IHyBillSetService {
 	 * @return 结果
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int insertHyBillSet(HyBillSet hyBillSet) {
 		return hyBillSetMapper.insertHyBillSet(hyBillSet);
 	}
@@ -104,6 +106,7 @@ public class HyBillSetServiceImpl implements IHyBillSetService {
 	 * @return 结果
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int updateHyBillSet(HyBillSet hyBillSet) {
 		return hyBillSetMapper.updateHyBillSet(hyBillSet);
 	}
@@ -115,6 +118,7 @@ public class HyBillSetServiceImpl implements IHyBillSetService {
 	 * @return 结果
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int deleteHyBillSetByIds(String ids) {
 		return hyBillSetMapper.deleteHyBillSetByIds(Convert.toStrArray(ids));
 	}
@@ -126,6 +130,7 @@ public class HyBillSetServiceImpl implements IHyBillSetService {
 	 * @return 结果
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int deleteHyBillSetById(Long id) {
 		return hyBillSetMapper.deleteHyBillSetById(id);
 	}

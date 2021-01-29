@@ -3,6 +3,8 @@ package com.ruoyi.system.service.impl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.ruoyi.system.mapper.HyExemptionReasonMapper;
 import com.ruoyi.system.domain.HyExemptionReason;
 import com.ruoyi.system.service.IHyExemptionReasonService;
@@ -51,6 +53,7 @@ public class HyExemptionReasonServiceImpl implements IHyExemptionReasonService
      * @return 结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int insertHyExemptionReason(HyExemptionReason hyExemptionReason)
     {
         return hyExemptionReasonMapper.insertHyExemptionReason(hyExemptionReason);
@@ -63,6 +66,7 @@ public class HyExemptionReasonServiceImpl implements IHyExemptionReasonService
      * @return 结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int updateHyExemptionReason(HyExemptionReason hyExemptionReason)
     {
         return hyExemptionReasonMapper.updateHyExemptionReason(hyExemptionReason);
@@ -75,6 +79,7 @@ public class HyExemptionReasonServiceImpl implements IHyExemptionReasonService
      * @return 结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteHyExemptionReasonByIds(String ids)
     {
         return hyExemptionReasonMapper.deleteHyExemptionReasonByIds(Convert.toStrArray(ids));
@@ -87,6 +92,7 @@ public class HyExemptionReasonServiceImpl implements IHyExemptionReasonService
      * @return 结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteHyExemptionReasonById(Long id)
     {
         return hyExemptionReasonMapper.deleteHyExemptionReasonById(id);
