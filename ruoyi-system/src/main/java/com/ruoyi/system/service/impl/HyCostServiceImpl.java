@@ -47,7 +47,7 @@ public class HyCostServiceImpl implements IHyCostService {
 	public List<HyCost> selectHyCostList(HyCost hyCost) {
 		return hyCostMapper.selectHyCostList(hyCost);
 	}
-	
+
 	/**
 	 * 查询费用项目列表
 	 * 
@@ -55,9 +55,16 @@ public class HyCostServiceImpl implements IHyCostService {
 	 * @return 费用项目
 	 */
 	@Override
-	
 	public List<HyCost> selectHyCostListDistinct(HyCost hyCost) {
-		return hyCostMapper.selectHyCostListDistinct(hyCost);
+		List<HyCost> list = hyCostMapper.selectHyCostListDistinct(hyCost);
+		List<HyCost> reList = new ArrayList<>();
+		for (HyCost cost : list) {
+			if (null == cost) {
+				continue;
+			}
+			reList.add(cost);
+		}
+		return reList;
 	}
 
 	/**

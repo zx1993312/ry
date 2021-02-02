@@ -14,7 +14,7 @@
                                 <label>费用项目：</label>
                                 <select id="costItems" name="costItems" class="form-control" th:with="type=${@cost.getCost()}" onchange="changeStandardName()"> 
 									<option value="">请选择</option>
-									<option th:each="data : ${type}" th:text="${data.costItems}" th:value="${data.costItems}"></option>
+									<option th:if="data != null" th:each="data : ${type}" th:text="${data.costItems}" th:value="${data.costItems}"></option>
 								</select> 
                             </li>
                             <li>
