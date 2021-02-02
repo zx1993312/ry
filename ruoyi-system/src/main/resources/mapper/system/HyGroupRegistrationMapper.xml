@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyGroupRegistrationMapper">
+    
+    <resultMap type="HyGroupRegistration" id="HyGroupRegistrationResult">
+        <result property="id"    column="id"    />
+        <result property="groupAreaName"    column="group_area_name"    />
+        <result property="locked"    column="locked"    />
+    </resultMap>
+
+    <sql id="selectHyGroupRegistrationVo">
+        select id, group_area_name, locked from hy_group_registration
+    </sql>
+
+    <select id="selectHyGroupRegistrationList" parameterType="HyGroupRegistration" resultMap="HyGroupRegistrationResult">
+        <include refid="selectHyGroupRegistrationVo"/>
+        <where>  
+            <if test="groupAreaName != null  and groupAreaName != ''"> and group_area_name like concat('%', #{groupAreaName}, '%')</if>
+            <if test="locked != null "> and locked = #{locked}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyGroupRegistrationById" parameterType="Long" resultMap="HyGroupRegistrationResult">
+        <include refid="selectHyGroupRegistrationVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyGroupRegistration" parameterType="HyGroupRegistration" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_group_registration
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="groupAreaName != null">group_area_name,</if>
+            <if test="locked != null">locked,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="groupAreaName != null">#{groupAreaName},</if>
+            <if test="locked != null">#{locked},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyGroupRegistration" parameterType="HyGroupRegistration">
+        update hy_group_registration
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="groupAreaName != null">group_area_name = #{groupAreaName},</if>
+            <if test="locked != null">locked = #{locked},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyGroupRegistrationById" parameterType="Long">
+        delete from hy_group_registration where id = #{id}
+    </delete>
+
+    <delete id="deleteHyGroupRegistrationByIds" parameterType="String">
+        delete from hy_group_registration where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
