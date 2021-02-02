@@ -53,11 +53,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="deliveryStatus" column="delivery_status" />
 		<result property="transferTenants" column="transfer_tenants" />
 		<result property="changeDate" column="change_date" />
-		
-		
-		<association property="hyHouseInf" column="id" javaType="HyHouseInf" resultMap="HyHouseInfResult" />
-		<association property="hyOwnerRegistration" column="id" javaType="HyOwnerRegistration" resultMap="HyOwnerRegistrationResult" />
-		<association property="hyParkingInf" column="id" javaType="HyParkingInf" resultMap="HyParkingInfResult" />
+		<result property="billingMethod" column="billing_method" />
+
+
+		<association property="hyHouseInf" column="id"
+			javaType="HyHouseInf" resultMap="HyHouseInfResult" />
+		<association property="hyOwnerRegistration" column="id"
+			javaType="HyOwnerRegistration" resultMap="HyOwnerRegistrationResult" />
+		<association property="hyParkingInf" column="id"
+			javaType="HyParkingInf" resultMap="HyParkingInfResult" />
+		<association property="hyMeter" column="id"
+			javaType="HyMeter" resultMap="HyMeterResult" />
 	</resultMap>
 
 	<resultMap type="HyHouseInf" id="HyHouseInfResult">
@@ -174,7 +180,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="parkingName" column="parking_name" />
 
 	</resultMap>
-<resultMap type="HyMeter" id="HyMeterResult">
+	<resultMap type="HyMeter" id="HyMeterResult">
 		<id property="id" column="id" />
 		<result property="houseNum" column="house_num" />
 		<result property="meterType" column="meter_type" />
@@ -214,8 +220,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="sourceMeter" column="source_meter" />
 		<result property="meterReader" column="meter_reader" />
 		<result property="inputTime" column="input_time" />
-		<association property="hyMeterCase" column="id"
-			javaType="HyMeterCase" resultMap="HyMeterCaseResult" />
+
 	</resultMap>
 	<sql id="selectHyCostVo">
 		SELECT
@@ -261,6 +266,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		c.billing_cycle,
 		c.transfer_tenants,
 		c.change_date,
+		c.billing_method,
 		o.owner_name,
 		h.group_area,
 		h.building,
@@ -271,23 +277,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		m.meter_name
 		FROM
 		hy_cost c
-		LEFT JOIN hy_owner_registration o ON c.house_num=o.house_num
-		LEFT JOIN hy_house_inf h ON o.house_num=h.house_number
-		LEFT JOIN hy_parking_inf p ON h.house_number=p.house_number
-		LEFT JOIN hy_meter m on m.house_num=c.house_num
+		LEFT JOIN
+		hy_owner_registration o ON c.house_num = o.house_num
+		LEFT JOIN
+		hy_house_inf h ON c.house_num = h.house_number
+		LEFT JOIN hy_parking_inf
+		p ON c.house_num = p.house_number
+		LEFT JOIN hy_meter m ON c.house_num =
+		m.house_num
 		WHERE
-		1=1
+		1 = 1
 	</sql>
-	
+
 	<sql id="selectHyCostDistinctVo">
 		SELECT
 		DISTINCT c.cost_items
 		FROM
 		hy_cost c
-		LEFT JOIN hy_owner_registration o ON c.house_num=o.house_num
-		LEFT JOIN hy_house_inf h ON o.house_num=h.house_number
-		LEFT JOIN hy_parking_inf p ON h.house_number=p.house_number
-		LEFT JOIN hy_meter m on m.house_num=c.house_num
+		LEFT JOIN
+		hy_owner_registration o ON c.house_num=o.house_num
+		LEFT JOIN
+		hy_house_inf h ON o.house_num=h.house_number
+		LEFT JOIN hy_parking_inf p
+		ON h.house_number=p.house_number
+		LEFT JOIN hy_meter m on
+		m.house_num=c.house_num
 		WHERE
 		1=1
 	</sql>
@@ -297,8 +311,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<include refid="selectHyCostVo" />
 		<if test="costItems != null  and costItems != ''"> and cost_items = #{costItems}</if>
 		<if test="expenseType != null  and expenseType != ''"> and expense_type = #{expenseType}</if>
+		<if test="chargingStandard != null  and chargingStandard != ''"> and charging_standard = #{chargingStandard}</if>
+		<if test="proportionDamags != null  and proportionDamags != ''"> and proportion_damags = #{proportionDamags}</if>
+		<if test="calculationMehod != null  and calculationMehod != ''"> and calculation_mehod = #{calculationMehod}</if>
+		<if test="billingCycle != null  and billingCycle != ''"> and billing_cycle = #{billingCycle}</if>
 	</select>
-	
+
 	<select id="selectHyCostListDistinct" parameterType="HyCost"
 		resultMap="HyCostResult">
 		<include refid="selectHyCostDistinctVo" />
@@ -309,19 +327,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectHyCostById" parameterType="Long"
 		resultMap="HyCostResult">
 		<include refid="selectHyCostVo" />
-		and id = #{id}
+		and c.id = #{id}
 	</select>
 
 	<insert id="insertHyCost" parameterType="HyCost"
 		useGeneratedKeys="true" keyProperty="id">
 		insert into hy_cost
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="costItems != null">cost_items,</if>
-			<if test="expenseType != null">expense_type,</if>
+			<if test="costItems != null and costItems!='' ">cost_items,</if>
+			<if test="houseNum != null  ">house_num,</if>
+			<if test="expenseType != null and expenseType!='' ">expense_type,</if>
+			<if test="billingCycle != null  ">billing_cycle,</if>
+			<if test="billingMethod != null  ">billing_method,</if>
+			<if test="standardName != null  ">standard_name,</if>
+			<if test="bilingStartDate != null ">biling_start_date,</if>
+			<if test="transferTenants != null and transferTenants !='' ">transfer_tenants,</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="costItems != null">#{costItems},</if>
-			<if test="expenseType != null">#{expenseType},</if>
+			<if test="costItems != null and costItems!='' ">#{costItems},</if>
+			<if test="houseNum != null  ">#{houseNum},</if>
+			<if test="expenseType != null and expenseType!='' ">#{expenseType},</if>
+			<if test="billingCycle != null ">#{billingCycle},</if>
+			<if test="billingMethod != null ">#{billingMethod},</if>
+			<if test="standardName != null ">#{standardName},</if>
+			<if test="bilingStartDate != null ">#{bilingStartDate},</if>
+			<if test="transferTenants != null and transferTenants !='' ">#{transferTenants},</if>
 		</trim>
 	</insert>
 
@@ -330,12 +360,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<trim prefix="SET" suffixOverrides=",">
 			<if test="costItems != null">cost_items = #{costItems},</if>
 			<if test="expenseType != null">expense_type = #{expenseType},</if>
+			<if test="houseNum != null  ">house_num = #{houseNum},</if>
+			<if test="billingCycle != null ">billing_cycle=#{billingCycle},</if>
+			<if test="billingMethod != null ">billing_method=#{billingMethod},</if>
+			<if test="standardName != null ">standard_name=#{standardName},</if>
+			<if test="bilingStartDate != null ">biling_start_date=#{bilingStartDate},</if>
+			<if test="transferTenants != null and transferTenants !='' ">transfer_tenants=#{transferTenants},</if>
 		</trim>
 		where id = #{id}
 	</update>
 
 	<delete id="deleteHyCostById" parameterType="Long">
-		delete from hy_cost where id = #{id}
+		delete from hy_cost
+		where id = #{id}
 	</delete>
 
 	<delete id="deleteHyCostByIds" parameterType="String">

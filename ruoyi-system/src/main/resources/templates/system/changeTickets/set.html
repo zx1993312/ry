@@ -29,9 +29,9 @@
 							<li><a class="btn btn-warning btn-rounded btn-sm"
 								onclick="reset()"><i class="fa fa-refresh"></i>&nbsp;放弃选择</a></li>
 							<li><a class="btn btn-warning btn-rounded btn-sm"
-								onclick="reset()"><i class="fa fa-refresh"></i>&nbsp;全选</a></li>
+								onclick="submitHandler()"><i class="fa fa-refresh"></i>&nbsp;全选</a></li>
 							<li><a class="btn btn-warning btn-rounded btn-sm"
-								onclick="reset()"><i class="fa fa-refresh"></i>&nbsp;单选</a></li>
+								onclick="submitHandler()"><i class="fa fa-refresh"></i>&nbsp;单选</a></li>
 						</ul>
 					</div>
 				</form>
@@ -102,6 +102,16 @@
         });
         function reset(){
         	window.location.href="/system/changeTickets/add"
+        }
+        function submitHandler() {
+        	var costItems = $.table.selectColumns('houseNum');
+        	var expenseType  = $.table.selectColumns('expenseType');
+        	if(costItems == ''){
+        		$.modal.alertWarning("请至少选择一条记录");
+        	}else{
+        		$("#standardName",window.parent.document).val(expenseType);
+        		window.location.href="/system/changeTickets/add";
+        	}
         }
     </script>
 </body>

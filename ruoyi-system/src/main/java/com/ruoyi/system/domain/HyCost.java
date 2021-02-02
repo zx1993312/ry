@@ -223,6 +223,11 @@ public class HyCost extends BaseEntity {
 	 */
 	@Excel(name="变更时间")
 	private Date changeDate;
+	/**
+	 * 计费方式
+	 */
+	@Excel(name="计费方式")
+	private String billingMethod;
 
 	private HyParkingInf hyParkingInf;
 
@@ -344,13 +349,7 @@ public class HyCost extends BaseEntity {
 		this.auditResultsReason = auditResultsReason;
 	}
 
-	public String getHouse_num() {
-		return houseNum;
-	}
 
-	public void setHouse_num(String house_num) {
-		this.houseNum = house_num;
-	}
 
 	public Date getBilingEndDate() {
 		return bilingEndDate;
@@ -616,6 +615,14 @@ public class HyCost extends BaseEntity {
 		this.hyMeter = hyMeter;
 	}
 
+	public String getBillingMethod() {
+		return billingMethod;
+	}
+
+	public void setBillingMethod(String billingMethod) {
+		this.billingMethod = billingMethod;
+	}
+
 	@Override
 	public String toString() {
 		return "HyCost [id=" + id + ", houseNum=" + houseNum + ", costItems=" + costItems + ", expenseType="
@@ -641,8 +648,7 @@ public class HyCost extends BaseEntity {
 				+ getCalculationMehod() + ", getStandardState()=" + getStandardState() + ", getProportionDamags()="
 				+ getProportionDamags() + ", getProjectModification()=" + getProjectModification()
 				+ ", getBillingCycle()=" + getBillingCycle() + ", getBilingStartDate()=" + getBilingStartDate()
-				+ ", getAuditResultsReason()=" + getAuditResultsReason() + ", getHouse_num()=" + getHouse_num()
-				+ ", getBilingEndDate()=" + getBilingEndDate() + ", getFeeDateOld()=" + getFeeDateOld()
+				+ ", getAuditResultsReason()=" + getAuditResultsReason() + ", getBilingEndDate()=" + getBilingEndDate() + ", getFeeDateOld()=" + getFeeDateOld()
 				+ ", getFeeDate()=" + getFeeDate() + ", getDueDateOld()=" + getDueDateOld() + ", getDueDate()="
 				+ getDueDate() + ", getAmountReceivableOld()=" + getAmountReceivableOld() + ", getAmountReceivable()="
 				+ getAmountReceivable() + ", getAmountActually()=" + getAmountActually() + ", getRemarks()="

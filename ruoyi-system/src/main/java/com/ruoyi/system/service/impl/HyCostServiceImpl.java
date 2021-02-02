@@ -11,8 +11,14 @@ import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.Ztree;
 import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.system.constants.Constants;
 import com.ruoyi.system.domain.HyCost;
+import com.ruoyi.system.domain.HyHouseInf;
 import com.ruoyi.system.mapper.HyCostMapper;
+import com.ruoyi.system.mapper.HyHouseInfMapper;
+import com.ruoyi.system.mapper.HyMeterMapper;
+import com.ruoyi.system.mapper.HyOwnerRegistrationMapper;
+import com.ruoyi.system.mapper.HyParkingInfMapper;
 import com.ruoyi.system.service.IHyCostService;
 
 /**
@@ -25,6 +31,14 @@ import com.ruoyi.system.service.IHyCostService;
 public class HyCostServiceImpl implements IHyCostService {
 	@Autowired
 	private HyCostMapper hyCostMapper;
+	@Autowired
+	private HyOwnerRegistrationMapper HyOwnerRegistrationMapper;
+	@Autowired
+	private HyHouseInfMapper HyHouseInfMapper;
+	@Autowired
+	private HyParkingInfMapper HyParkingInfMapper;
+	@Autowired
+	private HyMeterMapper HyMeterMapper;
 
 	/**
 	 * 查询费用项目
@@ -89,6 +103,11 @@ public class HyCostServiceImpl implements IHyCostService {
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public int insertHyCost(HyCost hyCost) {
+		hyCost.getHyOwnerRegistration().setHouseNum(hyCost.getHouseNum());
+		HyOwnerRegistrationMapper.insertHyOwnerRegistration(hyCost.getHyOwnerRegistration());
+		HyHouseInfMapper.insertHyHouseInf(hyCost.getHyHouseInf());
+		System.out.println(Constants.TIME_ALL.format(hyCost.getBilingStartDate()));
+//		hyCost.setBilingStartDate();
 		return hyCostMapper.insertHyCost(hyCost);
 	}
 
