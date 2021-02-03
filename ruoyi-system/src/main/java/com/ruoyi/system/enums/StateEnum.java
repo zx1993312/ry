@@ -4,7 +4,13 @@ import lombok.Getter;
 
 @Getter
 public enum StateEnum {
-	UNSOLD(0, "未售"), RECEIVED_ROOM(1, "已接房"), RENOVATION(2, "装修"), SOLD_BUT_NOT_RECEIVED(3, "已售未接房"), CHECK_IN(4, "已住");
+	SOLD_NOT_RECEIVED(0, "已售未接房"), 
+	UNSOLD(1,"未售"),
+	RECEIVED_ROOM(2,"已接房"),
+	RENOVATION(3,"装修"),
+	CHECK_IN(4,"入住"),
+	SOLD_VACANT(5,"已售空置"),
+	UNSOLD_VACANCY(6,"未售空置");
 	private int state;// 状态
 	private String value;// 值
 
@@ -19,7 +25,7 @@ public enum StateEnum {
 				return sta.value;
 			}
 		}
-		return null;
+		return String.valueOf(state);
 	}
 	
 }

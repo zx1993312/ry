@@ -20,7 +20,7 @@ public enum AuditEnum {
 			}
 		}
 
-		return null;
+		return String.valueOf(examine);
 	}
 
 }

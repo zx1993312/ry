@@ -17,8 +17,8 @@
 				<div class="col-sm-8">
 					<select id="state" name="state" class="form-control "
 						th:with="type=${@dict.getType('hy_delivery_status')}">
-						<option value="">请选择</option>
-					
+                                <option value="">请选择</option>
+								<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 					</select>
 				</div>
 			</div>
@@ -37,11 +37,10 @@
 			<div class="form-group">
 				<label class="col-sm-3 control-label">当前交房状态：</label>
 				<div class="col-sm-8">
-					<select name="currentState" class="form-control "
-						th:with="type=${@dict.getType('hy_delivery_status')}">
-						<option value="">请选择</option>
-					
-					</select>
+					 <select name="currentState" class="form-control " th:with="type=${@dict.getType('hy_delivery_status')}">
+			                <option value="">请选择</option>
+			            	<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+			            </select>
 				</div>
 			</div>
 			<div class="form-group">

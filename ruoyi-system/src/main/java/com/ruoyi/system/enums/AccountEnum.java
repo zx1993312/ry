@@ -22,6 +22,6 @@ public enum AccountEnum {
 				return ae.value;
 			}
 		}
-		return null;
+		return String.valueOf(manageProjects);
 	}
 }

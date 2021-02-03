@@ -72,7 +72,7 @@ public class HyChargeController extends BaseController {
 			map = Constants.REFLECT_UTIL.convertMap(hc);
 			reList.add(map);
 		}
-		return getDataTable(reList);
+		return getDataTable(list, reList);
 	}
 
 	/**
