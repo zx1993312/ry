@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('费用项目列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            
+
+          
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:cost:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:cost:remove')}]];
+        var prefix = ctx + "system/customerStandardsCost";
+
+        $(function() {
+            var options = {
+            		showSearch: false,
+    		        showRefresh: false,
+    		        showToggle: false,
+    		        showColumns: false,
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "费用项目",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '主键',
+                    visible: false
+                },
+          
+                {
+                    field: 'standardName',
+                    title: '费用名称'
+                },
+                {
+                    field: 'calculationMehod',
+                    title: '计算方式',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+                        	case '0' : value =  "按计费面积*单价每月计算";break;
+                        	case '1' : value =  "按计费面积*单价每季计算";break;
+                        	case '2' : value =  "按计费面积*单价每年计算";break;
+                        	case '3' : value =  "按定额每月计算";break;
+                        	case '4' : value =  "按定额每季计算";break;
+                        	case '5' : value =  "按定额每年计算";break;
+                    	}
+                    	return value;
+                    }
+                    
+                },
+                {
+                    field: 'calculationStandard',
+                    title: '计算标准'
+                   
+        
+                },
+                {
+                    field: 'billingCycle',
+                    title: '计费周期',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+                        	case '0' : value =  "按每1月计费";break;
+                        	case '1' : value =  "按每2月计费";break;
+                        	case '2' : value =  "按每3月计费";break;
+                        	case '3' : value =  "按每4月计费";break;
+                        	case '4' : value =  "按每5月计费";break;
+                        	case '5' : value =  "按每6月计费";break;
+                        	case '6' : value =  "按每7月计费";break;
+                        	case '7' : value =  "按每8月计费";break;
+                        	case '8' : value =  "按每9月计费";break;
+                        	case '9' : value =  "按每10月计费";break;
+                        	case '10' : value =  "按每11月计费";break;
+                        	case '11' : value =  "按每12月计费";break;
+                    	}
+                    	return value;
+                    }
+                },
+           
+                {
+                    field: 'proportionDamags',
+                    title: '违约金比例'
+                   
+        
+                },
+       
+                {
+                    field: 'standardDescription',
+                    title: '标准说明'
+                },
+                {
+                    field: 'standardState',
+                    title: '标准状态'
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

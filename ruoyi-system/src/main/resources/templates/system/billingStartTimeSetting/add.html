@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+<th:block th:include="include :: header('新增费用项目')" />
+</head>
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<form class="form-horizontal m" id="form-cost-add">
+			<div class="form-group">
+			<div align="center"  style="margin-left:-500px">
+						<input class="btn btn-success btn-lg" type="button" value="标准选择"
+							onclick="bt()" />
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-3 control-label">费用名称：</label>
+				<div class="col-sm-8">
+					<input name="standardName1" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">收费标准：</label>
+				<div class="col-sm-8">
+					<input name="standardName" class="form-control" type="text">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">计费开始时间：</label>
+				<div class="col-sm-8">
+					<div class="input-group date">
+						<input name="bilingStartDate" class="form-control"
+							placeholder="yyyy-MM-dd" type="text"> <span
+							class="input-group-addon"><i class="fa fa-calendar"></i></span>
+
+					</div>
+				</div>
+			</div>
+
+		</form>
+	</div>
+	<th:block th:include="include :: footer" />
+	<th:block th:include="include :: datetimepicker-js" />
+	<script th:inline="javascript">
+		var prefix = ctx + "system/customerStandardsCost"
+		$("#form-cost-add").validate({
+			onkeyup : false,
+			rules : {
+				costItems : {
+					maxlength : 255,
+					required : true,
+				},
+				expenseType : {
+					maxlength : 255,
+					required : true,
+				},
+			},
+			focusCleanup : true
+
+		});
+		function submitHandler() {
+			if ($.validate.form()) {
+				$.operate
+						.save(prefix + "/add", $('#form-cost-add').serialize());
+			}
+		}
+		$("input[name='bilingStartDate']").datetimepicker({
+			format : "yyyy-mm-dd",
+			minView : "month",
+			autoclose : true
+		});
+		function bt() {
+			window.location.href = "/system/cost/cost"
+		}
+	</script>
+</body>
+</html>

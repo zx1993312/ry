@@ -228,6 +228,11 @@ public class HyCost extends BaseEntity {
 	 */
 	@Excel(name="计费方式")
 	private String billingMethod;
+	/**
+	 * 计算标准
+	 */
+	@Excel(name="计算标准")
+	private BigDecimal calculationStandard;
 
 	private HyParkingInf hyParkingInf;
 
@@ -621,6 +626,14 @@ public class HyCost extends BaseEntity {
 
 	public void setBillingMethod(String billingMethod) {
 		this.billingMethod = billingMethod;
+	}
+
+	public BigDecimal getCalculationStandard() {
+		return calculationStandard;
+	}
+
+	public void setCalculationStandard(BigDecimal calculationStandard) {
+		this.calculationStandard = calculationStandard;
 	}
 
 	@Override
