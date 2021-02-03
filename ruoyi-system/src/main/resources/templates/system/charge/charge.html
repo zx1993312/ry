@@ -12,7 +12,7 @@
                         <ul>
                             <li>
                                 <label>房屋序号：</label>
-                                <input type="text" name="number"/>
+                                <input type="text" name="number" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
                             </li>
                             <li>
                                 <label>交房状态：</label>
@@ -41,7 +41,7 @@
                             </li>
                             <li>
                                 <label>缴费收费科目：</label>
-                                <input type="text" name="cost"/>
+                                <input type="text" name="cost" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>

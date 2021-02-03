@@ -20,7 +20,8 @@
 				<div class="col-sm-8">
 					<select id="state" name="state" th:field="*{state}" class="form-control "
 						th:with="type=${@dict.getType('hy_delivery_status')}">
-					
+						<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+							th:value="${dict.dictValue}"></option>
 					</select>
 				</div>
 			</div>
@@ -63,6 +64,9 @@
 	<th:block th:include="include :: footer" />
 	<script th:inline="javascript">
         var prefix = ctx + "system/charge";
+        
+        var oldNumber = $("#number").val();
+    	
         $("#form-charge-edit").validate({
             onkeyup: false,
             rules : {
@@ -81,6 +85,9 @@
 							}
 						},
 						dataFilter : function(data, type) {
+							if(oldNumber == $("#number").val()){
+								return $.validate.unique(0);
+							}
 							return $.validate.unique(data);
 						}
 					}

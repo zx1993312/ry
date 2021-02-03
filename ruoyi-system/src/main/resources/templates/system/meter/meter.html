@@ -13,7 +13,7 @@
 						<ul>
 							<li>
 								<label>表计序号：</label> 
-								<input type="text" name="meterSerialNum" />
+								<input type="text" name="meterSerialNum" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
 							</li>
 							<li>
 								<label>表计名称：</label> 
@@ -35,15 +35,15 @@
 							</li>
 							<li>
 								<label>初始读数：</label> 
-								<input type="text" name="initialRead" />
+								<input type="text" name="initialRead" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
 							</li>
 							<li>
 								<label>倍率：</label> 
-								<input type="text" name="magnification" />
+								<input type="text" name="magnification" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
 							</li>
 							<li>
 								<label>单价：</label> 
-								<input type="text" name="unitPrice" />
+								<input type="text" name="unitPrice" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
 							</li>
 							<li>
 								<label>表箱：</label> 

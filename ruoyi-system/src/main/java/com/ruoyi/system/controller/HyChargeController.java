@@ -177,6 +177,7 @@ public class HyChargeController extends BaseController {
 	@PostMapping("/checkNumber")
 	@ResponseBody
 	public String checkNumber(HyCharge hyCharge) {
+		System.out.println(hyCharge.getNumber());
 		Object obj = hyDataIsExistService.selectHyDataIsExist("hy_charge", "number", hyCharge.getNumber());
 		if (null == obj) {
 			return "0";

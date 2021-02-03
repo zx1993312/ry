@@ -12,7 +12,7 @@
                         <ul>
                             <li>
                                 <label>序号：</label>
-                                <input type="text" name="serialNum"/>
+                                <input type="text" name="serialNum" onkeyup="this.value=this.value.replace(/\D/g,'')" />
                             </li>
                             <li>
                                 <label>交房状态：</label>
@@ -157,6 +157,7 @@
             };
             $.table.init(options);
         });
+        
     </script>
 </body>
 </html>

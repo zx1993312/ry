@@ -32,11 +32,10 @@
 			<div class="form-group">
 				<label class="col-sm-3 control-label">计算方式：</label>
 				<div class="col-sm-8">
-					<select id="calculationMethod" name="calculationMethod" th:field="*{calculationMethod}"
-						class="form-control"
-						th:with="type=${@dict.getType('hy_charge_subject_set_calculation_method')}">
+					<select id="calculationMethod" name="calculationMethod" class="form-control"  th:field="*{calculationMethod}"               
+						th:with="type=${@dict.getType('hy_subject_type')}">
 						<option value="">请选择</option>
-						<option value="0">计费面积*单价每月</option>
+						<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 					</select>
 				</div>
 			</div>
