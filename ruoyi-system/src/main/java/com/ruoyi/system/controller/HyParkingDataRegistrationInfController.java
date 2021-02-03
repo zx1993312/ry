@@ -68,7 +68,7 @@ public class HyParkingDataRegistrationInfController extends BaseController {
 			map = Constants.REFLECT_UTIL.convertMap(hpi);
 			reList.add(map);
 		}
-		return getDataTable(list, reList);
+		return getDataTable(list,  reList);
 	}
 
 	/**

@@ -68,7 +68,7 @@ public class HyEntryController extends BaseController {
 			map = Constants.REFLECT_UTIL.convertMap(he);
 			reList.add(map);
 		}
-		return getDataTable(list, reList);
+		return getDataTable(list,  reList);
 	}
 
 	/**

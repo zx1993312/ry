@@ -68,7 +68,7 @@ public class HyCollectionController extends BaseController {
 			map = Constants.REFLECT_UTIL.convertMap(hc);
 			reList.add(map);
 		}
-		return getDataTable(list, reList);
+		return getDataTable(list,  reList);
 	}
 
 	/**

@@ -68,7 +68,7 @@ public class HyPastAccountController extends BaseController {
 			map = Constants.REFLECT_UTIL.convertMap(hpa);
 			reList.add(map);
 		}
-		return getDataTable(list, reList);
+		return getDataTable(list,  reList);
 	}
 
 	/**

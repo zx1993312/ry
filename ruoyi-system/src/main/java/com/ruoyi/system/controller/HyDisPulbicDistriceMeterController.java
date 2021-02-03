@@ -78,7 +78,7 @@ public class HyDisPulbicDistriceMeterController extends BaseController {
 			map.put("count", count);
 			reList.add(map);
 		}
-		return getDataTable(reList);
+		return getDataTable(list, reList);
 	}
 
 	/**

@@ -75,7 +75,7 @@ public class HyUpdateSelectMeterController extends BaseController {
 					count = newMeter.subtract(oldMeter);
 				}
 			}
-			map.put("count", count);
+			map.put("count",  count);
 			reList.add(map);
 		}
 		return getDataTable(list, reList);

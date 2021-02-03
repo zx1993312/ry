@@ -69,7 +69,7 @@ public class HyOwnerRegistrationController extends BaseController {
 			map = Constants.REFLECT_UTIL.convertMap(hor);
 			reList.add(map);
 		}
-		return getDataTable(list, reList);
+		return getDataTable(list,  reList);
 	}
 
 	/**

@@ -68,7 +68,7 @@ public class HyBillRevokeController extends BaseController {
 			map = Constants.REFLECT_UTIL.convertMap(hbs);
 			reList.add(map);
 		}
-		return getDataTable(list, reList);
+		return getDataTable(list,  reList);
 	}
 
 	/**
