@@ -107,6 +107,19 @@
             };
             $.table.init(options);
         });
+        function submitHandler() {
+        	var standardName = $.table.selectColumns('standardName');
+        	var calculationStandard  = $.table.selectColumns('calculationStandard');
+        	var calculationMehod  = $.table.selectColumns('calculationStandard');
+        	if(standardName == ''){
+        		$.modal.alertWarning("请至少选择一条记录");
+        	}else{
+        		$("#standardName",window.parent.document).val(standardName);
+        		$("#standardName",window.parent.document).val(calculationStandard);
+        		$("#standardName",window.parent.document).val(calculationMehod);
+        		 window.location.href="/system/customerStandardsCost/add?standardName="+standardName;
+        	}
+        }
     </script>
 </body>
 </html>
