@@ -60,10 +60,9 @@ public class HyPaymentOffsetController extends BaseController {
 	@ResponseBody
 	public TableDataInfo list(@RequestParam("startFeeDate") Date startFeeDate,
 			@RequestParam("endFeeDate") Date endFeeDate, @RequestParam("auditStatus") String auditStatus) {
-		
+
 		startPage();
-		List<?> list = hyPaymentOffsetService.selectHyPaymentOffsetListTy(startFeeDate, endFeeDate,
-				auditStatus);
+		List<?> list = hyPaymentOffsetService.selectHyPaymentOffsetListTy(startFeeDate, endFeeDate, auditStatus);
 		return getDataTable(list);
 	}
 

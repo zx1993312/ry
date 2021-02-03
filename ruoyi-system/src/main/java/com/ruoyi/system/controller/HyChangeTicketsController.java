@@ -68,10 +68,8 @@ public class HyChangeTicketsController extends BaseController {
 			map = Constants.REFLECT_UTIL.convertMap(hbi);
 			reList.add(map);
 		}
-		return getDataTable(reList);
+		return getDataTable(list, reList);
 	}
-
-	
 
 	/**
 	 * 查询票据发放列表
@@ -81,11 +79,10 @@ public class HyChangeTicketsController extends BaseController {
 	@RequiresPermissions("system:issuance:set")
 	@GetMapping("/set")
 	public String relist(HyBillIssuance hyBillIssuance) {
-		
-		return prefix +"/set";
+
+		return prefix + "/set";
 	}
 
-	
 	/**
 	 * 导出票据发放列表
 	 */

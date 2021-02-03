@@ -69,7 +69,7 @@ public class HyVatAuditController extends BaseController {
 			reList.add(map);
 		}
 
-		return getDataTable(reList);
+		return getDataTable(list, reList);
 	}
 
 	/**

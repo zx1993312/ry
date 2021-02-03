@@ -65,6 +65,7 @@ public class HyMeterAdjustmentController extends BaseController {
 		startPage();
 		List<HySelectMeter> list = hySelectMeterService.selectHySelMeterList(hySelectMeter);
 		List<Map<String, Object>> reList = new ArrayList<>();
+		BigDecimal count = new BigDecimal(0);
 		for (HySelectMeter hs : list) {
 			map = Constants.REFLECT_UTIL.convertMap(hs);
 			if (hs != null) {
@@ -73,13 +74,13 @@ public class HyMeterAdjustmentController extends BaseController {
 
 					BigDecimal newMeter = new BigDecimal(hs.getNewMeterConsumption());
 					BigDecimal oldMeter = new BigDecimal(hs.getOldMeterConsumption());
-					BigDecimal count = newMeter.subtract(oldMeter);
-					map.put("count", count);
-					reList.add(map);
+					count = newMeter.subtract(oldMeter);
 				}
 			}
+			map.put("count", count);
+			reList.add(map);
 		}
-		return getDataTable(reList);
+		return getDataTable(list, reList);
 	}
 
 	/**
