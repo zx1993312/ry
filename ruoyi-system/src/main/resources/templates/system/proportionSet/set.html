@@ -19,7 +19,6 @@
                          
                                 <select name="deliveryStatus" class="form-control " th:with="type=${@dict.getType('hy_delivery_status')}">
                                 <option value="">请选择</option>
-                               
 								<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                                 </select>
                             </li>

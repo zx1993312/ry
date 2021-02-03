@@ -27,8 +27,7 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">计算方式：</label>
                 <div class="col-sm-8">
-                    <select id="calculationMethod" name="calculationMethod" class="form-control"                
-						th:with="type=${@dict.getType('hy_subject_type')}">
+                    <select id="calculationMethod" name="calculationMethod" class="form-control" th:with="type=${@dict.getType('hy_subject_type')}">
 						<option value="">请选择</option>
 						<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 					</select>

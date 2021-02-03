@@ -16,8 +16,7 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">交房状态：</label>
                 <div class="col-sm-8">
-                   	<select name="deliveryStatus" class="form-control " th:field="*{deliveryStatus}"
-						th:with="type=${@dict.getType('hy_delivery_status')}">
+                   	<select name="deliveryStatus" class="form-control " th:field="*{deliveryStatus}" th:with="type=${@dict.getType('hy_delivery_status')}">
 						<option value="">请选择</option>
 						<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
 							th:value="${dict.dictValue}"></option>
