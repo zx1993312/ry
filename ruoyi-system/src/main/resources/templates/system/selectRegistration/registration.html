@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+<th:block th:include="include :: header('业主资料登记列表')" />
+</head>
+<body class="gray-bg">
+	<div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li><label>客户名称：</label> <input type="text" name="ownerName" />
+							</li>
+							<li><label>房屋编号：</label> <input type="text" name="houseNum" />
+							</li>
+					
+							<li><label>联系电话：</label> <input type="text"
+								name="mobilePhone" /></li>
+						</ul>
+					</div>
+				</form>
+			</div>
+
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table"></table>
+			</div>
+		</div>
+	</div>
+	<th:block th:include="include :: footer" />
+	<script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:registration:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:registration:remove')}]];
+        var prefix = ctx + "system/selectRegistration";
+
+        $(function() {
+            var options = {
+            		showSearch: false,
+    		        showRefresh: false,
+    		        showToggle: false,
+    		        showColumns: false,
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "业主资料登记",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '主键',
+                    visible: false
+                },
+                {
+                    field: 'ownerName',
+                    title: '业主名称'
+                },
+                {
+                    field: 'houseNum',
+                    title: '房屋编号'
+                },
+         
+                {
+                    field: 'mobilePhone',
+                    title: '联系电话'
+                },
+                {
+                    field: 'idCardNum',
+                    title: '身份证号码'
+                },
+        
+                {
+                    field: 'customerCategoy',
+                    title: '客户类别'
+                }
+         ]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

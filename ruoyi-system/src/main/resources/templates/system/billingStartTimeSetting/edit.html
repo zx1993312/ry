@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改费用项目')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-cost-edit" th:object="${hyCost}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <div class="form-group">
+				<label class="col-sm-3 control-label">客户名称：</label>
+				<div class="col-sm-8">
+					<input name="ownerName"  th:field="*{hyOwnerRegistration.ownerName}" class="form-control" type="text" readonly="readonly" >
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">可选房号：</label>
+				<div class="col-sm-8">
+					<input name="houseNumber" th:field="*{hyHouseInf.houseNumber}" class="form-control" type="text" readonly="readonly" >
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">房屋编号：</label>
+				<div class="col-sm-8">
+					<input name="houseNumber" th:field="*{houseNum}" class="form-control" type="text" readonly="readonly" >
+				</div>
+			</div>
+	<!-- 		<div class="form-group">
+				<label class="col-sm-3 control-label">费用名称：</label>
+				<div class="col-sm-8">
+					<input name="standardName" th:field="*{standardName}" class="form-control" type="text">
+				</div>
+			</div> -->
+			<div class="form-group">
+				<label class="col-sm-3 control-label">计费标准：</label>
+				<div class="col-sm-8">
+					<input name="standardName" th:field="*{standardName}" class="form-control" type="text" readonly="readonly" >
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">计算方式：</label>
+				<div class="col-sm-8">
+				<select name="calculationMehod" th:field="*{calculationMehod}" class="form-control m-b"
+					th:with="type=${@dict.getType('hy_subject_type')}" disabled="disabled">
+						<option value="">请选择</option>
+							<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+							th:value="${dict.dictValue}"></option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">计费周期：</label>
+				<div class="col-sm-8">
+					<select name="billingCycle" th:field="*{billingCycle}" class="form-control m-b"
+					th:with="type=${@dict.getType('hy_billing_cycle')}">
+						<option value="">请选择</option>
+						<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+							th:value="${dict.dictValue}"></option>
+			
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">计费方式：</label>
+				<div class="col-sm-8">
+					
+					<select name="billingMethod" th:field="*{billingMethod}" class="form-control m-b"
+					th:with="type=${@dict.getType('hy_billing_method')}">
+						<option value="">请选择</option>
+							<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+							th:value="${dict.dictValue}"></option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">计费开始日期：</label>
+				<div class="col-sm-8">
+				<div class="input-group date">
+					<input  name="bilingStartDate" th:field="*{bilingStartDate}"
+						class="form-control" placeholder="yyyy-MM-dd" type="text">
+					<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+					
+				</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">出租时自动转给租户：</label>
+				<div class="col-sm-8">
+					<select name="transferTenants" th:field="*{transferTenants}" class="form-control m-b"
+					th:with="type=${@dict.getType('sys_yes_no')}">
+						<option value="">请选择</option>
+							<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+							th:value="${dict.dictValue}"></option>
+					</select>
+				</div>
+			</div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: datetimepicker-js" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/customerStandardsCost";
+        $("#form-cost-edit").validate({
+        	
+        	onkeyup:false,
+        	rules:{
+        		costItems: {
+            		maxlength:255,
+            		required : true,
+    			},
+    			expenseType: {
+    				maxlength:255,
+    				required : true,
+    			},
+    			
+        	},
+        	
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-cost-edit').serialize());
+            }
+        }
+        $("input[name='bilingStartDate']").datetimepicker({
+			format : "yyyy-mm-dd",
+			minView : "month",
+			autoclose : true
+		});
+    </script>
+</body>
+</html>

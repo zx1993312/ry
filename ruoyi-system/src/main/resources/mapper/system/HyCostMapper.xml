@@ -54,6 +54,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="transferTenants" column="transfer_tenants" />
 		<result property="changeDate" column="change_date" />
 		<result property="billingMethod" column="billing_method" />
+		<result property="calculationStandard" column="calculation_standard" />
 
 
 		<association property="hyHouseInf" column="id"
@@ -267,6 +268,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		c.transfer_tenants,
 		c.change_date,
 		c.billing_method,
+		c.calculation_standard,
 		o.owner_name,
 		h.group_area,
 		h.building,
@@ -281,10 +283,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		hy_owner_registration o ON c.house_num = o.house_num
 		LEFT JOIN
 		hy_house_inf h ON c.house_num = h.house_number
-		LEFT JOIN hy_parking_inf
-		p ON c.house_num = p.house_number
-		LEFT JOIN hy_meter m ON c.house_num =
-		m.house_num
+		LEFT JOIN 
+		hy_parking_inf p ON c.house_num = p.house_number
+		LEFT JOIN 
+		hy_meter m ON c.house_num = m.house_num
 		WHERE
 		1 = 1
 	</sql>
@@ -298,10 +300,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		hy_owner_registration o ON c.house_num=o.house_num
 		LEFT JOIN
 		hy_house_inf h ON o.house_num=h.house_number
-		LEFT JOIN hy_parking_inf p
-		ON h.house_number=p.house_number
-		LEFT JOIN hy_meter m on
-		m.house_num=c.house_num
+		LEFT JOIN 
+		hy_parking_inf p ON h.house_number=p.house_number
+		LEFT JOIN
+		hy_meter m on c.house_num=m.house_num
 		WHERE
 		1=1
 	</sql>
@@ -311,10 +313,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<include refid="selectHyCostVo" />
 		<if test="costItems != null  and costItems != ''"> and cost_items = #{costItems}</if>
 		<if test="expenseType != null  and expenseType != ''"> and expense_type = #{expenseType}</if>
-		<if test="chargingStandard != null  and chargingStandard != ''"> and charging_standard = #{chargingStandard}</if>
-		<if test="proportionDamags != null  and proportionDamags != ''"> and proportion_damags = #{proportionDamags}</if>
-		<if test="calculationMehod != null  and calculationMehod != ''"> and calculation_mehod = #{calculationMehod}</if>
-		<if test="billingCycle != null  and billingCycle != ''"> and billing_cycle = #{billingCycle}</if>
+
 	</select>
 
 	<select id="selectHyCostListDistinct" parameterType="HyCost"
