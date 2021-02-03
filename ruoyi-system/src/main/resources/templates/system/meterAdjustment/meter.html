@@ -34,8 +34,9 @@
 									<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
 										th:value="${dict.dictValue}"></option>
 							</select></li>
-							<li><label>抄表日期：</label> <input type="text"
-								name="meterReadDate" /></li>
+							<li><label>抄表日期：</label> 
+								<input type="text" class="time-input" placeholder="请选择抄表日期" name="meterReadDate"/>
+							</li>
 							<li><label>现用量：</label> <input type="text"
 								id="newMeterConsumption" name="newMeterConsumption" /></li>
 							<li><label>旧表用量：</label> <input type="text"
