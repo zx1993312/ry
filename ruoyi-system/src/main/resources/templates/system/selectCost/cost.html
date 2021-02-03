@@ -6,9 +6,6 @@
 <body class="gray-bg">
      <div class="container-div">
         <div class="row">
-            
-
-          
             <div class="col-sm-12 select-table table-striped">
                 <table id="bootstrap-table"></table>
             </div>
@@ -110,14 +107,14 @@
         function submitHandler() {
         	var standardName = $.table.selectColumns('standardName');
         	var calculationStandard  = $.table.selectColumns('calculationStandard');
-        	var calculationMehod  = $.table.selectColumns('calculationStandard');
+        	var calculationMehod  = $.table.selectColumns('calculationMehod');
         	if(standardName == ''){
         		$.modal.alertWarning("请至少选择一条记录");
         	}else{
         		$("#standardName",window.parent.document).val(standardName);
-        		$("#standardName",window.parent.document).val(calculationStandard);
-        		$("#standardName",window.parent.document).val(calculationMehod);
-        		 window.location.href="/system/customerStandardsCost/add?standardName="+standardName;
+        		$("#calculationStandard",window.parent.document).val(calculationStandard);
+        		$("#calculationMehod",window.parent.document).val(calculationMehod);
+        		$.modal.close();
         	}
         }
     </script>

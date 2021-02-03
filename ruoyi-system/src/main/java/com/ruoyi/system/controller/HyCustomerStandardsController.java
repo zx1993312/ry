@@ -1,19 +1,15 @@
 package com.ruoyi.system.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ruoyi.common.annotation.Log;
@@ -98,10 +94,7 @@ public class HyCustomerStandardsController extends BaseController {
 	 * 新增费用项目
 	 */
 	@GetMapping("/add")
-	public String add(String standardName) {
-		System.out.println(standardName);
-		ModelMap map = new ModelMap();
-		map.put("standardName", standardName);
+	public String add() {
 		return prefix + "/add";
 	}
 
