@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+<th:block th:include="include :: header('新增费用项目')" />
+</head>
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<form class="form-horizontal m" id="form-cost-add">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">客户名称：</label>
+				<div class="col-sm-8">
+					<input id="ownerName"
+						name="ownerName" class="form-control"
+						type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">房屋编号：</label>
+				<div class="col-sm-8">
+					<input id="houseNum"
+						name="houseNum" class="form-control"
+						type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">房屋名称：</label>
+				<div class="col-sm-8">
+					<input id="houseName" name="houseName"
+						class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">车位编号：</label>
+				<div class="col-sm-8">
+					<input id="parkingNumber"
+						name="parkingNumber" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">费用项目：</label>
+				<div class="col-sm-8">
+					<select id="costItems" name="costItems" class="form-control m-b"
+						th:with="type=${@dict.getType('hy_fee_name')}">
+						<option value="">请选择</option>
+						<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+							th:value="${dict.dictValue}"></option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">费用日期：</label>
+				<div class="col-sm-8">
+					<div class="input-group date">
+
+						<input name="feeDateOld" class="form-control"
+							placeholder="yyyy-MM-dd" type="text"> <span
+							class="input-group-addon"><i class="fa fa-calendar"></i></span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">开始日期：</label>
+				<div class="col-sm-8">
+					<div class="input-group date">
+
+						<input name="bilingStartDate" class="form-control"
+							placeholder="yyyy-MM-dd" type="text"> <span
+							class="input-group-addon"><i class="fa fa-calendar"></i></span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">结束日期：</label>
+				<div class="col-sm-8">
+					<div class="input-group date">
+
+						<input name="bilingEndDate" class="form-control"
+							placeholder="yyyy-MM-dd" type="text"> <span
+							class="input-group-addon"><i class="fa fa-calendar"></i></span>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">应收金额：</label>
+				<div class="col-sm-8">
+					<input id="amountReceivable" name="amountReceivable"
+						class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">实收金额：</label>
+				<div class="col-sm-8">
+					<input id="amountActually" name="amountActually"
+						class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">预交冲抵：</label>
+				<div class="col-sm-8">
+					<input id="advancePaymetnOffset" name="advancePaymetnOffset"
+						class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">减免冲销：</label>
+				<div class="col-sm-8">
+					<input id="writeOff" name="writeOff" class="form-control"
+						type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">退款金额：</label>
+				<div class="col-sm-8">
+					<input id="refundAmount" name="refundAmount" class="form-control"
+						type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">欠收金额：</label>
+				<div class="col-sm-8">
+					<input  name="amountArrears" class="form-control"
+						type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">托收状态：</label>
+				<div class="col-sm-8">
+					<input id="collectionStatus" name="collectionStatus"
+						class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">冻结状态：</label>
+				<div class="col-sm-8">
+					<input id="frozenState" name="frozenState" class="form-control"
+						type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">垫付状态：</label>
+				<div class="col-sm-8">
+					<input id="advanceStatus" name="advanceStatus" class="form-control"
+						type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">预交状态：</label>
+				<div class="col-sm-8">
+					<input id="deliveryStatus" name="deliveryStatus"
+						class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+	</div>
+	<th:block th:include="include :: footer" />
+	<th:block th:include="include :: datetimepicker-js" />
+	<script th:inline="javascript">
+		var prefix = ctx + "system/receivableInput"
+		$("#form-cost-add").validate({
+			onkeyup : false,
+			rules : {
+				ownerName : {
+					maxlength : 255,
+					required : true,
+				},
+				houseNum : {
+					maxlength : 255,
+					required : true,
+				},
+				houseName : {
+					maxlength : 255,
+					required : true,
+				},
+				parkingNumber : {
+					maxlength : 255,
+					required : true,
+				},
+				costItems : {
+					maxlength : 255,
+					required : true,
+				},
+				amountReceivable : {
+					maxlength : 255,
+					required : true,
+					number:true,
+				},
+				amountActually : {
+					maxlength : 255,
+					required : true,
+					number:true,
+				},
+				advancePaymetnOffset : {
+					maxlength : 255,
+					required : true,
+					number:true,
+					
+				},
+				writeOff : {
+					maxlength : 255,
+					required : true,
+					number:true,
+				},
+				refundAmount : {
+					maxlength : 255,
+					required : true,
+					number:true,
+				},
+				amountArrears : {
+					maxlength : 255,
+					required : true,
+					number:true,
+				},
+				collectionStatus : {
+					maxlength : 255,
+					required : true,
+					number:true,
+				},
+				frozenState : {
+					maxlength : 255,
+					required : true,
+					number:true,
+				},
+				advanceStatus : {
+					maxlength : 255,
+					required : true,
+					number:true,
+				},
+				deliveryStatus : {
+					maxlength : 255,
+					required : true,
+					number:true,
+				},
+		
+			},
+			focusCleanup : true
+
+		});
+
+		function submitHandler() {
+			if ($.validate.form()) {
+				$.operate.save(prefix + "/add", $('#form-cost-add').serialize());
+			}
+		}
+		$("input[name='feeDateOld']").datetimepicker({
+			format : "yyyy-mm-dd",
+			minView : "month",
+			autoclose : true
+		});
+		$("input[name='bilingStartDate']").datetimepicker({
+			format : "yyyy-mm-dd",
+			minView : "month",
+			autoclose : true
+		});
+		$("input[name='bilingEndDate']").datetimepicker({
+			format : "yyyy-mm-dd",
+			minView : "month",
+			autoclose : true
+		});
+	</script>
+</body>
+</html>

@@ -12,7 +12,7 @@
                         <ul>
                             <li>
                                 <label>房屋编号：</label>
-                                <input type="text" name="houseNumber"/>
+                                <input type="text" name="hyHouseInf.houseNumber" id="houseNumber"/>
                             </li>
                             <li>
                                 <label>房屋名称：</label>
@@ -72,6 +72,16 @@
             };
             $.table.init(options);
         });
+        function submitHandler() {
+        	var id= $.table.selectColumns('id');
+        	var houseNumber= $.table.selectColumns('hyHouseInf.houseNumber');
+        	if(id == ''){
+        		$.modal.alertWarning("请至少选择一条记录");
+        	}else{
+        		$("#houseNum",window.parent.document).val(houseNumber);
+        		$.modal.close();
+        	}
+        }
     </script>
 </body>
 </html>

@@ -57,7 +57,9 @@
                 <label class="col-sm-3 control-label">费用日期：</label>
                 <div class="col-sm-8">
                     <div class="input-group date">
-                        <input name="feeDate" th:value="${#dates.format(hyPastAccount.feeDate, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <input name="feeDate" 
+                        th:value="${#dates.format(hyPastAccount.feeDate, 'yyyy-MM-dd')}" 
+                        class="form-control" placeholder="yyyy-MM-dd" type="text">
                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                     </div>
                 </div>

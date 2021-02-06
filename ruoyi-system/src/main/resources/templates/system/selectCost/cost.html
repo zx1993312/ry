@@ -61,8 +61,7 @@
                 {
                     field: 'calculationStandard',
                     title: '计算标准'
-                   
-        
+
                 },
                 {
                     field: 'billingCycle',
@@ -112,10 +111,10 @@
         		$.modal.alertWarning("请至少选择一条记录");
         	}else{
         		$("#standardName",window.parent.document).val(standardName);
-        		$("#calculationStandard",window.parent.document).val(calculationStandard);
+        		$("#standardState",window.parent.document).val(calculationStandard);
         		$("#calculationMehod",window.parent.document).val(calculationMehod);
-        		$.modal.close();
         	}
+        	$.modal.close();
         }
     </script>
 </body>

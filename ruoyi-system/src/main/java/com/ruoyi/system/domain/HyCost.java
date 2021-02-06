@@ -162,7 +162,7 @@ public class HyCost extends BaseEntity {
 	 * 预交冲抵
 	 */
 	@Excel(name = "预交冲抵")
-	private BigDecimal advancePaymetnOffset;
+	private BigDecimal advancePaymentOffset;
 	/**
 	 * 减免冲销
 	 */
@@ -452,13 +452,7 @@ public class HyCost extends BaseEntity {
 		this.deleteReason = deleteReason;
 	}
 
-	public BigDecimal getAdvancePaymetnOffset() {
-		return advancePaymetnOffset;
-	}
 
-	public void setAdvancePaymetnOffset(BigDecimal advancePaymetnOffset) {
-		this.advancePaymetnOffset = advancePaymetnOffset;
-	}
 
 	public BigDecimal getWriteOff() {
 		return writeOff;
@@ -636,50 +630,13 @@ public class HyCost extends BaseEntity {
 		this.calculationStandard = calculationStandard;
 	}
 
-	@Override
-	public String toString() {
-		return "HyCost [id=" + id + ", houseNum=" + houseNum + ", costItems=" + costItems + ", expenseType="
-				+ expenseType + ", parentId=" + parentId + ", ancestors=" + ancestors + ", standardName=" + standardName
-				+ ", feeNum=" + feeNum + ", chargingStandard=" + chargingStandard + ", calculationMehod="
-				+ calculationMehod + ", standardDescription=" + standardDescription + ", standardState=" + standardState
-				+ ", proportionDamags=" + proportionDamags + ", projectModification=" + projectModification
-				+ ", billingCycle=" + billingCycle + ", bilingStartDate=" + bilingStartDate + ", bilingEndDate="
-				+ bilingEndDate + ", auditResultsReason=" + auditResultsReason + ", feeDateOld=" + feeDateOld
-				+ ", feeDate=" + feeDate + ", dueDateOld=" + dueDateOld + ", dueDate=" + dueDate
-				+ ", amountReceivableOld=" + amountReceivableOld + ", amountReceivable=" + amountReceivable
-				+ ", amountActually=" + amountActually + ", remarks=" + remarks + ", operationDate=" + operationDate
-				+ ", operationUser=" + operationUser + ", operationType=" + operationType + ", deleteReason="
-				+ deleteReason + ", advancePaymetnOffset=" + advancePaymetnOffset + ", writeOff=" + writeOff
-				+ ", refundAmount=" + refundAmount + ", amountArrears=" + amountArrears + ", collectionStatus="
-				+ collectionStatus + ", frozenPerson=" + frozenPerson + ", frozenState=" + frozenState + ", frozenDate="
-				+ frozenDate + ", frozenReason=" + frozenReason + ", advanceStatus=" + advanceStatus
-				+ ", deliveryStatus=" + deliveryStatus + ", hyParkingInf=" + hyParkingInf + ", hyHouseInf=" + hyHouseInf
-				+ ", hyOwnerRegistration=" + hyOwnerRegistration + ", getId()=" + getId() + ", getCostItems()="
-				+ getCostItems() + ", getExpenseType()=" + getExpenseType() + ", getParentId()=" + getParentId()
-				+ ", getAncestors()=" + getAncestors() + ", getStandardName()=" + getStandardName()
-				+ ", getChargingStandard()=" + getChargingStandard() + ", getCalculationMehod()="
-				+ getCalculationMehod() + ", getStandardState()=" + getStandardState() + ", getProportionDamags()="
-				+ getProportionDamags() + ", getProjectModification()=" + getProjectModification()
-				+ ", getBillingCycle()=" + getBillingCycle() + ", getBilingStartDate()=" + getBilingStartDate()
-				+ ", getAuditResultsReason()=" + getAuditResultsReason() + ", getBilingEndDate()=" + getBilingEndDate() + ", getFeeDateOld()=" + getFeeDateOld()
-				+ ", getFeeDate()=" + getFeeDate() + ", getDueDateOld()=" + getDueDateOld() + ", getDueDate()="
-				+ getDueDate() + ", getAmountReceivableOld()=" + getAmountReceivableOld() + ", getAmountReceivable()="
-				+ getAmountReceivable() + ", getAmountActually()=" + getAmountActually() + ", getRemarks()="
-				+ getRemarks() + ", getOperationUser()=" + getOperationUser() + ", getOperationType()="
-				+ getOperationType() + ", getDeleteReason()=" + getDeleteReason() + ", getAdvancePaymetnOffset()="
-				+ getAdvancePaymetnOffset() + ", getWriteOff()=" + getWriteOff() + ", getRefundAmount()="
-				+ getRefundAmount() + ", getAmountArrears()=" + getAmountArrears() + ", getCollectionStatus()="
-				+ getCollectionStatus() + ", getFrozenState()=" + getFrozenState() + ", getAdvanceStatus()="
-				+ getAdvanceStatus() + ", getDeliveryStatus()=" + getDeliveryStatus() + ", getHyParkingInf()="
-				+ getHyParkingInf() + ", getHyHouseInf()=" + getHyHouseInf() + ", getHyOwnerRegistration()="
-				+ getHyOwnerRegistration() + ", getHouseNum()=" + getHouseNum() + ", getFeeNum()=" + getFeeNum()
-				+ ", getFrozenPerson()=" + getFrozenPerson() + ", getFrozenDate()=" + getFrozenDate()
-				+ ", getOperationDate()=" + getOperationDate() + ", getFrozenReason()=" + getFrozenReason()
-				+ ", getStandardDescription()=" + getStandardDescription() + ", getSearchValue()=" + getSearchValue()
-				+ ", getCreateBy()=" + getCreateBy() + ", getCreateTime()=" + getCreateTime() + ", getUpdateBy()="
-				+ getUpdateBy() + ", getUpdateTime()=" + getUpdateTime() + ", getRemark()=" + getRemark()
-				+ ", getParams()=" + getParams() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
-				+ ", toString()=" + super.toString() + "]";
+	public BigDecimal getAdvancePaymentOffset() {
+		return advancePaymentOffset;
 	}
+
+	public void setAdvancePaymentOffset(BigDecimal advancePaymentOffset) {
+		this.advancePaymentOffset = advancePaymentOffset;
+	}
+
 
 }

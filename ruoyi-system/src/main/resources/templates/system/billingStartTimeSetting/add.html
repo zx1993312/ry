@@ -8,7 +8,7 @@
 		<form class="form-horizontal m" id="form-cost-add">
 			<div class="form-group">
 			<div align="center"  style="margin-left:-500px">
-						<input class="btn btn-success btn-lg" type="button" value="标准选择"
+						<input class="btn btn-success btn-sm" type="button" value="标准选择"
 							onclick="bt()" />
 				</div>
 			</div>
@@ -71,7 +71,7 @@
 			autoclose : true
 		});
 		function bt() {
-			window.location.href = "/system/cost/cost"
+				$.modal.open("收费标准详细列表","/system/selectCost");
 		}
 	</script>
 </body>
