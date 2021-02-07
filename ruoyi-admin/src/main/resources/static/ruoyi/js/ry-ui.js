@@ -1676,3 +1676,27 @@ modal_status = {
     FAIL: "error",
     WARNING: "warning"
 };
+
+//日期
+jQuery.validator.addMethod("isYear", function(value, element){
+	debugger;
+	var ereg = /^[12][0-9]{3}$/;
+	var r = value.match(ereg);
+	var result = true;
+	if (r == null) {
+		return false;
+	}
+	return this.optional(element) || (result);
+}, "请输入正确的年份");
+
+//日期
+jQuery.validator.addMethod("isMonth", function(value, element){
+	debugger;
+	var ereg = /^0?[1-9]$|^1[0-2]$/;
+	var r = value.match(ereg);
+	var result = true;
+	if (r == null) {
+		return false;
+	}
+	return this.optional(element) || (result);
+}, "请输入正确的月份");

@@ -46,10 +46,9 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">费用名称：</label>
                 <div class="col-sm-8">
-                <select id="feeName" name="feeName" th:field="*{feeName}" class="form-control"                
-						th:with="type=${@dict.getType('hy_past_account_fee_name')}">
+                	<select id="feeName" name="feeName" th:field="*{feeName}" class="form-control" th:with="type=${@dict.getType('hy_fee_name')}">
 						<option value="">请选择</option>
-						
+						<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 					</select>
                 </div>
             </div>
@@ -89,7 +88,9 @@
     				required : true,
     				maxlength:50,
     			},
-    		
+    			feeNum: {
+    				maxlength:20,
+    			},
 
         	},
             focusCleanup: true

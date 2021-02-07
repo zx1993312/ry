@@ -336,7 +336,99 @@
 	<script th:inline="javascript">
 		var prefix = ctx + "system/remission";
 		$("#form-remission-edit").validate({
-			focusCleanup : true
+			onkeyup:false,
+        	rules:{
+        		ownerName: {
+        			maxlength:20,
+        		},
+        		houseNumber: {
+        			maxlength:50,
+        		},
+        		houseName: {
+        			maxlength:50,
+        		},
+        		parkingNumber: {
+        			maxlength:50,
+        			number:true,
+        		},
+        		meterName: {
+        			maxlength:50,
+        		},
+        		businessExemptedType: {
+        			maxlength:1,
+        			number:true,
+        		},
+        		feeName: {
+        			maxlength:50,
+        		},
+        		reliefTypes: {
+        			maxlength:1,
+        			number:true,
+        		},
+        		totalAmountDeduction: {
+        			maxlength:11,
+        			number:true,
+        		},
+        		reducedAmount: {
+        			maxlength:11,
+        			number:true,
+        		},
+        		cancellationCreditAmount: {
+        			maxlength:11,
+        			number:true,
+        		},
+        		monthlyDeductionAmount: {
+        			maxlength:11,
+        			number:true,
+        		},
+        		reductionRatio: {
+        			maxlength:11,
+        			number:true,
+        		},
+        		sharingTotalDeduction: {
+        			maxlength:11,
+        			number:true,
+        		},
+        		exemptionReason: {
+        			maxlength:50,
+        		},
+        		remarks: {
+        			maxlength:255,
+        		},
+        		taxRate: {
+        			maxlength:11,
+        			number:true,
+        		},
+        		remissionYear: {
+        			isYear:true,
+        		},
+        		remissionMonth: {
+        			isMonth:true,
+        		},
+        		exemptionRegistrant: {
+        			maxlength:20,
+        		},
+        		amountNotRemitted: {
+        			maxlength:11,
+        			number:true,
+        		},
+        		amountTaxInc: {
+        			maxlength:11,
+        			number:true,
+        		},
+        		taxation: {
+        			maxlength:11,
+        			number:true,
+        		},
+        		amountExcludingTax: {
+        			maxlength:11,
+        			number:true,
+        		},
+        		revocation: {
+        			maxlength:20,
+        		},
+        	},
+            focusCleanup: true
 		});
 
 		function submitHandler() {
@@ -393,6 +485,7 @@
 			minView : "month",
 			autoclose : true
 		});
+		
 	</script>
 </body>
 </html>
