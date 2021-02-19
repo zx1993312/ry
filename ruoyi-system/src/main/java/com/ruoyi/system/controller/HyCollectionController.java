@@ -75,7 +75,7 @@ public class HyCollectionController extends BaseController {
 	 * 导出收款管理 Collection management列表
 	 */
 	@RequiresPermissions("system:collection:export")
-	@Log(title = "收款管理 Collection management", businessType = BusinessType.EXPORT)
+	@Log(title = "收款管理", businessType = BusinessType.EXPORT)
 	@ApiOperation("导出收款管理")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "hyCollection", value = "项目实体类", required = true), })
 	@PostMapping("/export")
@@ -100,7 +100,7 @@ public class HyCollectionController extends BaseController {
 	 * 新增保存收款管理 Collection management
 	 */
 	@RequiresPermissions("system:collection:add")
-	@Log(title = "收款管理 Collection management", businessType = BusinessType.INSERT)
+	@Log(title = "收款管理", businessType = BusinessType.INSERT)
 	@ApiOperation("新增保存收款管理")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "hyCollection", value = "项目实体类", required = true), })
 	@PostMapping("/add")
@@ -125,7 +125,7 @@ public class HyCollectionController extends BaseController {
 	 * 修改保存收款管理 Collection management
 	 */
 	@RequiresPermissions("system:collection:edit")
-	@Log(title = "收款管理 Collection management", businessType = BusinessType.UPDATE)
+	@Log(title = "收款管理", businessType = BusinessType.UPDATE)
 	@ApiOperation("修改保存收款管理")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "hyCollection", value = "项目实体类", required = true), })
 	@PostMapping("/edit")
@@ -138,7 +138,7 @@ public class HyCollectionController extends BaseController {
 	 * 删除收款管理 Collection management
 	 */
 	@RequiresPermissions("system:collection:remove")
-	@Log(title = "收款管理 Collection management", businessType = BusinessType.DELETE)
+	@Log(title = "收款管理", businessType = BusinessType.DELETE)
 	@ApiOperation("删除收款管理")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "ids", value = "ids", required = true), })
 	@PostMapping("/remove")

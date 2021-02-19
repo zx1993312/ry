@@ -40,7 +40,7 @@
                             </li>
                             <li>
                                 <label>同单元同楼层流水号：</label>
-                                <input type="text" name="sameUnitNumber"/>
+                                <input type="text" name="sameUnitNumber" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
                             </li>
                             <li>
                                 <label>面积类型：</label>
@@ -51,7 +51,6 @@
                             </li>
                             <li>
                                 <label>计费面积：</label>
-                             
                                 <select name="bilingArea" class="form-control m-b" th:with="type=${@dict.getType('hy_subject_type')}">
                                     <option value="">请选择</option>
                                     <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
@@ -253,7 +252,18 @@
                 },
                 {
                     field: 'bilingArea',
-                    title: '计费面积'
+                    title: '计费面积',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case '0' : value =  "按计费面积*单价每月计算";break;
+	                    	case '1' : value =  "按计费面积*单价每季计算";break;
+	                    	case '2' : value =  "按计费面积*单价每年计算";break;
+	                    	case '3' : value =  "按定额每月计算";break;
+	                    	case '4' : value =  "按定额每季计算";break;
+	                    	case '5' : value =  "按定额每年计算";break;
+	                	}
+		            	return value;
+		            }
                 },
                 {
                     field: 'insideArea',
@@ -301,7 +311,18 @@
                 },
                 {
                     field: 'natureProperty',
-                    title: '产权性质'
+                    title: '产权性质',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case '0' : value =  "自主产权";break;
+	                    	case '1' : value =  "业主产权";break;
+	                    	case '2' : value =  "共有产权";break;
+	                    	case '3' : value =  "产权不明";break;
+	                    	case '4' : value =  "其他产权";break;
+	                    	case '5' : value =  "人防产权";break;
+	                	}
+		            	return value;
+		            }
                 },
                 {
                     field: 'natureUse',

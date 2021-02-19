@@ -17,11 +17,11 @@
 									<option value="1">发票</option>
 									<option value="2">凭据</option>
 							</select></li>
-							<li><label>起号：</label> <input type="text" name="billNumStr" />
+							<li><label>起号：</label> <input type="text" name="billNumStr" onkeyup="this.value=this.value.replace(/\D/g,'')" />
 							</li>
-							<li><label>止号：</label> <input type="text" name="billNumEnd" />
+							<li><label>止号：</label> <input type="text" name="billNumEnd" onkeyup="this.value=this.value.replace(/\D/g,'')" />
 							</li>
-							<li><label>份数：</label> <input type="text" name="copies" /></li>
+							<li><label>份数：</label> <input type="text" name="copies" onkeyup="this.value=this.value.replace(/\D/g,'')"/></li>
 							<li><label>起号样票：</label> <input type="text"
 								name="ticketSampleStr" /></li>
 							<li><label>止号样票：</label> <input type="text"

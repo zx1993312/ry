@@ -1677,26 +1677,22 @@ modal_status = {
     WARNING: "warning"
 };
 
-//日期
+//校验年份
 jQuery.validator.addMethod("isYear", function(value, element){
 	debugger;
 	var ereg = /^[12][0-9]{3}$/;
-	var r = value.match(ereg);
-	var result = true;
-	if (r == null) {
-		return false;
-	}
-	return this.optional(element) || (result);
+	return this.optional(element) || (ereg.test(value));
 }, "请输入正确的年份");
 
-//日期
+//校验月份
 jQuery.validator.addMethod("isMonth", function(value, element){
-	debugger;
 	var ereg = /^0?[1-9]$|^1[0-2]$/;
-	var r = value.match(ereg);
-	var result = true;
-	if (r == null) {
-		return false;
-	}
-	return this.optional(element) || (result);
+	return this.optional(element) || (ereg.test(value));
 }, "请输入正确的月份");
+
+//校验手机号码
+jQuery.validator.addMethod("isPhone", function(value, element) {
+    var length = value.length;
+    var mobile = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
+    return this.optional(element) || (length == 11 && mobile.test(value));
+   }, "请填写正确的手机号码");

@@ -32,14 +32,13 @@
                             </li>
                             <li>
                                 <label>总金额：</label>
-                                <input type="text" name="amount"/>
+                                <input type="text" name="amount" onkeyup="this.value=this.value.replace(/\D/g,'')" />
                             </li>
                             <li>
                                 <label>是否收款：</label>
-                             <select name="collection" class="form-control " th:with="type=${@dict.getType('sys_yes_no')}">
-                                <option value="">请选择</option>
-                             
-								<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                             	<select name="collection" class="form-control " th:with="type=${@dict.getType('sys_yes_no')}">
+	                                <option value="">请选择</option>
+									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                                 </select>
                             </li>
                             <li>
@@ -52,10 +51,9 @@
                             </li>
                             <li>
                                 <label>是否记账：</label>
-                           <select name="bookkeeping" class="form-control " th:with="type=${@dict.getType('sys_yes_no')}">
-                                <option value="">请选择</option>
-                              
-								<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                           		<select name="bookkeeping" class="form-control " th:with="type=${@dict.getType('sys_yes_no')}">
+	                                <option value="">请选择</option>
+									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                                 </select>
                             </li>
                             <li>
@@ -111,7 +109,7 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "收款管理 Collection management",
+                modalName: "收款管理",
                 columns: [{
                     checkbox: true
                 },

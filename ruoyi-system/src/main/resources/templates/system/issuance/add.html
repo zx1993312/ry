@@ -10,8 +10,7 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">票据种类：</label>
                 <div class="col-sm-8">
-                    <select id="billType"  name="billType" class="form-control m-b"
-                  >
+                    <select id="billType"  name="billType" class="form-control m-b">
                        	<option value="">请选择</option>
 						<option value="0">收据</option>
 						<option value="1">发票</option>
@@ -98,10 +97,12 @@
    				billNumStr :{
    					required : true,
    					maxlength:20,
+   					number: true,
    				},
    				billNumEnd :{
    					required : true,
    					maxlength:20,
+   					number: true,
    				},
    				ticketSampleStr:{
    					required : true,
@@ -129,6 +130,10 @@
    				applicationScope:{
    					required : true,
    					maxlength:50,
+   				},
+   				copies:{
+   					number: true,
+   					maxlength:6,
    				},
                },
         	

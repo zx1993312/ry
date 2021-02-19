@@ -21,7 +21,7 @@
 							</li>
 							<li>
 								<label>表计序号：</label> 
-								<input type="text" name="meterSerialNum" />
+								<input type="text" name="meterSerialNum" onkeyup="this.value=this.value.replace(/\D/g,'')" />
 							</li>
 							<li>
 								<label>表计名称：</label> 

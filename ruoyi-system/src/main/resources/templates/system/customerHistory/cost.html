@@ -34,7 +34,7 @@
                          
                             <li>
                                 <label>通用收费标准：</label>
-                                <input type="text" name="chargingStandard"/>
+                                <input type="text" name="chargingStandard" onkeyup="this.value=this.value.replace(/\D/g,'')" />
                             </li>
                             <li>
                                 <label>计费周期：</label>

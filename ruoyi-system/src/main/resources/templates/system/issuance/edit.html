@@ -89,50 +89,56 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/issuance";
         $("#form-issuance-edit").validate({
-        	   onkeyup: false,
-               rules : {
-            	   billType:{
-   					required : true,
-   					maxlength:50,
-   				},
-   				billNumStr :{
-   					required : true,
-   					maxlength:20,
-   				},
-   				billNumEnd :{
-   					required : true,
-   					maxlength:20,
-   				},
-   				ticketSampleStr:{
-   					required : true,
-   					maxlength:50,
-   				},
-   				ticketSampleEnd:{
-   					required : true,
-   					maxlength:50,
-   				},
-   				community: {
-   					required : true,
-   					maxlength:50,
-   				},
-   				receiver :{
-   					required : true,
-   					maxlength:20,
-   				},
-   				user:{
-   					required : true,
-   					maxlength:20,
-   				},
-   				releaseTime:{
-   					required : true,
-   				},
-   				applicationScope:{
-   					required : true,
-   					maxlength:50,
-   				},
-               },
-        	
-            focusCleanup: true
+        	 onkeyup: false,
+             rules : {
+          	   billType:{
+ 					required : true,
+ 					maxlength:50,
+ 				},
+ 				billNumStr :{
+ 					required : true,
+ 					maxlength:20,
+ 					number: true,
+ 				},
+ 				billNumEnd :{
+ 					required : true,
+ 					maxlength:20,
+ 					number: true,
+ 				},
+ 				ticketSampleStr:{
+ 					required : true,
+ 					maxlength:50,
+ 				},
+ 				ticketSampleEnd:{
+ 					required : true,
+ 					maxlength:50,
+ 				},
+ 				community: {
+ 					required : true,
+ 					maxlength:50,
+ 				},
+ 				receiver :{
+ 					required : true,
+ 					maxlength:20,
+ 				},
+ 				user:{
+ 					required : true,
+ 					maxlength:20,
+ 				},
+ 				releaseTime:{
+ 					required : true,
+ 				},
+ 				applicationScope:{
+ 					required : true,
+ 					maxlength:50,
+ 				},
+ 				copies:{
+ 					number: true,
+ 					maxlength:6,
+ 				},
+             },
+      	
+          focusCleanup: true
         });
 
         function submitHandler() {
