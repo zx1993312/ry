@@ -15,9 +15,7 @@ import com.ruoyi.system.constants.Constants;
 import com.ruoyi.system.domain.HyCost;
 import com.ruoyi.system.mapper.HyCostMapper;
 import com.ruoyi.system.mapper.HyHouseInfMapper;
-import com.ruoyi.system.mapper.HyMeterMapper;
 import com.ruoyi.system.mapper.HyOwnerRegistrationMapper;
-import com.ruoyi.system.mapper.HyParkingInfMapper;
 import com.ruoyi.system.service.IHyCostService;
 
 /**
@@ -34,10 +32,7 @@ public class HyCostServiceImpl implements IHyCostService {
 	private HyOwnerRegistrationMapper HyOwnerRegistrationMapper;
 	@Autowired
 	private HyHouseInfMapper HyHouseInfMapper;
-	@Autowired
-	private HyParkingInfMapper HyParkingInfMapper;
-	@Autowired
-	private HyMeterMapper HyMeterMapper;
+	
 
 	/**
 	 * 查询费用项目
@@ -125,6 +120,13 @@ public class HyCostServiceImpl implements IHyCostService {
 	@Transactional(rollbackFor = Exception.class)
 	public int updateHyCost(HyCost hyCost) {
 		return hyCostMapper.updateHyCost(hyCost);
+	}
+	
+	
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public int updateHyCostOther(HyCost hyCost) {
+		return hyCostMapper.updateHyCostOther(hyCost);
 	}
 
 	/**

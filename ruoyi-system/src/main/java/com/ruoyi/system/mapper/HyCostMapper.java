@@ -50,6 +50,12 @@ public interface HyCostMapper
      * @return 结果
      */
     public int updateHyCost(HyCost hyCost);
+    
+    
+    public int updateHyCostOther(HyCost hyCost);
+    
+    
+    
 
     /**
      * 删除费用项目

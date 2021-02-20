@@ -75,4 +75,6 @@ public interface IHyCostService {
 	 * @return 结果
 	 */
 	public int deleteHyCostById(Long id);
+
+	public int updateHyCostOther(HyCost hyCost);
 }

@@ -54,7 +54,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="transferTenants" column="transfer_tenants" />
 		<result property="changeDate" column="change_date" />
 		<result property="billingMethod" column="billing_method" />
-		<result property="calculationStandard" column="calculation_standard" />
+		<result property="calculationStandard"
+			column="calculation_standard" />
 
 
 		<association property="hyHouseInf" column="id"
@@ -281,12 +282,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM
 		hy_cost c
 		LEFT JOIN
-		hy_owner_registration o ON c.house_num = o.house_num
+		hy_owner_registration o ON
+		c.house_num = o.house_num
 		LEFT JOIN
-		hy_house_inf h ON c.house_num = h.house_number
-		LEFT JOIN 
+		hy_house_inf h ON c.house_num =
+		h.house_number
+		LEFT JOIN
 		hy_parking_inf p ON c.house_num = p.house_number
-		LEFT JOIN 
+		LEFT JOIN
 		hy_meter m ON c.house_num = m.house_num
 		WHERE
 		1 = 1
@@ -301,10 +304,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		hy_owner_registration o ON c.house_num=o.house_num
 		LEFT JOIN
 		hy_house_inf h ON o.house_num=h.house_number
-		LEFT JOIN 
+		LEFT JOIN
 		hy_parking_inf p ON h.house_number=p.house_number
 		LEFT JOIN
-		hy_meter m on c.house_num=m.house_num
+		hy_meter m on
+		c.house_num=m.house_num
 		WHERE
 		1=1
 	</sql>
@@ -312,10 +316,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectHyCostList" parameterType="HyCost"
 		resultMap="HyCostResult">
 		<include refid="selectHyCostVo" />
-		
+
 		<if test="costItems != null  and costItems != ''"> and cost_items = #{costItems}</if>
 		<if test="expenseType != null  and expenseType != ''"> and expense_type = #{expenseType}</if>
-		
+
 
 	</select>
 
@@ -324,7 +328,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<include refid="selectHyCostDistinctVo" />
 		<if test="costItems != null  and costItems != ''"> and cost_items = #{costItems}</if>
 		<if test="expenseType != null  and expenseType != ''"> and expense_type = #{expenseType}</if>
-		
+
 	</select>
 
 	<select id="selectHyCostById" parameterType="Long"
@@ -346,12 +350,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="bilingStartDate != null ">biling_start_date,</if>
 			<if test="transferTenants != null and transferTenants !='' ">transfer_tenants,</if>
 			<if test="writeOff != null and writeOff !='' ">write_off,</if>
-	
+
 			<if test="feeDateOld != null  ">fee_date_old,</if>
 			<if test="bilingEndDate != null ">biling_end_date,</if>
 			<if test="amountReceivable != null and amountReceivable !='' ">amount_receivable,</if>
 			<if test="amountActually != null and amountActually !='' ">amount_actually,</if>
-			<if test="advancePaymentOffset != null and advancePaymentOffset !='' ">advance_payment_offset,</if>
+			<if
+				test="advancePaymentOffset != null and advancePaymentOffset !='' ">advance_payment_offset,</if>
 			<if test="refundAmount != null and refundAmount !='' ">refund_amount,</if>
 			<if test="amountArrears != null and amountArrears !='' ">amount_arrears,</if>
 			<if test="collectionStatus != null and collectionStatus !='' ">collection_status,</if>
@@ -369,12 +374,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="bilingStartDate != null ">#{bilingStartDate},</if>
 			<if test="transferTenants != null and transferTenants !='' ">#{transferTenants},</if>
 			<if test="writeOff != null and writeOff !='' ">#{writeOff},</if>
-	
+
 			<if test="feeDateOld != null  ">#{feeDateOld},</if>
 			<if test="bilingEndDate != null ">#{bilingEndDate},</if>
 			<if test="amountReceivable != null and amountReceivable !='' ">#{amountReceivable},</if>
 			<if test="amountActually != null and amountActually !='' ">#{amountActually},</if>
-			<if test="advancePaymentOffset != null and advancePaymentOffset !='' ">#{advancePaymentOffset},</if>
+			<if
+				test="advancePaymentOffset != null and advancePaymentOffset !='' ">#{advancePaymentOffset},</if>
 			<if test="refundAmount != null and refundAmount !='' ">#{refundAmount},</if>
 			<if test="amountArrears != null and amountArrears !='' ">#{amountArrears},</if>
 			<if test="collectionStatus != null and collectionStatus !='' ">#{collectionStatus},</if>
@@ -397,6 +403,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="transferTenants != null and transferTenants !='' ">transfer_tenants=#{transferTenants},</if>
 		</trim>
 		where id = #{id}
+	</update>
+
+	<update id="updateHyCostOther" parameterType="HyCost">
+		update hy_cost
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="billingCycle != null ">billing_cycle=#{billingCycle},</if>
+			<if test="billingMethod != null ">billing_method=#{billingMethod},</if>
+			<if test="bilingStartDate != null ">biling_start_date=#{bilingStartDate},</if>
+			<if test="transferTenants != null and transferTenants !='' ">transfer_tenants=#{transferTenants},</if>
+		</trim>
+		where h.building = #{building}
 	</update>
 
 	<delete id="deleteHyCostById" parameterType="Long">

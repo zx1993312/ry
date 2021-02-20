@@ -54,8 +54,7 @@
 					<div class="col-sm-8">
 						<div class="select-list" style="margin-left: 52%;">
 							<ul>
-								<li><select name="currentState" class="form-control m-b"
-									th:with="type=${@dict.getType('hy_use_state')}">
+								<li><select id="currentState" name="currentState" class="form-control m-b" onchange="changeStanderName()">
 										<option value="0">按组团</option>
 										<option value="1">按楼宇</option>
 										<option value="2">按单元</option>
@@ -65,9 +64,9 @@
 						</div>
 					</div>
 					<form id="form" action="#" class="wizard-big">
-
-						<select class="form-control dual_select" multiple>
-
+						<input type="text" th:value="${#currentState}" th:text="${#currentState}">
+						<select class="form-control dual_select"  th:with="type=${@groupRegistration.getGroupRegistration('1')}" multiple>
+							<option th:if="data != null" th:each="data : ${type}" th:text="${data.data}" th:value="${data.data}"></option>
 						</select>
 					</form>
 				</div>
@@ -123,13 +122,25 @@
 			$.modal.open("收费标准选择","/system/selectCost");
 			
 	}
-        function selectProject() {
+    /*     function selectProject() {
 			$.modal.open("收费项目选择","/system/costSelect");
 			
-	}
+	} */
+        function selectProject(){
+        	var costItems = $("#costItems").val();
+        	if(costItems == ''){
+        		$.modal.alertWarning("费用项目未选择");
+        	}else{
+        		$.modal.open("收费项目选择","/system/costSelect?costItems=" + costItems);
+        	}
+        	
+        }
         function bt(){
-        	 
-                  $.operate.save(prefix + "/edit");
+                  $.operate.save("system/customerStandardsCost/edit/{buliding}");
+        }
+        
+        function changeStanderName(){
+        	var currentState =$("#currentState").val();
         }
     </script>
 </body>

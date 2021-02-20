@@ -34,10 +34,10 @@ import io.swagger.annotations.ApiOperation;
  * @date 2021-01-06
  */
 @Controller
-@RequestMapping("/system/cost")
+@RequestMapping("/system/receivableImport")
 @Api(tags = "费用项目Controller")
-public class HyCostController extends BaseController {
-	private String prefix = "system/cost";
+public class HyReceivableImportController extends BaseController {
+	private String prefix = "system/receivableImport";
 
 	@Autowired
 	private IHyCostService hyCostService;
@@ -121,16 +121,6 @@ public class HyCostController extends BaseController {
 		HyCost hyCost = hyCostService.selectHyCostById(id);
 		mmap.put("hyCost", hyCost);
 		return prefix + "/edit";
-	}
-
-	/**
-	 * 
-	 */
-	@ApiOperation("费用项目")
-	@ApiImplicitParams({ @ApiImplicitParam(name = "buliding", value = "", required = true), })
-	@GetMapping("/edit/{buliding}")
-	public AjaxResult editOther(HyCost hyCost) {
-		return toAjax(hyCostService.updateHyCostOther(hyCost));
 	}
 
 	/**
