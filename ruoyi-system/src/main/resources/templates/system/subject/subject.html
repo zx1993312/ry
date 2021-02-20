@@ -145,23 +145,22 @@
 	                },
 	                {
 	                    field: 'calculationMethod',
-	                    title: '计算方式'
-	                },
-	                {
-	                    field: 'chargingStanard',
-	                    title: '通用收费标准',
+	                    title: '计算方式',
 	                    formatter: function(value, item, index) {
 	                    	switch(value){
-		                    	case 0 : value =  "按计费面积*单价每月计算";break;
-		                    	case 1 : value =  "按计费面积*单价每季计算";break;
-		                    	case 1 : value =  "按计费面积*单价每年计算";break;
-		                    	case 1 : value =  "按定额每月计算";break;
-		                    	case 1 : value =  "按定额每季计算";break;
-		                    	case 1 : value =  "按定额每年计算";break;
-		          
+		                    	case '0' : value =  "按计费面积*单价每月计算";break;
+		                    	case '1' : value =  "按计费面积*单价每季计算";break;
+		                    	case '2' : value =  "按计费面积*单价每年计算";break;
+		                    	case '3' : value =  "按定额每月计算";break;
+		                    	case '4' : value =  "按定额每季计算";break;
+		                    	case '5' : value =  "按定额每年计算";break;
 		                	}
 			            	return value;
 			            }
+	                },
+	                {
+	                    field: 'chargingStanard',
+	                    title: '通用收费标准'
 	                },
 	                {
 	                    field: 'descriptionStandard',
