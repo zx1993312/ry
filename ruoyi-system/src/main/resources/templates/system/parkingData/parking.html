@@ -44,9 +44,9 @@
 								name="houseNumber" /></li>
 					
 							<li><label>房屋产权性质：</label> <input type="text"
-								name="houseProperty" /></li>
+								name="houseProperty" onkeyup="this.value=this.value.replace(/\D/g,'')"/></li>
 							<li><label>房屋使用性质：</label> <input type="text"
-								name="houseNature" /></li>
+								name="houseNature" onkeyup="this.value=this.value.replace(/\D/g,'')"/></li>
 							<li><label>是否收取其他费用：</label> <select id="otherExpenses"
 								name="otherExpenses" class="form-control m-b"
 								>
@@ -78,7 +78,7 @@
 				<a class="btn btn-primary single disabled"
 					onclick="$.operate.edit()"
 					shiro:hasPermission="system:parking:edit"> <i
-					class="fa fa-edit"></i> 新增
+					class="fa fa-edit"></i> 修改
 				</a>  <a class="btn btn-warning" onclick="$.table.exportExcel()"
 					shiro:hasPermission="system:parking:export"> <i
 					class="fa fa-download"></i> 导出

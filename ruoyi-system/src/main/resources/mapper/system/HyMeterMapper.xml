@@ -46,6 +46,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="inputTime" column="input_time" />
 		<association property="hyMeterCase" column="id"
 			javaType="HyMeterCase" resultMap="HyMeterCaseResult" />
+		<association property="hyHouseInf" column="id"
+			javaType="HyHouseInf" resultMap="HyHouseInfResult" />
 	</resultMap>
 
 	<resultMap type="HyMeterCase" id="HyMeterCaseResult">
@@ -92,6 +94,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="marketingNum" column="marketing_num" />
 	</resultMap>
 
+
+
 	<sql id="selectHyMeterVo">
 		select m.id, m.house_num, m.meter_type, m.meter_serial_num,
 		m.meter_name, m.initial_read, m.meter_str_num,m.meter_end_num,
@@ -102,7 +106,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		m.input_time,m.meter_read_date,
 		c.meter_case_name,c.meter_case_position,
 		c.meter_serial,c.case_id,
-		h.house_number,h.house_name
+		h.house_number,h.house_name,
+		o.owner_name
 		from
 		hy_meter m
 		left join hy_meter_case c on
@@ -148,6 +153,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="sourceMeter != null  and sourceMeter != ''"> and m.source_meter = #{sourceMeter}</if>
 		<if test="meterReader != null  and meterReader != ''"> and m.meter_reader = #{meterReader}</if>
 		<if test="inputTime != null "> and m.input_time = #{inputTime}</if>
+		<if test="hyMeterCase.meterCaseName != null and hyMeterCase.meterCaseName!=''"> and c.meter_case_name = #{hyMeterCase.meterCaseName}</if>
+		<if test="hyMeterCase.meterCasePosition != null and hyMeterCase.meterCasePosition!=''"> and c.meter_case_position = #{hyMeterCase.meterCasePosition}</if>
 	</select>
 
 	<select id="selectHyMeterCase" parameterType="HyMeter"

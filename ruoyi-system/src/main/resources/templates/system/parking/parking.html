@@ -12,7 +12,7 @@
 					<div class="select-list">
 						<ul>
 							<li><label>车位名称：</label> <input type="text"
-								name="parkingName" /></li>
+								name="parkingName" onkeyup="this.value=this.value.replace(/\D/g,'')"/></li>
 							<li><label>车位区域：</label> <input type="text"
 								name="parkingArea" /></li>
 							<li><label>车位类别：</label> <input type="text"
@@ -46,7 +46,7 @@
 							<li><label>房屋名称：</label> <input type="text" name="houseName" />
 							</li>
 							<li><label>房屋产权性质：</label> <input type="text"
-								name="houseProperty" /></li>
+								name="houseProperty" onkeyup="this.value=this.value.replace(/\D/g,'')"/></li>
 							<li><label>房屋使用性质：</label> <input type="text"
 								name="houseNature" /></li>
 							<li><label>停车卡号：</label> <input type="text"
@@ -58,7 +58,7 @@
 							<li><label>车辆品牌：</label> <input type="text"
 								name="vehicleBrand" /></li>
 							<li><label>排量：</label> <input type="text"
-								name="displacement" /></li>
+								name="displacement" onkeyup="this.value=this.value.replace(/\D/g,'')"/></li>
 							<li><label>车辆颜色：</label> <input type="text"
 								name="vehicleColor" /></li>
 							<li><label>是否收取其他费用：</label> <select id="otherExpenses"

@@ -44,16 +44,16 @@
 							<li><label>房屋名称：</label> <input type="text" name="houseName" />
 							</li>
 							<li><label>房屋产权性质：</label> <input type="text"
-								name="houseProperty" /></li>
+								name="houseProperty" onkeyup="this.value=this.value.replace(/\D/g,'')"/></li>
 							<li><label>房屋使用性质：</label> <input type="text"
-								name="houseNature" /></li>
+								name="houseNature" onkeyup="this.value=this.value.replace(/\D/g,'')"/></li>
 							<li><label>停车卡号：</label> <input type="text"
 								name="parkingCard" /></li>
 							<li><label>车牌号码：</label> <input type="text"
 								name="licensePlate" /></li>
 						
 							<li><label>排量：</label> <input type="text"
-								name="displacement" /></li>
+								name="displacement" onkeyup="this.value=this.value.replace(/\D/g,'')"/></li>
 							
 							<li><label>使用状态：</label> <select name="usageStatus"
 								class="form-control m-b"

@@ -64,6 +64,11 @@ public class HySelectMeter {
 
 	/** 房屋名称 */
 	private String houseName;
+	/**标准名称 */
+	private String standardName;
 	
 	private HyHouseInf hyHouseInf;
+	
+	private HyOwnerRegistration hyOwnerRegistration;
+
 }

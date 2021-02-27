@@ -18,7 +18,7 @@
                             <li>
                                 <label>审核状态：</label>
                                
-                                 <select name="auditStatus" th:with="type=${@dict.getType('hy_examine_type')}">
+                                 <select name="hyAuditManagement.auditStatus" th:with="type=${@dict.getType('hy_examine_type')}">
                                     <option value="">请选择</option>
                       <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                                 </select>

@@ -47,7 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="bankAccountName" column="bank_account_name" />
 		<association property="hyHouseInf" column="id" javaType="HyHouseInf" resultMap="HyHouseInfResult" />
 		<association property="hyEntry" column="id" javaType="HyEntry" resultMap="HyEntryResult" />
-		
+		<association property="hyAuditManagement" column="id" javaType="HyAuditManagement" resultMap="HyAuditManagementResult" />
 	</resultMap>
 
    <resultMap type="HyEntry" id="HyEntryResult">
@@ -101,6 +101,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="changePerson" column="change_person" />
 		<result property="remark" column="remark" />
 	</resultMap>
+	
+	<resultMap type="HyAuditManagement" id="HyAuditManagementResult">
+        <result property="id"    column="id"    />
+        <result property="houseNum"    column="house_num"    />
+        <result property="auditProcess"    column="audit_process"    />
+        <result property="auditStatus"    column="audit_status"    />
+    </resultMap>
+	
 	<sql id="selectHyOwnerRegistrationVo">
 		select
 		o.id,
@@ -186,7 +194,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="birthDate != null "> and o.birth_date = #{birthDate}</if>
 		<if test="workUnit != null  and workUnit != ''"> and o.work_unit = #{workUnit}</if>
 		<if test="ownerJob != null  and ownerJob != ''"> and o.owner_job = #{ownerJob}</if>
-		<if test="ownerHobby != null  and ownerHobby != ''"> o.and owner_hobby = #{ownerHobby}</if>
+		<if test="ownerHobby != null  and ownerHobby != ''"> and o.owner_hobby = #{ownerHobby}</if>
 		<if test="ownerId != null  and ownerId != ''"> and o.owner_id = #{ownerId}</if>
 		<if test="taxpayerNum != null  and taxpayerNum != ''"> and o.taxpayer_num = #{taxpayerNum}</if>
 		<if test="ownerAddPhone != null  and ownerAddPhone != ''"> and o.owner_add_phone = #{ownerAddPhone}</if>
@@ -196,12 +204,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="bankNum != null "> and o.bank_num = #{bankNum}</if>
 		<if test="bankAccountName != null  and bankAccountName != ''"> and o.bank_account_name like concat('%',
 			#{bankAccountName}, '%')</if>
+			
+			
+		<if test="hyHouseInf.houseName != null and hyHouseInf.houseName !=''"> and h.house_name = #{hyHouseInf.houseName}</if>	
+		<if test="hyHouseInf.deliveryStatusBefore != null and hyHouseInf.deliveryStatusBefore !=''"> and h.delivery_status_before = #{hyHouseInf.deliveryStatusBefore}</if>	
+		<if test="hyHouseInf.deliveryStatus != null and hyHouseInf.deliveryStatus !=''"> and h.delivery_status = #{hyHouseInf.deliveryStatus}</if>	
+		<if test="hyHouseInf.changePerson != null and hyHouseInf.changePerson !=''"> and h.change_person = #{hyHouseInf.changePerson}</if>	
+		<if test="hyHouseInf.changeDate != null"> and h.change_date = #{hyHouseInf.changeDate}</if>	
+		<if test="hyAuditManagement.auditProcess != null and hyAuditManagement.auditProcess !=''"> and a.audit_process = #{hyAuditManagement.auditProcess}</if>	
+		<if test="hyAuditManagement.auditStatus != null"> and a.audit_status = #{hyAuditManagement.auditStatus}</if>	
 	</select>
 
 	<select id="selectHyOwnerRegistrationById" parameterType="Long"
 		resultMap="HyOwnerRegistrationResult">
 		<include refid="selectHyOwnerRegistrationVo" />
-		where o.id = #{id}
+		and o.id = #{id}
 	</select>
 
 	<insert id="insertHyOwnerRegistration"

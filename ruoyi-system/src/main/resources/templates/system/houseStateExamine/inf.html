@@ -13,34 +13,34 @@
                          
                             <li>
                                 <label>房屋编号：</label>
-                                <input type="text" name="houseNumber"/>
+                                <input type="text" name="houseNum"/>
                             </li>
                             <li>
                                 <label>房屋名称：</label>
-                                <input type="text" name="houseName"/>
+                                <input type="text" name="hyHouseInf.houseName"/>
                             </li>
                             <li>
                                 <label>变更前交房状态：</label>
-                            <select id="deliveryStatusBefore" name="deliveryStatusBefore" class="form-control" th:with="type=${@dict.getType('hy_delivery_status')}" > 
+                            <select id="deliveryStatusBefore" name="hyHouseInf.deliveryStatusBefore" class="form-control" th:with="type=${@dict.getType('hy_delivery_status')}" > 
 									<option value="">请选择</option>
 									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 								</select> 
                             </li>
                             <li>
                                 <label>变更后交房状态：</label>
-                                 <select id="deliveryStatus" name="deliveryStatus" class="form-control" th:with="type=${@dict.getType('hy_delivery_status')}" > 
+                                 <select id="deliveryStatus" name="hyHouseInf.deliveryStatus" class="form-control" th:with="type=${@dict.getType('hy_delivery_status')}" > 
 									<option value="">请选择</option>
 									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 								</select> 
                             </li>
                             <li>
                                 <label>变更人：</label>
-                                <input type="text" name="changePerson"/>
+                                <input type="text" name="hyHouseInf.changePerson"/>
                             </li>
                          
                             <li>
                                 <label>变更日期：</label>
-                                <input type="text" class="time-input" placeholder="请选择变更日期" name="changeDate"/>
+                                <input type="text" class="time-input" placeholder="请选择变更日期" name="hyHouseInf.changeDate"/>
                             </li>
                             <li>
                                 <label>当前业主：</label>
@@ -48,11 +48,11 @@
                             </li>
                             <li>
                                 <label>审核流程：</label>
-                                <input type="text" name="auditProcess"/>
+                                <input type="text" name="hyAuditManagement.auditProcess"/>
                             </li>
                             <li>
                                 <label>审核状态：</label>
-                                <select id="auditStatus" name="auditStatus" class="form-control" th:with="type=${@dict.getType('hy_examine_type')}" > 
+                                <select id="auditStatus" name="hyAuditManagement.auditStatus" class="form-control" th:with="type=${@dict.getType('hy_examine_type')}" > 
 									<option value="">请选择</option>
 									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 								</select> 
@@ -104,11 +104,11 @@
                 },
           
                 {
-                    field: 'hyOwnerRegistration.ownerName',
+                    field: 'ownerName',
                     title: '当前业主'
                 },
                 {
-                    field: 'deliveryStatusBefore',
+                    field: 'hyHouseInf.deliveryStatusBefore',
                     title: '变更前交房状态',
                     formatter: function(value, item, index) {
                     	switch(value){
@@ -124,27 +124,27 @@
 		            }
                 },
                 {
-                    field: 'deliveryStatus',
+                    field: 'hyHouseInf.deliveryStatus',
                     title: '变更后交房状态',
                     formatter: function(value, item, index) {
                     	switch(value){
-	                    	case 0 : value =  "已售未接房";break;
-	                    	case 1 : value =  "未售";break;
-	                    	case 2 : value =  "已接房";break;
-	                    	case 3 : value =  "装修";break;
-	                    	case 4 : value =  "入住";break;
-	                    	case 5 : value =  "已售空置";break;
-	                    	case 6 : value =  "未售空置";break;
+	                    	case '0' : value =  "已售未接房";break;
+	                    	case '1' : value =  "未售";break;
+	                    	case '2' : value =  "已接房";break;
+	                    	case '3' : value =  "装修";break;
+	                    	case '4' : value =  "入住";break;
+	                    	case '5' : value =  "已售空置";break;
+	                    	case '6' : value =  "未售空置";break;
 	                	}
 		            	return value;
 		            }
                 },
                 {
-                    field: 'changePerson',
+                    field: 'hyHouseInf.changePerson',
                     title: '变更人 '
                 },
                 {
-                    field: 'changeDate',
+                    field: 'hyHouseInf.changeDate',
                     title: '变更日期'
                 },
                 {
@@ -152,17 +152,17 @@
                     title: '备注'
                 },
                 {
-                    field: 'hyEntry.auditProcess',
+                    field: 'hyAuditManagement.auditProcess',
                     title: '审核流程'
                 },
                 
                 {
-                    field: 'hyEntry.auditStatus',
+                    field: 'hyAuditManagement.auditStatus',
                     title: '审核状态',
                     	 formatter: function(value, item, index) {
                     			switch(value){
-     	                    	case 0 : value =  "未审核";break;
-     	                    	case 1 : value =  "已审核";break;
+     	                    	case 0 : value =  "已审核";break;
+     	                    	case 1 : value =  "未审核";break;
      	                
      	                	}
      		            	return value;

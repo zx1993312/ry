@@ -45,7 +45,9 @@ public class HyMeterServiceImpl implements IHyMeterService {
 	 */
 	@Override
 	public List<HyMeter> selectHyMeterList(HyMeter hyMeter) {
-		return hyMeterMapper.selectHyMeterList(hyMeter);
+	
+			return hyMeterMapper.selectHyMeterList(hyMeter);
+		
 	}
 
 	/**

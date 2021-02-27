@@ -58,7 +58,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectHyHouseInfList" parameterType="HyHouseInf"
 		resultMap="HyHouseInfResult">
 		<include refid="selectHyHouseInfVo" />
-		<where>
+		
 			<if test="building != null  and building != ''"> and building = #{building}</if>
 			<if test="houseNumber != null  and houseNumber != ''"> and house_number = #{houseNumber}</if>
 			<if test="houseName != null  and houseName != ''"> and house_name like concat('%', #{houseName}, '%')</if>
@@ -89,7 +89,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="salesStatus != null  and salesStatus != ''"> and sales_status = #{salesStatus}</if>
 			<if test="purchaseContract != null  and purchaseContract != ''"> and purchase_contract = #{purchaseContract}</if>
 			<if test="marketingNum != null  and marketingNum != ''"> and marketing_num = #{marketingNum}</if>
-		</where>
+	
 	</select>
 
 	<select id="selectHyHouseInfById" parameterType="Long"

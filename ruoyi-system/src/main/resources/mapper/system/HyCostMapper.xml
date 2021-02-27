@@ -316,11 +316,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectHyCostList" parameterType="HyCost"
 		resultMap="HyCostResult">
 		<include refid="selectHyCostVo" />
-
-		<if test="costItems != null  and costItems != ''"> and cost_items = #{costItems}</if>
-		<if test="expenseType != null  and expenseType != ''"> and expense_type = #{expenseType}</if>
-
-
+		<if test="costItems != null  and costItems != ''"> and c.cost_items = #{costItems}</if>
+		<if test="expenseType != null  and expenseType != ''"> and c.expense_type = #{expenseType}</if>
+		<if test="operationDate != null">and c.operation_date = #{operationDate}</if>
+		<if test="operationUser != null and operationUser!=''">and c.operation_user = #{operationUser}</if>
+		<if test="houseNum != null and houseNum !=''">and c.house_num = #{houseNum}</if>
+		<if test="standardName != null and standardName !=''">and c.standard_name = #{standardName}</if>
+		<if test="chargingStandard != null and chargingStandard !=''">and c.charging_standard = #{chargingStandard}</if>
+		<if test="billingCycle != null and billingCycle !=''">and c.billing_cycle = #{billingCycle}</if>
+		<if test="calculationMehod != null and calculationMehod !=''">and c.calculation_mehod = #{calculationMehod}</if>
+		<if test="standardDescription != null and standardDescription !=''">and c.standard_description = #{standardDescription}</if>
+		<if test="bilingStartDate != null ">and c.biling_start_date = #{bilingStartDate}</if>
+		<if test="transferTenants != null ">and c.transfer_tenants = #{transferTenants}</if>
+		<if test="changeDate != null ">and c.change_date = #{changeDate}</if>
+		<if test="feeDate != null ">and c.fee_date = #{feeDate}</if>
+		<if test="dueDate != null ">and c.due_date = #{dueDate}</if>
+		<if test="bilingStartDate != null ">and c.biling_start_date = #{bilingStartDate}</if>
+		<if test="bilingEndDate != null ">and c.biling_end_date = #{bilingEndDate}</if>
+		
+		
+		<if test="hyHouseInf.houseName != null and hyHouseInf.houseName !=''">and h.house_name = #{hyHouseInf.houseName}</if>
+		<if test="hyHouseInf.builtUpArea != null and hyHouseInf.builtUpArea !=''">and h.built_up_area = #{hyHouseInf.builtUpArea}</if>
+		<if test="hyOwnerRegistration.ownerName != null and hyOwnerRegistration.ownerName !=''">and o.owner_name = #{hyOwnerRegistration.ownerName}</if>
 	</select>
 
 	<select id="selectHyCostListDistinct" parameterType="HyCost"
@@ -418,7 +435,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<delete id="deleteHyCostById" parameterType="Long">
 		delete from hy_cost
-		where id = #{id}
+		and id = #{id}
 	</delete>
 
 	<delete id="deleteHyCostByIds" parameterType="String">

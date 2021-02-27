@@ -13,16 +13,17 @@
 						<ul>
 							<li><label>业主名称：</label> <input type="text" name="ownerName" />
 							</li>
-							<li><label>房屋编号：</label> <input type="text" name="houseNum" />
+							<li><label>房屋编号：</label> <input type="text" name="houseNum" 
+							onkeyup="this.value=this.value.replace(/\D/g,'')"/>
 							</li>
 							<li><label>固定电话：</label> <input type="text"
-								name="fixedTelephone" /></li>
+								name="fixedTelephone" onkeyup="this.value=this.value.replace(/\D/g,'')"/></li>
 							<li><label>移动电话：</label> <input type="text"
-								name="mobilePhone" /></li>
+								name="mobilePhone" onkeyup="this.value=this.value.replace(/\D/g,'')"/></li>
 							<li><label>证件号码：</label> <input type="text" name="idCardNum" />
 							</li>
 							<li><label>供应商类别：</label> <input type="text"
-								name="suplierCategory" /></li>
+								name="suplierCategory" onkeyup="this.value=this.value.replace(/\D/g,'')"/></li>
 							<li><label>是否锁定：</label> <select name="lockedNot"
 								class="form-control "
 								th:with="type=${@dict.getType('sys_yes_no')}">
@@ -30,18 +31,20 @@
 									<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
 										th:value="${dict.dictValue}"></option>
 							</select></li>
-							<li><label>出入卡号：</label> <input type="text" name="accessNum" />
+							<li><label>出入卡号：</label> <input type="text" name="accessNum"
+							onkeyup="this.value=this.value.replace(/\D/g,'')" />
 							</li>
 							<li><label>证件名称：</label> <input type="text"
 								name="certificateName" /></li>
 							<li><label>客户类别：</label> <input type="text"
-								name="customerCategoy" /></li>
-							<li><label>传真电话：</label> <input type="text" name="faxPhone" />
+								name="customerCategoy" onkeyup="this.value=this.value.replace(/\D/g,'')"/></li>
+							<li><label>传真电话：</label> <input type="text" name="faxPhone" 
+							onkeyup="this.value=this.value.replace(/\D/g,'')"/>
 							</li>
 							<li><label>联系地址：</label> <input type="text"
 								name="contactAddress" /></li>
 							<li><label>邮政编码：</label> <input type="text"
-								name="postalCode" /></li>
+								name="postalCode" onkeyup="this.value=this.value.replace(/\D/g,'')"/></li>
 							<li><label>收件人：</label> <input type="text"
 								name="postalPreson" /></li>
 							<li><label>电子邮件：</label> <input type="text" name="eMail" />
@@ -49,11 +52,11 @@
 							<li><label>绑定手机户名：</label> <input type="text"
 								name="phoneAccount" /></li>
 							<li><label>绑定手机号码：</label> <input type="text"
-								name="bindingPhoneNum" /></li>
+								name="bindingPhoneNum" onkeyup="this.value=this.value.replace(/\D/g,'')"/></li>
 							<li><label>共有业主：</label> <input type="text" name="coOwner" />
 							</li>
 							<li><label>业主标识：</label> <input type="text"
-								name="ownerIdentification" /></li>
+								name="ownerIdentification" onkeyup="this.value=this.value.replace(/\D/g,'')"/></li>
 							<li><label>姓：</label> <input type="text" name="firName" /></li>
 							<li><label>名：</label> <input type="text" name="secName" /></li>
 							<li><label>性别：</label> <select id="gender" name="gender"
@@ -82,12 +85,15 @@
 							<li><label>开户行及账号：</label> <input type="text"
 								name="bankAccount" /></li>
 							<li><label>托收类别：</label> <input type="text"
-								name="collectionCategory" /></li>
-							<li><label>银行行别：</label> <select name="bankType">
-									<option value="">所有</option>
-									<option value="-1">代码生成请选择字典属性</option>
+								name="collectionCategory"onkeyup="this.value=this.value.replace(/\D/g,'')" /></li>
+							<li><label>银行行别：</label> <select name="bankType" 
+								class="form-control "
+								th:with="type=${@dict.getType('hy_bank')}">
+									<option value="">请选择</option>
+									<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+										th:value="${dict.dictValue}"></option>
 							</select></li>
-							<li><label>开户行行号：</label> <input type="text" name="bankNum" />
+							<li><label>开户行行号：</label> <input type="text" name="bankNum" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
 							</li>
 							<li><label>银行户名：</label> <input type="text"
 								name="bankAccountName" /></li>
@@ -283,7 +289,18 @@
                 },
                 {
                     field: 'bankType',
-                    title: '银行行别'
+                    title: '银行行别',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case 0 : value =  "工商银行";break;
+	                    	case 1 : value =  "中国银行";break;
+	                    	case 2 : value =  "建设银行";break;
+	                    	case 3 : value =  "交通银行";break;
+	                    	case 4 : value =  "农业银行";break;
+	                    	case 5 : value =  "邮政银行";break;
+	                	}
+		            	return value;
+		            }
                 },
                 {
                     field: 'bankNum',

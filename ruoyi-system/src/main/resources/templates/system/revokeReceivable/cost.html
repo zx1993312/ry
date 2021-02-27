@@ -16,12 +16,12 @@
 							</li>
 							<li><label>操作人：</label> <input type="text"
 								name="operationUser" /></li>
-							<li><label>客户名称：</label> <input type="text" name="ownerName" />
+							<li><label>客户名称：</label> <input type="text" name="hyOwnerRegistration.ownerName" />
 							</li>
 							<li><label>房屋编号：</label> <input type="text" name="houseNum" />
 							</li>
 
-							<li><label>房屋名称：</label> <input type="text" name="houseName" />
+							<li><label>房屋名称：</label> <input type="text" name="hyHouseInf.houseName" />
 							</li>
 							<li><label>费用项目：</label> <select name="costItems" th:with="type=${@dict.getType('hy_fee_name')}">
 											<option value="">请选择</option>
@@ -29,7 +29,7 @@
 									</select>
 							</li>
 							<li><label>房屋面积：</label> <input type="text"
-								name="builtUpArea" /></li>
+								name="hyHouseInf.builtUpArea" /></li>
 
 							<li><a class="btn btn-primary btn-rounded btn-sm"
 								onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
