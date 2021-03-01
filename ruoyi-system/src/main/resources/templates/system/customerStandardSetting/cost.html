@@ -29,7 +29,7 @@
 							</li>
 							<li>
 								<label>计算方式：</label> 
-								<select name="calculationMehod" class="form-control m-b" th:with="type=${@dict.getType('hy_subject_type')}">
+								<select name="building" class="form-control m-b" th:with="type=${@dict.getType('hy_subject_type')}">
 									<option value="">请选择</option>
 									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 								</select>

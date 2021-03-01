@@ -2,10 +2,8 @@ package com.ruoyi.framework.web.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,41 +44,58 @@ public class GroupRegistrationService {
 			list = hyHouseInfService.selectHyHouseInfList(new HyHouseInf());
 		}
 
-		Set<String> set = new HashSet<>();
-		if (list.get(0) instanceof HyGroupRegistration) {
+		StringBuffer sb = new StringBuffer();
+
+		if (list.get(0) instanceof HyGroupRegistration) {// 查询组团区域
 			for (int i = 0; i < list.size(); i++) {
-				set = new HashSet<>();
+				sb.setLength(0);
 				map = new HashMap<>();
 				HyGroupRegistration hyGroupRegistration = (HyGroupRegistration) list.get(i);
-				set.add(hyGroupRegistration.getGroupAreaName());
-				map.put("data", set);
+				String groupAreaName = hyGroupRegistration.getGroupAreaName();
+				if (null == groupAreaName || groupAreaName.equals("")) {
+					continue;
+				}
+				sb.append(groupAreaName);
+				map.put("data", sb.toString());
 				reList.add(map);
 			}
-		} else if (list.get(0) instanceof HyHouseInf && group.equals("1")) {
+		} else if (list.get(0) instanceof HyHouseInf && group.equals("1")) {// 查询楼宇
 			for (int i = 0; i < list.size(); i++) {
-				set = new HashSet<>();
+				sb.setLength(0);
 				map = new HashMap<>();
 				HyHouseInf hyHouseInf = (HyHouseInf) list.get(i);
-				set.add(hyHouseInf.getBuilding());
-				map.put("data", set);
+				String building = hyHouseInf.getBuilding();
+				if (null == building || building.equals("")) {
+					continue;
+				}
+				sb.append(building);
+				map.put("data", sb.toString());
 				reList.add(map);
 			}
-		} else if (list.get(0) instanceof HyHouseInf && group.equals("2")) {
+		} else if (list.get(0) instanceof HyHouseInf && group.equals("2")) {// 查询单元
 			for (int i = 0; i < list.size(); i++) {
-				set = new HashSet<>();
+				sb.setLength(0);
 				map = new HashMap<>();
 				HyHouseInf hyHouseInf = (HyHouseInf) list.get(i);
-				set.add(hyHouseInf.getUnit());
-				map.put("data", set);
+				String unit = hyHouseInf.getUnit();
+				if (null == unit || unit.equals("")) {
+					continue;
+				}
+				sb.append(unit);
+				map.put("data", sb.toString());
 				reList.add(map);
 			}
-		} else if (list.get(0) instanceof HyHouseInf && group.equals("3")) {
+		} else if (list.get(0) instanceof HyHouseInf && group.equals("3")) {// 查询楼层
 			for (int i = 0; i < list.size(); i++) {
-				set = new HashSet<>();
+				sb.setLength(0);
 				map = new HashMap<>();
 				HyHouseInf hyHouseInf = (HyHouseInf) list.get(i);
-				set.add(hyHouseInf.getFloor());
-				map.put("data", set);
+				String floor = hyHouseInf.getFloor();
+				if (null == floor || floor.equals("")) {
+					continue;
+				}
+				sb.append(floor);
+				map.put("data", sb);
 				reList.add(map);
 			}
 		}
