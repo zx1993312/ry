@@ -12,34 +12,35 @@
 				<form id="formId">
 					<div class="select-list">
 						<ul>
-							<li><label>费用项目：</label> <input type="text" name="costItems"
-								onclick="selectProject()" /></li>
-							<li><label>收费标准：</label> <input type="text"
-								name="standardName" onclick="selectFee()" /></li>
-							<li><label>计费周期：</label> <select name="billingCycle"
-								class="form-control m-b"
-								th:with="type=${@dict.getType('hy_billing_cycle')}">
+							<li>
+								<label>费用项目：</label> 
+								<input type="text" name="costItems" onclick="selectProject()" />
+							</li>
+							<li>
+								<label>收费标准：</label> 
+								<input type="text" name="standardName" onclick="selectFee()" />
+							</li>
+							<li>
+								<label>计费周期：</label> 
+								<select name="billingCycle" class="form-control m-b" th:with="type=${@dict.getType('hy_billing_cycle')}">
 									<option value="">请选择</option>
-									<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
-										th:value="${dict.dictValue}"></option>
-
-							</select></li>
-							<li><label>计算方式：</label> <select name="calculationMehod"
-								class="form-control m-b"
-								th:with="type=${@dict.getType('hy_subject_type')}">
+									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+								</select>
+							</li>
+							<li>
+								<label>计算方式：</label> 
+								<select name="building" class="form-control m-b" th:with="type=${@dict.getType('hy_subject_type')}">
 									<option value="">请选择</option>
-									<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
-										th:value="${dict.dictValue}"></option>
-							</select></li>
-							<li><label>出租时自动转移租户：</label> <select name="transferTenants"
-								class="form-control m-b"
-								th:with="type=${@dict.getType('sys_yes_no')}">
+									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+								</select>
+							</li>
+							<li>
+								<label>出租时自动转移租户：</label> 
+								<select name="transferTenants" class="form-control m-b" th:with="type=${@dict.getType('sys_yes_no')}">
 									<option value="">请选择</option>
-									<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
-										th:value="${dict.dictValue}"></option>
-							</select></li>
-
-
+									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+								</select>
+							</li>
 						</ul>
 					</div>
 				</form>
@@ -48,25 +49,23 @@
 
 			<div class="col-sm-12 select-table table-striped">
 				<div class="ibox-content">
-
 					<p style="text-align: center">房号选择</p>
-
-					<div class="col-sm-8">
-						<div class="select-list" style="margin-left: 52%;">
-							<ul>
-								<li><select id="currentState" name="currentState" class="form-control m-b" onchange="changeStanderName()">
-										<option value="0">按组团</option>
-										<option value="1">按楼宇</option>
-										<option value="2">按单元</option>
-										<option value="3">按楼层</option>
-								</select></li>
-							</ul>
+						<div class="col-sm-8">
+							<div class="select-list" style="margin-left: 52%;">
+								<ul>
+									<li>
+										<select id="currentState" name="currentState" class="form-control m-b" onchange="changeStanderName()">
+											<option value="0">按组团</option>
+											<option value="1">按楼宇</option>
+											<option value="2">按单元</option>
+											<option value="3">按楼层</option>
+										</select>
+									</li>
+								</ul>
+							</div>
 						</div>
-					</div>
 					<form id="form" action="#" class="wizard-big">
-						<input type="text" th:value="${#currentState}" th:text="${#currentState}">
-						<select class="form-control dual_select"  th:with="type=${@groupRegistration.getGroupRegistration('1')}" multiple>
-							<option th:if="data != null" th:each="data : ${type}" th:text="${data.data}" th:value="${data.data}"></option>
+						<select class="form-control dual_select" id="sel" name="sel" multiple>
 						</select>
 					</form>
 				</div>
@@ -74,7 +73,9 @@
 			<div class="ibox-content">
 				<p style="text-align: center">客户选择</p>
 				<ul style="list-style-type: none">
-					<li><label>客户类型：</label> <select name="ownerCategory">
+					<li>
+					<label>客户类型：</label> 
+						<select name="ownerCategory">
 							<option value="">请选择</option>
 							<option value="0">业主</option>
 							<option value="1">租户</option>
@@ -82,11 +83,14 @@
 							<option value="3">外来单位</option>
 							<option value="4">临时客户</option>
 							<option value="5">VIP客户</option>
-					</select></li>
-					<li><label>设置对象：</label> <input type="radio"
-						name="ownerCategory" checked>当前住户 <input type="radio"
-						name="ownerCategory" checked>房屋业主 <input type="radio"
-						name="ownerCategory" checked>房屋租户</li>
+						</select>
+					</li>
+					<li>
+						<label>设置对象：</label> 
+						<input type="radio" name="ownerCategory" checked>当前住户 
+						<input type="radio" name="ownerCategory" checked>房屋业主 
+						<input type="radio" name="ownerCategory" checked>房屋租户
+					</li>
 				</ul>
 				<div align="center">
 					<input class="btn btn-success btn-sm" type="button" value="设置" onclick="bt()">
@@ -102,9 +106,8 @@
         var editFlag = [[${@permission.hasPermi('system:cost:edit')}]];
         var removeFlag = [[${@permission.hasPermi('system:cost:remove')}]];
         var prefix = ctx + "system/customerStandardSetting";
-
- 
-        $('.dual_select').bootstrapDualListbox({
+        
+        var selectorx = $('.dual_select').bootstrapDualListbox({
 	    	nonSelectedListLabel: '房屋范围',
             selectedListLabel: '&nbsp',
             preserveSelectionOnMove: 'moved',
@@ -118,14 +121,12 @@
             showFilterInputs: false,       // 是否带搜索
 	        selectorMinimalHeight: 160
 	    });
+        
         function selectFee() {
 			$.modal.open("收费标准选择","/system/selectCost");
 			
-	}
-    /*     function selectProject() {
-			$.modal.open("收费项目选择","/system/costSelect");
-			
-	} */
+		}
+        
         function selectProject(){
         	var costItems = $("#costItems").val();
         	if(costItems == ''){
@@ -135,12 +136,52 @@
         	}
         	
         }
+        
         function bt(){
-                  $.operate.save("system/customerStandardsCost/edit/{buliding}");
+            $.operate.save("system/customerStandardsCost/edit/{buliding}");
         }
         
+        $(window).load(function(){
+        	
+        	$("#sel").empty();
+			$.ajax({
+		        type:"GET",
+		        url:"/system/group/getGroupData?currentState="+$("#currentState").val(),
+		        dataType:"json", 
+		        success:function(data){
+		        	for (var i = 0; i < data.length; i++) {
+		        		if(data[i].data == null || data[i].data == ''){
+		        			continue;
+		        		}
+			        　　　　	selectorx.append("<option>"+data[i].data+"</option>");
+			        }
+		        　　　　	selectorx.bootstrapDualListbox('refresh');
+		        },
+		        error:function(jqXHR){
+		           aler("发生错误："+ jqXHR.status);
+		        }
+			});
+        });
+        
         function changeStanderName(){
-        	var currentState =$("#currentState").val();
+        	$("#sel").empty();
+			$.ajax({
+		        type:"GET",
+		        url:"/system/group/getGroupData?currentState="+$("#currentState").val(),
+		        dataType:"json", 
+		        success:function(data){
+		        	for (var i = 0; i < data.length; i++) {
+		        		if(data[i].data == null || data[i].data == ''){
+		        			continue;
+		        		}
+			        　　　　	selectorx.append("<option>"+data[i].data+"</option>");
+			        }
+		        　　　　	selectorx.bootstrapDualListbox('refresh');
+		        },
+		        error:function(jqXHR){
+		           aler("发生错误："+ jqXHR.status);
+		        }
+			});
         }
     </script>
 </body>
