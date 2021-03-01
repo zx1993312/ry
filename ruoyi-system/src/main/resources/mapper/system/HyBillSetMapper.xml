@@ -296,6 +296,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{endTimeNew}</if>
 	</select>
 
+	<select id="selectHyBillSetListOr" parameterType="HyBillSet"
+		resultMap="HyBillSetResult">
+		<include refid="selectHyBillSetVo" />
+		<if test="billTypes != null  and billTypes != ''"> and b.bill_types = #{billTypes}</if>
+		<if test="billCategory != null  and billCategory != ''"> and b.bill_category = #{billCategory}</if>
+		<if test="prefix != null  and prefix != ''"> and b.prefix = #{prefix}</if>
+		<if test="suffix != null  and suffix != ''"> and b.suffix = #{suffix}</if>
+		<if test="digit != null  and digit != ''"> and b.digit = #{digit}</if>
+		<if test="billSample != null  and billSample != ''"> and b.bill_sample = #{billSample}</if>
+		<if test="billPanel != null  and billPanel != ''"> and b.bill_panel = #{billPanel}</if>
+		<if test="panel!=null and panel!=''"> and b.panel=#{panel}</if>
+		<if test="billDate!=null "> and b.bill_date=#{billDate}</if>
+		<if test="billNumber!=null and billNumber!= ''"> and b.bill_number = #{billNumber}</if>
+		<if test="houseNum!=null and houseNum!= ''"> and b.house_num = #{houseNum}</if>
+		<if test="modifyPerson !=null and modifyPerson !=''"> and b.modify_person = #{modifyPerson}</if>
+		<if test="paymentPerson !=null and paymentPerson !=''"> and b.payment_person = #{paymentPerson}</if>
+	</select>
+
 
 	<select id="selectHyBillSetById" parameterType="Long"
 		resultMap="HyBillSetResult">

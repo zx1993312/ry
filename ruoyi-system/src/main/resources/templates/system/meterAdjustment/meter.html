@@ -75,7 +75,7 @@
 	<script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('system:meter:edit')}]];
         var removeFlag = [[${@permission.hasPermi('system:meter:remove')}]];
-        var prefix = ctx + "system/updateSelectMeter";
+        var prefix = ctx + "system/meterAdjustment";
         
         function meterCase(){
         	$("#formId").attr("action","/system/case");

@@ -107,4 +107,14 @@ public class HyMeterServiceImpl implements IHyMeterService {
 		return result;
 	}
 
+	@Override
+	public List<HyMeter> selectHyMeterListOr(HyMeter hyMeter) {
+		return hyMeterMapper.selectHyMeterListOr(hyMeter);
+	}
+
+	@Override
+	public List<HyMeter> selectHyMeter(HyMeter hyMeter) {
+		return hyMeterMapper.selectHyMeter(hyMeter);
+	}
+
 }

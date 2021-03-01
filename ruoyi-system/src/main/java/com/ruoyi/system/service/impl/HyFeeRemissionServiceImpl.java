@@ -93,7 +93,7 @@ public class HyFeeRemissionServiceImpl implements IHyFeeRemissionService {
 
 		HyOwnerRegistration hyOwnerRegistration = new HyOwnerRegistration();
 		hyOwnerRegistration.setHouseNum(hyFeeRemission.getHouseNumber());
-		List<?> ownerList = hyOwnerRegistrationMapper.selectHyOwnerRegistrationList(hyOwnerRegistration);// 根据houseNum查询数据是否存在
+		List<?> ownerList = hyOwnerRegistrationMapper.selectHyOwnerRegistrationListOrr(hyOwnerRegistration);// 根据houseNum查询数据是否存在
 		hyOwnerRegistration.setOwnerName(hyFeeRemission.getOwnerName());
 		if (StringUtils.isNull(ownerList) || ownerList.size() == 0) {// 数据存在，插入新数据
 			result = hyOwnerRegistrationMapper.insertHyOwnerRegistration(hyOwnerRegistration);
@@ -123,7 +123,7 @@ public class HyFeeRemissionServiceImpl implements IHyFeeRemissionService {
 
 		HyMeter hyMeter = new HyMeter();
 		hyMeter.setHouseNum(hyFeeRemission.getHouseNumber());
-		List<?> meterList = hyMeterMapper.selectHyMeterList(hyMeter);
+		List<?> meterList = hyMeterMapper.selectHyMeter(hyMeter);
 		hyMeter.setMeterName(hyFeeRemission.getMeterName());
 		if (StringUtils.isNull(meterList) || meterList.size() == 0) {
 			result = hyMeterMapper.insertHyMeter(hyMeter);

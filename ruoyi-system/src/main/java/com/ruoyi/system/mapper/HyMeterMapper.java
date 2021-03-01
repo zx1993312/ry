@@ -26,6 +26,10 @@ public interface HyMeterMapper {
 	 * @return 抄设置集合
 	 */
 	public List<HyMeter> selectHyMeterList(HyMeter hyMeter);
+	
+	public List<HyMeter> selectHyMeterListOr(HyMeter hyMeter);
+
+	public List<HyMeter> selectHyMeter(HyMeter hyMeter);
 
 	/**
 	 * 新增抄设置

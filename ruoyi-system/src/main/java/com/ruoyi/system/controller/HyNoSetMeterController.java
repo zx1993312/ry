@@ -57,7 +57,7 @@ public class HyNoSetMeterController extends BaseController {
 	@ResponseBody
 	public TableDataInfo list(HyMeter hyMeter) {
 		startPage();
-		List<HyMeter> list = hyMeterService.selectHyMeterList(hyMeter);
+		List<HyMeter> list = hyMeterService.selectHyMeterListOr(hyMeter);
 		return getDataTable(list);
 	}
 
@@ -71,7 +71,7 @@ public class HyNoSetMeterController extends BaseController {
 	@PostMapping("/export")
 	@ResponseBody
 	public AjaxResult export(HyMeter hyMeter) {
-		List<HyMeter> list = hyMeterService.selectHyMeterList(hyMeter);
+		List<HyMeter> list = hyMeterService.selectHyMeterListOr(hyMeter);
 		ExcelUtil<HyMeter> util = new ExcelUtil<HyMeter>(HyMeter.class);
 		return util.exportExcel(list, "meter");
 	}

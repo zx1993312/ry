@@ -127,14 +127,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="importTime != null "> and o.import_time = #{importTime}</if>
 		<if test="advanceTime != null "> and o.advance_time = #{advanceTime}</if>
 		<!-- <if test="feeDate != null "> and c.fee_date = #{feeDate}</if> -->
-		<if test="hyAuditManagement.auditStatus != null"> and a.audit_status=#{hyAuditManagement.auditStatus}</if>
-
 	</select>
 
-	<select id="selectHyPaymentOffsetListTy"
-		parameterType="HyPaymentOffset" resultMap="HyPaymentOffsetResult">
+	<select id="selectHyPaymentOffsetListTy"  resultMap="HyPaymentOffsetResult">
 		<include refid="selectHyPaymentOffsetVo"/>
 		<if test="startFeeDate != null and endFeeDate != null"> and c.fee_date between #{startFeeDate} and #{endFeeDate} </if>
+		<if test="auditStatus != null and auditStatus != ''"> and a.audit_status =#{auditStatus}</if>
 	</select>
 
 	<select id="selectHyPaymentOffsetById" parameterType="Long"

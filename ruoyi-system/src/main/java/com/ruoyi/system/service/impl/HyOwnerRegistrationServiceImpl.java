@@ -90,4 +90,15 @@ public class HyOwnerRegistrationServiceImpl implements IHyOwnerRegistrationServi
 	public int deleteHyOwnerRegistrationById(Long id) {
 		return hyOwnerRegistrationMapper.deleteHyOwnerRegistrationById(id);
 	}
+
+	@Override
+	public List<HyOwnerRegistration> selectHyOwnerRegistrationListOr(HyOwnerRegistration hyOwnerRegistration) {
+		
+		return hyOwnerRegistrationMapper.selectHyOwnerRegistrationListOr(hyOwnerRegistration);
+	}
+
+	@Override
+	public List<HyOwnerRegistration> selectHyOwnerRegistrationListOrr(HyOwnerRegistration hyOwnerRegistration) {
+		return hyOwnerRegistrationMapper.selectHyOwnerRegistrationListOrr(hyOwnerRegistration);
+	}
 }

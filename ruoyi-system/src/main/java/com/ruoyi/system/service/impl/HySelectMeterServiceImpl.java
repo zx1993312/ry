@@ -38,6 +38,11 @@ public class HySelectMeterServiceImpl implements IHySelectMeterService {
 	public List<HySelectMeter> selectHySelMeterList(HySelectMeter hySelectMeter) {
 		return hySelMeterMapper.selectHySelMeterList(hySelectMeter);
 	}
+	
+	@Override
+	public List<HySelectMeter> selectHySelMeterOr(HySelectMeter hySelectMeter){
+		return hySelMeterMapper.selectHySelMeterOr(hySelectMeter);
+	}
 
 	/**
 	 * 修改房间表

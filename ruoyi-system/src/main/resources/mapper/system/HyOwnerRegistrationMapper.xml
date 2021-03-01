@@ -215,6 +215,102 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="hyAuditManagement.auditStatus != null"> and a.audit_status = #{hyAuditManagement.auditStatus}</if>	
 	</select>
 
+<select id="selectHyOwnerRegistrationListOr"
+		parameterType="HyOwnerRegistration"
+		resultMap="HyOwnerRegistrationResult">
+		<include refid="selectHyOwnerRegistrationVo" />
+		<if test="ownerName != null  and ownerName != ''"> and o.owner_name like concat('%', #{ownerName}, '%')</if>
+		<if test="houseNum != null  and houseNum != ''"> and o.house_num = #{houseNum}</if>
+		<if test="fixedTelephone != null "> and o.fixed_telephone = #{fixedTelephone}</if>
+		<if test="mobilePhone != null "> and o.mobile_phone = #{mobilePhone}</if>
+		<if test="idCardNum != null  and idCardNum != ''"> and o.id_card_num = #{idCardNum}</if>
+		<if test="suplierCategory != null "> and o.suplier_category = #{suplierCategory}</if>
+		<if test="lockedNot != null "> and o.locked_not = #{lockedNot}</if>
+		<if test="accessNum != null "> and o.access_num = #{accessNum}</if>
+		<if test="certificateName != null  and certificateName != ''"> and o.certificate_name like concat('%',
+			#{certificateName}, '%')</if>
+		<if test="customerCategoy != null "> and o.customer_categoy = #{customerCategoy}</if>
+		<if test="faxPhone != null "> and o.fax_phone = #{faxPhone}</if>
+		<if test="contactAddress != null  and contactAddress != ''"> and o.contact_address = #{contactAddress}</if>
+		<if test="postalCode != null "> and o.postal_code = #{postalCode}</if>
+		<if test="postalPreson != null  and postalPreson != ''"> and o.postal_preson = #{postalPreson}</if>
+		<if test="eMail != null  and eMail != ''"> and o.e_mail = #{eMail}</if>
+		<if test="phoneAccount != null  and phoneAccount != ''"> and o.phone_account = #{phoneAccount}</if>
+		<if test="bindingPhoneNum != null "> and o.binding_phone_num = #{bindingPhoneNum}</if>
+		<if test="coOwner != null  and coOwner != ''"> and o.co_owner = #{coOwner}</if>
+		<if test="ownerIdentification != null "> and o.owner_identification = #{ownerIdentification}</if>
+		<if test="firName != null  and firName != ''"> and o.fir_name like concat('%', #{firName}, '%')</if>
+		<if test="secName != null  and secName != ''"> and o.sec_name like concat('%', #{secName}, '%')</if>
+		<if test="gender != null "> and o.gender = #{gender}</if>
+		<if test="nationality != null  and nationality != ''"> and o.nationality = #{nationality}</if>
+		<if test="birthDate != null "> and o.birth_date = #{birthDate}</if>
+		<if test="workUnit != null  and workUnit != ''"> and o.work_unit = #{workUnit}</if>
+		<if test="ownerJob != null  and ownerJob != ''"> and o.owner_job = #{ownerJob}</if>
+		<if test="ownerHobby != null  and ownerHobby != ''"> and o.owner_hobby = #{ownerHobby}</if>
+		<if test="ownerId != null  and ownerId != ''"> and o.owner_id = #{ownerId}</if>
+		<if test="taxpayerNum != null  and taxpayerNum != ''"> and o.taxpayer_num = #{taxpayerNum}</if>
+		<if test="ownerAddPhone != null  and ownerAddPhone != ''"> and o.owner_add_phone = #{ownerAddPhone}</if>
+		<if test="bankAccount != null  and bankAccount != ''"> and o.bank_account = #{bankAccount}</if>
+		<if test="collectionCategory != null "> and o.collection_category = #{collectionCategory}</if>
+		<if test="bankType != null "> and o.bank_type = #{bankType}</if>
+		<if test="bankNum != null "> and o.bank_num = #{bankNum}</if>
+		<if test="bankAccountName != null  and bankAccountName != ''"> and o.bank_account_name like concat('%',
+			#{bankAccountName}, '%')</if>
+			
+			
+		<if test="hyHouseInf.houseName != null and hyHouseInf.houseName !=''"> and h.house_name = #{hyHouseInf.houseName}</if>	
+		<if test="hyHouseInf.deliveryStatusBefore != null and hyHouseInf.deliveryStatusBefore !=''"> and h.delivery_status_before = #{hyHouseInf.deliveryStatusBefore}</if>	
+		<if test="hyHouseInf.deliveryStatus != null and hyHouseInf.deliveryStatus !=''"> and h.delivery_status = #{hyHouseInf.deliveryStatus}</if>	
+		<if test="hyHouseInf.changePerson != null and hyHouseInf.changePerson !=''"> and h.change_person = #{hyHouseInf.changePerson}</if>	
+		<if test="hyHouseInf.changeDate != null"> and h.change_date = #{hyHouseInf.changeDate}</if>	
+	</select>
+
+<select id="selectHyOwnerRegistrationListOrr"
+		parameterType="HyOwnerRegistration"
+		resultMap="HyOwnerRegistrationResult">
+		<include refid="selectHyOwnerRegistrationVo" />
+		<if test="ownerName != null  and ownerName != ''"> and o.owner_name like concat('%', #{ownerName}, '%')</if>
+		<if test="houseNum != null  and houseNum != ''"> and o.house_num = #{houseNum}</if>
+		<if test="fixedTelephone != null "> and o.fixed_telephone = #{fixedTelephone}</if>
+		<if test="mobilePhone != null "> and o.mobile_phone = #{mobilePhone}</if>
+		<if test="idCardNum != null  and idCardNum != ''"> and o.id_card_num = #{idCardNum}</if>
+		<if test="suplierCategory != null "> and o.suplier_category = #{suplierCategory}</if>
+		<if test="lockedNot != null "> and o.locked_not = #{lockedNot}</if>
+		<if test="accessNum != null "> and o.access_num = #{accessNum}</if>
+		<if test="certificateName != null  and certificateName != ''"> and o.certificate_name like concat('%',
+			#{certificateName}, '%')</if>
+		<if test="customerCategoy != null "> and o.customer_categoy = #{customerCategoy}</if>
+		<if test="faxPhone != null "> and o.fax_phone = #{faxPhone}</if>
+		<if test="contactAddress != null  and contactAddress != ''"> and o.contact_address = #{contactAddress}</if>
+		<if test="postalCode != null "> and o.postal_code = #{postalCode}</if>
+		<if test="postalPreson != null  and postalPreson != ''"> and o.postal_preson = #{postalPreson}</if>
+		<if test="eMail != null  and eMail != ''"> and o.e_mail = #{eMail}</if>
+		<if test="phoneAccount != null  and phoneAccount != ''"> and o.phone_account = #{phoneAccount}</if>
+		<if test="bindingPhoneNum != null "> and o.binding_phone_num = #{bindingPhoneNum}</if>
+		<if test="coOwner != null  and coOwner != ''"> and o.co_owner = #{coOwner}</if>
+		<if test="ownerIdentification != null "> and o.owner_identification = #{ownerIdentification}</if>
+		<if test="firName != null  and firName != ''"> and o.fir_name like concat('%', #{firName}, '%')</if>
+		<if test="secName != null  and secName != ''"> and o.sec_name like concat('%', #{secName}, '%')</if>
+		<if test="gender != null "> and o.gender = #{gender}</if>
+		<if test="nationality != null  and nationality != ''"> and o.nationality = #{nationality}</if>
+		<if test="birthDate != null "> and o.birth_date = #{birthDate}</if>
+		<if test="workUnit != null  and workUnit != ''"> and o.work_unit = #{workUnit}</if>
+		<if test="ownerJob != null  and ownerJob != ''"> and o.owner_job = #{ownerJob}</if>
+		<if test="ownerHobby != null  and ownerHobby != ''"> and o.owner_hobby = #{ownerHobby}</if>
+		<if test="ownerId != null  and ownerId != ''"> and o.owner_id = #{ownerId}</if>
+		<if test="taxpayerNum != null  and taxpayerNum != ''"> and o.taxpayer_num = #{taxpayerNum}</if>
+		<if test="ownerAddPhone != null  and ownerAddPhone != ''"> and o.owner_add_phone = #{ownerAddPhone}</if>
+		<if test="bankAccount != null  and bankAccount != ''"> and o.bank_account = #{bankAccount}</if>
+		<if test="collectionCategory != null "> and o.collection_category = #{collectionCategory}</if>
+		<if test="bankType != null "> and o.bank_type = #{bankType}</if>
+		<if test="bankNum != null "> and o.bank_num = #{bankNum}</if>
+		<if test="bankAccountName != null  and bankAccountName != ''"> and o.bank_account_name like concat('%',
+			#{bankAccountName}, '%')</if>
+			
+			
+	</select>
+
+
 	<select id="selectHyOwnerRegistrationById" parameterType="Long"
 		resultMap="HyOwnerRegistrationResult">
 		<include refid="selectHyOwnerRegistrationVo" />

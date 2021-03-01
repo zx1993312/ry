@@ -60,4 +60,6 @@ public interface IHySelectMeterService {
 	 */
 	public int deleteHySelMeterById(Long id);
 
+	public List<HySelectMeter> selectHySelMeterOr(HySelectMeter hySelectMeter);
+
 }

@@ -52,7 +52,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		shared_layers_area, share_ratio, building_structure, parameters_per,change_person,
 		house_layout, floor_height, nature_property, nature_use, usage_status,change_date,
 		occupancy_status,remark, delivery_status, house_type,delivery_status_before, sales_status,
-		purchase_contract, marketing_num from hy_house_inf
+		purchase_contract, marketing_num from hy_house_inf where 1=1
 	</sql>
 
 	<select id="selectHyHouseInfList" parameterType="HyHouseInf"
@@ -95,7 +95,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectHyHouseInfById" parameterType="Long"
 		resultMap="HyHouseInfResult">
 		<include refid="selectHyHouseInfVo" />
-		where id = #{id}
+		and id = #{id}
 	</select>
 
 	<insert id="insertHyHouseInf" parameterType="HyHouseInf"
