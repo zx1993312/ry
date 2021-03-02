@@ -52,7 +52,7 @@
 	<script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('system:set:edit')}]];
         var removeFlag = [[${@permission.hasPermi('system:set:remove')}]];
-        var prefix = ctx + "system/collectionBillSet";
+        var prefix = ctx + "system/collectionTimeBillSet";
 
         $(function() {
             var options = {

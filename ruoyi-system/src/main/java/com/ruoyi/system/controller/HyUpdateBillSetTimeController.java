@@ -75,7 +75,7 @@ public class HyUpdateBillSetTimeController extends BaseController {
 	@PostMapping("/export")
 	@ResponseBody
 	public AjaxResult export(HyBillSet hyBillSet) {
-		List<HyBillSet> list = hyBillSetService.selectHyBillSetList(hyBillSet);
+		List<HyBillSet> list = hyBillSetService.selectHyBillSetListOr(hyBillSet);
 		ExcelUtil<HyBillSet> util = new ExcelUtil<HyBillSet>(HyBillSet.class);
 		return util.exportExcel(list, "set");
 	}
@@ -98,7 +98,7 @@ public class HyUpdateBillSetTimeController extends BaseController {
 	@PostMapping("/add")
 	@ResponseBody
 	public AjaxResult addSave(HyBillSet hyBillSet) {
-		List<HyBillSet> list = hyBillSetService.selectHyBillSetList(hyBillSet);
+		List<HyBillSet> list = hyBillSetService.selectHyBillSetListOr(hyBillSet);
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyBillSet hbs : list) {
 			Map<String, Object> map = new HashMap<>();
@@ -117,7 +117,7 @@ public class HyUpdateBillSetTimeController extends BaseController {
 	public String edit(@PathVariable("id") Long id, ModelMap mmap) {
 		HyBillSet hyBillSet = hyBillSetService.selectHyBillSetById(id);
 		mmap.put("hyBillSet", hyBillSet);
-		List<HyBillSet> list = hyBillSetService.selectHyBillSetList(hyBillSet);
+		List<HyBillSet> list = hyBillSetService.selectHyBillSetListOr(hyBillSet);
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyBillSet hbs : list) {
 			Map<String, Object> map = new HashMap<>();
@@ -137,7 +137,7 @@ public class HyUpdateBillSetTimeController extends BaseController {
 	@PostMapping("/edit")
 	@ResponseBody
 	public AjaxResult editSave(HyBillSet hyBillSet) {
-		List<HyBillSet> list = hyBillSetService.selectHyBillSetList(hyBillSet);
+		List<HyBillSet> list = hyBillSetService.selectHyBillSetListOr(hyBillSet);
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyBillSet hbs : list) {
 			Map<String, Object> map = new HashMap<>();

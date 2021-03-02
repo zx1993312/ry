@@ -335,9 +335,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="bilingEndDate != null ">and c.biling_end_date = #{bilingEndDate}</if>
 		
 		
-		<if test="hyHouseInf.houseName != null and hyHouseInf.houseName !=''">and h.house_name = #{hyHouseInf.houseName}</if>
-		<if test="hyHouseInf.builtUpArea != null and hyHouseInf.builtUpArea !=''">and h.built_up_area = #{hyHouseInf.builtUpArea}</if>
-		<if test="hyOwnerRegistration.ownerName != null and hyOwnerRegistration.ownerName !=''">and o.owner_name = #{hyOwnerRegistration.ownerName}</if>
+		
 	</select>
 	
 		<select id="selectHyCostListOr" parameterType="HyCost"

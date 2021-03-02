@@ -67,7 +67,7 @@ public class HyBillSetServiceImpl implements IHyBillSetService {
 		Date endTimeNew = null;
 
 		if (null == billDateMap.get("startTime") && null == billDateMapNew.get("startTime")) {
-			return hyBillSetMapper.selectHyBillSetList(hyBillSet);// billDate时间为空并且billDateNew时间为空
+			return hyBillSetMapper.selectHyBillSetListOr(hyBillSet);// billDate时间为空并且billDateNew时间为空
 		}
 
 		if (null != billDateMap.get("startTime")) {
