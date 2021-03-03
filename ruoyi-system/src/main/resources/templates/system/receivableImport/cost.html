@@ -186,8 +186,17 @@
 										</form>
 									</div>
 								</div>
-								<div id="step-3" class="tab-pane" role="tabpanel" aria-labelledby="step-3">
+								<div id="step-3" class="tab-pane" role="tabpanel"
+									aria-labelledby="step-3">
 									<div class="m-t-md">
+										<div class="ibox-content">
+											<p style="text-align: center">房号选择</p>
+											<form id="form" action="#" class="wizard-big">
+												<select class="form-control dual_select" id="sel" name="sel"
+													multiple>
+												</select>
+											</form>
+										</div>
 									</div>
 								</div>
 								<div id="step-4" class="tab-pane" role="tabpanel" aria-labelledby="step-4">
@@ -204,6 +213,8 @@
 	</div>
 	<th:block th:include="include :: footer" />
 	<th:block th:include="include :: jquery-smartwizard-js" />
+	<th:block th:include="include :: bootstrap-duallistbox-js" />
+	
 	<script>
 		$(document).ready(function() {
 			// 工具栏按钮
@@ -235,6 +246,21 @@
                 }
             });
 		});
+		
+		 var selectorx = $('.dual_select').bootstrapDualListbox({
+		    	nonSelectedListLabel: false,
+	            selectedListLabel: '&nbsp',
+	            preserveSelectionOnMove: 'moved',
+	            moveOnSelect: false,           // 出现一个剪头，表示可以一次选择一个
+	            filterTextClear: false,
+	            moveSelectedLabel: "添加",
+	            moveAllLabel: '添加所有',
+	            removeSelectedLabel: "移除",
+	            removeAllLabel: '移除所有',
+	            infoText: false,
+	            showFilterInputs: false,       // 是否带搜索
+		        selectorMinimalHeight: 160
+		    });
 		
 		function submit(){
 			var data = {};
