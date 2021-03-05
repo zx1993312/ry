@@ -38,7 +38,11 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">商家名称：</label>
                 <div class="col-sm-8">
-                    <input name="hyBusiness.businessName" th:field="*{hyBusiness.businessName}" class="form-control" type="text">
+                     <select id="businessName" name="hyBusiness.businessName" th:field="*{hyBusiness.businessName}"  
+                     		 class="form-control" th:with="type=${@business.getBusiness()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.businessName}" th:value="${data.id}"></option>
+					  </select>
                 </div>
             </div>
         </form>
@@ -48,6 +52,27 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/shop";
         $("#form-shop-edit").validate({
+        	rules:{
+        		shopName: {
+            		maxlength:50,
+            		required : true,
+    			},
+    			shopAddress: {
+            		maxlength:255,
+            		required : true,
+    			},
+    			contactNumber: {
+        			isPhone:true,
+        			required : true,
+    			},
+    			businessHours: {
+    				required : true,
+    			},
+    			businessName: {
+    				maxlength:50,
+    				required : true,
+    			},
+        	},
             focusCleanup: true
         });
 
