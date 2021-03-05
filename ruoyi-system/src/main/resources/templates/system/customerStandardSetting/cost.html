@@ -138,11 +138,33 @@
         }
         
         function bt(){
-            $.operate.save("system/customerStandardsCost/edit/{buliding}");
+
+        	 $.ajax({
+	       		 url: "/system/customerStandardSetting/edit",
+	       	        type: "post",
+	       	        dataType: "json",
+	       	        data: {"currentState":$("#currentState").val()},
+	       	        	  {"costItems":$("#costItems").val()},
+	       	        	  {"standardName":$("#standardName").val()},
+	       	        	  {"billingCycle":$("#billingCycle").val()},
+	       	        	  {"standardName":$("#standardName").val()},
+	       	        
+	       	        beforeSend: function () {
+	       	            $.modal.loading("正在处理中，请稍后...");
+	       	            $.modal.disable();
+	       	        },
+	       	        success: function(result) {
+	       	            if (typeof callback == "function") {
+	       	                callback(result);
+	       	            }
+	       	            $.operate.successCallback(result);
+	       	        }
+			}); 
+        	s
+        	
         }
         
         $(window).load(function(){
-        	
         	$("#sel").empty();
 			$.ajax({
 		        type:"GET",

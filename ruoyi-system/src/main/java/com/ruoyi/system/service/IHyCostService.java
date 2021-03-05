@@ -62,6 +62,9 @@ public interface IHyCostService {
 	 * @return 结果
 	 */
 	public int updateHyCost(HyCost hyCost);
+	
+	
+	
 
 	/**
 	 * 批量删除费用项目
@@ -79,5 +82,5 @@ public interface IHyCostService {
 	 */
 	public int deleteHyCostById(Long id);
 
-	public int updateHyCostOther(HyCost hyCost);
+	public int updateHyCostOther(String currentState);
 }

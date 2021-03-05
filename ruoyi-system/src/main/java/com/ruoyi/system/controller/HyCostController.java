@@ -123,15 +123,7 @@ public class HyCostController extends BaseController {
 		return prefix + "/edit";
 	}
 
-	/**
-	 * 
-	 */
-	@ApiOperation("费用项目")
-	@ApiImplicitParams({ @ApiImplicitParam(name = "buliding", value = "", required = true), })
-	@GetMapping("/edit/{buliding}")
-	public AjaxResult editOther(HyCost hyCost) {
-		return toAjax(hyCostService.updateHyCostOther(hyCost));
-	}
+
 
 	/**
 	 * 修改保存费用项目

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ruoyi.common.annotation.Log;
@@ -132,8 +133,9 @@ public class HyCustomerStandardSettingsController extends BaseController {
 	@Log(title = "费用项目", businessType = BusinessType.UPDATE)
 	@PostMapping("/edit")
 	@ResponseBody
-	public AjaxResult editSave(HyCost hyCost) {
-		return toAjax(hyCostService.updateHyCost(hyCost));
+	public AjaxResult editSave(@RequestParam("currentState") String currentState) {
+		System.out.println(currentState);
+		return toAjax(hyCostService.updateHyCostOther(currentState));
 	}
 
 	/**

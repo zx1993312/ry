@@ -273,6 +273,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		c.calculation_standard,
 		o.owner_name,
 		h.group_area,
+		h.unit,
+		h.floor,
 		h.building,
 		h.delivery_status,
 		h.house_name,
@@ -455,8 +457,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="bilingStartDate != null ">biling_start_date=#{bilingStartDate},</if>
 			<if test="transferTenants != null and transferTenants !='' ">transfer_tenants=#{transferTenants},</if>
 		</trim>
-		where h.building = #{building}
+		where 1=1
+ 		<!-- <if test="hyHouseInf.building !=null and hyHouseInf.building !='' ">and h.building = #{hyHouseInf.building},</if>
+ 		<if test="hyHouseInf.unit !=null and hyHouseInf.unit != ''">and h.unit = #{hyHouseInf.unit},</if>
+		<if test="hyHouseInf.floor !=null and hyHouseInf.floor != ''">and h.floor = #{hyHouseInf.floor},</if> -->
 	</update>
+
+
 
 	<delete id="deleteHyCostById" parameterType="Long">
 		delete from hy_cost

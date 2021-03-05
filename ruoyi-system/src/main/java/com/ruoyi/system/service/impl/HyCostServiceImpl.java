@@ -132,8 +132,9 @@ public class HyCostServiceImpl implements IHyCostService {
 	
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public int updateHyCostOther(HyCost hyCost) {
-		return hyCostMapper.updateHyCostOther(hyCost);
+	public int updateHyCostOther(String currentState) {
+		System.out.println("long``````");
+		    return hyCostMapper.updateHyCostOther(currentState);
 	}
 
 	/**
