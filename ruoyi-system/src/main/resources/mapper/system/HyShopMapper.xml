@@ -45,7 +45,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
     <select id="selectHyShopList" parameterType="HyShop" resultMap="HyShopResult">
         <include refid="selectHyShopVo"/>
-            <if test="shopName != null  and shopName != ''"> and shop_name like concat('%', #{shopName}, '%')</if>
+            <if test="id != null  and id != ''"> and shop_name like concat('%', #{shopName}, '%')</if>
             <if test="shopAddress != null  and shopAddress != ''"> and shop_address = #{shopAddress}</if>
             <if test="contactNumber != null "> and contact_number = #{contactNumber}</if>
             <if test="businessHours != null "> and business_hours = #{businessHours}</if>

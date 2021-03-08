@@ -63,7 +63,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectHyProductList" parameterType="HyProduct" resultMap="HyProductResult">
         <include refid="selectHyProductVo"/>
-            <if test="productName != null  and productName != ''"> and product_name like concat('%', #{productName}, '%')</if>
+            <if test="id != null  and id != ''"> and product_name like concat('%', #{productName}, '%')</if>
             <if test="briefIntroduction != null  and briefIntroduction != ''"> and brief_introduction = #{briefIntroduction}</if>
             <if test="soldNumber != null "> and sold_number = #{soldNumber}</if>
             <if test="stockNumber != null "> and stock_number = #{stockNumber}</if>

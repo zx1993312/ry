@@ -12,9 +12,9 @@
                         <ul>
                             <li>
                                 <label>产品名称：</label>
-                                 	<select name="productName" class="form-control" th:with="type=${@product.getProduct()}">
+                                 	<select name="id" class="form-control" th:with="type=${@product.getProduct()}">
 										<option value="">请选择</option>
-										<option th:if="data!=null" th:each="data : ${type}" th:text="${data.productName}" th:value="${data.id}"></option>
+										<option th:if="data!=null" th:each="data : ${type}" th:text="${data.productName}" th:value="${data.productName}"></option>
 								 	</select>
                             </li>
                             <li>
@@ -55,9 +55,9 @@
                             </li>
                             <li>
                                 <label>店铺名称：</label>
-                               	<select name="hyShop.shopName" class="form-control" th:with="type=${@shop.getShop()}">
+                               	<select name="hyShop.id" class="form-control" th:with="type=${@shop.getShop()}">
 									<option value="">请选择</option>
-									<option th:if="data!=null" th:each="data:${type}" th:text="${data.shopName}" th:value="${data.id}"></option>
+									<option th:if="data!=null" th:each="data:${type}" th:text="${data.shopName}" th:value="${data.shopName}"></option>
 						 	    </select>
                             </li>
                             <li>

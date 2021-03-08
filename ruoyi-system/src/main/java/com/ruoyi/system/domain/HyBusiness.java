@@ -32,7 +32,7 @@ public class HyBusiness extends BaseEntity
 
     /** 身份证号 */
     @Excel(name = "身份证号")
-    private Long idCard;
+    private String idCard;
 
     /** 电子邮箱 */
     @Excel(name = "电子邮箱")
@@ -74,12 +74,12 @@ public class HyBusiness extends BaseEntity
     {
         return legalTelphone;
     }
-    public void setIdCard(Long idCard) 
+    public void setIdCard(String idCard) 
     {
         this.idCard = idCard;
     }
 
-    public Long getIdCard() 
+    public String getIdCard() 
     {
         return idCard;
     }

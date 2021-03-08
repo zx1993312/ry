@@ -32,7 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if
 				test="legalRepresentative != null  and legalRepresentative != ''"> and legal_representative = #{legalRepresentative}</if>
 			<if test="legalTelphone != null "> and legal_telphone = #{legalTelphone}</if>
-			<if test="idCard != null "> and id_card = #{idCard}</if>
+			<if test="idCard != null and idCard != '' "> and id_card = #{idCard}</if>
 			<if test="eMail != null  and eMail != ''"> and e_mail = #{eMail}</if>
 		</where>
 	</select>

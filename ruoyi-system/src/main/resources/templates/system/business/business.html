@@ -16,6 +16,7 @@
 									<option value="">请选择</option>
 									<option th:if="data!=null" th:each="data:${type}" th:text="${data.businessName}" th:value="${data.id}"></option>
 								  </select>
+								  
                             </li>
                             <li>
                                 <label>法人代表：</label>
@@ -23,11 +24,11 @@
                             </li>
                             <li>
                                 <label>法人代表电话：</label>
-                                <input type="text" name="legalTelphone"/>
+                                <input type="text" name="legalTelphone" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
                             </li>
                             <li>
                                 <label>身份证号：</label>
-                                <input type="text" name="idCard"/>
+                                <input type="text" name="idCard" />
                             </li>
                             <li>
                                 <label>电子邮箱：</label>

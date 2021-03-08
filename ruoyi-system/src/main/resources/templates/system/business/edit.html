@@ -12,7 +12,7 @@
                 <div class="col-sm-8">
                     <select name="businessName" th:field="*{businessName}" class="form-control" th:with="type=${@business.getBusiness()}">
                     	<option value="">请选择</option>
-						<option th:each="dict : ${type}" th:text="${dict.businessName}" th:value="${dict.id}"></option>
+						<option th:each="dict : ${type}" th:text="${dict.businessName}" th:value="${dict.businessName}"></option>
 				    </select>
                 </div>
             </div>
