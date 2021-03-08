@@ -16,7 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property=" appointmentDate"    column=" appointment_date"    />  
         <result property=" appointmentMode"    column=" appointment_mode"    />
         <result property="useDate"    column="use_date"    />
-        <result property="shopId"    column="shop_id"    />
+        <result property="shopId"    column="shop_id"    /> 
          <association property="hyShop" column="id"
 			javaType="HyShop" resultMap="HyShopResult" />
     </resultMap>
