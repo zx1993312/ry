@@ -25,7 +25,7 @@ import com.ruoyi.system.service.ISysDictDataService;
 
 @Controller
 @RequestMapping("/system/productState")
-public class productState extends BaseController{
+public class HyProductStateController extends BaseController{
 	
 	private String prefix="system/productState";
 	

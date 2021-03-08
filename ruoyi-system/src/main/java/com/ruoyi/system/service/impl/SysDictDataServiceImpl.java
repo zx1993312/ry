@@ -110,6 +110,7 @@ public class SysDictDataServiceImpl implements ISysDictDataService
 
 	@Override
 	public List<SysDictData> selectDictDataListOr(SysDictData dictData) {
+		dictData.setDictType("hy_product");
 		return dictDataMapper.selectDictDataListOr(dictData);
 	}
 }
