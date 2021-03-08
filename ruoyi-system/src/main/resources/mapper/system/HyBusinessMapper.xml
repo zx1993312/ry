@@ -27,7 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		resultMap="HyBusinessResult">
 		<include refid="selectHyBusinessVo" />
 		<where>
-			<if test="businessName != null  and businessName != ''"> and business_name like concat('%', #{businessName}, '%')
+			<if test="id != null  and id != ''"> and id = #{id}
 			</if>
 			<if
 				test="legalRepresentative != null  and legalRepresentative != ''"> and legal_representative = #{legalRepresentative}</if>

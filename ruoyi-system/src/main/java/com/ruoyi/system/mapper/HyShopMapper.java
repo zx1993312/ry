@@ -26,6 +26,8 @@ public interface HyShopMapper
      * @return 店铺集合
      */
     public List<HyShop> selectHyShopList(HyShop hyShop);
+    
+    public List<HyShop> selectHyShopVoDistinct(HyShop hyShop);
 
     /**
      * 新增店铺

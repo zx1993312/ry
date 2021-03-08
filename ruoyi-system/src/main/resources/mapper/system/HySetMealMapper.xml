@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HySetMealMapper">
+    
+    <resultMap type="HySetMeal" id="HySetMealResult">
+        <result property="id"    column="id"    />
+        <result property="setMealContent"    column="set_meal_content"    />
+        <result property="retailPrice"    column="retail_price"    />
+        <result property="marketPrice"    column="market_price"    />
+        <result property="setMealName"    column="set_meal_name"    />
+        <result property="productId"    column="product_id"    />
+         <association property="hyProduct" column="id"
+			javaType="HyProduct" resultMap="HyProductResult" />
+    </resultMap>
+    
+        <resultMap type="HyProduct" id="HyProductResult">
+        <result property="id"    column="id"    />
+        <result property="productName"    column="product_name"    />
+        <result property="briefIntroduction"    column="brief_introduction"    />
+        <result property="soldNumber"    column="sold_number"    />
+        <result property="stockNumber"    column="stock_number"    />
+        <result property="state"    column="state"    />
+        <result property="snapUpDate"    column="snap_up_date"    />
+        <result property="sendCodeDate"    column="send_code_date"    />
+        <result property=" appointmentDate"    column=" appointment_date"    />
+        <result property=" appointmentMode"    column=" appointment_mode"    />
+        <result property="useDate"    column="use_date"    />
+        <result property="shopId"    column="shop_id"    />
+    </resultMap>
+
+    <sql id="selectHySetMealVo">
+        select 
+        m.id, 
+        m.set_meal_content, 
+        m.retail_price, 
+        m.market_price, 
+        m.set_meal_name, 
+        m.product_id,
+        p.product_name
+        from 
+        hy_set_meal m
+        LEFT JOIN hy_product p ON m.product_id=p.id
+        where 1=1
+    </sql>
+
+    <select id="selectHySetMealList" parameterType="HySetMeal" resultMap="HySetMealResult">
+        <include refid="selectHySetMealVo"/>
+        <where>  
+            <if test="setMealContent != null  and setMealContent != ''"> and set_meal_content = #{setMealContent}</if>
+            <if test="retailPrice != null "> and retail_price = #{retailPrice}</if>
+            <if test="marketPrice != null "> and market_price = #{marketPrice}</if>
+            <if test="setMealName != null  and setMealName != ''"> and set_meal_name like concat('%', #{setMealName}, '%')</if>
+            <if test="productId != null "> and product_id = #{productId}</if>
+            <if test="hyProduct.productName != null and hyProduct.productName != '' "> and p.product_name = #{hyProduct.productName}</if>
+        </where>
+    </select>
+    
+    <select id="selectHySetMealById" parameterType="Long" resultMap="HySetMealResult">
+        <include refid="selectHySetMealVo"/>
+        and m.id = #{id}
+    </select>
+        
+    <insert id="insertHySetMeal" parameterType="HySetMeal" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_set_meal
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="setMealContent != null">set_meal_content,</if>
+            <if test="retailPrice != null">retail_price,</if>
+            <if test="marketPrice != null">market_price,</if>
+            <if test="setMealName != null">set_meal_name,</if>
+            <if test="productId != null">product_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="setMealContent != null">#{setMealContent},</if>
+            <if test="retailPrice != null">#{retailPrice},</if>
+            <if test="marketPrice != null">#{marketPrice},</if>
+            <if test="setMealName != null">#{setMealName},</if>
+            <if test="productId != null">#{productId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHySetMeal" parameterType="HySetMeal">
+        update hy_set_meal
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="setMealContent != null">set_meal_content = #{setMealContent},</if>
+            <if test="retailPrice != null">retail_price = #{retailPrice},</if>
+            <if test="marketPrice != null">market_price = #{marketPrice},</if>
+            <if test="setMealName != null">set_meal_name = #{setMealName},</if>
+            <if test="productId != null">product_id = #{productId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHySetMealById" parameterType="Long">
+        delete from hy_set_meal where id = #{id}
+    </delete>
+
+    <delete id="deleteHySetMealByIds" parameterType="String">
+        delete from hy_set_meal where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

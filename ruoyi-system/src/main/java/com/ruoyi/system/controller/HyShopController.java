@@ -105,6 +105,7 @@ public class HyShopController extends BaseController
     @ResponseBody
     public AjaxResult addSave(HyShop hyShop)
     {
+    	hyShop.setBusinessId(hyShop.getHyBusiness().getId());
         return toAjax(hyShopService.insertHyShop(hyShop));
     }
 

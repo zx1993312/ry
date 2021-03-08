@@ -38,6 +38,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where 1=1
     </sql>
 
+	<sql id="selectHyShopVoDistinct">
+		select distinct s.id,s.shop_name from hy_shop s LEFT JOIN hy_business b ON s.business_id=b.id 
+        where 1=1
+	</sql>
+	
     <select id="selectHyShopList" parameterType="HyShop" resultMap="HyShopResult">
         <include refid="selectHyShopVo"/>
             <if test="shopName != null  and shopName != ''"> and shop_name like concat('%', #{shopName}, '%')</if>
@@ -47,6 +52,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="businessId != null "> and business_id = #{businessId}</if>
             <if test="hyBusiness.businessName != null and hyBusiness.businessName != ''"> and b.business_name = #{hyBusiness.businessName}</if>
     </select>
+    
+    <select id="selectHyShopVoDistinct" parameterType="HyShop" resultMap="HyShopResult">
+        <include refid="selectHyShopVoDistinct"/>
+    </select>
+
     
     <select id="selectHyShopById" parameterType="Long" resultMap="HyShopResult">
         <include refid="selectHyShopVo"/>

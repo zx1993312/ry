@@ -12,7 +12,10 @@
                         <ul>
                             <li>
                                 <label>店铺名称：</label>
-                                <input type="text" name="shopName"/>
+                                	<select name="shopName" class="form-control" th:with="type=${@shop.getShop()}">
+										<option value="">请选择</option>
+										<option th:if="data!=null" th:each="data:${type}" th:text="${data.shopName}" th:value="${data.shopName}"></option>
+								 	</select>
                             </li>
                             <li>
                                 <label>店铺地址：</label>
@@ -30,7 +33,7 @@
                                 <label>商家名称：</label>
                                   <select name="hyBusiness.businessName" class="form-control" th:with="type=${@business.getBusiness()}">
 									<option value="">请选择</option>
-									<option th:if="data!=null" th:each="data:${type}" th:text="${data.businessName}" th:value="${data.id}"></option>
+									<option th:if="data!=null" th:each="data:${type}" th:text="${data.businessName}" th:value="${data.businessName}"></option>
 								  </select>
                             </li>
                             <li>

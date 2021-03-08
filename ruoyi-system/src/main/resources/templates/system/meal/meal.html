@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('商家列表')" />
+    <th:block th:include="include :: header('套餐列表')" />
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -11,27 +11,23 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                <label>商家名称：</label>
-                                  <select name="id" class="form-control" th:with="type=${@business.getBusiness()}">
-									<option value="">请选择</option>
-									<option th:if="data!=null" th:each="data:${type}" th:text="${data.businessName}" th:value="${data.id}"></option>
-								  </select>
+                                <label>零售价：</label>
+                                <input type="text" name="retailPrice"/>
                             </li>
                             <li>
-                                <label>法人代表：</label>
-                                <input type="text" name="legalRepresentative"/>
+                                <label>门市价：</label>
+                                <input type="text" name="marketPrice"/>
                             </li>
                             <li>
-                                <label>法人代表电话：</label>
-                                <input type="text" name="legalTelphone"/>
+                                <label>套餐名称：</label>
+                                <input type="text" name="setMealName"/>
                             </li>
                             <li>
-                                <label>身份证号：</label>
-                                <input type="text" name="idCard"/>
-                            </li>
-                            <li>
-                                <label>电子邮箱：</label>
-                                <input type="text" name="eMail"/>
+                                <label>产品名称：</label>
+                                 	<select name="hyProduct.productName" class="form-control" th:with="type=${@product.getProduct()}">
+										<option value="">请选择</option>
+										<option th:if="data!=null" th:each="data:${type}" th:text="${data.productName}" th:value="${data.id}"></option>
+								 	</select>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -43,14 +39,17 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:business:add">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:meal:add">
                     <i class="fa fa-plus"></i> 添加
                 </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:business:edit">
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:meal:edit">
                     <i class="fa fa-edit"></i> 修改
                 </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:business:remove">
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:meal:remove">
                     <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:meal:export">
+                    <i class="fa fa-download"></i> 导出
                 </a>
             </div>
             <div class="col-sm-12 select-table table-striped">
@@ -60,9 +59,9 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('system:business:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('system:business:remove')}]];
-        var prefix = ctx + "system/business";
+        var editFlag = [[${@permission.hasPermi('system:meal:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:meal:remove')}]];
+        var prefix = ctx + "system/meal";
 
         $(function() {
             var options = {
@@ -71,34 +70,34 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "商家",
+                modalName: "套餐",
                 columns: [{
                     checkbox: true
                 },
                 {
                     field: 'id',
-                    title: '商家id',
+                    title: '套餐id',
                     visible: false
                 },
                 {
-                    field: 'businessName',
-                    title: '商家名称'
+                    field: 'setMealContent',
+                    title: '套餐内容'
                 },
                 {
-                    field: 'legalRepresentative',
-                    title: '法人代表'
+                    field: 'retailPrice',
+                    title: '零售价'
                 },
                 {
-                    field: 'legalTelphone',
-                    title: '法人代表电话'
+                    field: 'marketPrice',
+                    title: '门市价'
                 },
                 {
-                    field: 'idCard',
-                    title: '身份证号'
+                    field: 'setMealName',
+                    title: '套餐名称'
                 },
                 {
-                    field: 'eMail',
-                    title: '电子邮箱'
+                    field: 'hyProduct.productName',
+                    title: '产品名称'
                 },
                 {
                     title: '操作',

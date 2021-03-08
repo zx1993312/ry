@@ -97,4 +97,10 @@ public class HyShopServiceImpl implements IHyShopService
     {
         return hyShopMapper.deleteHyShopById(id);
     }
+
+	@Override
+	public List<HyShop> selectHyShopVoDistinct(HyShop hyShop) {
+		
+		return hyShopMapper.selectHyShopVoDistinct(hyShop);
+	}
 }

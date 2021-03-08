@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyProductMapper">
+    
+    <resultMap type="HyProduct" id="HyProductResult">
+        <result property="id"    column="id"    />
+        <result property="productName"    column="product_name"    />
+        <result property="briefIntroduction"    column="brief_introduction"    />
+        <result property="soldNumber"    column="sold_number"    />
+        <result property="stockNumber"    column="stock_number"    />
+        <result property="state"    column="state"    />
+        <result property="snapUpDate"    column="snap_up_date"    />
+        <result property="sendCodeDate"    column="send_code_date"    />
+        <result property=" appointmentDate"    column=" appointment_date"    />
+        <result property=" appointmentMode"    column=" appointment_mode"    />
+        <result property="useDate"    column="use_date"    />
+        <result property="shopId"    column="shop_id"    />
+         <association property="hyShop" column="id"
+			javaType="HyShop" resultMap="HyShopResult" />
+    </resultMap>
+ 
+
+    
+    <resultMap type="HyShop" id="HyShopResult">
+        <result property="id"    column="id"    />
+        <result property="shopName"    column="shop_name"    />
+        <result property="shopAddress"    column="shop_address"    />
+        <result property="contactNumber"    column="contact_number"    />
+        <result property="businessHours"    column="business_hours"    />
+        <result property="businessId"    column="business_id"    />
+    </resultMap>
+
+    <sql id="selectHyProductVo">
+        select 
+        p.id, 
+        p.product_name, 
+        p.brief_introduction, 
+        p.sold_number, 
+        p.stock_number, 
+        p.state, 
+        p.snap_up_date, 
+        p.send_code_date,  
+        p.appointment_date,  
+        p.appointment_mode, 
+        p.use_date, 
+        p.shop_id,
+        s.shop_name
+        from 
+        hy_product p
+        LEFT JOIN hy_shop s ON  p.shop_id=s.id 
+        where 1=1
+    </sql>
+    
+    <sql id="selectHyProductVoDistinct">
+    	select distinct p.id,p.product_name  
+    	from 
+        hy_product p
+        LEFT JOIN hy_shop s ON  p.shop_id=s.id 
+        where 1=1
+    </sql>
+
+    <select id="selectHyProductList" parameterType="HyProduct" resultMap="HyProductResult">
+        <include refid="selectHyProductVo"/>
+            <if test="productName != null  and productName != ''"> and product_name like concat('%', #{productName}, '%')</if>
+            <if test="briefIntroduction != null  and briefIntroduction != ''"> and brief_introduction = #{briefIntroduction}</if>
+            <if test="soldNumber != null "> and sold_number = #{soldNumber}</if>
+            <if test="stockNumber != null "> and stock_number = #{stockNumber}</if>
+            <if test="state != null "> and state = #{state}</if>
+            <if test="snapUpDate != null "> and snap_up_date = #{snapUpDate}</if>
+            <if test="sendCodeDate != null "> and send_code_date = #{sendCodeDate}</if>
+            <if test=" appointmentDate != null "> and  appointment_date = #{ appointmentDate}</if>
+            <if test=" appointmentMode != null  and appointmentMode != ''"> and  appointment_mode = #{ appointmentMode}</if>
+            <if test="useDate != null "> and use_date = #{useDate}</if>
+            <if test="shopId != null "> and shop_id = #{shopId}</if>
+            <if test="hyShop.shopName != null and hyShop.shopName != ''"> and s.shop_name = #{hyShop.shopName}</if>
+    </select>
+    
+     <select id="selectHyProductVoDistinct" parameterType="HyProduct" resultMap="HyProductResult">
+        <include refid="selectHyProductVoDistinct"/>
+    </select>
+    
+    <select id="selectHyProductById" parameterType="Long" resultMap="HyProductResult">
+        <include refid="selectHyProductVo"/>
+        and p.id = #{id}
+    </select>
+        
+    <insert id="insertHyProduct" parameterType="HyProduct" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_product
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="productName != null">product_name,</if>
+            <if test="briefIntroduction != null">brief_introduction,</if>
+            <if test="soldNumber != null">sold_number,</if>
+            <if test="stockNumber != null">stock_number,</if>
+            <if test="state != null">state,</if>
+            <if test="snapUpDate != null">snap_up_date,</if>
+            <if test="sendCodeDate != null">send_code_date,</if>
+            <if test=" appointmentDate != null"> appointment_date,</if>
+            <if test=" appointmentMode != null"> appointment_mode,</if>
+            <if test="useDate != null">use_date,</if>
+            <if test="shopId != null">shop_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="productName != null">#{productName},</if>
+            <if test="briefIntroduction != null">#{briefIntroduction},</if>
+            <if test="soldNumber != null">#{soldNumber},</if>
+            <if test="stockNumber != null">#{stockNumber},</if>
+            <if test="state != null">#{state},</if>
+            <if test="snapUpDate != null">#{snapUpDate},</if>
+            <if test="sendCodeDate != null">#{sendCodeDate},</if>
+            <if test=" appointmentDate != null">#{ appointmentDate},</if>
+            <if test=" appointmentMode != null">#{ appointmentMode},</if>
+            <if test="useDate != null">#{useDate},</if>
+            <if test="shopId != null">#{shopId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyProduct" parameterType="HyProduct">
+        update hy_product
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="productName != null">product_name = #{productName},</if>
+            <if test="briefIntroduction != null">brief_introduction = #{briefIntroduction},</if>
+            <if test="soldNumber != null">sold_number = #{soldNumber},</if>
+            <if test="stockNumber != null">stock_number = #{stockNumber},</if>
+            <if test="state != null">state = #{state},</if>
+            <if test="snapUpDate != null">snap_up_date = #{snapUpDate},</if>
+            <if test="sendCodeDate != null">send_code_date = #{sendCodeDate},</if>
+            <if test=" appointmentDate != null"> appointment_date = #{ appointmentDate},</if>
+            <if test=" appointmentMode != null"> appointment_mode = #{ appointmentMode},</if>
+            <if test="useDate != null">use_date = #{useDate},</if>
+            <if test="shopId != null">shop_id = #{shopId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyProductById" parameterType="Long">
+        delete from hy_product where id = #{id}
+    </delete>
+
+    <delete id="deleteHyProductByIds" parameterType="String">
+        delete from hy_product where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
