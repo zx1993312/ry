@@ -19,6 +19,8 @@ public interface SysDictDataMapper
      */
     public List<SysDictData> selectDictDataList(SysDictData dictData);
 
+    
+    public List<SysDictData> selectDictDataListOr(SysDictData dictData);
     /**
      * 根据字典类型查询字典数据
      * 

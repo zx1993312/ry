@@ -18,6 +18,8 @@ public interface ISysDictDataService
      */
     public List<SysDictData> selectDictDataList(SysDictData dictData);
 
+    
+    public List<SysDictData> selectDictDataListOr(SysDictData dictData);
     /**
      * 根据字典类型和字典键值查询字典数据信息
      * 
