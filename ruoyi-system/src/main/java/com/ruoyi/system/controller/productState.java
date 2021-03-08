@@ -36,7 +36,7 @@ public class productState extends BaseController{
 	@RequiresPermissions("system:dict:view")
 	@GetMapping()
 	public String dicData() {
-		return prefix+"/product";
+		return prefix+"/product"; 
 	}
 	
 	@PostMapping("/list")
