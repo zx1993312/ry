@@ -9,33 +9,39 @@
         <form class="form-horizontal m" id="form-product-edit" th:object="${hyProduct}">
             <input name="id" th:field="*{id}" type="hidden">
             <div class="form-group">    
-                <label class="col-sm-3 control-label">产品名称：</label>
+                <label class="col-sm-3 control-label">字典编码：</label>
                 <div class="col-sm-8">
-                    <input name="productName" th:field="*{productName}" class="form-control" type="text">
+                    <input name="productName" th:field="*{dictCode}" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">简介：</label>
+                <label class="col-sm-3 control-label">字典标签：</label>
                 <div class="col-sm-8">
-                    <input name="briefIntroduction" th:field="*{briefIntroduction}" class="form-control" type="text">
+                    <input name="briefIntroduction" th:field="*{dictLabel}" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">已售数量：</label>
+                <label class="col-sm-3 control-label">字典键值：</label>
                 <div class="col-sm-8">
-                    <input name="soldNumber" th:field="*{soldNumber}" class="form-control" type="text">
+                    <input name="soldNumber" th:field="*{dictValue}" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">库存数量：</label>
+                <label class="col-sm-3 control-label">字典排序：</label>
                 <div class="col-sm-8">
-                    <input name="stockNumber" th:field="*{stockNumber}" class="form-control" type="text">
+                    <input name="stockNumber" th:field="*{dictSort}" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">状态：</label>
                 <div class="col-sm-8">
-                    <input name="state" th:field="*{state}" class="form-control" type="text">
+                    <input name="state" th:field="*{dictType}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">备注：</label>
+                <div class="col-sm-8">
+                    <input name="state" th:field="*{cssClass}" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
