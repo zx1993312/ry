@@ -64,10 +64,9 @@ public class HyProductStateController extends BaseController{
 	    /**
 	     * 新增字典类型
 	     */
-	    @GetMapping("/add/{dictType}")
-	    public String add(@PathVariable("dictType") String dictType, ModelMap mmap)
+	    @GetMapping("/add")
+	    public String add(ModelMap mmap)
 	    {
-	        mmap.put("dictType", dictType);
 	        return prefix + "/add";
 	    }
 
