@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('产品列表')" />
+    <th:block th:include="include :: header('海报列表')" />
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -11,18 +11,13 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                <label>字典名称：</label>
-                                <input type="text" name="productName"/>
+                                <label>海报地址：</label>
+                                <input type="text" name="posterAddress"/>
                             </li>
                             <li>
-                                <label>字典标签：</label>
-                                <input type="text" name="dictLabel"/>
+                                <label>产品id：</label>
+                                <input type="text" name="productId"/>
                             </li>
-                            <li>
-                                <label>数据状态：</label>
-                                <input type="text" name="soldNumber"/>
-                            </li>
-                           
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                                 <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
@@ -33,16 +28,16 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:product:add">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:poster:add">
                     <i class="fa fa-plus"></i> 添加
                 </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:product:edit">
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:poster:edit">
                     <i class="fa fa-edit"></i> 修改
                 </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:product:remove">
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:poster:remove">
                     <i class="fa fa-remove"></i> 删除
                 </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:product:export">
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:poster:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
             </div>
@@ -53,62 +48,33 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('system:product:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('system:product:remove')}]];
-        var prefix = ctx + "system/productState";
+        var editFlag = [[${@permission.hasPermi('system:poster:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:poster:remove')}]];
+        var prefix = ctx + "system/poster";
 
-        $(function() { 
+        $(function() {
             var options = {
                 url: prefix + "/list",
                 createUrl: prefix + "/add",
-                updateUrl: prefix + "/edit/{dictCode}",
+                updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "产品",
+                modalName: "海报",
                 columns: [{
                     checkbox: true
                 },
                 {
                     field: 'id',
-                    title: '产品id',
+                    title: '海报id',
                     visible: false
                 },
                 {
-                    field: 'dictCode',
-                    title: '字典编码',
-                   
+                    field: 'posterAddress',
+                    title: '海报地址'
                 },
                 {
-                    field: 'dictLabel',
-                    title: '字典标签'
-                },
-                {
-                    field: 'dictValue',
-                    title: '字典键值'
-                },
-                {
-                    field: 'dictSort',
-                    title: '字典排序'
-                },
-                {
-                    field: 'dictType',
-                    title: '状态'
-                },
-                {
-                    field: 'cssClass',
-                    title: '备注'
-                },
-                {
-                    field: 'listClass',
-                    title: '创建时间'
-                },
-                {
-                    field: 'isDefault',
-                    title: '创建时间'
-                },
-                {
-                    field: 'status',
-                    title: '创建时间'
+                    field: 'productId',
+                    title: '产品id'
                 },
                 {
                     title: '操作',

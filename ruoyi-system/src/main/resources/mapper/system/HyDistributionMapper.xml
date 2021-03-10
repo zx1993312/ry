@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyDistributionMapper">
+    
+    <resultMap type="HyDistribution" id="HyDistributionResult">
+        <result property="id"    column="id"    />
+        <result property="distributionId"    column="distribution_id"    />
+        <result property="salesVolume"    column="sales_volume"    />
+        <result property="commission"    column="commission"    />
+        <result property="userId"    column="user_id"    />
+    </resultMap>
+
+    <sql id="selectHyDistributionVo">
+        select id, distribution_id, sales_volume, commission, user_id from hy_distribution
+    </sql>
+
+    <select id="selectHyDistributionList" parameterType="HyDistribution" resultMap="HyDistributionResult">
+        <include refid="selectHyDistributionVo"/>
+        <where>  
+            <if test="distributionId != null "> and distribution_id = #{distributionId}</if>
+            <if test="salesVolume != null  and salesVolume != ''"> and sales_volume = #{salesVolume}</if>
+            <if test="commission != null  and commission != ''"> and commission = #{commission}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyDistributionById" parameterType="Long" resultMap="HyDistributionResult">
+        <include refid="selectHyDistributionVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyDistribution" parameterType="HyDistribution" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_distribution
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="distributionId != null">distribution_id,</if>
+            <if test="salesVolume != null">sales_volume,</if>
+            <if test="commission != null">commission,</if>
+            <if test="userId != null">user_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="distributionId != null">#{distributionId},</if>
+            <if test="salesVolume != null">#{salesVolume},</if>
+            <if test="commission != null">#{commission},</if>
+            <if test="userId != null">#{userId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyDistribution" parameterType="HyDistribution">
+        update hy_distribution
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="distributionId != null">distribution_id = #{distributionId},</if>
+            <if test="salesVolume != null">sales_volume = #{salesVolume},</if>
+            <if test="commission != null">commission = #{commission},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyDistributionById" parameterType="Long">
+        delete from hy_distribution where id = #{id}
+    </delete>
+
+    <delete id="deleteHyDistributionByIds" parameterType="String">
+        delete from hy_distribution where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

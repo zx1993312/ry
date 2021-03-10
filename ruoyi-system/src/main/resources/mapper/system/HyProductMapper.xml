@@ -19,10 +19,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="shopId"    column="shop_id"    /> 
          <association property="hyShop" column="id"
 			javaType="HyShop" resultMap="HyShopResult" />
+         <association property="hyPicture" column="id"
+			javaType="HyPicture" resultMap="HyPictureResult" />
     </resultMap>
- 
-
-     
+    
     <resultMap type="HyShop" id="HyShopResult">
         <result property="id"    column="id"    />
         <result property="shopName"    column="shop_name"    />
@@ -30,6 +30,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="contactNumber"    column="contact_number"    />
         <result property="businessHours"    column="business_hours"    />
         <result property="businessId"    column="business_id"    />
+    </resultMap>
+
+ 	<resultMap type="HyPicture" id="HyPictureResult">
+        <result property="id"    column="id"    />
+        <result property="pcitureAddress"    column="pciture_address"    />
+        <result property="productId"    column="product_id"    />
+    </resultMap>
+
+    <resultMap type="HyPoster" id="HyPosterResult">
+        <result property="id"    column="id"    />
+        <result property="posterAddress"    column="poster_address"    />
+        <result property="productId"    column="product_id"    />
     </resultMap>
 
     <sql id="selectHyProductVo">
@@ -46,10 +58,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         p.appointment_mode, 
         p.use_date, 
         p.shop_id,
-        s.shop_name
+        s.shop_name,
+        a.pciture_address,
+        c.poster_address
         from 
         hy_product p
-        LEFT JOIN hy_shop s ON  p.shop_id=s.id 
+        LEFT JOIN hy_shop s ON  p.shop_id=s.id
+        LEFT JOIN hy_picture a ON a.product_id = p.id
+        LEFT JOIN hy_poster c ON c.product_id=p.id
         where 1=1
     </sql>
     
@@ -58,6 +74,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     	from 
         hy_product p
         LEFT JOIN hy_shop s ON  p.shop_id=s.id 
+        LEFT JOIN hy_picture a ON a.product_id = p.id
         where 1=1
     </sql>
 
