@@ -87,7 +87,7 @@ public class HyProductStateController extends BaseController{
 	     * 修改字典类型
 	     */
 	    @GetMapping("/edit/{dictCode}")
-	    public String edit(@PathVariable("dictCode") Long dictCode, ModelMap mmap)
+	    public String edit(@PathVariable("dictCode")Long dictCode, ModelMap mmap)
 	    {
 	        mmap.put("dict", dictDataService.selectDictDataById(dictCode));
 	        return prefix + "/edit";
