@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyDistributionRuleMapper">
+    
+    <resultMap type="HyDistributionRule" id="HyDistributionRuleResult">
+        <result property="id"    column="id"    />
+        <result property="salesVolume"    column="sales_volume"    />
+        <result property="commissionFromSuperior"    column="commission_from_superior"    />
+        <result property="topCommission"    column="top_commission"    />
+        <result property="distributionId"    column="distribution_id"    />
+    </resultMap>
+
+    <sql id="selectHyDistributionRuleVo">
+        select id, sales_volume, commission_from_superior, top_commission, distribution_id from hy_distribution_rule
+    </sql>
+
+    <select id="selectHyDistributionRuleList" parameterType="HyDistributionRule" resultMap="HyDistributionRuleResult">
+        <include refid="selectHyDistributionRuleVo"/>
+        <where>  
+            <if test="salesVolume != null  and salesVolume != ''"> and sales_volume = #{salesVolume}</if>
+            <if test="commissionFromSuperior != null  and commissionFromSuperior != ''"> and commission_from_superior = #{commissionFromSuperior}</if>
+            <if test="topCommission != null  and topCommission != ''"> and top_commission = #{topCommission}</if>
+            <if test="distributionId != null "> and distribution_id = #{distributionId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyDistributionRuleById" parameterType="Long" resultMap="HyDistributionRuleResult">
+        <include refid="selectHyDistributionRuleVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyDistributionRule" parameterType="HyDistributionRule" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_distribution_rule
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="salesVolume != null">sales_volume,</if>
+            <if test="commissionFromSuperior != null">commission_from_superior,</if>
+            <if test="topCommission != null">top_commission,</if>
+            <if test="distributionId != null">distribution_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="salesVolume != null">#{salesVolume},</if>
+            <if test="commissionFromSuperior != null">#{commissionFromSuperior},</if>
+            <if test="topCommission != null">#{topCommission},</if>
+            <if test="distributionId != null">#{distributionId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyDistributionRule" parameterType="HyDistributionRule">
+        update hy_distribution_rule
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="salesVolume != null">sales_volume = #{salesVolume},</if>
+            <if test="commissionFromSuperior != null">commission_from_superior = #{commissionFromSuperior},</if>
+            <if test="topCommission != null">top_commission = #{topCommission},</if>
+            <if test="distributionId != null">distribution_id = #{distributionId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyDistributionRuleById" parameterType="Long">
+        delete from hy_distribution_rule where id = #{id}
+    </delete>
+
+    <delete id="deleteHyDistributionRuleByIds" parameterType="String">
+        delete from hy_distribution_rule where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

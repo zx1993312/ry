@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyUserMapper">
+    
+    <resultMap type="HyUser" id="HyUserResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="address"    column="address"    />
+        <result property="telphone"    column="telphone"    />
+    </resultMap>
+
+    <sql id="selectHyUserVo">
+        select id, name, address, telphone from hy_user
+    </sql>
+
+    <select id="selectHyUserList" parameterType="HyUser" resultMap="HyUserResult">
+        <include refid="selectHyUserVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="telphone != null "> and telphone = #{telphone}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyUserById" parameterType="Long" resultMap="HyUserResult">
+        <include refid="selectHyUserVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyUser" parameterType="HyUser" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="address != null">address,</if>
+            <if test="telphone != null">telphone,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="address != null">#{address},</if>
+            <if test="telphone != null">#{telphone},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyUser" parameterType="HyUser">
+        update hy_user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="telphone != null">telphone = #{telphone},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyUserById" parameterType="Long">
+        delete from hy_user where id = #{id}
+    </delete>
+
+    <delete id="deleteHyUserByIds" parameterType="String">
+        delete from hy_user where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

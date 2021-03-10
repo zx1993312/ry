@@ -74,6 +74,12 @@ public class HyProduct extends BaseEntity
     /**店铺表*/
     @Excel(name="店铺表")
     private HyShop hyShop;
+    /**图片表*/
+    @Excel(name="图片表")
+    private HyPicture hyPicture;
+    /**详细信息表（海报表）*/
+    @Excel(name="详细信息表（海报表）")
+    private HyPoster hyPoster;
 
     public void setId(Long id) 
     {
@@ -190,6 +196,22 @@ public class HyProduct extends BaseEntity
 
 	public void setHyShop(HyShop hyShop) {
 		this.hyShop = hyShop;
+	}
+
+	public HyPicture getHyPicture() {
+		return hyPicture;
+	}
+
+	public void setHyPicture(HyPicture hyPicture) {
+		this.hyPicture = hyPicture;
+	}
+
+	public HyPoster getHyPoster() {
+		return hyPoster;
+	}
+
+	public void setHyPoster(HyPoster hyPoster) {
+		this.hyPoster = hyPoster;
 	}
 
 	@Override

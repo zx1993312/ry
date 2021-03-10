@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyPosterMapper">
+    
+    <resultMap type="HyPoster" id="HyPosterResult">
+        <result property="id"    column="id"    />
+        <result property="posterAddress"    column="poster_address"    />
+        <result property="productId"    column="product_id"    />
+    </resultMap>
+
+    <sql id="selectHyPosterVo">
+        select id, poster_address, product_id from hy_poster
+    </sql>
+
+    <select id="selectHyPosterList" parameterType="HyPoster" resultMap="HyPosterResult">
+        <include refid="selectHyPosterVo"/>
+        <where>  
+            <if test="posterAddress != null  and posterAddress != ''"> and poster_address = #{posterAddress}</if>
+            <if test="productId != null "> and product_id = #{productId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyPosterById" parameterType="Long" resultMap="HyPosterResult">
+        <include refid="selectHyPosterVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyPoster" parameterType="HyPoster" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_poster
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="posterAddress != null">poster_address,</if>
+            <if test="productId != null">product_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="posterAddress != null">#{posterAddress},</if>
+            <if test="productId != null">#{productId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyPoster" parameterType="HyPoster">
+        update hy_poster
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="posterAddress != null">poster_address = #{posterAddress},</if>
+            <if test="productId != null">product_id = #{productId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyPosterById" parameterType="Long">
+        delete from hy_poster where id = #{id}
+    </delete>
+
+    <delete id="deleteHyPosterByIds" parameterType="String">
+        delete from hy_poster where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

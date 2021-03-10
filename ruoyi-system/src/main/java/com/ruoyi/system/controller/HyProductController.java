@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.system.domain.HyPicture;
 import com.ruoyi.system.domain.HyProduct;
 import com.ruoyi.system.service.IHyProductService;
 
