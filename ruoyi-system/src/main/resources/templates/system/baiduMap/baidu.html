@@ -1,0 +1,56 @@
+<!DOCTYPE html>  
+<html>
+<head>  
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />  
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
+<title>Hello, World</title>  
+  <style type="text/css">  
+     html{height:100%}  
+     body{height:100%;margin:0px;padding:0px}  
+     #container{height:100%}  
+  </style>  
+     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=DD279b2a90afdf0ae7a3796787a0742e">
+       //v2.0版本的引用方式：src="http://api.map.baidu.com/api?v=2.0&ak=您的密钥"
+     </script>
+</head>  
+ 
+<body>  
+    <div id="container"></div> 
+      <script type="text/javascript"> 
+          var map = new BMap.Map("container");
+          // 创建地图实例  
+          map.centerAndZoom(new BMap.Point(125.263154,43.823318),13);  
+	      map.enableScrollWheelZoom();  
+	      var marker=new BMap.Marker(new BMap.Point(125.263154,43.823318));  
+	      map.addOverlay(marker);  
+	      var licontent="<b>栖乐荟府</b><br>";  
+	        licontent+="<span><strong>地址：</strong>长春市高新区学苑路东侧</span><br>";  
+	        licontent+="<span><strong>电话：</strong>01011111111</span><br>";  
+	        licontent+="<span class=\"input\"><strong></strong><input' class=\"'outset'\" type='text' name='origin' value='长春站'/><input class=\"'outset-but'\" type='button' value='公交' onclick='gotobaidu(1)' /><input class=\"'outset-but'\" type='button' value='驾车'  onclick='gotobaidu(2)'/><a class=\"'gotob'\" href='url='http://api.map.baidu.com/direction?destination=latlng:"+marker.getPosition().lat+","+marker.getPosition().lng+"|name:人民广场"+"®ion=长春"+"&output=html' target='_blank'></a></span>";
+	  
+	       var hiddeninput="<input type='hidden' value='"+'长春'+"' name='region' /><input type='hidden' value='html' name='output' /><input type='hidden' value='driving' name='mode' /><input type='hidden' value='latlng:"+marker.getPosition().lat+","+marker.getPosition().lng+"|name:人民广场"+"' name='destination' />";
+	  
+	       var content1 ="<form id='gotobaiduform' action='http://api.map.baidu.com/direction' target='_blank' method='get'>" + licontent +hiddeninput+"</form>";
+	   
+	       var opts1 = { width: 300 };  
+	        
+	       var  infoWindow = new BMap.InfoWindow(content1, opts1);  
+	       marker.openInfoWindow(infoWindow);  
+           // 初始化地图，设置中心点坐标和地图级别  
+           map.centerAndZoom(point,12);
+           map.enableScrollWheelZoom(true);//开启鼠标滚轮缩放
+
+         /* function myFun(result){
+        		var cityName = result.name;
+        		map.setCenter(cityName);
+        		alert("当前定位城市:"+cityName);
+        	}
+        	var myCity = new BMap.LocalCity();
+        	myCity.get(myFun);
+        	全都是泡沫~~
+        	*/
+        	
+      </script>  
+       
+</body>  
+</html>
