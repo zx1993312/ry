@@ -77,7 +77,7 @@ public class HyProductStateController extends BaseController{
 	    @RequiresPermissions("system:dict:add")
 	    @PostMapping("/add")
 	    @ResponseBody
-	    public AjaxResult addSave(@Validated SysDictData dict)
+	    public AjaxResult addSave(SysDictData dict)
 	    {
 	        dict.setCreateBy(ShiroUtils.getLoginName());
 	        return toAjax(dictDataService.insertDictData(dict));
