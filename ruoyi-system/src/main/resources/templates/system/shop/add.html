@@ -7,14 +7,11 @@
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
         <form class="form-horizontal m" id="form-shop-add">
+           
             <div class="form-group">    
-                <label class="col-sm-3 control-label">店铺名称：</label>
+                <label class="col-sm-3 control-label">店铺地址：</label>
                 <div class="col-sm-8">
-             
-				 	<select name="shopName" class="form-control" th:with="type=${@shop.getShop()}">
-						<option value="">请选择</option>
-						<option th:if="data!=null" th:each="data:${type}" th:text="${data.shopName}" th:value="${data.shopName}"></option>
-				 	</select>
+                    <input name="shopName" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    

@@ -75,6 +75,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         hy_product p
         LEFT JOIN hy_shop s ON  p.shop_id=s.id 
         LEFT JOIN hy_picture a ON a.product_id = p.id
+        LEFT JOIN hy_poster c ON c.product_id=p.id
         where 1=1
     </sql>
 

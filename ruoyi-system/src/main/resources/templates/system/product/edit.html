@@ -9,6 +9,15 @@
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
         <form class="form-horizontal m" id="form-product-edit" th:object="${hyProduct}">
             <input name="id" th:field="*{id}" type="hidden">
+                <div class="form-group">    
+                 <label class="col-sm-3 control-label">店铺名称：</label>
+                <div class="col-sm-8">
+                    <select name="hyShop.shopName" th:field="*{hyShop.shopName}" class="form-control" th:with="type=${@shop.getShop()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.shopName}" th:value="${data.id}"></option>
+				 	</select>
+                </div>
+            </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">产品名称：</label>
                 <div class="col-sm-8">
@@ -18,8 +27,14 @@
 				 	</select>
                 </div>
             </div>
+            <div class="form-group">
+                  <label class="col-sm-3 control-label">多文件上传</label>
+	                   <div class="file-loading">
+		            		<input id="fileinput-demo-1" type="file" multiple>
+		       		   </div>
+            </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">简介：</label>
+                <label class="col-sm-3 control-label">简介（内容）：</label>
                 <div class="col-sm-8">
                         <input type="hidden" class="form-control" name="briefIntroduction" th:field="*{briefIntroduction}">
                  	<div class="summernote" id="briefIntroduction"></div>
@@ -44,56 +59,12 @@
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">抢购日期：</label>
+                <label class="col-sm-3 control-label">详细信息：</label>
                 <div class="col-sm-8">
-                    <div class="input-group date">
-                        <input name="snapUpDate" th:value="${#dates.format(hyProduct.snapUpDate, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    </div>
+                    <input name="state" th:field="*{state}" class="form-control" type="text">
                 </div>
             </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">发码日期：</label>
-                <div class="col-sm-8">
-                    <div class="input-group date">
-                        <input name="sendCodeDate" th:value="${#dates.format(hyProduct.sendCodeDate, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">预约日期：</label>
-                <div class="col-sm-8">
-                    <div class="input-group date">
-                        <input name="appointmentDate" th:value="${#dates.format(hyProduct.appointmentDate, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">预约方式：</label>
-                <div class="col-sm-8">
-                    <input name="appointmentMode" th:field="*{appointmentMode}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">使用日期：</label>
-                <div class="col-sm-8">
-                    <div class="input-group date">
-                        <input name="useDate" th:value="${#dates.format(hyProduct.useDate, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">    
-                 <label class="col-sm-3 control-label">店铺名称：</label>
-                <div class="col-sm-8">
-                    <select name="hyShop.shopName" th:field="*{hyShop.shopName}" class="form-control" th:with="type=${@shop.getShop()}">
-						<option value="">请选择</option>
-						<option th:if="data!=null" th:each="data:${type}" th:text="${data.shopName}" th:value="${data.id}"></option>
-				 	</select>
-                </div>
-            </div>
+        
         </form>
     </div>
     <th:block th:include="include :: footer" />
