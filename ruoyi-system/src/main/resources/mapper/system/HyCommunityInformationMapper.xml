@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybais.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.ruoyi.system.mapper.HyCommunityInformationMapper">
+	<resultMap type="HyCommunityInformation"
+		id="HyCommunityInformationResult">
+		<result property="id" column="id" />
+		<result property="informationType" column="information_type" />
+		<result property="source" column="source" />
+		<result property="title" column="title" />
+		<result property="startTime" column="start_time" />
+		<result property="effectiveTime" column="effective_time" />
+		<result property="importantAnnouncement"
+			column="important_announcement" />
+		<result property="state" column="state" />
+		<result property="historyOperator" column="history_operator" />
+		<result property="historyOperationTime"
+			column="history_operation_time" />
+		<result property="announcementScopeItems"
+			column="announcement_scope_items" />
+		<result property="noticeScopeBuilding"
+			column="notice_scope_building" />
+		<result property="informationContent"
+			column="information_content" />
+	</resultMap>
+	<sql id="selectHyCommunityInformationVo">
+		select
+		id, information_type, source, title, start_time, effective_time, important_announcement, state, history_operator, history_operation_time, announcement_scope_items,
+		notice_scope_building,
+		information_content
+		from hy_community_information
+	</sql>
+	<select id="selectHyCommunityInformationList"
+		parameterType="HyCommunityInformation"
+		resultMap="HyCommunityInformationResult">
+		<include refid="selectHyCommunityInformationVo" />
+		<where>
+			<if test="informationType !=null and informationType != ''"> and information_type=# {informationType} </if>
+			<if test="source !=null and source != ''"> and source=#{source}</if>
+			<if test="title !=null and title != ''"> and title=#{title}</if>
+			<if test="startTime != null "> and start_time=#{startTime}</if>
+			<if test="effectiveTime != null "> and effective_time=#{effectiveTime}</if>
+			<if test="importantAnnouncement !=null and importantAnnouncement != ''"> and important_announcement=#{importantAnnouncement} </if>
+			<if test="state !=null and state != ''"> and state=#{state}</if>
+			<if test="historyOperator !=null and historyOperator != ''"> and history_operator=# {historyOperator} </if>
+			<if test="announcementScopeItems !=null and announcementScopeItems != ''"> and announcement_scope_items=#{announcementScopeItems} </if>
+			<if test="historyOperationTime !=null"> and history_operation_time=#{historyOperationTime} </if>
+			<if test="noticeScopeBuilding !=null and noticeScopeBuilding != ''"> and notice_scope_building=#{noticeScopeBuilding} </if>
+			<if test="informationContent !=null and informationContent != ''"> and information_content=#{informationContent}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectHyCommunityInformationById"
+		parameterType="Long" resultMap="HyCommunityInformationResult">
+		<include refid="selectHyCommunityInformationVo" />
+		where id= #{id}
+	</select>
+
+	<insert id="insertHyCommunityInformation"
+		parameterType="HyCommunityInformation">
+		insert into hy_community_information
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">id,</if>
+			<if test="informationType != null">information_type,</if>
+			<if test="source != null">source,</if>
+			<if test="title != null">title,</if>
+			<if test="startTime != null">start_time,</if>
+			<if test="effectiveTime != null">effective_time,</if>
+			<if test="importantAnnouncement != null">important_announcement,</if>
+			<if test="state != null">state,</if>
+			<if test="historyOperator != null">history_operator,</if>
+			<if test="announcementScopeItems != null">announcement_scope_items,</if>
+			<if test="historyOperationTime != null">history_operation_time,</if>
+			<if test="noticeScopeBuilding != null">notice_scope_building,</if>
+			<if test="informationContent != null">information_content,</if>
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="id != null">id,</if>
+			<if test="informationType != null">#{informationType},</if>
+			<if test="source != null">#{source},</if>
+			<if test="title != null">#{title},</if>
+			<if test="startTime != null">#{startTime},</if>
+			<if test="effectiveTime != null">#{effectiveTime},</if>
+			<if test="importantAnnouncement != null">#{importantAnnouncement},</if>
+			<if test="state != null">#{state},</if>
+			<if test="historyOperator != null">#{historyOperator},</if>
+			<if test="announcementScopeItems != null">#{announcemenScopeItems},</if>
+			<if test="historyOperationTime != null">#{historyOperationTime},</if>
+			<if test="noticeScopeBuilding != null">#{noticeScopeBuilding},</if>
+			<if test="informationContent != null">#{informationContent},</if>
+		</trim>
+	</insert>
+
+	<update id="updateHyCommunityInformation"
+		parameterType="HyCommunityInformation">
+		update hy_community_information
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="informationType != null">information_type= #{informationType},</if>
+			<if test="source != null">source= #{source},</if>
+			<if test="title != null">title= #{title},</if>
+			<if test="startTime != null">start_time= #{startTime},</if>
+			<if test="effectiveTime != null">effective_time= #{effectiveTime},</if>
+			<if test="importantAnnouncement != null">important_announcement= # {importantAnnouncement}, </if>
+			<if test="state != null">state= #{state},</if>
+			<if test="historyOperator != null">history_operator= #{historyOperator},</if>
+			<if test="announcementScopeItems != null">announcement_scope_items= # announcementScopeItems}, </if>
+			<if test="historyOperationTime != null">history_operation_time= # {historyOperationTime}, </if>
+			<if test="noticeScopeBuilding != null">notice_scope_building= #{noticeScopeBuilding},</if>
+			<if test="informationContent != null">information_content= #{informationContent},</if>
+		</trim>
+		where id = #{id}
+	</update>
+
+	<delete id="deleteHyCommunityInformationById"
+		parameterType="Long">
+		delete from hy_community_information where id = #{id}
+	</delete>
+
+	<delete id="deleteHyCommunityInformationByIds"
+		parameterType="String">
+		delete from hy_community_information where id in
+		<foreach item="id" collection="array" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
+</mapper> 
