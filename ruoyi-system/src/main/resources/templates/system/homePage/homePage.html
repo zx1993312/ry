@@ -1,16 +1,14 @@
 <!DOCTYPE html>
-<html lang="ld">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-<meta charset="UTF-8">
-<title>首页</title>
+    <th:block th:include="include :: header('首页')" />
 </head>
 <body>
-	<img src="">
-	<div>
-	
-	</div>
-	<div>
-		<span>180</span>
-	</div>
+	<img src="img/1.jpg">
+
+    <div class="col-sm-8">
+           <input type="hidden" class="form-control" name="hyProduct.briefIntroduction" th:field="*{hyProduct.briefIntroduction}">
+    	   <div class="summernote" id="hyProduct.briefIntroduction"></div>
+    </div>
 </body>
 </html>
