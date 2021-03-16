@@ -11,11 +11,6 @@
 				<form id="data-form">
 					<div class="select-list">
 						<ul>
-						    <li>
-								字典名称：<select id="dictType" name="dictType" class="form-control">
-					                <option th:each="dict : ${dictList}" th:text="${dict['dictName']}" th:value="${dict['dictType']}" th:field="*{dict.dictType}"></option>
-								</select>
-							</li>
 							<li>
 								字典标签：<input type="text" name="dictLabel"/>
 							</li>
