@@ -16,7 +16,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property=" appointmentDate"    column=" appointment_date"    />  
         <result property=" appointmentMode"    column=" appointment_mode"    />
         <result property="useDate"    column="use_date"    />
-        <result property="shopId"    column="shop_id"    /> 
+        <result property="shopId"    column="shop_id"    />
+        <result property="limitedQuantity"    column="limited_quantity"    />
+        <result property="productOrderBy"    column="product_order_by"    />
+        <result property="customerServiceTel"    column="customer_service_tel"    />
+        <result property="shareTitle"    column="share_title"    />
          <association property="hyShop" column="id"
 			javaType="HyShop" resultMap="HyShopResult" />
          <association property="hyPicture" column="id"
@@ -58,6 +62,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         p.appointment_mode, 
         p.use_date, 
         p.shop_id,
+        p.limited_quantity,
+        p.product_order_by,
+        p.customer_service_tel,
+        p.share_title,
         s.shop_name,
         a.pciture_address,
         c.poster_address
@@ -92,6 +100,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test=" appointmentMode != null  and appointmentMode != ''"> and  appointment_mode = #{ appointmentMode}</if>
             <if test="useDate != null "> and use_date = #{useDate}</if>
             <if test="shopId != null "> and shop_id = #{shopId}</if>
+            <if test="limitedQuantity != null "> and limited_quantity = #{limitedQuantity}</if>
+            <if test="productOrderBy != null "> and product_order_by = #{productOrderBy}</if>
+            <if test="customerServiceTel != null "> and customer_service_tel = #{customerServiceTel}</if>
+            <if test="shareTitle != null "> and share_title = #{shareTitle}</if>
             <if test="hyShop.shopName != null and hyShop.shopName != ''"> and s.shop_name = #{hyShop.shopName}</if>
     </select>
     
@@ -118,6 +130,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test=" appointmentMode != null"> appointment_mode,</if>
             <if test="useDate != null">use_date,</if>
             <if test="shopId != null">shop_id,</if>
+            <if test="limitedQuantity != null">limited_quantity,</if>
+            <if test="productOrderBy != null">product_order_by,</if>
+            <if test="customerServiceTel != null">customer_service_tel,</if>
+            <if test="shareTitle != null">share_title,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="productName != null">#{productName},</if>
@@ -131,6 +147,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test=" appointmentMode != null">#{ appointmentMode},</if>
             <if test="useDate != null">#{useDate},</if>
             <if test="shopId != null">#{shopId},</if>
+            <if test="limitedQuantity != null">#{limitedQuantity},</if>
+            <if test="productOrderBy != null">#{productOrderBy},</if>
+            <if test="customerServiceTel != null">#{customerServiceTel},</if>
+            <if test="shareTitle != null">#{shareTitle},</if>
          </trim>
     </insert>
 
@@ -148,6 +168,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test=" appointmentMode != null"> appointment_mode = #{ appointmentMode},</if>
             <if test="useDate != null">use_date = #{useDate},</if>
             <if test="shopId != null">shop_id = #{shopId},</if>
+            <if test="limitedQuantity != null "> and limited_quantity = #{limitedQuantity}</if>
+            <if test="productOrderBy != null "> and product_order_by = #{productOrderBy}</if>
+            <if test="customerServiceTel != null "> and customer_service_tel = #{customerServiceTel}</if>
+            <if test="shareTitle != null "> and share_title = #{shareTitle}</if>
         </trim>
         where id = #{id}
     </update>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('社区配套列表')" />
+    <th:block th:include="include :: header('功能选择列表')" />
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -11,39 +11,39 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                <label>配套种类：</label>
-                                <input type="text" name="matchingTypes"/>
+                                <label>商品状态：</label>
+                                <input type="text" name="productState"/>
                             </li>
                             <li>
-                                <label>配套类型：</label>
-                                <select name="matchingType">
+                                <label>首页推荐：</label>
+                                <input type="text" name="homePageRecommendation"/>
+                            </li>
+                            <li>
+                                <label>地图展示：</label>
+                                <input type="text" name="showMap"/>
+                            </li>
+                            <li>
+                                <label>地图导航单个商品：</label>
+                                <input type="text" name="singleCommodity"/>
+                            </li>
+                            <li>
+                                <label>商品类型：</label>
+                                <select name="productType">
                                     <option value="">所有</option>
                                     <option value="-1">代码生成请选择字典属性</option>
                                 </select>
                             </li>
                             <li>
-                                <label>联系人：</label>
-                                <input type="text" name="contacts"/>
+                                <label>是否开启日期选择：</label>
+                                <input type="text" class="time-input" placeholder="请选择是否开启日期选择" name="startDate"/>
                             </li>
                             <li>
-                                <label>配套名称：</label>
-                                <input type="text" name="matchingName"/>
+                                <label>是否开启邮寄：</label>
+                                <input type="text" name="startMail"/>
                             </li>
                             <li>
-                                <label>联系电话：</label>
-                                <input type="text" name="contactNumber"/>
-                            </li>
-                            <li>
-                                <label>所在地址：</label>
-                                <input type="text" name="address"/>
-                            </li>
-                            <li>
-                                <label>备注：</label>
-                                <input type="text" name="abreak"/>
-                            </li>
-                            <li>
-                                <label>社区id：</label>
-                                <input type="text" name="communityId"/>
+                                <label>产品id：</label>
+                                <input type="text" name="productId"/>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -55,16 +55,16 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:support:add">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:selection:add">
                     <i class="fa fa-plus"></i> 添加
                 </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:support:edit">
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:selection:edit">
                     <i class="fa fa-edit"></i> 修改
                 </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:support:remove">
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:selection:remove">
                     <i class="fa fa-remove"></i> 删除
                 </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:support:export">
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:selection:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
             </div>
@@ -75,9 +75,9 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('system:support:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('system:support:remove')}]];
-        var prefix = ctx + "system/support";
+        var editFlag = [[${@permission.hasPermi('system:selection:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:selection:remove')}]];
+        var prefix = ctx + "system/selection";
 
         $(function() {
             var options = {
@@ -86,46 +86,46 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "社区配套",
+                modalName: "功能选择",
                 columns: [{
                     checkbox: true
                 },
                 {
                     field: 'id',
-                    title: '社区配套id',
+                    title: '功能选择id',
                     visible: false
                 },
                 {
-                    field: 'matchingTypes',
-                    title: '配套种类'
+                    field: 'productState',
+                    title: '商品状态'
                 },
                 {
-                    field: 'matchingType',
-                    title: '配套类型'
+                    field: 'homePageRecommendation',
+                    title: '首页推荐'
                 },
                 {
-                    field: 'contacts',
-                    title: '联系人'
+                    field: 'showMap',
+                    title: '地图展示'
                 },
                 {
-                    field: 'matchingName',
-                    title: '配套名称'
+                    field: 'singleCommodity',
+                    title: '地图导航单个商品'
                 },
                 {
-                    field: 'contactNumber',
-                    title: '联系电话'
+                    field: 'productType',
+                    title: '商品类型'
                 },
                 {
-                    field: 'address',
-                    title: '所在地址'
+                    field: 'startDate',
+                    title: '是否开启日期选择'
                 },
                 {
-                    field: 'abreak',
-                    title: '备注'
+                    field: 'startMail',
+                    title: '是否开启邮寄'
                 },
                 {
-                    field: 'communityId',
-                    title: '社区id'
+                    field: 'productId',
+                    title: '产品id'
                 },
                 {
                     title: '操作',

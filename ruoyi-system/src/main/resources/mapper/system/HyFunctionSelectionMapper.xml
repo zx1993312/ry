@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyFunctionSelectionMapper">
+    
+    <resultMap type="HyFunctionSelection" id="HyFunctionSelectionResult">
+        <result property="id"    column="id"    />
+        <result property="productState"    column="product_state"    />
+        <result property="homePageRecommendation"    column="home_page_recommendation"    />
+        <result property="showMap"    column="show_map"    />
+        <result property="singleCommodity"    column="single_commodity"    />
+        <result property="productType"    column="product_type"    />
+        <result property="startDate"    column="start_date"    />
+        <result property="startMail"    column="start_mail"    />
+        <result property="productId"    column="product_id"    />
+         <association property="hyProduct" column="id"
+			javaType="HyProduct" resultMap="HyProductResult" />
+    </resultMap>
+    
+    <resultMap type="HyProduct" id="HyProductResult">
+        <result property="id"    column="id"    />
+        <result property="productName"    column="product_name"    />
+        <result property="briefIntroduction"    column="brief_introduction"    />
+        <result property="soldNumber"    column="sold_number"    />
+        <result property="stockNumber"    column="stock_number"    />
+        <result property="state"    column="state"    />
+        <result property="snapUpDate"    column="snap_up_date"    />
+        <result property="sendCodeDate"    column="send_code_date"    />
+        <result property=" appointmentDate"    column=" appointment_date"    />  
+        <result property=" appointmentMode"    column=" appointment_mode"    />
+        <result property="useDate"    column="use_date"    />
+        <result property="shopId"    column="shop_id"    />
+        <result property="limitedQuantity"    column="limited_quantity"    />
+        <result property="productOrderBy"    column="product_order_by"    />
+        <result property="customerServiceTel"    column="customer_service_tel"    />
+        <result property="shareTitle"    column="share_title"    />
+    </resultMap>
+    
+
+    <sql id="selectHyFunctionSelectionVo">
+        select 
+        f.id, 
+        f.product_state, 
+        f.home_page_recommendation, 
+        f.show_map, 
+        f.single_commodity, 
+        f.product_type, 
+        f.start_date, 
+        f.start_mail, 
+        f.product_id
+        from 
+        hy_function_selection f
+        LEFT JOIN hy_product p ON f.product_id=p.id
+        where 1=1
+    </sql>
+
+    <select id="selectHyFunctionSelectionList" parameterType="HyFunctionSelection" resultMap="HyFunctionSelectionResult">
+        <include refid="selectHyFunctionSelectionVo"/>
+          
+            <if test="productState != null  and productState != ''"> and product_state = #{productState}</if>
+            <if test="homePageRecommendation != null  and homePageRecommendation != ''"> and home_page_recommendation = #{homePageRecommendation}</if>
+            <if test="showMap != null  and showMap != ''"> and show_map = #{showMap}</if>
+            <if test="singleCommodity != null  and singleCommodity != ''"> and single_commodity = #{singleCommodity}</if>
+            <if test="productType != null  and productType != ''"> and product_type = #{productType}</if>
+            <if test="startDate != null "> and start_date = #{startDate}</if>
+            <if test="startMail != null  and startMail != ''"> and start_mail = #{startMail}</if>
+            <if test="productId != null "> and product_id = #{productId}</if>
+     
+    </select>
+    
+    <select id="selectHyFunctionSelectionById" parameterType="Long" resultMap="HyFunctionSelectionResult">
+        <include refid="selectHyFunctionSelectionVo"/>
+       and f.id = #{id}
+    </select>
+        
+    <insert id="insertHyFunctionSelection" parameterType="HyFunctionSelection">
+        insert into hy_function_selection
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="productState != null">product_state,</if>
+            <if test="homePageRecommendation != null">home_page_recommendation,</if>
+            <if test="showMap != null">show_map,</if>
+            <if test="singleCommodity != null">single_commodity,</if>
+            <if test="productType != null">product_type,</if>
+            <if test="startDate != null">start_date,</if>
+            <if test="startMail != null">start_mail,</if>
+            <if test="productId != null">product_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="productState != null">#{productState},</if>
+            <if test="homePageRecommendation != null">#{homePageRecommendation},</if>
+            <if test="showMap != null">#{showMap},</if>
+            <if test="singleCommodity != null">#{singleCommodity},</if>
+            <if test="productType != null">#{productType},</if>
+            <if test="startDate != null">#{startDate},</if>
+            <if test="startMail != null">#{startMail},</if>
+            <if test="productId != null">#{productId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyFunctionSelection" parameterType="HyFunctionSelection">
+        update hy_function_selection
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="productState != null">product_state = #{productState},</if>
+            <if test="homePageRecommendation != null">home_page_recommendation = #{homePageRecommendation},</if>
+            <if test="showMap != null">show_map = #{showMap},</if>
+            <if test="singleCommodity != null">single_commodity = #{singleCommodity},</if>
+            <if test="productType != null">product_type = #{productType},</if>
+            <if test="startDate != null">start_date = #{startDate},</if>
+            <if test="startMail != null">start_mail = #{startMail},</if>
+            <if test="productId != null">product_id = #{productId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyFunctionSelectionById" parameterType="Long">
+        delete from hy_function_selection where id = #{id}
+    </delete>
+
+    <delete id="deleteHyFunctionSelectionByIds" parameterType="String">
+        delete from hy_function_selection where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -33,6 +33,9 @@ public class HyDistributionRule extends BaseEntity
     /** 分销id */
     @Excel(name = "分销id")
     private Long distributionId;
+    /**是否开启分销*/
+    @Excel(name="是否开启分销")
+    private String startDistribution;
 
     public void setId(Long id) 
     {
@@ -80,14 +83,27 @@ public class HyDistributionRule extends BaseEntity
         return distributionId;
     }
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("salesVolume", getSalesVolume())
-            .append("commissionFromSuperior", getCommissionFromSuperior())
-            .append("topCommission", getTopCommission())
-            .append("distributionId", getDistributionId())
-            .toString();
-    }
+    public String getStartDistribution() {
+		return startDistribution;
+	}
+
+	public void setStartDistribution(String startDistribution) {
+		this.startDistribution = startDistribution;
+	}
+
+	@Override
+	public String toString() {
+		return "HyDistributionRule [id=" + id + ", salesVolume=" + salesVolume + ", commissionFromSuperior="
+				+ commissionFromSuperior + ", topCommission=" + topCommission + ", distributionId=" + distributionId
+				+ ", startDistribution=" + startDistribution + ", getId()=" + getId() + ", getSalesVolume()="
+				+ getSalesVolume() + ", getCommissionFromSuperior()=" + getCommissionFromSuperior()
+				+ ", getTopCommission()=" + getTopCommission() + ", getDistributionId()=" + getDistributionId()
+				+ ", getStartDistribution()=" + getStartDistribution() + ", getSearchValue()=" + getSearchValue()
+				+ ", getCreateBy()=" + getCreateBy() + ", getCreateTime()=" + getCreateTime() + ", getUpdateBy()="
+				+ getUpdateBy() + ", getUpdateTime()=" + getUpdateTime() + ", getRemark()=" + getRemark()
+				+ ", getParams()=" + getParams() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
+	}
+
+
 }

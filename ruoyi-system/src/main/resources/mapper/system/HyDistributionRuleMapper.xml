@@ -10,10 +10,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="commissionFromSuperior"    column="commission_from_superior"    />
         <result property="topCommission"    column="top_commission"    />
         <result property="distributionId"    column="distribution_id"    />
+        <result property="startDistribution"    column="start_distribution"    />
     </resultMap>
 
     <sql id="selectHyDistributionRuleVo">
-        select id, sales_volume, commission_from_superior, top_commission, distribution_id from hy_distribution_rule
+        select id, sales_volume, commission_from_superior, top_commission,start_distribution, distribution_id from hy_distribution_rule
     </sql>
 
     <select id="selectHyDistributionRuleList" parameterType="HyDistributionRule" resultMap="HyDistributionRuleResult">
@@ -23,6 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="commissionFromSuperior != null  and commissionFromSuperior != ''"> and commission_from_superior = #{commissionFromSuperior}</if>
             <if test="topCommission != null  and topCommission != ''"> and top_commission = #{topCommission}</if>
             <if test="distributionId != null "> and distribution_id = #{distributionId}</if>
+            <if test="startDistribution != null "> and start_distribution = #{startDistribution}</if>
         </where>
     </select>
     
@@ -38,12 +40,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="commissionFromSuperior != null">commission_from_superior,</if>
             <if test="topCommission != null">top_commission,</if>
             <if test="distributionId != null">distribution_id,</if>
+            <if test="startDistribution != null">start_distribution,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="salesVolume != null">#{salesVolume},</if>
             <if test="commissionFromSuperior != null">#{commissionFromSuperior},</if>
             <if test="topCommission != null">#{topCommission},</if>
             <if test="distributionId != null">#{distributionId},</if>
+            <if test="startDistribution != null">#{startDistribution},</if>
          </trim>
     </insert>
 
@@ -54,6 +58,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="commissionFromSuperior != null">commission_from_superior = #{commissionFromSuperior},</if>
             <if test="topCommission != null">top_commission = #{topCommission},</if>
             <if test="distributionId != null">distribution_id = #{distributionId},</if>
+            <if test="startDistribution != null">start_distribution = #{startDistribution},</if>
         </trim>
         where id = #{id}
     </update>

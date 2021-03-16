@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+<th:block th:include="include :: header('标签列表')" />
+</head>
+
+<style>
+#table {
+	position: relative;
+	right: 500px;
+}
+
+#text {
+	height: 60px;
+	width: 1340px;
+	background-color: #B45F04;
+	border-radius: 5px;
+	margin: 0%, 200%, 0%, 200%;
+	position: relative;
+	right: 24px;
+}
+</style>
+<body class="gray-bg">
+
+
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<form class="form-horizontal m" id="form-lable-add">
+			<div class="form-group">标签管理</div>
+			<div id="text" style="color: white;">
+				<p>&nbsp;让客户精准查找内容</p>
+				<p>&nbsp;广告位和导航菜单中加入标签查询链接地址可实现精准导航</p>
+			</div>
+			<br>
+			<div id="table" class="form-group">
+				<label class="col-sm-3 control-label">&nbsp;</label>
+				<div class="col-sm-8 control-label">
+					<input name="labelName" class="form-control" type="text"
+						placeholder="请输入标签">
+				</div>
+				<a class="btn btn-success" onclick="submitHandler()"> <i
+					class="fa fa-plus"></i> 添加标签
+				</a>
+			</div>
+		</form>
+	</div>
+	<th:block th:include="include :: footer" />
+	<script th:inline="javascript">
+		       var prefix = ctx + "system/lable"
+		       $("#form-lable-add").validate({
+		           focusCleanup: true
+		       });
+		       function submitHandler() {
+		           if ($.validate.form()) {
+		               $.operate.save(prefix + "/add", $('#form-lable-add').serialize());
+		           }
+		       }
+		   </script>
+	<div class="btn-group-sm" id="toolbar" role="group"></div>
+	<div class="col-sm-12 select-table table-striped">
+		<table id="bootstrap-table"></table>
+	</div>
+	<th:block th:include="include :: footer" />
+	<script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:lable:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:lable:remove')}]];
+        var prefix = ctx + "system/lable";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "标签",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '标签id',
+                    visible: false
+                },
+                {
+                    field: 'labelName',
+                    title: '标签名称'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

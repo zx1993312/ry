@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('社区配套列表')" />
+    <th:block th:include="include :: header('订单列表')" />
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -10,40 +10,40 @@
                 <form id="formId">
                     <div class="select-list">
                         <ul>
+                        
                             <li>
-                                <label>配套种类：</label>
-                                <input type="text" name="matchingTypes"/>
+                                <label>客户名称：</label>
+                                <input type="text" name="hyUser.name"/>
                             </li>
                             <li>
-                                <label>配套类型：</label>
-                                <select name="matchingType">
-                                    <option value="">所有</option>
-                                    <option value="-1">代码生成请选择字典属性</option>
+                                <label>订单编号：</label>
+                                <input type="text" name="orderNumber"/>
+                            </li>
+                            <li>
+                                <label>商品名：</label>
+                                <input type="text" name="tradeName"/>
+                            </li>
+                            <li>
+                                <label>商家名：</label>
+                                <input type="text" name="businessName"/>
+                            </li>
+                            <li>
+                                <label>单价：</label>
+                                <input type="text" name="unitPrice"/>
+                            </li>
+                            <li>
+                                <label>数量：</label>
+                                <input type="text" name="number"/>
+                            </li>
+                            <li>
+                                <label>状态：</label>
+                                <select name="state" class="form-control " >
+                                <option value="">请选择</option>
+                                <option value="0">全部订单</option>
+                                <option value="1">已支付</option>
+                                <option value="2">已预约</option>
+                                <option value="3">已完成</option>
                                 </select>
-                            </li>
-                            <li>
-                                <label>联系人：</label>
-                                <input type="text" name="contacts"/>
-                            </li>
-                            <li>
-                                <label>配套名称：</label>
-                                <input type="text" name="matchingName"/>
-                            </li>
-                            <li>
-                                <label>联系电话：</label>
-                                <input type="text" name="contactNumber"/>
-                            </li>
-                            <li>
-                                <label>所在地址：</label>
-                                <input type="text" name="address"/>
-                            </li>
-                            <li>
-                                <label>备注：</label>
-                                <input type="text" name="abreak"/>
-                            </li>
-                            <li>
-                                <label>社区id：</label>
-                                <input type="text" name="communityId"/>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -55,16 +55,16 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:support:add">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:order:add">
                     <i class="fa fa-plus"></i> 添加
                 </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:support:edit">
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:order:edit">
                     <i class="fa fa-edit"></i> 修改
                 </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:support:remove">
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:order:remove">
                     <i class="fa fa-remove"></i> 删除
                 </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:support:export">
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:order:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
             </div>
@@ -75,9 +75,9 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('system:support:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('system:support:remove')}]];
-        var prefix = ctx + "system/support";
+        var editFlag = [[${@permission.hasPermi('system:order:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:order:remove')}]];
+        var prefix = ctx + "system/order";
 
         $(function() {
             var options = {
@@ -86,46 +86,43 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "社区配套",
+                modalName: "订单",
                 columns: [{
                     checkbox: true
                 },
                 {
                     field: 'id',
-                    title: '社区配套id',
+                    title: '订单id',
                     visible: false
                 },
+       
                 {
-                    field: 'matchingTypes',
-                    title: '配套种类'
+                    field: 'hyUser.name',
+                    title: '客户名称'
                 },
                 {
-                    field: 'matchingType',
-                    title: '配套类型'
+                    field: 'orderNumber',
+                    title: '订单编号'
                 },
                 {
-                    field: 'contacts',
-                    title: '联系人'
+                    field: 'tradeName',
+                    title: '商品名'
                 },
                 {
-                    field: 'matchingName',
-                    title: '配套名称'
+                    field: 'businessName',
+                    title: '商家名'
                 },
                 {
-                    field: 'contactNumber',
-                    title: '联系电话'
+                    field: 'unitPrice',
+                    title: '单价'
                 },
                 {
-                    field: 'address',
-                    title: '所在地址'
+                    field: 'number',
+                    title: '数量'
                 },
                 {
-                    field: 'abreak',
-                    title: '备注'
-                },
-                {
-                    field: 'communityId',
-                    title: '社区id'
+                    field: 'state',
+                    title: '状态'
                 },
                 {
                     title: '操作',

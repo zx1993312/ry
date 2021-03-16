@@ -80,6 +80,18 @@ public class HyProduct extends BaseEntity
     /**详细信息表（海报表）*/
     @Excel(name="详细信息表（海报表）")
     private HyPoster hyPoster;
+    /**限购数量*/
+    @Excel(name="限购数量")
+    private Integer limitedQuantity;
+    /**产品排序权重*/
+    @Excel(name="产品排序权重")
+    private Integer productOrderBy;
+    /**客服电话*/
+    @Excel(name="客服电话")
+    private String customerServiceTel;
+    /**分享标题*/
+    @Excel(name="分享标题")
+    private String shareTitle;
 
     public void setId(Long id) 
     {
@@ -214,21 +226,60 @@ public class HyProduct extends BaseEntity
 		this.hyPoster = hyPoster;
 	}
 
+	public Integer getLimitedQuantity() {
+		return limitedQuantity;
+	}
+
+	public void setLimitedQuantity(Integer limitedQuantity) {
+		this.limitedQuantity = limitedQuantity;
+	}
+
+	public Integer getProductOrderBy() {
+		return productOrderBy;
+	}
+
+	public void setProductOrderBy(Integer productOrderBy) {
+		this.productOrderBy = productOrderBy;
+	}
+
+	public String getCustomerServiceTel() {
+		return customerServiceTel;
+	}
+
+	public void setCustomerServiceTel(String customerServiceTel) {
+		this.customerServiceTel = customerServiceTel;
+	}
+	
+	public String getShareTitle() {
+		return shareTitle;
+	}
+
+	public void setShareTitle(String shareTitle) {
+		this.shareTitle = shareTitle;
+	}
+
 	@Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("productName", getProductName())
-            .append("briefIntroduction", getBriefIntroduction())
-            .append("soldNumber", getSoldNumber())
-            .append("stockNumber", getStockNumber())
-            .append("state", getState())
-            .append("snapUpDate", getSnapUpDate())
-            .append("sendCodeDate", getSendCodeDate())
-            .append(" appointmentDate", getAppointmentDate())
-            .append(" appointmentMode", getAppointmentMode())
-            .append("useDate", getUseDate())
-            .append("shopId", getShopId())
-            .toString();
-    }
+	public String toString() {
+		return "HyProduct [id=" + id + ", productName=" + productName + ", briefIntroduction=" + briefIntroduction
+				+ ", soldNumber=" + soldNumber + ", stockNumber=" + stockNumber + ", state=" + state + ", snapUpDate="
+				+ snapUpDate + ", sendCodeDate=" + sendCodeDate + ", appointmentDate=" + appointmentDate
+				+ ", appointmentMode=" + appointmentMode + ", useDate=" + useDate + ", shopId=" + shopId + ", hyShop="
+				+ hyShop + ", hyPicture=" + hyPicture + ", hyPoster=" + hyPoster + ", limitedQuantity="
+				+ limitedQuantity + ", productOrderBy=" + productOrderBy + ", customerServiceTel=" + customerServiceTel
+				+ ", shareTitle=" + shareTitle + ", getId()=" + getId() + ", getProductName()=" + getProductName()
+				+ ", getBriefIntroduction()=" + getBriefIntroduction() + ", getSoldNumber()=" + getSoldNumber()
+				+ ", getStockNumber()=" + getStockNumber() + ", getState()=" + getState() + ", getSnapUpDate()="
+				+ getSnapUpDate() + ", getSendCodeDate()=" + getSendCodeDate() + ", getAppointmentDate()="
+				+ getAppointmentDate() + ", getAppointmentMode()=" + getAppointmentMode() + ", getUseDate()="
+				+ getUseDate() + ", getShopId()=" + getShopId() + ", getHyShop()=" + getHyShop() + ", getHyPicture()="
+				+ getHyPicture() + ", getHyPoster()=" + getHyPoster() + ", getLimitedQuantity()=" + getLimitedQuantity()
+				+ ", getProductOrderBy()=" + getProductOrderBy() + ", getCustomerServiceTel()="
+				+ getCustomerServiceTel() + ", getShareTitle()=" + getShareTitle() + ", getSearchValue()="
+				+ getSearchValue() + ", getCreateBy()=" + getCreateBy() + ", getCreateTime()=" + getCreateTime()
+				+ ", getUpdateBy()=" + getUpdateBy() + ", getUpdateTime()=" + getUpdateTime() + ", getRemark()="
+				+ getRemark() + ", getParams()=" + getParams() + ", getClass()=" + getClass() + ", hashCode()="
+				+ hashCode() + ", toString()=" + super.toString() + "]";
+	}
+
+
 }

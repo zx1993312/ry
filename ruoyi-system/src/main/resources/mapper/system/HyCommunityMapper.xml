@@ -62,12 +62,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectHyCommunityList" parameterType="HyCommunity"
 		resultMap="HyCommunityResult">
 		<include refid="selectHyCommunityVo" />
-		<where>
+	
 			<if test="title != null  and title != ''"> and title = #{title}</if>
 			<if test="releaseTime != null "> and release_time = #{releaseTime}</if>
 			<if
 				test="introductionContent != null  and introductionContent != ''"> and introduction_content = #{introductionContent}</if>
-		</where>
+		
 	</select>
 
 	<select id="selectHyCommunityById" parameterType="Long"
