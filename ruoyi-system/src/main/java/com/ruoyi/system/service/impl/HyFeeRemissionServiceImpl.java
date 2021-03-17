@@ -94,7 +94,7 @@ public class HyFeeRemissionServiceImpl implements IHyFeeRemissionService {
 		HyOwnerRegistration hyOwnerRegistration = new HyOwnerRegistration();
 		hyOwnerRegistration.setHouseNum(hyFeeRemission.getHouseNumber());
 		List<?> ownerList = hyOwnerRegistrationMapper.selectHyOwnerRegistrationListOrr(hyOwnerRegistration);// 根据houseNum查询数据是否存在
-		hyOwnerRegistration.setOwnerName(hyFeeRemission.getOwnerName());
+		hyOwnerRegistration.setOwnerName(hyFeeRemission.getHyOwnerRegistration().getOwnerName());
 		if (StringUtils.isNull(ownerList) || ownerList.size() == 0) {// 数据存在，插入新数据
 			result = hyOwnerRegistrationMapper.insertHyOwnerRegistration(hyOwnerRegistration);
 		} else {
@@ -104,7 +104,7 @@ public class HyFeeRemissionServiceImpl implements IHyFeeRemissionService {
 		HyHouseInf hyHouseInf = new HyHouseInf();
 		hyHouseInf.setHouseNumber(hyFeeRemission.getHouseNumber());
 		List<?> houseList = hyHouseInfMapper.selectHyHouseInfList(hyHouseInf);
-		hyHouseInf.setHouseName(hyFeeRemission.getHouseName());
+		hyHouseInf.setHouseName(hyFeeRemission.getHyHouseInf().getHouseName());
 		if (StringUtils.isNull(houseList) || houseList.size() == 0) {
 			result = hyHouseInfMapper.insertHyHouseInf(hyHouseInf);
 		} else {
@@ -114,7 +114,7 @@ public class HyFeeRemissionServiceImpl implements IHyFeeRemissionService {
 		HyParkingInf hyParkingInf = new HyParkingInf();
 		hyParkingInf.setParkingNumber(String.valueOf(hyFeeRemission.getParkingNumber()));
 		List<?> parkingList = hyParkingInfMapper.selectHyParkingInfList(hyParkingInf);
-		hyParkingInf.setHouseNumber(hyFeeRemission.getHouseNumber());
+		hyParkingInf.setHouseNumber(hyFeeRemission.getHyParkingInf().getHouseNumber());
 		if (StringUtils.isNull(parkingList) || parkingList.size() == 0) {
 			result = hyParkingInfMapper.insertHyParkingInf(hyParkingInf);
 		} else {
@@ -124,7 +124,7 @@ public class HyFeeRemissionServiceImpl implements IHyFeeRemissionService {
 		HyMeter hyMeter = new HyMeter();
 		hyMeter.setHouseNum(hyFeeRemission.getHouseNumber());
 		List<?> meterList = hyMeterMapper.selectHyMeter(hyMeter);
-		hyMeter.setMeterName(hyFeeRemission.getMeterName());
+		hyMeter.setMeterName(hyFeeRemission.getHyMeter().getMeterName());
 		if (StringUtils.isNull(meterList) || meterList.size() == 0) {
 			result = hyMeterMapper.insertHyMeter(hyMeter);
 		} else {
