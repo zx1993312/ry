@@ -35,7 +35,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <sql id="selectHyRegistrationModeConfigurationVo">
         select 
-        m.id, 
+        m.id,  
         m.residential_quarters_set_up, 
         m.ecplain, 
         m.ecable, 
