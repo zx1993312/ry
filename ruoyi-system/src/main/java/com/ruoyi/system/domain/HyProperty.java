@@ -41,6 +41,7 @@ public class HyProperty extends BaseEntity
     @Excel(name = "物业图片地址")
     private String propertyPictureAddress;
 
+
     public void setId(Long id) 
     {
         this.id = id;
@@ -96,7 +97,10 @@ public class HyProperty extends BaseEntity
         return propertyPictureAddress;
     }
 
-    @Override
+    
+
+
+	@Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
