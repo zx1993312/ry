@@ -99,6 +99,7 @@ public class GroupRegistrationService {
 				reList.add(map);
 			}
 		}
+
 		return reList;
 	}
 
