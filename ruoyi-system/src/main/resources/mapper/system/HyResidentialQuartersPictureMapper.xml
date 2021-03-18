@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyResidentialQuartersPictureMapper">
+    
+    <resultMap type="HyResidentialQuartersPicture" id="HyResidentialQuartersPictureResult">
+        <result property="id"    column="id"    />
+        <result property="pictureAddress"    column="picture_address"    />
+        <result property="textPictureAddress"    column="text_picture_address"    />
+        <result property="chargeChapterAddress"    column="charge_chapter_address"    />
+        <result property="codeBackgroundAddress"    column="code_background_address"    />
+        <result property="visitorCodeBackgroundAddress"    column="visitor_code_background_address"    />
+        <result property="residentialQuartersId"    column="residential_quarters_id"    />
+           <association property="hyResidentialQuarters"
+			column="id" javaType="HyResidentialQuarters"
+			resultMap="HyResidentialQuartersResult" />
+    </resultMap>
+    
+     <resultMap type="HyResidentialQuarters" id="HyResidentialQuartersResult">
+        <result property="id"    column="id"    />
+        <result property="communityAddress"    column="community_address"    />
+        <result property="communityName"    column="community_name"    />
+        <result property="contacts"    column="contacts"    />
+        <result property="contactNumber"    column="contact_number"    />
+        <result property="contactQq"    column="Contact_QQ"    />
+        <result property="city"    column="city"    />
+        <result property="area"    column="area"    />
+        <result property="county"    column="county"    />
+        <result property="address"    column="address"    />
+        <result property="longitude"    column="longitude"    />
+        <result property="latitude"    column="latitude"    />
+        <result property="customerLink"    column="customer_link"    />
+        <result property="externalLinks"    column="external_links"    />
+        <result property="propertyId"    column="property_id"    />
+     
+    </resultMap>
+
+    <sql id="selectHyResidentialQuartersPictureVo">
+        select 
+        r.id, 
+        r.picture_address, 
+        r.text_picture_address, 
+        r.charge_chapter_address, 
+        r.code_background_address, 
+        r.visitor_code_background_address, 
+        r.residential_quarters_id 
+        from 
+        hy_residential_quarters_picture r
+        LEFT JOIN hy_residential_quarters q ON r.residential_quarters_id=q.id
+        where 1=1
+    </sql>
+
+    <select id="selectHyResidentialQuartersPictureList" parameterType="HyResidentialQuartersPicture" resultMap="HyResidentialQuartersPictureResult">
+        <include refid="selectHyResidentialQuartersPictureVo"/>
+    
+            <if test="pictureAddress != null  and pictureAddress != ''"> and picture_address = #{pictureAddress}</if>
+            <if test="textPictureAddress != null  and textPictureAddress != ''"> and text_picture_address = #{textPictureAddress}</if>
+            <if test="chargeChapterAddress != null  and chargeChapterAddress != ''"> and charge_chapter_address = #{chargeChapterAddress}</if>
+            <if test="codeBackgroundAddress != null  and codeBackgroundAddress != ''"> and code_background_address = #{codeBackgroundAddress}</if>
+            <if test="visitorCodeBackgroundAddress != null  and visitorCodeBackgroundAddress != ''"> and visitor_code_background_address = #{visitorCodeBackgroundAddress}</if>
+            <if test="residentialQuartersId != null "> and residential_quarters_id = #{residentialQuartersId}</if>
+     
+    </select>
+    
+    <select id="selectHyResidentialQuartersPictureById" parameterType="Long" resultMap="HyResidentialQuartersPictureResult">
+        <include refid="selectHyResidentialQuartersPictureVo"/>
+        and r.id = #{id}
+    </select>
+        
+    <insert id="insertHyResidentialQuartersPicture" parameterType="HyResidentialQuartersPicture" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_residential_quarters_picture
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pictureAddress != null">picture_address,</if>
+            <if test="textPictureAddress != null">text_picture_address,</if>
+            <if test="chargeChapterAddress != null">charge_chapter_address,</if>
+            <if test="codeBackgroundAddress != null">code_background_address,</if>
+            <if test="visitorCodeBackgroundAddress != null">visitor_code_background_address,</if>
+            <if test="residentialQuartersId != null">residential_quarters_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pictureAddress != null">#{pictureAddress},</if>
+            <if test="textPictureAddress != null">#{textPictureAddress},</if>
+            <if test="chargeChapterAddress != null">#{chargeChapterAddress},</if>
+            <if test="codeBackgroundAddress != null">#{codeBackgroundAddress},</if>
+            <if test="visitorCodeBackgroundAddress != null">#{visitorCodeBackgroundAddress},</if>
+            <if test="residentialQuartersId != null">#{residentialQuartersId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyResidentialQuartersPicture" parameterType="HyResidentialQuartersPicture">
+        update hy_residential_quarters_picture
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="pictureAddress != null">picture_address = #{pictureAddress},</if>
+            <if test="textPictureAddress != null">text_picture_address = #{textPictureAddress},</if>
+            <if test="chargeChapterAddress != null">charge_chapter_address = #{chargeChapterAddress},</if>
+            <if test="codeBackgroundAddress != null">code_background_address = #{codeBackgroundAddress},</if>
+            <if test="visitorCodeBackgroundAddress != null">visitor_code_background_address = #{visitorCodeBackgroundAddress},</if>
+            <if test="residentialQuartersId != null">residential_quarters_id = #{residentialQuartersId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyResidentialQuartersPictureById" parameterType="Long">
+        delete from hy_residential_quarters_picture where id = #{id}
+    </delete>
+
+    <delete id="deleteHyResidentialQuartersPictureByIds" parameterType="String">
+        delete from hy_residential_quarters_picture where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

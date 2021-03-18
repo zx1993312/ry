@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改小区图片')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-picture-edit" th:object="${hyResidentialQuartersPicture}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">小区图片地址：</label>
+                <div class="col-sm-8">
+                    <input name="pictureAddress" th:field="*{pictureAddress}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">图文图片地址：</label>
+                <div class="col-sm-8">
+                    <input name="textPictureAddress" th:field="*{textPictureAddress}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">收费专用章地址：</label>
+                <div class="col-sm-8">
+                    <input name="chargeChapterAddress" th:field="*{chargeChapterAddress}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">二维码背景地址：</label>
+                <div class="col-sm-8">
+                    <input name="codeBackgroundAddress" th:field="*{codeBackgroundAddress}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">访客二维码背景地址：</label>
+                <div class="col-sm-8">
+                    <input name="visitorCodeBackgroundAddress" th:field="*{visitorCodeBackgroundAddress}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">小区id：</label>
+                <div class="col-sm-8">
+                    <input name="residentialQuartersId" th:field="*{residentialQuartersId}" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/ResidentialQuartersPicture";
+        $("#form-picture-edit").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-picture-edit').serialize());
+            }
+        }
+    </script>
+</body>
+</html>
