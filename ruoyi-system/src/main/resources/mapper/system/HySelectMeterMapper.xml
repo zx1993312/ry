@@ -27,6 +27,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="ownerTenant" column="owner_tenant" />
 		<result property="standardName" column="standard_name" />
 		<association property="hyHouseInf" column="id" javaType="HyHouseInf" resultMap="HyHouseInfResult" />
+		<association property="hyOwnerRegistration" column="id"
+			javaType="HyOwnerRegistration" resultMap="HyOwnerRegistrationResult" />
 	</resultMap>
 
 	<resultMap type="HyHouseInf" id="HyHouseInfResult">
@@ -62,6 +64,48 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="purchaseContract" column="purchase_contract" />
 		<result property="marketingNum" column="marketing_num" />
 	</resultMap>
+	
+	<resultMap type="HyOwnerRegistration"
+		id="HyOwnerRegistrationResult">
+		<result property="id" column="id" />
+		<result property="ownerName" column="owner_name" />
+		<result property="houseNum" column="house_num" />
+		<result property="fixedTelephone" column="fixed_telephone" />
+		<result property="mobilePhone" column="mobile_phone" />
+		<result property="idCardNum" column="id_card_num" />
+		<result property="suplierCategory" column="suplier_category" />
+		<result property="lockedNot" column="locked_not" />
+		<result property="accessNum" column="access_num" />
+		<result property="certificateName" column="certificate_name" />
+		<result property="customerCategoy" column="customer_categoy" />
+		<result property="faxPhone" column="fax_phone" />
+		<result property="contactAddress" column="contact_address" />
+		<result property="postalCode" column="postal_code" />
+		<result property="postalPreson" column="postal_preson" />
+		<result property="eMail" column="e_mail" />
+		<result property="phoneAccount" column="phone_account" />
+		<result property="bindingPhoneNum" column="binding_phone_num" />
+		<result property="coOwner" column="co_owner" />
+		<result property="ownerIdentification"
+			column="owner_identification" />
+		<result property="firName" column="fir_name" />
+		<result property="secName" column="sec_name" />
+		<result property="gender" column="gender" />
+		<result property="nationality" column="nationality" />
+		<result property="birthDate" column="birth_date" />
+		<result property="workUnit" column="work_unit" />
+		<result property="ownerJob" column="owner_job" />
+		<result property="ownerHobby" column="owner_hobby" />
+		<result property="ownerId" column="owner_id" />
+		<result property="taxpayerNum" column="taxpayer_num" />
+		<result property="ownerAddPhone" column="owner_add_phone" />
+		<result property="bankAccount" column="bank_account" />
+		<result property="collectionCategory"
+			column="collection_category" />
+		<result property="bankType" column="bank_type" />
+		<result property="bankNum" column="bank_num" />
+		<result property="bankAccountName" column="bank_account_name" />
+	</resultMap>
 
 	<sql id="selectHySelMeterVo">
 		select m.id,
@@ -84,8 +128,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		m.customer_name,
 		m.owner_tenant,
 		m.standard_name,
-		i.house_name
-		from hy_meter m left join hy_house_inf i on m.house_num = i.house_number where 1=1
+		i.house_name,
+		o.owner_name
+		from hy_meter m 
+		left join hy_house_inf i on m.house_num = i.house_number 
+		LEFT JOIN
+		hy_owner_registration o on o.house_num=m.house_num
+		where 1=1
 	</sql>
 
 	<select id="selectHySelMeter" parameterType="Long" resultMap="HySelMeterResult">
@@ -130,6 +179,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="amountPrice != null  and amountPrice != ''"> and m.amount_price = #{amountPrice}</if>
 		<if test="customerName != null  and customerName != ''"> and m.customer_name = #{customerName}</if>
 		<if test="ownerTenant != null  and ownerTenant != ''"> and m.owner_tenant = #{ownerTenant}</if>
+		<if test="standardName != null  and standardName != ''"> and m.standard_name = #{standardName}</if>
+		<if test="hyHouseInf.houseName != null and hyHouseInf.houseName!=''"> and i.house_name = #{hyHouseInf.houseName}</if>
+	</select>
+	
+		<select id="selectHySelMeterOr" parameterType="HySelectMeter" resultMap="HySelMeterResult">
+		<include refid="selectHySelMeterVo"></include>
+		<if test="buildingName != null  and buildingName != ''"> and m.building_name = #{buildingName}</if>
+		<if test="houseNum != null  and houseNum != ''"> and m.house_num = #{houseNum}</if>
+		<if test="meterType != null  and meterType != ''"> and m.meter_type = #{meterType}</if>
+		<if test="meterSerialNum != null  and meterSerialNum != ''"> and m.meter_serial_num = #{meterSerialNum}</if>
+		<if test="meterName != null  and meterName != ''"> and m.meter_name = #{meterName}</if>
+		<if test="initialRead != null  and initialRead != ''"> and m.initial_read = #{initialRead}</if>
+		<if test="meterStrNum != null  and meterStrNum != ''"> and m.meter_str_num = #{meterStrNum}</if>
+		<if test="meterEndNum != null  and meterEndNum != ''"> and m.meter_end_num = #{meterEndNum}</if>
+		<if test="transfRatio != null  and transfRatio != ''"> and m.transf_ratio = #{transfRatio}</if>
+		<if test="strappingType != null  and strappingType != ''"> and m.strapping_type = #{strappingType}</if>
+		<if test="meterReadDate != null  and meterReadDate != ''"> and m.meter_read_date like '%${meterReadDate}%' </if>
+		<if test="newMeterConsumption != null  and newMeterConsumption != ''"> and m.new_meter_consumption = #{newMeterConsumption}</if>
+		<if test="oldMeterConsumption != null  and oldMeterConsumption != ''"> and m.old_meter_consumption = #{oldMeterConsumption}</if>
+		<if test="attritionRate != null  and attritionRate != ''"> and m.attrition_rate = #{attritionRate}</if>
+		<if test="unitPrice != null  and unitPrice != ''"> and m.unit_price = #{unitPrice}</if>
+		<if test="amountPrice != null  and amountPrice != ''"> and m.amount_price = #{amountPrice}</if>
+		<if test="customerName != null  and customerName != ''"> and m.customer_name = #{customerName}</if>
+		<if test="ownerTenant != null  and ownerTenant != ''"> and m.owner_tenant = #{ownerTenant}</if>
+		<if test="standardName != null  and standardName != ''"> and m.standard_name = #{standardName}</if>
+		<if test="hyHouseInf.houseName != null and hyHouseInf.houseName!=''"> and i.house_name = #{hyHouseInf.houseName}</if>
+		<if test="hyOwnerRegistration.ownerName != null and hyOwnerRegistration.ownerName !=''"> and o.owner_name = #{hyOwnerRegistration.ownerName}</if>
+	
 	</select>
 
 	<insert id="addHySelMeter" parameterType="HySelectMeter" useGeneratedKeys="true" keyProperty="id">

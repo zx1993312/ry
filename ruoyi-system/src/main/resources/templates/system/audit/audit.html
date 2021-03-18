@@ -21,7 +21,7 @@
 								<select name="taxScale" th:with="type=${@dict.getType('hy_taxpayper_type')}">
 											<option value="">请选择</option>
 											<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-									</select>
+								</select>
 							</li>
 							<li>
 								<label>费用科目：</label> 
@@ -134,7 +134,14 @@
                 },
                 {
                     field: 'taxScale',
-                    title: '纳税人规模'
+                    title: '纳税人规模',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+                        	case '0' : value =  "一般纳税人";break;
+                        	case '1' : value =  "小规模纳税人";break;
+                    	}
+    	            	return value;
+    	            }
                 },
                 {
                     field: 'expenseAccount',

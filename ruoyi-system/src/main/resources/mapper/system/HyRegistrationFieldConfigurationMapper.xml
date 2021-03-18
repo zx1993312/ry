@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyRegistrationFieldConfigurationMapper">
+    
+    <resultMap type="HyRegistrationFieldConfiguration" id="HyRegistrationFieldConfigurationResult">
+        <result property="id"    column="id"    />
+        <result property="field"    column="field"    />
+        <result property="title"    column="title"    />
+        <result property="enable"    column="enable"    />
+        <result property="residentialQuartersId"    column="residential_quarters_id"    />
+         <association property="hyResidentialQuarters"
+			column="id" javaType="HyResidentialQuarters"
+			resultMap="HyResidentialQuartersResult" />
+    </resultMap>
+    
+    <resultMap type="HyResidentialQuarters" id="HyResidentialQuartersResult">
+        <result property="id"    column="id"    />
+        <result property="communityAddress"    column="community_address"    />
+        <result property="communityName"    column="community_name"    />
+        <result property="contacts"    column="contacts"    />
+        <result property="contactNumber"    column="contact_number"    />
+        <result property="contactQq"    column="Contact_QQ"    />
+        <result property="city"    column="city"    />
+        <result property="area"    column="area"    />
+        <result property="county"    column="county"    />
+        <result property="address"    column="address"    />
+        <result property="longitude"    column="longitude"    />
+        <result property="latitude"    column="latitude"    />
+        <result property="customerLink"    column="customer_link"    />
+        <result property="externalLinks"    column="external_links"    />
+        <result property="propertyId"    column="property_id"    />
+    </resultMap>
+
+    <sql id="selectHyRegistrationFieldConfigurationVo">
+        select 
+        f.id, 
+        f.field, 
+        f.title, 
+        f.enable, 
+        f.residential_quarters_id 
+        from 
+        hy_registration_field_configuration f
+        LEFT JOIN hy_residential_quarters q ON f.residential_quarters_id=q.id
+    </sql>
+
+    <select id="selectHyRegistrationFieldConfigurationList" parameterType="HyRegistrationFieldConfiguration" resultMap="HyRegistrationFieldConfigurationResult">
+        <include refid="selectHyRegistrationFieldConfigurationVo"/>
+        
+            <if test="field != null  and field != ''"> and field = #{field}</if>
+            <if test="title != null  and title != ''"> and title = #{title}</if>
+            <if test="enable != null  and enable != ''"> and enable = #{enable}</if>
+            <if test="residentialQuartersId != null "> and residential_quarters_id = #{residentialQuartersId}</if>
+        
+    </select>
+    
+    <select id="selectHyRegistrationFieldConfigurationById" parameterType="Long" resultMap="HyRegistrationFieldConfigurationResult">
+        <include refid="selectHyRegistrationFieldConfigurationVo"/>
+        and f.id = #{id}
+    </select>
+        
+    <insert id="insertHyRegistrationFieldConfiguration" parameterType="HyRegistrationFieldConfiguration" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_registration_field_configuration
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="field != null">field,</if>
+            <if test="title != null">title,</if>
+            <if test="enable != null">enable,</if>
+            <if test="residentialQuartersId != null">residential_quarters_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="field != null">#{field},</if>
+            <if test="title != null">#{title},</if>
+            <if test="enable != null">#{enable},</if>
+            <if test="residentialQuartersId != null">#{residentialQuartersId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyRegistrationFieldConfiguration" parameterType="HyRegistrationFieldConfiguration">
+        update hy_registration_field_configuration
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="field != null">field = #{field},</if>
+            <if test="title != null">title = #{title},</if>
+            <if test="enable != null">enable = #{enable},</if>
+            <if test="residentialQuartersId != null">residential_quarters_id = #{residentialQuartersId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyRegistrationFieldConfigurationById" parameterType="Long">
+        delete from hy_registration_field_configuration where id = #{id}
+    </delete>
+
+    <delete id="deleteHyRegistrationFieldConfigurationByIds" parameterType="String">
+        delete from hy_registration_field_configuration where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

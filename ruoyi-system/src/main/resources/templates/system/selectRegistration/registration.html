@@ -81,10 +81,8 @@
             $.table.init(options);
         });
         function submitHandler() {
-            
         	var ownerName = $.table.selectColumns('ownerName');
         	var houseNum = $.table.selectColumns('houseNum');
-        
         	if(ownerName == ''){
         		$.modal.alertWarning("请至少选择一条记录");
         	}else{

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('社区咨询列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>咨询类型：</label>
+                                <select name="informationType">
+                                    <option value="">所有</option>
+                                    <option value="-1">代码生成请选择字典属性</option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>来源：</label>
+                                <input type="text" name="source"/>
+                            </li>
+                            <li>
+                                <label>标题：</label>
+                                <input type="text" name="title"/>
+                            </li>
+                            <li>
+                                <label>开始时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择开始时间" name="startTime"/>
+                            </li>
+                            <li>
+                                <label>有效时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择有效时间" name="effectiveTime"/>
+                            </li>
+                            <li>
+                                <label>是否重要公告：</label>
+                                <input type="text" name="importantAnnouncement"/>
+                            </li>
+                            <li>
+                                <label>状态：</label>
+                                <input type="text" name="state"/>
+                            </li>
+                            <li>
+                                <label>上次操作人：</label>
+                                <input type="text" name="historyOperator"/>
+                            </li>
+                            <li>
+                                <label>上次操作时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择上次操作时间" name="historyOperationTime"/>
+                            </li>
+                            <li>
+                                <label>公告范围项目：</label>
+                                <input type="text" name="announcementScopeItems"/>
+                            </li>
+                            <li>
+                                <label>公告范围楼栋：</label>
+                                <input type="text" name="noticeScopeBuilding"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:information:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:information:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:information:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:information:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:information:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:information:remove')}]];
+        var prefix = ctx + "system/information";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "社区咨询",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: ' 社区咨询id',
+                    visible: false
+                },
+                {
+                    field: 'informationType',
+                    title: '咨询类型'
+                },
+                {
+                    field: 'source',
+                    title: '来源'
+                },
+                {
+                    field: 'title',
+                    title: '标题'
+                },
+                {
+                    field: 'startTime',
+                    title: '开始时间'
+                },
+                {
+                    field: 'effectiveTime',
+                    title: '有效时间'
+                },
+                {
+                    field: 'importantAnnouncement',
+                    title: '是否重要公告'
+                },
+                {
+                    field: 'state',
+                    title: '状态'
+                },
+                {
+                    field: 'historyOperator',
+                    title: '上次操作人'
+                },
+                {
+                    field: 'historyOperationTime',
+                    title: '上次操作时间'
+                },
+                {
+                    field: 'announcementScopeItems',
+                    title: '公告范围项目'
+                },
+                {
+                    field: 'noticeScopeBuilding',
+                    title: '公告范围楼栋'
+                },
+                {
+                    field: 'informationContent',
+                    title: '信息内容'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

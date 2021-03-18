@@ -45,7 +45,9 @@ public class HyMeterServiceImpl implements IHyMeterService {
 	 */
 	@Override
 	public List<HyMeter> selectHyMeterList(HyMeter hyMeter) {
-		return hyMeterMapper.selectHyMeterList(hyMeter);
+	
+			return hyMeterMapper.selectHyMeterList(hyMeter);
+		
 	}
 
 	/**
@@ -103,6 +105,16 @@ public class HyMeterServiceImpl implements IHyMeterService {
 			result = hyMeterCaseMapper.deleteHyMeterCaseById(id);
 		}
 		return result;
+	}
+
+	@Override
+	public List<HyMeter> selectHyMeterListOr(HyMeter hyMeter) {
+		return hyMeterMapper.selectHyMeterListOr(hyMeter);
+	}
+
+	@Override
+	public List<HyMeter> selectHyMeter(HyMeter hyMeter) {
+		return hyMeterMapper.selectHyMeter(hyMeter);
 	}
 
 }

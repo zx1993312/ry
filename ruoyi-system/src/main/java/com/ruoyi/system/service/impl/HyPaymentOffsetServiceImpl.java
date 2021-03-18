@@ -46,7 +46,7 @@ public class HyPaymentOffsetServiceImpl implements IHyPaymentOffsetService {
 	}
 
 	public List<?> selectHyPaymentOffsetListTy(Date startFeeDate, Date endFeeDate, String auditStatus) {
-		if (null == startFeeDate && null == endFeeDate) {
+		if (null == startFeeDate && null == endFeeDate && auditStatus.equals("")) {
 			HyPaymentOffset hyPaymentOffset = new HyPaymentOffset();
 			return hyPaymentOffsetMapper.selectHyPaymentOffsetList(hyPaymentOffset);
 		}

@@ -83,6 +83,7 @@ public class SysDictDataServiceImpl implements ISysDictDataService
     @Override
     public int insertDictData(SysDictData dictData)
     {
+    	dictData.setDictType("hy_product");
         int row = dictDataMapper.insertDictData(dictData);
         if (row > 0)
         {
@@ -107,4 +108,10 @@ public class SysDictDataServiceImpl implements ISysDictDataService
         }
         return row;
     }
+
+	@Override
+	public List<SysDictData> selectDictDataListOr(SysDictData dictData) {
+		dictData.setDictType("hy_product");
+		return dictDataMapper.selectDictDataListOr(dictData);
+	}
 }

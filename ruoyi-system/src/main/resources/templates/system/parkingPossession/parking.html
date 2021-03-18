@@ -30,9 +30,9 @@
 							<li><label>房屋名称：</label> <input type="text" name="houseName" />
 							</li>
 							<li><label>房屋产权性质：</label> <input type="text"
-								name="houseProperty" /></li>
+								name="houseProperty" onkeyup="this.value=this.value.replace(/\D/g,'')"/></li>
 							<li><label>房屋使用性质：</label> <input type="text"
-								name="houseNature" /></li>
+								name="houseNature" onkeyup="this.value=this.value.replace(/\D/g,'')"/></li>
 							<li><label>合同交付日期：</label> <input type="text"
 								class="time-input" placeholder="请选择合同交付日期"
 								name="contractDeliveryDate" /></li>
@@ -62,7 +62,7 @@
 				<a class="btn btn-primary single disabled"
 					onclick="$.operate.edit()"
 					shiro:hasPermission="system:parking:edit"> <i
-					class="fa fa-edit"></i> 新增
+					class="fa fa-edit"></i> 修改
 				</a>  <a class="btn btn-warning" onclick="$.table.exportExcel()"
 					shiro:hasPermission="system:parking:export"> <i
 					class="fa fa-download"></i> 导出

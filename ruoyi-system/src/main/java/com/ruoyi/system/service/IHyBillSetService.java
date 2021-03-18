@@ -25,6 +25,8 @@ public interface IHyBillSetService {
 	 * @return 票据设置集合
 	 */
 	public List<HyBillSet> selectHyBillSetList(HyBillSet hyBillSet);
+	
+	public List<HyBillSet> selectHyBillSetListOr(HyBillSet hyBillSet);
 
 	/**
 	 * 查询票据设置列表

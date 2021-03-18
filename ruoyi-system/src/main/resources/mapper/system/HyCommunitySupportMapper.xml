@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyCommunitySupportMapper">
+    
+    <resultMap type="HyCommunitySupport" id="HyCommunitySupportResult">
+        <result property="id"    column="id"    />
+        <result property="matchingTypes"    column="matching_types"    />
+        <result property="matchingType"    column="matching_type"    />
+        <result property="contacts"    column="contacts"    />
+        <result property="matchingName"    column="matching_name"    />
+        <result property="contactNumber"    column="contact_number"    />
+        <result property="address"    column="address"    />
+        <result property="abreak"    column="abreak"    />
+        <result property="communityId"    column="community_id"    />
+    </resultMap>
+
+    <sql id="selectHyCommunitySupportVo">
+        select id, matching_types, matching_type, contacts, matching_name, contact_number, address, abreak, community_id from hy_community_support
+    </sql>
+
+    <select id="selectHyCommunitySupportList" parameterType="HyCommunitySupport" resultMap="HyCommunitySupportResult">
+        <include refid="selectHyCommunitySupportVo"/>
+        <where>  
+            <if test="matchingTypes != null "> and matching_types = #{matchingTypes}</if>
+            <if test="matchingType != null "> and matching_type = #{matchingType}</if>
+            <if test="contacts != null  and contacts != ''"> and contacts = #{contacts}</if>
+            <if test="matchingName != null  and matchingName != ''"> and matching_name like concat('%', #{matchingName}, '%')</if>
+            <if test="contactNumber != null "> and contact_number = #{contactNumber}</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="abreak != null  and abreak != ''"> and abreak = #{abreak}</if>
+            <if test="communityId != null "> and community_id = #{communityId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyCommunitySupportById" parameterType="Long" resultMap="HyCommunitySupportResult">
+        <include refid="selectHyCommunitySupportVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyCommunitySupport" parameterType="HyCommunitySupport">
+        insert into hy_community_support
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="matchingTypes != null">matching_types,</if>
+            <if test="matchingType != null">matching_type,</if>
+            <if test="contacts != null">contacts,</if>
+            <if test="matchingName != null">matching_name,</if>
+            <if test="contactNumber != null">contact_number,</if>
+            <if test="address != null">address,</if>
+            <if test="abreak != null">abreak,</if>
+            <if test="communityId != null">community_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="matchingTypes != null">#{matchingTypes},</if>
+            <if test="matchingType != null">#{matchingType},</if>
+            <if test="contacts != null">#{contacts},</if>
+            <if test="matchingName != null">#{matchingName},</if>
+            <if test="contactNumber != null">#{contactNumber},</if>
+            <if test="address != null">#{address},</if>
+            <if test="abreak != null">#{abreak},</if>
+            <if test="communityId != null">#{communityId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyCommunitySupport" parameterType="HyCommunitySupport">
+        update hy_community_support
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="matchingTypes != null">matching_types = #{matchingTypes},</if>
+            <if test="matchingType != null">matching_type = #{matchingType},</if>
+            <if test="contacts != null">contacts = #{contacts},</if>
+            <if test="matchingName != null">matching_name = #{matchingName},</if>
+            <if test="contactNumber != null">contact_number = #{contactNumber},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="abreak != null">abreak = #{abreak},</if>
+            <if test="communityId != null">community_id = #{communityId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyCommunitySupportById" parameterType="Long">
+        delete from hy_community_support where id = #{id}
+    </delete>
+
+    <delete id="deleteHyCommunitySupportByIds" parameterType="String">
+        delete from hy_community_support where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

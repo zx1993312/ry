@@ -24,7 +24,7 @@
 							<li><label>车辆品牌：</label> <input type="text"
 								name="vehicleBrand" /></li>
 							<li><label>排量：</label> <input type="text"
-								name="displacement" /></li>
+								name="displacement" onkeyup="this.value=this.value.replace(/\D/g,'')" /></li>
 							<li><label>车辆颜色：</label> <input type="text"
 								name="vehicleColor" /></li>
 							<li><a class="btn btn-primary btn-rounded btn-sm"
@@ -43,7 +43,7 @@
 				<a class="btn btn-primary single disabled"
 					onclick="$.operate.edit()"
 					shiro:hasPermission="system:parking:edit"> <i
-					class="fa fa-edit"></i> 新增
+					class="fa fa-edit"></i> 修改
 				</a>  <a class="btn btn-warning" onclick="$.table.exportExcel()"
 					shiro:hasPermission="system:parking:export"> <i
 					class="fa fa-download"></i> 导出

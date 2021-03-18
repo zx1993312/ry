@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyShopMapper">
+    
+    <resultMap type="HyShop" id="HyShopResult">
+        <result property="id"    column="id"    />
+        <result property="shopName"    column="shop_name"    />
+        <result property="shopAddress"    column="shop_address"    />
+        <result property="contactNumber"    column="contact_number"    />
+        <result property="businessHours"    column="business_hours"    />
+        <result property="businessId"    column="business_id"    />
+        <association property="hyBusiness" column="id"
+			javaType="HyBusiness" resultMap="HyBusinessResult" />
+    </resultMap>
+    
+    <resultMap type="HyBusiness" id="HyBusinessResult">
+        <result property="id"    column="id"    />
+        <result property="businessName"    column="business_name"    />
+        <result property="legalRepresentative"    column="legal_representative"    />
+        <result property="legalTelphone"    column="legal_telphone"    />
+        <result property="idCard"    column="id_card"    />
+        <result property="eMail"    column="e_mail"    />
+    </resultMap>
+
+    <sql id="selectHyShopVo">
+        select 
+        s.id, 
+        s.shop_name, 
+        s.shop_address, 
+        s.contact_number, 
+        s.business_hours, 
+        s.business_id,
+        b.business_name
+        from hy_shop s 
+        LEFT JOIN hy_business b ON s.business_id=b.id 
+        where 1=1
+    </sql>
+
+	<sql id="selectHyShopVoDistinct">
+		select distinct s.id,s.shop_name from hy_shop s LEFT JOIN hy_business b ON s.business_id=b.id 
+        where 1=1
+	</sql>
+	
+    <select id="selectHyShopList" parameterType="HyShop" resultMap="HyShopResult">
+        <include refid="selectHyShopVo"/>
+            <if test="id != null  and id != ''"> and shop_name like concat('%', #{shopName}, '%')</if>
+            <if test="shopAddress != null  and shopAddress != ''"> and shop_address = #{shopAddress}</if>
+            <if test="contactNumber != null "> and contact_number = #{contactNumber}</if>
+            <if test="businessHours != null "> and business_hours = #{businessHours}</if>
+            <if test="businessId != null "> and business_id = #{businessId}</if>
+            <if test="hyBusiness.businessName != null and hyBusiness.businessName != ''"> and b.business_name = #{hyBusiness.businessName}</if>
+    </select>
+    
+    <select id="selectHyShopVoDistinct" parameterType="HyShop" resultMap="HyShopResult">
+        <include refid="selectHyShopVoDistinct"/>
+    </select>
+
+    
+    <select id="selectHyShopById" parameterType="Long" resultMap="HyShopResult">
+        <include refid="selectHyShopVo"/>
+        and s.id = #{id}
+    </select>
+        
+    <insert id="insertHyShop" parameterType="HyShop" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_shop
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="shopName != null">shop_name,</if>
+            <if test="shopAddress != null">shop_address,</if>
+            <if test="contactNumber != null">contact_number,</if>
+            <if test="businessHours != null">business_hours,</if>
+            <if test="businessId != null">business_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shopName != null">#{shopName},</if>
+            <if test="shopAddress != null">#{shopAddress},</if>
+            <if test="contactNumber != null">#{contactNumber},</if>
+            <if test="businessHours != null">#{businessHours},</if>
+            <if test="businessId != null">#{businessId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyShop" parameterType="HyShop">
+        update hy_shop
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="shopName != null">shop_name = #{shopName},</if>
+            <if test="shopAddress != null">shop_address = #{shopAddress},</if>
+            <if test="contactNumber != null">contact_number = #{contactNumber},</if>
+            <if test="businessHours != null">business_hours = #{businessHours},</if>
+            <if test="businessId != null">business_id = #{businessId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyShopById" parameterType="Long">
+        delete from hy_shop where id = #{id}
+    </delete>
+
+    <delete id="deleteHyShopByIds" parameterType="String">
+        delete from hy_shop where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

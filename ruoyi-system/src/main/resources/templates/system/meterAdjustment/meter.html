@@ -11,9 +11,9 @@
 				<form id="formId">
 					<div class="select-list">
 						<ul>
-							<li><label>客户名称：</label> <input type="text" name="ownerName" />
+							<li><label>客户名称：</label> <input type="text" name="hyOwnerRegistration.ownerName" />
 							</li>
-							<li><label>房屋名称：</label> <input type="text" name="houseName" />
+							<li><label>房屋名称：</label> <input type="text" name="hyHouseInf.houseName" />
 							</li>
 							<li><label>表计类型：</label> <select name="meterType"
 								class="form-control "
@@ -75,7 +75,7 @@
 	<script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('system:meter:edit')}]];
         var removeFlag = [[${@permission.hasPermi('system:meter:remove')}]];
-        var prefix = ctx + "system/updateSelectMeter";
+        var prefix = ctx + "system/meterAdjustment";
         
         function meterCase(){
         	$("#formId").attr("action","/system/case");

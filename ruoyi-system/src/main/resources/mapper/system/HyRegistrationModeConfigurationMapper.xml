@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyRegistrationModeConfigurationMapper">
+    
+    <resultMap type="HyRegistrationModeConfiguration" id="HyRegistrationModeConfigurationResult">
+        <result property="id"    column="id"    />
+        <result property="residentialQuartersSetUp"    column="residential_quarters_set_up"    />
+        <result property="ecplain"    column="ecplain"    />
+        <result property="ecable"    column="ecable"    />
+        <result property="residentialQuartersId"    column="residential_quarters_id"    />
+        <association property="hyResidentialQuarters"
+			column="id" javaType="HyResidentialQuarters"
+			resultMap="HyResidentialQuartersResult" />
+    </resultMap>
+    
+    <resultMap type="HyResidentialQuarters" id="HyResidentialQuartersResult">
+        <result property="id"    column="id"    />
+        <result property="communityAddress"    column="community_address"    />
+        <result property="communityName"    column="community_name"    />
+        <result property="contacts"    column="contacts"    />
+        <result property="contactNumber"    column="contact_number"    />
+        <result property="contactQq"    column="Contact_QQ"    />
+        <result property="city"    column="city"    />
+        <result property="area"    column="area"    />
+        <result property="county"    column="county"    />
+        <result property="address"    column="address"    />
+        <result property="longitude"    column="longitude"    />
+        <result property="latitude"    column="latitude"    />
+        <result property="customerLink"    column="customer_link"    />
+        <result property="externalLinks"    column="external_links"    />
+        <result property="propertyId"    column="property_id"    />
+    </resultMap>
+
+    <sql id="selectHyRegistrationModeConfigurationVo">
+        select 
+        m.id,  
+        m.residential_quarters_set_up, 
+        m.ecplain, 
+        m.ecable, 
+        m.residential_quarters_id 
+        from 
+        hy_registration_mode_configuration m
+        LEFT JOIN hy_residential_quarters r ON m.residential_quarters_id=r.id
+        where 1=1 
+    </sql>
+
+    <select id="selectHyRegistrationModeConfigurationList" parameterType="HyRegistrationModeConfiguration" resultMap="HyRegistrationModeConfigurationResult">
+        <include refid="selectHyRegistrationModeConfigurationVo"/>
+        <where>  
+            <if test="residentialQuartersSetUp != null  and residentialQuartersSetUp != ''"> and residential_quarters_set_up = #{residentialQuartersSetUp}</if>
+            <if test="ecplain != null  and ecplain != ''"> and explain = #{ecplain}</if>
+            <if test="ecable != null  and ecable != ''"> and enable = #{ecable}</if>
+            <if test="residentialQuartersId != null "> and residential_quarters_id = #{residentialQuartersId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyRegistrationModeConfigurationById" parameterType="Long" resultMap="HyRegistrationModeConfigurationResult">
+        <include refid="selectHyRegistrationModeConfigurationVo"/>
+        and m.id = #{id}
+    </select>
+        
+    <insert id="insertHyRegistrationModeConfiguration" parameterType="HyRegistrationModeConfiguration" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_registration_mode_configuration
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="residentialQuartersSetUp != null">residential_quarters_set_up,</if>
+            <if test="ecplain != null">ecplain,</if>
+            <if test="ecable != null">ecable,</if>
+            <if test="residentialQuartersId != null">residential_quarters_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="residentialQuartersSetUp != null">#{residentialQuartersSetUp},</if>
+            <if test="ecplain != null">#{ecplain},</if>
+            <if test="ecable != null">#{ecable},</if>
+            <if test="residentialQuartersId != null">#{residentialQuartersId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyRegistrationModeConfiguration" parameterType="HyRegistrationModeConfiguration">
+        update hy_registration_mode_configuration
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="residentialQuartersSetUp != null">residential_quarters_set_up = #{residentialQuartersSetUp},</if>
+            <if test="ecplain != null">ecplain = #{ecplain},</if>
+            <if test="ecable != null">ecable = #{ecable},</if>
+            <if test="residentialQuartersId != null">residential_quarters_id = #{residentialQuartersId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyRegistrationModeConfigurationById" parameterType="Long">
+        delete from hy_registration_mode_configuration where id = #{id}
+    </delete>
+
+    <delete id="deleteHyRegistrationModeConfigurationByIds" parameterType="String">
+        delete from hy_registration_mode_configuration where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

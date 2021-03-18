@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyBusinessMapper">
+
+	<resultMap type="HyBusiness" id="HyBusinessResult">
+		<result property="id" column="id" />
+		<result property="businessName" column="business_name" />
+		<result property="legalRepresentative"
+			column="legal_representative" />
+		<result property="legalTelphone" column="legal_telphone" />
+		<result property="idCard" column="id_card" />
+		<result property="eMail" column="e_mail" />
+	</resultMap>
+
+	<sql id="selectHyBusinessVo">
+		select id, business_name, legal_representative, legal_telphone, id_card,
+		e_mail from hy_business
+	</sql>
+
+	<sql id="selectHyselectHyBusinessDistinct">
+		select DISTINCT id, business_name from hy_business
+	</sql>
+
+	<select id="selectHyBusinessList" parameterType="HyBusiness"
+		resultMap="HyBusinessResult">
+		<include refid="selectHyBusinessVo" />
+		<where>
+			<if test="id != null  and id != ''"> and id = #{id}
+			</if>
+			<if
+				test="legalRepresentative != null  and legalRepresentative != ''"> and legal_representative = #{legalRepresentative}</if>
+			<if test="legalTelphone != null "> and legal_telphone = #{legalTelphone}</if>
+			<if test="idCard != null and idCard != '' "> and id_card = #{idCard}</if>
+			<if test="eMail != null  and eMail != ''"> and e_mail = #{eMail}</if>
+		</where>
+	</select>
+
+	<select id="selectHyselectHyBusinessDistinct"
+		parameterType="HyBusiness" resultMap="HyBusinessResult">
+		<include refid="selectHyselectHyBusinessDistinct" />
+	</select>
+
+	<select id="selectHyBusinessById" parameterType="Long"
+		resultMap="HyBusinessResult">
+		<include refid="selectHyBusinessVo" />
+		where id = #{id}
+	</select>
+
+	<insert id="insertHyBusiness" parameterType="HyBusiness"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into hy_business
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="businessName != null">business_name,</if>
+			<if test="legalRepresentative != null">legal_representative,</if>
+			<if test="legalTelphone != null">legal_telphone,</if>
+			<if test="idCard != null">id_card,</if>
+			<if test="eMail != null">e_mail,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="businessName != null">#{businessName},</if>
+			<if test="legalRepresentative != null">#{legalRepresentative},</if>
+			<if test="legalTelphone != null">#{legalTelphone},</if>
+			<if test="idCard != null">#{idCard},</if>
+			<if test="eMail != null">#{eMail},</if>
+		</trim>
+	</insert>
+
+	<update id="updateHyBusiness" parameterType="HyBusiness">
+		update hy_business
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="businessName != null">business_name = #{businessName},</if>
+			<if test="legalRepresentative != null">legal_representative = #{legalRepresentative},</if>
+			<if test="legalTelphone != null">legal_telphone = #{legalTelphone},</if>
+			<if test="idCard != null">id_card = #{idCard},</if>
+			<if test="eMail != null">e_mail = #{eMail},</if>
+		</trim>
+		where id = #{id}
+	</update>
+
+	<delete id="deleteHyBusinessById" parameterType="Long">
+		delete from hy_business where id = #{id}
+	</delete>
+
+	<delete id="deleteHyBusinessByIds" parameterType="String">
+		delete from hy_business where id in
+		<foreach item="id" collection="array" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

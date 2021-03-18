@@ -62,7 +62,7 @@ public class HyOwnerRegistrationController extends BaseController {
 	@ResponseBody
 	public TableDataInfo list(HyOwnerRegistration hyOwnerRegistration) {
 		startPage();
-		List<HyOwnerRegistration> list = hyOwnerRegistrationService.selectHyOwnerRegistrationList(hyOwnerRegistration);
+		List<HyOwnerRegistration> list = hyOwnerRegistrationService.selectHyOwnerRegistrationListOrr(hyOwnerRegistration);
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyOwnerRegistration hor : list) {
 			Map<String, Object> map = new HashMap<>();
@@ -83,7 +83,7 @@ public class HyOwnerRegistrationController extends BaseController {
 	@PostMapping("/export")
 	@ResponseBody
 	public AjaxResult export(HyOwnerRegistration hyOwnerRegistration) {
-		List<HyOwnerRegistration> list = hyOwnerRegistrationService.selectHyOwnerRegistrationList(hyOwnerRegistration);
+		List<HyOwnerRegistration> list = hyOwnerRegistrationService.selectHyOwnerRegistrationListOrr(hyOwnerRegistration);
 		ExcelUtil<HyOwnerRegistration> util = new ExcelUtil<HyOwnerRegistration>(HyOwnerRegistration.class);
 		return util.exportExcel(list, "registration");
 	}
@@ -93,7 +93,7 @@ public class HyOwnerRegistrationController extends BaseController {
 	 */
 	@GetMapping("/add")
 	public String add(HyOwnerRegistration hyOwnerRegistration) {
-		List<HyOwnerRegistration> list = hyOwnerRegistrationService.selectHyOwnerRegistrationList(hyOwnerRegistration);
+		List<HyOwnerRegistration> list = hyOwnerRegistrationService.selectHyOwnerRegistrationListOrr(hyOwnerRegistration);
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyOwnerRegistration hor : list) {
 			Map<String, Object> map = new HashMap<>();
@@ -114,7 +114,7 @@ public class HyOwnerRegistrationController extends BaseController {
 	@PostMapping("/add")
 	@ResponseBody
 	public AjaxResult addSave(HyOwnerRegistration hyOwnerRegistration) {
-		List<HyOwnerRegistration> list = hyOwnerRegistrationService.selectHyOwnerRegistrationList(hyOwnerRegistration);
+		List<HyOwnerRegistration> list = hyOwnerRegistrationService.selectHyOwnerRegistrationListOrr(hyOwnerRegistration);
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyOwnerRegistration hor : list) {
 			Map<String, Object> map = new HashMap<>();
@@ -133,7 +133,7 @@ public class HyOwnerRegistrationController extends BaseController {
 	public String edit(@PathVariable("id") Long id, ModelMap mmap) {
 		HyOwnerRegistration hyOwnerRegistration = hyOwnerRegistrationService.selectHyOwnerRegistrationById(id);
 		mmap.put("hyOwnerRegistration", hyOwnerRegistration);
-		List<HyOwnerRegistration> list = hyOwnerRegistrationService.selectHyOwnerRegistrationList(hyOwnerRegistration);
+		List<HyOwnerRegistration> list = hyOwnerRegistrationService.selectHyOwnerRegistrationListOrr(hyOwnerRegistration);
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyOwnerRegistration hor : list) {
 			Map<String, Object> map = new HashMap<>();
@@ -154,7 +154,7 @@ public class HyOwnerRegistrationController extends BaseController {
 	@PostMapping("/edit")
 	@ResponseBody
 	public AjaxResult editSave(HyOwnerRegistration hyOwnerRegistration) {
-		List<HyOwnerRegistration> list = hyOwnerRegistrationService.selectHyOwnerRegistrationList(hyOwnerRegistration);
+		List<HyOwnerRegistration> list = hyOwnerRegistrationService.selectHyOwnerRegistrationListOrr(hyOwnerRegistration);
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyOwnerRegistration hor : list) {
 			Map<String, Object> map = new HashMap<>();

@@ -251,10 +251,12 @@
 			<div class="form-group">
 				<label class="col-sm-3 control-label">银行行别：</label>
 				<div class="col-sm-8">
-					<select id="bankType"  name="bankType" class="form-control m-b">
-						<option value="">所有</option>
-					</select> <span class="help-block m-b-none"><i
-						class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+						<select id="bankType" name="bankType" class="form-control" th:field="*{bankType}"
+						th:with="type=${@dict.getType('hy_bank')}">
+						<option value="">请选择</option>
+						<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+							th:value="${dict.dictValue}"></option>
+					</select>
 				</div>
 			</div>
 			<div class="form-group">
@@ -289,14 +291,50 @@
         			maxlength:20,
         		},
         		mobilePhone:{
-        			required:true,
-        			maxlength:12,
+        			isPhone:true,
+        			
+        		},
+        		fixedTelephone:{
+        			isTel:true,
         		},
         		idCardNum:{
         			required:true,
         			maxlength:40,
         		},
+        		ownerId:{
+        			isUserName:true,
+        		},
+        		ownerHobby:{
+        			
+        			maxlength:30,
+        		},
+        		postalCode:{
+        			number:true,
+        			required:true,
+        			maxlength:6,
+        		},
+        		taxpayerNum:{
+        			required:true,
+        			maxlength:255,
+        		},
+        		ownerAddPhone:{
+        			required:true,
+        			maxlength:30,
+        		},
+        		eMail:{
+        			email:true,
+        		},
+        		suplierCategory:{
+        			number:true,
+        			required:true,
+        			maxlength:3,
+        		},
+        		faxPhone:{
+        			isTel:true,
+        			
+        		},
         		accessNum:{
+        			number:true,
         			required:true,
         			maxlength:30,
         		},
@@ -304,7 +342,12 @@
         			required:true,
         			maxlength:50,
         		},
+        		coOwner:{
+        			
+        			maxlength:30,
+        		},
         		customerCategoy:{
+        			number:true,
         			required:true,
         			maxlength:3,
         		},
@@ -317,14 +360,17 @@
         			maxlength:50,
         		},
         		phoneAccount:{
+        			isPhone:true,
         			required:true,
         			maxlength:30,
         		},
         		bindingPhoneNum:{
+        			isPhone:true,
         			required:true,
         			maxlength:30,
         		},
         		ownerIdentification:{
+        			number:true,
         			required:true,
         			maxlength:3,
         		},
@@ -357,10 +403,12 @@
         			maxlength:30,
         		},
         		collectionCategory:{
+        			number:true,
         			required:true,
         			maxlength:2,
         		},
         		bankNum:{
+        			number:true,
         			required:true,
         			maxlength:30,
         		},

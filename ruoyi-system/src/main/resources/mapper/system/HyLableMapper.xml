@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyLableMapper">
+    
+    <resultMap type="HyLable" id="HyLableResult">
+        <result property="id"    column="id"    />
+        <result property="labelName"    column="label_name"    />
+    </resultMap>
+
+    <sql id="selectHyLableVo">
+        select id, label_name from hy_lable
+    </sql>
+
+    <select id="selectHyLableList" parameterType="HyLable" resultMap="HyLableResult">
+        <include refid="selectHyLableVo"/>
+        <where>  
+            <if test="labelName != null  and labelName != ''"> and label_name like concat('%', #{labelName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectHyLableById" parameterType="Long" resultMap="HyLableResult">
+        <include refid="selectHyLableVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyLable" parameterType="HyLable" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_lable
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="labelName != null">label_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="labelName != null">#{labelName},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyLable" parameterType="HyLable">
+        update hy_lable
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="labelName != null">label_name = #{labelName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyLableById" parameterType="Long">
+        delete from hy_lable where id = #{id}
+    </delete>
+
+    <delete id="deleteHyLableByIds" parameterType="String">
+        delete from hy_lable where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

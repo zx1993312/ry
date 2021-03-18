@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyResidentialQuartersMapper">
+    
+    <resultMap type="HyResidentialQuarters" id="HyResidentialQuartersResult">
+        <result property="id"    column="id"    />
+        <result property="communityAddress"    column="community_address"    />
+        <result property="communityName"    column="community_name"    />
+        <result property="contacts"    column="contacts"    />
+        <result property="contactNumber"    column="contact_number"    />
+        <result property="contactQq"    column="Contact_QQ"    />
+        <result property="city"    column="city"    />
+        <result property="area"    column="area"    />
+        <result property="county"    column="county"    />
+        <result property="address"    column="address"    />
+        <result property="longitude"    column="longitude"    />
+        <result property="latitude"    column="latitude"    />
+        <result property="customerLink"    column="customer_link"    />
+        <result property="externalLinks"    column="external_links"    />
+        <result property="propertyId"    column="property_id"    />
+        <association property="hyProperty"
+			column="id" javaType="HyProperty"
+			resultMap="HyPropertyResult" />
+    </resultMap>
+    
+    <resultMap type="HyProperty" id="HyPropertyResult">
+        <result property="id"    column="id"    />
+        <result property="propertyName"    column="property_name"    />
+        <result property="propertyPhone"    column="property_phone"    />
+        <result property="propertyIntroduce"    column="property_introduce"    />
+        <result property="creationTime"    column="creation_time"    />
+        <result property="propertyPictureAddress"    column="property_picture_address"    />
+    </resultMap>
+
+    <sql id="selectHyResidentialQuartersVo">
+        select 
+        r.id, 
+        r.community_address, 
+        r.community_name, 
+        r.contacts, 
+        r.contact_number, 
+        r.Contact_QQ, 
+        r.city, 
+        r.area, 
+        r.county, 
+        r.address, 
+        r.longitude, 
+        r.latitude, 
+        r.customer_link, 
+        r.external_links, 
+        r.property_id 
+        from 
+        hy_residential_quarters r
+        LEFT JOIN hy_property p ON r.property_id=p.id
+        where 1=1
+    </sql>
+
+    <select id="selectHyResidentialQuartersList" parameterType="HyResidentialQuarters" resultMap="HyResidentialQuartersResult">
+        <include refid="selectHyResidentialQuartersVo"/>
+        <where>  
+            <if test="communityAddress != null  and communityAddress != ''"> and community_address = #{communityAddress}</if>
+            <if test="communityName != null  and communityName != ''"> and community_name like concat('%', #{communityName}, '%')</if>
+            <if test="contacts != null  and contacts != ''"> and contacts = #{contacts}</if>
+            <if test="contactNumber != null "> and contact_number = #{contactNumber}</if>
+            <if test="contactQq != null  and contactQq != ''"> and Contact_QQ = #{contactQq}</if>
+            <if test="city != null  and city != ''"> and city = #{city}</if>
+            <if test="area != null  and area != ''"> and area = #{area}</if>
+            <if test="county != null  and county != ''"> and county = #{county}</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="longitude != null  and longitude != ''"> and longitude = #{longitude}</if>
+            <if test="latitude != null  and latitude != ''"> and latitude = #{latitude}</if>
+            <if test="customerLink != null  and customerLink != ''"> and customer_link = #{customerLink}</if>
+            <if test="externalLinks != null  and externalLinks != ''"> and external_links = #{externalLinks}</if>
+            <if test="propertyId != null  and propertyId != ''"> and property_id = #{propertyId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyResidentialQuartersById" parameterType="Long" resultMap="HyResidentialQuartersResult">
+        <include refid="selectHyResidentialQuartersVo"/>
+        and r.id = #{id}
+    </select>
+        
+    <insert id="insertHyResidentialQuarters" parameterType="HyResidentialQuarters" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_residential_quarters
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="communityAddress != null">community_address,</if>
+            <if test="communityName != null">community_name,</if>
+            <if test="contacts != null">contacts,</if>
+            <if test="contactNumber != null">contact_number,</if>
+            <if test="contactQq != null">Contact_QQ,</if>
+            <if test="city != null">city,</if>
+            <if test="area != null">area,</if>
+            <if test="county != null">county,</if>
+            <if test="address != null">address,</if>
+            <if test="longitude != null">longitude,</if>
+            <if test="latitude != null">latitude,</if>
+            <if test="customerLink != null">customer_link,</if>
+            <if test="externalLinks != null">external_links,</if>
+            <if test="propertyId != null">property_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="communityAddress != null">#{communityAddress},</if>
+            <if test="communityName != null">#{communityName},</if>
+            <if test="contacts != null">#{contacts},</if>
+            <if test="contactNumber != null">#{contactNumber},</if>
+            <if test="contactQq != null">#{contactQq},</if>
+            <if test="city != null">#{city},</if>
+            <if test="area != null">#{area},</if>
+            <if test="county != null">#{county},</if>
+            <if test="address != null">#{address},</if>
+            <if test="longitude != null">#{longitude},</if>
+            <if test="latitude != null">#{latitude},</if>
+            <if test="customerLink != null">#{customerLink},</if>
+            <if test="externalLinks != null">#{externalLinks},</if>
+            <if test="propertyId != null">#{propertyId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyResidentialQuarters" parameterType="HyResidentialQuarters">
+        update hy_residential_quarters
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="communityAddress != null">community_address = #{communityAddress},</if>
+            <if test="communityName != null">community_name = #{communityName},</if>
+            <if test="contacts != null">contacts = #{contacts},</if>
+            <if test="contactNumber != null">contact_number = #{contactNumber},</if>
+            <if test="contactQq != null">Contact_QQ = #{contactQq},</if>
+            <if test="city != null">city = #{city},</if>
+            <if test="area != null">area = #{area},</if>
+            <if test="county != null">county = #{county},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="longitude != null">longitude = #{longitude},</if>
+            <if test="latitude != null">latitude = #{latitude},</if>
+            <if test="customerLink != null">customer_link = #{customerLink},</if>
+            <if test="externalLinks != null">external_links = #{externalLinks},</if>
+            <if test="propertyId != null">property_id = #{propertyId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyResidentialQuartersById" parameterType="Long">
+        delete from hy_residential_quarters where id = #{id}
+    </delete>
+
+    <delete id="deleteHyResidentialQuartersByIds" parameterType="String">
+        delete from hy_residential_quarters where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

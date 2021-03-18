@@ -102,16 +102,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectHyEntryList" parameterType="HyEntry" resultMap="HyEntryResult">
         <include refid="selectHyEntryVo"/>
-        <where>  
-            <if test="entryType != null "> and entry_type = #{entryType}</if>
-            <if test="entryDate != null "> and entry_date = #{entryDate}</if>
-            <if test="entryPerson != null  and entryPerson != ''"> and entry_person = #{entryPerson}</if>
-            <if test="entryRange != null  and entryRange != ''"> and entry_range = #{entryRange}</if>
-            <if test="entryDateStr != null "> and entry_date_str = #{entryDateStr}</if>
-            <if test="entryDateEnd != null "> and entry_date_end = #{entryDateEnd}</if>
-            <if test="entryAmount != null  and entryAmount != ''"> and entry_amount = #{entryAmount}</if>
-            <if test="houseNum != null  and houseNum != ''"> and house_num = #{houseNum}</if>
-        </where>
+     
+            <if test="entryType != null "> and e.entry_type = #{entryType}</if>
+            <if test="entryDate != null "> and e.entry_date = #{entryDate}</if>
+            <if test="entryPerson != null  and entryPerson != ''"> and e.entry_person = #{entryPerson}</if>
+            <if test="entryRange != null  and entryRange != ''"> and e.entry_range = #{entryRange}</if>
+            <if test="entryDateStr != null "> and e.entry_date_str = #{entryDateStr}</if>
+            <if test="entryDateEnd != null "> and e.entry_date_end = #{entryDateEnd}</if>
+            <if test="entryAmount != null  and entryAmount != ''"> and e.entry_amount = #{entryAmount}</if>
+            <if test="houseNum != null  and houseNum != ''"> and e.house_num = #{houseNum}</if>
+        
     </select>
     
     <select id="selectHyEntryById" parameterType="Long" resultMap="HyEntryResult">

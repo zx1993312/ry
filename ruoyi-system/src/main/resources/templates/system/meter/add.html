@@ -71,7 +71,7 @@
 				<div class="form-group">
 					<label class="col-sm-3 control-label">表箱：</label>
 					<div class="col-sm-8">
-						<input name="hyMeterCase" class="form-control" type="text" onclick="meterCase()">
+						<input id="hyMeterCase" name="hyMeterCase" class="form-control" type="text" onclick="meterCase()" readonly="readonly">
 					</div>
 				</div>
 			</div>
@@ -117,7 +117,7 @@
 				},
 				meterSerialNum : {
 					number : true,
-					maxlength : 11,
+					maxlength : 3,
 				},
 				initialRead : {
 					number : true,
@@ -127,6 +127,9 @@
 					number : true,
 					maxlength : 50,
 				},
+			/* 	hyMeterCase : {
+					required : true,
+				}, */
 			},
 
 			focusCleanup : true
@@ -150,6 +153,14 @@
 			minView : "month",
 			autoclose : true
 		});
+		$(function(){
+			var hyMeterCase=$("#hyMeterCase");
+			if(hyMeterCase.vla()==""){
+				alert("请输入");
+			}
+		})
+			
+		
 	</script>
 </body>
 </html>

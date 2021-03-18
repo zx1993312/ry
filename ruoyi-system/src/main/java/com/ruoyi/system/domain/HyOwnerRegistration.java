@@ -170,6 +170,8 @@ public class HyOwnerRegistration extends BaseEntity
     private HyHouseInf hyHouseInf;
     
     private HyEntry hyEntry;
+    
+    private HyAuditManagement hyAuditManagement;
 
     public void setId(Long id) 
     {
@@ -510,6 +512,14 @@ public class HyOwnerRegistration extends BaseEntity
 
 	public void setHyEntry(HyEntry hyEntry) {
 		this.hyEntry = hyEntry;
+	}
+
+	public HyAuditManagement getHyAuditManagement() {
+		return hyAuditManagement;
+	}
+
+	public void setHyAuditManagement(HyAuditManagement hyAuditManagement) {
+		this.hyAuditManagement = hyAuditManagement;
 	}
 
 	@Override

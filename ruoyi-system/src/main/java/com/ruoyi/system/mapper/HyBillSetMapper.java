@@ -29,6 +29,8 @@ public interface HyBillSetMapper {
 	 * @return 票据设置集合
 	 */
 	public List<HyBillSet> selectHyBillSetList(HyBillSet hyBillSet);
+	
+	
 
 	/**
 	 * 查询票据设置列表
@@ -74,4 +76,6 @@ public interface HyBillSetMapper {
 	 * @return 结果
 	 */
 	public int deleteHyBillSetByIds(String[] ids);
+
+	public List<HyBillSet> selectHyBillSetListOr(HyBillSet hyBillSet);
 }

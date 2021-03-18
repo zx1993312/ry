@@ -20,12 +20,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectHyVatAuditVo">
-        select id, area_name, project_num, entry_name, tax_scale, expense_account, tax_rate, time_str, time_end, audit_status, estate_record, tax_rate_record from hy_vat_audit
+        select id, area_name, project_num, entry_name, tax_scale, expense_account, tax_rate, time_str, time_end, audit_status, estate_record, tax_rate_record from hy_vat_audit where 1=1
     </sql>
 
     <select id="selectHyVatAuditList" parameterType="HyVatAudit" resultMap="HyVatAuditResult">
         <include refid="selectHyVatAuditVo"/>
-        <where>  
+        
             <if test="areaName != null  and areaName != ''"> and area_name like concat('%', #{areaName}, '%')</if>
             <if test="projectNum != null  and projectNum != ''"> and project_num = #{projectNum}</if>
             <if test="entryName != null  and entryName != ''"> and entry_name like concat('%', #{entryName}, '%')</if>
@@ -37,12 +37,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="auditStatus != null "> and audit_status = #{auditStatus}</if>
             <if test="estateRecord != null "> and estate_record = #{estateRecord}</if>
             <if test="taxRateRecord != null "> and tax_rate_record = #{taxRateRecord}</if>
-        </where>
+      
     </select>
     
     <select id="selectHyVatAuditById" parameterType="Long" resultMap="HyVatAuditResult">
         <include refid="selectHyVatAuditVo"/>
-        where id = #{id}
+        and id = #{id}
     </select>
         
     <insert id="insertHyVatAudit" parameterType="HyVatAudit">

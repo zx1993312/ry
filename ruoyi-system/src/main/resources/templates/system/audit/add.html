@@ -24,9 +24,9 @@
                 <label class="col-sm-3 control-label">纳税人规模：</label>
                 <div class="col-sm-8">
                		<select id="taxScale"
-								name="taxScale" class="form-control">
-               		<option value="2">一般纳税人</option>
-               		<option value="3">小规模纳税人</option>
+								name="taxScale" class="form-control" th:with="type=${@dict.getType('hy_taxpayper_type')}">
+               		<option value="0">一般纳税人</option>
+               		<option value="1">小规模纳税人</option>
                		</select>
                
                 </div>

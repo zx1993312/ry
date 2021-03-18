@@ -12,7 +12,7 @@
                         <ul>
                             <li>
                                 <label>客户名称：</label>
-                                <input type="text" name="ownerName"/>
+                                <input type="text" name="hyOwnerRegistration.ownerName"/>
                             </li>
                             <li>
                                 <label>房屋编号：</label>
@@ -20,7 +20,7 @@
                             </li>
                             <li>
                                 <label>房屋名称：</label>
-                                <input type="text" name="houseName"/>
+                                <input type="text" name="hyHouseInf.houseName"/>
                             </li>
                             <li>
                                 <label>费用名称：</label>
@@ -89,7 +89,7 @@
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('system:cost:edit')}]];
         var removeFlag = [[${@permission.hasPermi('system:cost:remove')}]];
-        var prefix = ctx + "system/cost";
+        var prefix = ctx + "system/customerHistory";
 
         $(function() {
             var options = {

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyCommunityIntroductionMapper">
+    
+    <resultMap type="HyCommunityIntroduction" id="HyCommunityIntroductionResult">
+        <result property="id"    column="id"    />
+        <result property="introductionPhotoAddress"    column="introduction_photo_address"    />
+        <result property="communityId"    column="community_id"    />
+    </resultMap>
+
+    <sql id="selectHyCommunityIntroductionVo">
+        select id, introduction_photo_address, community_id from hy_community_introduction
+    </sql>
+
+    <select id="selectHyCommunityIntroductionList" parameterType="HyCommunityIntroduction" resultMap="HyCommunityIntroductionResult">
+        <include refid="selectHyCommunityIntroductionVo"/>
+        <where>  
+            <if test="introductionPhotoAddress != null  and introductionPhotoAddress != ''"> and introduction_photo_address = #{introductionPhotoAddress}</if>
+            <if test="communityId != null "> and community_id = #{communityId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyCommunityIntroductionById" parameterType="Long" resultMap="HyCommunityIntroductionResult">
+        <include refid="selectHyCommunityIntroductionVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyCommunityIntroduction" parameterType="HyCommunityIntroduction">
+        insert into hy_community_introduction
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="introductionPhotoAddress != null">introduction_photo_address,</if>
+            <if test="communityId != null">community_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="introductionPhotoAddress != null">#{introductionPhotoAddress},</if>
+            <if test="communityId != null">#{communityId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyCommunityIntroduction" parameterType="HyCommunityIntroduction">
+        update hy_community_introduction
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="introductionPhotoAddress != null">introduction_photo_address = #{introductionPhotoAddress},</if>
+            <if test="communityId != null">community_id = #{communityId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyCommunityIntroductionById" parameterType="Long">
+        delete from hy_community_introduction where id = #{id}
+    </delete>
+
+    <delete id="deleteHyCommunityIntroductionByIds" parameterType="String">
+        delete from hy_community_introduction where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

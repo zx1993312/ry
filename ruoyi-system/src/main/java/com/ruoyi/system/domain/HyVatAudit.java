@@ -38,7 +38,6 @@ public class HyVatAudit extends BaseEntity {
 
 	/** 纳税人规模 */
 	@Excel(name = "纳税人规模")
-	@EnumAnn(enumClass = AuditEnum.class, enumType = "String")
 	private String taxScale;
 
 	/** 费用科目 */

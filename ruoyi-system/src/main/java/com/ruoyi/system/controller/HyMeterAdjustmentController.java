@@ -63,7 +63,7 @@ public class HyMeterAdjustmentController extends BaseController {
 	public TableDataInfo list(HySelectMeter hySelectMeter) {
 		Map<String, Object> map = new HashMap<>();
 		startPage();
-		List<HySelectMeter> list = hySelectMeterService.selectHySelMeterList(hySelectMeter);
+		List<HySelectMeter> list = hySelectMeterService.selectHySelMeterOr(hySelectMeter);
 		List<Map<String, Object>> reList = new ArrayList<>();
 		BigDecimal count = new BigDecimal(0);
 		for (HySelectMeter hs : list) {
@@ -93,7 +93,7 @@ public class HyMeterAdjustmentController extends BaseController {
 	@PostMapping("/export")
 	@ResponseBody
 	public AjaxResult export(HySelectMeter hySelectMeter) {
-		List<HySelectMeter> list = hySelectMeterService.selectHySelMeterList(hySelectMeter);
+		List<HySelectMeter> list = hySelectMeterService.selectHySelMeterOr(hySelectMeter);
 		ExcelUtil<HySelectMeter> util = new ExcelUtil<HySelectMeter>(HySelectMeter.class);
 		return util.exportExcel(list, "meter");
 	}

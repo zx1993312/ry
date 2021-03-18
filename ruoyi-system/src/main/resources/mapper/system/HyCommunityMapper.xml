@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyCommunityMapper">
+
+	<resultMap type="HyCommunity" id="HyCommunityResult">
+		<result property="id" column="id" />
+		<result property="title" column="title" />
+		<result property="releaseTime" column="release_time" />
+		<result property="introductionContent"
+			column="introduction_content" />
+		<association property="hyCommunitySupport" column="id"
+			javaType="HyCommunitySupport" resultMap="HyCommunitySupportResult" />
+		<association property="hyCommunityIntroduction"
+			column="id" javaType="HyCommunityIntroduction"
+			resultMap="HyCommunityIntroductionResult" />
+	</resultMap>
+
+	<resultMap type="HyCommunitySupport"
+		id="HyCommunitySupportResult">
+		<result property="id" column="id" />
+		<result property="matchingTypes" column="matching_types" />
+		<result property="matchingType" column="matching_type" />
+		<result property="contacts" column="contacts" />
+		<result property="matchingName" column="matching_name" />
+		<result property="contactNumber" column="contact_number" />
+		<result property="address" column="address" />
+		<result property="abreak" column="abreak" />
+		<result property="communityId" column="community_id" />
+	</resultMap>
+
+	<resultMap type="HyCommunityIntroduction"
+		id="HyCommunityIntroductionResult">
+		<result property="id" column="id" />
+		<result property="introductionPhotoAddress"
+			column="introduction_photo_address" />
+		<result property="communityId" column="community_id" />
+	</resultMap>
+
+	<sql id="selectHyCommunityVo">
+		select 
+		c.id, 
+		c.title, 
+		c.release_time, 
+		c.introduction_content,
+		i.introduction_photo_address,
+		s.matching_types,
+		s.matching_type,
+		S.contacts,
+		s.matching_name,
+		s.contact_number,
+		s.address,
+		s.abreak
+		from
+		hy_community c
+		LEFT JOIN hy_community_support s ON s.community_id = c.id
+		LEFT JOIN hy_community_introduction i ON i.community_id=c.id
+		where 1=1
+	</sql>
+
+	<select id="selectHyCommunityList" parameterType="HyCommunity"
+		resultMap="HyCommunityResult">
+		<include refid="selectHyCommunityVo" />
+	
+			<if test="title != null  and title != ''"> and title = #{title}</if>
+			<if test="releaseTime != null "> and release_time = #{releaseTime}</if>
+			<if
+				test="introductionContent != null  and introductionContent != ''"> and introduction_content = #{introductionContent}</if>
+		
+	</select>
+
+	<select id="selectHyCommunityById" parameterType="Long"
+		resultMap="HyCommunityResult">
+		<include refid="selectHyCommunityVo" />
+		and c.id = #{id}
+	</select>
+
+	<insert id="insertHyCommunity" parameterType="HyCommunity">
+		insert into hy_community
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">id,</if>
+			<if test="title != null">title,</if>
+			<if test="releaseTime != null">release_time,</if>
+			<if test="introductionContent != null">introduction_content,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">#{id},</if>
+			<if test="title != null">#{title},</if>
+			<if test="releaseTime != null">#{releaseTime},</if>
+			<if test="introductionContent != null">#{introductionContent},</if>
+		</trim>
+	</insert>
+
+	<update id="updateHyCommunity" parameterType="HyCommunity">
+		update hy_community
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="title != null">title = #{title},</if>
+			<if test="releaseTime != null">release_time = #{releaseTime},</if>
+			<if test="introductionContent != null">introduction_content = #{introductionContent},</if>
+		</trim>
+		where id = #{id}
+	</update>
+
+	<delete id="deleteHyCommunityById" parameterType="Long">
+		delete from
+		hy_community where id = #{id}
+	</delete>
+
+	<delete id="deleteHyCommunityByIds" parameterType="String">
+		delete from hy_community where id in
+		<foreach item="id" collection="array" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

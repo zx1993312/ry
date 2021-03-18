@@ -45,8 +45,9 @@ public class HyBillSetServiceImpl implements IHyBillSetService {
 	@Override
 	public List<HyBillSet> selectHyBillSetList(HyBillSet hyBillSet) {
 		return hyBillSetMapper.selectHyBillSetList(hyBillSet);
+		
 	}
-
+	
 	/**
 	 * 查询票据设置列表
 	 * 
@@ -66,7 +67,7 @@ public class HyBillSetServiceImpl implements IHyBillSetService {
 		Date endTimeNew = null;
 
 		if (null == billDateMap.get("startTime") && null == billDateMapNew.get("startTime")) {
-			return hyBillSetMapper.selectHyBillSetList(hyBillSet);// billDate时间为空并且billDateNew时间为空
+			return hyBillSetMapper.selectHyBillSetListOr(hyBillSet);// billDate时间为空并且billDateNew时间为空
 		}
 
 		if (null != billDateMap.get("startTime")) {
@@ -133,5 +134,10 @@ public class HyBillSetServiceImpl implements IHyBillSetService {
 	@Transactional(rollbackFor = Exception.class)
 	public int deleteHyBillSetById(Long id) {
 		return hyBillSetMapper.deleteHyBillSetById(id);
+	}
+
+	@Override
+	public List<HyBillSet> selectHyBillSetListOr(HyBillSet hyBillSet) {
+		return hyBillSetMapper.selectHyBillSetListOr(hyBillSet);
 	}
 }
