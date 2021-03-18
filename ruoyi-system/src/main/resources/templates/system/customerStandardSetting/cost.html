@@ -143,12 +143,23 @@
 	       		 url: "/system/customerStandardSetting/edit",
 	       	        type: "post",
 	       	        dataType: "json",
-	       	        data: {"currentState":$("#currentState").val()},
-	       	        	  {"costItems":$("#costItems").val()},
-	       	        	  {"standardName":$("#standardName").val()},
-	       	        	  {"billingCycle":$("#billingCycle").val()},
-	       	        	  {"standardName":$("#standardName").val()},
-	       	        
+       	        	data: {
+                       	"currentState": function() {
+                            return $("#currentState").val();
+                        },
+                        "costItems": function() {
+	                		return $("#costItems").val();
+	                    },
+               			"standardName": function() {
+                            return $.common.trim($("#standardName").val());
+                        },
+                        "billingCycle": function() {
+                            return $.common.trim($("#billingCycle").val());
+                        },
+                        "standardName": function() {
+                            return $.common.trim($("#standardName").val());
+                        },
+                    },
 	       	        beforeSend: function () {
 	       	            $.modal.loading("正在处理中，请稍后...");
 	       	            $.modal.disable();
