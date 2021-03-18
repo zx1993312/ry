@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyUnionpayBusinessMapper">
+    
+    <resultMap type="HyUnionpayBusiness" id="HyUnionpayBusinessResult">
+        <result property="id"    column="id"    />
+        <result property="merchantNumber"    column="merchant_number"    />
+        <result property="terminalBox"    column="terminal_box"    />
+        <result property="organizationBusinessNumber"    column="organization_business_number"    />
+        <result property="informationSources"    column="information_sources"    />
+        <result property="sourceNumber"    column="source_number"    />
+        <result property="secretKey"    column="secret_key"    />
+        <result property="residentialQuartersId"    column="residential_quarters_id"    />
+                <association property="hyResidentialQuarters"
+			column="id" javaType="HyResidentialQuarters"
+			resultMap="HyResidentialQuartersResult" />
+    </resultMap>
+    
+    <resultMap type="HyResidentialQuarters" id="HyResidentialQuartersResult">
+        <result property="id"    column="id"    />
+        <result property="communityAddress"    column="community_address"    />
+        <result property="communityName"    column="community_name"    />
+        <result property="contacts"    column="contacts"    />
+        <result property="contactNumber"    column="contact_number"    />
+        <result property="contactQq"    column="Contact_QQ"    />
+        <result property="city"    column="city"    />
+        <result property="area"    column="area"    />
+        <result property="county"    column="county"    />
+        <result property="address"    column="address"    />
+        <result property="longitude"    column="longitude"    />
+        <result property="latitude"    column="latitude"    />
+        <result property="customerLink"    column="customer_link"    />
+        <result property="externalLinks"    column="external_links"    />
+        <result property="propertyId"    column="property_id"    />
+     
+    </resultMap>
+
+    <sql id="selectHyUnionpayBusinessVo">
+        select 
+        u.id, 
+        u.merchant_number, 
+        u.terminal_box, 
+        u.organization_business_number, 
+        u.information_sources, 
+        u.source_number, 
+        u.secret_key, 
+        u.residential_quarters_id 
+        from 
+        hy_unionpay_business u
+        LEFT JOIN hy_residential_quarters r ON u.residential_quarters_id=r.id
+        where 1=1
+    </sql>
+
+    <select id="selectHyUnionpayBusinessList" parameterType="HyUnionpayBusiness" resultMap="HyUnionpayBusinessResult">
+        <include refid="selectHyUnionpayBusinessVo"/>
+            <if test="merchantNumber != null  and merchantNumber != ''"> and merchant_number = #{merchantNumber}</if>
+            <if test="terminalBox != null  and terminalBox != ''"> and terminal_box = #{terminalBox}</if>
+            <if test="organizationBusinessNumber != null  and organizationBusinessNumber != ''"> and organization_business_number = #{organizationBusinessNumber}</if>
+            <if test="informationSources != null  and informationSources != ''"> and information_sources = #{informationSources}</if>
+            <if test="sourceNumber != null "> and source_number = #{sourceNumber}</if>
+            <if test="secretKey != null  and secretKey != ''"> and secret_key = #{secretKey}</if>
+            <if test="residentialQuartersId != null "> and residential_quarters_id = #{residentialQuartersId}</if>
+    </select>
+    
+    <select id="selectHyUnionpayBusinessById" parameterType="Long" resultMap="HyUnionpayBusinessResult">
+        <include refid="selectHyUnionpayBusinessVo"/>
+        and u.id = #{id}
+    </select>
+        
+    <insert id="insertHyUnionpayBusiness" parameterType="HyUnionpayBusiness" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_unionpay_business
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="merchantNumber != null">merchant_number,</if>
+            <if test="terminalBox != null">terminal_box,</if>
+            <if test="organizationBusinessNumber != null">organization_business_number,</if>
+            <if test="informationSources != null">information_sources,</if>
+            <if test="sourceNumber != null">source_number,</if>
+            <if test="secretKey != null">secret_key,</if>
+            <if test="residentialQuartersId != null">residential_quarters_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="merchantNumber != null">#{merchantNumber},</if>
+            <if test="terminalBox != null">#{terminalBox},</if>
+            <if test="organizationBusinessNumber != null">#{organizationBusinessNumber},</if>
+            <if test="informationSources != null">#{informationSources},</if>
+            <if test="sourceNumber != null">#{sourceNumber},</if>
+            <if test="secretKey != null">#{secretKey},</if>
+            <if test="residentialQuartersId != null">#{residentialQuartersId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyUnionpayBusiness" parameterType="HyUnionpayBusiness">
+        update hy_unionpay_business
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="merchantNumber != null">merchant_number = #{merchantNumber},</if>
+            <if test="terminalBox != null">terminal_box = #{terminalBox},</if>
+            <if test="organizationBusinessNumber != null">organization_business_number = #{organizationBusinessNumber},</if>
+            <if test="informationSources != null">information_sources = #{informationSources},</if>
+            <if test="sourceNumber != null">source_number = #{sourceNumber},</if>
+            <if test="secretKey != null">secret_key = #{secretKey},</if>
+            <if test="residentialQuartersId != null">residential_quarters_id = #{residentialQuartersId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyUnionpayBusinessById" parameterType="Long">
+        delete from hy_unionpay_business where id = #{id}
+    </delete>
+
+    <delete id="deleteHyUnionpayBusinessByIds" parameterType="String">
+        delete from hy_unionpay_business where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

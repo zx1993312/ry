@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增银联商务')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-business-add">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">商户号：</label>
+                <div class="col-sm-8">
+                    <input name="merchantNumber" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">终端盒：</label>
+                <div class="col-sm-8">
+                    <input name="terminalBox" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">机构商务号：</label>
+                <div class="col-sm-8">
+                    <input name="organizationBusinessNumber" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">信息来源：</label>
+                <div class="col-sm-8">
+                    <input name="informationSources" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">来源编号：</label>
+                <div class="col-sm-8">
+                    <input name="sourceNumber" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">测试环境md5密钥：</label>
+                <div class="col-sm-8">
+                    <input name="secretKey" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">小区id：</label>
+                <div class="col-sm-8">
+                    <input name="residentialQuartersId" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/unionpayBusiness"
+        $("#form-business-add").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-business-add').serialize());
+            }
+        }
+    </script>
+</body>
+</html>
