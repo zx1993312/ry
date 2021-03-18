@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyPaymentInterfaceMapper">
+    
+    <resultMap type="HyPaymentInterface" id="HyPaymentInterfaceResult">
+        <result property="id"    column="id"    />
+        <result property="paymentSettings"    column="payment_settings"    />
+        <result property="ecplain"    column="ecplain"    />
+        <result property="ecable"    column="ecable"    />
+        <result property="residentialQuartersId"    column="residential_quarters_id"    />
+        <association property="hyResidentialQuarters"
+			column="id" javaType="HyResidentialQuarters"
+			resultMap="HyResidentialQuartersResult" />
+    </resultMap>
+
+    <resultMap type="HyResidentialQuarters" id="HyResidentialQuartersResult">
+        <result property="id"    column="id"    />
+        <result property="communityAddress"    column="community_address"    />
+        <result property="communityName"    column="community_name"    />
+        <result property="contacts"    column="contacts"    />
+        <result property="contactNumber"    column="contact_number"    />
+        <result property="contactQq"    column="Contact_QQ"    />
+        <result property="city"    column="city"    />
+        <result property="area"    column="area"    />
+        <result property="county"    column="county"    />
+        <result property="address"    column="address"    />
+        <result property="longitude"    column="longitude"    />
+        <result property="latitude"    column="latitude"    />
+        <result property="customerLink"    column="customer_link"    />
+        <result property="externalLinks"    column="external_links"    />
+        <result property="propertyId"    column="property_id"    />
+    </resultMap>
+
+    <sql id="selectHyPaymentInterfaceVo">
+        select 
+        p.id, 
+        p.payment_settings, 
+        p.ecplain, 
+        p.ecable, 
+        p.residential_quarters_id 
+        from 
+        hy_payment_interface p 
+        LEFT JOIN hy_residential_quarters q ON q.id=p.residential_quarters_id
+        where 1=1
+    </sql>
+
+    <select id="selectHyPaymentInterfaceList" parameterType="HyPaymentInterface" resultMap="HyPaymentInterfaceResult">
+        <include refid="selectHyPaymentInterfaceVo"/>
+            <if test="paymentSettings != null  and paymentSettings != ''"> and payment_settings = #{paymentSettings}</if>
+            <if test="ecplain != null  and ecplain != ''"> and ecplain = #{ecplain}</if>
+            <if test="ecable != null  and ecable != ''"> and ecable = #{ecable}</if>
+            <if test="residentialQuartersId != null "> and residential_quarters_id = #{residentialQuartersId}</if>
+    </select>
+    
+    <select id="selectHyPaymentInterfaceById" parameterType="Long" resultMap="HyPaymentInterfaceResult">
+        <include refid="selectHyPaymentInterfaceVo"/>
+        and p.id = #{id}
+    </select>
+        
+    <insert id="insertHyPaymentInterface" parameterType="HyPaymentInterface" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_payment_interface
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="paymentSettings != null">payment_settings,</if>
+            <if test="ecplain != null">ecplain,</if>
+            <if test="ecable != null">ecable,</if>
+            <if test="residentialQuartersId != null">residential_quarters_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="paymentSettings != null">#{paymentSettings},</if>
+            <if test="ecplain != null">#{ecplain},</if>
+            <if test="ecable != null">#{ecable},</if>
+            <if test="residentialQuartersId != null">#{residentialQuartersId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyPaymentInterface" parameterType="HyPaymentInterface">
+        update hy_payment_interface
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="paymentSettings != null">payment_settings = #{paymentSettings},</if>
+            <if test="ecplain != null">ecplain = #{ecplain},</if>
+            <if test="ecable != null">ecable = #{ecable},</if>
+            <if test="residentialQuartersId != null">residential_quarters_id = #{residentialQuartersId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyPaymentInterfaceById" parameterType="Long">
+        delete from hy_payment_interface where id = #{id}
+    </delete>
+
+    <delete id="deleteHyPaymentInterfaceByIds" parameterType="String">
+        delete from hy_payment_interface where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
