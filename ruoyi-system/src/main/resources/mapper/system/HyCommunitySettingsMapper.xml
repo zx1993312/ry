@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyCommunitySettingsMapper">
+    
+    <resultMap type="HyCommunitySettings" id="HyCommunitySettingsResult">
+        <result property="id"    column="id"    />
+        <result property="communitySettings"    column="community_settings"    />
+        <result property="explains"    column="explains"    />
+        <result property="enables"    column="enables"    />
+        <result property="residentialQuartersId"    column="residential_quarters_id"    />
+        <association property="hyResidentialQuarters"
+			column="id" javaType="HyResidentialQuarters"
+			resultMap="HyResidentialQuartersResult" />
+    </resultMap>
+    
+    <resultMap type="HyResidentialQuarters" id="HyResidentialQuartersResult">
+        <result property="id"    column="id"    />
+        <result property="communityAddress"    column="community_address"    />
+        <result property="communityName"    column="community_name"    />
+        <result property="contacts"    column="contacts"    />
+        <result property="contactNumber"    column="contact_number"    />
+        <result property="contactQq"    column="Contact_QQ"    />
+        <result property="city"    column="city"    />
+        <result property="area"    column="area"    />
+        <result property="county"    column="county"    />
+        <result property="address"    column="address"    />
+        <result property="longitude"    column="longitude"    />
+        <result property="latitude"    column="latitude"    />
+        <result property="customerLink"    column="customer_link"    />
+        <result property="externalLinks"    column="external_links"    />
+        <result property="propertyId"    column="property_id"    />
+    </resultMap>
+
+    <sql id="selectHyCommunitySettingsVo">
+        select 
+        h.id, 
+        h.community_settings, 
+        h.explains, 
+        h.enables, 
+        h.residential_quarters_id 
+        from 
+        hy_community_settings h 
+        LEFT JOIN hy_residential_quarters r ON h.residential_quarters_id=r.id
+        where 1=1
+    </sql>
+
+    <select id="selectHyCommunitySettingsList" parameterType="HyCommunitySettings" resultMap="HyCommunitySettingsResult">
+        <include refid="selectHyCommunitySettingsVo"/>
+          
+            <if test="communitySettings != null  and communitySettings != ''"> and community_settings = #{communitySettings}</if>
+            <if test="explains != null  and explains != ''"> and explains = #{explains}</if>
+            <if test="enables != null  and enables != ''"> and enables = #{enables}</if>
+            <if test="residentialQuartersId != null "> and residential_quarters_id = #{residentialQuartersId}</if>
+    </select>
+    
+    <select id="selectHyCommunitySettingsById" parameterType="Long" resultMap="HyCommunitySettingsResult">
+        <include refid="selectHyCommunitySettingsVo"/>
+        and h.id  = #{id}
+    </select>
+        
+    <insert id="insertHyCommunitySettings" parameterType="HyCommunitySettings">
+        insert into hy_community_settings
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="communitySettings != null">community_settings,</if>
+            <if test="explains != null">explains,</if>
+            <if test="enables != null">enables,</if>
+            <if test="residentialQuartersId != null">residential_quarters_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="communitySettings != null">#{communitySettings},</if>
+            <if test="explains != null">#{explains},</if>
+            <if test="enables != null">#{enables},</if>
+            <if test="residentialQuartersId != null">#{residentialQuartersId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyCommunitySettings" parameterType="HyCommunitySettings">
+        update hy_community_settings
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="communitySettings != null">community_settings = #{communitySettings},</if>
+            <if test="explains != null">explains = #{explains},</if>
+            <if test="enables != null">enables = #{enables},</if>
+            <if test="residentialQuartersId != null">residential_quarters_id = #{residentialQuartersId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyCommunitySettingsById" parameterType="Long">
+        delete from hy_community_settings where id = #{id}
+    </delete>
+
+    <delete id="deleteHyCommunitySettingsByIds" parameterType="String">
+        delete from hy_community_settings where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

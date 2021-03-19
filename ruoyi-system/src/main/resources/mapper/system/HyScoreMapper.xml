@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyScoreMapper">
+    
+    <resultMap type="HyScore" id="HyScoreResult">
+        <result property="id"    column="id"    />
+        <result property="number"    column="number"    />
+        <result property="user"    column="user"    />
+        <result property="address"    column="address"    />
+        <result property="score"    column="score"    />
+        <result property="comunt"    column="comunt"    />
+        <result property="scoreContent"    column="score_content"    />
+        <result property="scoreTime"    column="score_time"    />
+        <result property="residentialQuartersId"    column="residential_quarters_id"    />
+        <association property="hyResidentialQuarters"
+			column="id" javaType="HyResidentialQuarters"
+			resultMap="HyResidentialQuartersResult" />
+    </resultMap>
+    
+    <resultMap type="HyResidentialQuarters" id="HyResidentialQuartersResult">
+        <result property="id"    column="id"    />
+        <result property="communityAddress"    column="community_address"    />
+        <result property="communityName"    column="community_name"    />
+        <result property="contacts"    column="contacts"    />
+        <result property="contactNumber"    column="contact_number"    />
+        <result property="contactQq"    column="Contact_QQ"    />
+        <result property="city"    column="city"    />
+        <result property="area"    column="area"    />
+        <result property="county"    column="county"    />
+        <result property="address"    column="address"    />
+        <result property="longitude"    column="longitude"    />
+        <result property="latitude"    column="latitude"    />
+        <result property="customerLink"    column="customer_link"    />
+        <result property="externalLinks"    column="external_links"    />
+        <result property="propertyId"    column="property_id"    />
+    </resultMap>
+
+    <sql id="selectHyScoreVo">
+        select 
+        r.id, 
+        r.number, 
+        r.user, 
+        r.address, 
+        r.score, 
+        r.comunt, 
+        r.score_content, 
+        r.score_time, 
+        r.residential_quarters_id 
+        from 
+        hy_score r
+        LEFT JOIN hy_residential_quarters q ON r.residential_quarters_id=q.id
+        where 1=1
+    </sql>
+
+    <select id="selectHyScoreList" parameterType="HyScore" resultMap="HyScoreResult">
+        <include refid="selectHyScoreVo"/>
+            <if test="number != null "> and r.number = #{number}</if>
+            <if test="user != null  and user != ''"> and r.user = #{user}</if>
+            <if test="address != null  and address != ''"> and r.address = #{address}</if>
+            <if test="score != null  and score != ''"> and r.score = #{score}</if>
+            <if test="comunt != null  and comunt != ''"> and r.comunt = #{comunt}</if>
+            <if test="scoreContent != null  and scoreContent != ''"> and r.score_content = #{scoreContent}</if>
+            <if test="scoreTime != null "> and r.score_time = #{scoreTime}</if>
+            <if test="residentialQuartersId != null "> and r.residential_quarters_id = #{residentialQuartersId}</if>
+    </select>
+    
+    <select id="selectHyScoreById" parameterType="Long" resultMap="HyScoreResult">
+        <include refid="selectHyScoreVo"/>
+        and r.id = #{id}
+    </select>
+        
+    <insert id="insertHyScore" parameterType="HyScore" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_score
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="number != null">number,</if>
+            <if test="user != null">user,</if>
+            <if test="address != null">address,</if>
+            <if test="score != null">score,</if>
+            <if test="comunt != null">comunt,</if>
+            <if test="scoreContent != null">score_content,</if>
+            <if test="scoreTime != null">score_time,</if>
+            <if test="residentialQuartersId != null">residential_quarters_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="number != null">#{number},</if>
+            <if test="user != null">#{user},</if>
+            <if test="address != null">#{address},</if>
+            <if test="score != null">#{score},</if>
+            <if test="comunt != null">#{comunt},</if>
+            <if test="scoreContent != null">#{scoreContent},</if>
+            <if test="scoreTime != null">#{scoreTime},</if>
+            <if test="residentialQuartersId != null">#{residentialQuartersId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyScore" parameterType="HyScore">
+        update hy_score
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="number != null">number = #{number},</if>
+            <if test="user != null">user = #{user},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="score != null">score = #{score},</if>
+            <if test="comunt != null">comunt = #{comunt},</if>
+            <if test="scoreContent != null">score_content = #{scoreContent},</if>
+            <if test="scoreTime != null">score_time = #{scoreTime},</if>
+            <if test="residentialQuartersId != null">residential_quarters_id = #{residentialQuartersId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyScoreById" parameterType="Long">
+        delete from hy_score where id = #{id}
+    </delete>
+
+    <delete id="deleteHyScoreByIds" parameterType="String">
+        delete from hy_score where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

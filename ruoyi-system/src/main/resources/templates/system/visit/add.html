@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增访客')" />
+    <th:block th:include="include :: datetimepicker-css" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-visit-add">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">姓名：</label>
+                <div class="col-sm-8">
+                    <input name="name" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">电话号：</label>
+                <div class="col-sm-8">
+                    <input name="telphone" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">申请地址：</label>
+                <div class="col-sm-8">
+                    <input name="applicationAddress" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">申请时间：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input name="applicationTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">有效时间：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input name="effectiveTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">有效天数：</label>
+                <div class="col-sm-8">
+                    <input name="effectiveDay" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">小区id：</label>
+                <div class="col-sm-8">
+                    <input name="residentialQuartersId" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: datetimepicker-js" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/visit"
+        $("#form-visit-add").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-visit-add').serialize());
+            }
+        }
+
+        $("input[name='applicationTime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='effectiveTime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+    </script>
+</body>
+</html>

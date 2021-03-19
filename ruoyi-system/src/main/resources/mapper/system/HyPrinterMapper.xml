@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyPrinterMapper">
+    
+    <resultMap type="HyPrinter" id="HyPrinterResult">
+        <result property="id"    column="id"    />
+        <result property="repairReportPrinting"    column="repair_report_printing"    />
+        <result property="opinionPrinting"    column="opinion_printing"    />
+        <result property="paymentPrinting"    column="payment_printing"    />
+        <result property="apiSecretKey"    column="api_secret_key"    />
+        <result property="terminalNumber"    column="terminal_number"    />
+        <result property="residentialQuartersId"    column="residential_quarters_id"    />
+        <association property="hyResidentialQuarters"
+			column="id" javaType="HyResidentialQuarters"
+			resultMap="HyResidentialQuartersResult" />
+    </resultMap>
+    
+    <resultMap type="HyResidentialQuarters" id="HyResidentialQuartersResult">
+        <result property="id"    column="id"    />
+        <result property="communityAddress"    column="community_address"    />
+        <result property="communityName"    column="community_name"    />
+        <result property="contacts"    column="contacts"    />
+        <result property="contactNumber"    column="contact_number"    />
+        <result property="contactQq"    column="Contact_QQ"    />
+        <result property="city"    column="city"    />
+        <result property="area"    column="area"    />
+        <result property="county"    column="county"    />
+        <result property="address"    column="address"    />
+        <result property="longitude"    column="longitude"    />
+        <result property="latitude"    column="latitude"    />
+        <result property="customerLink"    column="customer_link"    />
+        <result property="externalLinks"    column="external_links"    />
+        <result property="propertyId"    column="property_id"    />
+    </resultMap>
+
+    <sql id="selectHyPrinterVo">
+        select 
+        r.id, 
+        r.repair_report_printing, 
+        r.opinion_printing, 
+        r.payment_printing, api_secret_key, 
+        r.terminal_number, 
+        r.residential_quarters_id
+        from 
+        hy_printer r
+        LEFT JOIN hy_residential_quarters q ON r.residential_quarters_id=q.id
+        where 1=1
+    </sql>
+
+    <select id="selectHyPrinterList" parameterType="HyPrinter" resultMap="HyPrinterResult">
+        <include refid="selectHyPrinterVo"/>
+            <if test="repairReportPrinting != null  and repairReportPrinting != ''"> and repair_report_printing = #{repairReportPrinting}</if>
+            <if test="opinionPrinting != null  and opinionPrinting != ''"> and opinion_printing = #{opinionPrinting}</if>
+            <if test="paymentPrinting != null  and paymentPrinting != ''"> and payment_printing = #{paymentPrinting}</if>
+            <if test="apiSecretKey != null  and apiSecretKey != ''"> and api_secret_key = #{apiSecretKey}</if>
+            <if test="terminalNumber != null "> and terminal_number = #{terminalNumber}</if>
+            <if test="residentialQuartersId != null "> and residential_quarters_id = #{residentialQuartersId}</if>
+    </select>
+    
+    <select id="selectHyPrinterById" parameterType="Long" resultMap="HyPrinterResult">
+        <include refid="selectHyPrinterVo"/>
+        and r.id = #{id}
+    </select>
+        
+    <insert id="insertHyPrinter" parameterType="HyPrinter" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_printer
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="repairReportPrinting != null">repair_report_printing,</if>
+            <if test="opinionPrinting != null">opinion_printing,</if>
+            <if test="paymentPrinting != null">payment_printing,</if>
+            <if test="apiSecretKey != null">api_secret_key,</if>
+            <if test="terminalNumber != null">terminal_number,</if>
+            <if test="residentialQuartersId != null">residential_quarters_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="repairReportPrinting != null">#{repairReportPrinting},</if>
+            <if test="opinionPrinting != null">#{opinionPrinting},</if>
+            <if test="paymentPrinting != null">#{paymentPrinting},</if>
+            <if test="apiSecretKey != null">#{apiSecretKey},</if>
+            <if test="terminalNumber != null">#{terminalNumber},</if>
+            <if test="residentialQuartersId != null">#{residentialQuartersId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyPrinter" parameterType="HyPrinter">
+        update hy_printer
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="repairReportPrinting != null">repair_report_printing = #{repairReportPrinting},</if>
+            <if test="opinionPrinting != null">opinion_printing = #{opinionPrinting},</if>
+            <if test="paymentPrinting != null">payment_printing = #{paymentPrinting},</if>
+            <if test="apiSecretKey != null">api_secret_key = #{apiSecretKey},</if>
+            <if test="terminalNumber != null">terminal_number = #{terminalNumber},</if>
+            <if test="residentialQuartersId != null">residential_quarters_id = #{residentialQuartersId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyPrinterById" parameterType="Long">
+        delete from hy_printer where id = #{id}
+    </delete>
+
+    <delete id="deleteHyPrinterByIds" parameterType="String">
+        delete from hy_printer where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

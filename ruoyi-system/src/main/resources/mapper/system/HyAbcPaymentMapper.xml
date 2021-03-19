@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyAbcPaymentMapper">
+    
+    <resultMap type="HyAbcPayment" id="HyAbcPaymentResult">
+        <result property="id"    column="id"    />
+        <result property="paymentItemsNumber"    column="payment_items_number"    />
+        <result property="password"    column="password"    />
+        <result property="privateKey"    column="private_key"    />
+        <result property="residentialQuartersId"    column="residential_quarters_id"    />
+        <association property="hyResidentialQuarters"
+			column="id" javaType="HyResidentialQuarters"
+			resultMap="HyResidentialQuartersResult" />
+    </resultMap>
+    
+    <resultMap type="HyResidentialQuarters" id="HyResidentialQuartersResult">
+        <result property="id"    column="id"    />
+        <result property="communityAddress"    column="community_address"    />
+        <result property="communityName"    column="community_name"    />
+        <result property="contacts"    column="contacts"    />
+        <result property="contactNumber"    column="contact_number"    />
+        <result property="contactQq"    column="Contact_QQ"    />
+        <result property="city"    column="city"    />
+        <result property="area"    column="area"    />
+        <result property="county"    column="county"    />
+        <result property="address"    column="address"    />
+        <result property="longitude"    column="longitude"    />
+        <result property="latitude"    column="latitude"    />
+        <result property="customerLink"    column="customer_link"    />
+        <result property="externalLinks"    column="external_links"    />
+        <result property="propertyId"    column="property_id"    />
+    </resultMap>
+
+    <sql id="selectHyAbcPaymentVo">
+        select 
+        r.id, 
+        r.payment_items_number, 
+        r.password, 
+        r.private_key, 
+        r.residential_quarters_id 
+        from 
+        hy_abc_payment r
+        LEFT JOIN hy_residential_quarters q ON r.residential_quarters_id=q.id
+        where 1=1
+    </sql>
+
+    <select id="selectHyAbcPaymentList" parameterType="HyAbcPayment" resultMap="HyAbcPaymentResult">
+        <include refid="selectHyAbcPaymentVo"/>
+            <if test="paymentItemsNumber != null  and paymentItemsNumber != ''"> and payment_items_number = #{paymentItemsNumber}</if>
+            <if test="password != null  and password != ''"> and password = #{password}</if>
+            <if test="privateKey != null  and privateKey != ''"> and private_key = #{privateKey}</if>
+            <if test="residentialQuartersId != null "> and residential_quarters_id = #{residentialQuartersId}</if>
+    </select>
+    
+    <select id="selectHyAbcPaymentById" parameterType="Long" resultMap="HyAbcPaymentResult">
+        <include refid="selectHyAbcPaymentVo"/>
+        and r.id = #{id}
+    </select>
+        
+    <insert id="insertHyAbcPayment" parameterType="HyAbcPayment" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_abc_payment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="paymentItemsNumber != null">payment_items_number,</if>
+            <if test="password != null">password,</if>
+            <if test="privateKey != null">private_key,</if>
+            <if test="residentialQuartersId != null">residential_quarters_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="paymentItemsNumber != null">#{paymentItemsNumber},</if>
+            <if test="password != null">#{password},</if>
+            <if test="privateKey != null">#{privateKey},</if>
+            <if test="residentialQuartersId != null">#{residentialQuartersId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyAbcPayment" parameterType="HyAbcPayment">
+        update hy_abc_payment
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="paymentItemsNumber != null">payment_items_number = #{paymentItemsNumber},</if>
+            <if test="password != null">password = #{password},</if>
+            <if test="privateKey != null">private_key = #{privateKey},</if>
+            <if test="residentialQuartersId != null">residential_quarters_id = #{residentialQuartersId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyAbcPaymentById" parameterType="Long">
+        delete from hy_abc_payment where id = #{id}
+    </delete>
+
+    <delete id="deleteHyAbcPaymentByIds" parameterType="String">
+        delete from hy_abc_payment where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyVisitMapper">
+    
+    <resultMap type="HyVisit" id="HyVisitResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="telphone"    column="telphone"    />
+        <result property="applicationAddress"    column="application_address"    />
+        <result property="applicationTime"    column="application_time"    />
+        <result property="effectiveTime"    column="effective_time"    />
+        <result property="effectiveDay"    column="effective_day"    />
+        <result property="residentialQuartersId"    column="residential_quarters_id"    />
+        <association property="hyResidentialQuarters"
+			column="id" javaType="HyResidentialQuarters"
+			resultMap="HyResidentialQuartersResult" />
+    </resultMap>
+    
+    <resultMap type="HyResidentialQuarters" id="HyResidentialQuartersResult">
+        <result property="id"    column="id"    />
+        <result property="communityAddress"    column="community_address"    />
+        <result property="communityName"    column="community_name"    />
+        <result property="contacts"    column="contacts"    />
+        <result property="contactNumber"    column="contact_number"    />
+        <result property="contactQq"    column="Contact_QQ"    />
+        <result property="city"    column="city"    />
+        <result property="area"    column="area"    />
+        <result property="county"    column="county"    />
+        <result property="address"    column="address"    />
+        <result property="longitude"    column="longitude"    />
+        <result property="latitude"    column="latitude"    />
+        <result property="customerLink"    column="customer_link"    />
+        <result property="externalLinks"    column="external_links"    />
+        <result property="propertyId"    column="property_id"    />
+    </resultMap>
+    
+
+    <sql id="selectHyVisitVo">
+        select 
+        r.id, 
+        r.name, 
+        r.telphone, 
+        r.application_address, 
+        r.application_time, 
+        r.effective_time, 
+        r.effective_day, 
+        r.residential_quarters_id 
+        from 
+        hy_visit r
+        LEFT JOIN hy_residential_quarters q ON r.residential_quarters_id=q.id
+        where 1=1
+    </sql>
+
+    <select id="selectHyVisitList" parameterType="HyVisit" resultMap="HyVisitResult">
+        <include refid="selectHyVisitVo"/>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="telphone != null  and telphone != ''"> and telphone = #{telphone}</if>
+            <if test="applicationAddress != null  and applicationAddress != ''"> and application_address = #{applicationAddress}</if>
+            <if test="applicationTime != null "> and application_time = #{applicationTime}</if>
+            <if test="effectiveTime != null "> and effective_time = #{effectiveTime}</if>
+            <if test="effectiveDay != null  and effectiveDay != ''"> and effective_day = #{effectiveDay}</if>
+            <if test="residentialQuartersId != null "> and residential_quarters_id = #{residentialQuartersId}</if>
+    </select>
+    
+    <select id="selectHyVisitById" parameterType="Long" resultMap="HyVisitResult">
+        <include refid="selectHyVisitVo"/>
+        and r.id = #{id}
+    </select>
+        
+    <insert id="insertHyVisit" parameterType="HyVisit" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_visit
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="telphone != null">telphone,</if>
+            <if test="applicationAddress != null">application_address,</if>
+            <if test="applicationTime != null">application_time,</if>
+            <if test="effectiveTime != null">effective_time,</if>
+            <if test="effectiveDay != null">effective_day,</if>
+            <if test="residentialQuartersId != null">residential_quarters_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="telphone != null">#{telphone},</if>
+            <if test="applicationAddress != null">#{applicationAddress},</if>
+            <if test="applicationTime != null">#{applicationTime},</if>
+            <if test="effectiveTime != null">#{effectiveTime},</if>
+            <if test="effectiveDay != null">#{effectiveDay},</if>
+            <if test="residentialQuartersId != null">#{residentialQuartersId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyVisit" parameterType="HyVisit">
+        update hy_visit
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="telphone != null">telphone = #{telphone},</if>
+            <if test="applicationAddress != null">application_address = #{applicationAddress},</if>
+            <if test="applicationTime != null">application_time = #{applicationTime},</if>
+            <if test="effectiveTime != null">effective_time = #{effectiveTime},</if>
+            <if test="effectiveDay != null">effective_day = #{effectiveDay},</if>
+            <if test="residentialQuartersId != null">residential_quarters_id = #{residentialQuartersId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyVisitById" parameterType="Long">
+        delete from hy_visit where id = #{id}
+    </delete>
+
+    <delete id="deleteHyVisitByIds" parameterType="String">
+        delete from hy_visit where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
