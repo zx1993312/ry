@@ -32,11 +32,11 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @date 2021-03-18
  */
 @Controller
-@RequestMapping("/system/payment")
+@RequestMapping("/system/thirdPayment")
 @Api(tags = "微信支付第三方Controller")
 public class HyThirdPaymentController extends BaseController
 {
-    private String prefix = "system/payment";
+    private String prefix = "system/thirdPayment";
 
     @Autowired
     private IHyThirdPaymentService hyThirdPaymentService;

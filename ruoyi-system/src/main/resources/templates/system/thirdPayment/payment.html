@@ -71,7 +71,7 @@
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('system:payment:edit')}]];
         var removeFlag = [[${@permission.hasPermi('system:payment:remove')}]];
-        var prefix = ctx + "system/payment";
+        var prefix = ctx + "system/thirdPayment";
 
         $(function() {
             var options = {
@@ -112,7 +112,7 @@
                 {
                     field: 'applicationPrivateKey',
                     title: '应用私钥'
-
+                },
                 {
                     field: 'residentialQuartersId',
                     title: '小区id'
