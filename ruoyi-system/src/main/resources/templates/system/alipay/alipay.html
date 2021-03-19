@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-
-    <th:block th:include="include :: header('微信支付第三方列表')" />
+    <th:block th:include="include :: header('支付宝列表')" />
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -12,28 +11,16 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                <label>银行通道：</label>
-                                <input type="text" name="bankChannel"/>
+                                <label>支付宝账号：</label>
+                                <input type="text" name="alipayAccount"/>
                             </li>
                             <li>
-                                <label>商户号：</label>
-                                <input type="text" name="merchantNumber"/>
+                                <label>合作者身份：</label>
+                                <input type="text" name="partnerIdentity"/>
                             </li>
                             <li>
-                                <label>密钥：</label>
-                                <input type="text" name="secretKey"/>
-                            </li>
-                            <li>
-                                <label>公众号appid：</label>
-                                <input type="text" name="appid"/>
-                            </li>
-                            <li>
-                                <label>公众号appseret：</label>
-                                <input type="text" name="appsecret"/>
-                            </li>
-                            <li>
-                                <label>应用私钥：</label>
-                                <input type="text" name="applicationPrivateKey"/>
+                                <label>校验密钥：</label>
+                                <input type="text" name="verificationKey"/>
                             </li>
                             <li>
                                 <label>小区id：</label>
@@ -49,16 +36,16 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:payment:add">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:alipay:add">
                     <i class="fa fa-plus"></i> 添加
                 </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:payment:edit">
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:alipay:edit">
                     <i class="fa fa-edit"></i> 修改
                 </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:payment:remove">
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:alipay:remove">
                     <i class="fa fa-remove"></i> 删除
                 </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:payment:export">
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:alipay:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
             </div>
@@ -69,9 +56,9 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('system:payment:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('system:payment:remove')}]];
-        var prefix = ctx + "system/payment";
+        var editFlag = [[${@permission.hasPermi('system:alipay:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:alipay:remove')}]];
+        var prefix = ctx + "system/alipay";
 
         $(function() {
             var options = {
@@ -80,39 +67,27 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "微信支付第三方",
+                modalName: "支付宝",
                 columns: [{
                     checkbox: true
                 },
                 {
                     field: 'id',
-                    title: '第三方id',
+                    title: '支付宝账号id',
                     visible: false
                 },
                 {
-                    field: 'bankChannel',
-                    title: '银行通道'
+                    field: 'alipayAccount',
+                    title: '支付宝账号'
                 },
                 {
-                    field: 'merchantNumber',
-                    title: '商户号'
+                    field: 'partnerIdentity',
+                    title: '合作者身份'
                 },
                 {
-                    field: 'secretKey',
-                    title: '密钥'
+                    field: 'verificationKey',
+                    title: '校验密钥'
                 },
-                {
-                    field: 'appid',
-                    title: '公众号appid'
-                },
-                {
-                    field: 'appsecret',
-                    title: '公众号appseret'
-                },
-                {
-                    field: 'applicationPrivateKey',
-                    title: '应用私钥'
-
                 {
                     field: 'residentialQuartersId',
                     title: '小区id'

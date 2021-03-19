@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyAlipayMapper">
+    
+    <resultMap type="HyAlipay" id="HyAlipayResult">
+        <result property="id"    column="id"    />
+        <result property="alipayAccount"    column="alipay_account"    />
+        <result property="partnerIdentity"    column="partner_identity"    />
+        <result property="verificationKey"    column="verification_key"    />
+        <result property="residentialQuartersId"    column="residential_quarters_id"    />
+                <association property="hyResidentialQuarters"
+			column="id" javaType="HyResidentialQuarters"
+			resultMap="HyResidentialQuartersResult" />
+    </resultMap>
+    
+         <resultMap type="HyResidentialQuarters" id="HyResidentialQuartersResult">
+        <result property="id"    column="id"    />
+        <result property="communityAddress"    column="community_address"    />
+        <result property="communityName"    column="community_name"    />
+        <result property="contacts"    column="contacts"    />
+        <result property="contactNumber"    column="contact_number"    />
+        <result property="contactQq"    column="Contact_QQ"    />
+        <result property="city"    column="city"    />
+        <result property="area"    column="area"    />
+        <result property="county"    column="county"    />
+        <result property="address"    column="address"    />
+        <result property="longitude"    column="longitude"    />
+        <result property="latitude"    column="latitude"    />
+        <result property="customerLink"    column="customer_link"    />
+        <result property="externalLinks"    column="external_links"    />
+        <result property="propertyId"    column="property_id"    />
+     
+    </resultMap>
+
+    <sql id="selectHyAlipayVo">
+        select 
+        a.id, 
+        a.alipay_account, 
+        a.partner_identity, 
+        a.verification_key, 
+        a.residential_quarters_id 
+        from hy_alipay a
+        LEFT JOIN hy_residential_quarters r ON a.residential_quarters_id=r.id
+        where 1=1
+    </sql>
+
+    <select id="selectHyAlipayList" parameterType="HyAlipay" resultMap="HyAlipayResult">
+        <include refid="selectHyAlipayVo"/>
+            <if test="alipayAccount != null  and alipayAccount != ''"> and alipay_account = #{alipayAccount}</if>
+            <if test="partnerIdentity != null  and partnerIdentity != ''"> and partner_identity = #{partnerIdentity}</if>
+            <if test="verificationKey != null  and verificationKey != ''"> and verification_key = #{verificationKey}</if>
+            <if test="residentialQuartersId != null "> and residential_quarters_id = #{residentialQuartersId}</if>
+    </select>
+    
+    <select id="selectHyAlipayById" parameterType="Long" resultMap="HyAlipayResult">
+        <include refid="selectHyAlipayVo"/>
+        and a.id = #{id}
+    </select>
+        
+    <insert id="insertHyAlipay" parameterType="HyAlipay" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_alipay
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="alipayAccount != null">alipay_account,</if>
+            <if test="partnerIdentity != null">partner_identity,</if>
+            <if test="verificationKey != null">verification_key,</if>
+            <if test="residentialQuartersId != null">residential_quarters_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="alipayAccount != null">#{alipayAccount},</if>
+            <if test="partnerIdentity != null">#{partnerIdentity},</if>
+            <if test="verificationKey != null">#{verificationKey},</if>
+            <if test="residentialQuartersId != null">#{residentialQuartersId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyAlipay" parameterType="HyAlipay">
+        update hy_alipay
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="alipayAccount != null">alipay_account = #{alipayAccount},</if>
+            <if test="partnerIdentity != null">partner_identity = #{partnerIdentity},</if>
+            <if test="verificationKey != null">verification_key = #{verificationKey},</if>
+            <if test="residentialQuartersId != null">residential_quarters_id = #{residentialQuartersId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyAlipayById" parameterType="Long">
+        delete from hy_alipay where id = #{id}
+    </delete>
+
+    <delete id="deleteHyAlipayByIds" parameterType="String">
+        delete from hy_alipay where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

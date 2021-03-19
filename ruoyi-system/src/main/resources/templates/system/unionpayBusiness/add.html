@@ -1,18 +1,11 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
-
-    <th:block th:include="include :: header('新增微信支付第三方')" />
+    <th:block th:include="include :: header('新增银联商务')" />
 </head>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-payment-add">
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">银行通道：</label>
-                <div class="col-sm-8">
-                    <input name="bankChannel" class="form-control" type="text">
-                </div>
-            </div>
+        <form class="form-horizontal m" id="form-business-add">
             <div class="form-group">    
                 <label class="col-sm-3 control-label">商户号：</label>
                 <div class="col-sm-8">
@@ -20,28 +13,33 @@
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">密钥：</label>
+                <label class="col-sm-3 control-label">终端盒：</label>
+                <div class="col-sm-8">
+                    <input name="terminalBox" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">机构商务号：</label>
+                <div class="col-sm-8">
+                    <input name="organizationBusinessNumber" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">信息来源：</label>
+                <div class="col-sm-8">
+                    <input name="informationSources" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">来源编号：</label>
+                <div class="col-sm-8">
+                    <input name="sourceNumber" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">测试环境md5密钥：</label>
                 <div class="col-sm-8">
                     <input name="secretKey" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">公众号appid：</label>
-                <div class="col-sm-8">
-                    <input name="appid" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">公众号appseret：</label>
-                <div class="col-sm-8">
-                    <input name="appsecret" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">应用私钥：</label>
-                <div class="col-sm-8">
-                    <input name="applicationPrivateKey" class="form-control" type="text">
-
                 </div>
             </div>
             <div class="form-group">    
@@ -54,14 +52,14 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var prefix = ctx + "system/payment"
-        $("#form-payment-add").validate({
+        var prefix = ctx + "system/unionpayBusiness"
+        $("#form-business-add").validate({
             focusCleanup: true
         });
 
         function submitHandler() {
             if ($.validate.form()) {
-                $.operate.save(prefix + "/add", $('#form-payment-add').serialize());
+                $.operate.save(prefix + "/add", $('#form-business-add').serialize());
             }
         }
     </script>

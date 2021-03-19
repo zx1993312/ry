@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyServiceProviderAccountNumberMapper">
+    
+    <resultMap type="HyServiceProviderAccountNumber" id="HyServiceProviderAccountNumberResult">
+        <result property="id"    column="id"    />
+        <result property="serviceProviderAccounNumber"    column="service_provider_accoun_number"    />
+        <result property="merchantPaymentKey"    column="merchant_payment_key"    />
+        <result property="appid"    column="appid"    />
+        <result property="appsecret"    column="appsecret"    />
+        <result property="subMerchantNumber"    column="sub_merchant_number"    />
+        <result property="residentialQuartersId"    column="residential_quarters_id"    />
+                <association property="hyResidentialQuarters"
+			column="id" javaType="HyResidentialQuarters"
+			resultMap="HyResidentialQuartersResult" />
+    </resultMap>
+    
+         <resultMap type="HyResidentialQuarters" id="HyResidentialQuartersResult">
+        <result property="id"    column="id"    />
+        <result property="communityAddress"    column="community_address"    />
+        <result property="communityName"    column="community_name"    />
+        <result property="contacts"    column="contacts"    />
+        <result property="contactNumber"    column="contact_number"    />
+        <result property="contactQq"    column="Contact_QQ"    />
+        <result property="city"    column="city"    />
+        <result property="area"    column="area"    />
+        <result property="county"    column="county"    />
+        <result property="address"    column="address"    />
+        <result property="longitude"    column="longitude"    />
+        <result property="latitude"    column="latitude"    />
+        <result property="customerLink"    column="customer_link"    />
+        <result property="externalLinks"    column="external_links"    />
+        <result property="propertyId"    column="property_id"    />
+     
+    </resultMap>
+
+    <sql id="selectHyServiceProviderAccountNumberVo">
+        select 
+        a.id, 
+        a.service_provider_accoun_number, 
+        a.merchant_payment_key, 
+        a.appid, 
+        a.appsecret, 
+        a.sub_merchant_number, 
+        a.residential_quarters_id 
+        from 
+        hy_service_provider_account_number a
+        LEFT JOIN hy_residential_quarters r ON a.residential_quarters_id =r.id
+        where 1=1
+    </sql>
+
+    <select id="selectHyServiceProviderAccountNumberList" parameterType="HyServiceProviderAccountNumber" resultMap="HyServiceProviderAccountNumberResult">
+        <include refid="selectHyServiceProviderAccountNumberVo"/>
+            <if test="serviceProviderAccounNumber != null  and serviceProviderAccounNumber != ''"> and service_provider_accoun_number = #{serviceProviderAccounNumber}</if>
+            <if test="merchantPaymentKey != null  and merchantPaymentKey != ''"> and merchant_payment_key = #{merchantPaymentKey}</if>
+            <if test="appid != null  and appid != ''"> and appid = #{appid}</if>
+            <if test="appsecret != null  and appsecret != ''"> and appsecret = #{appsecret}</if>
+            <if test="subMerchantNumber != null  and subMerchantNumber != ''"> and sub_merchant_number = #{subMerchantNumber}</if>
+            <if test="residentialQuartersId != null "> and residential_quarters_id = #{residentialQuartersId}</if>
+    </select>
+    
+    <select id="selectHyServiceProviderAccountNumberById" parameterType="Long" resultMap="HyServiceProviderAccountNumberResult">
+        <include refid="selectHyServiceProviderAccountNumberVo"/>
+        and a.id = #{id}
+    </select>
+        
+    <insert id="insertHyServiceProviderAccountNumber" parameterType="HyServiceProviderAccountNumber">
+        insert into hy_service_provider_account_number
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="serviceProviderAccounNumber != null">service_provider_accoun_number,</if>
+            <if test="merchantPaymentKey != null">merchant_payment_key,</if>
+            <if test="appid != null">appid,</if>
+            <if test="appsecret != null">appsecret,</if>
+            <if test="subMerchantNumber != null">sub_merchant_number,</if>
+            <if test="residentialQuartersId != null">residential_quarters_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="serviceProviderAccounNumber != null">#{serviceProviderAccounNumber},</if>
+            <if test="merchantPaymentKey != null">#{merchantPaymentKey},</if>
+            <if test="appid != null">#{appid},</if>
+            <if test="appsecret != null">#{appsecret},</if>
+            <if test="subMerchantNumber != null">#{subMerchantNumber},</if>
+            <if test="residentialQuartersId != null">#{residentialQuartersId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyServiceProviderAccountNumber" parameterType="HyServiceProviderAccountNumber">
+        update hy_service_provider_account_number
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="serviceProviderAccounNumber != null">service_provider_accoun_number = #{serviceProviderAccounNumber},</if>
+            <if test="merchantPaymentKey != null">merchant_payment_key = #{merchantPaymentKey},</if>
+            <if test="appid != null">appid = #{appid},</if>
+            <if test="appsecret != null">appsecret = #{appsecret},</if>
+            <if test="subMerchantNumber != null">sub_merchant_number = #{subMerchantNumber},</if>
+            <if test="residentialQuartersId != null">residential_quarters_id = #{residentialQuartersId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyServiceProviderAccountNumberById" parameterType="Long">
+        delete from hy_service_provider_account_number where id = #{id}
+    </delete>
+
+    <delete id="deleteHyServiceProviderAccountNumberByIds" parameterType="String">
+        delete from hy_service_provider_account_number where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

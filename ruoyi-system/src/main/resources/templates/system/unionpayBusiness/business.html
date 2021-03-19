@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-
-    <th:block th:include="include :: header('微信支付第三方列表')" />
+    <th:block th:include="include :: header('银联商务列表')" />
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -12,28 +11,28 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                <label>银行通道：</label>
-                                <input type="text" name="bankChannel"/>
-                            </li>
-                            <li>
                                 <label>商户号：</label>
                                 <input type="text" name="merchantNumber"/>
                             </li>
                             <li>
-                                <label>密钥：</label>
+                                <label>终端盒：</label>
+                                <input type="text" name="terminalBox"/>
+                            </li>
+                            <li>
+                                <label>机构商务号：</label>
+                                <input type="text" name="organizationBusinessNumber"/>
+                            </li>
+                            <li>
+                                <label>信息来源：</label>
+                                <input type="text" name="informationSources"/>
+                            </li>
+                            <li>
+                                <label>来源编号：</label>
+                                <input type="text" name="sourceNumber"/>
+                            </li>
+                            <li>
+                                <label>测试环境md5密钥：</label>
                                 <input type="text" name="secretKey"/>
-                            </li>
-                            <li>
-                                <label>公众号appid：</label>
-                                <input type="text" name="appid"/>
-                            </li>
-                            <li>
-                                <label>公众号appseret：</label>
-                                <input type="text" name="appsecret"/>
-                            </li>
-                            <li>
-                                <label>应用私钥：</label>
-                                <input type="text" name="applicationPrivateKey"/>
                             </li>
                             <li>
                                 <label>小区id：</label>
@@ -49,16 +48,16 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:payment:add">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:business:add">
                     <i class="fa fa-plus"></i> 添加
                 </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:payment:edit">
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:business:edit">
                     <i class="fa fa-edit"></i> 修改
                 </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:payment:remove">
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:business:remove">
                     <i class="fa fa-remove"></i> 删除
                 </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:payment:export">
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:business:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
             </div>
@@ -69,9 +68,9 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('system:payment:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('system:payment:remove')}]];
-        var prefix = ctx + "system/payment";
+        var editFlag = [[${@permission.hasPermi('system:business:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:business:remove')}]];
+        var prefix = ctx + "system/unionpayBusiness";
 
         $(function() {
             var options = {
@@ -80,39 +79,39 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "微信支付第三方",
+                modalName: "银联商务",
                 columns: [{
                     checkbox: true
                 },
                 {
                     field: 'id',
-                    title: '第三方id',
+                    title: '银联商务id',
                     visible: false
-                },
-                {
-                    field: 'bankChannel',
-                    title: '银行通道'
                 },
                 {
                     field: 'merchantNumber',
                     title: '商户号'
                 },
                 {
+                    field: 'terminalBox',
+                    title: '终端盒'
+                },
+                {
+                    field: 'organizationBusinessNumber',
+                    title: '机构商务号'
+                },
+                {
+                    field: 'informationSources',
+                    title: '信息来源'
+                },
+                {
+                    field: 'sourceNumber',
+                    title: '来源编号'
+                },
+                {
                     field: 'secretKey',
-                    title: '密钥'
+                    title: '测试环境md5密钥'
                 },
-                {
-                    field: 'appid',
-                    title: '公众号appid'
-                },
-                {
-                    field: 'appsecret',
-                    title: '公众号appseret'
-                },
-                {
-                    field: 'applicationPrivateKey',
-                    title: '应用私钥'
-
                 {
                     field: 'residentialQuartersId',
                     title: '小区id'
