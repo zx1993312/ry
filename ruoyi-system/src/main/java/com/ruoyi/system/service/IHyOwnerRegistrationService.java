@@ -62,4 +62,7 @@ public interface IHyOwnerRegistrationService
      * @return 结果
      */
     public int deleteHyOwnerRegistrationById(Long id);
+
+	public String importOwnerRegistration(List<HyOwnerRegistration> hyOwnerRegistrationList, boolean updateSupport,
+			String operName);
 }

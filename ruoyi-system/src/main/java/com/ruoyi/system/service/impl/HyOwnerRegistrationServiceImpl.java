@@ -101,4 +101,11 @@ public class HyOwnerRegistrationServiceImpl implements IHyOwnerRegistrationServi
 	public List<HyOwnerRegistration> selectHyOwnerRegistrationListOrr(HyOwnerRegistration hyOwnerRegistration) {
 		return hyOwnerRegistrationMapper.selectHyOwnerRegistrationListOrr(hyOwnerRegistration);
 	}
+
+	@Override
+	public String importOwnerRegistration(List<HyOwnerRegistration> hyOwnerRegistrationList, boolean updateSupport,
+			String operName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
