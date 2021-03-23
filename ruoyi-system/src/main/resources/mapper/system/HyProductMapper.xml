@@ -89,21 +89,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectHyProductList" parameterType="HyProduct" resultMap="HyProductResult">
         <include refid="selectHyProductVo"/>
-            <if test="id != null  and id != ''"> and product_name like concat('%', #{productName}, '%')</if>
-            <if test="briefIntroduction != null  and briefIntroduction != ''"> and brief_introduction = #{briefIntroduction}</if>
-            <if test="soldNumber != null "> and sold_number = #{soldNumber}</if>
-            <if test="stockNumber != null "> and stock_number = #{stockNumber}</if>
-            <if test="state != null "> and state = #{state}</if>
-            <if test="snapUpDate != null "> and snap_up_date = #{snapUpDate}</if>
-            <if test="sendCodeDate != null "> and send_code_date = #{sendCodeDate}</if>
-            <if test=" appointmentDate != null "> and  appointment_date = #{ appointmentDate}</if>
-            <if test=" appointmentMode != null  and appointmentMode != ''"> and  appointment_mode = #{ appointmentMode}</if>
-            <if test="useDate != null "> and use_date = #{useDate}</if>
-            <if test="shopId != null "> and shop_id = #{shopId}</if>
-            <if test="limitedQuantity != null "> and limited_quantity = #{limitedQuantity}</if>
-            <if test="productOrderBy != null "> and product_order_by = #{productOrderBy}</if>
-            <if test="customerServiceTel != null "> and customer_service_tel = #{customerServiceTel}</if>
-            <if test="shareTitle != null "> and share_title = #{shareTitle}</if>
+            <if test="id != null"> and id = #{id}</if>
+            <if test="productName != null  and productName != ''"> and  p.product_name like concat('%', #{productName}, '%')</if>
+            <if test="briefIntroduction != null  and briefIntroduction != ''"> and  p.brief_introduction = #{briefIntroduction}</if>
+            <if test="soldNumber != null "> and  p.sold_number = #{soldNumber}</if>
+            <if test="stockNumber != null "> and  p.stock_number = #{stockNumber}</if>
+            <if test="state != null "> and  p.state = #{state}</if>
+            <if test="snapUpDate != null "> and  p.snap_up_date = #{snapUpDate}</if>
+            <if test="sendCodeDate != null "> and  p.send_code_date = #{sendCodeDate}</if>
+            <if test=" appointmentDate != null "> and   p.appointment_date = #{ appointmentDate}</if>
+            <if test=" appointmentMode != null  and appointmentMode != ''"> and   p.appointment_mode = #{ appointmentMode}</if>
+            <if test="useDate != null "> and  p.use_date = #{useDate}</if>
+            <if test="shopId != null "> and  p.shop_id = #{shopId}</if>
+            <if test="limitedQuantity != null "> and  p.limited_quantity = #{limitedQuantity}</if>
+            <if test="productOrderBy != null "> and  p.product_order_by = #{productOrderBy}</if>
+            <if test="customerServiceTel != null and customerServiceTel != '' "> and  p.customer_service_tel = #{customerServiceTel}</if>
+            <if test="shareTitle != null "> and  p.share_title = #{shareTitle}</if>
             <if test="hyShop.shopName != null and hyShop.shopName != ''"> and s.shop_name = #{hyShop.shopName}</if>
     </select>
     
