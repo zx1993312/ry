@@ -33,6 +33,8 @@ public class HyPaymentInterface extends BaseEntity
     /** 小区id */
     @Excel(name = "小区id")
     private Long residentialQuartersId;
+    
+    private HyResidentialQuarters hyResidentialQuarters;
 
     public void setId(Long id) 
     {
@@ -77,6 +79,14 @@ public class HyPaymentInterface extends BaseEntity
 
 	public void setEcable(String ecable) {
 		this.ecable = ecable;
+	}
+
+	public HyResidentialQuarters getHyResidentialQuarters() {
+		return hyResidentialQuarters;
+	}
+
+	public void setHyResidentialQuarters(HyResidentialQuarters hyResidentialQuarters) {
+		this.hyResidentialQuarters = hyResidentialQuarters;
 	}
 
 	@Override
