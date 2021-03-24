@@ -24,7 +24,7 @@
                             </li>
                             <li>
                                 <label>联系电话：</label>
-                                <input type="text" name="contactNumber"/>
+                                <input type="text" name="contactNumber" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
                             </li>
                             <li>
                                 <label>联系QQ：</label>
@@ -167,6 +167,10 @@
                 {
                     field: 'externalLinks',
                     title: '外部链接'
+                },
+                {
+                    field: 'protertyId',
+                    title: '小区id'
                 },
                 {
                     title: '操作',
