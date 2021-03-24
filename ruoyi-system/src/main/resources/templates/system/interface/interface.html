@@ -12,19 +12,19 @@
                         <ul>
                             <li>
                                 <label>支付设置：</label>
-                                <input type="text" name="paymentSettings"/>
+                                <input type="text" name="paymentSettings" placeholder="请输入支付设置"/>
                             </li>
                             <li>
                                 <label>说明：</label>
-                                <input type="text" name="ecplain"/>
+                                <input type="text" name="ecplain" placeholder="请输入说明"/>
                             </li>
                             <li>
                                 <label>是否启用：</label>
-                                <input type="text" name="ecable"/>
+                                <input type="text" name="ecable" placeholder="请输入是/否"/>
                             </li>
                             <li>
                                 <label>小区id：</label>
-                                <input type="text" name="residentialQuartersId"/>
+                                <input type="text" name="residentialQuartersId" placeholder="请输入小区id" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>

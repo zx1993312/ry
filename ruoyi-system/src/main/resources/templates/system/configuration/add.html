@@ -9,25 +9,25 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">小区设置：</label>
                 <div class="col-sm-8">
-                    <input name="residentialQuartersSetUp" class="form-control" type="text">
+                    <input name="residentialQuartersSetUp" class="form-control" type="text" placeholder="请输入小区设置">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">说明：</label>
                 <div class="col-sm-8">
-                    <input name="explain" class="form-control" type="text">
+                    <input name="ecplain" class="form-control" type="text" placeholder="请输入说明">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">是否启用：</label>
                 <div class="col-sm-8">
-                    <input name="enable" class="form-control" type="text">
+                    <input name="ecable" class="form-control" type="text" placeholder="请输入是/否">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">小区id：</label>
                 <div class="col-sm-8">
-                    <input name="residentialQuartersId" class="form-control" type="text">
+                    <input name="residentialQuartersId" class="form-control" type="text" placeholder="请输入小区id">
                 </div>
             </div>
         </form>
@@ -36,6 +36,24 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/configuration"
         $("#form-configuration-add").validate({
+        	rules:{
+        		residentialQuartersSetUp :{
+        			required : true,
+        			maxlength : 255
+        		},
+        		ecplain :{
+        			required : true,
+        			maxlength:255
+        		},
+        		ecable :{
+        			required : true,
+        			maxlength : 255
+        		},
+        		residentialQuartersId :{
+        			required : true,
+        			maxlength : 20
+        		}
+        	},
             focusCleanup: true
         });
 

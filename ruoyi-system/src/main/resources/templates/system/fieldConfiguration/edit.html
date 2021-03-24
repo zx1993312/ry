@@ -10,25 +10,25 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">字段：</label>
                 <div class="col-sm-8">
-                    <input name="field" th:field="*{field}" class="form-control" type="text">
+                    <input name="field" th:field="*{field}" class="form-control" type="text" placeholder="请输入字段">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">标题：</label>
                 <div class="col-sm-8">
-                    <input name="title" th:field="*{title}" class="form-control" type="text">
+                    <input name="title" th:field="*{title}" class="form-control" type="text" placeholder="请输入标题">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">是否启用：</label>
                 <div class="col-sm-8">
-                    <input name="enable" th:field="*{enable}" class="form-control" type="text">
+                    <input name="enable" th:field="*{enable}" class="form-control" type="text" placeholder="请输入是/否">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">小区id：</label>
                 <div class="col-sm-8">
-                    <input name="residentialQuartersId" th:field="*{residentialQuartersId}" class="form-control" type="text">
+                    <input name="residentialQuartersId" th:field="*{residentialQuartersId}" class="form-control" type="text" placeholder="请输入社区id" onkeyup="this.value=this.value.replace(/\D/g,'')">
                 </div>
             </div>
         </form>
@@ -37,6 +37,24 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/fieldConfiguration";
         $("#form-configuration-edit").validate({
+        	rules:{
+        		field :{
+        			required : true,
+        			maxlength : 255
+        		},
+        		title :{
+        			required : true,
+        			maxlength:255
+        		},
+        		enable :{
+        			required : true,
+        			maxlength : 255
+        		},
+        		residentialQuartersId :{
+        			required : true,
+        			maxlength : 20
+        		}
+        	},
             focusCleanup: true
         });
 
