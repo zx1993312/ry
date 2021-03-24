@@ -77,6 +77,8 @@ public class HyResidentialQuarters extends BaseEntity
     /**物业id*/
     @Excel(name="物业id")
     private Long propertyId;
+    /**物业表*/
+    private HyProperty hyProperty;
 
     public void setId(Long id) 
     {
@@ -211,6 +213,14 @@ public class HyResidentialQuarters extends BaseEntity
 
 	public void setPropertyId(Long propertyId) {
 		this.propertyId = propertyId;
+	}
+
+	public HyProperty getHyProperty() {
+		return hyProperty;
+	}
+
+	public void setHyProperty(HyProperty hyProperty) {
+		this.hyProperty = hyProperty;
 	}
 
 	@Override
