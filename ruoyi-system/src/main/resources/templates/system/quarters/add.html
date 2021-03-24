@@ -9,85 +9,85 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">小区地址：</label>
                 <div class="col-sm-8">
-                    <input name="communityAddress" class="form-control" type="text">
+                    <input name="communityAddress" class="form-control" type="text" placeholder="请输入小区地址">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">小区名称：</label>
                 <div class="col-sm-8">
-                    <input name="communityName" class="form-control" type="text">
+                    <input name="communityName" class="form-control" type="text" placeholder="请输入小区名称">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">联系人：</label>
                 <div class="col-sm-8">
-                    <input name="contacts" class="form-control" type="text">
+                    <input name="contacts" class="form-control" type="text" placeholder="请输入联系人">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">联系电话：</label>
                 <div class="col-sm-8">
-                    <input name="contactNumber" class="form-control" type="text">
+                    <input name="contactNumber" placeholder="请输入联系电话" class="form-control" type="text" onkeyup="this.value=this.value.replace(/\D/g,'')">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">联系QQ：</label>
                 <div class="col-sm-8">
-                    <input name="contactQq" class="form-control" type="text">
+                    <input name="contactQq" placeholder="请输入联系QQ" class="form-control" type="text" onkeyup="this.value=this.value.replace(/\D/g,'')">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">省/直辖市：</label>
                 <div class="col-sm-8">
-                    <input name="city" class="form-control" type="text">
+                    <input name="city" class="form-control" type="text" placeholder="请输入省/直辖市">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">市/市辖区：</label>
                 <div class="col-sm-8">
-                    <input name="area" class="form-control" type="text">
+                    <input name="area" class="form-control" type="text" placeholder="请输入市/市辖区">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">区/县：</label>
                 <div class="col-sm-8">
-                    <input name="county" class="form-control" type="text">
+                    <input name="county" class="form-control" type="text" placeholder="请输入区/县">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">详细地址：</label>
                 <div class="col-sm-8">
-                    <input name="address" class="form-control" type="text">
+                    <input name="address" class="form-control" type="text" placeholder="请输入详细地址">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">经度：</label>
                 <div class="col-sm-8">
-                    <input name="longitude" class="form-control" type="text">
+                    <input name="longitude" class="form-control" type="text" placeholder="请输入经度">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">纬度：</label>
                 <div class="col-sm-8">
-                    <input name="latitude" class="form-control" type="text">
+                    <input name="latitude" class="form-control" type="text" placeholder="请输入纬度">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">客户链接：</label>
                 <div class="col-sm-8">
-                    <input name="customerLink" class="form-control" type="text">
+                    <input name="customerLink" class="form-control" type="text" placeholder="请输入客户链接">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">外部链接：</label>
                 <div class="col-sm-8">
-                    <input name="externalLinks" class="form-control" type="text">
+                    <input name="externalLinks" class="form-control" type="text" placeholder="请输入外部链接">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">物业id：</label>
                 <div class="col-sm-8">
-                    <input name="property" class="form-control" type="text">
+                    <input name="propertyId" class="form-control" type="text" placeholder="请输入物业id" onkeyup="this.value=this.value.replace(/\D/g,'')">
                 </div>
             </div>
         </form>
@@ -96,6 +96,64 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/quarters"
         $("#form-quarters-add").validate({
+        	rules:{
+        		communityAddress :{
+        			required : true,
+        			maxlength : 50
+        		},
+        		communityName :{
+        			required : true,
+        			maxlength:30
+        		},
+        		contacts :{
+        			required : true,
+        			maxlength : 20
+        		},
+        		contactNumber :{
+        			required : true,
+        			maxlength : 11,
+        			isPhone : true
+        		},
+        		contactQq :{
+        			required : true,
+        			maxlength : 10,
+        			mixlength : 6
+        		},
+        		city :{
+        			required : true,
+        			maxlength : 30
+        		},
+        		area :{
+        			required : true,
+        			maxlength : 30
+        		},
+        		county :{
+        			required : true,
+        			maxlength : 30
+        		},
+        		address :{
+        			required : true,
+        			maxlength : 50
+        		},
+        		longitude :{
+        			maxlength : 20
+        		},
+        		latitude :{
+        			maxlength : 20
+        		},
+        		customerLink :{
+        			required : true,
+        			maxlength : 50
+        		},
+        		externalLinks :{
+        			required : true,
+        			maxlength : 50
+        		},
+        		propertyId :{
+        			required : true,
+        			maxlength : 255
+        		}
+        	},
             focusCleanup: true
         });
 

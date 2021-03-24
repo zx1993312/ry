@@ -10,85 +10,85 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">小区地址：</label>
                 <div class="col-sm-8">
-                    <input name="communityAddress" th:field="*{communityAddress}" class="form-control" type="text">
+                    <input name="communityAddress" th:field="*{communityAddress}" class="form-control" type="text" placeholder="请输入小区地址">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">小区名称：</label>
                 <div class="col-sm-8">
-                    <input name="communityName" th:field="*{communityName}" class="form-control" type="text">
+                    <input name="communityName" th:field="*{communityName}" class="form-control" type="text" placeholder="请输入小区名称">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">联系人：</label>
                 <div class="col-sm-8">
-                    <input name="contacts" th:field="*{contacts}" class="form-control" type="text">
+                    <input name="contacts" th:field="*{contacts}" class="form-control" type="text" placeholder="请输入联系人">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">联系电话：</label>
                 <div class="col-sm-8">
-                    <input name="contactNumber" th:field="*{contactNumber}" class="form-control" type="text">
+                    <input name="contactNumber" placeholder="请输入联系电话" th:field="*{contactNumber}" class="form-control" type="text"  onkeyup="this.value=this.value.replace(/\D/g,'')">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">联系QQ：</label>
                 <div class="col-sm-8">
-                    <input name="contactQq" th:field="*{contactQq}" class="form-control" type="text">
+                    <input name="contactQq" placeholder="请输入联系QQ" th:field="*{contactQq}" class="form-control" type="text"  onkeyup="this.value=this.value.replace(/\D/g,'')">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">省/直辖市：</label>
                 <div class="col-sm-8">
-                    <input name="city" th:field="*{city}" class="form-control" type="text">
+                    <input name="city" th:field="*{city}" class="form-control" type="text" placeholder="请输入省/直辖市">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">市/市辖区：</label>
                 <div class="col-sm-8">
-                    <input name="area" th:field="*{area}" class="form-control" type="text">
+                    <input name="area" th:field="*{area}" class="form-control" type="text" placeholder="请输入市/市辖区">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">区/县：</label>
                 <div class="col-sm-8">
-                    <input name="county" th:field="*{county}" class="form-control" type="text">
+                    <input name="county" th:field="*{county}" class="form-control" type="text" placeholder="请输入区/县">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">详细地址：</label>
                 <div class="col-sm-8">
-                    <input name="address" th:field="*{address}" class="form-control" type="text">
+                    <input name="address" th:field="*{address}" class="form-control" type="text" placeholder="请输入详细地址">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">经度：</label>
                 <div class="col-sm-8">
-                    <input name="longitude" th:field="*{longitude}" class="form-control" type="text">
+                    <input name="longitude" th:field="*{longitude}" class="form-control" type="text" placeholder="请输入经度">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">纬度：</label>
                 <div class="col-sm-8">
-                    <input name="latitude" th:field="*{latitude}" class="form-control" type="text">
+                    <input name="latitude" th:field="*{latitude}" class="form-control" type="text" placeholder="请输入纬度">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">客户链接：</label>
                 <div class="col-sm-8">
-                    <input name="customerLink" th:field="*{customerLink}" class="form-control" type="text">
+                    <input name="customerLink" th:field="*{customerLink}" class="form-control" type="text" placeholder="请输入客户链接">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">外部链接：</label>
                 <div class="col-sm-8">
-                    <input name="externalLinks" th:field="*{externalLinks}" class="form-control" type="text">
+                    <input name="externalLinks" th:field="*{externalLinks}" class="form-control" type="text" placeholder="请输入外部链接">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">物业id：</label>
                 <div class="col-sm-8">
-                    <input name="propertyId" th:field="*{propertyId}" class="form-control" type="text">
+                    <input name="propertyId" placeholder="请输入物业id" th:field="*{propertyId}" class="form-control" type="text"  onkeyup="this.value=this.value.replace(/\D/g,'')">
                 </div>
             </div>
         </form>
@@ -97,6 +97,64 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/quarters";
         $("#form-quarters-edit").validate({
+        	rules:{
+        		communityAddress :{
+        			required : true,
+        			maxlength : 50
+        		},
+        		communityName :{
+        			required : true,
+        			maxlength:30
+        		},
+        		contacts :{
+        			required : true,
+        			maxlength : 20
+        		},
+        		contactNumber :{
+        			required : true,
+        			maxlength : 11,
+        			isPhone : true
+        		},
+        		contactQq :{
+        			required : true,
+        			maxlength : 10,
+        			mixlength : 6
+        		},
+        		city :{
+        			required : true,
+        			maxlength : 30
+        		},
+        		area :{
+        			required : true,
+        			maxlength : 30
+        		},
+        		county :{
+        			required : true,
+        			maxlength : 30
+        		},
+        		address :{
+        			required : true,
+        			maxlength : 50
+        		},
+        		longitude :{
+        			maxlength : 20
+        		},
+        		latitude :{
+        			maxlength : 20
+        		},
+        		customerLink :{
+        			required : true,
+        			maxlength : 50
+        		},
+        		externalLinks :{
+        			required : true,
+        			maxlength : 50
+        		},
+        		propertyId :{
+        			required : true,
+        			maxlength : 255
+        		}
+        	},
             focusCleanup: true
         });
 
