@@ -41,9 +41,11 @@ public class HyResidentialQuartersPicture extends BaseEntity
     /** 小区id */
     @Excel(name = "小区id")
     private Long residentialQuartersId;
-    /**小区表*/
+    /**小区图片对象*/
     @Excel(name="小区表")
     private HyResidentialQuartersPicture hyResidentialQuartersPicture;
+    /**小区对象*/
+    private HyResidentialQuarters hyResidentialQuarters;
 
     public void setId(Long id) 
     {
@@ -115,6 +117,14 @@ public class HyResidentialQuartersPicture extends BaseEntity
 
 	public void setHyResidentialQuartersPicture(HyResidentialQuartersPicture hyResidentialQuartersPicture) {
 		this.hyResidentialQuartersPicture = hyResidentialQuartersPicture;
+	}
+
+	public HyResidentialQuarters getHyResidentialQuarters() {
+		return hyResidentialQuarters;
+	}
+
+	public void setHyResidentialQuarters(HyResidentialQuarters hyResidentialQuarters) {
+		this.hyResidentialQuarters = hyResidentialQuarters;
 	}
 
 	@Override
