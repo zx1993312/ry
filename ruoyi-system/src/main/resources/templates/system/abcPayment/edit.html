@@ -37,6 +37,22 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/abcPayment";
         $("#form-payment-edit").validate({
+         	rules:{
+        		paymentItemsNumber:{
+        			required:true,
+        			maxlength:30
+        		},
+        		password:{
+        			required:true,
+        			maxlength:6,
+        			mixlength:6,
+        			number:true
+        		},
+        		privateKey:{
+        			required:true,
+        			maxlength:255,
+        		}
+        	},
             focusCleanup: true
         });
 

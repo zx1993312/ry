@@ -68,6 +68,29 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/score"
         $("#form-score-add").validate({
+        	rules:{
+        		number:{
+        			required : true,
+        			maxlength:11
+        		},
+        		user:{
+        			required : true,
+        			maxlength:255
+        		},
+        		address:{
+        			required : true,
+        			maxlength:255
+        		},
+        		score:{
+        			required : true,
+        			maxlength:255
+        		},
+        		summernote:{
+        			required : true,
+        			maxlength:255
+        		}
+        	},
+        	
             focusCleanup: true
         });
 

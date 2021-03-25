@@ -60,7 +60,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="entryDateEnd"    column="entry_date_end"    />
         <result property="entryAmount"    column="entry_amount"    />
         <result property="houseNum"    column="house_num"    />
-       
     </resultMap>
 
 	<resultMap type="HyHouseInf" id="HyHouseInfResult">
