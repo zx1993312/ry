@@ -77,6 +77,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where 1=1
     </sql>
     
+    <sql id="selectHyProductVoTest">
+        select 
+        p.id, 
+        p.product_name, 
+        p.brief_introduction, 
+        p.sold_number, 
+        p.stock_number, 
+        p.state, 
+        p.snap_up_date, 
+        p.send_code_date,  
+        p.appointment_date,  
+        p.appointment_mode, 
+        p.use_date, 
+        p.shop_id,
+        p.limited_quantity,
+        p.product_order_by,
+        p.customer_service_tel,
+        p.share_title
+       
+        from 
+        hy_product p
+       
+        where 1=1
+    </sql>
+    
     <sql id="selectHyProductVoDistinct">
     	select distinct p.id,p.product_name  
     	from 
@@ -106,6 +131,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="customerServiceTel != null and customerServiceTel != '' "> and  p.customer_service_tel = #{customerServiceTel}</if>
             <if test="shareTitle != null "> and  p.share_title = #{shareTitle}</if>
             <if test="hyShop.shopName != null and hyShop.shopName != ''"> and s.shop_name = #{hyShop.shopName}</if>
+    </select>
+    
+    
+    <select id="selectHyProductListTest" parameterType="HyProduct" resultMap="HyProductResult">
+        <include refid="selectHyProductVoTest"/>
+            <if test="id != null  and id != ''"> and product_name like concat('%', #{productName}, '%')</if>
+            <if test="briefIntroduction != null  and briefIntroduction != ''"> and brief_introduction = #{briefIntroduction}</if>
+            <if test="soldNumber != null "> and sold_number = #{soldNumber}</if>
+            <if test="stockNumber != null "> and stock_number = #{stockNumber}</if>
+            <if test="state != null "> and state = #{state}</if>
+            <if test="snapUpDate != null "> and snap_up_date = #{snapUpDate}</if>
+            <if test="sendCodeDate != null "> and send_code_date = #{sendCodeDate}</if>
+            <if test=" appointmentDate != null "> and  appointment_date = #{ appointmentDate}</if>
+            <if test=" appointmentMode != null  and appointmentMode != ''"> and  appointment_mode = #{ appointmentMode}</if>
+            <if test="useDate != null "> and use_date = #{useDate}</if>
+            <if test="shopId != null "> and shop_id = #{shopId}</if>
+            <if test="limitedQuantity != null "> and limited_quantity = #{limitedQuantity}</if>
+            <if test="productOrderBy != null "> and product_order_by = #{productOrderBy}</if>
+            <if test="customerServiceTel != null "> and customer_service_tel = #{customerServiceTel}</if>
+            <if test="shareTitle != null "> and share_title = #{shareTitle}</if>
     </select>
     
      <select id="selectHyProductVoDistinct" parameterType="HyProduct" resultMap="HyProductResult">

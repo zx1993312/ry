@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyProductMapper">
+
+	<resultMap type="Hyscore" id="HyProductResult">
+		<result property="id" column="id" />
+		<result property="number" column="number"/>
+		<result property="user" column="user"/>
+		<result property="address" column="address"/>
+		<result property="score" column="score"/>
+		<result property="comunt" column="comunt"/>
+		<result property="scoreContent" column="score_content"/>
+		<result property="scoreTime" column="score_time"/>
+		<result property="residentialQuartersId" column="residential_quarters_id"/>
+	</resultMap>
+	
+	<sql id="Hyscore">
+		select id,
+		number,
+		user,
+		address,
+		score,
+		comunt,
+		score_content,
+		score_time,
+		residential_quarters_id 
+		from 
+		hy_score;
+	</sql>
+
+</mapper>

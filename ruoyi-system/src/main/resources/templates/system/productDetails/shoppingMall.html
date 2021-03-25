@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+<th:block th:include="include :: header('字典数据列表')" />
+<meta charset="UTF-8">
+<title>商城首页</title>
+<style type="text/css">
+h1 {
+	font-size: 50px;
+}
+
+#d1 {
+	width: 1030px;
+	height: 100%;
+	background-color: #e8e8e8;
+	overflow: hidden;
+}
+
+span {
+	font-size: 25px;
+	color: cadetblue;
+	font-family: fantasy;
+	margin-right: 770px;
+	font-weight: bold;
+}
+
+img {
+	width: 1000px;
+}
+
+a {
+	font-size: 20px;
+}
+
+select {
+	font-size: 25px;
+}
+
+#b1 {
+	font-size: 30px;
+	margin-right: 600px;
+	color: red;
+}
+
+s {
+	font-size: 15px;
+}
+
+#d1>div {
+	margin-top: 40px;
+	background-color: white;
+	width: 1000px;
+}
+#d20{
+	
+}
+</style>
+
+</head>
+<body>												
+	<form class="form-horizontalm" id="form-dict-edit">
+		
+		<center>
+			<div id="d1">
+			<div th:each="p:${list}">
+			<div th:each="h:${relist}">
+			<div th:each="o:${reList}">
+				<div>
+					<h1>商城首页</h1>
+					<span>千千惠生活</span><select>
+					    <option>请选择</option>
+						<option>长春站</option>
+						<option>北京站</option>
+						<option>上海站</option>
+					</select>     
+					
+		       
+		
+			<div is="d20">
+					<hr>
+					<img th:src="${o.pcitureAddress}"><br>
+					<a th:text="${p.briefIntroduction}"></a><br>
+				<s th:text=${h.marketPrice}>门市价¥</s>	¥<b id="b1" th:text="${h.retailPrice}"></b>销售量<b id="b2" th:text="${p.soldNumber}"></b>
+			</div>
+				</div>
+				</div>
+				</div>
+        </div>
+				
+
+			</div>
+		</center>
+	</form>
+	
+	<!-- <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-cost-edit" th:object="${hyCost}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">费用项目：</label>
+                <div class="col-sm-8">
+                    <input name="costItems" th:field="*{costItems}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">费用类型：</label>
+                <div class="col-sm-8">
+                	<input name="expenseType" th:field="*{expenseType}" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div> -->
+	<th:block th:include="include :: footer" />
+
+</body>
+</html>

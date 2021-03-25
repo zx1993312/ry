@@ -26,6 +26,8 @@ public interface HyPictureMapper
      * @return 图片集合
      */
     public List<HyPicture> selectHyPictureList(HyPicture hyPicture);
+    
+    public List<HyPicture> selectHyPictureAddress(HyPicture hyPicture);
 
     /**
      * 新增图片

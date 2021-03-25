@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+<th:block th:include="include :: header('字典数据列表')" />
+    <meta charset="UTF-8">
+    <title>产品详情</title>
+    <style type="text/css">
+
+        /*标题样式*/
+        p{
+            font-size: 25px;
+            color: cadetblue;
+            font-family: fantasy;
+
+        }
+
+        .imgBox{
+            border-top: 0px solid cadetblue;
+            width: 80%;
+            height: 500px;
+            margin: 0 auto;
+
+        }
+
+        .imgBox img{
+            width: 80%;
+            height: 300px;
+            margin: 0 auto;
+            padding-top: 30px;
+
+        }
+
+        .img1{
+            display: block;
+        }
+
+        .img2{
+            display: none;
+        }
+
+        .img3{
+            display: none;
+        }
+        #abc{
+        	width: 30px;
+        	height: 30px;
+        }
+        b{
+        	font-size: 20px
+        }
+        #bcd{
+        	width: 100%;
+        	height: 50px;
+        	background-color: #e8e8e8;
+        	overflow: hidden;
+        }
+        #bcd>span{
+        	margin-top: 15px;
+        }
+        #cde{
+        	width: 200px;
+        	height: 50px;
+        	background-color: #e8e8e8;
+        	margin-top: 20px;
+        }
+        body>div>a{
+        	text-decoration:none;
+        }
+        #def{
+        	width: 100%;
+        	height: 50px;
+        	background-color: #e8e8e8;
+        	margin-top: 20px;
+        }
+        #efg{
+        	width: 30px;
+        	height: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>产品详情</h1>
+
+<p>千千惠生活</p>
+<div class="imgBox">
+    <img class="img-slide img1" src="https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3461177213,1528805342&fm=26&gp=0.jpg" alt="1">
+</div>
+<p>豪华自助盛宴 | 一口就回本！仅108享门市价148元【艾博丽思大饭店】一大一<br>
+小午餐自助！多种美味不限量！让你吃到扶墙出~</p>
+<img id="abc" alt="" src="https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=208295833,373079534&fm=26&gp=0.jpg"><b>108</b>
+<div id="bcd">
+	<span>选择套餐</span>
+</div>
+<div id="cde">
+<a href="http://www.baidu.com">一大一小午餐自助</a>
+</div>
+<div id="def">
+	<span>商家信息</span>
+</div>
+<img id="efg" src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fbpic.588ku.com%2Felement_origin_min_pic%2F01%2F38%2F88%2F78573c9cd2376ff.jpg&refer=http%3A%2F%2Fbpic.588ku.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1618731185&t=b08b564a7aab780c8b1ba41fcbf7b770">
+艾博丽思大酒店<br>长春市高新区硅谷大街888号 （轻轨三号线电台街站对面）
+<th:block th:include="include :: footer" />
+</body>
+<script type="text/javascript">
+    var index=0;
+    //改变图片
+    function ChangeImg() {
+        index++;
+        var a=document.getElementsByClassName("img-slide");
+        if(index>=a.length) index=0;
+        for(var i=0;i<a.length;i++){
+            a[i].style.display='none';
+        }
+        a[index].style.display='block';
+    }
+    //设置定时器，每隔两秒切换一张图片
+    setInterval(ChangeImg,2000);
+</script>
+</html>
