@@ -263,7 +263,7 @@ public class QRCodeUtils {
     }
 
     public static void main(String[] args) throws Exception {
-        String text = "http://192.168.0.101:8080/system/business/list";  //这里设置自定义网站url
+        String text = "http://192.168.0.103:8080/system/business/list";  //这里设置自定义网站url
         String logoPath = "C:\\Users\\Administrator\\Desktop\\test\\test.jpg";
         String destPath = "C:\\Users\\Administrator\\Desktop\\test\\";
         System.out.println(QRCodeUtils.encode(text, logoPath, destPath, true));
