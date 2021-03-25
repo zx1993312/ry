@@ -27,10 +27,9 @@ public interface IHyCostService {
 	 * @return 费用项目集合
 	 */
 	public List<HyCost> selectHyCostList(HyCost hyCost);
-	
-    public List<HyCost> selectHyCostListOr(HyCost hyCost);
 
-	
+	public List<HyCost> selectHyCostListOr(HyCost hyCost);
+
 	/**
 	 * 查询费用项目列表
 	 * 
@@ -62,9 +61,6 @@ public interface IHyCostService {
 	 * @return 结果
 	 */
 	public int updateHyCost(HyCost hyCost);
-	
-	
-	
 
 	/**
 	 * 批量删除费用项目
@@ -83,4 +79,7 @@ public interface IHyCostService {
 	public int deleteHyCostById(Long id);
 
 	public int updateHyCostOther(String currentState);
+
+	public String importCost(List<HyCost> hyCostList, boolean updateSupport, String operName);
+
 }

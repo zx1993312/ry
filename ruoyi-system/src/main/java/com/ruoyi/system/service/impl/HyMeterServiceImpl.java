@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ruoyi.common.core.text.Convert;
+import com.ruoyi.common.exception.BusinessException;
+import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.system.domain.HyControlSet;
 import com.ruoyi.system.domain.HyMeter;
 import com.ruoyi.system.mapper.HyMeterCaseMapper;
 import com.ruoyi.system.mapper.HyMeterMapper;
@@ -48,6 +51,21 @@ public class HyMeterServiceImpl implements IHyMeterService {
 	
 			return hyMeterMapper.selectHyMeterList(hyMeter);
 		
+	}
+	/**查询抄表*/
+	@Override
+	public List<HyMeter> selectHyMeterCase(HyMeter hyMeter) {
+		return hyMeterMapper.selectHyMeterCase(hyMeter);
+	}
+		/**查询抄表和表箱全部*/
+	@Override
+	public List<HyMeter> selectHyMeterListOr(HyMeter hyMeter) {
+		return hyMeterMapper.selectHyMeterListOr(hyMeter);
+	}
+/**查询抄表和表箱列表*/
+	@Override
+	public List<HyMeter> selectHyMeter(HyMeter hyMeter) {
+		return hyMeterMapper.selectHyMeter(hyMeter);
 	}
 
 	/**
@@ -107,14 +125,59 @@ public class HyMeterServiceImpl implements IHyMeterService {
 		return result;
 	}
 
-	@Override
-	public List<HyMeter> selectHyMeterListOr(HyMeter hyMeter) {
-		return hyMeterMapper.selectHyMeterListOr(hyMeter);
-	}
+	
 
 	@Override
-	public List<HyMeter> selectHyMeter(HyMeter hyMeter) {
-		return hyMeterMapper.selectHyMeter(hyMeter);
+	public String importMeter(List<HyMeter> userList, boolean updateSupport, String operName) {
+
+
+		if (StringUtils.isNull(userList) || userList.size() == 0) {
+			throw new BusinessException("导入抄表数据不能为空！");
+		}
+		int successNum = 0;
+		int failureNum = 0;
+		StringBuilder successMsg = new StringBuilder();
+		StringBuilder failureMsg = new StringBuilder();
+		for (HyMeter hyMeter : userList) {
+			List<HyMeter> dataList = this.selectHyMeter(hyMeter);
+			
+			//判断这些是否为空
+			if (StringUtils.isNull(hyMeter.getMeterSerialNum()) || StringUtils.isNull(hyMeter.getMeterName())
+					|| StringUtils.isNull(hyMeter.getMeterType())
+					|| StringUtils.isNull(hyMeter.getInitialRead())|| StringUtils.isNull(hyMeter.getAbnormalPrompt()))
+					 {
+				failureMsg.insert(0, "很抱歉，导入失败！共 " + failureNum + " 条数据格式不正确，错误如下：");
+				throw new BusinessException(failureMsg.toString());
+			}
+			
+			//查询数据是否存在
+			if (dataList == null || dataList.size() == 0) {
+				this.insertHyMeter(hyMeter);
+				successNum++;
+				successMsg.append("<br/>" + successNum + "、表计序号 " + hyMeter.getMeterSerialNum() + " 导入成功");
+			} else if (updateSupport) {
+				hyMeter.setId(dataList.get(0).getId());
+				this.updateHyMeter(hyMeter);
+				successNum++;
+				successMsg.append("<br/>" + successNum + "、表计序号" + hyMeter.getMeterSerialNum() + " 更新成功");
+			} else {
+				failureNum++;
+				failureMsg.append("<br/>" + failureNum + "、表计序号" + hyMeter.getMeterSerialNum() + " 已存在");
+			}
+		}
+		if (failureNum > 0) {
+			failureMsg.insert(0, "很抱歉，导入失败！共 " + failureNum + " 条数据格式不正确，错误如下：");
+			throw new BusinessException(failureMsg.toString());
+		} else {
+			successMsg.insert(0, "恭喜您，数据已全部导入成功！共 " + successNum + " 条，数据如下：");
+		}
+		
+		return  successMsg.toString();
 	}
+
+	
+		
+
+	
 
 }

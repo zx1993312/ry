@@ -2,6 +2,7 @@ package com.ruoyi.system.service;
 
 import java.util.List;
 
+import com.ruoyi.system.domain.HyControlSet;
 import com.ruoyi.system.domain.HyMeter;
 
 /**
@@ -62,4 +63,11 @@ public interface IHyMeterService {
 	 * @return 结果
 	 */
 	public int deleteHyMeterById(Long id);
+
+	
+	public List<HyMeter> selectHyMeterCase(HyMeter hyMeter);
+
+	public String importMeter(List<HyMeter> userList, boolean updateSupport, String operName);
+
+	
 }

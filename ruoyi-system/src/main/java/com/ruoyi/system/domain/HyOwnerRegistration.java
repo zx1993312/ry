@@ -166,7 +166,6 @@ public class HyOwnerRegistration extends BaseEntity
     @Excel(name = "银行户名")
     private String bankAccountName;
     
-    @Excel(name="房屋类")
     private HyHouseInf hyHouseInf;
     
     private HyEntry hyEntry;

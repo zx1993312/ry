@@ -1,6 +1,8 @@
 package com.ruoyi.system.service;
 
 import java.util.List;
+
+import com.ruoyi.system.domain.HyCost;
 import com.ruoyi.system.domain.HyVatAudit;
 
 /**
@@ -58,4 +60,9 @@ public interface IHyVatAuditService
      * @return 结果
      */
     public int deleteHyVatAuditById(Long id);
+
+
+
+	public String importHyVatAudit(List<HyVatAudit> userList, boolean updateSupport, String operName);
+
 }

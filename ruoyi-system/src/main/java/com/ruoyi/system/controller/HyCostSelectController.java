@@ -148,4 +148,5 @@ public class HyCostSelectController extends BaseController {
 	public AjaxResult remove(String ids) {
 		return toAjax(hyCostService.deleteHyCostByIds(ids));
 	}
+
 }

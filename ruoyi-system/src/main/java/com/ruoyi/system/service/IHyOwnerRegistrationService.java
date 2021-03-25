@@ -31,6 +31,9 @@ public interface IHyOwnerRegistrationService
     
     public List<HyOwnerRegistration> selectHyOwnerRegistrationListOrr(HyOwnerRegistration hyOwnerRegistration);
 
+    public List<HyOwnerRegistration> selectHyOwnerRegistrationListOor(HyOwnerRegistration hyOwnerRegistration);	
+
+    
     /**
      * 新增业主资料登记
      * 
@@ -62,4 +65,6 @@ public interface IHyOwnerRegistrationService
      * @return 结果
      */
     public int deleteHyOwnerRegistrationById(Long id);
+
+	public String importOwnerRegistration(List<HyOwnerRegistration> userList, boolean updateSupport, String operName);
 }

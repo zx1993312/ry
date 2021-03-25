@@ -10,7 +10,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
 /**
  * 房屋登记对象 hy_house_inf
  * 
- * @author Administrator
+ * @author liutianqi
  * @date 2021-01-06
  */
 public class HyHouseInf extends BaseEntity

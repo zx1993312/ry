@@ -6,9 +6,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ruoyi.system.mapper.HyOwnerRegistrationMapper;
+import com.ruoyi.system.domain.HyHouseInf;
 import com.ruoyi.system.domain.HyOwnerRegistration;
 import com.ruoyi.system.service.IHyOwnerRegistrationService;
 import com.ruoyi.common.core.text.Convert;
+import com.ruoyi.common.exception.BusinessException;
+import com.ruoyi.common.utils.StringUtils;
 
 /**
  * 业主资料登记Service业务层处理
@@ -100,5 +103,60 @@ public class HyOwnerRegistrationServiceImpl implements IHyOwnerRegistrationServi
 	@Override
 	public List<HyOwnerRegistration> selectHyOwnerRegistrationListOrr(HyOwnerRegistration hyOwnerRegistration) {
 		return hyOwnerRegistrationMapper.selectHyOwnerRegistrationListOrr(hyOwnerRegistration);
+	}
+
+	
+	/**
+	 * 
+	 */
+	@Override
+	public String importOwnerRegistration(List<HyOwnerRegistration> hyOwnerRegistrationList, boolean updateSupport, String operName) {
+		if (StringUtils.isNull(hyOwnerRegistrationList) || hyOwnerRegistrationList.size() == 0) {
+			throw new BusinessException("导入楼宇数据不能为空！");
+		}
+		int successNum = 0;
+		int failureNum = 0;
+		StringBuilder successMsg = new StringBuilder();
+		StringBuilder failureMsg = new StringBuilder();
+		for (HyOwnerRegistration hyOwnerRegistration : hyOwnerRegistrationList) {
+			List<HyOwnerRegistration> dataList = this.selectHyOwnerRegistrationListOor(hyOwnerRegistration);
+			
+			//判断这些是否为空
+			if (StringUtils.isNull(hyOwnerRegistration.getOwnerName()) || StringUtils.isNull(hyOwnerRegistration.getHouseNum())
+					|| StringUtils.isNull(hyOwnerRegistration.getFixedTelephone())
+					|| StringUtils.isNull(hyOwnerRegistration.getMobilePhone())|| StringUtils.isNull(hyOwnerRegistration.getIdCardNum())) {
+				failureMsg.insert(0, "很抱歉，导入失败！共 " + failureNum + " 条数据格式不正确，错误如下：");
+				throw new BusinessException(failureMsg.toString());
+			}
+			
+			//查询数据是否存在
+			if (dataList == null || dataList.size() == 0) {
+				this.insertHyOwnerRegistration(hyOwnerRegistration);
+				successNum++;
+				successMsg.append("<br/>" + successNum + "、业主名称 " + hyOwnerRegistration.getOwnerName() + " 导入成功");
+			} else if (updateSupport) {
+				hyOwnerRegistration.setId(dataList.get(0).getId());
+				this.updateHyOwnerRegistration(hyOwnerRegistration);
+				successNum++;
+				successMsg.append("<br/>" + successNum + "、业主名称 " + hyOwnerRegistration.getOwnerName() + " 更新成功");
+			} else {
+				failureNum++;
+				failureMsg.append("<br/>" + failureNum + "、业主名称 " + hyOwnerRegistration.getOwnerName() + " 已存在");
+			}
+		}
+		if (failureNum > 0) {
+			failureMsg.insert(0, "很抱歉，导入失败！共 " + failureNum + " 条数据格式不正确，错误如下：");
+			throw new BusinessException(failureMsg.toString());
+		} else {
+			successMsg.insert(0, "恭喜您，数据已全部导入成功！共 " + successNum + " 条，数据如下：");
+		}
+		
+		
+		return successMsg.toString();
+	}
+
+	@Override
+	public List<HyOwnerRegistration> selectHyOwnerRegistrationListOor(HyOwnerRegistration hyOwnerRegistration) {
+		return hyOwnerRegistrationMapper.selectHyOwnerRegistrationListOor(hyOwnerRegistration);
 	}
 }

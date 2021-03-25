@@ -1,6 +1,8 @@
 package com.ruoyi.system.service;
 
 import java.util.List;
+
+import com.ruoyi.system.domain.HyCost;
 import com.ruoyi.system.domain.HyPastAccount;
 
 /**
@@ -58,4 +60,6 @@ public interface IHyPastAccountService
      * @return 结果
      */
     public int deleteHyPastAccountById(Long id);
+
+	public String importCost(List<HyPastAccount> userList, boolean updateSupport, String operName);
 }

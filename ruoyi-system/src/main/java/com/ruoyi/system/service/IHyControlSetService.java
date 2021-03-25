@@ -58,4 +58,6 @@ public interface IHyControlSetService
      * @return 结果
      */
     public int deleteHyControlSetById(Long id);
+
+	public String importOwnerRegistration(List<HyControlSet> userList, boolean updateSupport, String operName);
 }

@@ -335,9 +335,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="dueDate != null ">and c.due_date = #{dueDate}</if>
 		<if test="bilingStartDate != null ">and c.biling_start_date = #{bilingStartDate}</if>
 		<if test="bilingEndDate != null ">and c.biling_end_date = #{bilingEndDate}</if>
-		
-		
-		
 	</select>
 	
 		<select id="selectHyCostListOr" parameterType="HyCost"

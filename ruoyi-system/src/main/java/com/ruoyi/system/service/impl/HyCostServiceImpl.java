@@ -10,9 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.Ztree;
 import com.ruoyi.common.core.text.Convert;
+import com.ruoyi.common.exception.BusinessException;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.constants.Constants;
+import com.ruoyi.system.domain.HyControlSet;
 import com.ruoyi.system.domain.HyCost;
+import com.ruoyi.system.domain.HyMeter;
 import com.ruoyi.system.mapper.HyCostMapper;
 import com.ruoyi.system.mapper.HyHouseInfMapper;
 import com.ruoyi.system.mapper.HyOwnerRegistrationMapper;
@@ -32,7 +35,6 @@ public class HyCostServiceImpl implements IHyCostService {
 	private HyOwnerRegistrationMapper HyOwnerRegistrationMapper;
 	@Autowired
 	private HyHouseInfMapper HyHouseInfMapper;
-	
 
 	/**
 	 * 查询费用项目
@@ -56,9 +58,9 @@ public class HyCostServiceImpl implements IHyCostService {
 		return hyCostMapper.selectHyCostList(hyCost);
 	}
 
-    public List<HyCost> selectHyCostListOr(HyCost hyCost){
-    	return hyCostMapper.selectHyCostListOr(hyCost);
-    }
+	public List<HyCost> selectHyCostListOr(HyCost hyCost) {
+		return hyCostMapper.selectHyCostListOr(hyCost);
+	}
 
 	/**
 	 * 查询费用项目列表
@@ -101,12 +103,12 @@ public class HyCostServiceImpl implements IHyCostService {
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public int insertHyCost(HyCost hyCost) {
-		if(null!=hyCost.getHyOwnerRegistration()) {
+		if (null != hyCost.getHyOwnerRegistration()) {
 			hyCost.getHyOwnerRegistration().setHouseNum(hyCost.getHouseNum());
 			HyOwnerRegistrationMapper.insertHyOwnerRegistration(hyCost.getHyOwnerRegistration());
 		}
-		if(null!=hyCost.getHyHouseInf()) {
-			
+		if (null != hyCost.getHyHouseInf()) {
+
 			HyHouseInfMapper.insertHyHouseInf(hyCost.getHyHouseInf());
 		}
 		System.out.println(Constants.TIME_ALL.format(hyCost.getBilingStartDate()));
@@ -125,13 +127,12 @@ public class HyCostServiceImpl implements IHyCostService {
 	public int updateHyCost(HyCost hyCost) {
 		return hyCostMapper.updateHyCost(hyCost);
 	}
-	
-	
+
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public int updateHyCostOther(String currentState) {
 		System.out.println("long``````");
-		    return hyCostMapper.updateHyCostOther(currentState);
+		return hyCostMapper.updateHyCostOther(currentState);
 	}
 
 	/**
@@ -194,4 +195,50 @@ public class HyCostServiceImpl implements IHyCostService {
 		}
 		return ztrees;
 	}
+
+	@Override
+	public String importCost(List<HyCost> userList, boolean updateSupport, String operName) {
+
+		if (StringUtils.isNull(userList) || userList.size() == 0) {
+			throw new BusinessException("导入费用项目数据不能为空！");
+		}
+		int successNum = 0;
+		int failureNum = 0;
+		StringBuilder successMsg = new StringBuilder();
+		StringBuilder failureMsg = new StringBuilder();
+		for (HyCost hyCost : userList) {
+			List<HyCost> dataList = this.selectHyCostList(hyCost);
+
+			// 判断这些是否为空
+			if (StringUtils.isNull(hyCost.getCostItems()) || StringUtils.isNull(hyCost.getExpenseType())) {
+				failureMsg.insert(0, "很抱歉，导入失败！共 " + failureNum + " 条数据格式不正确，错误如下：");
+				throw new BusinessException(failureMsg.toString());
+			}
+
+			// 查询数据是否存在
+			if (dataList == null || dataList.size() == 0) {
+				this.insertHyCost(hyCost);
+				successNum++;
+				successMsg.append("<br/>" + successNum + "、收费科目是否需要审核 " + hyCost.getCostItems() + " 导入成功");
+			} else if (updateSupport) {
+				hyCost.setId(dataList.get(0).getId());
+				this.updateHyCost(hyCost);
+				successNum++;
+				successMsg.append("<br/>" + successNum + "、收费科目是否需要审核" + hyCost.getCostItems() + " 更新成功");
+			} else {
+				failureNum++;
+				failureMsg.append("<br/>" + failureNum + "、收费科目是否需要审核 " + hyCost.getCostItems() + " 已存在");
+			}
+		}
+		if (failureNum > 0) {
+			failureMsg.insert(0, "很抱歉，导入失败！共 " + failureNum + " 条数据格式不正确，错误如下：");
+			throw new BusinessException(failureMsg.toString());
+		} else {
+			successMsg.insert(0, "恭喜您，数据已全部导入成功！共 " + successNum + " 条，数据如下：");
+		}
+
+		return successMsg.toString();
+	}
+
+
 }

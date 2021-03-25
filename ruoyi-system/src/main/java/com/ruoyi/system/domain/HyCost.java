@@ -45,7 +45,7 @@ public class HyCost extends BaseEntity {
 	/**
 	 * 费用序号
 	 */
-	@Excel(name = "费用项目")
+	@Excel(name = "费用序号")
 	private String feeNum;
 	/**
 	 * 通用收费标注

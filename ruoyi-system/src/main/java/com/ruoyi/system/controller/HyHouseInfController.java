@@ -1,6 +1,7 @@
 package com.ruoyi.system.controller;
 
 import java.util.List;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,8 +11,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.ShiroUtils;
+import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.domain.HyHouseInf;
 import com.ruoyi.system.service.IHyHouseInfService;
 
@@ -19,11 +27,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-
-import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
  * 房屋登记Controller
@@ -132,5 +135,33 @@ public class HyHouseInfController extends BaseController {
 	@ResponseBody
 	public AjaxResult remove(String ids) {
 		return toAjax(hyHouseInfService.deleteHyHouseInfByIds(ids));
+	}
+
+	/**
+	 * 导入房屋数据
+	 * 
+	 * @param file
+	 * @param updateSupport
+	 * @return
+	 * @throws Exception
+	 */
+	@Log(title = "用户管理", businessType = BusinessType.IMPORT)
+	@RequiresPermissions("ystem:inf:import")
+	@PostMapping("/importData")
+	@ResponseBody
+	public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception {
+		ExcelUtil<HyHouseInf> util = new ExcelUtil<HyHouseInf>(HyHouseInf.class);
+		List<HyHouseInf> userList = util.importExcel(file.getInputStream());
+		String operName = ShiroUtils.getSysUser().getLoginName();
+		String message = hyHouseInfService.importHouseInf(userList, updateSupport, operName);
+		return AjaxResult.success(message);
+	}
+
+	@RequiresPermissions("system:inf:view")
+	@GetMapping("/importTemplate")
+	@ResponseBody
+	public AjaxResult importTemplate() {
+		ExcelUtil<HyHouseInf> util = new ExcelUtil<HyHouseInf>(HyHouseInf.class);
+		return util.importTemplateExcel("房屋登记");
 	}
 }

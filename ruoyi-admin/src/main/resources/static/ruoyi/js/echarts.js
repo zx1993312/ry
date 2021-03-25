@@ -6,7 +6,8 @@ $(function () {
     ceshis3();
     ceshis4();
     ceshis5();
-
+//    ceshis6();
+    ceshis7();
 
 
 
@@ -186,226 +187,82 @@ $(function () {
         var myChart = echarts.init(document.getElementById('chart3'));
 
         option = {
-            /*backgroundColor: '#000',*/
-            "animation": true,
-            "title": {
-                /*"text": 24,*/
-               /* "subtext": "沥青工",*/
-                "x": "center",
-                "y": "center",
-                "textStyle": {
-                    "color": "#fff",
-                    "fontSize": 10,
-                    "fontWeight": "normal",
-                    "align": "center",
-                    "width": "200px"
-                },
-                "subtextStyle": {
-                    "color": "#fff",
-                    "fontSize": 12,
-                    "fontWeight": "normal",
-                    "align": "center"
-                }
-            },
-            "legend": {
-                "width": "100%",
-                "left": "center",
-                "textStyle": {
-                    "color": "#fff",
-                    "fontSize": 12
-                },
-                "icon": "circle",
-                "right": "0",
-                "bottom": "0",
-                "padding": [15, 20],
-                "itemGap": 5,
-                "data": ["化妆品", "手机", "电脑", "羽绒服", "扫地机", "电视", "洗发露", "其它"]
-            },
-            "series": [{
-                "type": "pie",
-                "center": ["50%", "40%"],
-                "radius": ["20%", "43%"],
-                "color": ["#FEE449", "#00FFFF", "#00FFA8", "#9F17FF", "#FFE400", "#F76F01", "#01A4F7", "#FE2C8A"],
-                "startAngle": 135,
-                "labelLine": {
-                    "normal": {
-                        "length": 15
-                    }
-                },
-                "label": {
-                    "normal": {
-                        "formatter": "{b|{b}:}  {per|{d}%} ",
-                        "backgroundColor": "rgba(255, 147, 38, 0)",
-                        "borderColor": "transparent",
-                        "borderRadius": 4,
-                        "rich": {
-                            "a": {
-                                "color": "#999",
-                                "lineHeight": 12,
-                                "align": "center"
-                            },
-                            "hr": {
-                                "borderColor": "#aaa",
-                                "width": "100%",
-                                "borderWidth": 1,
-                                "height": 0
-                            },
-                            "b": {
-                                "color": "#b3e5ff",
-                                "fontSize": 16,
-                                "lineHeight": 33
-                            },
-                            "c": {
-                                "fontSize": 14,
-                                "color": "#eee"
-                            },
-                            "per": {
-                                "color": "#FDF44E",
-                                "fontSize": 14,
-                                "padding": [5, 8],
-                                "borderRadius": 2
-                            }
-                        },
-                        "textStyle": {
-                            "color": "#fff",
-                            "fontSize": 16
-                        }
-                    }
-                },
-                "emphasis": {
-                    "label": {
-                        "show": true,
-                        "formatter": "{b|{b}:}  {per|{d}%}  ",
-                        "backgroundColor": "rgba(255, 147, 38, 0)",
-                        "borderColor": "transparent",
-                        "borderRadius": 4,
-                        "rich": {
-                            "a": {
-                                "color": "#999",
-                                "lineHeight": 22,
-                                "align": "center"
-                            },
-                            "hr": {
-                                "borderColor": "#aaa",
-                                "width": "100%",
-                                "borderWidth": 1,
-                                "height": 0
-                            },
-                            "b": {
-                                "color": "#fff",
-                                "fontSize": 14,
-                                "lineHeight": 33
-                            },
-                            "c": {
-                                "fontSize": 14,
-                                "color": "#eee"
-                            },
-                            "per": {
-                                "color": "#FDF44E",
-                                "fontSize": 14,
-                                "padding": [5, 6],
-                                "borderRadius": 2
-                            }
-                        }
-                    }
-                },
-                "data": [{
-                    "name": "化妆品",
-                    "value": 3
-                }, {
-                    "name": "手机",
-                    "value": 2
-                }, {
-                    "name": "电脑",
-                    "value": 26
-                }, {
-                    "name": "羽绒服",
-                    "value": 24
-                }, {
-                    "name": "扫地机",
-                    "value": 12
-                }, {
-                    "name": "电视",
-                    "value": 11
-                }, {
-                    "name": "洗发露",
-                    "value": 3
-                }, {
-                    "name": "其它",
-                    "value": 2
-                }]
-            }, {
-                "type": "pie",
-                "center": ["50%", "40%"],
-                "radius": ["15%", "14%"],
-                "label": {
-                    "show": false
-                },
-                "data": [{
-                    "value": 78,
-                    "name": "实例1",
-                    "itemStyle": {
-                        "normal": {
-                            "color": {
-                                "x": 0,
-                                "y": 0,
-                                "x2": 1,
-                                "y2": 0,
-                                "type": "linear",
-                                "global": false,
-                                "colorStops": [{
-                                    "offset": 0,
-                                    "color": "#9F17FF"
-                                }, {
-                                    "offset": 0.2,
-                                    "color": "#01A4F7"
-                                }, {
-                                    "offset": 0.5,
-                                    "color": "#FE2C8A"
-                                }, {
-                                    "offset": 0.8,
-                                    "color": "#FEE449"
-                                }, {
-                                    "offset": 1,
-                                    "color": "#00FFA8"
-                                }]
-                            }
-                        }
-                    }
-                }]
-            }]
-        }
-
-        // 使用刚指定的配置项和数据显示图表。
+        	    tooltip: {
+        	        trigger: 'axis',
+        	        axisPointer: {
+        	            type: 'cross',
+        	            crossStyle: {
+        	                color: '#999'
+        	            }
+        	        }
+        	    },
+        	    toolbox: {
+        	        feature: {
+        	            dataView: {show: true, readOnly: false},
+        	            magicType: {show: true, type: ['line', 'bar']},
+        	            restore: {show: true},
+        	            saveAsImage: {show: true}
+        	        }
+        	    },
+        	    legend: {
+        	        data: ['蒸发量', '降水量', '平均温度']
+        	    },
+        	    xAxis: [
+        	        {
+        	            type: 'category',
+        	            data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+        	            axisPointer: {
+        	                type: 'shadow'
+        	            }
+        	        }
+        	    ],
+        	    yAxis: [
+        	        {
+        	            type: 'value',
+        	            name: '水量',
+        	            min: 0,
+        	            max: 250,
+        	            interval: 50,
+        	            axisLabel: {
+        	                formatter: '{value} ml'
+        	            }
+        	        },
+        	        {
+        	            type: 'value',
+        	            name: '温度',
+        	            min: 0,
+        	            max: 25,
+        	            interval: 5,
+        	            axisLabel: {
+        	                formatter: '{value} °C'
+        	            }
+        	        }
+        	    ],
+        	    series: [
+        	        {
+        	            name: '蒸发量',
+        	            type: 'bar',
+        	            data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
+        	        },
+        	        {
+        	            name: '降水量',
+        	            type: 'bar',
+        	            data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
+        	        },
+        	        {
+        	            name: '平均温度',
+        	            type: 'line',
+        	            yAxisIndex: 1,
+        	            data: [2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
+        	        }
+        	    ]
+        	};
         myChart.setOption(option);
-        myChart.currentIndex = -1;
-        //myChart.setOption(option);
-        //console.log(option.series[0].data[0]);
-        setInterval(function () {
-            var dataLen = option.series[0].data.length;
-            // 取消之前高亮的图形
-            myChart.dispatchAction({
-                type: 'downplay',
-                seriesIndex: 0,
-                dataIndex: myChart.currentIndex
-            });
-            myChart.currentIndex = (myChart.currentIndex + 1) % dataLen;
-            // 高亮当前图形
-            myChart.dispatchAction({
-                type: 'highlight',
-                seriesIndex: 0,
-                dataIndex: myChart.currentIndex
-            });
-        }, 1000);
-
-        window.addEventListener("resize",function(){
-            myChart.resize();
-        });
     }
     function ceshis3() {
         var myChart = echarts.init(document.getElementById('chart4'));
 
-        var colors = ['rgb(46, 199, 201)', 'rgb(90, 177, 239)', 'rgb(255, 185, 128)'];
+        var colors = ['#5470C6', '#91CC75', '#EE6666'];
 
         option = {
             color: colors,
@@ -414,24 +271,6 @@ $(function () {
                 trigger: 'axis',
                 axisPointer: {
                     type: 'cross'
-                },
-                formatter: function(params) {
-                    // 系列
-                    let html = params[0].name + "<br>";
-
-                    for (var i = 0; i < params.length; i++) {
-
-                        // 获取每个系列对应的颜色值
-                        html += '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:' + params[i].color + ';"></span>';
-
-                        // 通过判断指定系列增加 % 符号
-                        if (option.series[params[i].seriesIndex].type == "line") {
-                            html += params[i].seriesName + ": " + params[i].value + "%<br>";
-                        } else {
-                            html += params[i].seriesName + ": " + params[i].value + "<br>";
-                        }
-                    }
-                    return html;
                 }
             },
             grid: {
@@ -439,115 +278,91 @@ $(function () {
             },
             toolbox: {
                 feature: {
-                    dataView: {
-                        show: true,
-                        readOnly: false
-                    },
-                    restore: {
-                        show: true
-                    },
-                    saveAsImage: {
-                        show: true
-                    }
+                    dataView: {show: true, readOnly: false},
+                    restore: {show: true},
+                    saveAsImage: {show: true}
                 }
             },
             legend: {
-                textStyle: {
-                    color: '#fff'
-                },
-                data: ['下单量', '付款量', '平均值']
+                data: ['蒸发量', '降水量', '平均温度']
             },
-            // 缩放组件
-            /*dataZoom: {
-                type: 'slider'
-            },*/
-            xAxis: [{
-                type: 'category',
-                axisTick: {
-                    alignWithLabel: true
-                },
-                axisLabel: {
-                    formatter: '{value} 万',
-                    textStyle: {
-                        color: "#ffffff" //X轴文字颜色
-                    }
-                },
-                data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
-            }],
-            yAxis: [{
-                type: 'value',
-                name: '下单量',
-                min: 0,
-                max: 250,
-                position: 'right',
-                axisLine: {
-                    lineStyle: {
-                        color: colors[0]
-                    }
-                },
-                axisLabel: {
-                    formatter: '{value} 万'
+            xAxis: [
+                {
+                    type: 'category',
+                    axisTick: {
+                        alignWithLabel: true
+                    },
+                    data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
                 }
-            },
+            ],
+            yAxis: [
                 {
                     type: 'value',
-                    name: '付款量',
+                    name: '蒸发量',
+                    min: 0,
+                    max: 250,
+                    position: 'right',
+                    axisLine: {
+                        show: true,
+                        lineStyle: {
+                            color: colors[0]
+                        }
+                    },
+                    axisLabel: {
+                        formatter: '{value} ml'
+                    }
+                },
+                {
+                    type: 'value',
+                    name: '降水量',
                     min: 0,
                     max: 250,
                     position: 'right',
                     offset: 80,
                     axisLine: {
+                        show: true,
                         lineStyle: {
                             color: colors[1]
                         }
                     },
                     axisLabel: {
-                        formatter: '{value} 万'
+                        formatter: '{value} ml'
                     }
                 },
                 {
                     type: 'value',
-                    name: '平均值',
+                    name: '温度',
                     min: 0,
                     max: 25,
                     position: 'left',
                     axisLine: {
+                        show: true,
                         lineStyle: {
                             color: colors[2]
                         }
                     },
                     axisLabel: {
-                        formatter: '{value} 万'
+                        formatter: '{value} °C'
                     }
                 }
             ],
-            series: [{
-                name: '下单量',
-                type: 'bar',
-                data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
-                itemStyle: {
-                    normal: {
-                        barBorderRadius: 2
-                    }
-                }
-            },
+            series: [
                 {
-                    barGap: '-50%', // 增加偏移量使重叠显示
-                    name: '付款量',
+                    name: '蒸发量',
                     type: 'bar',
-                    yAxisIndex: 1,
-                    data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3],
-                    itemStyle: {
-                        normal: {
-                            barBorderRadius: 2
-                        }
-                    }
+                    data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
                 },
                 {
-                    name: '平均值',
+                    name: '降水量',
+                    type: 'bar',
+                    yAxisIndex: 1,
+                    data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
+                },
+                {
+                    name: '平均温度',
                     type: 'line',
                     yAxisIndex: 2,
-                    data: [2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2],
+                    data: [2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
                 }
             ]
         };
@@ -558,621 +373,46 @@ $(function () {
         });
     }
     function ceshis4() {
-        var myChart = echarts.init(document.getElementById('chart5'));
-
-        var labelimg = "";
-
-        option = {
-            /*backgroundColor: "#0E233E",*/
-            "grid": {
-                "left": "6%",
-                "top": "10%",
-                "right": "3%",
-                "bottom": "15%"
-            },
-            "legend": {
-                "data": [
-                    "日本",
-                    "韩国",
-                    "美国",
-                    "澳大利亚",
-                    "俄罗斯",
-                    "法国",
-                    "英国"
-                ],
-                "top": "92%",
-                "icon": "circle",
-                "textStyle": {
-                    "color": "#0DCAD2"
-                }
-            },
-            "color": [
-                "#534EE1",
-                "#ECD64F",
-                "#00E4F0",
-                "#44D16D",
-                "#124E91",
-                "#BDC414",
-                "#C8CCA5"
-            ],
-            "tooltip": {
-                "position": "top",
-            },
-            "xAxis": {
-                "type": "category",
-                "data": [
-                    "日本",
-                    "韩国",
-                    "美国",
-                    "澳大利亚",
-                    "俄罗斯",
-                    "法国",
-                    "英国"
-                ],
-                "axisLabel": {
-                    "show": false,
-                    "color": "#999999",
-                    "fontSize": 16
-                },
-                "axisTick": {
-                    "show": false
-                },
-                "axisLine": {
-                    "show": false
-                },
-                "splitLine": {
-                    "show": false
-                }
-            },
-            "yAxis": {
-                "type": "value",
-                "axisLabel": {
-                    "show": false,
-                    "color": "#999999",
-                    "fontSize": 16
-                },
-                "axisTick": {
-                    "show": false
-                },
-                "axisLine": {
-                    "show": false
-                },
-                "splitLine": {
-                    "show": false
-                }
-            },
-            "series": [{
-                "name": "日本",
-                "data": [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
-                "stack": "a",
-                "type": "bar"
-            },
-                {
-                    "name": "韩国",
-                    "data": [
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0
-                    ],
-                    "stack": "a",
-                    "type": "bar"
-                },
-                {
-                    "name": "美国",
-                    "data": [
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0
-                    ],
-                    "stack": "a",
-                    "type": "bar"
-                },
-                {
-                    "name": "澳大利亚",
-                    "data": [
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0
-                    ],
-                    "stack": "a",
-                    "type": "bar"
-                },
-                {
-                    "name": "俄罗斯",
-                    "data": [
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0
-                    ],
-                    "stack": "a",
-                    "type": "bar"
-                },
-                {
-                    "name": "法国",
-                    "data": [
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0
-                    ],
-                    "stack": "a",
-                    "type": "bar"
-                },
-                {
-                    "name": "英国",
-                    "data": [
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0
-                    ],
-                    "stack": "a",
-                    "type": "bar"
-                },
-                {
-                    "type": "pictorialBar",
-                    "name": "提示框值",
-                    "data": [{
-                        "name": "",
-                        "value": 868,
-                        "label": {
-                            "show": true,
-                            "position": "top",
-                            formatter: function(params) {
-                                var index = params.dataIndex;
-                                var str = "{a|" + params.value + "}\n{c|" + params.value + "个}";
-                                return str;
-                            },
-                            "rich": {
-                                "a": {
-                                    "fontSize": 18,
-                                    "color": "#534EE1",
-                                    "align": "center",
-                                    "height": 40
-                                },
-                                "c": {
-                                    "fontSize": 18,
-                                    "color": "#fff",
-                                    "padding": [
-                                        -2,
-                                        0,
-                                        2,
-                                        0
-                                    ],
-                                    "backgroundColor": {
-                                        "image": labelimg
-                                    },
-                                    "align": "center",
-                                    "verticalAlign": "bottom",
-                                    "height": 50,
-                                    "lineHeight": 40,
-                                    "width": 100
-                                }
-                            }
-                        },
-                        "itemStyle": {
-                            "normal": {
-                                "color": {
-                                    "type": "linear",
-                                    "x": 0,
-                                    "y": 0,
-                                    "x2": 0,
-                                    "y2": 1,
-                                    "colorStops": [{
-                                        "offset": 0,
-                                        "color": "rgba(83,78,225,1)"
-                                    },
-                                        {
-                                            "offset": 1,
-                                            "color": "rgba(83,78,225,0)"
-                                        }
-                                    ],
-                                    "global": false
-                                }
-                            }
-                        }
-                    },
-                        {
-                            "name": "",
-                            "value": 306,
-                            "label": {
-                                "show": true,
-                                "position": "top",
-                                formatter: function(params) {
-                                    var index = params.dataIndex;
-                                    var str = "{a|" + params.value + "}\n{c|" + params.value + "个}";
-                                    return str;
-                                },
-                                "rich": {
-                                    "a": {
-                                        "fontSize": 18,
-                                        "color": "#ECD64F",
-                                        "align": "center",
-                                        "height": 40
-                                    },
-                                    "c": {
-                                        "fontSize": 18,
-                                        "color": "#fff",
-                                        "padding": [
-                                            -4,
-                                            0,
-                                            8,
-                                            0
-                                        ],
-                                        "backgroundColor": {
-                                            "image": labelimg
-                                        },
-                                        "align": "center",
-                                        "verticalAlign": "bottom",
-                                        "height": 45,
-                                        "lineHeight": 40,
-                                        "width": 100
-                                    }
-                                }
-                            },
-                            "itemStyle": {
-                                "normal": {
-                                    "color": {
-                                        "type": "linear",
-                                        "x": 0,
-                                        "y": 0,
-                                        "x2": 0,
-                                        "y2": 1,
-                                        "colorStops": [{
-                                            "offset": 0,
-                                            "color": "rgba(236,214,79,1)"
-                                        },
-                                            {
-                                                "offset": 1,
-                                                "color": "rgba(236,214,79,0)"
-                                            }
-                                        ],
-                                        "global": false
-                                    }
-                                }
-                            }
-                        },
-                        {
-                            "name": "",
-                            "value": 162,
-                            "label": {
-                                "show": true,
-                                "position": "top",
-                                formatter: function(params) {
-                                    var index = params.dataIndex;
-                                    var str = "{a|" + params.value + "}\n{c|" + params.value + "个}";
-                                    return str;
-                                },
-                                "rich": {
-                                    "a": {
-                                        "fontSize": 18,
-                                        "color": "#00E4F0",
-                                        "align": "center",
-                                        "height": 40
-                                    },
-                                    "c": {
-                                        "fontSize": 18,
-                                        "color": "#fff",
-                                        "padding": [
-                                            -4,
-                                            0,
-                                            8,
-                                            0
-                                        ],
-                                        "backgroundColor": {
-                                            "image": labelimg
-                                        },
-                                        "align": "center",
-                                        "verticalAlign": "bottom",
-                                        "height": 45,
-                                        "lineHeight": 40,
-                                        "width": 100
-                                    }
-                                }
-                            },
-                            "itemStyle": {
-                                "normal": {
-                                    "color": {
-                                        "type": "linear",
-                                        "x": 0,
-                                        "y": 0,
-                                        "x2": 0,
-                                        "y2": 1,
-                                        "colorStops": [{
-                                            "offset": 0,
-                                            "color": "rgba(0,228,240,1)"
-                                        },
-                                            {
-                                                "offset": 1,
-                                                "color": "rgba(0,228,240,0)"
-                                            }
-                                        ],
-                                        "global": false
-                                    }
-                                }
-                            }
-                        },
-                        {
-                            "name": "",
-                            "value": 362,
-                            "label": {
-                                "show": true,
-                                formatter: function(params) {
-                                    var index = params.dataIndex;
-                                    var str = "{a|" + params.value + "}\n{c|" + params.value + "个}";
-                                    return str;
-                                },
-                                "position": "top",
-                                "rich": {
-                                    "a": {
-                                        "fontSize": 18,
-                                        "color": "#44D16D",
-                                        "align": "center",
-                                        "height": 40
-                                    },
-                                    "c": {
-                                        "fontSize": 18,
-                                        "color": "#fff",
-                                        "padding": [
-                                            -4,
-                                            0,
-                                            8,
-                                            0
-                                        ],
-                                        "backgroundColor": {
-                                            "image": labelimg
-                                        },
-                                        "align": "center",
-                                        "verticalAlign": "bottom",
-                                        "height": 45,
-                                        "lineHeight": 40,
-                                        "width": 100
-                                    }
-                                }
-                            },
-                            "itemStyle": {
-                                "normal": {
-                                    "color": {
-                                        "type": "linear",
-                                        "x": 0,
-                                        "y": 0,
-                                        "x2": 0,
-                                        "y2": 1,
-                                        "colorStops": [{
-                                            "offset": 0,
-                                            "color": "rgba(68,209,109,1)"
-                                        },
-                                            {
-                                                "offset": 1,
-                                                "color": "rgba(68,209,109,0)"
-                                            }
-                                        ],
-                                        "global": false
-                                    }
-                                }
-                            }
-                        },
-                        {
-                            "name": "",
-                            "value": 460,
-                            "label": {
-                                "show": true,
-                                "position": "top",
-                                formatter: function(params) {
-                                    var index = params.dataIndex;
-                                    var str = "{a|" + params.value + "}\n{c|" + params.value + "个}";
-                                    return str;
-                                },
-                                "rich": {
-                                    "a": {
-                                        "fontSize": 18,
-                                        "color": "#124E91",
-                                        "align": "center",
-                                        "height": 30
-                                    },
-                                    "c": {
-                                        "fontSize": 18,
-                                        "color": "#fff",
-                                        "padding": [
-                                            -4,
-                                            0,
-                                            8,
-                                            0
-                                        ],
-                                        "backgroundColor": {
-                                            "image": labelimg
-                                        },
-                                        "align": "center",
-                                        "verticalAlign": "bottom",
-                                        "height": 45,
-                                        "lineHeight": 40,
-                                        "width": 100
-                                    }
-                                }
-                            },
-                            "itemStyle": {
-                                "normal": {
-                                    "color": {
-                                        "type": "linear",
-                                        "x": 0,
-                                        "y": 0,
-                                        "x2": 0,
-                                        "y2": 1,
-                                        "colorStops": [{
-                                            "offset": 0,
-                                            "color": "rgba(18,78,145,1)"
-                                        },
-                                            {
-                                                "offset": 1,
-                                                "color": "rgba(18,78,145,0)"
-                                            }
-                                        ],
-                                        "global": false
-                                    }
-                                }
-                            }
-                        },
-                        {
-                            "name": "",
-                            "value": 606,
-                            "label": {
-                                "show": true,
-                                "position": "top",
-                                formatter: function(params) {
-                                    var index = params.dataIndex;
-                                    var str = "{a|" + params.value + "}\n{c|" + params.value + "个}";
-                                    return str;
-                                },
-                                "rich": {
-                                    "a": {
-                                        "fontSize": 18,
-                                        "color": "#BDC414",
-                                        "align": "center",
-                                        "height": 30
-                                    },
-                                    "c": {
-                                        "fontSize": 18,
-                                        "color": "#fff",
-                                        "padding": [
-                                            -4,
-                                            0,
-                                            8,
-                                            0
-                                        ],
-                                        "backgroundColor": {
-                                            "image": labelimg
-                                        },
-                                        "align": "center",
-                                        "verticalAlign": "bottom",
-                                        "height": 45,
-                                        "lineHeight": 40,
-                                        "width": 100
-                                    }
-                                }
-                            },
-                            "itemStyle": {
-                                "normal": {
-                                    "color": {
-                                        "type": "linear",
-                                        "x": 0,
-                                        "y": 0,
-                                        "x2": 0,
-                                        "y2": 1,
-                                        "colorStops": [{
-                                            "offset": 0,
-                                            "color": "rgba(189,196,20,1)"
-                                        },
-                                            {
-                                                "offset": 1,
-                                                "color": "rgba(189,196,20,0)"
-                                            }
-                                        ],
-                                        "global": false
-                                    }
-                                }
-                            }
-                        },
-                        {
-                            "name": "",
-                            "value": 506,
-                            "label": {
-                                "show": true,
-                                "position": "top",
-                                formatter: function(params) {
-                                    var index = params.dataIndex;
-                                    var str = "{a|" + params.value + "}\n{c|" + params.value + "个}";
-                                    return str;
-                                },
-                                "rich": {
-                                    "a": {
-                                        "fontSize": 18,
-                                        "color": "#C8CCA5",
-                                        "align": "center",
-                                        "height": 30
-                                    },
-                                    "c": {
-                                        "fontSize": 18,
-                                        "color": "#fff",
-                                        "padding": [
-                                            -4,
-                                            0,
-                                            8,
-                                            0
-                                        ],
-                                        "backgroundColor": {
-                                            "image": labelimg
-                                        },
-                                        "align": "center",
-                                        "verticalAlign": "bottom",
-                                        "height": 45,
-                                        "lineHeight": 40,
-                                        "width": 100
-                                    }
-                                }
-                            },
-                            "itemStyle": {
-                                "normal": {
-                                    "color": {
-                                        "type": "linear",
-                                        "x": 0,
-                                        "y": 0,
-                                        "x2": 0,
-                                        "y2": 1,
-                                        "colorStops": [{
-                                            "offset": 0,
-                                            "color": "rgba(200,204,165,1)"
-                                        },
-                                            {
-                                                "offset": 1,
-                                                "color": "rgba(200,204,165,0)"
-                                            }
-                                        ],
-                                        "global": false
-                                    }
-                                }
-                            }
-                        }
-                    ],
-                    "stack": "a",
-                    "symbol": "path://M0,10 L10,10 C5.5,10 5.5,5 5,0 C4.5,5 4.5,10 0,10 z"
-                }
-            ]
-        }
-        // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
-        window.addEventListener("resize",function(){
-            myChart.resize();
-        });
+    	var myChart = echarts.init(document.getElementById('Stastic'));
+    	option = {
+    		    tooltip: {
+    		        trigger: 'item'
+    		    },
+    		    legend: {
+    		        top: '5%',
+    		        left: 'center'
+    		    },
+    		    series: [
+    		        {
+    		            name: '访问来源',
+    		            type: 'pie',
+    		            radius: ['40%', '70%'],
+    		            avoidLabelOverlap: false,
+    		            label: {
+    		                show: false,
+    		                position: 'center'
+    		            },
+    		            emphasis: {
+    		                label: {
+    		                    show: true,
+    		                    fontSize: '40',
+    		                    fontWeight: 'bold'
+    		                }
+    		            },
+    		            labelLine: {
+    		                show: false
+    		            },
+    		            data: [
+    		                {value: 1048, name: '搜索引擎'},
+    		                {value: 735, name: '直接访问'},
+    		                {value: 580, name: '邮件营销'},
+    		                {value: 484, name: '联盟广告'},
+    		                {value: 300, name: '视频广告'}
+    		            ]
+    		        }
+    		    ]
+    		};
+    	 myChart.setOption(option);
     }
 
     function ceshis5() {
@@ -1926,18 +1166,172 @@ $(function () {
     }
 
 
+    function ceshis6(){
+    	var myChart = echarts.init(document.getElementById('USAmap'));
+
+    	option = {
+    		    backgroundColor: '#2c343c',
+
+    		    title: {
+    		        text: 'Customized Pie',
+    		        left: 'center',
+    		        top: 20,
+    		        textStyle: {
+    		            color: '#ccc'
+    		        }
+    		    },
+
+    		    tooltip: {
+    		        trigger: 'item'
+    		    },
+
+    		    visualMap: {
+    		        show: false,
+    		        min: 80,
+    		        max: 600,
+    		        inRange: {
+    		            colorLightness: [0, 1]
+    		        }
+    		    },
+    		    series: [
+    		        {
+    		            name: '访问来源',
+    		            type: 'pie',
+    		            radius: '55%',
+    		            center: ['50%', '50%'],
+    		            data: [
+    		                {value: 335, name: '直接访问'},
+    		                {value: 310, name: '邮件营销'},
+    		                {value: 274, name: '联盟广告'},
+    		                {value: 235, name: '视频广告'},
+    		                {value: 400, name: '搜索引擎'}
+    		            ].sort(function (a, b) { return a.value - b.value; }),
+    		            roseType: 'radius',
+    		            label: {
+    		                color: 'rgba(255, 255, 255, 0.3)'
+    		            },
+    		            labelLine: {
+    		                lineStyle: {
+    		                    color: 'rgba(255, 255, 255, 0.3)'
+    		                },
+    		                smooth: 0.2,
+    		                length: 10,
+    		                length2: 20
+    		            },
+    		            itemStyle: {
+    		                color: '#c23531',
+    		                shadowBlur: 200,
+    		                shadowColor: 'rgba(0, 0, 0, 0.5)'
+    		            },
+
+    		            animationType: 'scale',
+    		            animationEasing: 'elasticOut',
+    		            animationDelay: function (idx) {
+    		                return Math.random() * 200;
+    		            }
+    		        }
+    		    ]
+    		};
+
+    	    myChart.setOption(option);
+    	}
+    
 
 
+    function ceshis7() {}
+    
+    function ceshis9(){
+    	var myChart = echarts.init(document.getElementById('a'));
+    	
+    	var colors = ['#5470C6', '#EE6666'];
 
-    function ceshis7() {
-        var myChart = echarts.init(document.getElementById('chart_1'));
+    	option = {
+    	    color: colors,
 
-
-        // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
-        window.addEventListener("resize",function(){
-            myChart.resize();
-        });
+    	    tooltip: {
+    	        trigger: 'none',
+    	        axisPointer: {
+    	            type: 'cross'
+    	        }
+    	    },
+    	    legend: {
+    	        data:['2015 降水量', '2016 降水量']
+    	    },
+    	    grid: {
+    	        top: 70,
+    	        bottom: 50
+    	    },
+    	    xAxis: [
+    	        {
+    	            type: 'category',
+    	            axisTick: {
+    	                alignWithLabel: true
+    	            },
+    	            axisLine: {
+    	                onZero: false,
+    	                lineStyle: {
+    	                    color: colors[1]
+    	                }
+    	            },
+    	            axisPointer: {
+    	                label: {
+    	                    formatter: function (params) {
+    	                        return '降水量  ' + params.value
+    	                            + (params.seriesData.length ? '：' + params.seriesData[0].data : '');
+    	                    }
+    	                }
+    	            },
+    	            data: ['2016-1', '2016-2', '2016-3', '2016-4', '2016-5', '2016-6', '2016-7', '2016-8', '2016-9', '2016-10', '2016-11', '2016-12']
+    	        },
+    	        {
+    	            type: 'category',
+    	            axisTick: {
+    	                alignWithLabel: true
+    	            },
+    	            axisLine: {
+    	                onZero: false,
+    	                lineStyle: {
+    	                    color: colors[0]
+    	                }
+    	            },
+    	            axisPointer: {
+    	                label: {
+    	                    formatter: function (params) {
+    	                        return '降水量  ' + params.value
+    	                            + (params.seriesData.length ? '：' + params.seriesData[0].data : '');
+    	                    }
+    	                }
+    	            },
+    	            data: ['2015-1', '2015-2', '2015-3', '2015-4', '2015-5', '2015-6', '2015-7', '2015-8', '2015-9', '2015-10', '2015-11', '2015-12']
+    	        }
+    	    ],
+    	    yAxis: [
+    	        {
+    	            type: 'value'
+    	        }
+    	    ],
+    	    series: [
+    	        {
+    	            name: '2015 降水量',
+    	            type: 'line',
+    	            xAxisIndex: 1,
+    	            smooth: true,
+    	            emphasis: {
+    	                focus: 'series'
+    	            },
+    	            data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
+    	        },
+    	        {
+    	            name: '2016 降水量',
+    	            type: 'line',
+    	            smooth: true,
+    	            emphasis: {
+    	                focus: 'series'
+    	            },
+    	            data: [3.9, 5.9, 11.1, 18.7, 48.3, 69.2, 231.6, 46.6, 55.4, 18.4, 10.3, 0.7]
+    	        }
+    	    ]
+    	};
     }
 
 

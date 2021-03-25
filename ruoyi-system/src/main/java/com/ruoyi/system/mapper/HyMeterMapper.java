@@ -30,6 +30,8 @@ public interface HyMeterMapper {
 	public List<HyMeter> selectHyMeterListOr(HyMeter hyMeter);
 
 	public List<HyMeter> selectHyMeter(HyMeter hyMeter);
+	
+	public List<HyMeter> selectHyMeterCase(HyMeter hyMeter);
 
 	/**
 	 * 新增抄设置

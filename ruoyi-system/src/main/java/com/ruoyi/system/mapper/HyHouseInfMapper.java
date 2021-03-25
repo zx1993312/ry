@@ -6,7 +6,7 @@ import com.ruoyi.system.domain.HyHouseInf;
 /**
  * 房屋登记Mapper接口
  * 
- * @author Administrator
+ * @author liutianqi
  * @date 2021-01-06
  */
 public interface HyHouseInfMapper {

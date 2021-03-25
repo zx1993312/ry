@@ -76,21 +76,7 @@
 
 				</div>
 				<div class="left-cen rightTop border">
-					<div class="title">包裹量排名</div>
-
-					<ul class="company" id="ceshi">
-
-						<li class="wodryRX0"><span>NO.1</span> 湖南，包裹累计18.8万件</li>
-						<br />
-						<li class="wodryRX1">NO.2 河南，包裹累计16.5万件</li>
-						<br />
-						<li class="wodryRX2">NO.3 贵州，包裹累计15.9万件</li>
-						<br />
-						<li class="wodryRX3">NO.4 上海，包裹累计15.2万件</li>
-						<br />
-						<li class="wodryRX4">NO.5 北京，包裹累计14.7万件</li>
-					</ul>
-
+					<div class="echarts" id="Stastic"></div>
 				</div>
 				<div class="left-bottom rightTop border">
 					<div class="title">商品分类占比</div>
@@ -114,7 +100,7 @@
 					</div>
 
 					<div class="top-bottom">
-						<div id="map" class="allnav" style="height: 4.4rem"></div>
+						<div id="map" class="allnav" style="height: 3.3rem"></div>
 					</div>
 
 
@@ -133,84 +119,36 @@
 
 					<div class="echart wenzi">
 						<div class="gun">
-							<span>排名</span> <span>商品名称</span> <span>销量</span>
+							<span>企业类型</span> <span>产数</span> <span>占比</span>
 						</div>
 						<div id="FontScroll" class="myscroll">
 							<ul>
 								<li>
 									<div class="fontInner clearfix">
-										<span> <b>1</b>
-										</span> <span>女装</span> <span>4562万</span>
+										</span> <span>内资企业</span> <span>4562户</span><span>30%</span>
 									</div>
 								</li>
 								<li>
 									<div class="fontInner clearfix">
-										<span> <b>2</b>
-										</span> <span>手机配件</span> <span>4125万</span>
+										</span> <span>外商投资企业</span> <span>4125户</span><span>25%</span>
 									</div>
 								</li>
 								<li>
 									<div class="fontInner clearfix">
-										<span> <b>3</b>
-										</span> <span>手机</span> <span>4100万</span>
+										</span> <span>私营企业</span> <span>4100户</span><span>20%</span>
 									</div>
 								</li>
 								<li>
 									<div class="fontInner clearfix">
-										<span> <b>4</b>
-										</span> <span>流行饰品</span> <span>3989万</span>
+										</span> <span>外资企业</span> <span>3989户</span><span>20%</span>
 									</div>
 								</li>
 								<li>
 									<div class="fontInner clearfix">
-										<span> <b>5</b>
-										</span> <span>男装</span> <span>3956万</span>
+										</span> <span>个休工商户</span> <span>3956户</span><span>10%</span>
 									</div>
 								</li>
-								<li>
-									<div class="fontInner clearfix">
-										<span> <b>6</b>
-										</span> <span>真人发</span> <span>3823万</span>
-									</div>
-								</li>
-								<li>
-									<div class="fontInner clearfix">
-										<span> <b>7</b>
-										</span> <span>手表</span> <span>3723万</span>
-									</div>
-								</li>
-								<li>
-									<div class="fontInner clearfix">
-										<span> <b>8</b>
-										</span> <span>服饰配件</span> <span>3500万</span>
-									</div>
-								</li>
-								<li>
-									<div class="fontInner clearfix">
-										<span> <b>9</b>
-										</span> <span>电脑</span> <span>3412万</span>
-									</div>
-								</li>
-								<li>
-									<div class="fontInner clearfix">
-										<span> <b>10</b>
-										</span> <span>化妆品</span> <span>3312万</span>
-									</div>
-								</li>
-								<li>
-									<div class="fontInner clearfix">
-										<span> <b>11</b>
-										</span> <span>女鞋</span> <span>2856万</span>
-
-									</div>
-								</li>
-								<li>
-									<div class="fontInner clearfix">
-										<span> <b>12</b>
-										</span> <span>礼品</span> <span>2631万</span>
-
-									</div>
-								</li>
+								
 
 							</ul>
 						</div>
@@ -224,6 +162,7 @@
 					</div>
 
 				</div>
+			
 				<div class="right-bottom rightTop border">
 					<div class="title">全球贸易国家城市排行</div>
 					<div class="chat">
@@ -233,8 +172,31 @@
 				</div>
 			</div>
 		</div>
-
-
+		
+		
+		
+		
+		
+		
+		
+		
+        <div class="ibox float-e-margins">
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-wrench"></i>
+                    </a>
+            
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            <div id="a" class="ibox-content">
+                
+            </div>
+        </div>
 	</div>
 
 	<script th:src="@{/ajax/libs/report/echarts/echarts-all.js}"></script>
@@ -243,10 +205,11 @@
 	<script th:src="@{/ruoyi/js/fontscroll.js}"></script>
 	<script th:src="@{/ruoyi/js/echarts.js}"></script>
 	<script th:src="@{/ruoyi/js/china.js}"></script>
-
-
+	
+	 
 	<!--<script src="js/mymap.js"></script>-->
-	<script>
+	<script type="text/javascript">
+	
 		/*$('#ceshi').wodry({
 
 		    animation: 'rotateX',

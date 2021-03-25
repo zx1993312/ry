@@ -1,6 +1,8 @@
 package com.ruoyi.system.service;
 
 import java.util.List;
+
+import com.ruoyi.system.domain.HyOwnerRegistration;
 import com.ruoyi.system.domain.HyParkingInf;
 
 /**
@@ -72,4 +74,8 @@ ID
      * @return 结果
      */
     public int deleteHyParkingInfById(Long id);
+
+	public String importOwnerRegistration(List<HyParkingInf> userList, boolean updateSupport, String operName);
+
+
 }

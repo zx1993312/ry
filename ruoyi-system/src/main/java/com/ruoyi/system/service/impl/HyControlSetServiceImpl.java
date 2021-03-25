@@ -9,6 +9,8 @@ import com.ruoyi.system.mapper.HyControlSetMapper;
 import com.ruoyi.system.domain.HyControlSet;
 import com.ruoyi.system.service.IHyControlSetService;
 import com.ruoyi.common.core.text.Convert;
+import com.ruoyi.common.exception.BusinessException;
+import com.ruoyi.common.utils.StringUtils;
 
 /**
  * 管控模型设置Service业务层处理
@@ -97,4 +99,54 @@ public class HyControlSetServiceImpl implements IHyControlSetService
     {
         return hyControlSetMapper.deleteHyControlSetById(id);
     }
+
+	@Override
+	public String importOwnerRegistration(List<HyControlSet> userList, boolean updateSupport, String operName) {
+
+		if (StringUtils.isNull(userList) || userList.size() == 0) {
+			throw new BusinessException("导入楼宇数据不能为空！");
+		}
+		int successNum = 0;
+		int failureNum = 0;
+		StringBuilder successMsg = new StringBuilder();
+		StringBuilder failureMsg = new StringBuilder();
+		for (HyControlSet hyControlSet : userList) {
+			List<HyControlSet> dataList = this.selectHyControlSetList(hyControlSet);
+			
+			//判断这些是否为空
+			if (StringUtils.isNull(hyControlSet.getChargeSubjectApproved()) || StringUtils.isNull(hyControlSet.getDeliveryEffectiveTime())
+					|| StringUtils.isNull(hyControlSet.getDepositArrearsAllowed())
+					|| StringUtils.isNull(hyControlSet.getPartialOffsetAllowed())|| StringUtils.isNull(hyControlSet.getSystemTicketnumNot())
+					|| StringUtils.isNull(hyControlSet.getOddCarryForward())) {
+				failureMsg.insert(0, "很抱歉，导入失败！共 " + failureNum + " 条数据格式不正确，错误如下：");
+				throw new BusinessException(failureMsg.toString());
+			}
+			
+			//查询数据是否存在
+			if (dataList == null || dataList.size() == 0) {
+				this.insertHyControlSet(hyControlSet);
+				successNum++;
+				successMsg.append("<br/>" + successNum + "、收费科目是否需要审核 " + hyControlSet.getChargeSubjectApproved() + " 导入成功");
+			} else if (updateSupport) {
+				hyControlSet.setId(dataList.get(0).getId());
+				this.updateHyControlSet(hyControlSet);
+				successNum++;
+				successMsg.append("<br/>" + successNum + "、收费科目是否需要审核" + hyControlSet.getChargeSubjectApproved() + " 更新成功");
+			} else {
+				failureNum++;
+				failureMsg.append("<br/>" + failureNum + "、收费科目是否需要审核 " + hyControlSet.getChargeSubjectApproved() + " 已存在");
+			}
+		}
+		if (failureNum > 0) {
+			failureMsg.insert(0, "很抱歉，导入失败！共 " + failureNum + " 条数据格式不正确，错误如下：");
+			throw new BusinessException(failureMsg.toString());
+		} else {
+			successMsg.insert(0, "恭喜您，数据已全部导入成功！共 " + successNum + " 条，数据如下：");
+		}
+		
+		
+		
+		return  successMsg.toString();
+	}
+	
 }

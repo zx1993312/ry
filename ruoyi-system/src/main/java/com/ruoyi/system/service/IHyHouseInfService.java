@@ -6,7 +6,7 @@ import com.ruoyi.system.domain.HyHouseInf;
 /**
  * 房屋登记Service接口
  * 
- * @author Administrator
+ * @author liutianqi
  * @date 2021-01-06
  */
 public interface IHyHouseInfService 
@@ -58,4 +58,6 @@ public interface IHyHouseInfService
      * @return 结果
      */
     public int deleteHyHouseInfById(Long id);
+
+	public String importHouseInf(List<HyHouseInf> userList, boolean updateSupport, String operName);
 }
