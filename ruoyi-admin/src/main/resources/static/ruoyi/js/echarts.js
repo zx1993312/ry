@@ -6,14 +6,9 @@ $(function () {
     ceshis3();
     ceshis4();
     ceshis5();
-<<<<<<< HEAD
-//    ceshis6();
-    ceshis7();
-=======
     ceshis6();
     ceshis9();
     
->>>>>>> branch 'master' of https://github.com/zx1993312/ry.git
 
 
 
@@ -193,78 +188,6 @@ $(function () {
         var myChart = echarts.init(document.getElementById('chart3'));
 
         option = {
-<<<<<<< HEAD
-        	    tooltip: {
-        	        trigger: 'axis',
-        	        axisPointer: {
-        	            type: 'cross',
-        	            crossStyle: {
-        	                color: '#999'
-        	            }
-        	        }
-        	    },
-        	    toolbox: {
-        	        feature: {
-        	            dataView: {show: true, readOnly: false},
-        	            magicType: {show: true, type: ['line', 'bar']},
-        	            restore: {show: true},
-        	            saveAsImage: {show: true}
-        	        }
-        	    },
-        	    legend: {
-        	        data: ['蒸发量', '降水量', '平均温度']
-        	    },
-        	    xAxis: [
-        	        {
-        	            type: 'category',
-        	            data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
-        	            axisPointer: {
-        	                type: 'shadow'
-        	            }
-        	        }
-        	    ],
-        	    yAxis: [
-        	        {
-        	            type: 'value',
-        	            name: '水量',
-        	            min: 0,
-        	            max: 250,
-        	            interval: 50,
-        	            axisLabel: {
-        	                formatter: '{value} ml'
-        	            }
-        	        },
-        	        {
-        	            type: 'value',
-        	            name: '温度',
-        	            min: 0,
-        	            max: 25,
-        	            interval: 5,
-        	            axisLabel: {
-        	                formatter: '{value} °C'
-        	            }
-        	        }
-        	    ],
-        	    series: [
-        	        {
-        	            name: '蒸发量',
-        	            type: 'bar',
-        	            data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
-        	        },
-        	        {
-        	            name: '降水量',
-        	            type: 'bar',
-        	            data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
-        	        },
-        	        {
-        	            name: '平均温度',
-        	            type: 'line',
-        	            yAxisIndex: 1,
-        	            data: [2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
-        	        }
-        	    ]
-        	};
-=======
             /*backgroundColor: '#000',*/
             "animation": true,
             "title": {
@@ -441,13 +364,35 @@ $(function () {
         }
 
         // 使用刚指定的配置项和数据显示图表。
->>>>>>> branch 'master' of https://github.com/zx1993312/ry.git
         myChart.setOption(option);
+        myChart.currentIndex = -1;
+        //myChart.setOption(option);
+        //console.log(option.series[0].data[0]);
+        setInterval(function () {
+            var dataLen = option.series[0].data.length;
+            // 取消之前高亮的图形
+            myChart.dispatchAction({
+                type: 'downplay',
+                seriesIndex: 0,
+                dataIndex: myChart.currentIndex
+            });
+            myChart.currentIndex = (myChart.currentIndex + 1) % dataLen;
+            // 高亮当前图形
+            myChart.dispatchAction({
+                type: 'highlight',
+                seriesIndex: 0,
+                dataIndex: myChart.currentIndex
+            });
+        }, 1000);
+
+        window.addEventListener("resize",function(){
+            myChart.resize();
+        });
     }
     function ceshis3() {
         var myChart = echarts.init(document.getElementById('chart4'));
 
-        var colors = ['#5470C6', '#91CC75', '#EE6666'];
+        var colors = ['rgb(46, 199, 201)', 'rgb(90, 177, 239)', 'rgb(255, 185, 128)'];
 
         option = {
             color: colors,
@@ -456,6 +401,24 @@ $(function () {
                 trigger: 'axis',
                 axisPointer: {
                     type: 'cross'
+                },
+                formatter: function(params) {
+                    // 系列
+                    let html = params[0].name + "<br>";
+
+                    for (var i = 0; i < params.length; i++) {
+
+                        // 获取每个系列对应的颜色值
+                        html += '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:' + params[i].color + ';"></span>';
+
+                        // 通过判断指定系列增加 % 符号
+                        if (option.series[params[i].seriesIndex].type == "line") {
+                            html += params[i].seriesName + ": " + params[i].value + "%<br>";
+                        } else {
+                            html += params[i].seriesName + ": " + params[i].value + "<br>";
+                        }
+                    }
+                    return html;
                 }
             },
             grid: {
@@ -463,30 +426,24 @@ $(function () {
             },
             toolbox: {
                 feature: {
-                    dataView: {show: true, readOnly: false},
-                    restore: {show: true},
-                    saveAsImage: {show: true}
+                    dataView: {
+                        show: true,
+                        readOnly: false
+                    },
+                    restore: {
+                        show: true
+                    },
+                    saveAsImage: {
+                        show: true
+                    }
                 }
             },
             legend: {
-<<<<<<< HEAD
-                data: ['蒸发量', '降水量', '平均温度']
-=======
                 textStyle: {
                     color: '#fff'
                 },
                 data: ['2017', '2018', '同比增长']
->>>>>>> branch 'master' of https://github.com/zx1993312/ry.git
             },
-<<<<<<< HEAD
-            xAxis: [
-                {
-                    type: 'category',
-                    axisTick: {
-                        alignWithLabel: true
-                    },
-                    data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
-=======
             // 缩放组件
             /*dataZoom: {
                 type: 'slider'
@@ -517,79 +474,40 @@ $(function () {
                 },
                 axisLabel: {
                     formatter: '{value} %'
->>>>>>> branch 'master' of https://github.com/zx1993312/ry.git
                 }
-            ],
-            yAxis: [
+            },
                 {
                     type: 'value',
-<<<<<<< HEAD
-                    name: '蒸发量',
-                    min: 0,
-                    max: 250,
-                    position: 'right',
-                    axisLine: {
-                        show: true,
-                        lineStyle: {
-                            color: colors[0]
-                        }
-                    },
-                    axisLabel: {
-                        formatter: '{value} ml'
-                    }
-                },
-                {
-                    type: 'value',
-                    name: '降水量',
-=======
                     name: '',
->>>>>>> branch 'master' of https://github.com/zx1993312/ry.git
                     min: 0,
                     max: 100,
                     position: 'right',
                     offset: 0,
                     axisLine: {
-                        show: true,
                         lineStyle: {
                             color: colors[1]
                         }
                     },
                     axisLabel: {
-<<<<<<< HEAD
-                        formatter: '{value} ml'
-=======
                         formatter: '{value} %'
->>>>>>> branch 'master' of https://github.com/zx1993312/ry.git
                     }
                 },
                 {
                     type: 'value',
-<<<<<<< HEAD
-                    name: '温度',
-=======
                     name: '同比增长',
->>>>>>> branch 'master' of https://github.com/zx1993312/ry.git
                     min: 0,
                     max: 400,
                     position: 'left',
                     axisLine: {
-                        show: true,
                         lineStyle: {
                             color: colors[2]
                         }
                     },
                     axisLabel: {
-<<<<<<< HEAD
-                        formatter: '{value} °C'
-=======
                         formatter: '{value} '
->>>>>>> branch 'master' of https://github.com/zx1993312/ry.git
                     }
                 }
             ],
-<<<<<<< HEAD
-            series: [
-=======
             series: [{
                 name: '2017',
                 type: 'bar',
@@ -600,18 +518,10 @@ $(function () {
                     }
                 }
             },
->>>>>>> branch 'master' of https://github.com/zx1993312/ry.git
                 {
-<<<<<<< HEAD
-                    name: '蒸发量',
-=======
                     barGap: '-50%', // 增加偏移量使重叠显示
                     name: '2018',
->>>>>>> branch 'master' of https://github.com/zx1993312/ry.git
                     type: 'bar',
-<<<<<<< HEAD
-                    data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
-=======
                     yAxisIndex: 1,
                     data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 75.6, 82.2, 48.7, 18.8, 6.0, 2.3],
                     itemStyle: {
@@ -619,27 +529,12 @@ $(function () {
                             barBorderRadius: 2
                         }
                     }
->>>>>>> branch 'master' of https://github.com/zx1993312/ry.git
                 },
                 {
-<<<<<<< HEAD
-                    name: '降水量',
-                    type: 'bar',
-                    yAxisIndex: 1,
-                    data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
-                },
-                {
-                    name: '平均温度',
-=======
                     name: '同比增长',
->>>>>>> branch 'master' of https://github.com/zx1993312/ry.git
                     type: 'line',
                     yAxisIndex: 2,
-<<<<<<< HEAD
-                    data: [2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
-=======
                     data: [2.0, 2.2, 3.3, 4.5, 6.3, 87.2, 60.3, 32.4,45.0, 16.5, 12.0, 6.2],
->>>>>>> branch 'master' of https://github.com/zx1993312/ry.git
                 }
             ]
         };
@@ -650,48 +545,6 @@ $(function () {
         });
     }
     function ceshis4() {
-<<<<<<< HEAD
-    	var myChart = echarts.init(document.getElementById('Stastic'));
-    	option = {
-    		    tooltip: {
-    		        trigger: 'item'
-    		    },
-    		    legend: {
-    		        top: '5%',
-    		        left: 'center'
-    		    },
-    		    series: [
-    		        {
-    		            name: '访问来源',
-    		            type: 'pie',
-    		            radius: ['40%', '70%'],
-    		            avoidLabelOverlap: false,
-    		            label: {
-    		                show: false,
-    		                position: 'center'
-    		            },
-    		            emphasis: {
-    		                label: {
-    		                    show: true,
-    		                    fontSize: '40',
-    		                    fontWeight: 'bold'
-    		                }
-    		            },
-    		            labelLine: {
-    		                show: false
-    		            },
-    		            data: [
-    		                {value: 1048, name: '搜索引擎'},
-    		                {value: 735, name: '直接访问'},
-    		                {value: 580, name: '邮件营销'},
-    		                {value: 484, name: '联盟广告'},
-    		                {value: 300, name: '视频广告'}
-    		            ]
-    		        }
-    		    ]
-    		};
-    	 myChart.setOption(option);
-=======
         var myChart = echarts.init(document.getElementById('chart5'));
         
 
@@ -782,7 +635,6 @@ $(function () {
         window.addEventListener("resize",function(){
             myChart.resize();
         });
->>>>>>> branch 'master' of https://github.com/zx1993312/ry.git
     }
 
     function ceshis5() {
@@ -842,172 +694,18 @@ $(function () {
     }
 
 
-    function ceshis6(){
-    	var myChart = echarts.init(document.getElementById('USAmap'));
-
-    	option = {
-    		    backgroundColor: '#2c343c',
-
-    		    title: {
-    		        text: 'Customized Pie',
-    		        left: 'center',
-    		        top: 20,
-    		        textStyle: {
-    		            color: '#ccc'
-    		        }
-    		    },
-
-    		    tooltip: {
-    		        trigger: 'item'
-    		    },
-
-    		    visualMap: {
-    		        show: false,
-    		        min: 80,
-    		        max: 600,
-    		        inRange: {
-    		            colorLightness: [0, 1]
-    		        }
-    		    },
-    		    series: [
-    		        {
-    		            name: '访问来源',
-    		            type: 'pie',
-    		            radius: '55%',
-    		            center: ['50%', '50%'],
-    		            data: [
-    		                {value: 335, name: '直接访问'},
-    		                {value: 310, name: '邮件营销'},
-    		                {value: 274, name: '联盟广告'},
-    		                {value: 235, name: '视频广告'},
-    		                {value: 400, name: '搜索引擎'}
-    		            ].sort(function (a, b) { return a.value - b.value; }),
-    		            roseType: 'radius',
-    		            label: {
-    		                color: 'rgba(255, 255, 255, 0.3)'
-    		            },
-    		            labelLine: {
-    		                lineStyle: {
-    		                    color: 'rgba(255, 255, 255, 0.3)'
-    		                },
-    		                smooth: 0.2,
-    		                length: 10,
-    		                length2: 20
-    		            },
-    		            itemStyle: {
-    		                color: '#c23531',
-    		                shadowBlur: 200,
-    		                shadowColor: 'rgba(0, 0, 0, 0.5)'
-    		            },
-
-    		            animationType: 'scale',
-    		            animationEasing: 'elasticOut',
-    		            animationDelay: function (idx) {
-    		                return Math.random() * 200;
-    		            }
-    		        }
-    		    ]
-    		};
-
-    	    myChart.setOption(option);
-    	}
-    
 
 
-    function ceshis7() {}
-    
-    function ceshis9(){
-    	var myChart = echarts.init(document.getElementById('a'));
-    	
-    	var colors = ['#5470C6', '#EE6666'];
 
-    	option = {
-    	    color: colors,
+    function ceshis7() {
+        var myChart = echarts.init(document.getElementById('chart_1'));
 
-    	    tooltip: {
-    	        trigger: 'none',
-    	        axisPointer: {
-    	            type: 'cross'
-    	        }
-    	    },
-    	    legend: {
-    	        data:['2015 降水量', '2016 降水量']
-    	    },
-    	    grid: {
-    	        top: 70,
-    	        bottom: 50
-    	    },
-    	    xAxis: [
-    	        {
-    	            type: 'category',
-    	            axisTick: {
-    	                alignWithLabel: true
-    	            },
-    	            axisLine: {
-    	                onZero: false,
-    	                lineStyle: {
-    	                    color: colors[1]
-    	                }
-    	            },
-    	            axisPointer: {
-    	                label: {
-    	                    formatter: function (params) {
-    	                        return '降水量  ' + params.value
-    	                            + (params.seriesData.length ? '：' + params.seriesData[0].data : '');
-    	                    }
-    	                }
-    	            },
-    	            data: ['2016-1', '2016-2', '2016-3', '2016-4', '2016-5', '2016-6', '2016-7', '2016-8', '2016-9', '2016-10', '2016-11', '2016-12']
-    	        },
-    	        {
-    	            type: 'category',
-    	            axisTick: {
-    	                alignWithLabel: true
-    	            },
-    	            axisLine: {
-    	                onZero: false,
-    	                lineStyle: {
-    	                    color: colors[0]
-    	                }
-    	            },
-    	            axisPointer: {
-    	                label: {
-    	                    formatter: function (params) {
-    	                        return '降水量  ' + params.value
-    	                            + (params.seriesData.length ? '：' + params.seriesData[0].data : '');
-    	                    }
-    	                }
-    	            },
-    	            data: ['2015-1', '2015-2', '2015-3', '2015-4', '2015-5', '2015-6', '2015-7', '2015-8', '2015-9', '2015-10', '2015-11', '2015-12']
-    	        }
-    	    ],
-    	    yAxis: [
-    	        {
-    	            type: 'value'
-    	        }
-    	    ],
-    	    series: [
-    	        {
-    	            name: '2015 降水量',
-    	            type: 'line',
-    	            xAxisIndex: 1,
-    	            smooth: true,
-    	            emphasis: {
-    	                focus: 'series'
-    	            },
-    	            data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
-    	        },
-    	        {
-    	            name: '2016 降水量',
-    	            type: 'line',
-    	            smooth: true,
-    	            emphasis: {
-    	                focus: 'series'
-    	            },
-    	            data: [3.9, 5.9, 11.1, 18.7, 48.3, 69.2, 231.6, 46.6, 55.4, 18.4, 10.3, 0.7]
-    	        }
-    	    ]
-    	};
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+        window.addEventListener("resize",function(){
+            myChart.resize();
+        });
     }
 
     function ceshis6() {
