@@ -33,6 +33,7 @@ public class HyCommunitySettings extends BaseEntity
     /** 小区id */
     @Excel(name = "小区id")
     private Long residentialQuartersId;
+    
     /**小区表*/
     @Excel(name="小区表")
     private HyResidentialQuarters hyResidentialQuarters;

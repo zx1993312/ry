@@ -49,6 +49,31 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/number";
         $("#form-number-edit").validate({
+        	
+        	rules : {
+				serviceProviderAccounNumber:{
+					required : true,
+					maxlength : 50,
+				},
+				merchantPaymentKey:{
+					required : true,
+					maxlength : 30,
+				},
+				appid:{
+					required : true,
+					maxlength : 50,
+					number:true,
+				},
+				appsecret:{
+					required : true,
+					maxlength : 50,
+				},
+				subMerchantNumber:{
+					required : true,
+					maxlength : 50,
+				}
+			},
+        	
             focusCleanup: true
         });
 

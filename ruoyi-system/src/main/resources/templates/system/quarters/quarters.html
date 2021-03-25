@@ -12,59 +12,59 @@
                         <ul>
                             <li>
                                 <label>小区地址：</label>
-                                <input type="text" name="communityAddress"/>
+                                <input type="text" name="communityAddress" placeholder="请输入小区地址"/>
                             </li>
                             <li>
                                 <label>小区名称：</label>
-                                <input type="text" name="communityName"/>
+                                <input type="text" name="communityName" placeholder="请输入小区名称"/>
                             </li>
                             <li>
                                 <label>联系人：</label>
-                                <input type="text" name="contacts"/>
+                                <input type="text" name="contacts" placeholder="请输入联系人"/>
                             </li>
                             <li>
                                 <label>联系电话：</label>
-                                <input type="text" name="contactNumber"/>
+                                <input type="text" name="contactNumber" placeholder="请输入联系电话" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
                             </li>
                             <li>
                                 <label>联系QQ：</label>
-                                <input type="text" name="contactQq"/>
+                                <input type="text" name="contactQq" placeholder="请输入联系QQ" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
                             </li>
                             <li>
                                 <label>省/直辖市：</label>
-                                <input type="text" name="city"/>
+                                <input type="text" name="city" placeholder="请输入省/直辖市"/>
                             </li>
                             <li>
                                 <label>市/市辖区：</label>
-                                <input type="text" name="area"/>
+                                <input type="text" name="area" placeholder="请输入市/市辖区"/>
                             </li>
                             <li>
                                 <label>区/县：</label>
-                                <input type="text" name="county"/>
+                                <input type="text" name="county" placeholder="请输入区/县"/>
                             </li>
                             <li>
                                 <label>详细地址：</label>
-                                <input type="text" name="address"/>
+                                <input type="text" name="address" placeholder="请输入详细地址"/>
                             </li>
                             <li>
                                 <label>经度：</label>
-                                <input type="text" name="longitude"/>
+                                <input type="text" name="longitude" placeholder="请输入经度"/>
                             </li>
                             <li>
                                 <label>纬度：</label>
-                                <input type="text" name="latitude"/>
+                                <input type="text" name="latitude" placeholder="请输入纬度"/>
                             </li>
                             <li>
                                 <label>客户链接：</label>
-                                <input type="text" name="customerLink"/>
+                                <input type="text" name="customerLink" placeholder="请输入客户链接"/>
                             </li>
                             <li>
                                 <label>外部链接：</label>
-                                <input type="text" name="externalLinks"/>
+                                <input type="text" name="externalLinks" placeholder="请输入外部链接"/>
                             </li>
                             <li>
                                 <label>物业id：</label>
-                                <input type="text" name="protertyId"/>
+                                <input type="text" name="propertyId" placeholder="请输入物业id" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -93,6 +93,7 @@
                 <table id="bootstrap-table"></table>
             </div>
         </div>
+        
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
@@ -167,6 +168,10 @@
                 {
                     field: 'externalLinks',
                     title: '外部链接'
+                },
+                {
+                    field: 'propertyId',
+                    title: '物业id'
                 },
                 {
                     title: '操作',

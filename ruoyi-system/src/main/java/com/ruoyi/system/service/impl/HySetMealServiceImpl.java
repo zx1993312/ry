@@ -97,4 +97,11 @@ public class HySetMealServiceImpl implements IHySetMealService
     {
         return hySetMealMapper.deleteHySetMealById(id);
     }
+/**
+ * 查询套餐列表（测试方法）
+ */
+	@Override
+	public List<HySetMeal> selectHySetMealVoTest(HySetMeal hySetMeal) {
+		return hySetMealMapper.selectHySetMealVoTest(hySetMeal);
+	}
 }

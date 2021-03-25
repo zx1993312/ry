@@ -12,27 +12,27 @@
                         <ul>
                             <li>
                                 <label>报修打印：</label>
-                                <input type="text" name="repairReportPrinting"/>
+                                <input type="text" name="repairReportPrinting" placeholder="请输入保修打印"/>
                             </li>
                             <li>
                                 <label>意见打印：</label>
-                                <input type="text" name="opinionPrinting"/>
+                                <input type="text" name="opinionPrinting" placeholder="请输入意见打印"/>
                             </li>
                             <li>
                                 <label>缴费打印：</label>
-                                <input type="text" name="paymentPrinting"/>
+                                <input type="text" name="paymentPrinting" placeholder="请输入缴费打印"/>
                             </li>
                             <li>
                                 <label>API密钥：</label>
-                                <input type="text" name="apiSecretKey"/>
+                                <input type="text" name="apiSecretKey" placeholder="请输入API密钥"/>
                             </li>
                             <li>
                                 <label>终端编号：</label>
-                                <input type="text" name="terminalNumber"/>
+                                <input type="text" name="terminalNumber" placeholder="请输入终端标号" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
                             </li>
                             <li>
                                 <label>小区id：</label>
-                                <input type="text" name="residentialQuartersId"/>
+                                <input type="text" name="residentialQuartersId" placeholder="请输入小区id" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>

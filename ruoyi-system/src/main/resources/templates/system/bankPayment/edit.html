@@ -43,6 +43,25 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/bankPayment";
         $("#form-payment-edit").validate({
+        	rules:{
+        		channelIdentification:{
+        			required:true,
+        			maxlength:255
+        		},
+        		businessCode:{
+        			required:true,
+        			maxlength:255
+        		},
+        		secretKey:{
+        			required:true,
+        			number:true,
+        			maxlength:255
+        		},
+        		residentialQuartersId:{
+        			required:true,
+        			maxlength:20
+        		}
+        	},
             focusCleanup: true
         });
 

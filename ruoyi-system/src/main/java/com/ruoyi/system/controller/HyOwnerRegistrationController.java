@@ -30,6 +30,10 @@ import io.swagger.annotations.ApiOperation;
 
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
+<<<<<<< HEAD
+=======
+import com.ruoyi.common.core.domain.entity.SysUser;
+>>>>>>> branch 'master' of https://github.com/zx1993312/ry.git
 import com.ruoyi.common.utils.ShiroUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
@@ -75,6 +79,19 @@ public class HyOwnerRegistrationController extends BaseController {
 		}
 		return getDataTable(list,  reList);
 	}
+	
+	@Log(title = "用户管理", businessType = BusinessType.IMPORT)
+    @RequiresPermissions("system:registration:import")
+    @PostMapping("/import")
+    @ResponseBody
+    public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception
+    {
+        ExcelUtil<HyOwnerRegistration> util = new ExcelUtil<HyOwnerRegistration>(HyOwnerRegistration.class);
+        List<HyOwnerRegistration> hyOwnerRegistrationList = util.importExcel(file.getInputStream());
+        String operName = ShiroUtils.getSysUser().getLoginName();
+        String message = hyOwnerRegistrationService.importOwnerRegistration(hyOwnerRegistrationList, updateSupport, operName);
+        return AjaxResult.success(message);
+    }
 
 	/**
 	 * 导出业主资料登记列表

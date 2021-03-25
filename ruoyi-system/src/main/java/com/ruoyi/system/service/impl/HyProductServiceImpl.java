@@ -42,6 +42,18 @@ public class HyProductServiceImpl implements IHyProductService {
 	public List<HyProduct> selectHyProductList(HyProduct hyProduct) {
 		return hyProductMapper.selectHyProductList(hyProduct);
 	}
+	
+	
+	/**
+	 * 查询产品列表(测试方法)
+	 * 
+	 * @param hyProduct 产品
+	 * @return 产品
+	 */
+	@Override
+	public List<HyProduct> selectHyProductListTest(HyProduct hyProduct) {
+		return hyProductMapper.selectHyProductListTest(hyProduct);
+	}
 
 	/**
 	 * 新增产品

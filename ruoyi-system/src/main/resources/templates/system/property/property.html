@@ -12,23 +12,23 @@
                         <ul>
                             <li>
                                 <label>物业名称：</label>
-                                <input type="text" name="propertyName"/>
+                                <input type="text" name="propertyName" placeholder="请输入物业名称"/>
                             </li>
                             <li>
                                 <label>物业电话：</label>
-                                <input type="text" name="propertyPhone"/>
+                                <input type="text" name="propertyPhone" placeholder="请输入物业电话" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
                             </li>
                             <li>
                                 <label>物业介绍：</label>
-                                <input type="text" name="propertyIntroduce"/>
+                                <input type="text" name="propertyIntroduce" placeholder="请输入物业介绍"/>
                             </li>
                             <li>
                                 <label>创建时间：</label>
                                 <input type="text" class="time-input" placeholder="请选择创建时间" name="creationTime"/>
                             </li>
                             <li>
-                                <label>物业图片地址：</label>
-                                <input type="text" name="propertyPictureAddress"/>
+                                <label style="width: 100px">物业图片地址：</label>
+                                <input type="text" name="propertyPictureAddress" placeholder="请输入物业图片地址"/>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -63,7 +63,7 @@
         var editFlag = [[${@permission.hasPermi('system:property:edit')}]];
         var removeFlag = [[${@permission.hasPermi('system:property:remove')}]];
         var prefix = ctx + "system/property";
-
+        
         $(function() {
             var options = {
                 url: prefix + "/list",

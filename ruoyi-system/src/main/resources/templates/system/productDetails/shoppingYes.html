@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Bootstrap Template</title>
+<style>
+	.container{
+		width: 60%;
+		height: 100%;
+		border: 1px solid black;
+	}
+	.in{
+		width: 100%;
+		height: 40px;
+		overflow: hidden;
+	}
+	#i1{
+		font-size: 20px;
+		position: absolute;
+		left: 75%;
+		margin-top: 10px;
+	}
+	#i2{
+		color: red;
+		position: absolute;
+		left: 78%;
+		font-size: 20px;
+	}
+	
+	.purchasenumber {
+  width: 100%;
+  height: 25%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #f1f1f1;
+}
+.purchasenumber .number i,
+.purchasenumber .number input {
+  display: inline-block;
+  height: 0.6rem;
+  line-height: 0.6rem;
+  font-size: 0.2rem;
+  text-align: center;
+  border: 1px solid #515151;
+  color: #323232;
+}
+.purchasenumber .number i {
+  width: 0.6rem;
+}
+.purchasenumber .number input {
+  width: 0.8rem;
+  vertical-align: top;
+  margin-left: -0.08rem;
+  border-left-style: none;
+  box-sizing: content-box;
+}
+.purchasenumber .number .minus {
+  border-radius: 0.06rem 0 0 0.06rem;
+}
+.purchasenumber .number .plus {
+  margin-left: -0.08rem;
+  border-radius: 0 0.06rem 0.06rem 0;
+  border-left-style: none;
+}
+ 
+
+</style>
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<link rel="stylesheet" type="text/css" href="../bootstrap3/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="../bootstrap3/font-awesome-4.7.0/css/font-awesome.css"/>
+</head>
+<body>
+  	<center><h1>商品确认</h1></center>
+  <div class="container">
+  	<div class="well"><a>《返回</a></div>
+	  	<div>
+	  		姓        名:<input class="in" type="text" placeholder="请输入姓名"/><i id="i1" class="fa fa-address-card" aria-hidden="true"></i></a><br>
+	  		<hr>
+	  		手机号码:<input class="in" type="text" placeholder="请输入手机号码"/><br>
+	  		<hr>
+	  		备          注:<input class="in" type="text" placeholder="请输入备注"/><br>
+	  		<hr>
+	  	</div>
+	  	
+	  	<div id=d1>
+	  		<h3>商品信息</h3>
+	  		<img src="https://dss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3225163326,3627210682&fm=26&gp=0.jpg" style="width: 50px; height: 50px;">
+	  		<b id="t1">爆品回归！【经开区·川井料理】日料控的天下！99元立抢门市价1022的超值套餐，一次吃到爽！龙虾鲍鱼+寿喜锅+手握+寿司~海鲜盛宴哦</b>
+	  		<hr style="border:1px dashed #000; height:1px">
+	  		<span style="font-size: 20px;">川井日料套餐</span><i id=i2>¥99</i>
+	  		<hr style="border:1px dashed #000; height:1px">
+	  		<span style="font-size: 20px;">数量</span>
+		<div class="purchasenumber">
+			<h3>购买数量</h3>
+			<div class="number">
+				<i class="minus iconfont icon-jianhao"></i> <input type="number"
+					min="1" step="1" value="1"> <i
+					class="plus iconfont icon-jiahao1"></i>
+			</div>
+		</div>
+
+
+	</div>
+  	
+  </div>
+</body>
+<script type="text/javascript" src="../bootstrap3/jquery.min.js"></script>
+<script type="text/javascript" src="../bootstrap3/js/bootstrap.js"></script>
+<script type="text/javascript" src="../bootstrap3/js/holder.js"></script>
+<script type="text/javascript" src="../bootstrap3/js/html5shiv.min.js"></script>
+<script type="text/javascript" src="../bootstrap3/js/css3-mediaqueries.js"></script>
+<script type="text/javascript" src="../bootstrap3/js/respond.min.js"></script>
+</html>

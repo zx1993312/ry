@@ -96,8 +96,8 @@ public class HyRegistrationModeConfiguration extends BaseEntity
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
             .append("residentialQuartersSetUp", getResidentialQuartersSetUp())
-            .append("explain", getEcplain())
-            .append("enable", getEcable())
+            .append("ecplain", getEcplain())
+            .append("ecable", getEcable())
             .append("residentialQuartersId", getResidentialQuartersId())
             .toString();
     }

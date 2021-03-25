@@ -10,37 +10,37 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">报修打印：</label>
                 <div class="col-sm-8">
-                    <input name="repairReportPrinting" th:field="*{repairReportPrinting}" class="form-control" type="text">
+                    <input name="repairReportPrinting" th:field="*{repairReportPrinting}" class="form-control" type="text" placeholder="请输入保修打印">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">意见打印：</label>
                 <div class="col-sm-8">
-                    <input name="opinionPrinting" th:field="*{opinionPrinting}" class="form-control" type="text">
+                    <input name="opinionPrinting" th:field="*{opinionPrinting}" class="form-control" type="text" placeholder="请输入意见打印">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">缴费打印：</label>
                 <div class="col-sm-8">
-                    <input name="paymentPrinting" th:field="*{paymentPrinting}" class="form-control" type="text">
+                    <input name="paymentPrinting" th:field="*{paymentPrinting}" class="form-control" type="text" placeholder="请输入缴费打印">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">API密钥：</label>
                 <div class="col-sm-8">
-                    <input name="apiSecretKey" th:field="*{apiSecretKey}" class="form-control" type="text">
+                    <input name="apiSecretKey" th:field="*{apiSecretKey}" class="form-control" type="text" placeholder="请输入API密钥">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">终端编号：</label>
                 <div class="col-sm-8">
-                    <input name="terminalNumber" th:field="*{terminalNumber}" class="form-control" type="text">
+                    <input name="terminalNumber" th:field="*{terminalNumber}" class="form-control" type="text" placeholder="请输入终端编号" onkeyup="this.value=this.value.replace(/\D/g,'')">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">小区id：</label>
                 <div class="col-sm-8">
-                    <input name="residentialQuartersId" th:field="*{residentialQuartersId}" class="form-control" type="text">
+                    <input name="residentialQuartersId" th:field="*{residentialQuartersId}" class="form-control" type="text" placeholder="请输入小区id" onkeyup="this.value=this.value.replace(/\D/g,'')">
                 </div>
             </div>
         </form>
@@ -49,6 +49,32 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/printer";
         $("#form-printer-edit").validate({
+        	rules:{
+        		repairReportPrinting :{
+        			required : true,
+        			maxlength : 255
+        		},
+        		opinionPrinting :{
+        			required : true,
+        			maxlength : 255
+        		},
+        		paymentPrinting :{
+        			required : true,
+        			maxlength : 255
+        		},
+        		apiSecretKey :{
+        			required : true,
+        			maxlength : 255
+        		},
+        		terminalNumber :{
+        			required : true,
+        			maxlength : 11
+        		},
+        		residentialQuartersId :{
+        			required : true,
+        			maxlength : 11
+        		}
+        	},
             focusCleanup: true
         });
 

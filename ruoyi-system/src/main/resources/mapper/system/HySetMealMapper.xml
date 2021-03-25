@@ -44,17 +44,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         LEFT JOIN hy_product p ON m.product_id=p.id
         where 1=1
     </sql>
+    
+    <sql id="selectHySetMealVoTest">
+        select 
+        m.id, 
+        m.set_meal_content, 
+        m.retail_price, 
+        m.market_price, 
+        m.set_meal_name, 
+        m.product_id,
+        p.product_name
+        from 
+        hy_set_meal m
+        where 1=1
+    </sql>
 
     <select id="selectHySetMealList" parameterType="HySetMeal" resultMap="HySetMealResult">
         <include refid="selectHySetMealVo"/>
-        <where>  
             <if test="setMealContent != null  and setMealContent != ''"> and set_meal_content = #{setMealContent}</if>
             <if test="retailPrice != null "> and retail_price = #{retailPrice}</if>
             <if test="marketPrice != null "> and market_price = #{marketPrice}</if>
             <if test="setMealName != null  and setMealName != ''"> and set_meal_name like concat('%', #{setMealName}, '%')</if>
             <if test="productId != null "> and product_id = #{productId}</if>
             <if test="hyProduct.productName != null and hyProduct.productName != '' "> and p.product_name = #{hyProduct.productName}</if>
-        </where>
+    </select>
+    
+     <select id="selectHySetMealVoTest" parameterType="HySetMeal" resultMap="HySetMealResult">
+        <include refid="selectHySetMealVo"/>
+            <if test="setMealContent != null  and setMealContent != ''"> and set_meal_content = #{setMealContent}</if>
+            <if test="retailPrice != null "> and retail_price = #{retailPrice}</if>
+            <if test="marketPrice != null "> and market_price = #{marketPrice}</if>
+            <if test="setMealName != null  and setMealName != ''"> and set_meal_name like concat('%', #{setMealName}, '%')</if>
+            <if test="productId != null "> and product_id = #{productId}</if>
+            <if test="hyProduct.productName != null and hyProduct.productName != '' "> and p.product_name = #{hyProduct.productName}</if>
     </select>
     
     <select id="selectHySetMealById" parameterType="Long" resultMap="HySetMealResult">

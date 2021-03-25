@@ -10,37 +10,37 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">小区图片地址：</label>
                 <div class="col-sm-8">
-                    <input name="pictureAddress" th:field="*{pictureAddress}" class="form-control" type="text">
+                    <input name="pictureAddress" th:field="*{pictureAddress}" class="form-control" type="text" placeholder="请输入小区图片地址">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">图文图片地址：</label>
                 <div class="col-sm-8">
-                    <input name="textPictureAddress" th:field="*{textPictureAddress}" class="form-control" type="text">
+                    <input name="textPictureAddress" th:field="*{textPictureAddress}" class="form-control" type="text" placeholder="请输入图文图片地址">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">收费专用章地址：</label>
                 <div class="col-sm-8">
-                    <input name="chargeChapterAddress" th:field="*{chargeChapterAddress}" class="form-control" type="text">
+                    <input name="chargeChapterAddress" th:field="*{chargeChapterAddress}" class="form-control" type="text" placeholder="请输入收费专用章地址">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">二维码背景地址：</label>
                 <div class="col-sm-8">
-                    <input name="codeBackgroundAddress" th:field="*{codeBackgroundAddress}" class="form-control" type="text">
+                    <input name="codeBackgroundAddress" th:field="*{codeBackgroundAddress}" class="form-control" type="text" placeholder="请输入二维码背景地址">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">访客二维码背景地址：</label>
                 <div class="col-sm-8">
-                    <input name="visitorCodeBackgroundAddress" th:field="*{visitorCodeBackgroundAddress}" class="form-control" type="text">
+                    <input name="visitorCodeBackgroundAddress" th:field="*{visitorCodeBackgroundAddress}" class="form-control" type="text" placeholder="请输入访客二维码背景地址">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">小区id：</label>
                 <div class="col-sm-8">
-                    <input name="residentialQuartersId" th:field="*{residentialQuartersId}" class="form-control" type="text">
+                    <input name="residentialQuartersId" placeholder="请输入小区id" th:field="*{residentialQuartersId}" class="form-control" type="text" onkeyup="this.value=this.value.replace(/\D/g,'')">
                 </div>
             </div>
         </form>
@@ -49,6 +49,32 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/ResidentialQuartersPicture";
         $("#form-picture-edit").validate({
+        rules:{
+    		pictureAddress :{
+    			required : true,
+    			maxlength : 255
+    		},
+    		textPictureAddress :{
+    			required : true,
+    			maxlength : 255
+    		},
+    		chargeChapterAddress :{
+    			required : true,
+    			maxlength : 255
+    		},
+    		codeBackgroundAddress :{
+    			required : true,
+    			maxlength : 255
+    		},
+    		visitorCodeBackgroundAddress :{
+    			required : true,
+    			maxlength : 255
+    		},
+    		residentialQuartersId :{
+    			required : true,
+    			maxlength : 20
+    		},
+        },
             focusCleanup: true
         });
 

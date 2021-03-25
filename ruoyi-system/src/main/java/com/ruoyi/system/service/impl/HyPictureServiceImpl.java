@@ -97,4 +97,11 @@ public class HyPictureServiceImpl implements IHyPictureService
     {
         return hyPictureMapper.deleteHyPictureById(id);
     }
+/**
+ * 根据图片地址查询图片列表
+ */
+	@Override
+	public List<HyPicture> selectHyPictureAddress(HyPicture hyPicture) {
+		return hyPictureMapper.selectHyPictureAddress(hyPicture);
+	}
 }

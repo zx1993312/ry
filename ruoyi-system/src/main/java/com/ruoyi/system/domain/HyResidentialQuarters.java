@@ -5,6 +5,8 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
+import lombok.Data;
+
 /**
  * 小区对象 hy_residential_quarters
  * 
@@ -15,6 +17,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * @author Administrator
  *
  */
+@Data
 public class HyResidentialQuarters extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
@@ -77,8 +80,10 @@ public class HyResidentialQuarters extends BaseEntity
     /**物业id*/
     @Excel(name="物业id")
     private Long propertyId;
+    /**物业表*/
+    private HyProperty hyProperty;
 
-    public void setId(Long id) 
+    /*public void setId(Long id) 
     {
         this.id = id;
     }
@@ -213,6 +218,14 @@ public class HyResidentialQuarters extends BaseEntity
 		this.propertyId = propertyId;
 	}
 
+	public HyProperty getHyProperty() {
+		return hyProperty;
+	}
+
+	public void setHyProperty(HyProperty hyProperty) {
+		this.hyProperty = hyProperty;
+	}
+
 	@Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -232,5 +245,5 @@ public class HyResidentialQuarters extends BaseEntity
             .append("externalLinks", getExternalLinks())
             .append("propertyId", getPropertyId())
             .toString();
-    }
+    }*/
 }

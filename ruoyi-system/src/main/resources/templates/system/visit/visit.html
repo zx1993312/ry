@@ -12,15 +12,15 @@
                         <ul>
                             <li>
                                 <label>姓名：</label>
-                                <input type="text" name="name"/>
+                                <input type="text" name="name" placeholder="请输入姓名"/>
                             </li>
                             <li>
                                 <label>电话号：</label>
-                                <input type="text" name="telphone"/>
+                                <input type="text" name="telphone" placeholder="请输入电话号" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
                             </li>
                             <li>
                                 <label>申请地址：</label>
-                                <input type="text" name="applicationAddress"/>
+                                <input type="text" name="applicationAddress" placeholder="请输入申请地址"/>
                             </li>
                             <li>
                                 <label>申请时间：</label>
@@ -32,11 +32,11 @@
                             </li>
                             <li>
                                 <label>有效天数：</label>
-                                <input type="text" name="effectiveDay"/>
+                                <input type="text" name="effectiveDay" placeholder="请输入有效天数"/>
                             </li>
                             <li>
                                 <label>小区id：</label>
-                                <input type="text" name="residentialQuartersId"/>
+                                <input type="text" name="residentialQuartersId" placeholder="请输入小区id" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>

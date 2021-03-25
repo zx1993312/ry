@@ -48,12 +48,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectHyRegistrationModeConfigurationList" parameterType="HyRegistrationModeConfiguration" resultMap="HyRegistrationModeConfigurationResult">
         <include refid="selectHyRegistrationModeConfigurationVo"/>
-        <where>  
             <if test="residentialQuartersSetUp != null  and residentialQuartersSetUp != ''"> and residential_quarters_set_up = #{residentialQuartersSetUp}</if>
-            <if test="ecplain != null  and ecplain != ''"> and explain = #{ecplain}</if>
-            <if test="ecable != null  and ecable != ''"> and enable = #{ecable}</if>
+            <if test="ecplain != null  and ecplain != ''"> and ecplain = #{ecplain}</if>
+            <if test="ecable != null  and ecable != ''"> and ecable = #{ecable}</if>
             <if test="residentialQuartersId != null "> and residential_quarters_id = #{residentialQuartersId}</if>
-        </where>
     </select>
     
     <select id="selectHyRegistrationModeConfigurationById" parameterType="Long" resultMap="HyRegistrationModeConfigurationResult">

@@ -13,6 +13,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <sql id="selectHyPictureVo">
         select id, pciture_address, product_id from hy_picture
     </sql>
+    
+    <select id="selectHyPictureAddress" parameterType="HyPicture" resultMap="HyPictureResult">
+        <include refid="selectHyPictureVo"/>
+        where pciture_address=#{pcitureAddress}
+    </select>
 
     <select id="selectHyPictureList" parameterType="HyPicture" resultMap="HyPictureResult">
         <include refid="selectHyPictureVo"/>

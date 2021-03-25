@@ -26,6 +26,13 @@ public interface IHySetMealService
      * @return 套餐集合
      */
     public List<HySetMeal> selectHySetMealList(HySetMeal hySetMeal);
+    /**
+     * 查询套餐列表（测试方法）
+     * @param hySetMeal
+     * @return
+     */
+    public List<HySetMeal> selectHySetMealVoTest(HySetMeal hySetMeal);
+
 
     /**
      * 新增套餐

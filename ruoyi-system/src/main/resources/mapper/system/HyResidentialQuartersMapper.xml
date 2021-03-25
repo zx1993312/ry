@@ -59,7 +59,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectHyResidentialQuartersList" parameterType="HyResidentialQuarters" resultMap="HyResidentialQuartersResult">
         <include refid="selectHyResidentialQuartersVo"/>
-        <where>  
             <if test="communityAddress != null  and communityAddress != ''"> and community_address = #{communityAddress}</if>
             <if test="communityName != null  and communityName != ''"> and community_name like concat('%', #{communityName}, '%')</if>
             <if test="contacts != null  and contacts != ''"> and contacts = #{contacts}</if>
@@ -73,8 +72,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="latitude != null  and latitude != ''"> and latitude = #{latitude}</if>
             <if test="customerLink != null  and customerLink != ''"> and customer_link = #{customerLink}</if>
             <if test="externalLinks != null  and externalLinks != ''"> and external_links = #{externalLinks}</if>
-            <if test="propertyId != null  and propertyId != ''"> and property_id = #{propertyId}</if>
-        </where>
+            <if test="propertyId != null"> and property_id = #{propertyId}</if>
     </select>
     
     <select id="selectHyResidentialQuartersById" parameterType="Long" resultMap="HyResidentialQuartersResult">

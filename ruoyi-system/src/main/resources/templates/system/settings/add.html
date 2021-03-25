@@ -9,25 +9,25 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">小区设置：</label>
                 <div class="col-sm-8">
-                    <input name="communitySettings" class="form-control" type="text">
+                    <input name="communitySettings" class="form-control" type="text" placeholder="请输入小区设置">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">说明：</label>
                 <div class="col-sm-8">
-                    <input name="explains" class="form-control" type="text">
+                    <input name="explains" class="form-control" type="text" placeholder="请输入说明">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">是否启用：</label>
                 <div class="col-sm-8">
-                    <input name="enables" class="form-control" type="text">
+                    <input name="enables" class="form-control" type="text" placeholder="请输入是/否">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">小区id：</label>
                 <div class="col-sm-8">
-                    <input name="residentialQuartersId" class="form-control" type="text">
+                    <input name="residentialQuartersId" class="form-control" type="text" placeholder="请输入小区id" onkeyup="this.value=this.value.replace(/\D/g,'')">
                 </div>
             </div>
         </form>
@@ -40,15 +40,19 @@
         		residentialQuartersId:{
         			number:true,
         			required:true,
+        			maxlength : 20
         		},
         		communitySettings:{
         			required:true,
+        			maxlength : 255
         		},
         		explains:{
         			required:true,
+        			maxlength : 255
         		},
         		enables:{
         			required:true,
+        			maxlength : 255
         		}
         	},
             focusCleanup: true
