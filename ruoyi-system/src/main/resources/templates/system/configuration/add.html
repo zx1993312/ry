@@ -27,7 +27,7 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">小区id：</label>
                 <div class="col-sm-8">
-                    <input name="residentialQuartersId" class="form-control" type="text" placeholder="请输入小区id">
+                    <input name="residentialQuartersId" class="form-control" type="text" placeholder="请输入小区id" onkeyup="this.value=this.value.replace(/\D/g,'')">
                 </div>
             </div>
         </form>

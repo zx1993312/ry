@@ -28,7 +28,7 @@
                             </li>
                             <li>
                                 <label>终端编号：</label>
-                                <input type="text" name="terminalNumber" placeholder="请输入终端标号"/>
+                                <input type="text" name="terminalNumber" placeholder="请输入终端标号" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
                             </li>
                             <li>
                                 <label>小区id：</label>
