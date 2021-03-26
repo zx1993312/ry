@@ -22,6 +22,10 @@ public class HyOrder extends BaseEntity
     /** 用户id */
     @Excel(name = "用户id")
     private Long userId;
+    
+    /** 用户头像 */
+    @Excel(name = "用户头像")
+    private String userPictrue;
 
     /** 订单编号 */
     @Excel(name = "订单编号")
@@ -67,7 +71,16 @@ public class HyOrder extends BaseEntity
     {
         return userId;
     }
-    public void setOrderNumber(String orderNumber) 
+    
+    public String getUserPictrue() {
+		return userPictrue;
+	}
+
+	public void setUserPictrue(String userPictrue) {
+		this.userPictrue = userPictrue;
+	}
+
+	public void setOrderNumber(String orderNumber) 
     {
         this.orderNumber = orderNumber;
     }
@@ -130,15 +143,11 @@ public class HyOrder extends BaseEntity
 	}
 
 	@Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("userId", getUserId())
-            .append("orderNumber", getOrderNumber())
-            .append("tradeName", getTradeName())
-            .append("businessName", getBusinessName())
-            .append("unitPrice", getUnitPrice())
-            .append("number", getNumber())
-            .toString();
-    }
+	public String toString() {
+		return "HyOrder [id=" + id + ", userId=" + userId + ", userPictrue=" + userPictrue + ", orderNumber="
+				+ orderNumber + ", tradeName=" + tradeName + ", businessName=" + businessName + ", unitPrice="
+				+ unitPrice + ", number=" + number + ", state=" + state + ", hyUser=" + hyUser + "]";
+	}
+
+	
 }
