@@ -3,8 +3,10 @@ package com.ruoyi.system.utils;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.ruoyi.system.annotation.EnumAnn;
@@ -61,8 +63,38 @@ public class ReflectUtil<T> {
 			return map;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
+			return null;
 		}
-		return null;
+
+	}
+
+	public List<Map<String, Object>> convertMap(@SuppressWarnings("unchecked") List<T>... lists) {
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			List<Map<String, Object>> relist = new ArrayList<>();
+			for (int i = 0; i < lists.length; i++) {
+				if (null == lists[i] || lists[i].size() == 0) {
+					return new ArrayList<>();
+				}
+				for (T t : lists[i]) {
+					Field[] fields = t.getClass().getDeclaredFields();
+					for (Field field : fields) {
+						map = new HashMap<String, Object>();
+						field.setAccessible(true);// 私有属性必须设置访问权限
+						if (null == field.get(t)) {
+							continue;
+						}
+						map.put(field.getName(), field.get(t));
+						relist.add(map);
+					}
+				}
+			}
+			return relist;
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return null;
+		}
+
 	}
 
 	/**
