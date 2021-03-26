@@ -7,10 +7,10 @@
  <body class="gray-bg">
 			  <!-- 选项卡 tabs -->
 			  <ul class="nav nav-tabs" role="tablist">
-			    <li role="presentation" class="active"><a href="#billSet" aria-controls="home" role="tab" data-toggle="tab">收款方式修改历史</a></li>
-			    <li role="presentation"> <a href="#collectionBillSet" aria-controls="profile" role="tab" data-toggle="tab">收款方式更正</a></li>
-			    <li role="presentation"><a href="#collectionTimeBillSet" aria-controls="messages" role="tab" data-toggle="tab">收费时间更正</a></li>
-			    <li role="presentation"><a href="#updateCollectionTimeBillSet" aria-controls="settings" role="tab" data-toggle="tab">修改时间修改历史</a></li>
+			    <li role="presentation" class="active"><a href="#billSet" aria-controls="home" role="tab" data-toggle="tab" onclick="initBiaoGe(1)">收款方式修改历史</a></li>
+			    <li role="presentation"> <a href="#collectionBillSet" aria-controls="profile" role="tab" data-toggle="tab" onclick="initBiaoGe(2)">收款方式更正</a></li>
+			    <li role="presentation"><a href="#collectionTimeBillSet" aria-controls="messages" role="tab" data-toggle="tab" onclick="initBiaoGe(3)">收费时间更正</a></li>
+			    <li role="presentation"><a href="#updateCollectionTimeBillSet" aria-controls="settings" role="tab" data-toggle="tab" onclick="initBiaoGe(4)">修改时间修改历史</a></li>
 			  </ul>
 			  <!-- Tab 面板 -->
 			  <div class="tab-content">
@@ -189,7 +189,7 @@
 			  </div>
 	<th:block th:include="include :: footer" />
 	<script th:inline="javascript">
-	var editFlag = [[${@permission.hasPermi('system:set:edit')}]];
+/* 	var editFlag = [[${@permission.hasPermi('system:set:edit')}]];
     var removeFlag = [[${@permission.hasPermi('system:set:remove')}]];
     var prefix = ctx + "system/billSet";
     $(function() {
@@ -238,46 +238,137 @@
         };
         $.table.init(options);
         
-        $('#collectionBillSet a').click(function (e) {
-     		 console.log("11111")
-             e.preventDefault();//阻止a链接的跳转行为
-             $(this).tab('show');//显示当前选中的链接及关联的content
-            
-           })
-    });
+    }); */
       
-    //准备tabs数据
-    var tabsData = [{
-        "id" : "collectionBillSet",
-        "url" : "collectionBillSet/list"
-    },{
-        "id" : "collectionTimeBillSet",
-        "url" : "collectionTimeBillSet/list"
-    },{
-        "id" : "updateCollectionTimeBillSet",
-        "url" : "updateCollectionTimeBillSet/list"
-    }];
+    function init1(){
+    	var editFlag = [[${@permission.hasPermi('system:set:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:set:remove')}]];
+        var prefix = ctx + "system/billSet";
+        $(function() {
+        	//收款方式修改历史
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "票据设置",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '主键',
+                    visible: false
+                },
+                {
+                    field: 'billNumber',
+                    title: '票据号码'
+                },
+                {
+                    field: 'billDate',
+                    title: '票据日期'
+                },
+                {
+                    field: 'paymentMethod',
+                    title: '收款方式'
+                },
+                {
+                    field: 'paymentMethodNew',
+                    title: '新收款方式'
+                },
+                {
+                    field: 'modifyPerson',
+                    title: '修改人'
+                },
+                {
+                    field: 'modifyTime',
+                    title: '修改时间'
+                }
+            
+              ]
+            };
+            $.table.init(options);
+            
+        });
+    };
  
- 
+    
+    
+    function init2(){
+    	var editFlag = [[${@permission.hasPermi('system:set:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:set:remove')}]];
+        var prefix = ctx + "system/collectionBillSet";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "票据设置",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '主键',
+                    visible: false
+                },
+                {
+                    field: 'hyOwnerRegistration.ownerName',
+                    title: '客户名称'
+                },
+                {
+                    field: 'hyHouseInf.houseName',
+                    title: '房屋名称'
+                },
+                {
+                    field: 'billNumber',
+                    title: '票据号码'
+                },
+                {
+                    field: 'invoiceNumber',
+                    title: '发票号码'
+                },
+               
+                {
+                    field: 'paymentMethod',
+                    title: '收款方式'
+                },
+                {
+                    field: 'paymentDate',
+                    title: '收款日期'
+                },
+                {
+                    field: 'paymentPerson',
+                    title: '收款人'
+                }
+
+              ]
+            };
+            $.table.init(options);
+        });
+    };
+    
 	 /**
 	  选项卡
   	*/
  	  $('#myTabs a').click(function (e) {
   	  e.preventDefault();
   	  $(this).tab('show');
-  	  $.ajax({
-  	 		url:url,
-  	 		type : "POST",
-  	 		success:function(data){
-  	 			console.log('success',data);
-  	 		},
-  	 		error: function(XMLHttpRequest, textStatus, errorThrown){
-  	 			console.log('error', errorThrown);
-  	 		}
-
-  	   });
   	})
-  	 
+  	function initBiaoGe(id){
+		 console.log(id);
+		 switch(id){
+		 case 1 :init1();break;
+		 case 2 :init2();break;
+		 case 3 :init3();break;
+		 case 4 :init4();break;
+		 default:init1();break;
+		 }
+	 }
 
     </script>
 </body>
