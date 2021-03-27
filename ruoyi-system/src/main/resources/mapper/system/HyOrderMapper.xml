@@ -81,6 +81,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="userId != null">user_id,</if>
             <if test="orderNumber != null">order_number,</if>
+            <if test="userPicture != null">user_Picture,</if>
             <if test="tradeName != null">trade_name,</if>
             <if test="businessName != null">business_name,</if>
             <if test="unitPrice != null">unit_price,</if>
@@ -90,6 +91,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="userId != null">#{userId},</if>
             <if test="orderNumber != null">#{orderNumber},</if>
+            <if test="userPicture != null">#{userPicture},</if>
             <if test="tradeName != null">#{tradeName},</if>
             <if test="businessName != null">#{businessName},</if>
             <if test="unitPrice != null">#{unitPrice},</if>

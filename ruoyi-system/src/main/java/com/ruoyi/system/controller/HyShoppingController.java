@@ -29,7 +29,7 @@ import io.swagger.annotations.ApiOperation;
  * @date 2021-01-06
  */
 @Controller
-@RequestMapping("/system/productDetails")
+@RequestMapping("/system/productDetailsSM")
 @Api(tags = "票据设置Controller")
 public class HyShoppingController extends BaseController {
 	private String prefix = "system/productDetails";

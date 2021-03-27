@@ -35,7 +35,7 @@ import io.swagger.annotations.ApiOperation;
  * @date 2021-01-06
  */
 @Controller
-@RequestMapping("/system/productDetail")
+@RequestMapping("/system/productDetailsCM")
 @Api(tags = "票据设置Controller")
 public class HycarouselMap2Controller extends BaseController {
 	private String prefix = "system/productDetails";
@@ -52,7 +52,7 @@ public class HycarouselMap2Controller extends BaseController {
 	@RequiresPermissions("system:set:view")
 	@GetMapping()
 	public String set() {
-		return prefix + "/carouselMap2";
+		return prefix + "/carouselMap";
 	}
 
 	@ApiOperation("查询收费比例设置列表")
@@ -69,6 +69,6 @@ public class HycarouselMap2Controller extends BaseController {
         List<HyPicture> reList = hyPictureService.selectHyPictureList(new HyPicture());
         mmap.put("reList", reList);
 
-		return prefix + "/carouselMap2";
+		return prefix + "/carouselMap";
 	}
 }
