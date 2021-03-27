@@ -7,6 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="HyOrder" id="HyOrderResult">
         <result property="id"    column="id"    />
         <result property="userId"    column="user_id"    />
+        <result property="userPicture"    column="user_picture"    />
         <result property="orderNumber"    column="order_number"    />
         <result property="tradeName"    column="trade_name"    />
         <result property="businessName"    column="business_name"    />
@@ -29,6 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select 
         o.id, 
         o.user_id, 
+        o.user_picture,
         o.order_number, 
         o.trade_name, 
         o.business_name, 

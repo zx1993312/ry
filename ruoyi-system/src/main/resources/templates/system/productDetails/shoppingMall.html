@@ -78,7 +78,8 @@ s {
 		
 			<div is="d20">
 					<hr>
-					<img th:src="${o.pcitureAddress}"><br>
+					<img th:src="'/img/'+${o.pcitureAddress}"><br>
+					<!-- <img src="/img/b79be4c7-1085-47cc-87dd-0af350f13817.png"><br> -->
 					<a th:text="${p.briefIntroduction}"></a><br>
 				<s th:text=${h.marketPrice}>门市价¥</s>	¥<b id="b1" th:text="${h.retailPrice}"></b>销售量<b id="b2" th:text="${p.soldNumber}"></b>
 			</div>

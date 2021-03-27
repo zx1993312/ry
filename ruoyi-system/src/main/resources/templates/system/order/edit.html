@@ -14,17 +14,25 @@
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">客户名称：</label>
-                <div class="col-sm-8">
-                    <input name="hyUser.name" th:field="*{hyUser.name}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
                 <label class="col-sm-3 control-label">订单编号：</label>
                 <div class="col-sm-8">
                     <input name="orderNumber" th:field="*{orderNumber}" class="form-control" type="text">
                 </div>
             </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">客户头像：</label>
+                <div class="col-sm-8">
+               <!-- th:field="*{userPicture}"  -->
+            		<input name="userPicture" th:field="*{userPicture}" type="file" multiple>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">客户名称：</label>
+                <div class="col-sm-8">
+                    <input name="hyUser.name" th:field="*{hyUser.name}" class="form-control" type="text">
+                </div>
+            </div>
+            
             <div class="form-group">    
                 <label class="col-sm-3 control-label">商品名：</label>
                 <div class="col-sm-8">
@@ -75,6 +83,7 @@
                 $.operate.save(prefix + "/edit", $('#form-order-edit').serialize());
             }
         }
+            
     </script>
 </body>
 </html>

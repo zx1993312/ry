@@ -95,7 +95,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         p.product_order_by,
         p.customer_service_tel,
         p.share_title
-       
         from 
         hy_product p
        
@@ -161,7 +160,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectHyProductVo"/>
         and p.id = #{id}
     </select>
-        
+    
+	<!-- <select id="selectMaxId" >
+		select max(id) productId from hy_product
+	</select> -->
+
     <insert id="insertHyProduct" parameterType="HyProduct" useGeneratedKeys="true" keyProperty="id">
         insert into hy_product
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -199,7 +202,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="shareTitle != null">#{shareTitle},</if>
          </trim>
     </insert>
-
     <update id="updateHyProduct" parameterType="HyProduct">
         update hy_product
         <trim prefix="SET" suffixOverrides=",">

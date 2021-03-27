@@ -1,11 +1,15 @@
 package com.ruoyi.system.service.impl;
 
 import java.util.List;
+
+import org.apache.poi.poifs.property.Parent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ruoyi.system.mapper.HyPictureMapper;
 import com.ruoyi.system.mapper.HyProductMapper;
+import com.ruoyi.system.domain.HyPicture;
 import com.ruoyi.system.domain.HyProduct;
 import com.ruoyi.system.service.IHyProductService;
 import com.ruoyi.common.core.text.Convert;
@@ -21,6 +25,8 @@ public class HyProductServiceImpl implements IHyProductService {
 	@Autowired
 	private HyProductMapper hyProductMapper;
 
+	@Autowired
+    private HyPictureMapper hyPictureMapper;
 	/**
 	 * 查询产品
 	 * 
@@ -64,7 +70,18 @@ public class HyProductServiceImpl implements IHyProductService {
 	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int insertHyProduct(HyProduct hyProduct) {
-		return hyProductMapper.insertHyProduct(hyProduct);
+		HyPicture hyPicture = new HyPicture();
+		String pcitureAddress = hyProduct.getHyPicture().getPcitureAddress();
+		hyPicture.setPcitureAddress(pcitureAddress);
+		String a = hyProductMapper.selectNextValue("hy_database", "hy_product");
+		 Long productId = Long.valueOf(a);
+			hyPicture.setProductId(productId);
+		int row = hyProductMapper.insertHyProduct(hyProduct);
+		if(row>0) {
+			return hyPictureMapper.insertHyPicture(hyPicture);
+		}
+		return 0;
+		
 	}
 
 	/**
@@ -113,4 +130,5 @@ public class HyProductServiceImpl implements IHyProductService {
 	public List<HyProduct> selectHyProductVoDistinct(HyProduct hyProduct) {
 		return hyProductMapper.selectHyProductVoDistinct(hyProduct);
 	}
+	
 }

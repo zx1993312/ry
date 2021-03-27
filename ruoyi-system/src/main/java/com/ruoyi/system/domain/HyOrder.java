@@ -25,7 +25,7 @@ public class HyOrder extends BaseEntity
     
     /** 用户头像 */
     @Excel(name = "用户头像")
-    private String userPictrue;
+    private String userPicture;
 
     /** 订单编号 */
     @Excel(name = "订单编号")
@@ -41,7 +41,7 @@ public class HyOrder extends BaseEntity
 
     /** 单价 */
     @Excel(name = "单价")
-    private BigDecimal unitPrice;
+    private Double unitPrice;
 
     /** 数量 */
     @Excel(name = "数量")
@@ -72,12 +72,14 @@ public class HyOrder extends BaseEntity
         return userId;
     }
     
-    public String getUserPictrue() {
-		return userPictrue;
+   
+
+	public String getUserPicture() {
+		return userPicture;
 	}
 
-	public void setUserPictrue(String userPictrue) {
-		this.userPictrue = userPictrue;
+	public void setUserPicture(String userPicture) {
+		this.userPicture = userPicture;
 	}
 
 	public void setOrderNumber(String orderNumber) 
@@ -107,12 +109,12 @@ public class HyOrder extends BaseEntity
     {
         return businessName;
     }
-    public void setUnitPrice(BigDecimal unitPrice) 
+    public void setUnitPrice(Double unitPrice) 
     {
         this.unitPrice = unitPrice;
     }
 
-    public BigDecimal getUnitPrice() 
+    public Double getUnitPrice() 
     {
         return unitPrice;
     }
@@ -144,7 +146,7 @@ public class HyOrder extends BaseEntity
 
 	@Override
 	public String toString() {
-		return "HyOrder [id=" + id + ", userId=" + userId + ", userPictrue=" + userPictrue + ", orderNumber="
+		return "HyOrder [id=" + id + ", userId=" + userId + ", userPicture=" + userPicture + ", orderNumber="
 				+ orderNumber + ", tradeName=" + tradeName + ", businessName=" + businessName + ", unitPrice="
 				+ unitPrice + ", number=" + number + ", state=" + state + ", hyUser=" + hyUser + "]";
 	}

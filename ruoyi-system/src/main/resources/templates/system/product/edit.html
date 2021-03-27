@@ -27,12 +27,6 @@
 				 	</select>
                 </div>
             </div>
-            <div class="form-group">
-                  <label class="col-sm-3 control-label">图片上传：</label>
-	                   <div class="file-loading">
-		            		<input id="fileinput-demo-1" type="file" multiple>
-		       		   </div>
-            </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">简介（内容）：</label>
                 <div class="col-sm-8">
@@ -40,6 +34,22 @@
                  	<div class="summernote" id="briefIntroduction"></div>
                 </div>
             </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">首页图：</label>
+                <div class="col-sm-8">
+                      <div class="file-loading">
+		            		<input id="fileinput-demo-1" type="file" multiple>
+		       		   </div>
+               	 </div>
+            </div> 
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">产品详情页轮播图：</label>
+                <div class="col-sm-8">
+                      <div class="file-loading">
+		            		<input id="fileinput-demo-2" type="file" multiple>
+		       		   </div>
+               	 </div>
+            </div> 
             <div class="form-group">    
                 <label class="col-sm-3 control-label">已售数量：</label>
                 <div class="col-sm-8">
@@ -138,6 +148,47 @@
                     }
                 }
             });
+        });
+$(document).ready(function () {
+            
+            //首页图
+            $("#fileinput-demo-1").fileinput({
+                'theme': 'explorer-fas',
+                'uploadUrl': '#',
+                overwriteInitial: false,
+                initialPreviewAsData: true,
+                initialPreview: [
+                    ""
+                ],
+                allowedFileExtensions:['jpg', 'gif', 'png']
+            });
+            
+            $("#fileinput-demo-1").on("fileuploaded", function(event, data, proviewId, index) {
+                console.info(event);
+                console.info(data);
+                console.info(proviewId);
+                console.info(index);
+            });
+            
+          //产品详情页轮播图
+            $("#fileinput-demo-2").fileinput({
+                'theme': 'explorer-fas',
+                'uploadUrl': '#',
+                overwriteInitial: false,
+                initialPreviewAsData: true,
+                initialPreview: [
+                    ""
+                ],
+                allowedFileExtensions:['jpg', 'gif', 'png']
+            });
+            
+            $("#fileinput-demo-2").on("fileuploaded", function(event, data, proviewId, index) {
+                console.info(event);
+                console.info(data);
+                console.info(proviewId);
+                console.info(index);
+            });
+            
         });
     </script>
 </body>

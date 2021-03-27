@@ -41,7 +41,6 @@ import com.ruoyi.common.core.page.TableDataInfo;
 @Api(tags = "票据设置Controller")
 public class HyUpdateCollectionBillSetController extends BaseController {
 	private String prefix = "system/collectionBillSet";
-
 	@Autowired
 	private IHyBillSetService hyBillSetService;
 

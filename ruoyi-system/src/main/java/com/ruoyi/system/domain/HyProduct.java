@@ -93,6 +93,8 @@ public class HyProduct extends BaseEntity
     @Excel(name="分享标题")
     private String shareTitle;
 
+    
+
     public void setId(Long id) 
     {
         this.id = id;
@@ -257,7 +259,8 @@ public class HyProduct extends BaseEntity
 	public void setShareTitle(String shareTitle) {
 		this.shareTitle = shareTitle;
 	}
-
+	
+	
 	@Override
 	public String toString() {
 		return "HyProduct [id=" + id + ", productName=" + productName + ", briefIntroduction=" + briefIntroduction
@@ -266,19 +269,18 @@ public class HyProduct extends BaseEntity
 				+ ", appointmentMode=" + appointmentMode + ", useDate=" + useDate + ", shopId=" + shopId + ", hyShop="
 				+ hyShop + ", hyPicture=" + hyPicture + ", hyPoster=" + hyPoster + ", limitedQuantity="
 				+ limitedQuantity + ", productOrderBy=" + productOrderBy + ", customerServiceTel=" + customerServiceTel
-				+ ", shareTitle=" + shareTitle + ", getId()=" + getId() + ", getProductName()=" + getProductName()
-				+ ", getBriefIntroduction()=" + getBriefIntroduction() + ", getSoldNumber()=" + getSoldNumber()
-				+ ", getStockNumber()=" + getStockNumber() + ", getState()=" + getState() + ", getSnapUpDate()="
-				+ getSnapUpDate() + ", getSendCodeDate()=" + getSendCodeDate() + ", getAppointmentDate()="
-				+ getAppointmentDate() + ", getAppointmentMode()=" + getAppointmentMode() + ", getUseDate()="
-				+ getUseDate() + ", getShopId()=" + getShopId() + ", getHyShop()=" + getHyShop() + ", getHyPicture()="
-				+ getHyPicture() + ", getHyPoster()=" + getHyPoster() + ", getLimitedQuantity()=" + getLimitedQuantity()
-				+ ", getProductOrderBy()=" + getProductOrderBy() + ", getCustomerServiceTel()="
-				+ getCustomerServiceTel() + ", getShareTitle()=" + getShareTitle() + ", getSearchValue()="
-				+ getSearchValue() + ", getCreateBy()=" + getCreateBy() + ", getCreateTime()=" + getCreateTime()
-				+ ", getUpdateBy()=" + getUpdateBy() + ", getUpdateTime()=" + getUpdateTime() + ", getRemark()="
-				+ getRemark() + ", getParams()=" + getParams() + ", getClass()=" + getClass() + ", hashCode()="
-				+ hashCode() + ", toString()=" + super.toString() + "]";
+				+ ", shareTitle=" + shareTitle + ", getId()=" + getId()
+				+ ", getProductName()=" + getProductName() + ", getBriefIntroduction()=" + getBriefIntroduction()
+				+ ", getSoldNumber()=" + getSoldNumber() + ", getStockNumber()=" + getStockNumber() + ", getState()="
+				+ getState() + ", getSnapUpDate()=" + getSnapUpDate() + ", getSendCodeDate()=" + getSendCodeDate()
+				+ ", getAppointmentDate()=" + getAppointmentDate() + ", getAppointmentMode()=" + getAppointmentMode()
+				+ ", getUseDate()=" + getUseDate() + ", getShopId()=" + getShopId() + ", getHyShop()=" + getHyShop()
+				+ ", getHyPicture()=" + getHyPicture() + ", getHyPoster()=" + getHyPoster() + ", getLimitedQuantity()="
+				+ getLimitedQuantity() + ", getProductOrderBy()=" + getProductOrderBy() + ", getCustomerServiceTel()="
+				+ getCustomerServiceTel() + ", getShareTitle()=" + getShareTitle() + ", getSearchValue()=" + getSearchValue() + ", getCreateBy()=" + getCreateBy()
+				+ ", getCreateTime()=" + getCreateTime() + ", getUpdateBy()=" + getUpdateBy() + ", getUpdateTime()="
+				+ getUpdateTime() + ", getRemark()=" + getRemark() + ", getParams()=" + getParams() + ", getClass()="
+				+ getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
 	}
 
 
