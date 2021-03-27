@@ -34,6 +34,14 @@ public interface HyUserMapper
      * @return 结果
      */
     public int insertHyUser(HyUser hyUser);
+    
+    /**
+     * 新增用户(测试方法)
+     * 
+     * @param hyUser 用户
+     * @return 结果
+     */
+    public int insertHyUserTest(HyUser hyUser);
 
     /**
      * 修改用户

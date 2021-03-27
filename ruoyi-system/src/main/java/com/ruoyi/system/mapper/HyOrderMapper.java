@@ -26,6 +26,15 @@ public interface HyOrderMapper
      * @return 订单集合
      */
     public List<HyOrder> selectHyOrderList(HyOrder hyOrder);
+    
+    /**
+     * 查询订单列表(测试方法)
+     * 
+     * @param hyOrder 订单
+     * @return 订单集合
+     */
+    public List<HyOrder> selectHyOrderListTest(HyOrder hyOrder);
+    
     /**
      * 查询订单装态
      * @param hyOrder

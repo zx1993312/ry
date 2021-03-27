@@ -68,7 +68,7 @@ public class ReflectUtil<T> {
 
 	}
 
-	public List<Map<String, Object>> convertMap(@SuppressWarnings("unchecked") List<T>... lists) {
+	public List<Map<String, Object>> convertMap(List<?>... lists) {
 		try {
 			Map<String, Object> map = new HashMap<String, Object>();
 			List<Map<String, Object>> relist = new ArrayList<>();
@@ -76,7 +76,7 @@ public class ReflectUtil<T> {
 				if (null == lists[i] || lists[i].size() == 0) {
 					return new ArrayList<>();
 				}
-				for (T t : lists[i]) {
+				for (Object t : lists[i]) {
 					Field[] fields = t.getClass().getDeclaredFields();
 					for (Field field : fields) {
 						map = new HashMap<String, Object>();

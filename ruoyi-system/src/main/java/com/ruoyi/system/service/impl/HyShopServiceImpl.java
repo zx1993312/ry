@@ -45,6 +45,18 @@ public class HyShopServiceImpl implements IHyShopService
     {
         return hyShopMapper.selectHyShopList(hyShop);
     }
+    
+    /**
+     * 查询店铺列表(测试方法)
+     * 
+     * @param hyShop 店铺
+     * @return 店铺
+     */
+    @Override
+    public List<HyShop> selectHyShopListTest(HyShop hyShop)
+    {
+        return hyShopMapper.selectHyShopListTest(hyShop);
+    }
 
     /**
      * 新增店铺

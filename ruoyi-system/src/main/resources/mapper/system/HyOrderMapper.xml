@@ -42,6 +42,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where 1=1
     </sql>
     
+    <sql id="selectHyOrderVoTest">
+        select 
+        o.id, 
+        o.user_id, 
+        o.order_number, 
+        o.trade_name, 
+        o.business_name, 
+        o.unit_price, 
+        o.number,
+        o.state
+        from 
+        hy_order o
+        where 1=1
+    </sql>
+    
     <sql id="selectHyOrderState">
      select 
         o.id, 
@@ -56,6 +71,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectHyOrderVo"/>
         
             <if test="hyUser.name != null and hyUser.name != ''"> and u.name = #{hyUser.name}</if>
+            <if test="orderNumber != null  and orderNumber != ''"> and order_number = #{orderNumber}</if>
+            <if test="tradeName != null  and tradeName != ''"> and trade_name like concat('%', #{tradeName}, '%')</if>
+            <if test="businessName != null  and businessName != ''"> and business_name like concat('%', #{businessName}, '%')</if>
+            <if test="unitPrice != null "> and unit_price = #{unitPrice}</if>
+            <if test="state != null and state!='' "> and state = #{state}</if>
+            <if test="number != null "> and number = #{number}</if>
+      
+    </select>
+    
+    <select id="selectHyOrderListTest" parameterType="HyOrder" resultMap="HyOrderResult">
+        <include refid="selectHyOrderVoTest"/>
+        
+            <!-- <if test="hyUser.name != null and hyUser.name != ''"> and u.name = #{hyUser.name}</if> -->
             <if test="orderNumber != null  and orderNumber != ''"> and order_number = #{orderNumber}</if>
             <if test="tradeName != null  and tradeName != ''"> and trade_name like concat('%', #{tradeName}, '%')</if>
             <if test="businessName != null  and businessName != ''"> and business_name like concat('%', #{businessName}, '%')</if>

@@ -1,6 +1,8 @@
 package com.ruoyi.system.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import com.ruoyi.system.domain.HySetMeal;
 import com.ruoyi.system.service.IHyPictureService;
 import com.ruoyi.system.service.IHyProductService;
 import com.ruoyi.system.service.IHySetMealService;
+import com.ruoyi.system.utils.ReflectUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -23,14 +26,14 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 /**
- * 票据设置Controller
+ * 商城首页Controller
  * 
  * @author Administrator
- * @date 2021-01-06
+ * @date 2021-03-24
  */
 @Controller
-@RequestMapping("/system/productDetails")
-@Api(tags = "票据设置Controller")
+@RequestMapping("/system/productDetailsSM")
+@Api(tags = "商城首页Controller")
 public class HyShoppingController extends BaseController {
 	private String prefix = "system/productDetails";
 
@@ -53,6 +56,7 @@ public class HyShoppingController extends BaseController {
 	@ApiImplicitParams({ @ApiImplicitParam(name = "hyPicture", value = "项目实体类", required = true), })
 	@GetMapping("/list")
 	public String list(HyPicture hyPicture, ModelMap mmap) {
+		
 
 		List<HyProduct> list = hyProductService.selectHyProductListTest(new HyProduct());
 		mmap.put("list", list);
@@ -63,6 +67,9 @@ public class HyShoppingController extends BaseController {
         List<HyPicture> reList = hyPictureService.selectHyPictureList(new HyPicture());
         mmap.put("reList", reList);
 
+        //ReflectUtil<?> reflectUtil = new ReflectUtil();
+        //reflectUtil.convertMap(list,relist,reList);
+        
 		return prefix + "/shoppingMall";
 	}
 }

@@ -45,6 +45,19 @@ public class HyOrderServiceImpl implements IHyOrderService
     {
         return hyOrderMapper.selectHyOrderList(hyOrder);
     }
+    
+    /**
+     * 查询订单列表(测试方法)
+     * 
+     * @param hyOrder 订单
+     * @return 订单
+     */
+    @Override
+    public List<HyOrder> selectHyOrderListTest(HyOrder hyOrder)
+    {
+        return hyOrderMapper.selectHyOrderListTest(hyOrder);
+    }
+    
 /**
  * 查询订单装态
  */

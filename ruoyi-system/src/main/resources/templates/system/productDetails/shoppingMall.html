@@ -16,7 +16,7 @@ h1 {
 	overflow: hidden;
 }
 
-span {
+#s1 {
 	font-size: 25px;
 	color: cadetblue;
 	font-family: fantasy;
@@ -38,7 +38,7 @@ select {
 
 #b1 {
 	font-size: 30px;
-	margin-right: 600px;
+	margin-right: 800px; 
 	color: red;
 }
 
@@ -51,9 +51,8 @@ s {
 	background-color: white;
 	width: 1000px;
 }
-#d20{
-	
-}
+
+
 </style>
 
 </head>
@@ -67,7 +66,8 @@ s {
 			<div th:each="o:${reList}">
 				<div>
 					<h1>商城首页</h1>
-					<span>千千惠生活</span><select>
+					<span id="s1">千千惠生活</span>
+					<select>
 					    <option>请选择</option>
 						<option>长春站</option>
 						<option>北京站</option>
@@ -76,14 +76,18 @@ s {
 					
 		       
 		
-			<div is="d20">
-					<hr>
-					<img th:src="${o.pcitureAddress}"><br>
+			<div>
+					<img width="1000px" height="400px" th:src="'/img/'+${o.pcitureAddress}"><br>
 					<a th:text="${p.briefIntroduction}"></a><br>
-				<s th:text=${h.marketPrice}>门市价¥</s>	¥<b id="b1" th:text="${h.retailPrice}"></b>销售量<b id="b2" th:text="${p.soldNumber}"></b>
+				¥<span id="b1" th:text="${h.retailPrice}"></span><br>
+				<hr> 
+				门市价:<s style="margin-right: 750px;" th:text=${h.marketPrice}></s> 销售量:<b th:text="${p.soldNumber}"></b>
+				<img width="1000px" height="400px" th:src="'/img/'+${o.pcitureAddress}"><br>
+					<a th:text="${p.briefIntroduction}"></a><br>
+				¥<span id="b1" th:text="${h.retailPrice}"></span><br>
+				<hr> 
+				门市价:<s style="margin-right: 750px;" th:text=${h.marketPrice}></s> 销售量:<b th:text="${p.soldNumber}"></b>
 			</div>
-				</div>
-				</div>
 				</div>
         </div>
 				

@@ -42,6 +42,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="telphone != null">#{telphone},</if>
          </trim>
     </insert>
+    
+     <insert id="insertHyUserTest" parameterType="HyUser" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="telphone != null">telphone,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="telphone != null">#{telphone},</if>
+         </trim>
+    </insert>
 
     <update id="updateHyUser" parameterType="HyUser">
         update hy_user
