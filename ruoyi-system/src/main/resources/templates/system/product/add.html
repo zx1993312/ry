@@ -71,6 +71,30 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/product"
         $("#form-product-add").validate({
+        	rules:{
+        		productName:{
+        			required:true,
+        			maxlength:11,
+        			number:true,
+        		},
+        		briefIntroduction:{
+        			required:true,
+        			maxlength:30,
+        		},
+        		soldNumber:{
+        			required:true,
+        			maxlength:50,
+        		},
+        		stockNumber:{
+        			required:true,
+        			maxlength:50,
+        		},
+        		state:{
+        			required:true,
+        			maxlength:10,
+        			number:true,
+        		}
+        	},
             focusCleanup: true
         });
 

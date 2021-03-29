@@ -31,6 +31,20 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/hyUser";
         $("#form-user-edit").validate({
+        	rules:{
+        		telphone:{
+        			isPhone:true,
+        			required : true,
+        		},
+       			 name:{
+        			maxlength:20,
+        			required : true,
+        		},
+        		address:{
+        			maxlength:30,
+        			required : true,
+        		}
+        	},
             focusCleanup: true
         });
 

@@ -2,6 +2,8 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
 	<th:block th:include="include :: header('岗位列表')" />
+		<th:block th:include="include :: layout-latest-css" />
+	
 </head>
 <body class="gray-bg">
 	<div class="container-div">
@@ -52,6 +54,8 @@
 		</div>
 	</div>
 	<th:block th:include="include :: footer" />
+		<th:block th:include="include :: layout-latest-js" />
+	
 	<script th:inline="javascript">
 		var editFlag = [[${@permission.hasPermi('system:post:edit')}]];
 		var removeFlag = [[${@permission.hasPermi('system:post:remove')}]];
@@ -98,6 +102,10 @@
 		            }
 		        },
 		        {
+		            field: 'dept.deptName',
+		            title: '部门',
+		        },
+		        {
 		            field: 'createTime',
 		            title: '创建时间',
 		            sortable: true
@@ -115,6 +123,14 @@
 		    };
 		    $.table.init(options);
 		});
+		
+		
+		
+		/* 用户管理-部门 */
+		function dept() {
+			var url = ctx + "system/dept";
+			$.modal.openTab("部门管理", url);
+		}
 	</script>
 </body>
 </html>

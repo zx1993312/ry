@@ -19,7 +19,7 @@
                             </li>
                             <li>
                                 <label>法人代表：</label>
-                                <input type="text" name="legalRepresentative"/>
+                                <input type="text" name="legalRepresentative" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
                             </li>
                             <li>
                                 <label>法人代表电话：</label>
@@ -27,11 +27,11 @@
                             </li>
                             <li>
                                 <label>身份证号：</label>
-                                <input type="text" name="idCard" />
+                                <input type="text" name="idCard"  onkeyup="this.value=this.value.replace(/\D/g,'')"/>
                             </li>
                             <li>
                                 <label>电子邮箱：</label>
-                                <input type="text" name="eMail"/>
+                                <input type="text" name="eMail" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>

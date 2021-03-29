@@ -162,7 +162,7 @@ public class SysPostServiceImpl implements ISysPostService
     }
 
     /**
-     * 校验岗位编码是否唯一
+     * 校验工号是否唯一
      * 
      * @param post 岗位信息
      * @return 结果

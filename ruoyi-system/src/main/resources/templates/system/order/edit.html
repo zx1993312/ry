@@ -67,6 +67,35 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/order";
         $("#form-order-edit").validate({
+        	rules:{
+        		userId:{
+        			required:true,
+        			maxlength:11,
+        			number:true,
+        		},
+        		orderNumber:{
+        			required:true,
+        			maxlength:30,
+        		},
+        		tradeName:{
+        			required:true,
+        			maxlength:50,
+        		},
+        		businessName:{
+        			required:true,
+        			maxlength:50,
+        		},
+        		unitPrice:{
+        			required:true,
+        			maxlength:10,
+        			number:true,
+        		},
+        		number:{
+        			required:true,
+        			maxlength:20,
+        			number:true,
+        		}
+        	},
             focusCleanup: true
         });
 

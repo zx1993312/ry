@@ -1,11 +1,30 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org"
-	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html>
 <head>
-<th:block th:include="include :: header('票据设置列表')" />
+	<meta charset="utf-8"> 
+	<title>Bootstrap 实例 - 标签页（Tab）插件</title>
+	<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<th:block th:include="include :: header('票据设置列表')" />
 </head>
-<body class="gray-bg">
-	<div class="container-div">
+<body>
+
+<ul id="myTab" class="nav nav-tabs">
+	<li class="active">
+		<a href="#home" data-toggle="tab"> 收款方式修改历史</a>
+	</li>
+	<li><a href="#ios" data-toggle="tab">收款方式更正</a></li>
+	<li><a href="#timegengzheng" data-toggle="tab">收费时间更正</a></li>
+	<li><a href="#timexiugaihistory" data-toggle="tab">收费时间修改历史</a></li>
+	
+</ul>
+<div id="myTabContent" class="tab-content">
+	<div class="tab-pane fade in active" id="home">
+
+
+                                                                      <!-- 1的 -->
+<div class="container-div">
 		<div class="row">
 			<div class="col-sm-12 search-collapse">
 				<form id="formId">
@@ -43,6 +62,8 @@
 			</div>
 		</div>
 	</div>
+	
+	
 	<th:block th:include="include :: footer" />
 	<script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('system:set:edit')}]];
@@ -95,5 +116,219 @@
             $.table.init(options);
         });
     </script>
+
+
+
+	</div>
+	<!-- 2的 -->
+	<div class="tab-pane fade" id="ios">
+		
+		<p>阿巴阿巴 </br>帮帮狼帮帮 帮帮狼棒狼棒</p>
+		
+	</div>
+	                                                          <!-- 3的 -->
+	<div class="tab-pane fade" id="timegengzheng">
+	
+	
+	<div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li><label>票据种类：</label> <select id="billTypes"
+								>
+									<option value="">请选择</option>
+									<option value="0">收据</option>
+									<option value="1">发票</option>
+									<option value="2">凭据</option>
+							</select></li>
+							<li><label>票据类别：</label> <input type="text"
+								name="billCategory" /></li>
+							<li><label>前缀：</label> <input type="text" name="prefix" /></li>
+							<li><label>后缀：</label> <input type="text" name="suffix" /></li>
+							<li><label>位数：</label> <input type="text" name="digit" /></li>
+							<li><label>票据样例：</label> <input type="text"
+								name="billSample" /></li>
+							<li><label>定额票据面板：</label> <input type="text"
+								name="billPanel" /></li>
+							<li><a class="btn btn-primary btn-rounded btn-sm"
+								onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm"
+								onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+
+			<div class="btn-group-sm" id="toolbar" role="group">
+		 <a class="btn btn-warning" onclick="$.table.exportExcel()"
+					shiro:hasPermission="system:set:export"> <i
+					class="fa fa-download"></i> 导出
+				</a>
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table"></table>
+			</div>
+		</div>
+	</div>
+	<th:block th:include="include :: footer" />
+	<script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:set:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:set:remove')}]];
+        var prefix = ctx + "system/collectionTimeBillSet";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "票据设置",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '主键',
+                    visible: false
+                },
+                {
+                    field: 'hyOwnerRegistration.ownerName',
+                    title: '客户名称'
+                }, 
+                {
+                    field: 'houseNum',
+                    title: '房屋标号'
+                },
+                {
+                    field: 'hyHouseInf.houseName',
+                    title: '房屋名称'
+                },
+                {
+                    field: 'billNumber',
+                    title: '票据号码'
+                },
+                {
+                    field: 'invoiceNumber',
+                    title: '发票号码'
+                },
+               
+                {
+                    field: 'paymentMethod',
+                    title: '收款方式'
+                },
+                {
+                    field: 'paymentDate',
+                    title: '收款日期'
+                },
+                {
+                    field: 'paymentPerson',
+                    title: '收款人'
+                }
+
+              ]
+            };
+            $.table.init(options);
+        });
+    </script>
+	</div>
+	                                                      <!-- 4的 -->
+	<div class="tab-pane fade" id="timexiugaihistory">
+	<div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li><label>票据日期：</label> <input type="text"
+								class="time-input" placeholder="请选择票据时间" name="billDate" /></li>
+							<li><label>新票据日期：</label> <input type="text"
+								class="time-input" placeholder="请选择票据时间" name="billDateNew" /></li>
+							<li><label>房屋编号：</label> <input type="text" name="houseNum" /></li>
+							<li><label>票据号码：</label> <input type="text"
+								name="billNumber" /></li>
+							<li><a class="btn btn-primary btn-rounded btn-sm"
+								onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm"
+								onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+
+			<div class="btn-group-sm" id="toolbar" role="group">
+				<a class="btn btn-warning" onclick="$.table.exportExcel()"
+					shiro:hasPermission="system:set:export"> <i
+					class="fa fa-download"></i> 导出
+				</a>
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table"></table>
+			</div>
+		</div>
+	</div>
+	<th:block th:include="include :: footer" />
+	<script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:updatCollectionTimeBillSet:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:updatCollectionTimeBillSet:remove')}]];
+        var prefix = ctx + "system/updateCollectionTimeBillSet";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "票据设置",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '主键',
+                    visible: false
+                },
+              
+                {
+                    field: 'billNumber',
+                    title: '票据号码'
+                },
+                {
+                    field: 'billDate',
+                    title: '票据日期'
+                },
+                {
+                    field: 'billDateNew',
+                    title: '新票据日期'
+                },
+              
+                {
+                    field: 'paymentMethod',
+                    title: '收款方式'
+                },
+              
+                {
+                    field: 'paymentPerson',
+                    title: '收款人'
+                },
+                {
+                    field: 'modifyTime',
+                    title: '修改时间'
+                }
+
+              ]
+            };
+            $.table.init(options);
+        });
+    </script>
+	</div>
+	
+</div>
+
 </body>
 </html>

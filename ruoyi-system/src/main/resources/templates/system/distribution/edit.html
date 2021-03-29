@@ -37,6 +37,26 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/distribution";
         $("#form-distribution-edit").validate({
+        	rules:{
+        		distributionId:{
+        			required:true,
+        			maxlength:11,
+        			number:true,
+        		},
+        		salesVolume:{
+        			required:true,
+        			maxlength:30,
+        		},
+        		commission:{
+        			required:true,
+        			maxlength:50,
+        		},
+        		userId:{
+        			required:true,
+        			maxlength:50,
+        		}
+        		
+        	},
             focusCleanup: true
         });
 

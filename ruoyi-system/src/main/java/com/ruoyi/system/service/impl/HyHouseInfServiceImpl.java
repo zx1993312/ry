@@ -95,12 +95,12 @@ public class HyHouseInfServiceImpl implements IHyHouseInfService {
 	}
 
 	/**
-	 * 导入楼宇数据
+	 * 导入房屋登记数据
 	 */
 	@Override
 	public String importHouseInf(List<HyHouseInf> hyHouseInfList, boolean updateSupport, String operName) {
 		if (StringUtils.isNull(hyHouseInfList) || hyHouseInfList.size() == 0) {
-			throw new BusinessException("导入楼宇数据不能为空！");
+			throw new BusinessException("导入房屋登记数据不能为空！");
 		}
 		int successNum = 0;
 		int failureNum = 0;
@@ -120,15 +120,15 @@ public class HyHouseInfServiceImpl implements IHyHouseInfService {
 			if (dataList == null || dataList.size() == 0) {
 				this.insertHyHouseInf(hyHouseInf);
 				successNum++;
-				successMsg.append("<br/>" + successNum + "、楼宇 " + hyHouseInf.getBuilding() + " 导入成功");
+				successMsg.append("<br/>" + successNum + "、房屋登记" + hyHouseInf.getBuilding() + " 导入成功");
 			} else if (updateSupport) {
 				hyHouseInf.setId(dataList.get(0).getId());
 				this.updateHyHouseInf(hyHouseInf);
 				successNum++;
-				successMsg.append("<br/>" + successNum + "、楼宇 " + hyHouseInf.getBuilding() + " 更新成功");
+				successMsg.append("<br/>" + successNum + "、房屋登记 " + hyHouseInf.getBuilding() + " 更新成功");
 			} else {
 				failureNum++;
-				failureMsg.append("<br/>" + failureNum + "、楼宇 " + hyHouseInf.getBuilding() + " 已存在");
+				failureMsg.append("<br/>" + failureNum + "、房屋登记 " + hyHouseInf.getBuilding() + " 已存在");
 			}
 		}
 		if (failureNum > 0) {

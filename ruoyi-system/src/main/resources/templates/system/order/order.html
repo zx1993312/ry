@@ -29,7 +29,7 @@
                             </li>
                             <li>
                                 <label>单价：</label>
-                                <input type="text" name="unitPrice"/>
+                                <input type="text" name="unitPrice" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
                             </li>
                             <li>
                                 <label>数量：</label>

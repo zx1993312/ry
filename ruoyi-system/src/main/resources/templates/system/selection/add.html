@@ -68,6 +68,37 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/selection"
         $("#form-selection-add").validate({
+        	rules:{
+        		productState:{
+        			
+        			required : true,
+        		},
+        		homePageRecommendation:{
+        			maxlength:20,
+        			required : true,
+        		},
+        		showMap:{
+        			maxlength:30,
+        			required : true,
+        		},
+        		singleCommodity:{
+        			maxlength:30,
+        			required : true,
+        		},
+        		productType:{
+        			maxlength:30,
+        			required : true,
+        		},
+        		startMail:{
+        			maxlength:30,
+        			required : true,
+        		},
+        		productId:{
+        			maxlength:30,
+        			required : true,
+        			number:true,
+        		}
+        	},
             focusCleanup: true
         });
 
