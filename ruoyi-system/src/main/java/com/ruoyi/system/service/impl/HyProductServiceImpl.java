@@ -93,7 +93,29 @@ public class HyProductServiceImpl implements IHyProductService {
 	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int updateHyProduct(HyProduct hyProduct) {
-		return hyProductMapper.updateHyProduct(hyProduct);
+		System.out.println("=========hyProduct==========="+hyProduct);
+		HyPicture hyPicture = new HyPicture();
+		Long productId = hyProduct.getId();
+		System.out.println("=========productId==========="+productId);
+		hyPicture.setProductId(productId);
+		System.out.println("=========hyPicture.getProductId()==========="+hyPicture.getProductId());
+		List<HyPicture> list = hyPictureMapper.selectHyPictureList(hyPicture);
+		System.out.println("=========HyPicture的list==========="+list);
+		HyPicture hy = (HyPicture)list.get(0);
+		System.out.println("=========hy==========="+hy);
+		Long id = hy.getId();
+		System.out.println("=========HyPicture的id==========="+id);
+		hyPicture.setId(id);
+		String pcitureAddress = hyProduct.getHyPicture().getPcitureAddress();
+		hyPicture.setPcitureAddress(pcitureAddress);
+		System.out.println("=========HyPicture==========="+hyPicture);
+		System.out.println("=========hyProduct==========="+hyProduct);
+		int row = hyPictureMapper.updateHyPicture(hyPicture);
+		if(row>0) {
+			return hyProductMapper.updateHyProduct(hyProduct);
+		}
+		return 0;
+		
 	}
 
 	/**
