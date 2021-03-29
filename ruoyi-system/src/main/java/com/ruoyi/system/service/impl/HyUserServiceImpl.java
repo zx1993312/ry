@@ -58,6 +58,19 @@ public class HyUserServiceImpl implements IHyUserService
     {
         return hyUserMapper.insertHyUser(hyUser);
     }
+    
+    /**
+     * 新增用户(测试方法)
+     * 
+     * @param hyUser 用户
+     * @return 结果
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public int insertHyUserTest(HyUser hyUser)
+    {
+        return hyUserMapper.insertHyUserTest(hyUser);
+    }
 
     /**
      * 修改用户

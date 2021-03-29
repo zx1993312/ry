@@ -12,11 +12,11 @@
                         <ul>
                             <li>
                                 <label>零售价：</label>
-                                <input type="text" name="retailPrice"/>
+                                <input type="text" name="retailPrice" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
                             </li>
                             <li>
                                 <label>门市价：</label>
-                                <input type="text" name="marketPrice"/>
+                                <input type="text" name="marketPrice" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
                             </li>
                             <li>
                                 <label>套餐名称：</label>

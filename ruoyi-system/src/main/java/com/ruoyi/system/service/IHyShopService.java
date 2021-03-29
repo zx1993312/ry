@@ -30,6 +30,13 @@ public interface IHyShopService
     public List<HyShop> selectHyShopVoDistinct(HyShop hyShop);
 
     /**
+     * 查询店铺列表（测试方法）
+     * @param hyShop
+     * @return
+     */
+    public List<HyShop> selectHyShopListTest(HyShop hyShop);
+    
+    /**
      * 新增店铺
      * 
      * @param hyShop 店铺

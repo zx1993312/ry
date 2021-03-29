@@ -40,7 +40,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</where>
 	</select>
 	
-		<select id="selectDictDataListOr" parameterType="SysDictData" resultMap="SysDictDataResult">
+	<select id="selectDictDataListOr" parameterType="SysDictData" resultMap="SysDictDataResult">
 	    <include refid="selectDictDataVo"/>
 		<where>
 		    <if test="dictType != null and dictType != ''">

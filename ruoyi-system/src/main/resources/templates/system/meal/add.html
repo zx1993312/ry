@@ -48,6 +48,26 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/meal"
         $("#form-meal-add").validate({
+        	rules:{
+        		setMealContent:{
+        			required:true,
+        			maxlength:11,
+        			number:true,
+        		},
+        		retailPrice:{
+        			required:true,
+        			maxlength:30,
+        		},
+        		marketPrice:{
+        			required:true,
+        			maxlength:50,
+        		},
+        		setMealName:{
+        			required:true,
+        			maxlength:50,
+        		}
+        		
+        	},
             focusCleanup: true
         });
 

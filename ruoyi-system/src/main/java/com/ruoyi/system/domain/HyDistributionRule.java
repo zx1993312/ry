@@ -9,7 +9,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 分销规则对象 hy_distribution_rule
  * 
  * @author Administrator
- * @date 2021-03-09
+ * @date 2021-03-29
  */
 public class HyDistributionRule extends BaseEntity
 {
@@ -18,24 +18,29 @@ public class HyDistributionRule extends BaseEntity
     /** 分销规则id */
     private Long id;
 
-    /** 销售额 */
-    @Excel(name = "销售额")
-    private String salesVolume;
-
-    /** 上级提成 */
-    @Excel(name = "上级提成")
+    /** 一级固定金额 */
+    @Excel(name = "一级固定金额")
     private String commissionFromSuperior;
 
-    /** 顶级提成 */
-    @Excel(name = "顶级提成")
+    /** 二级固定金额 */
+    @Excel(name = "二级固定金额")
     private String topCommission;
 
-    /** 分销id */
-    @Excel(name = "分销id")
-    private Long distributionId;
-    /**是否开启分销*/
-    @Excel(name="是否开启分销")
-    private String startDistribution;
+    /** 产品id */
+    @Excel(name = "产品id")
+    private Long productId;
+
+    /** 三级固定金额 */
+    @Excel(name = "三级固定金额")
+    private String threeLevelDistribution;
+
+    /** 是否开启分销 */
+    @Excel(name = "是否开启分销")
+    private Integer startDistribution;
+
+    /** 分销类型 */
+    @Excel(name = "分销类型")
+    private String distributionType;
 
     public void setId(Long id) 
     {
@@ -45,15 +50,6 @@ public class HyDistributionRule extends BaseEntity
     public Long getId() 
     {
         return id;
-    }
-    public void setSalesVolume(String salesVolume) 
-    {
-        this.salesVolume = salesVolume;
-    }
-
-    public String getSalesVolume() 
-    {
-        return salesVolume;
     }
     public void setCommissionFromSuperior(String commissionFromSuperior) 
     {
@@ -73,37 +69,53 @@ public class HyDistributionRule extends BaseEntity
     {
         return topCommission;
     }
-    public void setDistributionId(Long distributionId) 
+    public void setProductId(Long productId) 
     {
-        this.distributionId = distributionId;
+        this.productId = productId;
     }
 
-    public Long getDistributionId() 
+    public Long getProductId() 
     {
-        return distributionId;
+        return productId;
+    }
+    public void setThreeLevelDistribution(String threeLevelDistribution) 
+    {
+        this.threeLevelDistribution = threeLevelDistribution;
     }
 
-    public String getStartDistribution() {
-		return startDistribution;
-	}
+    public String getThreeLevelDistribution() 
+    {
+        return threeLevelDistribution;
+    }
+    public void setStartDistribution(Integer startDistribution) 
+    {
+        this.startDistribution = startDistribution;
+    }
 
-	public void setStartDistribution(String startDistribution) {
-		this.startDistribution = startDistribution;
-	}
+    public Integer getStartDistribution() 
+    {
+        return startDistribution;
+    }
+    public void setDistributionType(String distributionType) 
+    {
+        this.distributionType = distributionType;
+    }
 
-	@Override
-	public String toString() {
-		return "HyDistributionRule [id=" + id + ", salesVolume=" + salesVolume + ", commissionFromSuperior="
-				+ commissionFromSuperior + ", topCommission=" + topCommission + ", distributionId=" + distributionId
-				+ ", startDistribution=" + startDistribution + ", getId()=" + getId() + ", getSalesVolume()="
-				+ getSalesVolume() + ", getCommissionFromSuperior()=" + getCommissionFromSuperior()
-				+ ", getTopCommission()=" + getTopCommission() + ", getDistributionId()=" + getDistributionId()
-				+ ", getStartDistribution()=" + getStartDistribution() + ", getSearchValue()=" + getSearchValue()
-				+ ", getCreateBy()=" + getCreateBy() + ", getCreateTime()=" + getCreateTime() + ", getUpdateBy()="
-				+ getUpdateBy() + ", getUpdateTime()=" + getUpdateTime() + ", getRemark()=" + getRemark()
-				+ ", getParams()=" + getParams() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
-				+ ", toString()=" + super.toString() + "]";
-	}
+    public String getDistributionType() 
+    {
+        return distributionType;
+    }
 
-
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+            .append("id", getId())
+            .append("commissionFromSuperior", getCommissionFromSuperior())
+            .append("topCommission", getTopCommission())
+            .append("productId", getProductId())
+            .append("threeLevelDistribution", getThreeLevelDistribution())
+            .append("startDistribution", getStartDistribution())
+            .append("distributionType", getDistributionType())
+            .toString();
+    }
 }

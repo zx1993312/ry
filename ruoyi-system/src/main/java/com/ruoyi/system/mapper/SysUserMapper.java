@@ -97,6 +97,14 @@ public interface SysUserMapper
      * @return 结果
      */
     public int insertUser(SysUser user);
+    
+    /**
+     * 新增用户信息(测试方法)
+     * 
+     * @param user 用户信息
+     * @return 结果
+     */
+    public int insertUserTest(SysUser user);
 
     /**
      * 校验用户名称是否唯一

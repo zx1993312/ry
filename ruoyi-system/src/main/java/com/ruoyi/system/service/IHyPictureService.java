@@ -26,6 +26,8 @@ public interface IHyPictureService
      * @return 图片集合
      */
     public List<HyPicture> selectHyPictureList(HyPicture hyPicture);
+    
+    
     /**
      * 根据图片地址查询图片列表
      * @param hyPicture

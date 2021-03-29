@@ -9,10 +9,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="name"    column="name"    />
         <result property="address"    column="address"    />
         <result property="telphone"    column="telphone"    />
+        <result property="remark"    column="remark"    />
     </resultMap>
 
     <sql id="selectHyUserVo">
-        select id, name, address, telphone from hy_user
+        select id, name, address, telphone, remark from hy_user
     </sql>
 
     <select id="selectHyUserList" parameterType="HyUser" resultMap="HyUserResult">
@@ -21,6 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
             <if test="address != null  and address != ''"> and address = #{address}</if>
             <if test="telphone != null "> and telphone = #{telphone}</if>
+            <if test="remark != null and remark != ''"> and remark = #{remark}</if>
         </where>
     </select>
     
@@ -35,11 +37,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="name != null">name,</if>
             <if test="address != null">address,</if>
             <if test="telphone != null">telphone,</if>
+            <if test="remark != null">remark,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="name != null">#{name},</if>
             <if test="address != null">#{address},</if>
             <if test="telphone != null">#{telphone},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+    
+     <insert id="insertHyUserTest" parameterType="HyUser" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="telphone != null">telphone,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="telphone != null">#{telphone},</if>
+            <if test="remark != null">#{remark},</if>
          </trim>
     </insert>
 
@@ -49,6 +67,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="name != null">name = #{name},</if>
             <if test="address != null">address = #{address},</if>
             <if test="telphone != null">telphone = #{telphone},</if>
+            <if test="remark != null">remark = #{remark},</if>
         </trim>
         where id = #{id}
     </update>
