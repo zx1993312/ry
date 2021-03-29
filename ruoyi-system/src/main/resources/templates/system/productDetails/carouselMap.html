@@ -52,6 +52,11 @@
 	#a20{
 		font-size:18px;
 		margin-left: 1000px;
+		margin-left: 1040px;
+	}
+	#a20{
+		font-size:18px;
+		margin-left: 950px;
 	}
 </style>
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
@@ -80,9 +85,7 @@
     <div class="carousel-inner">
         <div class="item active">
             <img style="width: 1920px;height: 550px;" th:src="'/img/'+${o.pcitureAddress}" alt="First slide">
-            <div class="carousel-caption"></div>
-        </div>
-        
+  <div>
     </div>
     <!-- 轮播（Carousel）导航 -->
     <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
@@ -104,9 +107,10 @@
     <span id=p5 th:text="${h.setMealContent}">套餐中“一小”是指身高在1.2m以下的儿童</span>
     <div id="d4" class="well">商家信息</div>
     
-    <span id="p6" class="glyphicon glyphicon-map-marker"></span><span id="p7" th:text="${s.shopAddress}">艾博丽思大酒店<br>长春市高新区硅谷大街888号 （轻轨三号线电台街站对面）</span>
-    <a id="a20" class="glyphicon glyphicon-earphone" th:text="${s.contactNumber}">电话</a>
-  </div>
+    
+    
+    <span id="p6" class="glyphicon glyphicon-map-marker"></span><span id="p7">艾博丽思大酒店<br>长春市高新区硅谷大街888号 （轻轨三号线电台街站对面）</span>
+    <a id="a20" class="glyphicon glyphicon-earphone" th:text=${s.contactNumber}>电话</a>
   </div>
   </div>
   </div>
