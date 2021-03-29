@@ -4,8 +4,11 @@ import javax.validation.constraints.*;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
+import com.ruoyi.common.annotation.Excels;
 import com.ruoyi.common.annotation.Excel.ColumnType;
+import com.ruoyi.common.annotation.Excel.Type;
 import com.ruoyi.common.core.domain.BaseEntity;
+import com.ruoyi.common.core.domain.entity.SysDept;
 
 /**
  * 岗位表 sys_post
@@ -39,7 +42,41 @@ public class SysPost extends BaseEntity
     /** 用户是否存在此岗位标识 默认不存在 */
     private boolean flag = false;
 
-    public Long getPostId()
+    /** 部门ID */
+    @Excel(name = "部门编号", type = Type.IMPORT)
+    private Long deptId;
+    /**直属上级*/
+    @Excel(name="直属上级")
+    private String directSuperior;
+    /**直属下级*/
+    @Excel(name="直属下级")
+    private String directSubordinate;
+    
+    /** 部门对象 */
+    @Excels({
+        @Excel(name = "部门名称", targetAttr = "deptName", type = Type.EXPORT),
+        @Excel(name = "部门负责人", targetAttr = "leader", type = Type.EXPORT)
+    })
+    private SysDept dept;
+    
+ 
+    public Long getDeptId() {
+		return deptId;
+	}
+
+	public void setDeptId(Long deptId) {
+		this.deptId = deptId;
+	}
+
+	public SysDept getDept() {
+		return dept;
+	}
+
+	public void setDept(SysDept dept) {
+		this.dept = dept;
+	}
+
+	public Long getPostId()
     {
         return postId;
     }
@@ -104,7 +141,23 @@ public class SysPost extends BaseEntity
         this.flag = flag;
     }
 
-    @Override
+    public String getDirectSuperior() {
+		return directSuperior;
+	}
+
+	public void setDirectSuperior(String directSuperior) {
+		this.directSuperior = directSuperior;
+	}
+
+	public String getDirectSubordinate() {
+		return directSubordinate;
+	}
+
+	public void setDirectSubordinate(String directSubordinate) {
+		this.directSubordinate = directSubordinate;
+	}
+
+	@Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("postId", getPostId())

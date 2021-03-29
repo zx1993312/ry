@@ -6,25 +6,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <resultMap type="HyDistributionRule" id="HyDistributionRuleResult">
         <result property="id"    column="id"    />
-        <result property="salesVolume"    column="sales_volume"    />
         <result property="commissionFromSuperior"    column="commission_from_superior"    />
         <result property="topCommission"    column="top_commission"    />
-        <result property="distributionId"    column="distribution_id"    />
+        <result property="productId"    column="product_id"    />
+        <result property="threeLevelDistribution"    column="three_level_distribution"    />
         <result property="startDistribution"    column="start_distribution"    />
+        <result property="distributionType"    column="distribution_type"    />
     </resultMap>
 
     <sql id="selectHyDistributionRuleVo">
-        select id, sales_volume, commission_from_superior, top_commission,start_distribution, distribution_id from hy_distribution_rule
+        select id, commission_from_superior, top_commission, product_id, three_level_distribution, start_distribution, distribution_type from hy_distribution_rule
     </sql>
 
     <select id="selectHyDistributionRuleList" parameterType="HyDistributionRule" resultMap="HyDistributionRuleResult">
         <include refid="selectHyDistributionRuleVo"/>
         <where>  
-            <if test="salesVolume != null  and salesVolume != ''"> and sales_volume = #{salesVolume}</if>
             <if test="commissionFromSuperior != null  and commissionFromSuperior != ''"> and commission_from_superior = #{commissionFromSuperior}</if>
             <if test="topCommission != null  and topCommission != ''"> and top_commission = #{topCommission}</if>
-            <if test="distributionId != null "> and distribution_id = #{distributionId}</if>
+            <if test="productId != null "> and product_id = #{productId}</if>
+            <if test="threeLevelDistribution != null  and threeLevelDistribution != ''"> and three_level_distribution = #{threeLevelDistribution}</if>
             <if test="startDistribution != null "> and start_distribution = #{startDistribution}</if>
+            <if test="distributionType != null  and distributionType != ''"> and distribution_type = #{distributionType}</if>
         </where>
     </select>
     
@@ -36,29 +38,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="insertHyDistributionRule" parameterType="HyDistributionRule" useGeneratedKeys="true" keyProperty="id">
         insert into hy_distribution_rule
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="salesVolume != null">sales_volume,</if>
             <if test="commissionFromSuperior != null">commission_from_superior,</if>
             <if test="topCommission != null">top_commission,</if>
-            <if test="distributionId != null">distribution_id,</if>
+            <if test="productId != null">product_id,</if>
+            <if test="threeLevelDistribution != null">three_level_distribution,</if>
             <if test="startDistribution != null">start_distribution,</if>
+            <if test="distributionType != null">distribution_type,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="salesVolume != null">#{salesVolume},</if>
             <if test="commissionFromSuperior != null">#{commissionFromSuperior},</if>
             <if test="topCommission != null">#{topCommission},</if>
-            <if test="distributionId != null">#{distributionId},</if>
+            <if test="productId != null">#{productId},</if>
+            <if test="threeLevelDistribution != null">#{threeLevelDistribution},</if>
             <if test="startDistribution != null">#{startDistribution},</if>
+            <if test="distributionType != null">#{distributionType},</if>
          </trim>
     </insert>
 
     <update id="updateHyDistributionRule" parameterType="HyDistributionRule">
         update hy_distribution_rule
         <trim prefix="SET" suffixOverrides=",">
-            <if test="salesVolume != null">sales_volume = #{salesVolume},</if>
             <if test="commissionFromSuperior != null">commission_from_superior = #{commissionFromSuperior},</if>
             <if test="topCommission != null">top_commission = #{topCommission},</if>
-            <if test="distributionId != null">distribution_id = #{distributionId},</if>
+            <if test="productId != null">product_id = #{productId},</if>
+            <if test="threeLevelDistribution != null">three_level_distribution = #{threeLevelDistribution},</if>
             <if test="startDistribution != null">start_distribution = #{startDistribution},</if>
+            <if test="distributionType != null">distribution_type = #{distributionType},</if>
         </trim>
         where id = #{id}
     </update>

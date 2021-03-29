@@ -4,7 +4,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.ruoyi.system.mapper.HyDistributionRuleMapper;
 import com.ruoyi.system.domain.HyDistributionRule;
 import com.ruoyi.system.service.IHyDistributionRuleService;
@@ -14,7 +13,7 @@ import com.ruoyi.common.core.text.Convert;
  * 分销规则Service业务层处理
  * 
  * @author Administrator
- * @date 2021-03-09
+ * @date 2021-03-29
  */
 @Service
 public class HyDistributionRuleServiceImpl implements IHyDistributionRuleService 

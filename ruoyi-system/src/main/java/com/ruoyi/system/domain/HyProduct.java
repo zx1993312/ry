@@ -21,6 +21,8 @@ public class HyProduct extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
+
+    
     /** 产品id */
     private Long id;
 
@@ -92,7 +94,10 @@ public class HyProduct extends BaseEntity
     /**分享标题*/
     @Excel(name="分享标题")
     private String shareTitle;
-
+    /**销售状态*/
+    @Excel(name="销售状态")
+    private String salState;
+    
     public void setId(Long id) 
     {
         this.id = id;
@@ -256,6 +261,14 @@ public class HyProduct extends BaseEntity
 
 	public void setShareTitle(String shareTitle) {
 		this.shareTitle = shareTitle;
+	}
+
+	public String getSalState() {
+		return salState;
+	}
+
+	public void setSalState(String salState) {
+		this.salState = salState;
 	}
 
 	@Override

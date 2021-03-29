@@ -17,7 +17,10 @@ import com.ruoyi.common.core.text.Convert;
  * @date 2021-03-06
  */
 @Service
-public class HyProductServiceImpl implements IHyProductService {
+public class HyProductServiceImpl implements /*继承*/ IHyProductService /*service接口*/ {
+	/**
+	 * 注入mapper接口
+	 */
 	@Autowired
 	private HyProductMapper hyProductMapper;
 
@@ -50,9 +53,11 @@ public class HyProductServiceImpl implements IHyProductService {
 	 * @param hyProduct 产品
 	 * @return 产品
 	 */
+
 	@Override
 	public List<HyProduct> selectHyProductListTest(HyProduct hyProduct) {
-		return hyProductMapper.selectHyProductListTest(hyProduct);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/**
@@ -113,4 +118,5 @@ public class HyProductServiceImpl implements IHyProductService {
 	public List<HyProduct> selectHyProductVoDistinct(HyProduct hyProduct) {
 		return hyProductMapper.selectHyProductVoDistinct(hyProduct);
 	}
+
 }

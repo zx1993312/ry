@@ -54,12 +54,5 @@ public class HyPicture extends BaseEntity
         return productId;
     }
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("pcitureAddress", getPcitureAddress())
-            .append("productId", getProductId())
-            .toString();
-    }
+  
 }
