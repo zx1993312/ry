@@ -29,6 +29,9 @@ public class HyUser extends BaseEntity
     /** 电话 */
     @Excel(name = "电话")
     private Long telphone;
+    /**备注*/
+    @Excel(name="备注")
+    private String remark;
 
     public void setId(Long id) 
     {
@@ -67,7 +70,15 @@ public class HyUser extends BaseEntity
         return telphone;
     }
 
-    @Override
+    public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	@Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
