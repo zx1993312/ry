@@ -29,7 +29,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 分销规则Controller
  * 
  * @author Administrator
- * @date 2021-03-09
+ * @date 2021-03-29
  */
 @Controller
 @RequestMapping("/system/rule")

@@ -38,7 +38,12 @@
                             </li>
                             <li>
                                 <label>状态：</label>
-                                <input type="text" name="state"/>
+                                <select name="state" class="form-control " >
+                                <option value=""></option>
+                                <option value="0">上架</option>
+                                <option value="1">下架</option>
+                              
+                                </select>
                             </li>
                             <li>
                                 <label>限购数量：</label>
@@ -73,6 +78,7 @@
                 <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:product:remove">
                     <i class="fa fa-remove"></i> 删除
                 </a>
+                <a class="btn btn-success" onclick="add()">添加分销规则</a>
              <!--    <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:product:export">
                     <i class="fa fa-download"></i> 导出
                 </a> -->
@@ -123,7 +129,15 @@
                 },
                 {
                     field: 'state',
-                    title: '状态'
+                    title: '状态',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case 0 : value =  "上架";break;
+	                    	case 1 : value =  "下架";break;
+	                
+	                	}
+		            	return value;
+		            }
                 },
                 {
                     field: 'snapUpDate',
@@ -162,6 +176,10 @@
             };
             $.table.init(options);
         });
+        
+        function add(){
+        	window.location.href=ctx+'system/rule';
+        }
     </script>
 </body>
 </html>

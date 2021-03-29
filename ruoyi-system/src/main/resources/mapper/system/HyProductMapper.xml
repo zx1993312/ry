@@ -21,6 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="productOrderBy"    column="product_order_by"    />
         <result property="customerServiceTel"    column="customer_service_tel"    />
         <result property="shareTitle"    column="share_title"    />
+        <result property="salState"    column="sal_state"    />
          <association property="hyShop" column="id"
 			javaType="HyShop" resultMap="HyShopResult" />
          <association property="hyPicture" column="id"
@@ -66,6 +67,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         p.product_order_by,
         p.customer_service_tel,
         p.share_title,
+        p.sal_state,
         s.shop_name,
         a.pciture_address,
         c.poster_address
@@ -79,25 +81,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <sql id="selectHyProductVoTest">
         select 
-        p.id, 
-        p.product_name, 
-        p.brief_introduction, 
-        p.sold_number, 
-        p.stock_number, 
-        p.state, 
-        p.snap_up_date, 
-        p.send_code_date,  
-        p.appointment_date,  
-        p.appointment_mode, 
-        p.use_date, 
-        p.shop_id,
-        p.limited_quantity,
-        p.product_order_by,
-        p.customer_service_tel,
-        p.share_title
-       
+        id, 
+        product_name, 
+        brief_introduction, 
+        sold_number, 
+        stock_number, 
+       state, 
+       snap_up_date, 
+        send_code_date,  
+        appointment_date,  
+        appointment_mode, 
+      use_date, 
+        shop_id,
+        limited_quantity,
+       product_order_by,
+       customer_service_tel,
+       share_title,
+        sal_state
         from 
-        hy_product p
+        hy_product 
        
         where 1=1
     </sql>
@@ -114,8 +116,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectHyProductList" parameterType="HyProduct" resultMap="HyProductResult">
         <include refid="selectHyProductVo"/>
-            <if test="id != null"> and id = #{id}</if>
-            <if test="productName != null  and productName != ''"> and  p.product_name like concat('%', #{productName}, '%')</if>
+            <if test="id != null"> and p.product_name like concat('%', #{productName}, '%')</if>
             <if test="briefIntroduction != null  and briefIntroduction != ''"> and  p.brief_introduction = #{briefIntroduction}</if>
             <if test="soldNumber != null "> and  p.sold_number = #{soldNumber}</if>
             <if test="stockNumber != null "> and  p.stock_number = #{stockNumber}</if>
@@ -130,6 +131,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="productOrderBy != null "> and  p.product_order_by = #{productOrderBy}</if>
             <if test="customerServiceTel != null and customerServiceTel != '' "> and  p.customer_service_tel = #{customerServiceTel}</if>
             <if test="shareTitle != null "> and  p.share_title = #{shareTitle}</if>
+            <if test="salState != null "> and  p.sal_state = #{salState}</if>
             <if test="hyShop.shopName != null and hyShop.shopName != ''"> and s.shop_name = #{hyShop.shopName}</if>
     </select>
     
@@ -151,6 +153,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="productOrderBy != null "> and product_order_by = #{productOrderBy}</if>
             <if test="customerServiceTel != null "> and customer_service_tel = #{customerServiceTel}</if>
             <if test="shareTitle != null "> and share_title = #{shareTitle}</if>
+            <if test="salState != null "> and sal_state = #{salState}</if>
     </select>
     
      <select id="selectHyProductVoDistinct" parameterType="HyProduct" resultMap="HyProductResult">
@@ -180,6 +183,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="productOrderBy != null">product_order_by,</if>
             <if test="customerServiceTel != null">customer_service_tel,</if>
             <if test="shareTitle != null">share_title,</if>
+            <if test="salState != null">sal_state,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="productName != null">#{productName},</if>
@@ -197,6 +201,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="productOrderBy != null">#{productOrderBy},</if>
             <if test="customerServiceTel != null">#{customerServiceTel},</if>
             <if test="shareTitle != null">#{shareTitle},</if>
+            <if test="salState != null">#{salState},</if>
          </trim>
     </insert>
 
@@ -218,6 +223,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="productOrderBy != null "> and product_order_by = #{productOrderBy}</if>
             <if test="customerServiceTel != null "> and customer_service_tel = #{customerServiceTel}</if>
             <if test="shareTitle != null "> and share_title = #{shareTitle}</if>
+            <if test="salState != null "> and sal_state = #{salState}</if>
         </trim>
         where id = #{id}
     </update>

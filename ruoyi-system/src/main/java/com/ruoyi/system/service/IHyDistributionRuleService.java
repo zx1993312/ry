@@ -7,7 +7,7 @@ import com.ruoyi.system.domain.HyDistributionRule;
  * 分销规则Service接口
  * 
  * @author Administrator
- * @date 2021-03-09
+ * @date 2021-03-29
  */
 public interface IHyDistributionRuleService 
 {
