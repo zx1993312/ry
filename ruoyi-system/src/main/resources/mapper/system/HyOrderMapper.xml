@@ -110,7 +110,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="unitPrice != null">unit_price = #{unitPrice},</if>
             <if test="state != null">state = #{state},</if>
             <if test="number != null">number = #{number},</if>
-            <if test="userPicture != null">user_picture = #{userPicture},</if>
+            <if test="userPicture != null and userPicture !=''">user_picture = #{userPicture},</if>
         </trim>
         where id = #{id}
     </update>

@@ -13,13 +13,13 @@
          <div class="form-group">    
                 <label class="col-sm-3 control-label">客户id：</label>
                 <div class="col-sm-8">
-                    <input name="userId" class="form-control" type="text">
+                    <input id="userId" name="userId" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">订单编号：</label>
                 <div class="col-sm-8">
-                    <input name="orderNumber" class="form-control" type="text">
+                    <input id="orderNumber" name="orderNumber" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">
@@ -29,34 +29,40 @@
 		        </div>
             </div>
 		            <input type="hidden" name="userPicture" id="remarks" value="">
+		    <div class="form-group">    
+                <label class="col-sm-3 control-label">客户名称：</label>
+                <div class="col-sm-8">
+                    <input id="Username" name="hyUser.name" class="form-control" type="text">
+            </div>
+            </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">商品名：</label>
                 <div class="col-sm-8">
-                    <input name="tradeName" class="form-control" type="text">
+                    <input id="tradeName" name="tradeName" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">商家名：</label>
                 <div class="col-sm-8">
-                    <input name="businessName" class="form-control" type="text">
+                    <input id="businessName" name="businessName" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">单价：</label>
                 <div class="col-sm-8">
-                    <input name="unitPrice" class="form-control" type="text">
+                    <input id="unitPrice" name="unitPrice" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">数量：</label>
                 <div class="col-sm-8">
-                    <input name="number" class="form-control" type="text">
+                    <input id="number" name="number" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">状态：</label>
                 <div class="col-sm-8">
-               <select name="state" class="form-control " >
+               <select id="state" name="state" class="form-control " >
                       <option value="">请选择</option>
                       <option value="0">全部订单</option>
                       <option value="1">已支付</option>
@@ -82,26 +88,30 @@
 
         function submitHandler() {
         	var imagepath = $("#remarks").val();
+        	var userId = $("#userId").val();
+        	var orderNumber = $("#orderNumber").val();
+        	var Username = $("#Username").val();
+        	var tradeName = $("#tradeName").val();
+        	var businessName = $("#businessName").val();
+        	var unitPrice = $("#unitPrice").val();
+        	var number = $("#number").val();
+        	var state = $("#state").val();
         	$.ajax({
                 type: "post",
                 datatype: "json",
                 url:  prefix + '/add',
-                data: {"userPicture": imagepath},
+                data: {"userPicture": imagepath,"orderNumber":orderNumber,"hyUser.name":Username,
+                	"tradeName":tradeName,"businessName":businessName,"unitPrice":unitPrice,"number":number,"state":state},
                 async: true,
                 success: function (result) {
                     //console.log(result);
-
-                    if (result.flag == 'success') {
-                        $("#noticeTable").bootstrapTable('refresh');
-                        result.flag
-                    } else {
-                    	result.flag
-                    }
+					if (typeof callback == "function") {
+						 $("#noticeTable").bootstrapTable('refresh');
+       	                callback(result)						;
+       	            }
+       	            $.operate.successCallback(result);
                 }
             });
-            if ($.validate.form()) {
-                $.operate.save(prefix + "/add", $('#form-order-add').serialize());
-            }
         }
        
         $("input[name='snapUpDate']").datetimepicker({

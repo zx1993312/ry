@@ -16,7 +16,7 @@
                 <div class="col-sm-8">
                     <select name="hyShop.shopName" id="hyShop.shopName" th:field="*{hyShop.shopName}" class="form-control" th:with="type=${@shop.getShop()}">
 						<option value="">请选择</option>
-						<option th:if="data!=null" th:each="data:${type}" th:text="${data.shopName}" th:value="${data.id}"></option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.shopName}" th:value="${data.shopName}"></option>
 				 	</select>
                 </div>
             </div>
@@ -25,7 +25,7 @@
                 <div class="col-sm-8">
                   	<select name="productName" id="productName" th:field="*{productName}" class="form-control" th:with="type=${@product.getProduct()}">
 						<option value="">请选择</option>
-						<option th:if="data!=null" th:each="data:${type}" th:text="${data.productName}" th:value="${data.id}"></option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.productName}" th:value="${data.productName}"></option>
 				 	</select>
                 </div>
             </div>

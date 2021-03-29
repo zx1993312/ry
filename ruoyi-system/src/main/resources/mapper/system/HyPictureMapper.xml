@@ -47,7 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateHyPicture" parameterType="HyPicture">
         update hy_picture
         <trim prefix="SET" suffixOverrides=",">
-            <if test="pcitureAddress != null">pciture_address = #{pcitureAddress},</if>
+            <if test="pcitureAddress != null and pcitureAddress !=''">pciture_address = #{pcitureAddress},</if>
             <if test="productId != null">product_id = #{productId},</if>
         </trim>
         where id = #{id}

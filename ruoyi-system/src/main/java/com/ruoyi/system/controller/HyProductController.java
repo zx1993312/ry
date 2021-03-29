@@ -114,6 +114,7 @@ public class HyProductController extends BaseController
     @ResponseBody
     public AjaxResult addSave(HyProduct hyProduct)
     {
+    	System.out.println("===================hyProduct==================="+hyProduct);
         return toAjax(hyProductService.insertHyProduct(hyProduct));
     }
 
@@ -128,6 +129,7 @@ public class HyProductController extends BaseController
     public String edit(@PathVariable("id") Long id, ModelMap mmap)
     {
         HyProduct hyProduct = hyProductService.selectHyProductById(id);
+        System.out.println("==============hyProduct============"+hyProduct);
         mmap.put("hyProduct", hyProduct);
         return prefix + "/edit";
     }

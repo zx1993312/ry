@@ -75,6 +75,7 @@ public class HyOrderServiceImpl implements IHyOrderService
     @Override
     public int updateHyOrder(HyOrder hyOrder)
     {
+    	System.out.println("===============hyOrder============="+hyOrder);
         return hyOrderMapper.updateHyOrder(hyOrder);
     }
 

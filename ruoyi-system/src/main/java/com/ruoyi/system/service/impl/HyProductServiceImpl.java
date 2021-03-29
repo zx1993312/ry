@@ -74,8 +74,8 @@ public class HyProductServiceImpl implements IHyProductService {
 		String pcitureAddress = hyProduct.getHyPicture().getPcitureAddress();
 		hyPicture.setPcitureAddress(pcitureAddress);
 		String a = hyProductMapper.selectNextValue("hy_database", "hy_product");
-		 Long productId = Long.valueOf(a);
-			hyPicture.setProductId(productId);
+		Long productId = Long.valueOf(a);
+		hyPicture.setProductId(productId);
 		int row = hyProductMapper.insertHyProduct(hyProduct);
 		if(row>0) {
 			return hyPictureMapper.insertHyPicture(hyPicture);
