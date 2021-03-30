@@ -52,7 +52,9 @@ public class HyOrder extends BaseEntity
     /**用户表*/
     @Excel(name="用户表")
     private HyUser hyUser;
-
+    /**图片地址*/
+    @Excel(name="图片地址")
+    private String fileName;
     public void setId(Long id) 
     {
         this.id = id;
@@ -143,13 +145,24 @@ public class HyOrder extends BaseEntity
 	public void setState(String state) {
 		this.state = state;
 	}
+	
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
 
 	@Override
 	public String toString() {
 		return "HyOrder [id=" + id + ", userId=" + userId + ", userPicture=" + userPicture + ", orderNumber="
 				+ orderNumber + ", tradeName=" + tradeName + ", businessName=" + businessName + ", unitPrice="
-				+ unitPrice + ", number=" + number + ", state=" + state + ", hyUser=" + hyUser + "]";
+				+ unitPrice + ", number=" + number + ", state=" + state + ", hyUser=" + hyUser + ", fileName="
+				+ fileName + "]";
 	}
+
+	
 
 	
 }

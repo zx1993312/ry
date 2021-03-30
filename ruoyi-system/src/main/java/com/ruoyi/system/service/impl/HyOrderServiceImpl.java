@@ -1,5 +1,6 @@
 package com.ruoyi.system.service.impl;
 
+import java.io.File;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -115,5 +116,26 @@ public class HyOrderServiceImpl implements IHyOrderService
     {
         return hyOrderMapper.deleteHyOrderById(id);
     }
+    /**
+     * 删除上传图片
+     * @return
+     */
+	@Override
+	public boolean deleteFile(String fileName) {
+		String fileName1 = "C:\\Users\\Administrator\\Desktop\\hykj\\ry\\ruoyi-admin\\src\\main\\resources\\static\\img\\"+fileName;
+		File file = new File(fileName1);
+		System.out.println("================file================"+file);
+		//判断文件存不存在
+		if(!file.exists()){
+			System.out.println("删除文件失败："+fileName+"不存在！");
+			return false;
+		}else{
+			//判断这是不是一个文件，ps：有可能是文件夹
+			if(file.isFile()){
+				return file.delete();
+			}
+		}
+		return false;
+	}
 
 }

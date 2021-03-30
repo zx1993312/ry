@@ -92,6 +92,9 @@ public class HyProduct extends BaseEntity
     /**分享标题*/
     @Excel(name="分享标题")
     private String shareTitle;
+    /**图片地址*/
+    @Excel(name="图片地址")
+    private String fileName;
 
     
 
@@ -261,6 +264,14 @@ public class HyProduct extends BaseEntity
 	}
 	
 	
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
 	@Override
 	public String toString() {
 		return "HyProduct [id=" + id + ", productName=" + productName + ", briefIntroduction=" + briefIntroduction
@@ -269,7 +280,7 @@ public class HyProduct extends BaseEntity
 				+ ", appointmentMode=" + appointmentMode + ", useDate=" + useDate + ", shopId=" + shopId + ", hyShop="
 				+ hyShop + ", hyPicture=" + hyPicture + ", hyPoster=" + hyPoster + ", limitedQuantity="
 				+ limitedQuantity + ", productOrderBy=" + productOrderBy + ", customerServiceTel=" + customerServiceTel
-				+ ", shareTitle=" + shareTitle + ", getId()=" + getId()
+				+ ", shareTitle=" + shareTitle + ", fileName=" + fileName + ", getId()=" + getId()
 				+ ", getProductName()=" + getProductName() + ", getBriefIntroduction()=" + getBriefIntroduction()
 				+ ", getSoldNumber()=" + getSoldNumber() + ", getStockNumber()=" + getStockNumber() + ", getState()="
 				+ getState() + ", getSnapUpDate()=" + getSnapUpDate() + ", getSendCodeDate()=" + getSendCodeDate()
@@ -277,11 +288,14 @@ public class HyProduct extends BaseEntity
 				+ ", getUseDate()=" + getUseDate() + ", getShopId()=" + getShopId() + ", getHyShop()=" + getHyShop()
 				+ ", getHyPicture()=" + getHyPicture() + ", getHyPoster()=" + getHyPoster() + ", getLimitedQuantity()="
 				+ getLimitedQuantity() + ", getProductOrderBy()=" + getProductOrderBy() + ", getCustomerServiceTel()="
-				+ getCustomerServiceTel() + ", getShareTitle()=" + getShareTitle() + ", getSearchValue()=" + getSearchValue() + ", getCreateBy()=" + getCreateBy()
-				+ ", getCreateTime()=" + getCreateTime() + ", getUpdateBy()=" + getUpdateBy() + ", getUpdateTime()="
-				+ getUpdateTime() + ", getRemark()=" + getRemark() + ", getParams()=" + getParams() + ", getClass()="
-				+ getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+				+ getCustomerServiceTel() + ", getShareTitle()=" + getShareTitle() + ", getFileName()=" + getFileName()
+				+ ", getSearchValue()=" + getSearchValue() + ", getCreateBy()=" + getCreateBy() + ", getCreateTime()="
+				+ getCreateTime() + ", getUpdateBy()=" + getUpdateBy() + ", getUpdateTime()=" + getUpdateTime()
+				+ ", getRemark()=" + getRemark() + ", getParams()=" + getParams() + ", getClass()=" + getClass()
+				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
 	}
+
+	
 
 
 }

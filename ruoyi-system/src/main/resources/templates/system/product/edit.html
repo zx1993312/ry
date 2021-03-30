@@ -44,6 +44,7 @@
             </div>
             <input type="hidden" name="hyPicture.pcitureAddress" id="remarks" value="">
             <img alt="" th:src="'/img/'+*{hyPicture.pcitureAddress}" width="200px" height="200px">
+            <input id="deleteFile" th:value="*{hyPicture.pcitureAddress}" type="hidden">
             <div class="form-group">    
                 <label class="col-sm-3 control-label">已售数量：</label>
                 <div class="col-sm-8">
@@ -91,27 +92,23 @@
         	var soldNumber = $("#soldNumber").val();
         	var stockNumber = $("#stockNumber").val();
         	var state = $("#state").val();
+        	var deleteFile = $("#deleteFile").val();
         	$.ajax({
                 type: "post",
                 datatype: "json",
                 url:  prefix + '/edit',
                 data: {"hyPicture.pcitureAddress": imagepath,"id":id,"productName":productName,"briefIntroduction":briefIntroduction
-                	,"soldNumber":soldNumber,"stockNumber":stockNumber,"state":state,"hyShop.shopName":shop},
+                	,"soldNumber":soldNumber,"stockNumber":stockNumber,"state":state,"hyShop.shopName":shop,"fileName":deleteFile},
                 async: true,
                 success: function (result) {
                     //console.log(result);
 
-                    if (result.flag == 'success') {
-                        $("#noticeTable").bootstrapTable('refresh');
-                        result.flag
-                    } else {
-                    	result.flag
-                    }
+                	if (typeof callback == "function") {
+    	                callback(result);
+    	            }
+    	            $.operate.successCallback(result);
                 }
             });
-            if ($.validate.form()) {
-                $.operate.save(prefix + "/edit", $('#form-product-edit').serialize());
-            }
         }
        
         $("input[name='snapUpDate']").datetimepicker({

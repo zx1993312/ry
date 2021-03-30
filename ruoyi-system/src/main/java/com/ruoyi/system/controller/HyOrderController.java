@@ -143,8 +143,15 @@ public class HyOrderController extends BaseController
     @PostMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(HyOrder hyOrder)
-    {
-        return toAjax(hyOrderService.updateHyOrder(hyOrder));
+    {	
+    	String fileName = hyOrder.getFileName();
+    	boolean b = hyOrderService.deleteFile(fileName);
+    	if(b) {
+    		return toAjax(hyOrderService.updateHyOrder(hyOrder));
+    	}
+    	return toAjax(false);
+    	
+       
     }
 
     /**

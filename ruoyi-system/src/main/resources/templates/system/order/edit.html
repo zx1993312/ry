@@ -30,8 +30,8 @@
 		        </div>
             </div>
             <input type="hidden" name="userPicture" id="remarks" value="">
-            <input type="hidden" name="deleteFile" id="deleteFile" th:field="*{userPicture}" value="">
             <img alt="" th:src="'/img/'+*{userPicture}" width="200px" height="200px">
+            <input id="deleteFile" th:value="*{userPicture}" type="hidden">
            <div class="form-group">    
                 <label class="col-sm-3 control-label">客户名称：</label>
                 <div class="col-sm-8">
@@ -111,17 +111,12 @@
                 success: function (result) {
                     //console.log(result);
 
-                    if (result.flag == 'success') {
-                        $("#noticeTable").bootstrapTable('refresh');
-                        result.flag
-                    } else {
-                    	result.flag
-                    }
+                	if (typeof callback == "function") {
+    	                callback(result);
+    	            }
+    	            $.operate.successCallback(result);
                 }
             });
-            if ($.validate.form()) {
-                $.operate.save(prefix + "/edit", $('#form-order-edit').serialize());
-            }
         }
        
         $("input[name='snapUpDate']").datetimepicker({

@@ -72,5 +72,10 @@ public interface IHyOrderService
      * @return 结果
      */
     public int deleteHyOrderById(Long id);
+    /**
+     * 删除上传图片
+     * @return
+     */
+	public boolean deleteFile(String fileName);
 
 }
