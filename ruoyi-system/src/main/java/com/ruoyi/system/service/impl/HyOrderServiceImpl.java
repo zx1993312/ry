@@ -101,6 +101,14 @@ public class HyOrderServiceImpl implements IHyOrderService
     @Override
     public int deleteHyOrderByIds(String ids)
     {
+    	String ida [] = ids.split(",");
+    	for(String id:ida) {
+    		Long idd = Long.valueOf(id);
+    		HyOrder hyOrder = hyOrderMapper.selectHyOrderById(idd);
+    		String fileName = hyOrder.getUserPicture();
+    		deleteFile(fileName);
+    	}
+    	
         return hyOrderMapper.deleteHyOrderByIds(Convert.toStrArray(ids));
     }
 

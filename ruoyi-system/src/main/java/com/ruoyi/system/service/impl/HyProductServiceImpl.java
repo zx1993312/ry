@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ruoyi.system.mapper.HyPictureMapper;
 import com.ruoyi.system.mapper.HyProductMapper;
+import com.ruoyi.system.domain.HyOrder;
 import com.ruoyi.system.domain.HyPicture;
 import com.ruoyi.system.domain.HyProduct;
 import com.ruoyi.system.service.IHyProductService;
@@ -128,7 +129,22 @@ public class HyProductServiceImpl implements IHyProductService {
 	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int deleteHyProductByIds(String ids) {
-		return hyProductMapper.deleteHyProductByIds(Convert.toStrArray(ids));
+		String ida [] = ids.split(",");
+    	for(String id:ida) {
+    		Long idd = Long.valueOf(id);
+    		HyProduct hyProduct = hyProductMapper.selectHyProductById(idd);
+    		String fileName = hyProduct.getHyPicture().getPcitureAddress();
+    		deleteFile(fileName);
+    		HyPicture hyPicture = new HyPicture();
+    		hyPicture.setProductId(idd);
+    		List<HyPicture> list =  hyPictureMapper.selectHyPictureList(hyPicture);
+    		hyPicture = list.get(0);
+    		Long idf = hyPicture.getId();
+    		hyPictureMapper.deleteHyPictureById(idf);
+    	}
+    	
+    		return hyProductMapper.deleteHyProductByIds(Convert.toStrArray(ids));
+    	
 	}
 
 	/**
