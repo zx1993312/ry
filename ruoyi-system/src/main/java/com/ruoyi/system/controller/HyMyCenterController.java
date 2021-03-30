@@ -1,0 +1,62 @@
+package com.ruoyi.system.controller;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.system.domain.HyOrder;
+import com.ruoyi.system.domain.HyPicture;
+import com.ruoyi.system.domain.HyProduct;
+import com.ruoyi.system.domain.HySetMeal;
+import com.ruoyi.system.service.IHyOrderService;
+import com.ruoyi.system.service.IHyPictureService;
+import com.ruoyi.system.service.IHyProductService;
+import com.ruoyi.system.service.IHySetMealService;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+
+/**
+ * 个人中心Controller
+ * 
+ * @author Administrator
+ * @date 2021-03-24
+ */
+@Controller
+@RequestMapping("/system/productDetailsMC")
+@Api(tags = "个人中心Controller")
+public class HyMyCenterController extends BaseController {
+	private String prefix = "system/productDetails";
+
+	@Autowired
+	private IHyOrderService hyOrderService;
+	
+
+	@RequiresPermissions("system:set:view")
+	@GetMapping()
+	public String set() {
+		return prefix + "/myCenter";
+	}
+
+	@ApiOperation("查询订单设置列表")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyOrder", value = "项目实体类", required = true), })
+	@GetMapping("/list")
+	public String list(HyOrder hyOrder, ModelMap mmap) {
+		
+		List<HyOrder> list = hyOrderService.selectHyOrderListTest(new HyOrder());
+		mmap.put("list", list);
+
+		return prefix + "/myCenter";
+		
+	}
+}

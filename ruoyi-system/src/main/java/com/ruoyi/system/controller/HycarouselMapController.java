@@ -37,7 +37,7 @@ import io.swagger.annotations.ApiOperation;
 @Controller
 @RequestMapping("/system/productDetailsCM")
 @Api(tags = "票据设置Controller")
-public class HycarouselMap2Controller extends BaseController {
+public class HycarouselMapController extends BaseController {
 	private String prefix = "system/productDetails";
 
 	@Autowired

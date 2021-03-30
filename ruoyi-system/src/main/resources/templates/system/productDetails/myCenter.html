@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+<th:block th:include="include :: header('字典数据列表')" />
+<meta charset="UTF-8">
+<title>个人中心</title>
+<style type="text/css">
+#d1{
+	display: block;
+	margin: 0 auto;
+	width: 50%;
+	height: 100%;
+	background-color: #e8e8e8;
+}
+.c1{
+	margin-left: 25px;
+}
+.c2{
+	margin-left: 40px;
+}
+a{
+	color: black;
+}
+</style>
+</head>
+<body>
+<center><h1>个人中心</h1></center>
+<div id="d1">
+
+<!-- 装图片的div -->
+<div style="width= 50%;height: 200px; background-color: red; ">
+<img width="100%" height="200px" src="https://img2.baidu.com/it/u=4277010421,1238629898&fm=11&fmt=auto&gp=0.jpg">
+</div>
+
+<!-- 装订单的div -->
+<div style="width: 80%; height: 100px; background-color: white; margin: 0 auto; overflow: hidden;">
+	
+	<div style="margin-left: 170px; margin-top: 20px;">
+		<span class="c2"><img width="30px" height="30px" src="https://img1.baidu.com/it/u=1385089890,3175888085&fm=26&fmt=auto&gp=0.jpg"></img></span>
+		<span class="c2"><img width="30px" height="30px" src="https://img2.baidu.com/it/u=3351608471,1510713889&fm=26&fmt=auto&gp=0.jpg"></img></span>
+		<span class="c2"><img width="30px" height="30px" src="https://img2.baidu.com/it/u=1656488848,1479139087&fm=26&fmt=auto&gp=0.jpg"></img></span>
+		<span class="c2"><img width="30px" height="30px" src="https://img2.baidu.com/it/u=2825026119,3923935707&fm=26&fmt=auto&gp=0.jpg"></img></span>
+	</div>
+	<div style="margin-left: 180px;">
+		<span class="c1"><a style="text-decoration: none;" onclick="orderAll()">全部订单</a></span>
+		<span class="c1"><a style="text-decoration: none;" href="">已支付</a></span>
+		<span class="c1"><a style="text-decoration: none;" href="">已预约</a></span>
+		<span class="c1"><a style="text-decoration: none;" href="">已完成</a></span>
+	</div>
+	
+	
+	</div>
+	
+	<!-- 空div，用来放用户查询的全部订单 -->
+	<div>
+	<div style="width: 100%;height: 300px;">
+		<table style="margin-left: 180px; font-size: 20px;" th:each="p:${list}" border="1" caption="商品订单">
+			<tr>
+				<th>订单编号</th>
+				<th>商品名</th>
+				<th>商家名</th>
+				<th>单价</th>
+				<th>数量</th>
+				<th>订单状态</th>
+			</tr>
+			<tr>
+				<td th:text="${p.orderNumber}"></td>
+				<td th:text="${p.tradeName}"></td>
+				<td th:text="${p.businessName}"></td>
+				<td th:text="${p.unitPrice}"></td>
+				<td th:text="${p.number}"></td>
+				<td th:text="${p.state}"></td>
+			</tr>
+		</table>
+	</div>
+	</div>
+</div>
+
+<th:block th:include="include :: footer" />
+<script type="text/javascript">
+$("#orderAll").click(function(){
+	orderAll();
+});
+</script>
+</body>
+</html>
