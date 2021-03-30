@@ -71,6 +71,7 @@ public class HyProductController extends BaseController
     {
         startPage();
         List<HyProduct> list = hyProductService.selectHyProductList(hyProduct);
+        System.out.println("===================list=================="+list);
         return getDataTable(list);
     }
 

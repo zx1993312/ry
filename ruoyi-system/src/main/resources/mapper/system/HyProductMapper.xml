@@ -13,8 +13,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="state"    column="state"    />
         <result property="snapUpDate"    column="snap_up_date"    />
         <result property="sendCodeDate"    column="send_code_date"    />
-        <result property="appointmentDate"    column=" appointment_date"    />  
-        <result property="appointmentMode"    column=" appointment_mode"    />
+        <result property="appointmentDate"    column="appointment_date"    />  
+        <result property="appointmentMode"    column="appointment_mode"    />
         <result property="useDate"    column="use_date"    />
         <result property="shopId"    column="shop_id"    />
         <result property="limitedQuantity"    column="limited_quantity"    />
@@ -121,8 +121,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="state != null "> and  p.state = #{state}</if>
             <if test="snapUpDate != null "> and  p.snap_up_date = #{snapUpDate}</if>
             <if test="sendCodeDate != null "> and  p.send_code_date = #{sendCodeDate}</if>
-            <if test=" appointmentDate != null "> and   p.appointment_date = #{ appointmentDate}</if>
-            <if test=" appointmentMode != null  and appointmentMode != ''"> and   p.appointment_mode = #{ appointmentMode}</if>
+            <if test=" appointmentDate != null "> and   p.appointment_date = #{appointmentDate}</if>
+            <if test=" appointmentMode != null  and appointmentMode != ''"> and   p.appointment_mode = #{appointmentMode}</if>
             <if test="useDate != null "> and  p.use_date = #{useDate}</if>
             <if test="shopId != null "> and  p.shop_id = #{shopId}</if>
             <if test="limitedQuantity != null "> and  p.limited_quantity = #{limitedQuantity}</if>
@@ -142,8 +142,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="state != null "> and state = #{state}</if>
             <if test="snapUpDate != null "> and snap_up_date = #{snapUpDate}</if>
             <if test="sendCodeDate != null "> and send_code_date = #{sendCodeDate}</if>
-            <if test=" appointmentDate != null "> and  appointment_date = #{ appointmentDate}</if>
-            <if test=" appointmentMode != null  and appointmentMode != ''"> and  appointment_mode = #{ appointmentMode}</if>
+            <if test=" appointmentDate != null "> and  appointment_date = #{appointmentDate}</if>
+            <if test=" appointmentMode != null  and appointmentMode != ''"> and  appointment_mode = #{appointmentMode}</if>
             <if test="useDate != null "> and use_date = #{useDate}</if>
             <if test="shopId != null "> and shop_id = #{shopId}</if>
             <if test="limitedQuantity != null "> and limited_quantity = #{limitedQuantity}</if>
@@ -175,8 +175,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="state != null">state,</if>
             <if test="snapUpDate != null">snap_up_date,</if>
             <if test="sendCodeDate != null">send_code_date,</if>
-            <if test=" appointmentDate != null"> appointment_date,</if>
-            <if test=" appointmentMode != null"> appointment_mode,</if>
+            <if test=" appointmentDate != null">appointment_date,</if>
+            <if test=" appointmentMode != null">appointment_mode,</if>
             <if test="useDate != null">use_date,</if>
             <if test="shopId != null">shop_id,</if>
             <if test="limitedQuantity != null">limited_quantity,</if>
@@ -212,8 +212,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="state != null">state = #{state},</if>
             <if test="snapUpDate != null">snap_up_date = #{snapUpDate},</if>
             <if test="sendCodeDate != null">send_code_date = #{sendCodeDate},</if>
-            <if test=" appointmentDate != null"> appointment_date = #{ appointmentDate},</if>
-            <if test=" appointmentMode != null"> appointment_mode = #{ appointmentMode},</if>
+            <if test=" appointmentDate != null">appointment_date = #{ appointmentDate},</if>
+            <if test=" appointmentMode != null">appointment_mode = #{ appointmentMode},</if>
             <if test="useDate != null">use_date = #{useDate},</if>
             <if test="shopId != null">shop_id = #{shopId},</if>
             <if test="limitedQuantity != null "> and limited_quantity = #{limitedQuantity}</if>

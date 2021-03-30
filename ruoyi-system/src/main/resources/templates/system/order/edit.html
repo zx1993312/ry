@@ -30,6 +30,7 @@
 		        </div>
             </div>
             <input type="hidden" name="userPicture" id="remarks" value="">
+            <input type="hidden" name="deleteFile" id="deleteFile" th:field="*{userPicture}" value="">
             <img alt="" th:src="'/img/'+*{userPicture}" width="200px" height="200px">
            <div class="form-group">    
                 <label class="col-sm-3 control-label">客户名称：</label>
@@ -99,12 +100,13 @@
         	var unitPrice = $("#unitPrice").val();
         	var number = $("#number").val();
         	var state = $("#state").val();
+        	var deleteFile = $("#deleteFile").val();
         	$.ajax({
                 type: "post",
                 datatype: "json",
                 url:  prefix + '/edit',
-                data: {"userPicture": imagepath,"id":id,"orderNumber":orderNumber,"hyUser.name":Username
-                	,"tradeName":tradeName,"businessName":businessName,"unitPrice":unitPrice,"number":number,"state":state},
+                data: {"userPicture": imagepath,"id":id,"orderNumber":orderNumber,"hyUser.name":Username,"tradeName":tradeName,
+                	"businessName":businessName,"unitPrice":unitPrice,"number":number,"state":state,"fileName":deleteFile},
                 async: true,
                 success: function (result) {
                     //console.log(result);
