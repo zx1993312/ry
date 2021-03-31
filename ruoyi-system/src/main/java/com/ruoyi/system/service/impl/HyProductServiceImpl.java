@@ -39,6 +39,15 @@ public class HyProductServiceImpl implements IHyProductService {
 	public HyProduct selectHyProductById(Long id) {
 		return hyProductMapper.selectHyProductById(id);
 	}
+	
+	/**
+	 * 查询产品，图片，套餐名，简介根据id
+	 * @param id
+	 * @return
+	 */
+	public HyProduct selectHyId(Long id) {
+		return hyProductMapper.selectHyId(id);
+	}
 
 	/**
 	 * 查询产品列表

@@ -17,7 +17,12 @@ public interface IHyProductService {
 	 * @return 产品
 	 */
 	public HyProduct selectHyProductById(Long id);
-
+	/**
+	 * 查询产品，图片，套餐名，简介根据id
+	 * @param id
+	 * @return
+	 */
+	public HyProduct selectHyId(Long id);
 	/**
 	 * 查询产品列表
 	 * 

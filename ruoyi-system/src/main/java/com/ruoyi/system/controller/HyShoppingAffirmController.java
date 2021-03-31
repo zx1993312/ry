@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,8 +27,6 @@ import io.swagger.annotations.ApiOperation;
 
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
  * 商品确认Controller
@@ -87,15 +84,10 @@ public class HyShoppingAffirmController extends BaseController
 	@GetMapping("/list")
 	public String list(HyPicture hyPicture, ModelMap mmap) {
 		
-    	List<HyProduct> list = hyProductService.selectHyProductListTest(new HyProduct());
-		mmap.put("list", list);
+    	HyProduct product = hyProductService.selectHyId(Long.valueOf(9));
+		mmap.put("product", product);
 		
-        List<HySetMeal> relist = hySetMealService.selectHySetMealVoTest(new HySetMeal());
-        mmap.put("relist", relist);
-		
-        List<HyPicture> reList = hyPictureService.selectHyPictureList(new HyPicture());
-        mmap.put("reList", reList);
-
+       
         
 		return prefix + "/shoppingAffirm";
 

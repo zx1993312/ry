@@ -42,10 +42,10 @@ a{
 		<span class="c2"><img width="30px" height="30px" src="https://img2.baidu.com/it/u=2825026119,3923935707&fm=26&fmt=auto&gp=0.jpg"></img></span>
 	</div>
 	<div style="margin-left: 180px;">
-		<span class="c1"><a style="text-decoration: none;" onclick="orderAll()">全部订单</a></span>
-		<span class="c1"><a style="text-decoration: none;" href="">已支付</a></span>
-		<span class="c1"><a style="text-decoration: none;" href="">已预约</a></span>
-		<span class="c1"><a style="text-decoration: none;" href="">已完成</a></span>
+		<span class="c1"><a style="text-decoration: none;" onclick="orderAll(0)">全部订单</a></span>
+		<span class="c1"><a style="text-decoration: none;" onclick="orderAll(1)">已支付</a></span>
+		<span class="c1"><a style="text-decoration: none;" onclick="orderAll(2)">已预约</a></span>
+		<span class="c1"><a style="text-decoration: none;" onclick="orderAll(3)">已完成</a></span>
 	</div>
 	
 	
@@ -78,9 +78,30 @@ a{
 
 <th:block th:include="include :: footer" />
 <script type="text/javascript">
-$("#orderAll").click(function(){
-	orderAll();
-});
+	function orderAll(value){
+		console.log(value);
+		$.ajax({
+            url: '/system/productDetailsMC/list',
+            data: {state : value},
+            cache: false,
+            contentType: false,
+            processData: false,
+            type: 'POST',
+            success: function (result) {
+                if (result.code == web_status.SUCCESS) {
+                    $.modal.closeAll();
+                    $.modal.alertSuccess(result.msg);
+                    $.table.refresh();
+                } else if (result.code == web_status.WARNING) {
+                    $.modal.enable();
+                    $.modal.alertWarning(result.msg)
+                } else {
+                    $.modal.enable();
+                    $.modal.alertError(result.msg);
+                }
+            }
+        });
+	}
 </script>
 </body>
 </html>

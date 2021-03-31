@@ -80,6 +80,8 @@ public class HyProduct extends BaseEntity
     /**详细信息表（海报表）*/
     @Excel(name="详细信息表（海报表）")
     private HyPoster hyPoster;
+    
+    private HySetMeal hySetMeal;
     /**限购数量*/
     @Excel(name="限购数量")
     private Integer limitedQuantity;
@@ -264,6 +266,14 @@ public class HyProduct extends BaseEntity
 	}
 	
 	
+	public HySetMeal getHySetMeal() {
+		return hySetMeal;
+	}
+
+	public void setHySetMeal(HySetMeal hySetMeal) {
+		this.hySetMeal = hySetMeal;
+	}
+
 	public String getFileName() {
 		return fileName;
 	}
@@ -271,7 +281,6 @@ public class HyProduct extends BaseEntity
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
-
 	@Override
 	public String toString() {
 		return "HyProduct [id=" + id + ", productName=" + productName + ", briefIntroduction=" + briefIntroduction

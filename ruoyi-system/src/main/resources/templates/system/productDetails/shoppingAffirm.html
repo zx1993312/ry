@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
+<th:block th:include="include :: header('字典数据列表')" />
 <meta charset="UTF-8">
 <title>商品确认</title>
 <style>
@@ -27,7 +28,7 @@
 #i2 {
 	color: red;
 	position: absolute;
-	left: 78%;
+	left: 70%;
 	font-size: 20px;
 }
 
@@ -52,7 +53,7 @@
 
 .btn-numbox .count {
 	overflow: hidden;
-	margin: 0 16px 0 900px;
+	margin: 0 16px 0 600px;
 }
 
 .btn-numbox .count .num-jian, .input-num, .num-jia {
@@ -85,14 +86,14 @@
 	height: 60px;
 	background-color: green;
 	display: inline-block;
-	margin-left: 510px;
+	margin-left: 430px;
 	overflow: hidden;
 	
 }
 #a1{
 	font-size: 20px;
 	color: white;
-	margin:20px 0 0 200px;
+	margin:20px 0 0 190px;
 	 
 }
 </style>
@@ -104,75 +105,113 @@
 <body>
   	<center><h1>商品确认</h1></center>
   <div class="container">
-  	<div class="well"><a>《返回</a></div>
-	  	<div id=d1>
-	  		姓        名:<input class="in" type="text" placeholder="请输入姓名"/><i id="i1" class="fa fa-address-card" aria-hidden="true"></i></a><br>
-	  		<hr>
-	  		手机号码:<input class="in" type="text" placeholder="请输入手机号码"/><br>
-	  		<hr>
-	  		备          注:<input class="in" type="text" placeholder="请输入备注"/><br>
-	  		<hr>
-	  	</div>
+  	<form class="form-horizontalm" id="form-user-add">
+	  	<div class="well"><a href="/system/productDetailsCM/list">《返回</a></div>
+		  	<div id=d1>
+		  		姓        名:<input name="name" class="in" type="text" placeholder="请输入姓名" /><i id="i1" class="fa fa-address-card" aria-hidden="true"></i></a><br>
+		  		<hr>
+		  		手机号码:<input name="telphone" class="in" type="text" placeholder="请输入手机号码"/><br>
+		  		<hr>
+		  		备          注:<input name="remark"  class="in" type="text" placeholder="请输入备注"/><br>
+		  		<hr>
+		  	</div>
+		  	
+		  	<div th:object="${product}" id=d2>
+		  		<h3>商品信息</h3>
+		  		<span><img th:src="'/img/'+*{hyPicture.pcitureAddress}" style="width: 50px; height: 50px;"></span>
+		  		<span><b th:text="*{briefIntroduction}" id="t1">爆品回归！【经开区·川井料理】日料控的天下！99元立抢门市价1022的超值套餐，一次吃到爽！龙虾鲍鱼+寿喜锅+手握+寿司~海鲜盛宴哦</b></span>
+		  		<hr style="border:1px dashed #000; height:1px">
+		  		<span>
+			  		<span th:text="*{hySetMeal.setMealName}" style="font-size: 20px;">川井日料套餐</span>
+			  		<span type="text" id="i2" th:text="*{hySetMeal.retailPrice}" th:value="*{hySetMeal.retailPrice}">
+		  		</span>
+		  		</span>
+		  		<hr style="border:1px dashed #000; height:1px">
+			<span style="font-size: 17px">数量</span>
+			<div style="width: 160px; margin-left: 80%">
+				 
+				<input style="width: 50px; height: 38px; border: 2px white; float: left;" type="button" value="-" onclick="reductionOf(this)" /> 
+				 
+				<input id="number"style="text-align: center; width: 50px; height: 32px; float: left;" type="text" value="1" onblur="checkNumber(this)" /> 
+				 
+				<input style="width: 50px; height: 38px; border: 2px white;" type="button" value="+" onclick="add(this)" />
+ 
+			</div>
+			<input type="hidden" id="price" th:value="*{hySetMeal.retailPrice}"/>
+			<script type="text/javascript">
+			
+			//减数量
+			function reductionOf(obj) {
+			            //减前判断
+				if ($(obj).next().val() == '') {
+					$(obj).next().val(1);
+				}
+			            
+				$(obj).next().val(parseInt($(obj).next().val()) - 1);//数值减
+				$(obj).next().val($(obj).next().val());//赋值给框
+				var price = $('#price').val();
+				var num = $('#number').val();
+			    console.log($('#price').val());
+			    var sum = num*price;
+			    $("#sum").html(sum)
+			};
+			
+			    //加数量
+			function add(obj) {
+			            //加前判断
+				/* console.log($('#number').val()); */
+				if ($(obj).prev().val() == '') {
+					$(obj).prev().val(1);
+				}
+				$(obj).prev().val(parseInt($(obj).prev().val()) + 1);//数值加
+				$(obj).prev().val($(obj).prev().val());//赋值给框
+				var price = $('#price').val();
+				var num = $('#number').val();
+			    console.log($('#price').val());
+			    var sum = num*price;
+			    $("#sum").html(sum)
+			};
+			//校验数字格式（只能输入正整数）
+			function checkNumber(obj) {
+				var reg = /^[1-9]\d*$/;
+				if(!reg.test($(obj).val()) || $(obj).val()==''){
+					$(obj).val(1);
+				}
+			}
+			</script>
+	
+			
+		
+		<span class="glyphicon glyphicon-exclamation-sign" style="color: blue;">
+		</span><span>此为定制套餐，无正当理由不可退改，购买即视为认同此说明及使用规则，如遇使用问题可咨询客服。</span>
 	  	
-	  	<div id=d2>
-	  		<h3>商品信息</h3>
-	  		<img src="https://dss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3225163326,3627210682&fm=26&gp=0.jpg" style="width: 50px; height: 50px;">
-	  		<b id="t1">爆品回归！【经开区·川井料理】日料控的天下！99元立抢门市价1022的超值套餐，一次吃到爽！龙虾鲍鱼+寿喜锅+手握+寿司~海鲜盛宴哦</b>
-	  		<hr style="border:1px dashed #000; height:1px">
-	  		<span style="font-size: 20px;">川井日料套餐</span><i id=i2>¥99</i>
-	  		<hr style="border:1px dashed #000; height:1px">
+	  	<div style="width: 60%;height: 250px;"></div>
+	  	
+	  	<div style="width: ">
+	  		<span style="font-size: 22px;">小计:</span><span th:text="*{hySetMeal.retailPrice}" th:value="*{hySetMeal.retailPrice}" id="sum" style="font-size: 20px; color: red;">¥99.00</span>
+	  		<a id=s30 href="" onclick="submitHandler()"><span id=a1>微信支付</span></a>
+	  	</div>
+	  	</div>
+	  	</form>
+	  	</div>
+  	<th:block th:include="include :: footer" />
+  	<script th:inline="javascript">
+        var prefix = ctx + "system/productDetailsSA"
+        $("#form-user-add").validate({
+        	
+            focusCleanup: true
+        });
 
-
-
-		<table>
-			<tr>
-				<td>数量</td>
-				<td class="gmcp_cp_tr04_std01">
-					<ul class="btn-numbox">
-						<li>
-							<ul class="count">
-								<li><span id="num-jian" class="num-jian">--</span></li>
-								<li><input type="text" class="input-num" id="input-num"
-									value="0" /></li>
-								<li><span id="num-jia" class="num-jia">+</span></li>
-							</ul>
-						</li>
-					</ul> <script type="text/javascript">
-						var num_jia = document.getElementById("num-jia");
-						var num_jian = document.getElementById("num-jian");
-						var input_num = document.getElementById("input-num");
-
-						num_jia.onclick = function() {
-
-							input_num.value = parseInt(input_num.value) + 1;
-						}
-
-						num_jian.onclick = function() {
-
-							if (input_num.value <= 0) {
-								input_num.value = 0;
-							} else {
-
-								input_num.value = parseInt(input_num.value) - 1;
-							}
-
-						}
-					</script>
-				</td>
-			</tr>
-		</table>
-	</div>
-	<span class="glyphicon glyphicon-exclamation-sign" style="color: blue;">
-	</span><span>此为定制套餐，无正当理由不可退改，购买即视为认同此说明及使用规则，如遇使用问题可咨询客服。</span>
-  	
-  	<div style="width: 60%;height: 250px;"></div>
-  	
-  	<div style="width: ">
-  		<span style="font-size: 22px;">小计:</span><span style="font-size: 20px; color: red;">¥99.00</span>
-  		<a id=s30 href="http://www.baidu.com" onmouseover="this.className='yellow'" onmouseout="this.className='blue'"><span id=a1>微信支付</span></a>
-  	</div>
-  	
-  	</div>
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-user-add').serialize());
+            }
+        }
+        
+        function sum(){
+        	console.log('1');
+        }
+    </script>
 </body>
 <script type="text/javascript" src="../bootstrap3/jquery.min.js"></script>
 <script type="text/javascript" src="../bootstrap3/js/bootstrap.js"></script>

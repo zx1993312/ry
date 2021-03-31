@@ -25,6 +25,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			javaType="HyShop" resultMap="HyShopResult" />
          <association property="hyPicture" column="id"
 			javaType="HyPicture" resultMap="HyPictureResult" />
+         <association property="hySetMeal" column="id"
+			javaType="HySetMeal" resultMap="HySetMealResult" />
+    </resultMap>
+    
+    <resultMap type="HySetMeal" id="HySetMealResult">
+        <result property="id"    column="id"    />
+        <result property="setMealContent"    column="set_meal_content"    />
+        <result property="retailPrice"    column="retail_price"    />
+        <result property="marketPrice"    column="market_price"    />
+        <result property="setMealName"    column="set_meal_name"    />
+        <result property="productId"    column="product_id"    />
     </resultMap>
     
     <resultMap type="HyShop" id="HyShopResult">
@@ -101,6 +112,42 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where 1=1
     </sql>
     
+    <sql id="selectHyProductById">
+    	 select 
+        p.id, 
+        p.product_name, 
+        p.brief_introduction, 
+        p.sold_number, 
+        p.stock_number, 
+        p.state, 
+        p.snap_up_date, 
+        p.send_code_date,  
+        p.appointment_date,  
+        p.appointment_mode, 
+        p.use_date, 
+        p.shop_id,
+        p.limited_quantity,
+        p.product_order_by,
+        p.customer_service_tel,
+        p.share_title
+        from 
+        hy_product p
+       
+        where 1=1
+    </sql>
+    
+    <sql id="selectHyProductByIdAndPictor">
+    	select 
+    	p.brief_introduction,
+    	s.retail_price,
+    	s.set_meal_name,
+    	h.pciture_address
+    	from hy_product p 
+    	LEFT JOIN hy_set_meal s ON p.id=s.product_id
+    	LEFT JOIN hy_picture h ON p.id=h.product_id
+    	where 1=1
+    </sql>
+    
     <sql id="selectHyProductVoDistinct">
     	select distinct p.id,p.product_name  
     	from 
@@ -110,6 +157,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         LEFT JOIN hy_poster c ON c.product_id=p.id
         where 1=1
     </sql>
+    
+    <select id="selectHyId" parameterType="Long" resultMap="HyProductResult">
+    	<include refid="selectHyProductByIdAndPictor" />
+    	and p.id = #{id}
+    </select>
 
     <select id="selectHyProductList" parameterType="HyProduct" resultMap="HyProductResult">
         <include refid="selectHyProductVo"/>
