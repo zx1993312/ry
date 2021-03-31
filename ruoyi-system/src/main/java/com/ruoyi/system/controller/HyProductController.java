@@ -188,7 +188,7 @@ public class HyProductController extends BaseController
 		// 存储路径
 		if (imagepath != null && oldFileName != null && oldFileName.length() > 0) {
 			// 我这写的是绝对路径请注意，springboot 用内置tomcat 展示图片会有问题 稍后在看
-			String saveFilePath = "C:\\Users\\Administrator\\Desktop\\hykj\\ry\\ruoyi-admin\\src\\main\\resources\\static\\img";
+			String saveFilePath = System.getProperty("user.dir")+"\\src\\main\\resources\\static\\img";
 			File files = new File(saveFilePath);
 			if (!files.exists()) {
 				files.mkdirs();

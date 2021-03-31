@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ea8daae5-42bb-432e-bb48-bf1a8ca862e9">
+	<property name="ireport.zoom" value="1.0000000000000024"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="306" y="21" width="198" height="57" uuid="9e5a96fd-d15b-43d3-93c0-9ae5cb7fb454"/>
+				<textElement>
+					<font size="32" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[XXXX表]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="63" splitType="Stretch">
+			<staticText>
+				<reportElement x="62" y="10" width="316" height="44" uuid="7aa24ef4-ffd4-4546-ab01-89454ee6c62c"/>
+				<textElement>
+					<font size="18" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[姓名：            房号：                   面积：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="584" y="38" width="107" height="25" uuid="f26f3927-c2ed-41cb-b93c-ba88af6f3591"/>
+				<textElement>
+					<font size="13" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[日期：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="584" y="5" width="107" height="20" uuid="f2b8d58a-929d-47ec-82c2-24b04e8e90bd"/>
+				<textElement>
+					<font size="13" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[NO：]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="59" splitType="Stretch">
+			<line>
+				<reportElement x="61" y="5" width="673" height="1" uuid="f319f62f-8397-4903-b9da-636ba78bc73f"/>
+			</line>
+			<line>
+				<reportElement x="61" y="58" width="673" height="1" uuid="3aca8893-b410-4720-bf86-3c4b12b9ce63"/>
+			</line>
+			<line>
+				<reportElement x="61" y="5" width="1" height="53" uuid="1743d59d-a2c3-471c-8815-b40ca3818322"/>
+			</line>
+			<line>
+				<reportElement x="156" y="5" width="1" height="53" uuid="aebb3451-57fc-4892-bb0b-8905dadb8c8a"/>
+			</line>
+			<line>
+				<reportElement x="260" y="6" width="1" height="53" uuid="3559b461-43b2-44f9-b93b-99fa05d24b57"/>
+			</line>
+			<line>
+				<reportElement x="733" y="6" width="1" height="53" uuid="d07b8940-bd72-43e0-8120-779bead8ab02"/>
+			</line>
+			<staticText>
+				<reportElement x="77" y="20" width="62" height="38" uuid="761f679e-00b2-4c35-b226-425f7acdfa74"/>
+				<textElement>
+					<font size="13" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[收费项目]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="170" y="20" width="65" height="38" uuid="6506974e-c318-4690-a689-51aeecb3da24"/>
+				<textElement>
+					<font size="13" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[收费期间]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="43" splitType="Stretch">
+			<line>
+				<reportElement x="61" y="-1" width="1" height="43" uuid="3de8d2db-0b75-4692-b720-44425cc0a23f"/>
+			</line>
+			<line>
+				<reportElement x="62" y="42" width="672" height="1" uuid="f5b8cb5d-a2c0-4837-aa07-3b420d97a10c"/>
+			</line>
+			<line>
+				<reportElement x="733" y="0" width="1" height="43" uuid="c6495ee0-4278-438e-8911-bae88e7bedd5"/>
+			</line>
+			<line>
+				<reportElement x="156" y="0" width="1" height="43" uuid="5c22120a-6f79-44e0-8724-df90b2c3f221"/>
+			</line>
+			<line>
+				<reportElement x="260" y="0" width="1" height="42" uuid="e84dd525-5a3c-40bb-8bc5-e15bf8b3c41c"/>
+			</line>
+			<staticText>
+				<reportElement x="77" y="11" width="34" height="20" uuid="e42e211b-350d-4d58-8d7c-33f954e37a7d"/>
+				<text><![CDATA[asdf]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="170" y="11" width="55" height="20" uuid="d6c1cbc2-3ea9-407b-85a9-36b3a8eb88cd"/>
+				<text><![CDATA[2018]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

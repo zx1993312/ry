@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -178,7 +180,7 @@ public class HyOrderController extends BaseController
      */
 	@RequestMapping("/uploadFile")
 	@ResponseBody
-	public Map<String, Object> uploadFile(MultipartFile imagepath) throws IllegalStateException, IOException {
+	public Map<String, Object> uploadFile(MultipartFile imagepath,HttpServletRequest request) throws IllegalStateException, IOException {
 		System.out.println(imagepath);
 		String mynewpic = null;
 		// 原始图片名称
@@ -186,7 +188,7 @@ public class HyOrderController extends BaseController
 		// 存储路径
 		if (imagepath != null && oldFileName != null && oldFileName.length() > 0) {
 			// 我这写的是绝对路径请注意，springboot 用内置tomcat 展示图片会有问题 稍后在看
-			String saveFilePath = "C:\\Users\\Administrator\\Desktop\\hykj\\ry\\ruoyi-admin\\src\\main\\resources\\static\\img";
+			String saveFilePath = System.getProperty("user.dir")+"\\src\\main\\resources\\static\\img";
 			File files = new File(saveFilePath);
 			if (!files.exists()) {
 				files.mkdirs();
