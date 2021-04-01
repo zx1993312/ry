@@ -17,9 +17,8 @@
 <link th:href="@{/ruoyi/css/ry-ui.css?v=4.6.0}" rel="stylesheet" />
 <title>数据展示</title>
 <style type="text/css">
-#d2{
-margin-top:35px; 
-margin-bottom: 35px;
+div{
+text-align:center
 }
 
 </style>
@@ -113,7 +112,7 @@ margin-bottom: 35px;
 
 				</div>
 				<div class="left-cen rightTop border">
-					<div class="title">三大区块企业占有率对比</div>
+					<div class="title" >今日车流量</div>
 					<div class="bottom-b">
 						<div id="chart3" class="allnav"></div>
 					</div>
@@ -128,27 +127,43 @@ margin-bottom: 35px;
 				</div>
 			</div>
 			
-			<div id="d1" class="center-cen fl">
+				<div class="center-cen fl">
+				<div class="cen-top rightTop border">
+					<div class="top-title">
+						<ul>
+							<li>
+								<p>数量统计</p> <span>3</span> <span>6</span> <span>5</span> <b>个</b>
+							</li>
+							<li>
+								<p>同比上升</p> <span>1</span> <span>3</span> <b>%</b>
+							</li>
+						</ul>
+					</div>
+
+					<div class="top-bottom">
+						<div id="map" class="allnav" style="height: 4.4rem"></div>
+					</div>
+
+
+				</div>
 				<div class="cen-bottom rightTop border">
-					<div class="title">各行业平均年龄统计</div>
+					<div class="title">月统计</div>
 					<div class="bottom-b">
-						<div id="chart8" class="allnav"></div>
+						<div id="chart4" class="allnav"></div>
 					</div>
 
 				</div>
-				<div id="d2" class="cen-bottom rightTop border">
-					<div class="title">近6个月新登记市场主体户数趋势图</div>
-					<div class="bottom-b">
-						<div id="chart7" class="allnav"></div>
-					</div>
-				</div>
-				<div class="cen-bottom rightTop border">
+			</div>
+
+
+
+				<!-- <div class="cen-bottom rightTop border">
 					<div class="title">近12个月市场主体户数同比增长</div>
 					<div class="bottom-b">
 						<div id="chart4" class="allnav"></div>
 					</div>
-	 			</div>
-			</div>
+	 			</div> -->
+			<!-- </div> -->
 			<div class="center-right fr">
 				<div class="right-top rightTop border">
 					<div class="title">各类型市场主体新增户数及占比</div>
@@ -231,7 +246,7 @@ margin-bottom: 35px;
 		    animationDuration: 800
 
 		});*/
-		/*window.onload = function () {
+		window.onload = function () {
 		    setInterval(function () {
 		        var hs=document.getElementById("ceshi");
 		        var hstyle=hs.style.transform;
@@ -244,7 +259,7 @@ margin-bottom: 35px;
 		            hs.style.transition="all 2s";
 		        }
 		    }, 5000);
-		};*/
+		};
 		var counter = 3000;
 		var ulist = document.getElementById("ceshi").getElementsByTagName("li");
 		for (var i = 0; i < ulist.length; i++) {
