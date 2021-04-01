@@ -9,14 +9,14 @@ import com.ruoyi.system.annotation.JDBCConnection;
 
 public class GenPDF {
 
-	private static final String JASPER_PATH = "C:\\Users\\Administrator\\Desktop\\hykj\\ry\\ruoyi-system\\src\\main\\resources\\templates\\system\\WebRoot\\";
+	private static final String JASPER_PATH = System.getProperty("user.dir")+"\\src\\main\\resources\\templates\\system\\WebRoot\\";
 	
 	public static final String OUT_PATH = "D:/";
 	
 	public void genPDF(String CLASSNO) {
 		long start_time = new Date().getTime();
 		
-		Connection connection = JDBCConnection.getConnection();
+		
 		
 		Map<String, Object> parameters = new HashMap<>();
 		
@@ -28,7 +28,7 @@ public class GenPDF {
 			
 			String ireportTemplate = JASPER_PATH+"repo.jasper";
 			
-			IReportUtil.exportPdfFileServer(ireportTemplate,outFileName,parameters,connection);
+			IReportUtil.exportPdfFileServer(ireportTemplate,outFileName,parameters);
 			
 			long end_time = new Date().getTime();
 			

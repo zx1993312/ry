@@ -7,262 +7,618 @@
 <body class="gray-bg">
 	<div class="container-div">
 		<div class="row">
-
 			<div class="col-sm-6">
 				<div class="tabs-container">
 					<ul class="nav nav-tabs">
-						<li class="active"><a data-toggle="tab" href="#tab-1"aria-expanded="true"> 收款方式修改历史</a></li>
-						<li class=""><a data-toggle="tab" href="#tab-2"aria-expanded="false">收款方式更正</a></li>
-						<li class=""><a data-toggle="tab" href="#tab-3"aria-expanded="false">收费时间更正</a></li>
-						<li class=""><a data-toggle="tab" href="#tab-4"aria-expanded="false">修改时间修改历史</a></li>
+						<li id="tab1li" class="active">
+							<a data-toggle="tab" href="#tab-1" aria-expanded="true" onclick="tab(1)"> 收款方式修改历史</a>
+						</li>
+						<li id="tab2li" class="">
+							<a data-toggle="tab" href="#tab-2" aria-expanded="false" onclick="tab(2)">收款方式更正</a>
+						</li>
+						<li id="tab3li" class="">
+							<a data-toggle="tab" href="#tab-3" aria-expanded="false" onclick="tab(3)">收费时间更正</a>
+						</li>
+						<li id="tab4li" class="">
+							<a data-toggle="tab" href="#tab-4" aria-expanded="false" onclick="tab(4)">修改时间修改历史</a>
+						</li>
 					</ul>
 				</div>
 			</div>
-						<div id="tab-1" class="tab-pane active">
-
-							<div role="tabpanel" class="tab-pane active" id="billSet">
-								<div class="container-div">
-									<div class="row">
-										<div class="col-sm-12 search-collapse">
-											<form id="formId">
-												<div class="select-list">
-													<ul>
-														<li><label>票据日期：</label> <input type="text"
-															class="time-input" placeholder="请选择票据时间" name="billDate" /></li>
-														<li><label>客户名称：</label> <input type="text"
-															name="hyOwnerRegistration.ownerName" /></li>
-														<li><label>房屋编号：</label> <input type="text"
-															name="houseNum" /></li>
-														<li><label>票据号码：</label> <input type="text"
-															name="billNumber" /></li>
-														<li><label>收款人：</label> <input type="text"
-															name="paymentPerson" /></li>
-														<li><label>修改人：</label> <input type="text"
-															name="modifyPerson" /></li>
-														<li><a class="btn btn-primary btn-rounded btn-sm"
-															onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
-															<a class="btn btn-warning btn-rounded btn-sm"
-															onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
-														</li>
-													</ul>
-												</div>
-											</form>
-										</div>
-										<div class="btn-group-sm" id="toolbar" role="group">
-											<a class="btn btn-warning" onclick="$.table.exportExcel()"
-												shiro:hasPermission="system:set:export"> <i
-												class="fa fa-download"></i> 导出
-											</a>
-										</div>
-										<div>
-											<div class="col-sm-12 select-table table-striped">
-												<table id="bootstrap-table"></table>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							</div>
-			<div id="tab-2" class="tab-pane active">
-
-
-	</div>
-			 	
-
-		<div id="tab-3" class="tab-pane active">
-		
-		
-		
-		
-		
-		<div class="col-sm-12 search-collapse">
-				<form id="formId">
-					<div class="select-list">
-						<ul>
-							<li><label>票据种类：</label> <select id="billTypes"
-								>
-									<option value="">请选择</option>
-									<option value="0">收据</option>
-									<option value="1">发票</option>
-									<option value="2">凭据</option>
-							</select></li>
-							<li><label>票据类别：</label> <input type="text"name="billCategory" /></li>
-							<li><label>前缀：</label> <input type="text" name="prefix" /></li>
-							<li><label>后缀：</label> <input type="text" name="suffix" /></li>
-							<li><label>位数：</label> <input type="text" name="digit" /></li>
-							<li><label>票据样例：</label> <input type="text"
-								name="billSample" /></li>
-							<li><label>定额票据面板：</label> <input type="text"
-								name="billPanel" /></li>
-							<li><a class="btn btn-primary btn-rounded btn-sm"
-								onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
-								<a class="btn btn-warning btn-rounded btn-sm"
-								onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
-							</li>
-						</ul>
-					</div>
-				</form>
-			</div>
 			
-			<div class="btn-group-sm" id="toolbar" role="group">
-		 <a class="btn btn-warning" onclick="$.table.exportExcel()"
-					shiro:hasPermission="system:set:export"> <i
-					class="fa fa-download"></i> 导出
-				</a>
-			</div>
-			<div class="col-sm-12 select-table table-striped">
-				<table id="bootstrap-table"></table>
+			<div class="tab-content ">
+				<div id="tab-1" class="tab-pane active">
+					<div class="row">
+						<div class="col-sm-12 search-collapse">
+							<form id="formId">
+								<div class="select-list">
+									<ul>
+										<li>
+											<label>票据日期：</label> 
+											<input type="text" class="time-input" placeholder="请选择票据时间"  name="billDate" />
+										</li>
+										<li>
+											<label>客户名称：</label> 
+											<input type="text" name="hyOwnerRegistration.ownerName" />
+										</li>
+										<li>
+											<label>房屋编号：</label> 
+											<input type="text" name="houseNum" />
+										</li>
+										<li>
+											<label>票据号码：</label> 
+											<input type="text" name="billNumber" />
+										</li>
+										<li>
+											<label>收款人：</label> 
+											<input type="text" name="paymentPerson" />
+										</li>
+										<li>
+											<label>修改人：</label> 
+											<input type="text" name="modifyPerson" />
+										</li>
+										<li>
+											<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()">
+												<i class="fa fa-search"></i>&nbsp;搜索
+											</a>
+											<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()">
+												<i class="fa fa-refresh"></i>&nbsp;重置
+											</a>
+										</li>
+									</ul>
+								</div>
+							</form>
+						</div>
+			
+						<div class="btn-group-sm" id="toolbar" role="group">
+					 		<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:set:export"> 
+					 			<i class="fa fa-download"></i> 导出
+							</a>
+						</div>
+						<div class="col-sm-12 select-table table-striped">
+							<table id="table1"></table>
+						</div>
+					</div>
+				</div>
+			
+				<div id="tab-2" class="tab-pane ">
+					<div class="row">
+						<div class="col-sm-12 search-collapse">
+							<form id="formId">
+								<div class="select-list">
+									<ul>
+										<li>
+											<label>票据种类：</label> 
+											<select id="billTypes" name="billTypes">
+												<option value="">请选择</option>
+												<option value="0">收据</option>
+												<option value="1">发票</option>
+												<option value="2">凭据</option>
+											</select>
+										</li>
+										<li>
+											<label>票据类别：</label> 
+											<input type="text" name="billCategory" />
+										</li>
+										<li>
+											<label>客户名称：</label> 
+											<input type="text" name="hyOwnerRegistration.ownerName" />
+										</li>
+										<li>
+											<label>前缀：</label> 
+											<input type="text" name="prefix" />
+										</li>
+										<li>
+											<label>后缀：</label> 
+											<input type="text" name="suffix" />
+										</li>
+										<li>
+											<label>位数：</label> 
+											<input type="text" name="digit" />
+										</li>
+										<li>
+											<label>票据样例：</label> 
+											<input type="text" name="billSample" />
+										</li>
+										<li>
+											<label>定额票据面板：</label> 
+											<input type="text" name="billPanel" />
+										</li>
+										<li>
+											<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()">
+												<i class="fa fa-search"></i>&nbsp;搜索
+											</a>
+											<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()">
+												<i class="fa fa-refresh"></i>&nbsp;重置
+											</a>
+										</li>
+									</ul>
+								</div>
+							</form>
+						</div>
+			
+						<div class="btn-group-sm" id="toolbar" role="group">
+					 		<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:set:export"> 
+					 			<i class="fa fa-download"></i> 导出
+							</a>
+						</div>
+						<div class="col-sm-12 select-table table-striped">
+							<table id="table2"></table>
+						</div>
+					</div>
+				</div>
+
+				<div id="tab-3" class="tab-pane ">
+					<div class="row">
+						<div class="col-sm-12 search-collapse">
+							<form id="formId">
+								<div class="select-list">
+									<ul>
+										<li>
+											<label>票据种类：</label> 
+											<select id="billTypes" >
+												<option value="">请选择</option>
+												<option value="0">收据</option>
+												<option value="1">发票</option>
+												<option value="2">凭据</option>
+											</select>
+										</li>
+										<li>
+											<label>票据类别：</label> 
+											<input type="text" name="billCategory" />
+										</li>
+										<li>
+											<label>前缀：</label> 
+											<input type="text" name="prefix" />
+										</li>
+										<li>
+											<label>后缀：</label> 
+											<input type="text" name="suffix" />
+										</li>
+										<li>
+											<label>位数：</label> 
+											<input type="text" name="digit" />
+										</li>
+										<li>
+											<label>票据样例：</label> 
+											<input type="text" name="billSample" />
+										</li>
+										<li>
+											<label>定额票据面板：</label> 
+											<input type="text" name="billPanel" />
+										</li>
+										<li>
+											<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()">
+												<i class="fa fa-search"></i>&nbsp;搜索
+											</a>
+											<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()">
+												<i class="fa fa-refresh"></i>&nbsp;重置
+											</a>
+										</li>
+									</ul>
+								</div>
+							</form>
+						</div>
+			
+						<div class="btn-group-sm" id="toolbar" role="group">
+					 		<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:set:export"> 
+					 			<i class="fa fa-download"></i> 导出
+							</a>
+						</div>
+						<div class="col-sm-12 select-table table-striped">
+							<table id="table3"></table>
+						</div>
+					</div>
+				</div>
+				
+				<div id="tab-4" class="tab-pane ">
+					<div class="row">
+						<div class="col-sm-12 search-collapse">
+							<form id="formId">
+								<div class="select-list">
+									<ul>
+										<li>
+											<label>票据日期：</label> 
+											<input type="text" class="time-input" placeholder="请选择票据时间" name="billDate" />
+										</li>
+										<li>
+											<label>新票据日期：</label> 
+											<input type="text" class="time-input" placeholder="请选择票据时间" name="billDateNew" /></li>
+										<li>
+											<label>房屋编号：</label> 
+											<input type="text" name="houseNum" />
+										</li>
+										<li>
+											<label>票据号码：</label> 
+											<input type="text" name="billNumber" />
+										</li>
+										<li>
+											<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()">
+												<i class="fa fa-search"></i>&nbsp;搜索
+											</a>
+											<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()">
+												<i class="fa fa-refresh"></i>&nbsp;重置
+											</a>
+										</li>
+									</ul>
+								</div>
+							</form>
+						</div>
+
+						<div class="btn-group-sm" id="toolbar" role="group">
+							<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:set:export"> 
+								<i class="fa fa-download"></i> 导出
+							</a>
+						</div>
+						<div class="col-sm-12 select-table table-striped">
+							<table id="table4"></table>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-	
-		
-		
-		
-		
-		
-		
-		</div>
-		
-		
-		
-		
-		
-		
-		
-		
-		<div id="tab-4" class="tab-pane active"></div>
-	
+			
 
-
-
-
-
-<!-- 3的 -->
-<th:block th:include="include :: footer" />
-	<script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('system:set:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('system:set:remove')}]];
-        var prefix = ctx + "system/collectionTimeBillSet";
-
-        $(function() {
-            var options = {
-                url: prefix + "/list",
-                createUrl: prefix + "/add",
-                updateUrl: prefix + "/edit/{id}",
-                removeUrl: prefix + "/remove",
-                exportUrl: prefix + "/export",
-                modalName: "票据设置",
-                columns: [{
-                    checkbox: true
-                },
-                {
-                    field: 'id',
-                    title: '主键',
-                    visible: false
-                },
-                {
-                    field: 'hyOwnerRegistration.ownerName',
-                    title: '客户名称'
-                },
-                {
-                    field: 'houseNum',
-                    title: '房屋标号'
-                },
-                {
-                    field: 'hyHouseInf.houseName',
-                    title: '房屋名称'
-                },
-                {
-                    field: 'billNumber',
-                    title: '票据号码'
-                },
-                {
-                    field: 'invoiceNumber',
-                    title: '发票号码'
-                },
-               
-                {
-                    field: 'paymentMethod',
-                    title: '收款方式'
-                },
-                {
-                    field: 'paymentDate',
-                    title: '收款日期'
-                },
-                {
-                    field: 'paymentPerson',
-                    title: '收款人'
-                }
-
-              ]
-            };
-            $.table.init(options);
-        });
-    </script>
-
-
-
-
-
-
-	
 	<th:block th:include="include :: footer" />
+	
 	<script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('system:set:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('system:set:remove')}]];
-        var prefix = ctx + "system/collectionBillSet";
+	var editFlag = [[${@permission.hasPermi('system:set:edit')}]];
+    var removeFlag = [[${@permission.hasPermi('system:set:remove')}]];
+    var prefix = ctx + "system/billSet";
 
-        $(function() {
-            var options = {
+    $(function() {
+        var options1 = {
+        	tableId : "table1",
+            url: prefix + "/list",
+            createUrl: prefix + "/add",
+            updateUrl: prefix + "/edit/{id}",
+            removeUrl: prefix + "/remove",
+            exportUrl: prefix + "/export",
+            modalName: "票据设置",
+            columns: [{
+                checkbox: true
+            },
+            {
+                field: 'id',
+                title: '主键',
+                visible: false
+            },
+            {
+                field: 'billNumber',
+                title: '票据号码'
+            },
+            {
+                field: 'billDate',
+                title: '票据日期'
+            },
+            {
+                field: 'paymentMethod',
+                title: '收款方式'
+            },
+            {
+                field: 'paymentMethodNew',
+                title: '新收款方式'
+            },
+            {
+                field: 'modifyPerson',
+                title: '修改人'
+            },
+            {
+                field: 'modifyTime',
+                title: '修改时间'
+            }
+        
+          ]
+        };
+        $.table.initOtherTable(options1);
+    });
+    
+    function tab(value){
+		console.log(value);
+		if(value == 1){
+			var editFlag = [[${@permission.hasPermi('system:set:edit')}]];
+	        var removeFlag = [[${@permission.hasPermi('system:set:remove')}]];
+	        var prefix = ctx + "system/billSet";
+	       
+	        $.ajax({
+	        	tableId : "table1",
                 url: prefix + "/list",
-                createUrl: prefix + "/add",
-                updateUrl: prefix + "/edit/{id}",
-                removeUrl: prefix + "/remove",
-                exportUrl: prefix + "/export",
-                modalName: "票据设置",
-                columns: [{
-                    checkbox: true
-                },
-                {
-                    field: 'id',
-                    title: '主键',
-                    visible: false
-                },
-                {
-                    field: 'hyOwnerRegistration.ownerName',
-                    title: '客户名称'
-                },
-                {
-                    field: 'hyHouseInf.houseName',
-                    title: '房屋名称'
-                },
-                {
-                    field: 'billNumber',
-                    title: '票据号码'
-                },
-                {
-                    field: 'invoiceNumber',
-                    title: '发票号码'
-                },
-               
-                {
-                    field: 'paymentMethod',
-                    title: '收款方式'
-                },
-                {
-                    field: 'paymentDate',
-                    title: '收款日期'
-                },
-                {
-                    field: 'paymentPerson',
-                    title: '收款人'
+                cache: false,
+                contentType: false,
+                processData: false,
+                type: 'POST',
+                success: function (result) {
+                    if (result.code == web_status.SUCCESS) {
+                    	var options = {
+            	                url: prefix + "/list",
+            	                createUrl: prefix + "/add",
+            	                updateUrl: prefix + "/edit/{id}",
+            	                removeUrl: prefix + "/remove",
+            	                exportUrl: prefix + "/export",
+            	                modalName: "票据设置",
+            	                columns: [{
+            	                    checkbox: true
+            	                },
+            	                {
+            	                    field: 'id',
+            	                    title: '主键',
+            	                    visible: false
+            	                },
+            	                {
+            	                    field: 'billNumber',
+            	                    title: '票据号码'
+            	                },
+            	                {
+            	                    field: 'billDate',
+            	                    title: '票据日期'
+            	                },
+            	                {
+            	                    field: 'paymentMethod',
+            	                    title: '收款方式'
+            	                },
+            	                {
+            	                    field: 'paymentMethodNew',
+            	                    title: '新收款方式'
+            	                },
+            	                {
+            	                    field: 'modifyPerson',
+            	                    title: '修改人'
+            	                },
+            	                {
+            	                    field: 'modifyTime',
+            	                    title: '修改时间'
+            	                }
+            	            
+            	              ]
+            	            };
+            	            $.table.initOtherTable(options);
+                    }  else {
+                        $.modal.enable();
+                        $.modal.alertError(result.msg);
+                    }
                 }
+            });
+	        
+			
+		} else if(value == 2) {
+			var editFlag = [[${@permission.hasPermi('system:set:edit')}]];
+	        var removeFlag = [[${@permission.hasPermi('system:set:remove')}]];
+	        var prefix = ctx + "system/collectionBillSet";
 
-              ]
-            };
-            $.table.init(options);
-        });
+	        $.ajax({
+                url: prefix + "/list",
+                cache: false,
+                contentType: false,
+                processData: false,
+                type: 'POST',
+                success: function (result) {
+                    if (result.code == web_status.SUCCESS) {
+                    	var options = {
+                    			tableId : "table2",
+            	                url: prefix + "/list",
+            	                createUrl: prefix + "/add",
+            	                updateUrl: prefix + "/edit/{id}",
+            	                removeUrl: prefix + "/remove",
+            	                exportUrl: prefix + "/export",
+            	                modalName: "票据设置",
+            	                columns: [{
+            	                    checkbox: true
+            	                },
+            	                {
+            	                    field: 'id',
+            	                    title: '主键',
+            	                    visible: false
+            	                },
+            	                {
+            	                    field: 'billAmount',
+            	                    title: '收/退款金額'
+            	                },
+            	                {
+            	                    field: 'billCategory',
+            	                    title: '票据類別'
+            	                },
+            	                {
+            	                    field: 'billDate',
+            	                    title: '票据日期'
+            	                },
+            	                {
+            	                    field: 'billDateNew',
+            	                    title: '新票据日期'
+            	                },
+            	               
+            	                {
+            	                    field: 'billNumber',
+            	                    title: '票据號碼'
+            	                },
+            	                {
+            	                    field: 'billPanel',
+            	                    title: '定额票据面板'
+            	                },
+            	                {
+            	                    field: 'billSample',
+            	                    title: '票据样例'
+            	                },
+            	                {
+            	                    field: 'billTypes',
+            	                    title: '票据种类'
+            	                },
+            	                {
+            	                    field: 'businessType',
+            	                    title: '业务类型'
+            	                },
+            	                {
+            	                    field: 'cancelNot',
+            	                    title: '是否冲销'
+            	                },
+            	                {
+            	                    field: 'digit',
+            	                    title: '位数'
+            	                },
+            	                {
+            	                    field: 'draftCheckNumber',
+            	                    title: '支/汇票号'
+            	                },
+            	                {
+            	                    field: 'houseNum',
+            	                    title: '房屋编号'
+            	                }
+
+            	              ]
+            	            };
+            	            $.table.initOtherTable(options);
+                    }  else {
+                        $.modal.enable();
+                        $.modal.alertError(result.msg);
+                    }
+                }
+            });
+		}else if(value == 3){
+			console.log('进入到第三个');
+			var editFlag = [[${@permission.hasPermi('system:set:edit')}]];
+	        var removeFlag = [[${@permission.hasPermi('system:set:remove')}]];
+	        var prefix = ctx + "system/collectionTimeBillSet";
+	        
+	        $.ajax({
+                url: prefix + "/list",
+                cache: false,
+                contentType: false,
+                processData: false,
+                type: 'POST',
+                success: function (result) {
+                    if (result.code == web_status.SUCCESS) {
+                    	var options = {
+                    			tableId : "table3",
+                                url: prefix + "/list",
+                                createUrl: prefix + "/add",
+                                updateUrl: prefix + "/edit/{id}",
+                                removeUrl: prefix + "/remove",
+                                exportUrl: prefix + "/export",
+                                modalName: "票据设置",
+                                columns: [{
+                                    checkbox: true
+                                },
+                                {
+                                    field: 'id',
+                                    title: '主键',
+                                    visible: false
+                                },
+                                {
+                                    field: 'hyOwnerRegistration.ownerName',
+                                    title: '客户名称'
+                                },
+                                {
+                                    field: 'houseNum',
+                                    title: '房屋标号'
+                                },
+                                {
+                                    field: 'hyHouseInf.houseName',
+                                    title: '房屋名称'
+                                },
+                                {
+                                    field: 'billNumber',
+                                    title: '票据号码'
+                                },
+                                {
+                                    field: 'invoiceNumber',
+                                    title: '发票号码'
+                                },
+                               
+                                {
+                                    field: 'paymentMethod',
+                                    title: '收款方式'
+                                },
+                                {
+                                    field: 'paymentDate',
+                                    title: '收款日期'
+                                },
+                                {
+                                    field: 'paymentPerson',
+                                    title: '收款人'
+                                }
+
+                              ]
+                            };
+                            $.table.initOtherTable(options);
+                    }  else {
+                        $.modal.enable();
+                        $.modal.alertError(result.msg);
+                    }
+                }
+            });
+            
+		}else {
+			console.log('进入到第四个');
+			var editFlag = [[${@permission.hasPermi('system:updatCollectionTimeBillSet:edit')}]];
+	        var removeFlag = [[${@permission.hasPermi('system:updatCollectionTimeBillSet:remove')}]];
+	        var prefix = ctx + "system/updateCollectionTimeBillSet";
+
+	        $.ajax({
+                url: prefix + "/list",
+                cache: false,
+                contentType: false,
+                processData: false,
+                type: 'POST',
+                success: function (result) {
+                    if (result.code == web_status.SUCCESS) {
+                    	var options = {
+                    			tableId : "table4",
+            	                url: prefix + "/list",
+            	                createUrl: prefix + "/add",
+            	                updateUrl: prefix + "/edit/{id}",
+            	                removeUrl: prefix + "/remove",
+            	                exportUrl: prefix + "/export",
+            	                modalName: "票据设置",
+            	                columns: [{
+            	                    checkbox: true
+            	                },
+            	                {
+            	                    field: 'id',
+            	                    title: '主键',
+            	                    visible: false
+            	                },
+            	              
+            	                {
+            	                    field: 'billNumber',
+            	                    title: '票据号码'
+            	                },
+            	                {
+            	                    field: 'billDate',
+            	                    title: '票据日期'
+            	                },
+            	                {
+            	                    field: 'billDateNew',
+            	                    title: '新票据日期'
+            	                },
+            	              
+            	                {
+            	                    field: 'paymentMethod',
+            	                    title: '收款方式'
+            	                },
+            	              
+            	                {
+            	                    field: 'paymentPerson',
+            	                    title: '收款人'
+            	                },
+            	                {
+            	                    field: 'modifyTime',
+            	                    title: '修改时间'
+            	                }
+
+            	              ]
+            	            };
+            	            $.table.initOtherTable(options);
+                    }  else {
+                        $.modal.enable();
+                        $.modal.alertError(result.msg);
+                    }
+                }
+            });
+	        
+	            
+		}
+        
+	} 
     </script>
 </body>
 </html>

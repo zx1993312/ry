@@ -275,7 +275,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="billDate!=null "> and b.bill_date=#{billDate}</if>
 		<if test="billNumber!=null and billNumber!= ''"> and b.bill_number = #{billNumber}</if>
 		<if test="houseNum!=null and houseNum!= ''"> and b.house_num = #{houseNum}</if>
+		<if test="hyOwnerRegistration!=null and hyOwnerRegistration!= ''">
 		<if test="hyOwnerRegistration.ownerName!=null and hyOwnerRegistration.ownerName!= ''"> and o.owner_name = #{hyOwnerRegistration.ownerName}</if>
+		</if>
 		<if test="modifyPerson !=null and modifyPerson !=''"> and b.modify_person = #{modifyPerson}</if>
 		<if test="paymentPerson !=null and paymentPerson !=''"> and b.payment_person = #{paymentPerson}</if>
 	</select>
