@@ -9,10 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.system.domain.HyOrder;
+import com.ruoyi.system.domain.HyProduct;
 import com.ruoyi.system.service.IHyOrderService;
 
 import io.swagger.annotations.Api;
@@ -34,7 +39,6 @@ public class HyMyCenterController extends BaseController {
 
 	@Autowired
 	private IHyOrderService hyOrderService;
-	
 
 	@RequiresPermissions("system:set:view")
 	@GetMapping()
@@ -45,12 +49,12 @@ public class HyMyCenterController extends BaseController {
 	@ApiOperation("查询订单设置列表")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "hyOrder", value = "项目实体类", required = true), })
 	@RequestMapping("/list")
-	public String list(HyOrder hyOrder, ModelMap mmap,HttpServletRequest request) {
-		hyOrder.setState(request.getParameter("state"));
+	public String list(HyOrder hyOrder, ModelMap mmap) {
 		List<HyOrder> list = hyOrderService.selectHyOrderListTest(hyOrder);
 		mmap.put("list", list);
 
 		return prefix + "/myCenter";
-		
+
 	}
+
 }
