@@ -340,7 +340,6 @@
 	        var prefix = ctx + "system/billSet";
 	       
 	        $.ajax({
-	        	tableId : "table1",
                 url: prefix + "/list",
                 cache: false,
                 contentType: false,
@@ -349,6 +348,7 @@
                 success: function (result) {
                     if (result.code == web_status.SUCCESS) {
                     	var options = {
+                    			tableId : "table1",
             	                url: prefix + "/list",
             	                createUrl: prefix + "/add",
             	                updateUrl: prefix + "/edit/{id}",
