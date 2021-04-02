@@ -16,12 +16,15 @@ import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.system.domain.HyPicture;
 import com.ruoyi.system.domain.HyProduct;
 import com.ruoyi.system.domain.HySetMeal;
+import com.ruoyi.system.domain.HyShop;
 import com.ruoyi.system.service.IHyPictureService;
 import com.ruoyi.system.service.IHyProductService;
 import com.ruoyi.system.service.IHySetMealService;
+import com.ruoyi.system.service.IHyShopService;
 import com.ruoyi.system.service.impl.HyPictureServiceImpl;
 import com.ruoyi.system.service.impl.HyPrinterServiceImpl;
 import com.ruoyi.system.service.impl.HySetMealServiceImpl;
+import com.ruoyi.system.service.impl.HyShopServiceImpl;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -48,6 +51,9 @@ public class HycarouselMapController extends BaseController {
 	
 	@Autowired
 	private IHyPictureService hyPictureService;
+	
+	@Autowired
+	private IHyShopService HyShopService;
 
 	@RequiresPermissions("system:set:view")
 	@GetMapping()
@@ -60,14 +66,17 @@ public class HycarouselMapController extends BaseController {
 	@GetMapping("/list")
 	public String list(HyPicture hyPicture, ModelMap mmap) {
 
-		List<HyProduct> list = hyProductService.selectHyProductListTest(new HyProduct());
-		mmap.put("list", list);
+		List<HyProduct> productList = hyProductService.selectHyProductListTest(new HyProduct());
+		mmap.put("productList", productList);
 		
-        List<HySetMeal> relist = hySetMealService.selectHySetMealVoTest(new HySetMeal());
-        mmap.put("relist", relist);
+        List<HySetMeal> setMealList = hySetMealService.selectHySetMealVoTest(new HySetMeal());
+        mmap.put("setMealList", setMealList);
 		
-        List<HyPicture> reList = hyPictureService.selectHyPictureList(new HyPicture());
-        mmap.put("reList", reList);
+        List<HyPicture> pictureList = hyPictureService.selectHyPictureList(new HyPicture());
+        mmap.put("pictureList", pictureList);
+        
+        List<HyShop> shopList = HyShopService.selectHyShopListTest(new HyShop());
+        mmap.put("shopList", shopList);
 
 		return prefix + "/carouselMap";
 	}

@@ -136,7 +136,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where 1=1
     </sql>
     
-    <sql id="selectHyProductByIdAndPictor">
+    <sql id="selectHyProductByIdAndPictor"> 
     	select 
     	p.brief_introduction,
     	s.retail_price,
