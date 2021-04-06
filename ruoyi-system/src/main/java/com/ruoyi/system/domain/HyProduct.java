@@ -94,6 +94,9 @@ public class HyProduct extends BaseEntity
     /**分享标题*/
     @Excel(name="分享标题")
     private String shareTitle;
+    /**销售状态*/
+    @Excel(name="销售状态")
+    private String salState;
     /**图片地址*/
     @Excel(name="图片地址")
     private String fileName;
@@ -281,28 +284,17 @@ public class HyProduct extends BaseEntity
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
-	@Override
-	public String toString() {
-		return "HyProduct [id=" + id + ", productName=" + productName + ", briefIntroduction=" + briefIntroduction
-				+ ", soldNumber=" + soldNumber + ", stockNumber=" + stockNumber + ", state=" + state + ", snapUpDate="
-				+ snapUpDate + ", sendCodeDate=" + sendCodeDate + ", appointmentDate=" + appointmentDate
-				+ ", appointmentMode=" + appointmentMode + ", useDate=" + useDate + ", shopId=" + shopId + ", hyShop="
-				+ hyShop + ", hyPicture=" + hyPicture + ", hyPoster=" + hyPoster + ", limitedQuantity="
-				+ limitedQuantity + ", productOrderBy=" + productOrderBy + ", customerServiceTel=" + customerServiceTel
-				+ ", shareTitle=" + shareTitle + ", fileName=" + fileName + ", getId()=" + getId()
-				+ ", getProductName()=" + getProductName() + ", getBriefIntroduction()=" + getBriefIntroduction()
-				+ ", getSoldNumber()=" + getSoldNumber() + ", getStockNumber()=" + getStockNumber() + ", getState()="
-				+ getState() + ", getSnapUpDate()=" + getSnapUpDate() + ", getSendCodeDate()=" + getSendCodeDate()
-				+ ", getAppointmentDate()=" + getAppointmentDate() + ", getAppointmentMode()=" + getAppointmentMode()
-				+ ", getUseDate()=" + getUseDate() + ", getShopId()=" + getShopId() + ", getHyShop()=" + getHyShop()
-				+ ", getHyPicture()=" + getHyPicture() + ", getHyPoster()=" + getHyPoster() + ", getLimitedQuantity()="
-				+ getLimitedQuantity() + ", getProductOrderBy()=" + getProductOrderBy() + ", getCustomerServiceTel()="
-				+ getCustomerServiceTel() + ", getShareTitle()=" + getShareTitle() + ", getFileName()=" + getFileName()
-				+ ", getSearchValue()=" + getSearchValue() + ", getCreateBy()=" + getCreateBy() + ", getCreateTime()="
-				+ getCreateTime() + ", getUpdateBy()=" + getUpdateBy() + ", getUpdateTime()=" + getUpdateTime()
-				+ ", getRemark()=" + getRemark() + ", getParams()=" + getParams() + ", getClass()=" + getClass()
-				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+	
+	
+	public String getSalState() {
+		return salState;
 	}
+
+	public void setSalState(String salState) {
+		this.salState = salState;
+	}
+
+	
 
 	
 

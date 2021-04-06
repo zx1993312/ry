@@ -26,8 +26,7 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
- * 审核管理
-Controller
+ * 审核管理 Controller
  * 
  * @author Administrator
  * @date 2021-01-23
@@ -35,131 +34,112 @@ Controller
 @Controller
 @RequestMapping("/system/management")
 @Api(tags = "审核管理Controller")
-public class HyAuditManagementController extends BaseController
-{
-    private String prefix = "system/management";
+public class HyAuditManagementController extends BaseController {
+	private String prefix = "system/management";
 
-    @Autowired
-    private IHyAuditManagementService hyAuditManagementService;
+	@Autowired
+	private IHyAuditManagementService hyAuditManagementService;
 
-    @RequiresPermissions("system:management:view")
-    @GetMapping()
-    public String management()
-    {
-        return prefix + "/management";
-    }
+	@RequiresPermissions("system:management:view")
+	@GetMapping()
+	public String management() {
+		return prefix + "/management";
+	}
 
-    /**
-     * 查询审核管理
-列表
-     */
-    @ApiOperation("审核管理")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyAuditManagement", value = "项目实体类hyAuditManagement", required = true),
-	})
-    @RequiresPermissions("system:management:list")
-    @PostMapping("/list")
-    @ResponseBody
-    public TableDataInfo list(HyAuditManagement hyAuditManagement)
-    {
-        startPage();
-        List<HyAuditManagement> list = hyAuditManagementService.selectHyAuditManagementList(hyAuditManagement);
-        return getDataTable(list);
-    }
+	/**
+	 * 查询审核管理 列表
+	 */
+	@ApiOperation("审核管理")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "hyAuditManagement", value = "项目实体类hyAuditManagement", required = true), })
+	@RequiresPermissions("system:management:list")
+	@PostMapping("/list")
+	@ResponseBody
+	public TableDataInfo list(HyAuditManagement hyAuditManagement) {
+		startPage();
+		List<HyAuditManagement> list = hyAuditManagementService.selectHyAuditManagementList(hyAuditManagement);
+		return getDataTable(list);
+	}
 
-    /**
-     * 导出审核管理
-列表
-     */
-    @ApiOperation("审核管理")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyAuditManagement", value = "项目实体类hyAuditManagement", required = true),
-	})
-    @RequiresPermissions("system:management:export")
-    @Log(title = "审核管理", businessType = BusinessType.EXPORT)
-    @PostMapping("/export")
-    @ResponseBody
-    public AjaxResult export(HyAuditManagement hyAuditManagement)
-    {
-        List<HyAuditManagement> list = hyAuditManagementService.selectHyAuditManagementList(hyAuditManagement);
-        ExcelUtil<HyAuditManagement> util = new ExcelUtil<HyAuditManagement>(HyAuditManagement.class);
-        return util.exportExcel(list, "management");
-    }
+	/**
+	 * 导出审核管理 列表
+	 */
+	@ApiOperation("审核管理")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "hyAuditManagement", value = "项目实体类hyAuditManagement", required = true), })
+	@RequiresPermissions("system:management:export")
+	@Log(title = "审核管理", businessType = BusinessType.EXPORT)
+	@PostMapping("/export")
+	@ResponseBody
+	public AjaxResult export(HyAuditManagement hyAuditManagement) {
+		List<HyAuditManagement> list = hyAuditManagementService.selectHyAuditManagementList(hyAuditManagement);
+		ExcelUtil<HyAuditManagement> util = new ExcelUtil<HyAuditManagement>(HyAuditManagement.class);
+		return util.exportExcel(list, "management");
+	}
 
-    /**
-     * 新增审核管理
+	/**
+	 * 新增审核管理
+	 * 
+	 */
+	@GetMapping("/add")
+	public String add() {
+		return prefix + "/add";
+	}
 
-     */
-    @GetMapping("/add")
-    public String add()
-    {
-        return prefix + "/add";
-    }
+	/**
+	 * 新增保存审核管理
+	 * 
+	 */
+	@ApiOperation("审核管理")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "hyAuditManagement", value = "项目实体类hyAuditManagement", required = true), })
+	@RequiresPermissions("system:management:add")
+	@Log(title = "审核管理", businessType = BusinessType.INSERT)
+	@PostMapping("/add")
+	@ResponseBody
+	public AjaxResult addSave(HyAuditManagement hyAuditManagement) {
+		return toAjax(hyAuditManagementService.insertHyAuditManagement(hyAuditManagement));
+	}
 
-    /**
-     * 新增保存审核管理
+	/**
+	 * 修改审核管理
+	 * 
+	 */
+	@ApiOperation("审核管理")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "id", value = "主键id", required = true), })
+	@GetMapping("/edit/{id}")
+	public String edit(@PathVariable("id") Long id, ModelMap mmap) {
+		HyAuditManagement hyAuditManagement = hyAuditManagementService.selectHyAuditManagementById(id);
+		mmap.put("hyAuditManagement", hyAuditManagement);
+		return prefix + "/edit";
+	}
 
-     */
-    @ApiOperation("审核管理")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyAuditManagement", value = "项目实体类hyAuditManagement", required = true),
-	})
-    @RequiresPermissions("system:management:add")
-    @Log(title = "审核管理", businessType = BusinessType.INSERT)
-    @PostMapping("/add")
-    @ResponseBody
-    public AjaxResult addSave(HyAuditManagement hyAuditManagement)
-    {
-        return toAjax(hyAuditManagementService.insertHyAuditManagement(hyAuditManagement));
-    }
+	/**
+	 * 修改保存审核管理
+	 * 
+	 */
+	@ApiOperation("审核管理")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "hyAuditManagement", value = "项目实体类hyAuditManagement", required = true), })
+	@RequiresPermissions("system:management:edit")
+	@Log(title = "审核管理", businessType = BusinessType.UPDATE)
+	@PostMapping("/edit")
+	@ResponseBody
+	public AjaxResult editSave(HyAuditManagement hyAuditManagement) {
+		return toAjax(hyAuditManagementService.updateHyAuditManagement(hyAuditManagement));
+	}
 
-    /**
-     * 修改审核管理
-
-     */
-    @ApiOperation("审核管理")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "id", value = "主键id", required = true),
-	})
-    @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Long id, ModelMap mmap)
-    {
-        HyAuditManagement hyAuditManagement = hyAuditManagementService.selectHyAuditManagementById(id);
-        mmap.put("hyAuditManagement", hyAuditManagement);
-        return prefix + "/edit";
-    }
-
-    /**
-     * 修改保存审核管理
-
-     */
-    @ApiOperation("审核管理")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyAuditManagement", value = "项目实体类hyAuditManagement", required = true),
-	})
-    @RequiresPermissions("system:management:edit")
-    @Log(title = "审核管理", businessType = BusinessType.UPDATE)
-    @PostMapping("/edit")
-    @ResponseBody
-    public AjaxResult editSave(HyAuditManagement hyAuditManagement)
-    {
-        return toAjax(hyAuditManagementService.updateHyAuditManagement(hyAuditManagement));
-    }
-
-    /**
-     * 删除审核管理
-
-     */
-    @ApiOperation("审核管理")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "ids", value = "ids", required = true),
-	})
-    @RequiresPermissions("system:management:remove")
-    @Log(title = "审核管理", businessType = BusinessType.DELETE)
-    @PostMapping( "/remove")
-    @ResponseBody
-    public AjaxResult remove(String ids)
-    {
-        return toAjax(hyAuditManagementService.deleteHyAuditManagementByIds(ids));
-    }
+	/**
+	 * 删除审核管理
+	 * 
+	 */
+	@ApiOperation("审核管理")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "ids", value = "ids", required = true), })
+	@RequiresPermissions("system:management:remove")
+	@Log(title = "审核管理", businessType = BusinessType.DELETE)
+	@PostMapping("/remove")
+	@ResponseBody
+	public AjaxResult remove(String ids) {
+		return toAjax(hyAuditManagementService.deleteHyAuditManagementByIds(ids));
+	}
 }
