@@ -38,7 +38,11 @@
                             </li>
                             <li>
                                 <label>状态：</label>
-                                <input type="text" name="state"/>
+                                <select name="state" class="form-control " >
+                                <option value="">请选择</option>
+                                <option value=1>上线</option>
+                                <option value=2>下线</option>
+                                </select>
                             </li>
                             <li>
                                 <label>限购数量：</label>
@@ -106,6 +110,20 @@
                     visible: false
                 },
                 {
+                    field: 'hyPicture.pcitureAddress',
+                    title: '产品信息缩略图',
+                    formatter: function(value, row, index) {
+				    	// 图片预览（注意：如存储在本地直接获取数据库路径，如有配置context-path需要使用ctx+路径）
+				    	// 如：/profile/upload/2019/08/08/3b7a839aced67397bac694d77611ce72.png
+				    		return $.table.imageView("/img/"+value);
+				    		 /* if(index % 2 == 0){
+					    		return $.table.imageView(value);
+					    	}else {
+					    		return $.table.imageView(value);
+					    	}  */
+				    }
+                },
+                {
                     field: 'productName',
                     title: '产品名称'
                 },
@@ -123,7 +141,15 @@
                 },
                 {
                     field: 'state',
-                    title: '状态'
+                    title: '状态',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case "" : value =  "请选择";break;
+	                    	case 1 : value =  "上线";break;
+	                    	case 2 : value =  "下线";break;
+	                	}
+		            	return value;
+		            }
                 },
                 {
                     field: 'snapUpDate',
@@ -148,20 +174,6 @@
                 {
                     field: 'hyShop.shopName',
                     title: '店铺名称'
-                },
-                {
-                    field: 'hyPicture.pcitureAddress',
-                    title: '首页图和产品详情页轮播图',
-                    formatter: function(value, row, index) {
-				    	// 图片预览（注意：如存储在本地直接获取数据库路径，如有配置context-path需要使用ctx+路径）
-				    	// 如：/profile/upload/2019/08/08/3b7a839aced67397bac694d77611ce72.png
-				    		return $.table.imageView("/img/"+value);
-				    		 /* if(index % 2 == 0){
-					    		return $.table.imageView(value);
-					    	}else {
-					    		return $.table.imageView(value);
-					    	}  */
-				    }
                 },
                 {
                     title: '操作',

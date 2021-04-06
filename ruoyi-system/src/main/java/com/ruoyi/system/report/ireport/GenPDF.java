@@ -9,7 +9,6 @@ import com.ruoyi.system.annotation.JDBCConnection;
 
 public class GenPDF {
 
-	private static final String JASPER_PATH = System.getProperty("user.dir")+"\\src\\main\\resources\\templates\\system\\WebRoot\\";
 	
 	public static final String OUT_PATH = "D:/";
 	
@@ -26,9 +25,8 @@ public class GenPDF {
 			
 			String outFileName = OUT_PATH+CLASSNO+"_"+start_time+".pdf";
 			
-			String ireportTemplate = JASPER_PATH+"repo.jasper";
 			
-			IReportUtil.exportPdfFileServer(ireportTemplate,outFileName,parameters);
+			IReportUtil.exportPdfFileServer(outFileName,parameters);
 			
 			long end_time = new Date().getTime();
 			

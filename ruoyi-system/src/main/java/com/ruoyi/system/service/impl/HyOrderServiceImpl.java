@@ -1,14 +1,29 @@
 package com.ruoyi.system.service.impl;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ResourceUtils;
 
 import com.ruoyi.system.mapper.HyOrderMapper;
 import com.ruoyi.system.domain.HyOrder;
 import com.ruoyi.system.service.IHyOrderService;
+
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+
 import com.ruoyi.common.core.text.Convert;
 
 /**
@@ -144,6 +159,28 @@ public class HyOrderServiceImpl implements IHyOrderService
 			}
 		}
 		return false;
+	}
+	/**
+	 * 导出PDF
+	 */
+	@Override
+	public void downloadPDF(HttpServletResponse response) throws Exception{
+		//1、获取模版文件
+	    File rootFile = new File(ResourceUtils.getURL("classpath:").getPath());
+	    File templateFile = new File(rootFile,"/jasper_templates/repo.jasper");
+	    //2、准备数据库连接
+	    Map params = new HashMap();
+	    JasperPrint jasperPrint =JasperFillManager.fillReport(new FileInputStream(templateFile),params,getCon());
+	    ServletOutputStream servletOutputStream = response.getOutputStream();
+	    String filename="考核列表数据.pdf";
+	    response.setContentType("application/pdf");
+	    response.setHeader("content-disposition","attachment;filename="+new String(filename.getBytes(),"iso8859-1"));
+	    JasperExportManager.exportReportToPdfStream(jasperPrint,servletOutputStream);
+	}
+	private Connection getCon() throws Exception{
+	    Class.forName("com.mysql.cj.jdbc.Driver");
+	    Connection connection = DriverManager.getConnection("jdbc:mysql://192.168.0.103:3306/hy_database?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8","root","root");
+	    return connection;
 	}
 
 }

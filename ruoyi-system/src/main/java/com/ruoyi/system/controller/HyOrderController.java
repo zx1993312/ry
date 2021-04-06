@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -213,4 +214,19 @@ public class HyOrderController extends BaseController
 			return map;
 		}
 	}
+	/**
+	 * 导出PDF
+	 */
+	 @ApiOperation("订单")
+	 @ApiImplicitParams({ 
+	 @ApiImplicitParam(name = "hyOrder", value = "项目实体类hyOrder", required = true),
+	 })
+	 @Log(title = "订单", businessType = BusinessType.EXPORT)
+	 @PostMapping("/downloadPDF")
+	 @ResponseBody
+	public void downloadPDF(HttpServletResponse response) throws Exception
+	{
+		 hyOrderService.downloadPDF(response);
+	}
+	
 }

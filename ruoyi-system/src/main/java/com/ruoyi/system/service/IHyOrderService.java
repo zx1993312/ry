@@ -1,6 +1,9 @@
 package com.ruoyi.system.service;
 
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+
 import com.ruoyi.system.domain.HyOrder;
 
 /**
@@ -77,5 +80,12 @@ public interface IHyOrderService
      * @return
      */
 	public boolean deleteFile(String fileName);
+	/**
+	 * 导出PDF
+	 * @param response
+	 * @throws Exception 
+	 */
+	public void downloadPDF(HttpServletResponse response) throws Exception;
+
 
 }

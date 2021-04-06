@@ -87,6 +87,7 @@ public class HyProductServiceImpl implements IHyProductService {
 		String a = hyProductMapper.selectNextValue("hy_database", "hy_product");
 		Long productId = Long.valueOf(a);
 		hyPicture.setProductId(productId);
+		System.out.println("================hyProduct.getShopId()============"+hyProduct.getShopId());
 		int row = hyProductMapper.insertHyProduct(hyProduct);
 		if(row>0) {
 			return hyPictureMapper.insertHyPicture(hyPicture);
@@ -184,7 +185,7 @@ public class HyProductServiceImpl implements IHyProductService {
      */
 	@Override
 	public boolean deleteFile(String fileName) {
-		String fileName1 = "C:\\Users\\Administrator\\Desktop\\hykj\\ry\\ruoyi-admin\\src\\main\\resources\\static\\img\\"+fileName;
+		String fileName1 = System.getProperty("user.dir")+"\\src\\main\\resources\\static\\img\\"+fileName;
 		File file = new File(fileName1);
 		System.out.println("================file================"+file);
 		//判断文件存不存在
