@@ -64,7 +64,6 @@
                 <div class="col-sm-8">
                <select id="state" name="state" class="form-control " >
                       <option value="">请选择</option>
-                      <option value="0">全部订单</option>
                       <option value="1">已支付</option>
                       <option value="2">已预约</option>
                       <option value="3">已完成</option>
@@ -100,7 +99,7 @@
                 type: "post",
                 datatype: "json",
                 url:  prefix + '/add',
-                data: {"userPicture": imagepath,"orderNumber":orderNumber,"hyUser.name":Username,
+                data: {"userPicture": imagepath,"orderNumber":orderNumber,"hyUser.name":Username,"userId":userId,
                 	"tradeName":tradeName,"businessName":businessName,"unitPrice":unitPrice,"number":number,"state":state},
                 async: true,
                 success: function (result) {

@@ -259,6 +259,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="customerServiceTel != null">customer_service_tel,</if>
             <if test="shareTitle != null">share_title,</if>
             <if test="salState != null ">sal_state,</if>
+            <if test="lableId != null ">lable_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="productName != null">#{productName},</if>
@@ -277,6 +278,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="customerServiceTel != null">#{customerServiceTel},</if>
             <if test="shareTitle != null">#{shareTitle},</if>
             <if test="salState != null"> #{salState},</if>
+            <if test="lableId != null"> #{lableId},</if>
          </trim>
     </insert>
     <update id="updateHyProduct" parameterType="HyProduct">
@@ -298,6 +300,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="customerServiceTel != null "> and customer_service_tel = #{customerServiceTel}</if>
             <if test="shareTitle != null "> and share_title = #{shareTitle}</if>
             <if test="salState != null "> and  sal_state = #{salState}</if>
+            <if test="lableId != null "> and  lable_id = #{lableId}</if>
         </trim>
         where id = #{id}
     </update>

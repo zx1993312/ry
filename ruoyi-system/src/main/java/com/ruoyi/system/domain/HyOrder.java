@@ -1,6 +1,8 @@
 package com.ruoyi.system.domain;
 
 import java.math.BigDecimal;
+import java.util.Date;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
@@ -55,6 +57,9 @@ public class HyOrder extends BaseEntity
     /**图片地址*/
     @Excel(name="图片地址")
     private String fileName;
+    /**创建时间*/
+    @Excel(name="创建时间")
+    private Date createTime;
     public void setId(Long id) 
     {
         this.id = id;
@@ -154,13 +159,23 @@ public class HyOrder extends BaseEntity
 		this.fileName = fileName;
 	}
 
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
 	@Override
 	public String toString() {
 		return "HyOrder [id=" + id + ", userId=" + userId + ", userPicture=" + userPicture + ", orderNumber="
 				+ orderNumber + ", tradeName=" + tradeName + ", businessName=" + businessName + ", unitPrice="
 				+ unitPrice + ", number=" + number + ", state=" + state + ", hyUser=" + hyUser + ", fileName="
-				+ fileName + "]";
+				+ fileName + ", createTime=" + createTime + "]";
 	}
+
+	
 
 	
 

@@ -14,6 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="unitPrice"    column="unit_price"    />
         <result property="state"    column="state"    />
         <result property="number"    column="number"    />
+        <result property="createTime"    column="create_time"    />
         <association property="hyUser"
 			column="id" javaType="HyUser"
 			resultMap="HyUserResult" />
@@ -37,6 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         o.unit_price, 
         o.number,
         o.state,
+        o.create_time,
         u.name
         from 
         hy_order o
@@ -54,7 +56,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         o.business_name, 
         o.unit_price, 
         o.number,
-        o.state
+        o.state,
+        o.create_time
         from 
         hy_order o
         where 1=1
@@ -117,6 +120,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="unitPrice != null">unit_price,</if>
             <if test="state != null">state,</if>
             <if test="number != null">number,</if>
+            create_time,
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="userId != null">#{userId},</if>
@@ -127,6 +131,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="unitPrice != null">#{unitPrice},</if>
             <if test="state != null">#{state},</if>
             <if test="number != null">#{number},</if>
+            NOW(),
          </trim>
     </insert>
 

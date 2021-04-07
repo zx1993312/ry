@@ -1181,8 +1181,8 @@ var table = {
             	    $.modal.open("修改" + table.options.modalName, $.operate.editUrl(id));
             	}
             },
-            // 商户结算
-            edit1: function(id) {
+            // 一键结算
+            edit2: function(id) {
             	table.set();
             	var rows = $.common.isEmpty(table.options.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns(table.options.uniqueId);
             	if (rows.length == 0) {
@@ -1193,6 +1193,25 @@ var table = {
             	    var url = table.options.updateUrl;
             	    var data = { "ids": rows.join(),"state":"3" };
             	    $.operate.submit(url, "post", "json", data);
+            	});
+            },
+            // 商户结算
+            edit1: function(id,state) {
+            	table.set();
+            	$.modal.confirm("确定结算该条" + table.options.modalName + "信息吗？", function() {
+                    var url = $.common.isEmpty(id) ? table.options.updateUrl : table.options.updateUrl.replace("{id}", id);
+                    if(table.options.type == table_type.bootstrapTreeTable) {
+                    	$.operate.get(url);
+                    } else {
+                    	if(state=="1"){
+                    		var url = table.options.updateUrl;
+                        	var data = { "ids": id,"state":"3" };
+                        	$.operate.submit(url, "post", "json", data);
+                    	}else{
+                    		$.modal.alertWarning("结算订单失败");
+                    		return;
+                    	}
+                    }
             	});
             },
             // 修改信息，以tab页展现
