@@ -1,6 +1,9 @@
 package com.ruoyi.system.controller;
 
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -82,9 +85,11 @@ public class HyShoppingAffirmController extends BaseController
     @ApiOperation("查询收费比例设置列表")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "hyPicture", value = "项目实体类", required = true), })
 	@GetMapping("/list")
-	public String list(HyPicture hyPicture, ModelMap mmap) {
+	public String list(HyPicture hyPicture, ModelMap mmap,HttpServletRequest request) {
 		
-    	HyProduct product = hyProductService.selectHyId(Long.valueOf(9));
+    	String id = request.getParameter("id");
+    	
+    	HyProduct product = hyProductService.selectHyId(Long.parseLong(id));
 		mmap.put("product", product);
 		
        

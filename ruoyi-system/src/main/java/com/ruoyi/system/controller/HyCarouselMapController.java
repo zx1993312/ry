@@ -82,5 +82,5 @@ public class HyCarouselMapController extends BaseController {
         HyShop shop = HyShopService.selectHyShopById(Long.parseLong(pid));
         mmap.put("shop", shop);
 		return prefix + "/carouselMap";
-	}
+	} 
 }

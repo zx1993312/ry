@@ -49,10 +49,12 @@ public class HyMyCenterController extends BaseController {
 	@ApiOperation("查询订单设置列表")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "hyOrder", value = "项目实体类", required = true), })
 	@RequestMapping("/list")
-	public String list(HyOrder hyOrder, ModelMap mmap) {
+	public String list(HyOrder hyOrder, ModelMap mmap,HttpServletRequest request) {
 		List<HyOrder> list = hyOrderService.selectHyOrderListTest(hyOrder);
 		mmap.put("list", list);
 
+		String state = request.getParameter("state");
+		
 		return prefix + "/myCenter";
 
 	}

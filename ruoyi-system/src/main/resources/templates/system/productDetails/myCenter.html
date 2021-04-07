@@ -44,9 +44,9 @@ a{
 	</div>
 	<div style="margin-left: 180px;">
 		<span class="c1"><a style="text-decoration: none;" onclick="orderAll(0)">全部订单</a></span>
-		<span class="c1"><a style="text-decoration: none;" href="yizhifu" onclick="orderAll(1)">已支付</a></span>
-		<span class="c1"><a style="text-decoration: none;" onclick="orderAll(2)">已预约</a></span>
-		<span class="c1"><a style="text-decoration: none;" onclick="orderAll(3)">已完成</a></span>
+		<span class="c1"><a style="text-decoration: none;" href="?state=1">已支付</a></span>
+		<span class="c1"><a style="text-decoration: none;" href="?state=2">已预约</a></span>
+		<span class="c1"><a style="text-decoration: none;" href="?state=3">已完成</a></span>
 	</div>
 	
 	
@@ -55,8 +55,8 @@ a{
 	<!-- 空div，用来放用户查询的全部订单 -->
 	<div>
 	<div style="width: 100%;height: 100%; background-color: #e8e8e8">
-		<table style=" font-size: 20px;" th:each="p:${list}" border="1" caption="商品订单">
-			<center><img width="70px" height="70" th:src="'/img/'+${p.userPicture}"></img></center>
+		<table style=" font-size: 20px; margin-bottom: 10px;" th:each="p:${list}" border="1" caption="商品订单">
+			<center><img width="70px" height="70" th:src="'/img/'+${p.userPicture}"></center>
 			<tr>
 				<th width="300">订单编号</th>
 				<th width="300">商品名</th>
@@ -73,15 +73,15 @@ a{
 				<td width="300" th:text="${p.number}"></td>
 				<td width="200" th:text="${p.state}"></td>
 			</tr>
-			<hr>
 		</table>
+			
 	</div>
 	</div>
 </div>
 </form>
 <th:block th:include="include :: footer" />
 <script type="text/javascript">
-	function orderAll(value){
+	/* function orderAll(value){
 		console.log(value);
 		if(value==0){
 			$.ajax({
@@ -97,7 +97,7 @@ a{
 	     	            /* data:{
 	     	            	"state":value
 	     	            },	 */            
-	     	            type: "post",
+	     	           /* type: "post",
 	     	           success: function (result) {
 	     	        	  if (result.code == web_status.SUCCESS) {
 	  	                    $.modal.closeAll();
@@ -118,7 +118,7 @@ a{
                 }
 	        });
 		}
-	}
+	} */
 </script>
 </body>
 </html>

@@ -38,7 +38,7 @@ select {
 
 #b1 {
 	font-size: 30px;
-	margin-right: 800px; 
+	margin-right: 800px;
 	color: red;
 }
 
@@ -51,58 +51,68 @@ s {
 	background-color: white;
 	width: 1000px;
 }
-
-
 </style>
-
+<meta name="viewport"
+	content="width=device-width,initial-scale=1,user-scalable=no" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<link rel="stylesheet" type="text/css"
+	href="../bootstrap3/css/bootstrap.css">
+<link rel="stylesheet" type="text/css"
+	href="../bootstrap3/font-awesome-4.7.0/css/font-awesome.css" />
 </head>
-<body>												
+<body>
 	<form class="form-horizontalm" id="form-dict-edit">
-		
+
 		<center>
 			<div id="d1">
-			<div th:each="p:${list}">
-			<div th:each="h:${relist}">
-			<div th:each="o:${reList}">
-				<div>
-					<h1>商城首页</h1>
-					<span id="s1">千千惠生活</span>
-					<select>
-					    <option>请选择</option>
-						<option>长春站</option>
-						<option>北京站</option>
-						<option>上海站</option>
-					</select>     
-					
-		       
-		
-			<div>
-					<a th:href="'/system/productDetailsCM/list?id='+${p.id}"><img width="1000px" height="400px" th:src="'/img/'+${o.pcitureAddress}"></a><br>
-					<a th:text="${p.briefIntroduction}"></a><br>
-				¥<span id="b1" th:text="${h.retailPrice}"></span><br>
-				<hr> 
-				门市价:<s style="margin-right: 750px;" th:text=${h.marketPrice}></s> 销售量:<b th:text="${p.soldNumber}"></b>
-				
-			</div>
-			<hr>
-			<div style="height: 15px; background-color: #e8e8e8;"></div>
-				</div>
-        </div>
-				
+				<div th:each="p:${list}">
+					<div th:each="h:${relist}">
+						<div th:each="o:${reList}">
+							<div>
+								<h1>商城首页</h1>
+								<span id="s1">千千惠生活</span> <select>
+									<option>请选择</option>
+									<option>长春站</option>
+									<option>北京站</option>
+									<option>上海站</option>
+								</select>
 
+
+
+								<div>
+									<a th:href="'/system/productDetailsCM/list?id='+${p.id}"><img
+										width="1000px" height="400px"
+										th:src="'/img/'+${o.pcitureAddress}"></a><br> <a
+										th:text="${p.briefIntroduction}"></a><br> ¥<span id="b1"
+										th:text="${h.retailPrice}"></span><br>
+									<hr>
+									门市价:<s style="margin-right: 750px;" th:text=${h.marketPrice}></s>
+									销售量:<b th:text="${p.soldNumber}"></b>
+
+								</div>
+								<hr>
+								<div style="height: 15px; background-color: #e8e8e8;"></div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</center>
 	</form>
 	<script type="text/javascript">
-	function foo(){
-        var frm = window.event.srcElement;
-        frm.hid.value = $(frm.hid).attr("index"); 
-        return true;
-    }
+		function foo() {
+			var frm = window.event.srcElement;
+			frm.hid.value = $(frm.hid).attr("index");
+			return true;
+		}
 	</script>
-	
-	
 	<th:block th:include="include :: footer" />
-
 </body>
+<script type="text/javascript" src="../bootstrap3/jquery.min.js"></script>
+<script type="text/javascript" src="../bootstrap3/js/bootstrap.js"></script>
+<script type="text/javascript" src="../bootstrap3/js/holder.js"></script>
+<script type="text/javascript" src="../bootstrap3/js/html5shiv.min.js"></script>
+<script type="text/javascript"
+	src="../bootstrap3/js/css3-mediaqueries.js"></script>
+<script type="text/javascript" src="../bootstrap3/js/respond.min.js"></script>
 </html>

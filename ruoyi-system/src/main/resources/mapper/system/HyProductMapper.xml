@@ -153,6 +153,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <sql id="selectHyProductByIdAndPictor">
     	select 
+    	p.id,
     	p.brief_introduction,
     	s.retail_price,
     	s.set_meal_name,

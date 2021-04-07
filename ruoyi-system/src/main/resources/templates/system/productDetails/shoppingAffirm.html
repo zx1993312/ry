@@ -94,7 +94,8 @@
 	font-size: 20px;
 	color: white;
 	margin:20px 0 0 190px;
-	 
+	line-height: 60px;
+	text-align: center; 
 }
 </style>
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
@@ -106,7 +107,7 @@
   	<center><h1>商品确认</h1></center>
   <div class="container">
   	<form class="form-horizontalm" id="form-user-add">
-	  	<div class="well"><a href="/system/productDetailsCM/list">《返回</a></div>
+	<div th:each="product:${product}" class="well"><a th:href="'/system/productDetailsCM/list?id='+${product.id}">&lt返回</a></div>
 		  	<div id=d1>
 		  		姓        名:<input name="name" class="in" type="text" placeholder="请输入姓名" /><i id="i1" class="fa fa-address-card" aria-hidden="true"></i></a><br>
 		  		<hr>
