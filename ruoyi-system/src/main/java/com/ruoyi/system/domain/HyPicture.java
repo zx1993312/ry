@@ -52,5 +52,10 @@ public class HyPicture extends BaseEntity
         return productId;
     }
 
+	@Override
+	public String toString() {
+		return "HyPicture [id=" + id + ", pcitureAddress=" + pcitureAddress + ", productId=" + productId + "]";
+	}
+
   
 }

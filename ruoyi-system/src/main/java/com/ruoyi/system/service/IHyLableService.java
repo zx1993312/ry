@@ -2,6 +2,7 @@ package com.ruoyi.system.service;
 
 import java.util.List;
 import com.ruoyi.system.domain.HyLable;
+import com.ruoyi.system.domain.HyShop;
 
 /**
  * 标签Service接口
@@ -58,4 +59,11 @@ public interface IHyLableService
      * @return 结果
      */
     public int deleteHyLableById(Long id);
+    /**
+     * 查询标签列表
+     * 
+     * @param hyLable 标签
+     * @return 标签集合
+     */
+	public List<HyLable> selectHyLableVoDistinct(HyLable hyLable);
 }

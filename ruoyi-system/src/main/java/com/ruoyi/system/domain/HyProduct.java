@@ -80,8 +80,15 @@ public class HyProduct extends BaseEntity
     /**详细信息表（海报表）*/
     @Excel(name="详细信息表（海报表）")
     private HyPoster hyPoster;
-    
+    /**套餐表*/
+    @Excel(name="套餐信息表")
     private HySetMeal hySetMeal;
+    /**标签表*/
+    @Excel(name="标签表")
+    private HyLable hyLable;
+    /** 标签id */
+    @Excel(name = "标签id")
+    private Long lableId;
     /**限购数量*/
     @Excel(name="限购数量")
     private Integer limitedQuantity;
@@ -293,6 +300,38 @@ public class HyProduct extends BaseEntity
 	public void setSalState(String salState) {
 		this.salState = salState;
 	}
+
+	public HyLable getHyLable() {
+		return hyLable;
+	}
+
+	public void setHyLable(HyLable hyLable) {
+		this.hyLable = hyLable;
+	}
+
+	public Long getLableId() {
+		return lableId;
+	}
+
+	public void setLableId(Long lableId) {
+		this.lableId = lableId;
+	}
+
+	@Override
+	public String toString() {
+		return "HyProduct [id=" + id + ", productName=" + productName + ", briefIntroduction=" + briefIntroduction
+				+ ", soldNumber=" + soldNumber + ", stockNumber=" + stockNumber + ", state=" + state + ", snapUpDate="
+				+ snapUpDate + ", sendCodeDate=" + sendCodeDate + ", appointmentDate=" + appointmentDate
+				+ ", appointmentMode=" + appointmentMode + ", useDate=" + useDate + ", shopId=" + shopId + ", hyShop="
+				+ hyShop + ", hyPicture=" + hyPicture + ", hyPoster=" + hyPoster + ", hySetMeal=" + hySetMeal
+				+ ", hyLable=" + hyLable + ", lableId=" + lableId + ", limitedQuantity=" + limitedQuantity
+				+ ", productOrderBy=" + productOrderBy + ", customerServiceTel=" + customerServiceTel + ", shareTitle="
+				+ shareTitle + ", salState=" + salState + ", fileName=" + fileName + "]";
+	}
+
+	
+
+	
 
 	
 

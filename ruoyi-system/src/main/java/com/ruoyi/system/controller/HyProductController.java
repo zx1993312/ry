@@ -148,12 +148,12 @@ public class HyProductController extends BaseController
     @ResponseBody
     public AjaxResult editSave(HyProduct hyProduct)
     {
-    	String fileName = hyProduct.getFileName();
-    	boolean b = hyProductService.deleteFile(fileName);
-    	if(b) {
-    		return toAjax(hyProductService.updateHyProduct(hyProduct));
+    	if(hyProduct.getHyPicture().getPcitureAddress()!=null&&!"".equals(hyProduct.getHyPicture().getPcitureAddress())) {
+    		String fileName = hyProduct.getFileName();
+        	hyProductService.deleteFile(fileName);
     	}
-        return toAjax(false);
+    	
+    	return toAjax(hyProductService.updateHyProduct(hyProduct));
     }
 
     /**

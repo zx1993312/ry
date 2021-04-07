@@ -97,4 +97,9 @@ public class HyLableServiceImpl implements IHyLableService
     {
         return hyLableMapper.deleteHyLableById(id);
     }
+
+	@Override
+	public List<HyLable> selectHyLableVoDistinct(HyLable hyLable) {
+		return hyLableMapper.selectHyLableVoDistinct(hyLable);
+	}
 }

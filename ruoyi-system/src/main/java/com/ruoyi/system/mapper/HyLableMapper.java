@@ -58,4 +58,6 @@ public interface HyLableMapper
      * @return 结果
      */
     public int deleteHyLableByIds(String[] ids);
+
+	public List<HyLable> selectHyLableVoDistinct(HyLable hyLable);
 }

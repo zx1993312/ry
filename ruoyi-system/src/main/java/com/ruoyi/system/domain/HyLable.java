@@ -1,7 +1,5 @@
 package com.ruoyi.system.domain;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
@@ -20,7 +18,7 @@ public class HyLable extends BaseEntity
 
     /** 标签名称 */
     @Excel(name = "标签名称")
-    private String labelName;
+    private String lableName;
 
     public void setId(Long id) 
     {
@@ -31,21 +29,25 @@ public class HyLable extends BaseEntity
     {
         return id;
     }
-    public void setLabelName(String labelName) 
+    public void setlableName(String lableName) 
     {
-        this.labelName = labelName;
+        this.lableName = lableName;
     }
 
-    public String getLabelName() 
+    public String getlableName() 
     {
-        return labelName;
+        return lableName;
     }
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("labelName", getLabelName())
-            .toString();
-    }
+	@Override
+	public String toString() {
+		return "HyLable [id=" + id + ", lableName=" + lableName + "]";
+	}
+
+	
+    
+
+
+
+	
 }

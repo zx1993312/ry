@@ -22,12 +22,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="customerServiceTel"    column="customer_service_tel"    />
         <result property="shareTitle"    column="share_title"    />
         <result property="salState"  column="sal_state"/>
+        <result property="lableId"  column="lable_id"/>
          <association property="hyShop" column="id"
 			javaType="HyShop" resultMap="HyShopResult" />
          <association property="hyPicture" column="id"
 			javaType="HyPicture" resultMap="HyPictureResult" />
          <association property="hySetMeal" column="id"
 			javaType="HySetMeal" resultMap="HySetMealResult" />
+         <association property="hyLable" column="id"
+			javaType="HyLable" resultMap="HyLableResult" />
+    </resultMap>
+    
+    <resultMap type="HyLable" id="HyLableResult">
+        <result property="id"    column="id"    />
+        <result property="lableName"    column="lable_name"    />
     </resultMap>
     
     <resultMap type="HySetMeal" id="HySetMealResult">
@@ -79,14 +87,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         p.customer_service_tel,
         p.share_title,
         p.sal_state,
+        p.lable_id,
         s.shop_name,
         a.pciture_address,
-        c.poster_address
+        c.poster_address,
+        l.id,
+        l.lable_name
         from 
         hy_product p
         LEFT JOIN hy_shop s ON  p.shop_id=s.id
         LEFT JOIN hy_picture a ON a.product_id = p.id
         LEFT JOIN hy_poster c ON c.product_id=p.id
+        LEFT JOIN hy_lable l ON p.lable_id=l.id
         where 1=1
     </sql>
     
@@ -186,7 +198,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="customerServiceTel != null and customerServiceTel != '' "> and  p.customer_service_tel = #{customerServiceTel}</if>
             <if test="shareTitle != null and shareTitle != '' "> and  p.share_title = #{shareTitle}</if>
             <if test="salState != null and salState != '' "> and  p.sal_state = #{salState}</if>
+            <if test="lableId != null and lableId != '' "> and  p.lable_id = #{lableId}</if>
             <if test="hyShop.shopName != null and hyShop.shopName != ''"> and s.shop_name = #{hyShop.shopName}</if>
+            <if test="hyLable!=null and hyLable!=''">
+            <if test="hyLable.lableName!=null and hyLable.lableName!=''"> and l.lable_name = #{hyLable.lableName}</if>
+            </if>
+            
     </select>
     
     

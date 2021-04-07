@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ruoyi.system.mapper.HyPictureMapper;
 import com.ruoyi.system.mapper.HyProductMapper;
+import com.ruoyi.system.domain.HyLable;
 import com.ruoyi.system.domain.HyOrder;
 import com.ruoyi.system.domain.HyPicture;
 import com.ruoyi.system.domain.HyProduct;
@@ -57,7 +58,7 @@ public class HyProductServiceImpl implements IHyProductService {
 	 */
 	@Override
 	public List<HyProduct> selectHyProductList(HyProduct hyProduct) {
-		return hyProductMapper.selectHyProductList(hyProduct);
+			return hyProductMapper.selectHyProductList(hyProduct);
 	}
 	
 	

@@ -147,14 +147,12 @@ public class HyOrderController extends BaseController
     @ResponseBody
     public AjaxResult editSave(HyOrder hyOrder)
     {	
-    	String fileName = hyOrder.getFileName();
-    	boolean b = hyOrderService.deleteFile(fileName);
-    	if(b) {
-    		return toAjax(hyOrderService.updateHyOrder(hyOrder));
+    	if(hyOrder.getUserPicture()!=null&&!"".equals(hyOrder.getUserPicture())) {
+    		String fileName = hyOrder.getFileName();
+        	hyOrderService.deleteFile(fileName);
     	}
-    	return toAjax(false);
     	
-       
+    	return toAjax(hyOrderService.updateHyOrder(hyOrder));
     }
 
     /**

@@ -17,6 +17,13 @@
 									<option th:if="data!=null" th:each="data:${type}" th:text="${data.shopName}" th:value="${data.shopName}"></option>
 						 	    </select>
                             </li>
+                             <li>
+                                <label>关联标签：</label>
+                               	<select name="hyLable.id" class="form-control" th:with="type=${@lable.getLable()}">
+									<option value="">请选择</option>
+									<option th:if="data!=null" th:each="data:${type}" th:text="${data}" th:value="${data}"></option>
+						 	    </select>
+                            </li>
                             <li>
                                 <label>产品名称：</label>
                                  	<select name="id" class="form-control" th:with="type=${@product.getProduct()}">
@@ -174,6 +181,10 @@
                 {
                     field: 'hyShop.shopName',
                     title: '店铺名称'
+                },
+                {
+                    field: 'hyLable.lableName',
+                    title: '标签名称'
                 },
                 {
                     title: '操作',
