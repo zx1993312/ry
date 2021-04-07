@@ -72,8 +72,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectHyOrderList" parameterType="HyOrder" resultMap="HyOrderResult">
         <include refid="selectHyOrderVo"/>
-        
+        	
+            <if test="hyUser != null and hyUser != ''">
             <if test="hyUser.name != null and hyUser.name != ''"> and u.name = #{hyUser.name}</if>
+            </if>
             <if test="orderNumber != null  and orderNumber != ''"> and order_number = #{orderNumber}</if>
             <if test="tradeName != null  and tradeName != ''"> and trade_name like concat('%', #{tradeName}, '%')</if>
             <if test="businessName != null  and businessName != ''"> and business_name like concat('%', #{businessName}, '%')</if>

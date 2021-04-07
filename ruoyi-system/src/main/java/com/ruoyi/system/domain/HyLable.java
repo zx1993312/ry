@@ -11,7 +11,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  */
 public class HyLable extends BaseEntity
 {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L ;
 
     /** 标签id */
     private Long id;
@@ -29,12 +29,12 @@ public class HyLable extends BaseEntity
     {
         return id;
     }
-    public void setlableName(String lableName) 
+    public void setLableName(String lableName) 
     {
         this.lableName = lableName;
     }
 
-    public String getlableName() 
+    public String getLableName() 
     {
         return lableName;
     }

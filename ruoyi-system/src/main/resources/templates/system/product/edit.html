@@ -12,11 +12,11 @@
        <form class="form-horizontal m" id="form-product-edit" th:object="${hyProduct}">
             <input name="id" th:field="*{id}" type="hidden">
                 <div class="form-group">    
-                 <label class="col-sm-3 control-label">店铺名称：</label>
+                 <label class="col-sm-3 control-label">选择店铺：</label>
                 <div class="col-sm-8">
-                    <select name="hyShop.shopName" id="hyShop.shopName" th:field="*{hyShop.shopName}" class="form-control" th:with="type=${@shop.getShop()}">
+                    <select name="shopId" id="shopId" th:field="*{shopId}" class="form-control" th:with="type=${@shop.getShop()}">
 						<option value="">请选择</option>
-						<option th:if="data!=null" th:each="data:${type}" th:text="${data.shopName}" th:value="${data.shopName}"></option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.shopName}" th:value="${data.id}"></option>
 				 	</select>
                 </div>
             </div>
@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">简介（内容）：</label>
+                <label class="col-sm-3 control-label">产品介绍：</label>
                 <div class="col-sm-8">
                         <input type="hidden" class="form-control" id="briefIntroduction" th:field="*{briefIntroduction}" name="briefIntroduction">
                  	<div class="summernote" id="briefIntroduction" th:field="*{briefIntroduction}"></div>
@@ -46,19 +46,19 @@
             <img alt="" th:src="'/img/'+*{hyPicture.pcitureAddress}" width="200px" height="200px">
             <input id="deleteFile" th:value="*{hyPicture.pcitureAddress}" type="hidden">
             <div class="form-group">    
-                <label class="col-sm-3 control-label">已售数量：</label>
+                <label class="col-sm-3 control-label">产品销量：</label>
                 <div class="col-sm-8">
                     <input name="soldNumber" id="soldNumber" th:field="*{soldNumber}" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">库存数量：</label>
+                <label class="col-sm-3 control-label">产品库存：</label>
                 <div class="col-sm-8">
                     <input name="stockNumber" id="stockNumber" th:field="*{stockNumber}" class="form-control" type="text">
                 </div>    
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">商品排序权重：</label>
+                <label class="col-sm-3 control-label">产品排序权重：</label>
                 <div class="col-sm-8">
                     <input name="productOrderBy" id="productOrderBy" th:field="*{productOrderBy}" class="form-control" type="text">
                 </div>
@@ -67,9 +67,9 @@
                 <label class="col-sm-3 control-label">关联标签：</label>
                  <div class="col-sm-8">
                     <!-- <input name="hyLable.lableName" id="hyLable.lableName" th:field="*{hyLable.lableName}" class="form-control" type="text"> -->
-                 	<select name="hyLable.lableName" id="hyLable.lableName" th:field="*{hyLable.lableName}" class="form-control" th:with="type=${@lable.getLable()}">
+                 	<select name="lableId" id="lableId" th:field="*{lableId}" class="form-control" th:with="type=${@lable.getLable()}">
 						<option value="">请选择</option>
-						<option th:if="data!=null" th:each="data:${type}" th:text="${data}" th:value="${data}"></option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.lableName}" th:value="${data.id}"></option>
 				 	</select>
                 </div> 
             </div>
@@ -80,7 +80,7 @@
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">状态：</label>
+                <label class="col-sm-3 control-label">产品状态：</label>
                 <div class="col-sm-8">
                     <select id="state" name="state" th:field="*{state}"  class="form-control " >
                        <option value="">请选择</option>
@@ -105,9 +105,10 @@
         });
 
         function submitHandler() {
-        	var imagepath = $("#remarks").val();
+        	var pcitureAddress = $("#remarks").val();
         	var id = $("#id").val();
-        	var shop = $("#hyShop.shopName").val();
+        	var shopId = $("#shopId").val();
+        	var lableId = $("#lableId").val();
         	var productName = $("#productName").val();
         	var briefIntroduction = $("#briefIntroduction").val();
         	var soldNumber = $("#soldNumber").val();
@@ -118,8 +119,9 @@
                 type: "post",
                 datatype: "json",
                 url:  prefix + '/edit',
-                data: {"hyPicture.pcitureAddress": imagepath,"id":id,"productName":productName,"briefIntroduction":briefIntroduction
-                	,"soldNumber":soldNumber,"stockNumber":stockNumber,"state":state,"hyShop.shopName":shop,"fileName":deleteFile},
+                data: {"hyPicture.pcitureAddress": pcitureAddress,"id":id,"productName":productName,"briefIntroduction":briefIntroduction
+                	,"soldNumber":soldNumber,"stockNumber":stockNumber,"state":state,"shopId":shopId,"fileName":deleteFile
+                	,"lableId":lableId},
                 async: true,
                 success: function (result) {
                     //console.log(result);

@@ -74,7 +74,7 @@
 							</form>
 						</div>
 						
-						<div class="btn-group-sm" id="toolbar" role="group">
+						<div class="btn-group-sm" id="toolbar1" role="group">
 					 		<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:set:export"> 
 					 			<i class="fa fa-download"></i> 导出
 							</a>
@@ -142,7 +142,7 @@
 							</form>
 						</div>
 						
-						<div class="btn-group-sm" id="toolbar" role="group">
+						<div class="btn-group-sm" id="toolbar2" role="group">
 					 		<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:set:export"> 
 					 			<i class="fa fa-download"></i> 导出
 							</a>
@@ -206,7 +206,7 @@
 							</form>
 						</div>
 			
-						<div class="btn-group-sm" id="toolbar" role="group">
+						<div class="btn-group-sm" id="toolbar3" role="group">
 					 		<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:set:export"> 
 					 			<i class="fa fa-download"></i> 导出
 							</a>
@@ -252,7 +252,7 @@
 							</form>
 						</div>
 
-						<div class="btn-group-sm" id="toolbar" role="group">
+						<div class="btn-group-sm" id="toolbar4" role="group">
 					 		<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:set:export"> 
 					 			<i class="fa fa-download"></i> 导出
 							</a>
@@ -278,6 +278,7 @@
     $(function() {
         var options1 = {
         	tableId : "table1",
+        	toolbar:"toolbar1",
             url: prefix + "/list",
             createUrl: prefix + "/add",
             updateUrl: prefix + "/edit/{id}",
@@ -349,6 +350,7 @@
                     if (result.code == web_status.SUCCESS) {
                     	var options = {
                     			tableId : "table1",
+                    			toolbar:"toolbar1",
             	                url: prefix + "/list",
             	                createUrl: prefix + "/add",
             	                updateUrl: prefix + "/edit/{id}",
@@ -424,6 +426,7 @@
                     if (result.code == web_status.SUCCESS) {
                     	var options = {
                     			tableId : "table2",
+                    			toolbar:"toolbar2",
             	                url: prefix + "/list",
             	                createUrl: prefix + "/add",
             	                updateUrl: prefix + "/edit/{id}",
@@ -527,6 +530,7 @@
                     if (result.code == web_status.SUCCESS) {
                     	var options = {
                     			tableId : "table3",
+                    			toolbar:"toolbar3",
                                 url: prefix + "/list",
                                 createUrl: prefix + "/add",
                                 updateUrl: prefix + "/edit/{id}",
@@ -611,6 +615,7 @@
                     if (result.code == web_status.SUCCESS) {
                     	var options = {
                     			tableId : "table4",
+                    			toolbar:"toolbar4",
             	                url: prefix + "/list",
             	                createUrl: prefix + "/add",
             	                updateUrl: prefix + "/edit/{id}",

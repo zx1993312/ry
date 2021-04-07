@@ -120,18 +120,18 @@ public class HyOrderController extends BaseController
     }
 
     /**
-     * 修改订单
+     * 查看订单
      */
     @ApiOperation("订单")
     @ApiImplicitParams({ 
 		@ApiImplicitParam(name = "id", value = "主键id", required = true),
 	})
-    @GetMapping("/edit/{id}")
+    @GetMapping("/detail/{id}")
     public String edit(@PathVariable("id") Long id, ModelMap mmap)
     {
         HyOrder hyOrder = hyOrderService.selectHyOrderById(id);
         mmap.put("hyOrder", hyOrder);
-        return prefix + "/edit";
+        return prefix + "/detail";
     }
 
     /**
@@ -145,14 +145,14 @@ public class HyOrderController extends BaseController
     @Log(title = "订单", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(HyOrder hyOrder)
+    public AjaxResult editSave(String ids,HyOrder hyOrder)
     {	
-    	if(hyOrder.getUserPicture()!=null&&!"".equals(hyOrder.getUserPicture())) {
+    	/*if(hyOrder.getUserPicture()!=null&&!"".equals(hyOrder.getUserPicture())) {
     		String fileName = hyOrder.getFileName();
         	hyOrderService.deleteFile(fileName);
-    	}
+    	}*/
     	
-    	return toAjax(hyOrderService.updateHyOrder(hyOrder));
+    	return toAjax(hyOrderService.updateHyOrder(ids,hyOrder));
     }
 
     /**
@@ -177,7 +177,7 @@ public class HyOrderController extends BaseController
      * @throws IllegalStateException
      * @throws IOException
      */
-	@RequestMapping("/uploadFile")
+	/*@RequestMapping("/uploadFile")
 	@ResponseBody
 	public Map<String, Object> uploadFile(MultipartFile imagepath,HttpServletRequest request) throws IllegalStateException, IOException {
 		System.out.println(imagepath);
@@ -211,7 +211,7 @@ public class HyOrderController extends BaseController
 			map.put("error", "图片不合法");
 			return map;
 		}
-	}
+	}*/
 	/**
 	 * 导出PDF
 	 */

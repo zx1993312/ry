@@ -12,10 +12,6 @@
                         <ul>
                         
                             <li>
-                                <label>客户名称：</label>
-                                <input type="text" name="hyUser.name"/>
-                            </li>
-                            <li>
                                 <label>订单编号：</label>
                                 <input type="text" name="orderNumber"/>
                             </li>
@@ -36,9 +32,10 @@
                                 <input type="text" name="number" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
                             </li>
                             <li>
-                                <label>状态：</label>
+                                <label>订单状态：</label>
                                 <select name="state" class="form-control " >
-                                <option value="">全部订单</option>
+                                <option value="">请选择</option>
+                                <option value="0">全部订单</option>
                                 <option value="1">已支付</option>
                                 <option value="2">已预约</option>
                                 <option value="3">已完成</option>
@@ -57,8 +54,8 @@
                 <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:order:add">
                     <i class="fa fa-plus"></i> 添加
                 </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:order:edit">
-                    <i class="fa fa-edit"></i> 修改
+                 <a class="btn btn-primary single disabled" onclick="$.operate.detail()" shiro:hasPermission="system:order:detail">
+                    <i class="fa fa-search"></i> 详情
                 </a>
                 <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:order:remove">
                     <i class="fa fa-remove"></i> 删除
@@ -72,11 +69,16 @@
                 
                 </table>
             </div>
+            <div class="btn-group-sm" id="toolbar" role="group">
+             <a style="float: right" class="btn btn-primary multiple disabled" onclick="$.operate.edit1()" shiro:hasPermission="system:order:detail">
+                    <i class="fa fa-rmb"></i> 一键结算
+             </a>
+            </div>
         </div>
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('system:order:edit')}]];
+        var detailFlag = [[${@permission.hasPermi('system:order:detail')}]];
         var removeFlag = [[${@permission.hasPermi('system:order:remove')}]];
         var prefix = ctx + "system/order";
 
@@ -84,7 +86,8 @@
             var options = {
                 url: prefix + "/list",
                 createUrl: prefix + "/add",
-                updateUrl: prefix + "/edit/{id}",
+                detailUrl: prefix + "/detail/{id}",
+                updateUrl: prefix + "/edit",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
                 modalName: "订单",
@@ -100,24 +103,24 @@
                     field: 'orderNumber',
                     title: '订单编号'
                 },
-                {	
+                 /* {	
                 	field: 'userPicture',
                     title: '客户头像',
                     formatter: function(value, row, index) {
 				    	// 图片预览（注意：如存储在本地直接获取数据库路径，如有配置context-path需要使用ctx+路径）
 				    	// 如：/profile/upload/2019/08/08/3b7a839aced67397bac694d77611ce72.png
 				    		return $.table.imageView("/img/"+value);
-				    		/* if(index % 2 == 0){
+				    		  if(index % 2 == 0){
 					    		return $.table.imageView(value);
 					    	}else {
 					    		return $.table.imageView(value);
-					    	} */
+					    	}  
 				    }
                 },
                 {
                     field: 'hyUser.name',
                     title: '客户名称'
-                },
+                },  */
                 {
                     field: 'tradeName',
                     title: '商品名'
@@ -136,10 +139,11 @@
                 },
                 {
                     field: 'state',
-                    title: '状态',
+                    title: '订单状态',
                     formatter: function(value, item, index) {
                     	switch(value){
-	                    	case "" : value =  "全部订单";break;
+                    		case "" : value =  "";break;
+	                    	case "0" : value =  "全部订单";break;
 	                    	case "1" : value =  "已支付";break;
 	                    	case "2" : value =  "已预约";break;
 	                    	case "3" : value =  "已完成";break;
@@ -152,7 +156,8 @@
                     align: 'center',
                     formatter: function(value, row, index) {
                         var actions = [];
-                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-info btn-xs ' + detailFlag + '" href="javascript:void(0)" onclick="$.operate.detail(\'' + row.id + '\')"><i class="fa fa-search"></i>订单详情</a> ');
+                        actions.push('<a class="btn btn-info btn-xs ' + detailFlag + '" href="javascript:void(0)" onclick="$.operate.edit1(\'' + row.id + '\')"><i class="fa fa-rmb"></i>商户结算</a> ');
                         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
                         return actions.join('');
                     }

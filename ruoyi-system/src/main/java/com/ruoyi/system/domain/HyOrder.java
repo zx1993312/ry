@@ -46,8 +46,8 @@ public class HyOrder extends BaseEntity
     /** 数量 */
     @Excel(name = "数量")
     private Long number;
-    /**订单装态*/
-    @Excel(name="订单装态")
+    /**订单状态*/
+    @Excel(name="订单状态")
     private String state;
     /**用户表*/
     @Excel(name="用户表")

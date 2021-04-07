@@ -91,7 +91,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         s.shop_name,
         a.pciture_address,
         c.poster_address,
-        l.id,
         l.lable_name
         from 
         hy_product p

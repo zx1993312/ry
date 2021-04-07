@@ -58,7 +58,7 @@ public interface IHyOrderService
      * @param hyOrder 订单
      * @return 结果
      */
-    public int updateHyOrder(HyOrder hyOrder);
+    public int updateHyOrder(String ids,HyOrder hyOrder);
 
     /**
      * 批量删除订单

@@ -100,10 +100,19 @@ public class HyOrderServiceImpl implements IHyOrderService
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public int updateHyOrder(HyOrder hyOrder)
+    public int updateHyOrder(String ids,HyOrder hyOrder)
     {
+    	if(!"".equals(ids)&&hyOrder!=null) {
     	System.out.println("===============hyOrder============="+hyOrder);
-        return hyOrderMapper.updateHyOrder(hyOrder);
+    	String ida [] = ids.split(",");
+    	for(String id:ida) {
+    		Long idd = Long.valueOf(id);
+    		hyOrder.setId(idd);
+    		hyOrderMapper.updateHyOrder(hyOrder);
+    	}
+    	return 1;
+    	}
+        return 0;
     }
 
     /**

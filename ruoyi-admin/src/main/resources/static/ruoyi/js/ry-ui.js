@@ -161,7 +161,7 @@ var table = {
                     pageSize: 10,
                     pageNumber: 1,
                     pageList: [10, 25, 50],
-                    toolbar: "toolbar",
+                    toolbar: options.toolbar,
                     loadingFontSize: 13,
                     striped: false,
                     escape: false,
@@ -1180,6 +1180,20 @@ var table = {
             	} else {
             	    $.modal.open("修改" + table.options.modalName, $.operate.editUrl(id));
             	}
+            },
+            // 商户结算
+            edit1: function(id) {
+            	table.set();
+            	var rows = $.common.isEmpty(table.options.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns(table.options.uniqueId);
+            	if (rows.length == 0) {
+            	    $.modal.alertWarning("请至少选择一条记录");
+            	    return;
+            	}
+            	$.modal.confirm("确认要结算选中的" + rows.length + "条数据吗?", function() {
+            	    var url = table.options.updateUrl;
+            	    var data = { "ids": rows.join(),"state":"3" };
+            	    $.operate.submit(url, "post", "json", data);
+            	});
             },
             // 修改信息，以tab页展现
             editTab: function(id) {

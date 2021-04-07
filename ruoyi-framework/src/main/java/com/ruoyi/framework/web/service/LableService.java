@@ -13,12 +13,6 @@ public class LableService {
 	@Autowired
 	private IHyLableService hyLableService;
 	
-	/**
-	 * 根据字典类型查询字典数据信息
-	 * 
-	 * @param dictType 字典类型
-	 * @return  参数键值
-	 */
 	public List<HyLable> getLable(){
 		return hyLableService.selectHyLableVoDistinct(new HyLable());
 		 

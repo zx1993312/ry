@@ -11,17 +11,17 @@
                     <div class="select-list">
                         <ul>
                              <li>
-                                <label>店铺名称：</label>
+                                <label>选择店铺：</label>
                                	<select name="hyShop.id" class="form-control" th:with="type=${@shop.getShop()}">
 									<option value="">请选择</option>
-									<option th:if="data!=null" th:each="data:${type}" th:text="${data.shopName}" th:value="${data.shopName}"></option>
+									<option th:if="data!=null" th:each="data:${type}" th:text="${data.shopName}" th:value="${data.id}"></option>
 						 	    </select>
                             </li>
                              <li>
                                 <label>关联标签：</label>
                                	<select name="hyLable.id" class="form-control" th:with="type=${@lable.getLable()}">
 									<option value="">请选择</option>
-									<option th:if="data!=null" th:each="data:${type}" th:text="${data}" th:value="${data}"></option>
+									<option th:if="data!=null" th:each="data:${type}" th:text="${data.lableName}" th:value="${data.id}"></option>
 						 	    </select>
                             </li>
                             <li>
@@ -32,7 +32,7 @@
 								 	</select>
                             </li>
                             <li>
-                                <label>简介（内容）：</label>
+                                <label>产品介绍：</label>
                                 <input type="text" name="briefIntroduction"/>
                             </li>
                             <li>
@@ -136,19 +136,19 @@
                 },
                 {
                     field: 'briefIntroduction',
-                    title: '简介'
+                    title: '产品介绍'
                 },
                 {
                     field: 'soldNumber',
-                    title: '已售数量'
+                    title: '产品销量'
                 },
                 {
                     field: 'stockNumber',
-                    title: '库存数量'
+                    title: '产品库存'
                 },
                 {
                     field: 'state',
-                    title: '状态',
+                    title: '产品状态',
                     formatter: function(value, item, index) {
                     	switch(value){
 	                    	case "" : value =  "请选择";break;
