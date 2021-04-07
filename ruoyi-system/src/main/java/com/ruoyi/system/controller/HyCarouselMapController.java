@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,7 +42,8 @@ import io.swagger.annotations.ApiOperation;
 @Controller
 @RequestMapping("/system/productDetailsCM")
 @Api(tags = "票据设置Controller")
-public class HycarouselMapController extends BaseController {
+public class HyCarouselMapController extends BaseController {
+
 	private String prefix = "system/productDetails";
 
 	@Autowired
@@ -58,26 +61,26 @@ public class HycarouselMapController extends BaseController {
 	@RequiresPermissions("system:set:view")
 	@GetMapping()
 	public String set() {
-		return prefix + "/carouselMap";
+		return prefix + "/carouselMap";  
 	}
 
 	@ApiOperation("查询收费比例设置列表")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "hyPicture", value = "项目实体类", required = true), })
 	@GetMapping("/list")
-	public String list(HyPicture hyPicture, ModelMap mmap) {
+	public String list(HyPicture hyPicture, ModelMap mmap,HttpServletRequest request) {
 
-		List<HyProduct> productList = hyProductService.selectHyProductListTest(new HyProduct());
-		mmap.put("productList", productList);
+		String pid = request.getParameter("id");
+		HyProduct product = hyProductService.selectHyProductById(Long.parseLong(pid));
+		mmap.put("product", product);
 		
-        List<HySetMeal> setMealList = hySetMealService.selectHySetMealVoTest(new HySetMeal());
-        mmap.put("setMealList", setMealList);
+        HySetMeal setMeal = hySetMealService.selectHySetMealById(Long.parseLong(pid));
+        mmap.put("setMeal", setMeal);
 		
-        List<HyPicture> pictureList = hyPictureService.selectHyPictureList(new HyPicture());
-        mmap.put("pictureList", pictureList);
+        HyPicture picture = hyPictureService.selectHyPictureById(Long.parseLong(pid));
+        mmap.put("picture", picture);
         
-        List<HyShop> shopList = HyShopService.selectHyShopListTest(new HyShop());
-        mmap.put("shopList", shopList);
-
+        HyShop shop = HyShopService.selectHyShopById(Long.parseLong(pid));
+        mmap.put("shop", shop);
 		return prefix + "/carouselMap";
 	}
 }
