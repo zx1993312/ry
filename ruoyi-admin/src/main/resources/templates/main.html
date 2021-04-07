@@ -21,6 +21,8 @@ div{
 text-align:center
 }
 
+
+
 </style>
 <link rel="stylesheet" th:href="@{/css/wodry.css}">
 <link rel="stylesheet" th:href="@{/css/index.css}">
@@ -51,7 +53,6 @@ text-align:center
 </script>
 </head>
 <body>
-
 	<div class="main">
 		<div class="header">
 			<div class="header-left fl" id="time"></div>
@@ -71,43 +72,99 @@ text-align:center
 
 					<div class="echart wenzi">
 						<div class="gun">
-							<span>全部：</span> <span>已处理：</span> <span>未处理：</span>
+							<span>全部：100条</span> <span>已处理：80条</span> <span>未处理：20条</span>
 						</div>
 						<div class="gun">
-							<span>订单编号</span><span>来源</span><span>执行情况</span><span>类型</span>
+							<span style="float: left; width: 100px;">订单编号</span>
+							<span style="float: left; width: 150px;">来源</span>
+							<span style="float: left; width: 100px;">执行情况</span>
+							<span style="float: right; width: 100px;">类型</span>
 						</div>
-						<div id="FontScroll" class="myscroll">
+						<div id="FontScroll" class="myscroll" style="height: 180px;">
 							<ul>
 								<li>
 									<div class="fontInner clearfix">
-										<span>17010</span><span>东安半岛</span> <span>未处理</span><span>水暖</span>
+										<span style="float: left; width: 100px;">17010</span>
+										<span style="float: left; width: 150px;">东安半岛</span> 
+										<span style="float: left; width: 100px;">未处理</span>
+										<span style="float: right; width: 100px;">水暖</span>
 									</div>
 								</li>
 								<li>
 									<div class="fontInner clearfix">
-										<span>17011</span><span>京御华府</span> <span>已处理</span><span>家政</span>
+										<span style="float: left; width: 100px;">17011</span>
+										<span style="float: left; width: 150px;">京御华府</span>
+										<span style="float: left; width: 100px;">已处理</span>
+										<span style="float: right; width: 100px;">家政</span>
 									</div>
 								</li>
 								<li>
 									<div class="fontInner clearfix">
-										<span>17012</span><span>天御华府</span> <span>未处理</span><span>其他</span>
+										<span style="float: left; width: 100px;">17012</span>
+										<span style="float: left; width: 150px;">天御华府</span> 
+										<span style="float: left; width: 100px;">未处理</span>
+										<span style="float: right; width: 100px;">其他</span>
 									</div>
 								</li>
 								<li>
 									<div class="fontInner clearfix">
-										<span>17013</span><span>中海小区</span><span>已处理</span><span>水暖</span>
+										<span style="float: left; width: 100px;">17013</span>
+										<span style="float: left; width: 150px;">中海小区</span>
+										<span style="float: left; width: 100px;">已处理</span>
+										<span style="float: right; width: 100px;">水暖</span>
 									</div>
 								</li>
 								<li>
 									<div class="fontInner clearfix">
-										<span>17014</span><span>锦程物业</span><span>未处理</span><span>其他</span>
+										<span style="float: left; width: 100px;">17014</span>
+										<span style="float: left; width: 150px;">锦程物业</span>
+										<span style="float: left; width: 100px;">未处理</span>
+										<span style="float: right; width: 100px;">其他</span>
+									</div>
+								</li>
+								<li>
+									<div class="fontInner clearfix">
+										<span style="float: left; width: 100px;">17014</span>
+										<span style="float: left; width: 150px;">锦程物业</span>
+										<span style="float: left; width: 100px;">未处理</span>
+										<span style="float: right; width: 100px;">其他</span>
+									</div>
+								</li>
+								<li>
+									<div class="fontInner clearfix">
+										<span style="float: left; width: 100px;">17014</span>
+										<span style="float: left; width: 150px;">锦程物业</span>
+										<span style="float: left; width: 100px;">未处理</span>
+										<span style="float: right; width: 100px;">其他</span>
+									</div>
+								</li>
+								<li>
+									<div class="fontInner clearfix">
+										<span style="float: left; width: 100px;">17014</span>
+										<span style="float: left; width: 150px;">锦程物业</span>
+										<span style="float: left; width: 100px;">处理中</span>
+										<span style="float: right; width: 100px;">其他</span>
+									</div>
+								</li>
+								<li>
+									<div class="fontInner clearfix">
+										<span style="float: left; width: 100px;">17014</span>
+										<span style="float: left; width: 150px;">锦程物业</span>
+										<span style="float: left; width: 100px;">未处理</span>
+										<span style="float: right; width: 100px;">其他</span>
+									</div>
+								</li>
+								<li>
+									<div class="fontInner clearfix">
+										<span style="float: left; width: 100px;">17014</span>
+										<span style="float: left; width: 150px;">锦程物业</span>
+										<span style="float: left; width: 100px;">处理中</span>
+										<span style="float: right; width: 100px;">其他</span>
 									</div>
 								</li>
 							</ul>
 						</div>
 					</div>
-					
-
 				</div>
 				<div class="left-cen rightTop border">
 					<div class="title" >今日车流量</div>
@@ -124,7 +181,6 @@ text-align:center
 					</div>
 				</div>
 			</div>
-			
 				<div class="center-cen fl">
 				<div class="cen-top rightTop border">
 					<div class="top-title">
@@ -141,15 +197,12 @@ text-align:center
 					<div class="top-bottom">
 						<div id="map" class="allnav" style="height: 4.4rem"></div>
 					</div>
-
-
 				</div>
 				<div class="cen-bottom rightTop border">
 					<div class="title">月统计</div>
 					<div class="bottom-b">
 						<div id="chart4" class="allnav"></div>
 					</div>
-
 				</div>
 			</div>
 
@@ -163,58 +216,109 @@ text-align:center
 	 			</div> -->
 			<!-- </div> -->
 			<div class="center-right fr">
+				<div class="right-cen border"  >
+					<div class="title" >各平台占比</div>
+					<div class="right-cen-cent">
+						<div id="chart2" class="allnav"></div>
+					</div>
+				</div>
 				<div class="right-top rightTop border">
-					<div class="title">各类型市场主体新增户数及占比</div>
-
+					<div class="title">设备管理</div>
 					<div class="echart wenzi">
 						<div class="gun">
-							<span>企业类型</span> <span>户数</span> <span>占比</span>
+							<span style="float: left; width: 100px;">设备类型</span>
+							<span style="float: left; width: 150px;">总数</span>
+							<span style="float: left; width: 100px;">故障</span>
+							<span style="float: right; width: 100px;">离线</span>
 						</div>
 						<div id="FontScroll" class="myscroll">
 							<ul>
 								<li>
 									<div class="fontInner clearfix">
-										<span> 内资企业
-										</span> <span>192424户</span> <span>30%</span>
+										<span style="float: left; width: 100px;">蓝牙门禁</span>
+										<span style="float: left; width: 150px;">0</span> 
+										<span style="float: left; width: 100px;">0</span>
+										<span style="float: right; width: 100px;">0</span>
 									</div>
 								</li>
 								<li>
 									<div class="fontInner clearfix">
-										<span> 外商投资企业
-										</span> <span>192424户</span> <span>20%</span>
+										<span style="float: left; width: 100px;">人脸识别门禁</span>
+										<span style="float: left; width: 150px;">0</span>
+										<span style="float: left; width: 100px;">0</span>
+										<span style="float: right; width: 100px;">0</span>
 									</div>
 								</li>
 								<li>
 									<div class="fontInner clearfix">
-										<span> 私营企业
-										</span> <span>192424户</span> <span>20%</span>
+										<span style="float: left; width: 100px;">人脸识别摄像机</span>
+										<span style="float: left; width: 150px;">0</span> 
+										<span style="float: left; width: 100px;">0</span>
+										<span style="float: right; width: 100px;">0</span>
 									</div>
 								</li>
 								<li>
 									<div class="fontInner clearfix">
-										<span> 外资企业
-										</span> <span>192424户</span> <span>10%</span>
+										<span style="float: left; width: 100px;">智能快递柜</span>
+										<span style="float: left; width: 150px;">34</span>
+										<span style="float: left; width: 100px;">0</span>
+										<span style="float: right; width: 100px;">0</span>
 									</div>
 								</li>
 								<li>
 									<div class="fontInner clearfix">
-										<span> 个体商户
-										</span> <span>192424户</span> <span>20%</span>
+										<span style="float: left; width: 100px;">智慧停车</span>
+										<span style="float: left; width: 150px;">1</span>
+										<span style="float: left; width: 100px;">0</span>
+										<span style="float: right; width: 100px;">1</span>
+									</div>
+								</li>
+								<li>
+									<div class="fontInner clearfix">
+										<span style="float: left; width: 100px;">蓝牙门禁</span>
+										<span style="float: left; width: 150px;">0</span> 
+										<span style="float: left; width: 100px;">0</span>
+										<span style="float: right; width: 100px;">0</span>
+									</div>
+								</li>
+								<li>
+									<div class="fontInner clearfix">
+										<span style="float: left; width: 100px;">人脸识别门禁</span>
+										<span style="float: left; width: 150px;">0</span>
+										<span style="float: left; width: 100px;">0</span>
+										<span style="float: right; width: 100px;">0</span>
+									</div>
+								</li>
+								<li>
+									<div class="fontInner clearfix">
+										<span style="float: left; width: 100px;">人脸识别摄像机</span>
+										<span style="float: left; width: 150px;">0</span> 
+										<span style="float: left; width: 100px;">0</span>
+										<span style="float: right; width: 100px;">0</span>
+									</div>
+								</li>
+								<li>
+									<div class="fontInner clearfix">
+										<span style="float: left; width: 100px;">智能快递柜</span>
+										<span style="float: left; width: 150px;">34</span>
+										<span style="float: left; width: 100px;">0</span>
+										<span style="float: right; width: 100px;">0</span>
+									</div>
+								</li>
+								<li>
+									<div class="fontInner clearfix">
+										<span style="float: left; width: 100px;">智慧停车</span>
+										<span style="float: left; width: 150px;">1</span>
+										<span style="float: left; width: 100px;">0</span>
+										<span style="float: right; width: 100px;">1</span>
 									</div>
 								</li>
 							</ul>
 						</div>
 					</div>
-
-				</div>
-				<div class="right-cen border">
-					<div class="title">各平台占比</div>
-					<div class="right-cen-cent">
-						<div id="chart2" class="allnav"></div>
-					</div>
 				</div>
 				<div class="right-bottom rightTop border">
-					<div class="title">各行业出生率和死亡率趋势</div>
+					<div class="title">收费统计</div>
 					<div class="chat">
 						<div id="chart5" class="allnav"></div>
 					</div>

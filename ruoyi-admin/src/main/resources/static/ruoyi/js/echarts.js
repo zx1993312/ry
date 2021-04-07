@@ -222,7 +222,7 @@ $(function () {
                 "bottom": "0",
                 "padding": [15, 20],
                 "itemGap": 5,
-                "data": ["今日车流量","电脑", "仓山区"]
+                "data": ["月租车","储值车", "临时车"]
             },
             "series": [{
                 "type": "pie",
@@ -313,13 +313,13 @@ $(function () {
                     }
                 },
                 "data": [{
-                    "name": "今日车流量",
+                    "name": "月租车",
                     "value": 30
                 }, {
-                    "name": "仓山区",
+                    "name": "储值车",
                     "value": 30
                 }, {
-                    "name": "电脑",
+                    "name": "临时车",
                     "value": 26
                 }]
             }, {
@@ -567,7 +567,7 @@ $(function () {
         	        }
         	    },
         	    legend: {
-        	        data: ['出生率', '死亡率']
+        	        data: ['物业收入', '停车位收入']
         	    },
         	    toolbox: {
         	        feature: {
@@ -594,7 +594,7 @@ $(function () {
         	    ],
         	    series: [
         	        {
-        	            name: '出生率',
+        	            name: '物业收入',
         	            type: 'line',
         	            stack: '总量',
         	            smooth: true,
@@ -612,7 +612,7 @@ $(function () {
         	            data: [140, 232, 101, 264, 90, 340, 250]
         	        },
         	        {
-        	            name: '死亡率',
+        	            name: '停车位收入',
         	            type: 'line',
         	            stack: '总量',
         	            smooth: true,
