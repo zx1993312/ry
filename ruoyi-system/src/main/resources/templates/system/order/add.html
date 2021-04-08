@@ -38,7 +38,7 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">商品名：</label>
                 <div class="col-sm-8">
-                    <input id="tradeName" name="tradeName" class="form-control" type="text">
+                    <input id="productName" name="hyProduct.productName" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
@@ -90,7 +90,7 @@
         	var userId = $("#userId").val();
         	var orderNumber = $("#orderNumber").val();
         	var Username = $("#Username").val();
-        	var tradeName = $("#tradeName").val();
+        	var productName = $("#productName").val();
         	var businessName = $("#businessName").val();
         	var unitPrice = $("#unitPrice").val();
         	var number = $("#number").val();
@@ -100,7 +100,7 @@
                 datatype: "json",
                 url:  prefix + '/add',
                 data: {"userPicture": imagepath,"orderNumber":orderNumber,"hyUser.name":Username,"userId":userId,
-                	"tradeName":tradeName,"businessName":businessName,"unitPrice":unitPrice,"number":number,"state":state},
+                	"hyProduct.productName":productName,"businessName":businessName,"unitPrice":unitPrice,"number":number,"state":state},
                 async: true,
                 success: function (result) {
                     //console.log(result);

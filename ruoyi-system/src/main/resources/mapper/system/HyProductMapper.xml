@@ -31,6 +31,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			javaType="HySetMeal" resultMap="HySetMealResult" />
          <association property="hyLable" column="id"
 			javaType="HyLable" resultMap="HyLableResult" />
+         <association property="hyDeatilPicture" column="id"
+			javaType="HyDeatilPicture" resultMap="HyDeatilPictureResult" />
+    </resultMap>
+    
+    <resultMap type="HyDeatilPicture" id="HyDeatilPictureResult">
+        <result property="id"    column="id"    />
+        <result property="deatilPicture"    column="deatil_picture"    />
+        <result property="productId"    column="product_id"    />
     </resultMap>
     
     <resultMap type="HyLable" id="HyLableResult">
@@ -91,13 +99,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         s.shop_name,
         a.pciture_address,
         c.poster_address,
-        l.lable_name
+        l.lable_name,
+        d.deatil_picture
         from 
         hy_product p
         LEFT JOIN hy_shop s ON  p.shop_id=s.id
         LEFT JOIN hy_picture a ON a.product_id = p.id
         LEFT JOIN hy_poster c ON c.product_id=p.id
         LEFT JOIN hy_lable l ON p.lable_id=l.id
+        LEFT JOIN hy_deatil_picture d ON d.product_id=p.id
         where 1=1
     </sql>
     

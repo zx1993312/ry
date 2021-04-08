@@ -109,7 +109,6 @@
         function submitHandler() {
         	var pcitureAddress = $("#remarks").val();
         	var imagepaths = $("#imagepaths").val();
-        	console.log("==============imagepaths=========="+imagepaths)
         	var shopId = $("#shopId").val();
         	var productName = $("#productName").val();
         	var briefIntroduction = $("#briefIntroduction").val();
@@ -126,7 +125,7 @@
                 url:  prefix + '/add',
                 data: {"hyPicture.pcitureAddress": pcitureAddress,"productName":productName,"briefIntroduction":briefIntroduction
                 	,"soldNumber":soldNumber,"stockNumber":stockNumber,"state":state,"shopId":shopId,"productOrderBy":productOrderBy
-                	,"customerServiceTel":customerServiceTel,"lableId":lableId,"hyLable.lableName":lableName},
+                	,"customerServiceTel":customerServiceTel,"lableId":lableId,"hyLable.lableName":lableName,"hyDeatilPicture.deatilPicture":imagepaths},
                 async: true,
                 success: function (result) {
                     //console.log(result);
@@ -243,7 +242,11 @@
 	                response = data.response, reader = data.reader;
 	            console.log("文件正在上传。。。。");
 	        });
-	      //上传产品多图操作
+            
+        });
+        $(document).ready(function () {
+        	var imgPath = '';
+        	//上传产品多图操作
 	        $(".yourfile").fileinput({
 	        	uploadUrl : prefix + '/uploadFile2', //接受请求地址
 	            uploadAsync: true, //默认异步上传
@@ -275,8 +278,10 @@
 	        });
 	        //异步上传返回结果处理
 	        $(".yourfile").on("fileuploaded", function (event, data, previewId, index) {
+	        	imgPath += data.response.url + ",";
 	            console.log(data.response.url);
-	            var aa = $("input[name='Pcitures']").val(data.response.url);
+	            var ref = $(this).attr("data-ref");
+	            var aa = $("input[name='" + ref + "']").val(imgPath);
 	            var jsonData = JSON.stringify(aa);// 转成JSON格式
 	            var result = $.parseJSON(jsonData);// 转成JSON对象
 	        });
@@ -287,8 +292,8 @@
 	                response = data.response, reader = data.reader;
 	            console.log("文件正在上传。。。。");
 	        });
+            
         });
-        
     </script>
 </body>
 </html>

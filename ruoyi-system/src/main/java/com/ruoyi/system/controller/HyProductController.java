@@ -222,13 +222,13 @@ public class HyProductController extends BaseController
 	 */
 	@RequestMapping("/uploadFile2")
 	@ResponseBody
-	public Map<String, Object> uploadFile2(MultipartFile imagepath) throws IllegalStateException, IOException {
-		System.out.println(imagepath);
+	public Map<String, Object> uploadFile2(MultipartFile imagepaths) throws IllegalStateException, IOException {
+		System.out.println(imagepaths);
 		String mynewpic = null;
 		// 原始图片名称
-		String oldFileName = imagepath.getOriginalFilename(); // 获取上传文件的原名
+		String oldFileName = imagepaths.getOriginalFilename(); // 获取上传文件的原名
 		// 存储路径
-		if (imagepath != null && oldFileName != null && oldFileName.length() > 0) {
+		if (imagepaths != null && oldFileName != null && oldFileName.length() > 0) {
 			// 我这写的是绝对路径请注意，springboot 用内置tomcat 展示图片会有问题 稍后在看
 			String saveFilePath = System.getProperty("user.dir")+"\\src\\main\\resources\\static\\img";
 			File files = new File(saveFilePath);
@@ -240,7 +240,7 @@ public class HyProductController extends BaseController
 			// 新图片
 			File newFile = new File(saveFilePath + "\\" + newFileName);
 			// 将内存中的数据写入磁盘
-			imagepath.transferTo(newFile);
+			imagepaths.transferTo(newFile);
 			// 将路径名存入全局变量mynewpic
 			mynewpic = newFileName;
 			

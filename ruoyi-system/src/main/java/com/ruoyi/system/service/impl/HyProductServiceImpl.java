@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ruoyi.system.mapper.HyDeatilPictureMapper;
 import com.ruoyi.system.mapper.HyPictureMapper;
 import com.ruoyi.system.mapper.HyProductMapper;
+import com.ruoyi.system.domain.HyDeatilPicture;
 import com.ruoyi.system.domain.HyLable;
 import com.ruoyi.system.domain.HyOrder;
 import com.ruoyi.system.domain.HyPicture;
@@ -30,6 +32,9 @@ public class HyProductServiceImpl implements IHyProductService {
 
 	@Autowired
     private HyPictureMapper hyPictureMapper;
+	
+	@Autowired
+    private HyDeatilPictureMapper hyDeatilPictureMapper;
 	/**
 	 * 查询产品
 	 * 
@@ -88,10 +93,24 @@ public class HyProductServiceImpl implements IHyProductService {
 		String a = hyProductMapper.selectNextValue("hy_database", "hy_product");
 		Long productId = Long.valueOf(a);
 		hyPicture.setProductId(productId);
-		System.out.println("================hyProduct.getShopId()============"+hyProduct.getShopId());
-		int row = hyProductMapper.insertHyProduct(hyProduct);
-		if(row>0) {
-			return hyPictureMapper.insertHyPicture(hyPicture);
+		HyDeatilPicture hyDeatilPicture = new HyDeatilPicture();
+		String pictureAddress = hyProduct.getHyDeatilPicture().getDeatilPicture();
+		System.out.println("=============pictureAddress============="+pictureAddress);
+		String pictureAdd = pictureAddress.substring(0,pictureAddress.length()-1);
+		System.out.println("=============pictureAdd============="+pictureAdd);
+		String[]pictureArr = pictureAdd.split(",");
+		int row1 = 0;
+		for(String picture:pictureArr) {
+		hyDeatilPicture.setDeatilPicture(picture);
+		hyDeatilPicture.setProductId(productId);
+		hyDeatilPictureMapper.insertHyDeatilPicture(hyDeatilPicture);
+		row1++;
+		}
+		if(row1>0) {
+			int row2 = hyPictureMapper.insertHyPicture(hyPicture);
+			if(row1>0&&row2>0) {
+				return hyProductMapper.insertHyProduct(hyProduct);
+			}
 		}
 		return 0;
 		
