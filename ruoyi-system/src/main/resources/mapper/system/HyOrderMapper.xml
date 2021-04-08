@@ -15,12 +15,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="state"    column="state"    />
         <result property="number"    column="number"    />
         <result property="createTime"    column="create_time"    />
+        <result property="productId"    column="product_id"    />
         <association property="hyUser"
 			column="id" javaType="HyUser"
 			resultMap="HyUserResult" />
+        <association property="hyProduct"
+			column="id" javaType="HyProduct"
+			resultMap="HyProductResult" />
     </resultMap>
 
- <resultMap type="HyUser" id="HyUserResult">
+	<resultMap type="HyProduct" id="HyProductResult">
+        <result property="id"    column="id"    />
+    	<result property="productName"    column="product_name"    />
+    	 <result property="briefIntroduction"    column="brief_introduction"    />
+        <result property="soldNumber"    column="sold_number"    />
+        <result property="stockNumber"    column="stock_number"    />
+        <result property="state"    column="state"    />
+        <result property="snapUpDate"    column="snap_up_date"    />
+        <result property="sendCodeDate"    column="send_code_date"    />
+        <result property="appointmentDate"    column="appointment_date"    />  
+        <result property="appointmentMode"    column="appointment_mode"    />
+        <result property="useDate"    column="use_date"    />
+        <result property="shopId"    column="shop_id"    />
+        <result property="limitedQuantity"    column="limited_quantity"    />
+        <result property="productOrderBy"    column="product_order_by"    />
+        <result property="customerServiceTel"    column="customer_service_tel"    />
+        <result property="shareTitle"    column="share_title"    />
+        <result property="salState"  column="sal_state"/>
+        <result property="lableId"  column="lable_id"/>
+    </resultMap>
+ 	<resultMap type="HyUser" id="HyUserResult">
         <result property="id"    column="id"    />
         <result property="name"    column="name"    />
         <result property="address"    column="address"    />
@@ -33,16 +57,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         o.user_id, 
         o.user_picture,
         o.order_number, 
-        o.trade_name, 
         o.business_name, 
         o.unit_price, 
         o.number,
         o.state,
         o.create_time,
-        u.name
+        o.product_id,
+        u.name,
+        p.product_name
         from 
         hy_order o
         LEFT JOIN hy_user u ON o.user_id=u.id
+        LEFT JOIN hy_product p ON o.product_id=p.id
         where 1=1
     </sql>
     
@@ -52,7 +78,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         o.user_id, 
         o.user_picture,
         o.order_number, 
-        o.trade_name, 
         o.business_name, 
         o.unit_price, 
         o.number,
@@ -80,12 +105,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="hyUser.name != null and hyUser.name != ''"> and u.name = #{hyUser.name}</if>
             </if>
             <if test="orderNumber != null  and orderNumber != ''"> and order_number = #{orderNumber}</if>
-            <if test="tradeName != null  and tradeName != ''"> and trade_name like concat('%', #{tradeName}, '%')</if>
             <if test="businessName != null  and businessName != ''"> and business_name like concat('%', #{businessName}, '%')</if>
             <if test="unitPrice != null "> and unit_price = #{unitPrice}</if>
             <if test="state != null and state!='' "> and state = #{state}</if>
             <if test="number != null "> and number = #{number}</if>
-      
+            <if test="productId != null "> and product_id = #{productId}</if>
+            <if test="hyProduct != null and hyProduct != ''">
+            <if test="hyProduct.productName != null and hyProduct.productName != ''"> and p.product_name = #{hyProduct.productName}</if>
+            </if>
     </select>
     
     <select id="selectHyOrderListTest" parameterType="HyOrder" resultMap="HyOrderResult">

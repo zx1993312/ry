@@ -33,10 +33,6 @@ public class HyOrder extends BaseEntity
     @Excel(name = "订单编号")
     private String orderNumber;
 
-    /** 商品名 */
-    @Excel(name = "商品名")
-    private String tradeName;
-
     /** 商家名 */
     @Excel(name = "商家名")
     private String businessName;
@@ -54,12 +50,18 @@ public class HyOrder extends BaseEntity
     /**用户表*/
     @Excel(name="用户表")
     private HyUser hyUser;
+    /**产品表*/
+    @Excel(name="产品表")
+    private HyProduct hyProduct;
     /**图片地址*/
     @Excel(name="图片地址")
     private String fileName;
     /**创建时间*/
     @Excel(name="创建时间")
     private Date createTime;
+    /**产品id*/
+    @Excel(name="产品id")
+    private Long productId;
     public void setId(Long id) 
     {
         this.id = id;
@@ -97,15 +99,6 @@ public class HyOrder extends BaseEntity
     public String getOrderNumber() 
     {
         return orderNumber;
-    }
-    public void setTradeName(String tradeName) 
-    {
-        this.tradeName = tradeName;
-    }
-
-    public String getTradeName() 
-    {
-        return tradeName;
     }
     public void setBusinessName(String businessName) 
     {
@@ -167,13 +160,34 @@ public class HyOrder extends BaseEntity
 		this.createTime = createTime;
 	}
 
+	public Long getProductId() {
+		return productId;
+	}
+
+	public void setProductId(Long productId) {
+		this.productId = productId;
+	}
+
+	public HyProduct getHyProduct() {
+		return hyProduct;
+	}
+
+	public void setHyProduct(HyProduct hyProduct) {
+		this.hyProduct = hyProduct;
+	}
+
 	@Override
 	public String toString() {
 		return "HyOrder [id=" + id + ", userId=" + userId + ", userPicture=" + userPicture + ", orderNumber="
-				+ orderNumber + ", tradeName=" + tradeName + ", businessName=" + businessName + ", unitPrice="
-				+ unitPrice + ", number=" + number + ", state=" + state + ", hyUser=" + hyUser + ", fileName="
-				+ fileName + ", createTime=" + createTime + "]";
+				+ orderNumber + ", businessName=" + businessName + ", unitPrice=" + unitPrice + ", number=" + number
+				+ ", state=" + state + ", hyUser=" + hyUser + ", hyProduct=" + hyProduct + ", fileName=" + fileName
+				+ ", createTime=" + createTime + ", productId=" + productId + "]";
 	}
+
+
+
+	
+
 
 	
 

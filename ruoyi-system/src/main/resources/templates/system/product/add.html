@@ -198,7 +198,7 @@
             });
         });
         $(document).ready(function () {
-        	//上传图片操作
+        	//上传产品缩略图操作
 	        $(".myfile").fileinput({
 	        	uploadUrl : prefix + '/uploadFile', //接受请求地址
 	            uploadAsync: true, //默认异步上传
@@ -243,10 +243,7 @@
 	                response = data.response, reader = data.reader;
 	            console.log("文件正在上传。。。。");
 	        });
-            
-        });
-        $(document).ready(function () {
-        	//上传图片操作
+	      //上传产品多图操作
 	        $(".yourfile").fileinput({
 	        	uploadUrl : prefix + '/uploadFile2', //接受请求地址
 	            uploadAsync: true, //默认异步上传
@@ -279,8 +276,7 @@
 	        //异步上传返回结果处理
 	        $(".yourfile").on("fileuploaded", function (event, data, previewId, index) {
 	            console.log(data.response.url);
-	            var ref = $(this).attr("data-ref");
-	            var aa = $("input[name='" + ref + "']").val(data.response.url);
+	            var aa = $("input[name='Pcitures']").val(data.response.url);
 	            var jsonData = JSON.stringify(aa);// 转成JSON格式
 	            var result = $.parseJSON(jsonData);// 转成JSON对象
 	        });
@@ -291,8 +287,8 @@
 	                response = data.response, reader = data.reader;
 	            console.log("文件正在上传。。。。");
 	        });
-            
         });
+        
     </script>
 </body>
 </html>
