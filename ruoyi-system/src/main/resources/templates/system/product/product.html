@@ -12,26 +12,26 @@
                         <ul>
                              <li>
                                 <label>选择店铺：</label>
-                               	<select name="hyShop.id" class="form-control" th:with="type=${@shop.getShop()}">
+                               	<select name="shopId" class="form-control" th:with="type=${@shop.getShop()}">
 									<option value="">请选择</option>
 									<option th:if="data!=null" th:each="data:${type}" th:text="${data.shopName}" th:value="${data.id}"></option>
 						 	    </select>
                             </li>
                              <li>
                                 <label>关联标签：</label>
-                               	<select name="hyLable.id" class="form-control" th:with="type=${@lable.getLable()}">
+                               	<select name="lableId" class="form-control" th:with="type=${@lable.getLable()}">
 									<option value="">请选择</option>
 									<option th:if="data!=null" th:each="data:${type}" th:text="${data.lableName}" th:value="${data.id}"></option>
 						 	    </select>
                             </li>
                             <li>
                                 <label>产品名称：</label>
-                                 	<select name="id" class="form-control" th:with="type=${@product.getProduct()}">
+                                 	<select name="productName" class="form-control" th:with="type=${@product.getProduct()}">
 										<option value="">请选择</option>
 										<option th:if="data!=null" th:each="data : ${type}" th:text="${data.productName}" th:value="${data.productName}"></option>
 								 	</select>
                             </li>
-                            <li>
+                            <!-- <li>
                                 <label>产品介绍：</label>
                                 <input type="text" name="briefIntroduction"/>
                             </li>
@@ -42,16 +42,16 @@
                             <li>
                                 <label>库存数量：</label>
                                 <input type="text" name="stockNumber"/>
-                            </li>
+                            </li> -->
                             <li>
-                                <label>状态：</label>
+                                <label>产品状态：</label>
                                 <select name="state" class="form-control " >
                                 <option value="">请选择</option>
                                 <option value=1>上线</option>
                                 <option value=2>下线</option>
                                 </select>
                             </li>
-                            <li>
+                            <!-- <li>
                                 <label>限购数量：</label>
                                 <input type="text" name="limitedQuantity"/>
                             </li>
@@ -62,7 +62,7 @@
                             <li>
                                 <label>客服电话：</label>
                                 <input type="text" name="customerServiceTel" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
-                            </li>
+                            </li> -->
                         
                        
                             <li>

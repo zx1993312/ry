@@ -199,7 +199,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="shareTitle != null and shareTitle != '' "> and  p.share_title = #{shareTitle}</if>
             <if test="salState != null and salState != '' "> and  p.sal_state = #{salState}</if>
             <if test="lableId != null and lableId != '' "> and  p.lable_id = #{lableId}</if>
+            <if test="hyShop != null and hyShop != ''">
             <if test="hyShop.shopName != null and hyShop.shopName != ''"> and s.shop_name = #{hyShop.shopName}</if>
+            </if>
             <if test="hyLable!=null and hyLable!=''">
             <if test="hyLable.lableName!=null and hyLable.lableName!=''"> and l.lable_name = #{hyLable.lableName}</if>
             </if>
