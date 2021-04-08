@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('商品详情的图片
-列表')" />
+    <th:block th:include="include :: header('商品详情的图片列表')" />
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -51,7 +50,7 @@
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('system:picture:edit')}]];
         var removeFlag = [[${@permission.hasPermi('system:picture:remove')}]];
-        var prefix = ctx + "system/picture";
+        var prefix = ctx + "system/deatilPicture";
 
         $(function() {
             var options = {
@@ -60,8 +59,7 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "商品详情的图片
-",
+                modalName: "商品详情的图片",
                 columns: [{
                     checkbox: true
                 },

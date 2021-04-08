@@ -33,17 +33,16 @@ Controller
  * @date 2021-04-08
  */
 @Controller
-@RequestMapping("/system/picture")
-@Api(tags = "商品详情的图片
-Controller")
+@RequestMapping("/system/deatilPicture")
+@Api(tags = "商品详情的图片Controller")
 public class HyDeatilPictureController extends BaseController
 {
-    private String prefix = "system/picture";
+    private String prefix = "system/deatilPicture";
 
     @Autowired
     private IHyDeatilPictureService hyDeatilPictureService;
 
-    @RequiresPermissions("system:picture:view")
+    @RequiresPermissions("system:deatilPicture:view")
     @GetMapping()
     public String picture()
     {
@@ -54,12 +53,11 @@ public class HyDeatilPictureController extends BaseController
      * 查询商品详情的图片
 列表
      */
-    @ApiOperation("商品详情的图片
-")
+    @ApiOperation("商品详情的图片")
     @ApiImplicitParams({ 
 		@ApiImplicitParam(name = "hyDeatilPicture", value = "项目实体类hyDeatilPicture", required = true),
 	})
-    @RequiresPermissions("system:picture:list")
+    @RequiresPermissions("system:deatilPicture:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(HyDeatilPicture hyDeatilPicture)
@@ -73,14 +71,12 @@ public class HyDeatilPictureController extends BaseController
      * 导出商品详情的图片
 列表
      */
-    @ApiOperation("商品详情的图片
-")
+    @ApiOperation("商品详情的图片")
     @ApiImplicitParams({ 
 		@ApiImplicitParam(name = "hyDeatilPicture", value = "项目实体类hyDeatilPicture", required = true),
 	})
-    @RequiresPermissions("system:picture:export")
-    @Log(title = "商品详情的图片
-", businessType = BusinessType.EXPORT)
+    @RequiresPermissions("system:deatilPicture:export")
+    @Log(title = "商品详情的图片", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ResponseBody
     public AjaxResult export(HyDeatilPicture hyDeatilPicture)
@@ -104,14 +100,12 @@ public class HyDeatilPictureController extends BaseController
      * 新增保存商品详情的图片
 
      */
-    @ApiOperation("商品详情的图片
-")
+    @ApiOperation("商品详情的图片")
     @ApiImplicitParams({ 
 		@ApiImplicitParam(name = "hyDeatilPicture", value = "项目实体类hyDeatilPicture", required = true),
 	})
-    @RequiresPermissions("system:picture:add")
-    @Log(title = "商品详情的图片
-", businessType = BusinessType.INSERT)
+    @RequiresPermissions("system:deatilPicture:add")
+    @Log(title = "商品详情的图片", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(HyDeatilPicture hyDeatilPicture)
@@ -123,8 +117,7 @@ public class HyDeatilPictureController extends BaseController
      * 修改商品详情的图片
 
      */
-    @ApiOperation("商品详情的图片
-")
+    @ApiOperation("商品详情的图片")
     @ApiImplicitParams({ 
 		@ApiImplicitParam(name = "id", value = "主键id", required = true),
 	})
@@ -140,14 +133,12 @@ public class HyDeatilPictureController extends BaseController
      * 修改保存商品详情的图片
 
      */
-    @ApiOperation("商品详情的图片
-")
+    @ApiOperation("商品详情的图片")
     @ApiImplicitParams({ 
 		@ApiImplicitParam(name = "hyDeatilPicture", value = "项目实体类hyDeatilPicture", required = true),
 	})
-    @RequiresPermissions("system:picture:edit")
-    @Log(title = "商品详情的图片
-", businessType = BusinessType.UPDATE)
+    @RequiresPermissions("system:deatilPicture:edit")
+    @Log(title = "商品详情的图片", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(HyDeatilPicture hyDeatilPicture)
@@ -159,14 +150,12 @@ public class HyDeatilPictureController extends BaseController
      * 删除商品详情的图片
 
      */
-    @ApiOperation("商品详情的图片
-")
+    @ApiOperation("商品详情的图片")
     @ApiImplicitParams({ 
 		@ApiImplicitParam(name = "ids", value = "ids", required = true),
 	})
-    @RequiresPermissions("system:picture:remove")
-    @Log(title = "商品详情的图片
-", businessType = BusinessType.DELETE)
+    @RequiresPermissions("system:deatilPicture:remove")
+    @Log(title = "商品详情的图片", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")
     @ResponseBody
     public AjaxResult remove(String ids)
