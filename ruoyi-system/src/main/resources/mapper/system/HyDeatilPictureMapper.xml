@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyDeatilPictureMapper">
+    
+    <resultMap type="HyDeatilPicture" id="HyDeatilPictureResult">
+        <result property="id"    column="id"    />
+        <result property="deatilPicture"    column="deatil_picture"    />
+        <result property="productId"    column="product_id"    />
+    </resultMap>
+
+    <sql id="selectHyDeatilPictureVo">
+        select id, deatil_picture, product_id from hy_deatil_picture
+    </sql>
+
+    <select id="selectHyDeatilPictureList" parameterType="HyDeatilPicture" resultMap="HyDeatilPictureResult">
+        <include refid="selectHyDeatilPictureVo"/>
+        <where>  
+            <if test="deatilPicture != null  and deatilPicture != ''"> and deatil_picture = #{deatilPicture}</if>
+            <if test="productId != null "> and product_id = #{productId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyDeatilPictureById" parameterType="Long" resultMap="HyDeatilPictureResult">
+        <include refid="selectHyDeatilPictureVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyDeatilPicture" parameterType="HyDeatilPicture">
+        insert into hy_deatil_picture
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="deatilPicture != null">deatil_picture,</if>
+            <if test="productId != null">product_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="deatilPicture != null">#{deatilPicture},</if>
+            <if test="productId != null">#{productId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyDeatilPicture" parameterType="HyDeatilPicture">
+        update hy_deatil_picture
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="deatilPicture != null">deatil_picture = #{deatilPicture},</if>
+            <if test="productId != null">product_id = #{productId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyDeatilPictureById" parameterType="Long">
+        delete from hy_deatil_picture where id = #{id}
+    </delete>
+
+    <delete id="deleteHyDeatilPictureByIds" parameterType="String">
+        delete from hy_deatil_picture where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
