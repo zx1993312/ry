@@ -65,7 +65,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="marketPrice != null "> and market_price = #{marketPrice}</if>
             <if test="setMealName != null  and setMealName != ''"> and set_meal_name like concat('%', #{setMealName}, '%')</if>
             <if test="productId != null "> and product_id = #{productId}</if>
+            <if test="hyProduct != null and hyProduct != '' "> 
             <if test="hyProduct.productName != null and hyProduct.productName != '' "> and p.product_name = #{hyProduct.productName}</if>
+            </if>
     </select>
     
      <select id="selectHySetMealVoTest" parameterType="HySetMeal" resultMap="HySetMealResult">

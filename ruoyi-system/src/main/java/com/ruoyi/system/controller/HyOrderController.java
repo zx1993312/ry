@@ -177,7 +177,7 @@ public class HyOrderController extends BaseController
      * @throws IllegalStateException
      * @throws IOException
      */
-	/*@RequestMapping("/uploadFile")
+	@RequestMapping("/uploadFile")
 	@ResponseBody
 	public Map<String, Object> uploadFile(MultipartFile imagepath,HttpServletRequest request) throws IllegalStateException, IOException {
 		System.out.println(imagepath);
@@ -211,7 +211,7 @@ public class HyOrderController extends BaseController
 			map.put("error", "图片不合法");
 			return map;
 		}
-	}*/
+	}
 	/**
 	 * 导出PDF
 	 */

@@ -34,6 +34,7 @@ a {
 
 select {
 	font-size: 25px;
+	float: right;
 }
 
 #b1 {
@@ -52,13 +53,13 @@ s {
 	width: 1000px;
 }
 </style>
-<meta name="viewport"
+<!-- <meta name="viewport"
 	content="width=device-width,initial-scale=1,user-scalable=no" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <link rel="stylesheet" type="text/css"
 	href="../bootstrap3/css/bootstrap.css">
 <link rel="stylesheet" type="text/css"
-	href="../bootstrap3/font-awesome-4.7.0/css/font-awesome.css" />
+	href="../bootstrap3/font-awesome-4.7.0/css/font-awesome.css" /> -->
 </head>
 <body>
 	<form class="form-horizontalm" id="form-dict-edit">
@@ -70,12 +71,18 @@ s {
 						<div th:each="o:${reList}">
 							<div>
 								<h1>商城首页</h1>
-								<span id="s1">千千惠生活</span> <select>
-									<option>请选择</option>
-									<option>长春站</option>
-									<option>北京站</option>
-									<option>上海站</option>
+								<span id="s1">千千惠生活</span>
+								<select id="subselectid">
+								    <option>选择城市</option>
 								</select>
+								<select id="selectid" onchange="selectCity()">
+								    <option>选择省市</option>
+								    <option>北京</option>
+								    <option>南京</option>
+								    <option>淮北</option>
+								    <option>合肥</option>
+								</select>
+
 
 
 
@@ -99,20 +106,55 @@ s {
 			</div>
 		</center>
 	</form>
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		function foo() {
 			var frm = window.event.srcElement;
 			frm.hid.value = $(frm.hid).attr("index");
 			return true;
 		}
-	</script>
+	</script> -->
+	
 	<th:block th:include="include :: footer" />
+	
 </body>
-<script type="text/javascript" src="../bootstrap3/jquery.min.js"></script>
+<script type="text/javascript">
+        function selectCity() {
+      		//二维数组
+            var cities = [
+            			  ['选择城市'],
+                          ['海淀区','朝阳区','东城区','西城区'],
+                          ['鼓楼区','栖霞区','玄武区','秦淮区'],
+                          ['杜集区','烈山区','相山区','濉溪县'],
+                          ['瑶海区','蜀山区','庐阳区','包河区']
+            	];
+            //获取两个下拉菜单对象
+            var selectNode = document.getElementById("selectid");
+            var subSelectNode = document.getElementById("subselectid");
+            //获取选择的省的角标
+            var index = selectNode.selectedIndex;
+            //通过角标到容器中去获取对应的城市数组
+            var arrCities = cities[index];
+
+            //将子菜单中的内容清空
+            for(var i=0;i<subSelectNode.options.length;i++){
+                //通过父节点删除子节点
+                subSelectNode.removeChild(subSelectNode.options[i]);
+                i--;
+            }
+
+            //遍历城市数组，并将这个数组的元素对象封装成option对象，添加到子菜单中
+            for(var i=0;i<arrCities.length;i++){
+                var optionNode = document.createElement("option");
+                optionNode.innerHTML=arrCities[i];
+                subSelectNode.appendChild(optionNode);
+            }
+        }
+    </script>
+<!-- <script type="text/javascript" src="../bootstrap3/jquery.min.js"></script>
 <script type="text/javascript" src="../bootstrap3/js/bootstrap.js"></script>
 <script type="text/javascript" src="../bootstrap3/js/holder.js"></script>
 <script type="text/javascript" src="../bootstrap3/js/html5shiv.min.js"></script>
 <script type="text/javascript"
 	src="../bootstrap3/js/css3-mediaqueries.js"></script>
-<script type="text/javascript" src="../bootstrap3/js/respond.min.js"></script>
+<script type="text/javascript" src="../bootstrap3/js/respond.min.js"></script> -->
 </html>

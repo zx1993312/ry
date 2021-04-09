@@ -53,17 +53,25 @@
 		font-size:18px;
 		margin-left: 900px;
 	}
+	#i20{
+		width: 1140px;
+		height: 450px;
+	}
+	#s50{
+		position: absolute;
+		right:340px;
+	}
 </style>
-<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+<!-- <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <link rel="stylesheet" type="text/css" href="../bootstrap3/css/bootstrap.css">
-<link rel="stylesheet" type="text/css" href="../bootstrap3/font-awesome-4.7.0/css/font-awesome.css"/>
+<link rel="stylesheet" type="text/css" href="../bootstrap3/font-awesome-4.7.0/css/font-awesome.css"/> -->
 </head>
 <body>
 <section class="container">
   <h1>产品详情</h1>
   <span id="p1" class="glyphicon glyphicon-heart">千千惠生活</span>
-  <div th:each="picture:${picture}">
+  <div th:each="deatilPicture:${deatilPicture}">
   <div th:each="product:${product}">
   <div th:each="setMeal:${setMeal}">
   <div th:each="shop:${shop}">
@@ -79,17 +87,18 @@
     <!-- 轮播（Carousel）项目 -->
     <div class="carousel-inner">
         <div class="item active">
-            <img th:src="'/img/'+${picture.pcitureAddress}" alt="First slide">
+            <img id="i20" th:src="'/img/'+${deatilPicture.deatilPicture}" alt="First slide">
             <div class="carousel-caption"></div>
         </div>
-        <div class="item">
-            <img th:src="'/img/'+${picture.pcitureAddress}" alt="Second slide">
-            <div class="carousel-caption"></div> 
-        </div>
-        <div class="item">
-            <img th:src="'/img/'+${picture.pcitureAddress}" alt="Third slide">
+        <div class="item ">
+            <img id="i20" th:src="'/img/'+${deatilPicture.deatilPicture}" alt="First slide">
             <div class="carousel-caption"></div>
         </div>
+        <div class="item ">
+            <img id="i20" th:src="'/img/'+${deatilPicture.deatilPicture}" alt="First slide">
+            <div class="carousel-caption"></div>
+        </div>
+        
     </div>
     <!-- 轮播（Carousel）导航 -->
     <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
@@ -106,7 +115,7 @@
     <!-- 价格和门市价 -->
     ¥<span id="p3" class="jpy" th:text="${setMeal.retailPrice}">108</span><s th:text=${setMeal.marketPrice}>门市价148</s><br>
     <!--已售和库存  -->
-    已售<span id="p4" th:text="${product.soldNumber}">822</span><span id="p8">库存77</span>
+    已售:<span id="p4" th:text="${product.soldNumber}">822</span><span id="s50">库存:</span><span th:text="${product.stockNumber}" id="p8">77</span>
     <div class="well" th:text="${setMeal.setMealName}">选择套餐</div>
     <div id="d1"><a href="" th:text="${setMeal.setMealContent}">一大一小自助餐</a></div>
     <div id="d2" style="border-top:1px dashed #cccccc;height: 1px;overflow:hidden"></div>
@@ -117,7 +126,7 @@
     <a id="a20" class="glyphicon glyphicon-earphone" th:text="${shop.contactNumber}">电话</a>
     <div  style="width: 100%;height: 100px; overflow: hidden;">
     	<a href="/system/productDetailsSM/list" style="width: 50%;height: 100px;background-color: #e8e8e8; display: inline-block;"><span style="font-size: 50px; text-align: center; line-height: 100px; margin-left: 30%">商城首页</span></a>
-    	<a th:href="'/system/productDetailsSA/list?id='+${product.id}" style="width: 50%;height: 100px;background-color: red; display: inline-block; float: right;"><span style="font-size: 50px; color:black; text-align: center; line-height: 100px; margin-left: 30%">立即购买</span></a>
+    	<a th:href="'/system/productDetailsSA/list?id='+${product.id}" onclick="add()" style="width: 50%;height: 100px;background-color: red; display: inline-block; float: right;"><span style="font-size: 50px; color:black; text-align: center; line-height: 100px; margin-left: 30%">立即购买</span></a>
     </div>
   </div>
   </div>
@@ -127,10 +136,41 @@
   </section>
   <th:block th:include="include :: footer" /><!-- align="right" -->
 </body>
-<script type="text/javascript" src="../bootstrap3/jquery.min.js"></script>
+
+<!-- <script type="text/javascript" src="../bootstrap3/jquery.min.js"></script>
 <script type="text/javascript" src="../bootstrap3/js/bootstrap.js"></script>
 <script type="text/javascript" src="../bootstrap3/js/holder.js"></script>
 <script type="text/javascript" src="../bootstrap3/js/html5shiv.min.js"></script>
 <script type="text/javascript" src="../bootstrap3/js/css3-mediaqueries.js"></script>
-<script type="text/javascript" src="../bootstrap3/js/respond.min.js"></script>
+<script type="text/javascript" src="../bootstrap3/js/respond.min.js"></script> -->
+<script type="text/javascript">
+var prefix = ctx + "system/order"
+	function add(){
+		var imagepath = $("#remarks").val();
+    	var userId = 2;
+    	var orderNumber = new Date().getTime();
+    	//var Username = $("#Username").val();
+    	//var tradeName = $("#tradeName").val();
+    	var productId = $("#productId").val();
+    	var businessName = $("#businessName").val();
+    	//var unitPrice = $("#unitPrice").val();
+    	//var number = $("#number").val();
+    	var state = "2";
+    	$.ajax({
+            type: "post",
+            datatype: "json",
+            url:  prefix + '/add',
+            data: {"userPicture": imagepath,"orderNumber":orderNumber,/* "hyUser.name":Username, */"userId":userId,
+            	"productId":productId, /* "tradeName":tradeName, */"businessName":businessName,/* "unitPrice":unitPrice, *//* "number":number, */"state":state},
+            async: true,
+            success: function (result) {
+                //console.log(result);
+				if (typeof callback == "function") {
+   	                callback(result);
+   	            }
+   	            $.operate.successCallback(result);
+            }
+        });
+	}
+</script>
 </html>

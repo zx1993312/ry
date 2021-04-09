@@ -8,28 +8,60 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="id"    column="id"    />
         <result property="pcitureAddress"    column="pciture_address"    />
         <result property="productId"    column="product_id"    />
+       <association property="hyProduct"
+			column="id" javaType="HyProduct"
+			resultMap="HyProductResult" />
+    </resultMap>
+	<resultMap type="HyProduct" id="HyProductResult">
+        <result property="id"    column="id"    />
+    	<result property="productName"    column="product_name"    />
+    	<result property="briefIntroduction"    column="brief_introduction"    />
+        <result property="soldNumber"    column="sold_number"    />
+        <result property="stockNumber"    column="stock_number"    />
+        <result property="state"    column="state"    />
+        <result property="snapUpDate"    column="snap_up_date"    />
+        <result property="sendCodeDate"    column="send_code_date"    />
+        <result property="appointmentDate"    column="appointment_date"    />  
+        <result property="appointmentMode"    column="appointment_mode"    />
+        <result property="useDate"    column="use_date"    />
+        <result property="shopId"    column="shop_id"    />
+        <result property="limitedQuantity"    column="limited_quantity"    />
+        <result property="productOrderBy"    column="product_order_by"    />
+        <result property="customerServiceTel"    column="customer_service_tel"    />
+        <result property="shareTitle"    column="share_title"    />
+        <result property="salState"  column="sal_state"/>
+        <result property="lableId"  column="lable_id"/>
     </resultMap>
 
     <sql id="selectHyPictureVo">
-        select id, pciture_address, product_id from hy_picture
+        select 
+        o.id, 
+        o.pciture_address, 
+        o.product_id,
+        p.state 
+        from 
+        hy_picture o
+        LEFT JOIN hy_product p ON o.product_id=p.id
+        where 1=1
     </sql>
     
     <select id="selectHyPictureAddress" parameterType="HyPicture" resultMap="HyPictureResult">
         <include refid="selectHyPictureVo"/>
-        where pciture_address=#{pcitureAddress}
+        and o.pciture_address=#{pcitureAddress}
     </select>
 
     <select id="selectHyPictureList" parameterType="HyPicture" resultMap="HyPictureResult">
         <include refid="selectHyPictureVo"/>
-        <where>  
-            <if test="pcitureAddress != null  and pcitureAddress != ''"> and pciture_address = #{pcitureAddress}</if>
-            <if test="productId != null "> and product_id = #{productId}</if>
-        </where>
+        
+            <if test="pcitureAddress != null  and pcitureAddress != ''"> and o.pciture_address = #{pcitureAddress}</if>
+            <if test="productId != null "> and o.product_id = #{productId}</if>
+            and p.state = 1        
+            
     </select>
     
     <select id="selectHyPictureById" parameterType="Long" resultMap="HyPictureResult">
         <include refid="selectHyPictureVo"/>
-        where id = #{id}
+        and o.id = #{id}
     </select>
         
     <insert id="insertHyPicture" parameterType="HyPicture" useGeneratedKeys="true" keyProperty="id">

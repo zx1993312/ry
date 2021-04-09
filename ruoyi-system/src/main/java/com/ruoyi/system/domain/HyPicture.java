@@ -23,8 +23,22 @@ public class HyPicture extends BaseEntity
     /** 产品id */
     @Excel(name = "产品id")
     private Long productId;
+    
+    /** 产品表 */
+    @Excel(name = "产品表")
+    private HyProduct hyProduct;
+    
+    
 
-    public void setId(Long id) 
+    public HyProduct getHyProduct() {
+		return hyProduct;
+	}
+
+	public void setHyProduct(HyProduct hyProduct) {
+		this.hyProduct = hyProduct;
+	}
+
+	public void setId(Long id) 
     {
         this.id = id;
     }
@@ -54,8 +68,11 @@ public class HyPicture extends BaseEntity
 
 	@Override
 	public String toString() {
-		return "HyPicture [id=" + id + ", pcitureAddress=" + pcitureAddress + ", productId=" + productId + "]";
+		return "HyPicture [id=" + id + ", pcitureAddress=" + pcitureAddress + ", productId=" + productId
+				+ ", hyProduct=" + hyProduct + "]";
 	}
+
+	
 
   
 }
