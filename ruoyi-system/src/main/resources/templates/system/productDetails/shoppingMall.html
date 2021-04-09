@@ -67,8 +67,8 @@ s {
 		<center>
 			<div id="d1">
 				<div th:each="p:${list}">
-					<div th:each="h:${relist}">
-						<div th:each="o:${reList}">
+					<!-- <div th:each="h:${relist}">
+						<div th:each="o:${reList}"> -->
 							<div>
 								<h1>商城首页</h1>
 								<span id="s1">千千惠生活</span>
@@ -85,15 +85,14 @@ s {
 
 
 
-
-								<div>
+<div>
 									<a th:href="'/system/productDetailsCM/list?id='+${p.id}"><img
 										width="1000px" height="400px"
-										th:src="'/img/'+${o.pcitureAddress}"></a><br> <a
+										th:src="'/img/'+${p.hyPicture.pcitureAddress}"></a><br> <a
 										th:text="${p.briefIntroduction}"></a><br> ¥<span id="b1"
-										th:text="${h.retailPrice}"></span><br>
+										th:text="${p.hySetMeal.retailPrice}"></span><br>
 									<hr>
-									门市价:<s style="margin-right: 750px;" th:text=${h.marketPrice}></s>
+									门市价:<s style="margin-right: 750px;" th:text=${p.hySetMeal.marketPrice}></s>
 									销售量:<b th:text="${p.soldNumber}"></b>
 
 								</div>
@@ -101,18 +100,18 @@ s {
 								<div style="height: 15px; background-color: #e8e8e8;"></div>
 							</div>
 						</div>
-					</div>
-				</div>
+					<!-- </div>
+				</div> -->
 			</div>
 		</center>
 	</form>
-	<!-- <script type="text/javascript">
+	 <script type="text/javascript">
 		function foo() {
 			var frm = window.event.srcElement;
 			frm.hid.value = $(frm.hid).attr("index");
 			return true;
 		}
-	</script> -->
+	</script> 
 	
 	<th:block th:include="include :: footer" />
 	

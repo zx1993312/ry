@@ -37,11 +37,7 @@ public class HyShoppingController extends BaseController {
 	@Autowired
 	private IHyProductService hyProductService;
 	
-	@Autowired
-	private IHySetMealService hySetMealService;
 	
-	@Autowired
-	private IHyPictureService hyPictureService;
 
 	@RequiresPermissions("system:set:view")
 	@GetMapping()
@@ -56,13 +52,6 @@ public class HyShoppingController extends BaseController {
 
 		List<HyProduct> list = hyProductService.selectHyProductListTest(new HyProduct());
 		mmap.put("list", list);
-		
-        List<HySetMeal> relist = hySetMealService.selectHySetMealVoTest(new HySetMeal());
-        mmap.put("relist", relist);
-		
-        List<HyPicture> reList = hyPictureService.selectHyPictureList(new HyPicture());
-        mmap.put("reList", reList);
-
 		return prefix + "/shoppingMall";
 	}
 }

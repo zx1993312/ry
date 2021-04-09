@@ -129,9 +129,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         p.product_order_by,
         p.customer_service_tel,
         p.share_title,
-        p.sal_state
+        p.sal_state,
+        p.lable_id,
+        s.shop_name,
+        a.pciture_address,
+        c.poster_address,
+        l.lable_name,
+        d.deatil_picture
         from 
         hy_product p
+        LEFT JOIN hy_shop s ON  p.shop_id=s.id
+        LEFT JOIN hy_picture a ON a.product_id = p.id
+        LEFT JOIN hy_poster c ON c.product_id=p.id
+        LEFT JOIN hy_lable l ON p.lable_id=l.id
+        LEFT JOIN hy_deatil_picture d ON d.product_id=p.id
        	ORDER BY  p.product_order_by DESC 
         
     </sql>
