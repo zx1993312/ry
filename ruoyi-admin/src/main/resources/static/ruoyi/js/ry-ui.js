@@ -1185,7 +1185,12 @@ var table = {
             // 一键结算
             edit2: function(id) {
             	var row=$("#bootstrap-table").bootstrapTable('getSelections');
-                console.log(row[0].state);
+            	for(var i=0;i<row.length;i++){
+            		if(row[i].state!="1"){
+            			$.modal.alertWarning("一键结算订单失败,请选择已支付的数据");
+            			return;
+            		}
+            	}
             	table.set();
             	var rows = $.common.isEmpty(table.options.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns(table.options.uniqueId);
             	if (rows.length == 0) {
@@ -1193,14 +1198,9 @@ var table = {
             	    return;
             	}
             	$.modal.confirm("确认要结算选中的" + rows.length + "条数据吗?", function() {
-            	   if(state=="1"){
             		var url = table.options.updateUrl;
                	    var data = { "ids": rows.join(),"state":"3" };
                	    $.operate.submit(url, "post", "json", data);
-            	   }else{
-               		$.modal.alertWarning("一键结算订单失败");
-            		return;
-            	}
             	});
             },
             // 商户结算
@@ -1216,7 +1216,7 @@ var table = {
                         	var data = { "ids": id,"state":"3" };
                         	$.operate.submit(url, "post", "json", data);
                     	}else{
-                    		$.modal.alertWarning("结算订单失败");
+                    		$.modal.alertWarning("结算订单失败,请选择已支付的数据");
                     		return;
                     	}
                     }
