@@ -1126,6 +1126,7 @@ var table = {
             },
             // 批量删除信息
             removeAll: function() {
+            	    	
             	table.set();
             	var rows = $.common.isEmpty(table.options.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns(table.options.uniqueId);
             	if (rows.length == 0) {
@@ -1190,9 +1191,14 @@ var table = {
             	    return;
             	}
             	$.modal.confirm("确认要结算选中的" + rows.length + "条数据吗?", function() {
-            	    var url = table.options.updateUrl;
-            	    var data = { "ids": rows.join(),"state":"3" };
-            	    $.operate.submit(url, "post", "json", data);
+            	   if(state=="1"){
+            		var url = table.options.updateUrl;
+               	    var data = { "ids": rows.join(),"state":"3" };
+               	    $.operate.submit(url, "post", "json", data);
+            	   }else{
+               		$.modal.alertWarning("一键结算订单失败");
+            		return;
+            	}
             	});
             },
             // 商户结算

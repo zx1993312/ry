@@ -104,9 +104,12 @@ public class HyProduct extends BaseEntity
     /**销售状态*/
     @Excel(name="销售状态")
     private String salState;
-    /**图片地址*/
+    /**产品缩略图地址*/
     @Excel(name="图片地址")
     private String fileName;
+    /**产品多图地址*/
+    @Excel(name="图片地址")
+    private String deleteFiles;
     /**商品详情的图片表*/
     @Excel(name="商品详情的图片表")
     private HyDeatilPicture hyDeatilPicture;
@@ -319,6 +322,15 @@ public class HyProduct extends BaseEntity
 	public void setLableId(Long lableId) {
 		this.lableId = lableId;
 	}
+	
+
+	public String getDeleteFiles() {
+		return deleteFiles;
+	}
+
+	public void setDeleteFiles(String deleteFiles) {
+		this.deleteFiles = deleteFiles;
+	}
 
 	public HyDeatilPicture getHyDeatilPicture() {
 		return hyDeatilPicture;
@@ -337,9 +349,11 @@ public class HyProduct extends BaseEntity
 				+ hyShop + ", hyPicture=" + hyPicture + ", hyPoster=" + hyPoster + ", hySetMeal=" + hySetMeal
 				+ ", hyLable=" + hyLable + ", lableId=" + lableId + ", limitedQuantity=" + limitedQuantity
 				+ ", productOrderBy=" + productOrderBy + ", customerServiceTel=" + customerServiceTel + ", shareTitle="
-				+ shareTitle + ", salState=" + salState + ", fileName=" + fileName + ", hyDeatilPicture="
-				+ hyDeatilPicture + "]";
+				+ shareTitle + ", salState=" + salState + ", fileName=" + fileName + ", deleteFiles=" + deleteFiles
+				+ ", hyDeatilPicture=" + hyDeatilPicture + "]";
 	}
+
+	
 
 	
 

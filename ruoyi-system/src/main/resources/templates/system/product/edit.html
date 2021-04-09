@@ -36,6 +36,7 @@
                  	<div class="summernote" id="briefIntroduction" th:field="*{briefIntroduction}"></div>
                 </div>
             </div>
+            
             <div class="form-group">
                 <label class="font-noraml">产品信息缩略图：</label>
                 <div class="file-loading">
@@ -45,6 +46,17 @@
             <input type="hidden" name="hyPicture.pcitureAddress" id="remarks" value="">
             <img alt="" th:src="'/img/'+*{hyPicture.pcitureAddress}" width="200px" height="200px">
             <input id="deleteFile" th:value="*{hyPicture.pcitureAddress}" type="hidden">
+             
+            <div class="form-group">
+                <label class="font-noraml">产品多图：</label>
+                <div class="file-loading">
+		            <input type="file" name="imagepaths" data-ref="Pcitures"  class="yourfile" value=""/> 
+		        </div>
+            </div>
+		            <input type="hidden" name="Pcitures" id="imagepaths" value="">
+		    <img alt="" th:src="'/img/'+*{hyDeatilPicture.deatilPicture}" width="200px" height="200px">
+            <input id="deleteFiles" th:value="*{hyDeatilPicture.deatilPicture}" type="hidden">
+            
             <div class="form-group">    
                 <label class="col-sm-3 control-label">产品销量：</label>
                 <div class="col-sm-8">
@@ -106,6 +118,7 @@
 
         function submitHandler() {
         	var pcitureAddress = $("#remarks").val();
+        	var imagepaths = $("#imagepaths").val();
         	var id = $("#id").val();
         	var shopId = $("#shopId").val();
         	var lableId = $("#lableId").val();
@@ -115,13 +128,14 @@
         	var stockNumber = $("#stockNumber").val();
         	var state = $("#state").val();
         	var deleteFile = $("#deleteFile").val();
+        	var deleteFiles = $("#deleteFiles").val();
         	$.ajax({
                 type: "post",
                 datatype: "json",
                 url:  prefix + '/edit',
                 data: {"hyPicture.pcitureAddress": pcitureAddress,"id":id,"productName":productName,"briefIntroduction":briefIntroduction
-                	,"soldNumber":soldNumber,"stockNumber":stockNumber,"state":state,"shopId":shopId,"fileName":deleteFile
-                	,"lableId":lableId},
+                	,"soldNumber":soldNumber,"stockNumber":stockNumber,"state":state,"shopId":shopId,"fileName":deleteFile,"deleteFiles":deleteFiles
+                	,"hyDeatilPicture.deatilPicture":imagepaths,"lableId":lableId},
                 async: true,
                 success: function (result) {
                     //console.log(result);
@@ -192,7 +206,7 @@
             });
         });
         $(document).ready(function () {
-        	//上传图片操作
+        	//上传产品缩略图操作
 	        $(".myfile").fileinput({
 	        	uploadUrl : prefix + '/uploadFile', //接受请求地址
 	            uploadAsync: true, //默认异步上传
@@ -233,6 +247,56 @@
 
 	        //上传前
 	        $('.myfile').on('filepreupload', function (event, data, previewId, index) {
+	            var form = data.form, mynewpic = data.mynewpic, extra = data.extra,
+	                response = data.response, reader = data.reader;
+	            console.log("文件正在上传。。。。");
+	        });
+            
+        });
+        $(document).ready(function () {
+        	var imgPath = '';
+        	//上传产品多图操作
+	        $(".yourfile").fileinput({
+	        	uploadUrl : prefix + '/uploadFile2', //接受请求地址
+	            uploadAsync: true, //默认异步上传
+	            showUpload: true, //是否显示上传按钮,跟随文本框的那个
+	            showRemove: false, //显示移除按钮,跟随文本框的那个
+	            showCaption: true,//是否显示标题,就是那个文本框
+	            showPreview: true, //是否显示预览,不写默认为true
+	            dropZoneEnabled: false,//是否显示拖拽区域，默认不写为true，但是会占用很大区域
+	            //minImageWidth: 50, //图片的最小宽度
+	            //minImageHeight: 50,//图片的最小高度
+	            //maxImageWidth: 1000,//图片的最大宽度
+	            //maxImageHeight: 1000,//图片的最大高度
+	            //maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
+	            //minFileCount: 0,
+	            maxFileCount: 6, //表示允许同时上传的最大文件个数
+	            enctype: 'multipart/form-data',
+	            validateInitialCount: true,
+	            previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+	            msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+	            allowedFileTypes: ['image'],//配置允许文件上传的类型
+	            allowedPreviewTypes: ['image'],//配置所有的被预览文件类型
+	            allowedPreviewMimeTypes: ['jpg', 'png', 'gif'],//控制被预览的所有mime类型
+	            language: 'zh'
+	        })
+	        //异步上传返回结果处理
+	        $('.yourfile').on('fileerror', function (event, data, msg) {
+	            console.log("fileerror");
+	            console.log(data);
+	        });
+	        //异步上传返回结果处理
+	        $(".yourfile").on("fileuploaded", function (event, data, previewId, index) {
+	        	imgPath += data.response.url + ",";
+	            console.log(data.response.url);
+	            var ref = $(this).attr("data-ref");
+	            var aa = $("input[name='" + ref + "']").val(imgPath);
+	            var jsonData = JSON.stringify(aa);// 转成JSON格式
+	            var result = $.parseJSON(jsonData);// 转成JSON对象
+	        });
+
+	        //上传前
+	        $('.yourfile').on('filepreupload', function (event, data, previewId, index) {
 	            var form = data.form, mynewpic = data.mynewpic, extra = data.extra,
 	                response = data.response, reader = data.reader;
 	            console.log("文件正在上传。。。。");
