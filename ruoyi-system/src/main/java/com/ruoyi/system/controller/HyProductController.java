@@ -20,8 +20,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.system.domain.HyDeatilPicture;
 import com.ruoyi.system.domain.HyPicture;
 import com.ruoyi.system.domain.HyProduct;
+import com.ruoyi.system.mapper.HyDeatilPictureMapper;
+import com.ruoyi.system.service.IHyDeatilPictureService;
 import com.ruoyi.system.service.IHyProductService;
 
 import io.swagger.annotations.Api;
@@ -49,6 +52,9 @@ public class HyProductController extends BaseController
 
     @Autowired
     private IHyProductService hyProductService;
+    
+    @Autowired
+    private IHyDeatilPictureService hyDeatilPictureService;
 
     @RequiresPermissions("system:product:view")
     @GetMapping()
@@ -130,8 +136,13 @@ public class HyProductController extends BaseController
     public String edit(@PathVariable("id") Long id, ModelMap mmap)
     {
         HyProduct hyProduct = hyProductService.selectHyProductById(id);
+        HyDeatilPicture hyDeatilPicture = new HyDeatilPicture();
+        hyDeatilPicture.setProductId(id);
+        List<HyDeatilPicture> list  = hyDeatilPictureService.selectHyDeatilPictureList(hyDeatilPicture);
         System.out.println("==============hyProduct============"+hyProduct);
+        System.out.println("==============list============"+list);
         mmap.put("hyProduct", hyProduct);
+        mmap.put("list", list);
         return prefix + "/edit";
     }
 

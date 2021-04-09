@@ -54,9 +54,7 @@
 		        </div>
             </div>
 		            <input type="hidden" name="Pcitures" id="imagepaths" value="">
-		    <div th:with="type=*{hyDeatilPicture}">
-		    <img th:if="data!=null" th:each="data:${type}" alt="" th:src="'/img/'+${data.deatilPicture}" width="200px" height="200px">
-		    </div>
+		    <img th:if="data!=null" th:each="data:${list}" alt="" th:src="'/img/'+${data.deatilPicture}" width="200px" height="200px">
             <input id="deleteFiles" th:value="*{hyDeatilPicture.deatilPicture}" type="hidden">
             
             <div class="form-group">    
