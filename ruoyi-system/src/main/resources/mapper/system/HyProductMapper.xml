@@ -307,12 +307,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test=" appointmentMode != null">appointment_mode = #{ appointmentMode},</if>
             <if test="useDate != null">use_date = #{useDate},</if>
             <if test="shopId != null">shop_id = #{shopId},</if>
-            <if test="limitedQuantity != null "> and limited_quantity = #{limitedQuantity}</if>
-            <if test="productOrderBy != null "> and product_order_by = #{productOrderBy}</if>
-            <if test="customerServiceTel != null "> and customer_service_tel = #{customerServiceTel}</if>
-            <if test="shareTitle != null "> and share_title = #{shareTitle}</if>
-            <if test="salState != null "> and  sal_state = #{salState}</if>
-            <if test="lableId != null "> and  lable_id = #{lableId}</if>
+            <if test="limitedQuantity != null ">limited_quantity = #{limitedQuantity}</if>
+            <if test="productOrderBy != null ">product_order_by = #{productOrderBy}</if>
+            <if test="customerServiceTel != null ">customer_service_tel = #{customerServiceTel}</if>
+            <if test="shareTitle != null ">share_title = #{shareTitle}</if>
+            <if test="salState != null ">sal_state = #{salState}</if>
+            <if test="lableId != null ">lable_id = #{lableId}</if>
         </trim>
         where id = #{id}
     </update>

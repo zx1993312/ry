@@ -1184,6 +1184,8 @@ var table = {
             },
             // 一键结算
             edit2: function(id) {
+            	var row=$("#bootstrap-table").bootstrapTable('getSelections');
+                console.log(row[0].state);
             	table.set();
             	var rows = $.common.isEmpty(table.options.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns(table.options.uniqueId);
             	if (rows.length == 0) {

@@ -125,43 +125,50 @@ public class HyProductServiceImpl implements IHyProductService {
 	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int updateHyProduct(HyProduct hyProduct) {
-		int row1 =0;
-		HyPicture hyPicture = new HyPicture();
 		Long productId = hyProduct.getId();
-		hyPicture.setProductId(productId);
-		List<HyPicture> list = hyPictureMapper.selectHyPictureList(hyPicture);
-		HyPicture hy = (HyPicture)list.get(0);
-		Long id = hy.getId();
-		hyPicture.setId(id);
-		String pcitureAddress = hyProduct.getHyPicture().getPcitureAddress();
-		hyPicture.setPcitureAddress(pcitureAddress);
-		HyDeatilPicture hyDeatilPicture = new HyDeatilPicture();
-		hyDeatilPicture.setProductId(productId);
-		List<HyDeatilPicture> list1 =  hyDeatilPictureMapper.selectHyDeatilPictureList(hyDeatilPicture);
-		for(HyDeatilPicture lists:list1) {
-			hyDeatilPicture = lists;
-    		String deleteFiles = hyDeatilPicture.getDeatilPicture();
-    		deleteFile(deleteFiles);
-		}
-		String deatilPictures = hyProduct.getHyDeatilPicture().getDeatilPicture();
-		String pictureAdd = deatilPictures.substring(0,deatilPictures.length()-1);
-		String[]pictureArr = pictureAdd.split(",");
-		int i =0;
-		for(String picture:pictureArr) {
-			HyDeatilPicture hyDeatilPictures =new HyDeatilPicture();
-			hyDeatilPictures = list1.get(i);
-			hyDeatilPictures.setDeatilPicture(picture);
-			hyDeatilPictureMapper.updateHyDeatilPicture(hyDeatilPictures);
-			row1++;
-			i++;
-		}
-		if(row1>0) {
-			int row2 = hyPictureMapper.updateHyPicture(hyPicture);
-			if(row2>0) {
-				return hyProductMapper.updateHyProduct(hyProduct);
+		if(hyProduct.getHyDeatilPicture().getDeatilPicture()!=null||!"".equals(hyProduct.getHyDeatilPicture().getDeatilPicture())) {
+			HyDeatilPicture hyDeatilPicture = new HyDeatilPicture();
+			hyDeatilPicture.setProductId(productId);
+			List<HyDeatilPicture> list1 =  hyDeatilPictureMapper.selectHyDeatilPictureList(hyDeatilPicture);
+			for(HyDeatilPicture lists:list1) {
+				hyDeatilPicture = lists;
+	    		String deleteFiles = hyDeatilPicture.getDeatilPicture();
+	    		deleteFile(deleteFiles);
+			}
+			String deatilPictures = hyProduct.getHyDeatilPicture().getDeatilPicture();
+			String pictureAdd = deatilPictures.substring(0,deatilPictures.length()-1);
+			String[]pictureArr = pictureAdd.split(",");
+			int i =0;
+			for(String picture:pictureArr) {
+				HyDeatilPicture hyDeatilPictures =new HyDeatilPicture();
+				if(list1.size()>i) {
+					hyDeatilPictures = list1.get(i);
+					hyDeatilPictures.setDeatilPicture(picture);
+					hyDeatilPictureMapper.updateHyDeatilPicture(hyDeatilPictures);
+				}
+				if(list1.size()<=i) {
+				hyDeatilPictures.setDeatilPicture(picture);
+				hyDeatilPictures.setProductId(productId);
+				hyDeatilPictureMapper.insertHyDeatilPicture(hyDeatilPictures);
+				}
+				i++;
 			}
 		}
-		return 0;
+		if(hyProduct.getHyPicture().getPcitureAddress()!=null||!"".equals(hyProduct.getHyPicture().getPcitureAddress())) {
+			HyPicture hyPicture = new HyPicture();
+			hyPicture.setProductId(productId);
+			List<HyPicture> list = hyPictureMapper.selectHyPictureList(hyPicture);
+			HyPicture hy = (HyPicture)list.get(0);
+			Long id = hy.getId();
+			String deleteFile = hy.getPcitureAddress();
+			deleteFile(deleteFile);
+			hyPicture.setId(id);
+			String pcitureAddress = hyProduct.getHyPicture().getPcitureAddress();
+			hyPicture.setPcitureAddress(pcitureAddress);
+			hyPictureMapper.updateHyPicture(hyPicture);
+		}
+		
+		return hyProductMapper.updateHyProduct(hyProduct);
 	}
 
 	/**
