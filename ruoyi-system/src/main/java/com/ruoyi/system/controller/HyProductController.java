@@ -80,6 +80,8 @@ public class HyProductController extends BaseController
         System.out.println("===================list=================="+list);
         return getDataTable(list);
     }
+    
+
 
     /**
      * 导出产品列表

@@ -9,7 +9,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="userId"    column="user_id"    />
         <result property="userPicture"    column="user_picture"    />
         <result property="orderNumber"    column="order_number"    />
-        <result property="businessName"    column="business_name"    />
         <result property="unitPrice"    column="unit_price"    />
         <result property="state"    column="state"    />
         <result property="number"    column="number"    />
@@ -21,6 +20,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <association property="hyProduct"
 			column="id" javaType="HyProduct"
 			resultMap="HyProductResult" />
+        <association property="hyShop" column="id"
+			javaType="HyShop" resultMap="HyShopResult" />
+        <association property="hyBusiness"
+			column="id" javaType="HyBusiness"
+			resultMap="HyBusinessResult" />
+    </resultMap>
+
+	<resultMap type="HyBusiness" id="HyBusinessResult">
+		<result property="id" column="id" />
+		<result property="businessName" column="business_name" />
+		<result property="legalRepresentative"
+			column="legal_representative" />
+		<result property="legalTelphone" column="legal_telphone" />
+		<result property="idCard" column="id_card" />
+		<result property="eMail" column="e_mail" />
+	</resultMap>
+
+	<resultMap type="HyShop" id="HyShopResult">
+        <result property="id"    column="id"    />
+        <result property="shopName"    column="shop_name"    />
+        <result property="shopAddress"    column="shop_address"    />
+        <result property="contactNumber"    column="contact_number"    />
+        <result property="businessHours"    column="business_hours"    />
+        <result property="businessId"    column="business_id"    />
     </resultMap>
 
 	<resultMap type="HyProduct" id="HyProductResult">
@@ -49,25 +72,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="address"    column="address"    />
         <result property="telphone"    column="telphone"    />
     </resultMap>
-
-    <sql id="selectHyOrderVo">
+    
+     <sql id="selectHyOrderVo">
         select 
         o.id, 
         o.user_id, 
         o.user_picture,
         o.order_number, 
-        o.business_name, 
         o.unit_price, 
         o.number,
         o.state,
         o.create_time,
         o.product_id,
         u.name,
-        p.product_name
+        p.product_name,
+        b.business_name
         from 
         hy_order o
         LEFT JOIN hy_user u ON o.user_id=u.id
         LEFT JOIN hy_product p ON o.product_id=p.id
+        LEFT JOIN hy_shop s ON s.id=p.shop_id
+        LEFT JOIN hy_business b ON b.id=s.business_id
+        
         where 1=1
     </sql>
     
@@ -77,14 +103,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         o.user_id, 
         o.user_picture,
         o.order_number, 
-        o.business_name, 
         o.unit_price, 
         o.number,
         o.state,
         o.create_time,
-        o.product_id
+        o.product_id,
+        u.name,
+        p.product_name,
+        b.business_name
         from 
         hy_order o
+        LEFT JOIN hy_user u ON o.user_id=u.id
+        LEFT JOIN hy_product p ON o.product_id=p.id
+        LEFT JOIN hy_shop s ON s.id=p.shop_id
+        LEFT JOIN hy_business b ON b.id=s.business_id
+        
         where 1=1
     </sql>
     
@@ -105,7 +138,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="hyUser.name != null and hyUser.name != ''"> and u.name = #{hyUser.name}</if>
             </if>
             <if test="orderNumber != null  and orderNumber != ''"> and order_number = #{orderNumber}</if>
-            <if test="businessName != null  and businessName != ''"> and business_name like concat('%', #{businessName}, '%')</if>
             <if test="unitPrice != null "> and unit_price = #{unitPrice}</if>
             <if test="state != null and state!='' "> and state = #{state}</if>
             <if test="number != null "> and number = #{number}</if>
@@ -119,7 +151,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectHyOrderVoTest"/>
         
             <if test="orderNumber != null  and orderNumber != ''"> and order_number = #{orderNumber}</if>
-            <if test="businessName != null  and businessName != ''"> and business_name like concat('%', #{businessName}, '%')</if>
             <if test="unitPrice != null "> and unit_price = #{unitPrice}</if>
             <if test="state != null and state!='' "> and state = #{state}</if>
             <if test="number != null "> and number = #{number}</if>
@@ -141,7 +172,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="userId != null">user_id,</if>
             <if test="orderNumber != null">order_number,</if>
             <if test="userPicture != null">user_Picture,</if>
-            <if test="businessName != null">business_name,</if>
             <if test="unitPrice != null">unit_price,</if>
             <if test="state != null">state,</if>
             <if test="number != null">number,</if>
@@ -152,7 +182,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="userId != null">#{userId},</if>
             <if test="orderNumber != null">#{orderNumber},</if>
             <if test="userPicture != null">#{userPicture},</if>
-            <if test="businessName != null">#{businessName},</if>
             <if test="unitPrice != null">#{unitPrice},</if>
             <if test="state != null">#{state},</if>
             <if test="number != null">#{number},</if>
@@ -166,7 +195,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="SET" suffixOverrides=",">
             <if test="userId != null">user_id = #{userId},</if>
             <if test="orderNumber != null">order_number = #{orderNumber},</if>
-            <if test="businessName != null">business_name = #{businessName},</if>
             <if test="unitPrice != null">unit_price = #{unitPrice},</if>
             <if test="state != null">state = #{state},</if>
             <if test="number != null">number = #{number},</if>

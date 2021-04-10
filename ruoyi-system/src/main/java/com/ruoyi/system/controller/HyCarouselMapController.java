@@ -83,16 +83,17 @@ public class HyCarouselMapController extends BaseController {
 //        setMeal = hySetMealService.selectHySetMealById(id);
         mmap.put("setMeal", setMeal);
 		
-        HyDeatilPicture hyDeatilPicture = new HyDeatilPicture();
-        hyDeatilPicture.setProductId(Long.parseLong(pid));
-        List<HyDeatilPicture> list1 = hyDeatilPictureService.selectHyDeatilPictureList(hyDeatilPicture);
-        hyDeatilPicture = (HyDeatilPicture)list1.get(0);
-        mmap.put("deatilPicture", hyDeatilPicture);
+//        HyDeatilPicture hyDeatilPicture = new HyDeatilPicture();
+//        hyDeatilPicture.setProductId(Long.parseLong(pid));
+        List<HyDeatilPicture> deatilPicture = hyDeatilPictureService.selectHyDeatilPictureList(new HyDeatilPicture());
+//        hyDeatilPicture = (HyDeatilPicture)list1.get(0);
+        mmap.put("deatilPicture", deatilPicture);
         
         HyShop shop = new HyShop();
         Long shopId = product.getShopId();
         shop = HyShopService.selectHyShopById(shopId);
         mmap.put("shop", shop);
+        
 		return prefix + "/carouselMap";
 	} 
 }

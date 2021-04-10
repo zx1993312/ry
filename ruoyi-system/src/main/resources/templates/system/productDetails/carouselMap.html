@@ -71,13 +71,10 @@
 <section class="container">
   <h1>产品详情</h1>
   <span id="p1" class="glyphicon glyphicon-heart">千千惠生活</span>
-  <div th:each="deatilPicture:${deatilPicture}">
-  <div th:each="product:${product}">
-  <div th:each="setMeal:${setMeal}">
-  <div th:each="shop:${shop}">
+  
   <div>
   	<!--轮播图开始  -->
-  		<div id="myCarousel" class="carousel slide">
+  	<div id="myCarousel" class="carousel slide">
     <!-- 轮播（Carousel）指标 -->
     <ol class="carousel-indicators">
         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -85,19 +82,12 @@
         <li data-target="#myCarousel" data-slide-to="2"></li>
     </ol>   
     <!-- 轮播（Carousel）项目 -->
-    <div class="carousel-inner">
-        <div class="item active">
+    <div th:each="deatilPicture:${deatilPicture}" class="carousel-inner">
+        <div class="item">
             <img id="i20" th:src="'/img/'+${deatilPicture.deatilPicture}" alt="First slide">
             <div class="carousel-caption"></div>
         </div>
-        <div class="item ">
-            <img id="i20" th:src="'/img/'+${deatilPicture.deatilPicture}" alt="First slide">
-            <div class="carousel-caption"></div>
-        </div>
-        <div class="item ">
-            <img id="i20" th:src="'/img/'+${deatilPicture.deatilPicture}" alt="First slide">
-            <div class="carousel-caption"></div>
-        </div>
+        
         
     </div>
     <!-- 轮播（Carousel）导航 -->
@@ -111,6 +101,9 @@
     </a>
 </div>
   	<!--轮播图结束  -->
+  	<div th:each="product:${product}">
+    <div th:each="setMeal:${setMeal}">
+    <div th:each="shop:${shop}">
     <span id="p2" th:text="${product.briefIntroduction}"></span><br>
     <!-- 价格和门市价 -->
     ¥<span id="p3" class="jpy" th:text="${setMeal.retailPrice}">108</span><s th:text=${setMeal.marketPrice}>门市价148</s><br>
@@ -121,14 +114,14 @@
     <div id="d2" style="border-top:1px dashed #cccccc;height: 1px;overflow:hidden"></div>
     <span id=p5 th:text="${product.briefIntroduction}">套餐中“一小”是指身高在1.2m以下的儿童</span>
     <div id="d4" class="well">商家信息</div>
-    
+    <input id="productId" type="hidden" th:value="${product.id}">
+    <input id="businessId" type="hidden" th:value="${shop.businessId}" th:text="${shop.businessId}">
     <a href="/system/map"><span id="p6" class="glyphicon glyphicon-map-marker"></a></span><span id="p7" th:text="${shop.shopAddress}">艾博丽思大酒店<br>长春市高新区硅谷大街888号 （轻轨三号线电台街站对面）</span>
     <a id="a20" class="glyphicon glyphicon-earphone" th:text="${shop.contactNumber}">电话</a>
     <div  style="width: 100%;height: 100px; overflow: hidden;">
     	<a href="/system/productDetailsSM/list" style="width: 50%;height: 100px;background-color: #e8e8e8; display: inline-block;"><span style="font-size: 50px; text-align: center; line-height: 100px; margin-left: 30%">商城首页</span></a>
-    	<a th:href="'/system/productDetailsSA/list?id='+${product.id}" onclick="add()" style="width: 50%;height: 100px;background-color: red; display: inline-block; float: right;"><span style="font-size: 50px; color:black; text-align: center; line-height: 100px; margin-left: 30%">立即购买</span></a>
+    	<a onclick="add()" th:href="'/system/productDetailsSA/list?id='+${product.id}"  style="width: 50%;height: 100px;background-color: red; display: inline-block; float: right;"><span style="font-size: 50px; color:black; text-align: center; line-height: 100px; margin-left: 30%">立即购买</span></a>
     </div>
-  </div>
   </div>
   </div>
   </div>
@@ -136,7 +129,12 @@
   </section>
   <th:block th:include="include :: footer" /><!-- align="right" -->
 </body>
-
+<script type="text/javascript">
+//得到第一个轮播图设置active显示
+$(".item").eq(0).attr("class","item active");
+//让轮播图自己移动
+$("#myCarousel").carousel("cycle");
+</script>
 <!-- <script type="text/javascript" src="../bootstrap3/jquery.min.js"></script>
 <script type="text/javascript" src="../bootstrap3/js/bootstrap.js"></script>
 <script type="text/javascript" src="../bootstrap3/js/holder.js"></script>
@@ -145,23 +143,20 @@
 <script type="text/javascript" src="../bootstrap3/js/respond.min.js"></script> -->
 <script type="text/javascript">
 var prefix = ctx + "system/order"
+var prefix1 = ctx + "system/product"
 	function add(){
-		var imagepath = $("#remarks").val();
+	
+		/* var imagepath = $("#remarks").val(); */
     	var userId = 2;
     	var orderNumber = new Date().getTime();
-    	//var Username = $("#Username").val();
-    	//var tradeName = $("#tradeName").val();
     	var productId = $("#productId").val();
-    	var businessName = $("#businessName").val();
-    	//var unitPrice = $("#unitPrice").val();
-    	//var number = $("#number").val();
     	var state = "2";
     	$.ajax({
             type: "post",
             datatype: "json",
             url:  prefix + '/add',
-            data: {"userPicture": imagepath,"orderNumber":orderNumber,/* "hyUser.name":Username, */"userId":userId,
-            	"productId":productId, /* "tradeName":tradeName, */"businessName":businessName,/* "unitPrice":unitPrice, *//* "number":number, */"state":state},
+            data: {/* "userPicture": imagepath, */"orderNumber":orderNumber,"userId":userId,
+            	"productId":productId, /*"unitPrice":unitPrice,"number":number, */"state":state},
             async: true,
             success: function (result) {
                 //console.log(result);

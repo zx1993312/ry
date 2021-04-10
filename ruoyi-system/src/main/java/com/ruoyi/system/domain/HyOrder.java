@@ -33,10 +33,6 @@ public class HyOrder extends BaseEntity
     @Excel(name = "订单编号")
     private String orderNumber;
 
-    /** 商家名 */
-    @Excel(name = "商家名")
-    private String businessName;
-
     /** 单价 */
     @Excel(name = "单价")
     private Double unitPrice;
@@ -62,7 +58,33 @@ public class HyOrder extends BaseEntity
     /**产品id*/
     @Excel(name="产品id")
     private Long productId;
-    public void setId(Long id) 
+    
+    /**店铺表*/
+    @Excel(name="店铺表")
+    private HyShop hyShop;
+    
+    /**店家表*/
+    @Excel(name="店家表")
+    private HyBusiness hyBusiness;
+    
+    
+    public HyShop getHyShop() {
+		return hyShop;
+	}
+
+	public void setHyShop(HyShop hyShop) {
+		this.hyShop = hyShop;
+	}
+
+	public HyBusiness getHyBusiness() {
+		return hyBusiness;
+	}
+
+	public void setHyBusiness(HyBusiness hyBusiness) {
+		this.hyBusiness = hyBusiness;
+	}
+
+	public void setId(Long id) 
     {
         this.id = id;
     }
@@ -100,15 +122,7 @@ public class HyOrder extends BaseEntity
     {
         return orderNumber;
     }
-    public void setBusinessName(String businessName) 
-    {
-        this.businessName = businessName;
-    }
-
-    public String getBusinessName() 
-    {
-        return businessName;
-    }
+    
     public void setUnitPrice(Double unitPrice) 
     {
         this.unitPrice = unitPrice;
@@ -179,10 +193,12 @@ public class HyOrder extends BaseEntity
 	@Override
 	public String toString() {
 		return "HyOrder [id=" + id + ", userId=" + userId + ", userPicture=" + userPicture + ", orderNumber="
-				+ orderNumber + ", businessName=" + businessName + ", unitPrice=" + unitPrice + ", number=" + number
-				+ ", state=" + state + ", hyUser=" + hyUser + ", hyProduct=" + hyProduct + ", fileName=" + fileName
-				+ ", createTime=" + createTime + ", productId=" + productId + "]";
+				+ orderNumber + ", unitPrice=" + unitPrice + ", number=" + number + ", state=" + state + ", hyUser="
+				+ hyUser + ", hyProduct=" + hyProduct + ", fileName=" + fileName + ", createTime=" + createTime
+				+ ", productId=" + productId + ", hyShop=" + hyShop + ", hyBusiness=" + hyBusiness + "]";
 	}
+
+	
 
 
 
