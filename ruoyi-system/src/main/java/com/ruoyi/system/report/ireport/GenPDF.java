@@ -16,7 +16,6 @@ public class GenPDF {
 		long start_time = new Date().getTime();
 		
 		
-		
 		Map<String, Object> parameters = new HashMap<>();
 		
 		parameters.put("NameP", "徐世龙");

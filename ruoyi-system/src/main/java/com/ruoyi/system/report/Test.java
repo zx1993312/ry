@@ -26,7 +26,6 @@ public class Test {
 	    File filePath = new File(rootFile,"/pdf_template/test01.jasper");
 		FileInputStream inputStream = new FileInputStream(filePath);
 		Map params = new HashMap();
-		
 		params.put("NameP", "张三");
 		params.put("PhoneP", "15800000000");
 		JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, params,new JREmptyDataSource());

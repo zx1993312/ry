@@ -59,7 +59,6 @@ public class IReportUtil {
 					out.write(bytes);
 					out.flush();
 					out.close();
-
 				} catch (JRException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

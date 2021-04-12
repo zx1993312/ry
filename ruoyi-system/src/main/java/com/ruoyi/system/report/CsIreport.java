@@ -20,7 +20,6 @@ import net.sf.jasperreports.engine.util.JRLoader;
 public class CsIreport {
 	public static void main(String[] args) throws JRException, UnsupportedEncodingException, FileNotFoundException {
 		try {
-
 			JRDataSource jrBeanCollectionDataSource = new JRBeanCollectionDataSource(new ArrayList<>());
 			File jasperFile = ResourceUtils.getFile("D:/repo.jasper");
 			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperFile);
@@ -29,7 +28,6 @@ public class CsIreport {
 			JasperExportManager.exportReportToHtmlFile(jasperPrint, "D:/reportPreviewTemp.html");
 		} catch (JRException e) {
 			e.printStackTrace();
-
 		}
 	}
 }
