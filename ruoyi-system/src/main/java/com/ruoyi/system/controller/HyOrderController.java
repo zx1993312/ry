@@ -220,11 +220,11 @@ public class HyOrderController extends BaseController
 	 @ApiImplicitParam(name = "hyOrder", value = "项目实体类hyOrder", required = true),
 	 })
 	 @Log(title = "订单", businessType = BusinessType.EXPORT)
-	 @PostMapping("/downloadPDF")
+	 @PostMapping("/exportPDF")
 	 @ResponseBody
-	public void downloadPDF(HttpServletResponse response) throws Exception
+	public AjaxResult downloadPDF(HttpServletResponse response) throws Exception
 	{
-		 hyOrderService.downloadPDF(response);
+		 return toAjax(hyOrderService.downloadPDF(response));
 	}
 	
 }

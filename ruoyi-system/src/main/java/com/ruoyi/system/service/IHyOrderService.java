@@ -85,7 +85,7 @@ public interface IHyOrderService
 	 * @param response
 	 * @throws Exception 
 	 */
-	public void downloadPDF(HttpServletResponse response) throws Exception;
+	public int downloadPDF(HttpServletResponse response) throws Exception;
 
 
 }

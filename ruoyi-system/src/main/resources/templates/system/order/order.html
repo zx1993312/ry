@@ -84,7 +84,6 @@
         var updateFlag = [[${@permission.hasPermi('system:order:edit')}]];
         var removeFlag = [[${@permission.hasPermi('system:order:remove')}]];
         var prefix = ctx + "system/order";
-
         $(function() {
             var options = {
                 url: prefix + "/list",
@@ -172,10 +171,19 @@
             $.table.init(options);
         });
         function exportPDF(){
+        	$.modal.confirm("确定导出" + table.options.modalName + "报表吗？", function() {
         	$.ajax({
                 type: "post",
-                url: ctx + "system/exportPDF/ePDF",
+                url: prefix + "/exportPDF",
+                success: function (result){
+                	console.log("result"+result);
+                	if (typeof callback == "function") {
+      	                callback(result);
+      	            }
+      	            $.operate.successCallback(result);
+                }
             });
+        	});
         }
     </script>
 </body>

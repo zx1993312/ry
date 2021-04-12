@@ -2,6 +2,7 @@ package com.ruoyi.system.service.impl;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.HashMap;
@@ -173,18 +174,20 @@ public class HyOrderServiceImpl implements IHyOrderService
 	 * 导出PDF
 	 */
 	@Override
-	public void downloadPDF(HttpServletResponse response) throws Exception{
+	public int downloadPDF(HttpServletResponse response) throws Exception{
 		//1、获取模版文件
 	    File rootFile = new File(ResourceUtils.getURL("classpath:").getPath());
-	    File templateFile = new File(rootFile,"/jasper_templates/repo.jasper");
+	    File templateFile = new File(rootFile,"/pdf_template/order_db.jasper");
 	    //2、准备数据库连接
 	    Map params = new HashMap();
 	    JasperPrint jasperPrint =JasperFillManager.fillReport(new FileInputStream(templateFile),params,getCon());
-	    ServletOutputStream servletOutputStream = response.getOutputStream();
-	    String filename="考核列表数据.pdf";
-	    response.setContentType("application/pdf");
-	    response.setHeader("content-disposition","attachment;filename="+new String(filename.getBytes(),"iso8859-1"));
-	    JasperExportManager.exportReportToPdfStream(jasperPrint,servletOutputStream);
+	   /* ServletOutputStream outputStream = response.getOutputStream();
+	    String filename="订单报表.pdf";
+	    response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+	    response.setHeader("Content-Disposition", "attachment;filename="+new String(filename.getBytes(),"ISO8859-1"));
+	    JasperExportManager.exportReportToPdfStream(jasperPrint,outputStream);*/
+	    JasperExportManager.exportReportToPdfStream(jasperPrint,new FileOutputStream("d:\\订单报表.pdf"));
+	    return 1;
 	}
 	private Connection getCon() throws Exception{
 	    Class.forName("com.mysql.cj.jdbc.Driver");
