@@ -1,5 +1,6 @@
 package com.ruoyi.system.report.ireport;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -9,9 +10,13 @@ import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.springframework.util.ResourceUtils;
+
 import com.ruoyi.system.annotation.ReportDataSource;
 import com.ruoyi.system.report.ExportPDFController;
 import net.sf.jasperreports.engine.JRAbstractExporter;
+import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -37,10 +42,12 @@ public class IReportUtil {
 
 					// 获取jasper文件。
 					// InputStream in = IReportUtil.class.getResourceAsStream("D:/repo.jasper");
-					InputStream in = new FileInputStream("D:/repo.jasper");
-					System.out.println(in);
+					File rootFile = new File(ResourceUtils.getURL("classpath:").getPath());
+				    File filePath = new File(rootFile,"/pdf_template/test01.jasper");
+				    FileInputStream inputStream = new FileInputStream(filePath);
+					System.out.println(inputStream);
 					// 填充jasper，生成打印或导出实例
-					JasperPrint jasperPrint = JasperFillManager.fillReport(in, parameters);
+					JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, parameters,new JREmptyDataSource());
 					// 使导出转换成更具体(popular formats)的形式，PDF、HTML、XML
 					byte[] bytes = JasperExportManager.exportReportToPdf(jasperPrint);
 					// 得到响应流

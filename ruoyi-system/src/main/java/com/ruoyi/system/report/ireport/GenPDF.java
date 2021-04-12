@@ -10,7 +10,7 @@ import com.ruoyi.system.annotation.JDBCConnection;
 public class GenPDF {
 
 	
-	public static final String OUT_PATH = "D:/";
+	public static final String OUT_PATH = "D:/pdfWorkSpace/";
 	
 	public void genPDF(String CLASSNO) {
 		long start_time = new Date().getTime();
@@ -19,7 +19,8 @@ public class GenPDF {
 		
 		Map<String, Object> parameters = new HashMap<>();
 		
-		parameters.put("CLASSNO", CLASSNO);
+		parameters.put("NameP", "徐世龙");
+		parameters.put("PhoneP", "15800000000");
 		
 		try {
 			
