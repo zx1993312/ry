@@ -55,7 +55,7 @@ public class ExportPDFController extends BaseController {
 	    response.setContentType("application/pdf");
 	    response.setHeader("content-disposition", "attachment;filename="+new String(filename.getBytes(),"iso8859-1"));*/
 	    //JasperExportManager.exportReportToPdfStream(jasperPrint,new FileOutputStream("d:\\pdfWorkSpace\\订单表.pdf"));
-	    JasperExportManager.exportReportToPdfStream(jasperPrint,new FileOutputStream("d:\\pdfWorkSpace\\订单表.pdf"));
+	    JasperExportManager.exportReportToPdfStream(jasperPrint,new FileOutputStream("d:\\订单表.pdf"));
 	}
 	
 	private Connection getCon() throws Exception{
