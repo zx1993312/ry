@@ -46,7 +46,7 @@ public class ExportPDFController extends BaseController {
 	public void exportPDF(String outFileName,HttpServletResponse response) throws Exception {
 		//1、获取模版文件
 	    File rootFile = new File(ResourceUtils.getURL("classpath:").getPath());
-	    File templateFile = new File(rootFile,"/pdf_template/hy_order.jasper");
+	    File templateFile = new File(rootFile,"/pdf_template/order_db.jasper");
 	    //2、准备数据库连接
 	    Map params = new HashMap();
 	    JasperPrint jasperPrint =JasperFillManager.fillReport(new FileInputStream(templateFile),params,getCon());
