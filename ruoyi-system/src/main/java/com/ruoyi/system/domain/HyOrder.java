@@ -1,10 +1,6 @@
 package com.ruoyi.system.domain;
 
-import java.math.BigDecimal;
 import java.util.Date;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
@@ -55,6 +51,7 @@ public class HyOrder extends BaseEntity
     /**创建时间*/
     @Excel(name="创建时间")
     private Date createTime;
+    
     /**产品id*/
     @Excel(name="产品id")
     private Long productId;

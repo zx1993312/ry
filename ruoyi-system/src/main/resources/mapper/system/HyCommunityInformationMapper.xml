@@ -18,33 +18,70 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="announcementScopeItems"    column="announcement_scope_items"    />
         <result property="noticeScopeBuilding"    column="notice_scope_building"    />
         <result property="informationContent"    column="information_content"    />
+        <result property="communityId"    column="community_id"    />
+        <association property="hyCommunity" column="id"
+			javaType="HyCommunity" resultMap="HyCommunityResult" />
     </resultMap>
-
+    
+	<resultMap type="HyCommunity" id="HyCommunityResult">
+		<result property="id" column="id" />
+		<result property="title" column="title" />
+		<result property="releaseTime" column="release_time" />
+		<result property="introductionContent"
+			column="introduction_content" />
+		<result property="communityName"
+			column="community_name" />
+		<result property="communityProvince"
+			column="community_province" />
+		<result property="communityCity"
+			column="community_city" />
+		<result property="communityArea"
+			column="community_area" />
+		<result property="communityAddress"
+			column="community_address" />
+	</resultMap>
+	
     <sql id="selectHyCommunityInformationVo">
-        select id, information_type, source, title, start_time, effective_time, important_announcement, state, history_operator, history_operation_time, announcement_scope_items, notice_scope_building, information_content from hy_community_information
+        select 
+        i.id, 
+        i.information_type, 
+        i.source, 
+        i.title, 
+        i.start_time, 
+        i.effective_time, 
+        i.important_announcement, 
+        i.state, history_operator, 
+        i.history_operation_time, 
+        i.announcement_scope_items, 
+        i.notice_scope_building, 
+        i.information_content,
+        c.community_name
+        from 
+        hy_community_information i
+        LEFT JOIN hy_community c ON i.community_id = c.id
     </sql>
 
     <select id="selectHyCommunityInformationList" parameterType="HyCommunityInformation" resultMap="HyCommunityInformationResult">
         <include refid="selectHyCommunityInformationVo"/>
         <where>  
-            <if test="informationType != null  and informationType != ''"> and information_type = #{informationType}</if>
-            <if test="source != null  and source != ''"> and source = #{source}</if>
-            <if test="title != null  and title != ''"> and title = #{title}</if>
-            <if test="startTime != null "> and start_time = #{startTime}</if>
-            <if test="effectiveTime != null "> and effective_time = #{effectiveTime}</if>
-            <if test="importantAnnouncement != null  and importantAnnouncement != ''"> and important_announcement = #{importantAnnouncement}</if>
-            <if test="state != null  and state != ''"> and state = #{state}</if>
+            <if test="informationType != null  and informationType != ''"> and i.information_type = #{informationType}</if>
+            <if test="source != null  and source != ''"> and i.source = #{source}</if>
+            <if test="title != null  and title != ''"> and i.title = #{title}</if>
+            <if test="startTime != null "> and i.start_time = #{startTime}</if>
+            <if test="effectiveTime != null "> and i.effective_time = #{effectiveTime}</if>
+            <if test="importantAnnouncement != null  and importantAnnouncement != ''"> i.and important_announcement = #{importantAnnouncement}</if>
+            <if test="state != null  and state != ''"> and i.state = #{state}</if>
             <if test="historyOperator != null  and historyOperator != ''"> and history_operator = #{historyOperator}</if>
-            <if test="historyOperationTime != null "> and history_operation_time = #{historyOperationTime}</if>
-            <if test="announcementScopeItems != null  and announcementScopeItems != ''"> and announcement_scope_items = #{announcementScopeItems}</if>
-            <if test="noticeScopeBuilding != null  and noticeScopeBuilding != ''"> and notice_scope_building = #{noticeScopeBuilding}</if>
-            <if test="informationContent != null  and informationContent != ''"> and information_content = #{informationContent}</if>
+            <if test="historyOperationTime != null "> and i.history_operation_time = #{historyOperationTime}</if>
+            <if test="announcementScopeItems != null  and announcementScopeItems != ''"> and i.announcement_scope_items = #{announcementScopeItems}</if>
+            <if test="noticeScopeBuilding != null  and noticeScopeBuilding != ''"> and i.notice_scope_building = #{noticeScopeBuilding}</if>
+            <if test="informationContent != null  and informationContent != ''"> and i.information_content = #{informationContent}</if>
         </where>
     </select>
     
     <select id="selectHyCommunityInformationById" parameterType="Long" resultMap="HyCommunityInformationResult">
         <include refid="selectHyCommunityInformationVo"/>
-        where id = #{id}
+        where i.id = #{id}
     </select>
         
     <insert id="insertHyCommunityInformation" parameterType="HyCommunityInformation" useGeneratedKeys="true" keyProperty="id">

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('社区列表')" />
+    <th:block th:include="include :: header('社区文化列表')" />
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -15,8 +15,8 @@
                                 <input type="text" name="title"/>
                             </li>
                             <li>
-                                <label>发布时间：</label>
-                                <input type="text" class="time-input" placeholder="请选择发布时间" name="releaseTime"/>
+                                <label>社区id：</label>
+                                <input type="text" name="communityId"/>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -28,16 +28,16 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:community:add">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:culture:add">
                     <i class="fa fa-plus"></i> 添加
                 </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:community:edit">
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:culture:edit">
                     <i class="fa fa-edit"></i> 修改
                 </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:community:remove">
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:culture:remove">
                     <i class="fa fa-remove"></i> 删除
                 </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:community:export">
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:culture:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
             </div>
@@ -48,9 +48,9 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('system:community:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('system:community:remove')}]];
-        var prefix = ctx + "system/community";
+        var editFlag = [[${@permission.hasPermi('system:culture:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:culture:remove')}]];
+        var prefix = ctx + "system/culture";
 
         $(function() {
             var options = {
@@ -59,13 +59,13 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "社区",
+                modalName: "社区文化",
                 columns: [{
                     checkbox: true
                 },
                 {
                     field: 'id',
-                    title: '社区id',
+                    title: '社区文化id',
                     visible: false
                 },
                 {
@@ -73,32 +73,12 @@
                     title: '标题'
                 },
                 {
-                    field: 'introductionContent',
-                    title: '简介内容'
+                    field: 'informationContent',
+                    title: '信息内容'
                 },
                 {
-                    field: 'communityName',
-                    title: '社区名称'
-                },
-                {
-                    field: 'communityProvince',
-                    title: '省/直辖市'
-                },
-                {
-                    field: 'communityCity',
-                    title: '市/直辖区'
-                },
-                {
-                    field: 'communityArea',
-                    title: '区/县'
-                },
-                {
-                    field: 'communityAddress',
-                    title: '详细地址'
-                },
-                {
-                    field: 'releaseTime',
-                    title: '发布时间'
+                    field: 'hyCommunity.communityName',
+                    title: '所属社区'
                 },
                 {
                     title: '操作',

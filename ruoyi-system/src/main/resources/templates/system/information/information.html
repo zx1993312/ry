@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('社区咨询列表')" />
+    <th:block th:include="include :: header('社区资讯列表')" />
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -11,7 +11,7 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                <label>咨询类型：</label>
+                                <label>资讯类型：</label>
                                 <select name="informationType">
                                     <option value="">所有</option>
                                     <option value="-1">代码生成请选择字典属性</option>
@@ -98,18 +98,18 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "社区咨询",
+                modalName: "社区资讯",
                 columns: [{
                     checkbox: true
                 },
                 {
                     field: 'id',
-                    title: ' 社区咨询id',
+                    title: ' 社区资讯id',
                     visible: false
                 },
                 {
                     field: 'informationType',
-                    title: '咨询类型'
+                    title: '资讯类型'
                 },
                 {
                     field: 'source',
@@ -154,6 +154,10 @@
                 {
                     field: 'informationContent',
                     title: '信息内容'
+                },
+                {
+                    field: 'hyCommunity.communityName',
+                    title: '所属社区'
                 },
                 {
                     title: '操作',

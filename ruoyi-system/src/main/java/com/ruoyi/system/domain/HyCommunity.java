@@ -33,6 +33,26 @@ public class HyCommunity extends BaseEntity
     @Excel(name = "简介内容")
     private String introductionContent;
     
+    /** 社区名称 */
+    @Excel(name = "社区名称")
+    private String communityName;
+    
+    /** 省/直辖市 */
+    @Excel(name = "省/市辖区")
+    private String communityProvince;
+    
+    /** 市/市辖区 */
+    @Excel(name = "市/市辖区")
+    private String communityCity;
+    
+    /** 区/县 */
+    @Excel(name = "区/县")
+    private String communityArea;
+    
+    /** 详细地址 */
+    @Excel(name = "详细地址")
+    private String communityAddress;
+    
     /**社区配套表*/
     @Excel(name="社区配套表")
     private HyCommunitySupport hyCommunitySupport;
@@ -78,7 +98,47 @@ public class HyCommunity extends BaseEntity
         return introductionContent;
     }
 
-    public HyCommunitySupport getHyCommunitySupport() {
+    public String getCommunityName() {
+		return communityName;
+	}
+
+	public void setCommunityName(String communityName) {
+		this.communityName = communityName;
+	}
+
+	public String getCommunityProvince() {
+		return communityProvince;
+	}
+
+	public void setCommunityProvince(String communityProvince) {
+		this.communityProvince = communityProvince;
+	}
+
+	public String getCommunityCity() {
+		return communityCity;
+	}
+
+	public void setCommunityCity(String communityCity) {
+		this.communityCity = communityCity;
+	}
+
+	public String getCommunityArea() {
+		return communityArea;
+	}
+
+	public void setCommunityArea(String communityArea) {
+		this.communityArea = communityArea;
+	}
+
+	public String getCommunityAddress() {
+		return communityAddress;
+	}
+
+	public void setCommunityAddress(String communityAddress) {
+		this.communityAddress = communityAddress;
+	}
+
+	public HyCommunitySupport getHyCommunitySupport() {
 		return hyCommunitySupport;
 	}
 
@@ -95,12 +155,13 @@ public class HyCommunity extends BaseEntity
 	}
 
 	@Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("title", getTitle())
-            .append("releaseTime", getReleaseTime())
-            .append("introductionContent", getIntroductionContent())
-            .toString();
-    }
+	public String toString() {
+		return "HyCommunity [id=" + id + ", title=" + title + ", releaseTime=" + releaseTime + ", introductionContent="
+				+ introductionContent + ", communityName=" + communityName + ", communityProvince=" + communityProvince
+				+ ", communityCity=" + communityCity + ", communityArea=" + communityArea + ", communityAddress="
+				+ communityAddress + ", hyCommunitySupport=" + hyCommunitySupport + ", hyCommunityIntroduction="
+				+ hyCommunityIntroduction + "]";
+	}
+
+	
 }

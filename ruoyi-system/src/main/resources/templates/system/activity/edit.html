@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
-    <th:block th:include="include :: header('修改社区')" />
+    <th:block th:include="include :: header('修改社区活动')" />
     <th:block th:include="include :: datetimepicker-css" />
     <th:block th:include="include :: summernote-css" />
 </head>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-community-edit" th:object="${hyCommunity}">
+        <form class="form-horizontal m" id="form-activity-edit" th:object="${hyCommunityActivity}">
             <input name="id" th:field="*{id}" type="hidden">
             <div class="form-group">    
                 <label class="col-sm-3 control-label">标题：</label>
@@ -16,49 +16,31 @@
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">发布时间：</label>
+                <label class="col-sm-3 control-label">信息内容：</label>
+                <div class="col-sm-8">
+                    <input type="hidden" class="form-control" th:field="*{informationContent}">
+                    <div class="summernote" id="informationContent"></div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">活动日期：</label>
                 <div class="col-sm-8">
                     <div class="input-group date">
-                        <input name="releaseTime" th:value="${#dates.format(hyCommunity.releaseTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <input name="activityDate" th:value="${#dates.format(hyCommunityActivity.activityDate, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                     </div>
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">简介内容：</label>
+                <label class="col-sm-3 control-label">活动地点：</label>
                 <div class="col-sm-8">
-                    <input type="hidden" class="form-control" th:field="*{introductionContent}">
-                    <div class="summernote" id="introductionContent"></div>
+                    <input name="activityAddress" th:field="*{activityAddress}" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">社区名称：</label>
+                <label class="col-sm-3 control-label">社区id：</label>
                 <div class="col-sm-8">
-                    <input name="communityName" th:field="*{communityName}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">省/直辖市：</label>
-                <div class="col-sm-8">
-                    <input name="communityProvince" th:field="*{communityProvince}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">市/直辖区：</label>
-                <div class="col-sm-8">
-                    <input name="communityCity" th:field="*{communityCity}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">区/县：</label>
-                <div class="col-sm-8">
-                    <input name="communityArea" th:field="*{communityArea}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">详细地址：</label>
-                <div class="col-sm-8">
-                    <input name="communityAddress" th:field="*{communityAddress}" class="form-control" type="text">
+                    <input name="communityId" th:field="*{communityId}" class="form-control" type="text">
                 </div>
             </div>
         </form>
@@ -67,18 +49,18 @@
     <th:block th:include="include :: datetimepicker-js" />
     <th:block th:include="include :: summernote-js" />
     <script th:inline="javascript">
-        var prefix = ctx + "system/community";
-        $("#form-community-edit").validate({
+        var prefix = ctx + "system/activity";
+        $("#form-activity-edit").validate({
             focusCleanup: true
         });
 
         function submitHandler() {
             if ($.validate.form()) {
-                $.operate.save(prefix + "/edit", $('#form-community-edit').serialize());
+                $.operate.save(prefix + "/edit", $('#form-activity-edit').serialize());
             }
         }
 
-        $("input[name='releaseTime']").datetimepicker({
+        $("input[name='activityDate']").datetimepicker({
             format: "yyyy-mm-dd",
             minView: "month",
             autoclose: true

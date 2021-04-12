@@ -10,6 +10,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="releaseTime" column="release_time" />
 		<result property="introductionContent"
 			column="introduction_content" />
+		<result property="communityName"
+			column="community_name" />
+		<result property="communityProvince"
+			column="community_province" />
+		<result property="communityCity"
+			column="community_city" />
+		<result property="communityArea"
+			column="community_area" />
+		<result property="communityAddress"
+			column="community_address" />
 		<association property="hyCommunitySupport" column="id"
 			javaType="HyCommunitySupport" resultMap="HyCommunitySupportResult" />
 		<association property="hyCommunityIntroduction"
@@ -44,6 +54,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		c.title, 
 		c.release_time, 
 		c.introduction_content,
+		c.community_name,
+		c.community_province,
+		c.community_city,
+		c.community_area,
+		c.community_address,
 		i.introduction_photo_address,
 		s.matching_types,
 		s.matching_type,
@@ -63,10 +78,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		resultMap="HyCommunityResult">
 		<include refid="selectHyCommunityVo" />
 	
-			<if test="title != null  and title != ''"> and title = #{title}</if>
-			<if test="releaseTime != null "> and release_time = #{releaseTime}</if>
-			<if
-				test="introductionContent != null  and introductionContent != ''"> and introduction_content = #{introductionContent}</if>
+			<if test="title != null  and title != ''"> and c.title = #{title}</if>
+			<if test="releaseTime != null "> and c.release_time = #{releaseTime}</if>
+			<if test="introductionContent != null  and introductionContent != ''"> and c.introduction_content = #{introductionContent}</if>
+			<if test="communityName != null  and communityName != ''"> and c.community_name = #{communityName}</if>
+			<if test="communityProvince != null  and communityProvince != ''"> and c.community_province = #{communityProvince}</if>
+			<if test="communityCity != null  and communityCity != ''"> and c.community_city = #{communityCity}</if>
+			<if test="communityArea != null  and communityArea != ''"> and c.community_area = #{communityArea}</if>
+			<if test="communityAddress != null  and communityAddress != ''"> and c.community_address = #{communityAddress}</if>
 		
 	</select>
 
@@ -83,12 +102,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="title != null">title,</if>
 			<if test="releaseTime != null">release_time,</if>
 			<if test="introductionContent != null">introduction_content,</if>
+			<if test="communityName != null  and communityName != ''">community_name,</if>
+			<if test="communityProvince != null  and communityProvince != ''">community_province,</if>
+			<if test="communityCity != null  and communityCity != ''">community_city,</if>
+			<if test="communityArea != null  and communityArea != ''">community_area,</if>
+			<if test="communityAddress != null  and communityAddress != ''">community_address,</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null">#{id},</if>
 			<if test="title != null">#{title},</if>
 			<if test="releaseTime != null">#{releaseTime},</if>
 			<if test="introductionContent != null">#{introductionContent},</if>
+			<if test="communityName != null  and communityName != ''">#{communityName},</if>
+			<if test="communityProvince != null  and communityProvince != ''">#{communityProvince},</if>
+			<if test="communityCity != null  and communityCity != ''">#{communityCity},</if>
+			<if test="communityArea != null  and communityArea != ''">#{communityArea},</if>
+			<if test="communityAddress != null  and communityAddress != ''">#{communityAddress},</if>
 		</trim>
 	</insert>
 
@@ -98,6 +127,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="title != null">title = #{title},</if>
 			<if test="releaseTime != null">release_time = #{releaseTime},</if>
 			<if test="introductionContent != null">introduction_content = #{introductionContent},</if>
+			<if test="communityName != null  and communityName != ''">community_name = #{communityName},</if>
+			<if test="communityProvince != null  and communityProvince != ''">community_province = #{communityProvince},</if>
+			<if test="communityCity != null  and communityCity != ''">community_city = #{communityCity},</if>
+			<if test="communityArea != null  and communityArea != ''">community_area = #{communityArea},</if>
+			<if test="communityAddress != null  and communityAddress != ''">community_address = #{communityAddress},</if>
 		</trim>
 		where id = #{id}
 	</update>

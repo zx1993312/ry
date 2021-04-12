@@ -17,11 +17,11 @@ public class HyCommunityInformation extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
-    /**  社区咨询id */
+    /**  社区资讯id */
     private Long id;
 
-    /** 咨询类型 */
-    @Excel(name = "咨询类型")
+    /** 资讯类型 */
+    @Excel(name = "资讯类型")
     private String informationType;
 
     /** 来源 */
@@ -70,6 +70,14 @@ public class HyCommunityInformation extends BaseEntity
     /** 信息内容 */
     @Excel(name = "信息内容")
     private String informationContent;
+    
+    /** 社区id */
+    @Excel(name = "社区id")
+    private Long communityId;
+    
+    /** 社区表 */
+    @Excel(name = "社区表")
+    private HyCommunity hyCommunity;
 
     public void setId(Long id) 
     {
@@ -189,22 +197,30 @@ public class HyCommunityInformation extends BaseEntity
         return informationContent;
     }
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("informationType", getInformationType())
-            .append("source", getSource())
-            .append("title", getTitle())
-            .append("startTime", getStartTime())
-            .append("effectiveTime", getEffectiveTime())
-            .append("importantAnnouncement", getImportantAnnouncement())
-            .append("state", getState())
-            .append("historyOperator", getHistoryOperator())
-            .append("historyOperationTime", getHistoryOperationTime())
-            .append("announcementScopeItems", getAnnouncementScopeItems())
-            .append("noticeScopeBuilding", getNoticeScopeBuilding())
-            .append("informationContent", getInformationContent())
-            .toString();
-    }
+    public Long getCommunityId() {
+		return communityId;
+	}
+
+	public void setCommunityId(Long communityId) {
+		this.communityId = communityId;
+	}
+
+	public HyCommunity getHyCommunity() {
+		return hyCommunity;
+	}
+
+	public void setHyCommunity(HyCommunity hyCommunity) {
+		this.hyCommunity = hyCommunity;
+	}
+
+	@Override
+	public String toString() {
+		return "HyCommunityInformation [id=" + id + ", informationType=" + informationType + ", source=" + source
+				+ ", title=" + title + ", startTime=" + startTime + ", effectiveTime=" + effectiveTime
+				+ ", importantAnnouncement=" + importantAnnouncement + ", state=" + state + ", historyOperator="
+				+ historyOperator + ", historyOperationTime=" + historyOperationTime + ", announcementScopeItems="
+				+ announcementScopeItems + ", noticeScopeBuilding=" + noticeScopeBuilding + ", informationContent="
+				+ informationContent + ", communityId=" + communityId + ", hyCommunity=" + hyCommunity + "]";
+	}
+
 }

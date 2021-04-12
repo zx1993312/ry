@@ -40,6 +40,14 @@ public class HyProperty extends BaseEntity
     /** 物业图片地址 */
     @Excel(name = "物业图片地址")
     private String propertyPictureAddress;
+    
+    /** 社区id */
+    @Excel(name = "社区id")
+    private Long communityId;
+    
+    /** 社区表 */
+    @Excel(name = "社区表")
+    private HyCommunity hyCommunity;
 
 
     public void setId(Long id) 
@@ -97,18 +105,29 @@ public class HyProperty extends BaseEntity
         return propertyPictureAddress;
     }
 
-    
+	public Long getCommunityId() {
+		return communityId;
+	}
 
+	public void setCommunityId(Long communityId) {
+		this.communityId = communityId;
+	}
+
+	public HyCommunity getHyCommunity() {
+		return hyCommunity;
+	}
+
+	public void setHyCommunity(HyCommunity hyCommunity) {
+		this.hyCommunity = hyCommunity;
+	}
 
 	@Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("propertyName", getPropertyName())
-            .append("propertyPhone", getPropertyPhone())
-            .append("propertyIntroduce", getPropertyIntroduce())
-            .append("creationTime", getCreationTime())
-            .append("propertyPictureAddress", getPropertyPictureAddress())
-            .toString();
-    }
+	public String toString() {
+		return "HyProperty [id=" + id + ", propertyName=" + propertyName + ", propertyPhone=" + propertyPhone
+				+ ", propertyIntroduce=" + propertyIntroduce + ", creationTime=" + creationTime
+				+ ", propertyPictureAddress=" + propertyPictureAddress + ", communityId=" + communityId
+				+ ", hyCommunity=" + hyCommunity + "]";
+	}
+
+	
 }

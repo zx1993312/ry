@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyCommunitySuggestMapper">
+    
+    <resultMap type="HyCommunitySuggest" id="HyCommunitySuggestResult">
+        <result property="id"    column="id"    />
+        <result property="suggestType"    column="suggest_type"    />
+        <result property="informationContent"    column="information_content"    />
+        <result property="suggestName"    column="suggest_name"    />
+        <result property="suggestDate"    column="suggest_date"    />
+        <result property="contactInformation"    column="contact_information"    />
+        <result property="communityId"    column="community_id"    />
+        <association property="hyCommunity" column="id"
+			javaType="HyCommunity" resultMap="HyCommunityResult" />
+    </resultMap>
+
+	<resultMap type="HyCommunity" id="HyCommunityResult">
+		<result property="id" column="id" />
+		<result property="title" column="title" />
+		<result property="releaseTime" column="release_time" />
+		<result property="introductionContent"
+			column="introduction_content" />
+		<result property="communityName"
+			column="community_name" />
+		<result property="communityProvince"
+			column="community_province" />
+		<result property="communityCity"
+			column="community_city" />
+		<result property="communityArea"
+			column="community_area" />
+		<result property="communityAddress"
+			column="community_address" />
+	</resultMap>
+
+    <sql id="selectHyCommunitySuggestVo">
+        select 
+        s.id, 
+        s.suggest_type, 
+        s.information_content, 
+        s.suggest_name, 
+        s.suggest_date, 
+        s.contact_information, 
+        s.community_id,
+        c.community_name 
+        from 
+        hy_community_suggest s
+        LEFT JOIN hy_community c ON s.community_id = c.id
+    </sql>
+
+    <select id="selectHyCommunitySuggestList" parameterType="HyCommunitySuggest" resultMap="HyCommunitySuggestResult">
+        <include refid="selectHyCommunitySuggestVo"/>
+        <where>  
+            <if test="suggestType != null  and suggestType != ''"> and s.suggest_type = #{suggestType}</if>
+            <if test="informationContent != null  and informationContent != ''"> and s.information_content = #{informationContent}</if>
+            <if test="suggestName != null  and suggestName != ''"> and s.suggest_name like concat('%', #{suggestName}, '%')</if>
+            <if test="suggestDate != null "> and s.suggest_date = #{suggestDate}</if>
+            <if test="contactInformation != null  and contactInformation != ''"> and s.contact_information = #{contactInformation}</if>
+            <if test="communityId != null "> and s.community_id = #{communityId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyCommunitySuggestById" parameterType="Long" resultMap="HyCommunitySuggestResult">
+        <include refid="selectHyCommunitySuggestVo"/>
+        where s.id = #{id}
+    </select>
+        
+    <insert id="insertHyCommunitySuggest" parameterType="HyCommunitySuggest" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_community_suggest
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="suggestType != null">suggest_type,</if>
+            <if test="informationContent != null">information_content,</if>
+            <if test="suggestName != null">suggest_name,</if>
+            <if test="suggestDate != null">suggest_date,</if>
+            <if test="contactInformation != null">contact_information,</if>
+            <if test="communityId != null">community_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="suggestType != null">#{suggestType},</if>
+            <if test="informationContent != null">#{informationContent},</if>
+            <if test="suggestName != null">#{suggestName},</if>
+            <if test="suggestDate != null">#{suggestDate},</if>
+            <if test="contactInformation != null">#{contactInformation},</if>
+            <if test="communityId != null">#{communityId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyCommunitySuggest" parameterType="HyCommunitySuggest">
+        update hy_community_suggest
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="suggestType != null">suggest_type = #{suggestType},</if>
+            <if test="informationContent != null">information_content = #{informationContent},</if>
+            <if test="suggestName != null">suggest_name = #{suggestName},</if>
+            <if test="suggestDate != null">suggest_date = #{suggestDate},</if>
+            <if test="contactInformation != null">contact_information = #{contactInformation},</if>
+            <if test="communityId != null">community_id = #{communityId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyCommunitySuggestById" parameterType="Long">
+        delete from hy_community_suggest where id = #{id}
+    </delete>
+
+    <delete id="deleteHyCommunitySuggestByIds" parameterType="String">
+        delete from hy_community_suggest where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

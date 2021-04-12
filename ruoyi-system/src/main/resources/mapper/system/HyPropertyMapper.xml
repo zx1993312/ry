@@ -11,26 +11,57 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="propertyIntroduce"    column="property_introduce"    />
         <result property="creationTime"    column="creation_time"    />
         <result property="propertyPictureAddress"    column="property_picture_address"    />
+        <result property="propertyPictureAddress"    column="property_picture_address"    />
+        <association property="hyCommunity" column="id"
+			javaType="HyCommunity" resultMap="HyCommunityResult" />
     </resultMap>
-
+    
+	<resultMap type="HyCommunity" id="HyCommunityResult">
+		<result property="id" column="id" />
+		<result property="title" column="title" />
+		<result property="releaseTime" column="release_time" />
+		<result property="introductionContent"
+			column="introduction_content" />
+		<result property="communityName"
+			column="community_name" />
+		<result property="communityProvince"
+			column="community_province" />
+		<result property="communityCity"
+			column="community_city" />
+		<result property="communityArea"
+			column="community_area" />
+		<result property="communityAddress"
+			column="community_address" />
+	</resultMap>
+	
     <sql id="selectHyPropertyVo">
-        select id, property_name, property_phone, property_introduce, creation_time, property_picture_address from hy_property
+        select 
+        p.id, 
+        p.property_name, 
+        p.property_phone, 
+        p.property_introduce, 
+        p.creation_time, 
+        p.property_picture_address,
+        c.community_name
+        from 
+        hy_property p
+        LEFT JOIN hy_community c ON p.community_id = c.id
     </sql>
 
     <select id="selectHyPropertyList" parameterType="HyProperty" resultMap="HyPropertyResult">
         <include refid="selectHyPropertyVo"/>
         <where>  
-            <if test="propertyName != null  and propertyName != ''"> and property_name like concat('%', #{propertyName}, '%')</if>
-            <if test="propertyPhone != null "> and property_phone = #{propertyPhone}</if>
-            <if test="propertyIntroduce != null  and propertyIntroduce != ''"> and property_introduce = #{propertyIntroduce}</if>
+            <if test="propertyName != null  and propertyName != ''"> and p.property_name like concat('%', #{propertyName}, '%')</if>
+            <if test="propertyPhone != null "> and p.property_phone = #{propertyPhone}</if>
+            <if test="propertyIntroduce != null  and propertyIntroduce != ''"> and p.property_introduce = #{propertyIntroduce}</if>
             <if test="creationTime != null "> and creation_time = #{creationTime}</if>
-            <if test="propertyPictureAddress != null  and propertyPictureAddress != ''"> and property_picture_address = #{propertyPictureAddress}</if>
+            <if test="propertyPictureAddress != null  and propertyPictureAddress != ''"> and p.property_picture_address = #{propertyPictureAddress}</if>
         </where>
     </select>
     
     <select id="selectHyPropertyById" parameterType="Long" resultMap="HyPropertyResult">
         <include refid="selectHyPropertyVo"/>
-        where id = #{id}
+        where p.id = #{id}
     </select>
         
     <insert id="insertHyProperty" parameterType="HyProperty" useGeneratedKeys="true" keyProperty="id">

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('社区列表')" />
+    <th:block th:include="include :: header('社区建议列表')" />
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -11,12 +11,27 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                <label>标题：</label>
-                                <input type="text" name="title"/>
+                                <label>建议类别：</label>
+                                <select name="suggestType">
+                                    <option value="">所有</option>
+                                    <option value="-1">代码生成请选择字典属性</option>
+                                </select>
                             </li>
                             <li>
-                                <label>发布时间：</label>
-                                <input type="text" class="time-input" placeholder="请选择发布时间" name="releaseTime"/>
+                                <label>建议人姓名：</label>
+                                <input type="text" name="suggestName"/>
+                            </li>
+                            <li>
+                                <label>建议日期：</label>
+                                <input type="text" class="time-input" placeholder="请选择建议日期" name="suggestDate"/>
+                            </li>
+                            <li>
+                                <label>联系方式：</label>
+                                <input type="text" name="contactInformation"/>
+                            </li>
+                            <li>
+                                <label>社区id：</label>
+                                <input type="text" name="communityId"/>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -28,16 +43,16 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:community:add">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:suggest:add">
                     <i class="fa fa-plus"></i> 添加
                 </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:community:edit">
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:suggest:edit">
                     <i class="fa fa-edit"></i> 修改
                 </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:community:remove">
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:suggest:remove">
                     <i class="fa fa-remove"></i> 删除
                 </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:community:export">
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:suggest:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
             </div>
@@ -48,9 +63,9 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('system:community:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('system:community:remove')}]];
-        var prefix = ctx + "system/community";
+        var editFlag = [[${@permission.hasPermi('system:suggest:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:suggest:remove')}]];
+        var prefix = ctx + "system/suggest";
 
         $(function() {
             var options = {
@@ -59,46 +74,38 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "社区",
+                modalName: "社区建议",
                 columns: [{
                     checkbox: true
                 },
                 {
                     field: 'id',
-                    title: '社区id',
+                    title: '社区建议id',
                     visible: false
                 },
                 {
-                    field: 'title',
-                    title: '标题'
+                    field: 'suggestType',
+                    title: '建议类别'
                 },
                 {
-                    field: 'introductionContent',
-                    title: '简介内容'
+                    field: 'informationContent',
+                    title: '建议内容'
                 },
                 {
-                    field: 'communityName',
-                    title: '社区名称'
+                    field: 'suggestName',
+                    title: '建议人姓名'
                 },
                 {
-                    field: 'communityProvince',
-                    title: '省/直辖市'
+                    field: 'suggestDate',
+                    title: '建议日期'
                 },
                 {
-                    field: 'communityCity',
-                    title: '市/直辖区'
+                    field: 'contactInformation',
+                    title: '联系方式'
                 },
                 {
-                    field: 'communityArea',
-                    title: '区/县'
-                },
-                {
-                    field: 'communityAddress',
-                    title: '详细地址'
-                },
-                {
-                    field: 'releaseTime',
-                    title: '发布时间'
+                    field: 'hyCommunity.communityName',
+                    title: '所属社区'
                 },
                 {
                     title: '操作',

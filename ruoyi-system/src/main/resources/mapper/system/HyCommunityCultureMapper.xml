@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyCommunityCultureMapper">
+    
+    <resultMap type="HyCommunityCulture" id="HyCommunityCultureResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="informationContent"    column="information_content"    />
+        <result property="communityId"    column="community_id"    />
+        <association property="hyCommunity" column="id"
+			javaType="HyCommunity" resultMap="HyCommunityResult" />
+    </resultMap>
+
+	<resultMap type="HyCommunity" id="HyCommunityResult">
+		<result property="id" column="id" />
+		<result property="title" column="title" />
+		<result property="releaseTime" column="release_time" />
+		<result property="introductionContent"
+			column="introduction_content" />
+		<result property="communityName"
+			column="community_name" />
+		<result property="communityProvince"
+			column="community_province" />
+		<result property="communityCity"
+			column="community_city" />
+		<result property="communityArea"
+			column="community_area" />
+		<result property="communityAddress"
+			column="community_address" />
+	</resultMap>
+
+    <sql id="selectHyCommunityCultureVo">
+        select 
+        u.id, 
+        u.title, 
+        u.information_content, 
+        u.community_id,
+        c.community_name 
+        from 
+        hy_community_culture u
+        LEFT JOIN hy_community c ON u.community_id = c.id
+    </sql>
+
+    <select id="selectHyCommunityCultureList" parameterType="HyCommunityCulture" resultMap="HyCommunityCultureResult">
+        <include refid="selectHyCommunityCultureVo"/>
+        <where>  
+            <if test="title != null  and title != ''"> and u.title = #{title}</if>
+            <if test="informationContent != null  and informationContent != ''"> and u.information_content = #{informationContent}</if>
+            <if test="communityId != null "> and u.community_id = #{communityId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyCommunityCultureById" parameterType="Long" resultMap="HyCommunityCultureResult">
+        <include refid="selectHyCommunityCultureVo"/>
+        where u.id = #{id}
+    </select>
+        
+    <insert id="insertHyCommunityCulture" parameterType="HyCommunityCulture" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_community_culture
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null">title,</if>
+            <if test="informationContent != null">information_content,</if>
+            <if test="communityId != null">community_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title != null">#{title},</if>
+            <if test="informationContent != null">#{informationContent},</if>
+            <if test="communityId != null">#{communityId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyCommunityCulture" parameterType="HyCommunityCulture">
+        update hy_community_culture
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null">title = #{title},</if>
+            <if test="informationContent != null">information_content = #{informationContent},</if>
+            <if test="communityId != null">community_id = #{communityId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyCommunityCultureById" parameterType="Long">
+        delete from hy_community_culture where id = #{id}
+    </delete>
+
+    <delete id="deleteHyCommunityCultureByIds" parameterType="String">
+        delete from hy_community_culture where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

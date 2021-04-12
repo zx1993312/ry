@@ -1,63 +1,54 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
-    <th:block th:include="include :: header('新增社区')" />
+    <th:block th:include="include :: header('新增社区建议')" />
     <th:block th:include="include :: datetimepicker-css" />
     <th:block th:include="include :: summernote-css" />
 </head>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-community-add">
+        <form class="form-horizontal m" id="form-suggest-add">
             <div class="form-group">    
-                <label class="col-sm-3 control-label">标题：</label>
+                <label class="col-sm-3 control-label">建议类别：</label>
                 <div class="col-sm-8">
-                    <input name="title" class="form-control" type="text">
+                    <select name="suggestType" class="form-control m-b">
+                        <option value="">所有</option>
+                    </select>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">发布时间：</label>
+                <label class="col-sm-3 control-label">建议内容：</label>
+                <div class="col-sm-8">
+                    <input type="hidden" class="form-control" name="informationContent">
+                    <div class="summernote" id="informationContent"></div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">建议人姓名：</label>
+                <div class="col-sm-8">
+                    <input name="suggestName" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">建议日期：</label>
                 <div class="col-sm-8">
                     <div class="input-group date">
-                        <input name="releaseTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <input name="suggestDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                     </div>
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">简介内容：</label>
+                <label class="col-sm-3 control-label">联系方式：</label>
                 <div class="col-sm-8">
-                    <input type="hidden" class="form-control" name="introductionContent">
-                    <div class="summernote" id="introductionContent"></div>
+                    <input name="contactInformation" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">社区名称：</label>
+                <label class="col-sm-3 control-label">社区id：</label>
                 <div class="col-sm-8">
-                    <input name="communityName" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">省/直辖市：</label>
-                <div class="col-sm-8">
-                    <input name="communityProvince" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">市/直辖区：</label>
-                <div class="col-sm-8">
-                    <input name="communityCity" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">区/县：</label>
-                <div class="col-sm-8">
-                    <input name="communityArea" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">详细地址：</label>
-                <div class="col-sm-8">
-                    <input name="communityAddress" class="form-control" type="text">
+                    <input name="communityId" class="form-control" type="text">
                 </div>
             </div>
         </form>
@@ -66,18 +57,18 @@
     <th:block th:include="include :: datetimepicker-js" />
     <th:block th:include="include :: summernote-js" />
     <script th:inline="javascript">
-        var prefix = ctx + "system/community"
-        $("#form-community-add").validate({
+        var prefix = ctx + "system/suggest"
+        $("#form-suggest-add").validate({
             focusCleanup: true
         });
 
         function submitHandler() {
             if ($.validate.form()) {
-                $.operate.save(prefix + "/add", $('#form-community-add').serialize());
+                $.operate.save(prefix + "/add", $('#form-suggest-add').serialize());
             }
         }
 
-        $("input[name='releaseTime']").datetimepicker({
+        $("input[name='suggestDate']").datetimepicker({
             format: "yyyy-mm-dd",
             minView: "month",
             autoclose: true

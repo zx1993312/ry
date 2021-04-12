@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyCommunityActivityMapper">
+    
+    <resultMap type="HyCommunityActivity" id="HyCommunityActivityResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="informationContent"    column="information_content"    />
+        <result property="activityDate"    column="activity_date"    />
+        <result property="activityAddress"    column="activity_address"    />
+        <result property="communityId"    column="community_id"    />
+        <association property="hyCommunity" column="id"
+			javaType="HyCommunity" resultMap="HyCommunityResult" />
+    </resultMap>
+
+	<resultMap type="HyCommunity" id="HyCommunityResult">
+		<result property="id" column="id" />
+		<result property="title" column="title" />
+		<result property="releaseTime" column="release_time" />
+		<result property="introductionContent"
+			column="introduction_content" />
+		<result property="communityName"
+			column="community_name" />
+		<result property="communityProvince"
+			column="community_province" />
+		<result property="communityCity"
+			column="community_city" />
+		<result property="communityArea"
+			column="community_area" />
+		<result property="communityAddress"
+			column="community_address" />
+	</resultMap>
+
+    <sql id="selectHyCommunityActivityVo">
+        select 
+        a.id, 
+        a.title, 
+        a.information_content, 
+        a.activity_date, 
+        a.activity_address, 
+        a.community_id,
+        c.community_name 
+        from 
+        hy_community_activity a
+        LEFT JOIN hy_community c ON a.community_id = c.id
+    </sql>
+
+    <select id="selectHyCommunityActivityList" parameterType="HyCommunityActivity" resultMap="HyCommunityActivityResult">
+        <include refid="selectHyCommunityActivityVo"/>
+        <where>  
+            <if test="title != null  and title != ''"> and a.title = #{title}</if>
+            <if test="informationContent != null  and informationContent != ''"> and a.information_content = #{informationContent}</if>
+            <if test="activityDate != null "> and a.activity_date = #{activityDate}</if>
+            <if test="activityAddress != null  and activityAddress != ''"> and a.activity_address = #{activityAddress}</if>
+            <if test="communityId != null "> and a.community_id = #{communityId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyCommunityActivityById" parameterType="Long" resultMap="HyCommunityActivityResult">
+        <include refid="selectHyCommunityActivityVo"/>
+        where a.id = #{id}
+    </select>
+        
+    <insert id="insertHyCommunityActivity" parameterType="HyCommunityActivity" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_community_activity
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null">title,</if>
+            <if test="informationContent != null">information_content,</if>
+            <if test="activityDate != null">activity_date,</if>
+            <if test="activityAddress != null">activity_address,</if>
+            <if test="communityId != null">community_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title != null">#{title},</if>
+            <if test="informationContent != null">#{informationContent},</if>
+            <if test="activityDate != null">#{activityDate},</if>
+            <if test="activityAddress != null">#{activityAddress},</if>
+            <if test="communityId != null">#{communityId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyCommunityActivity" parameterType="HyCommunityActivity">
+        update hy_community_activity
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null">title = #{title},</if>
+            <if test="informationContent != null">information_content = #{informationContent},</if>
+            <if test="activityDate != null">activity_date = #{activityDate},</if>
+            <if test="activityAddress != null">activity_address = #{activityAddress},</if>
+            <if test="communityId != null">community_id = #{communityId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyCommunityActivityById" parameterType="Long">
+        delete from hy_community_activity where id = #{id}
+    </delete>
+
+    <delete id="deleteHyCommunityActivityByIds" parameterType="String">
+        delete from hy_community_activity where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
