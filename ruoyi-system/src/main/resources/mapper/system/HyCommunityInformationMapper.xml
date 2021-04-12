@@ -55,6 +55,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         i.announcement_scope_items, 
         i.notice_scope_building, 
         i.information_content,
+        i.community_id,
         c.community_name
         from 
         hy_community_information i
@@ -99,6 +100,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="announcementScopeItems != null">announcement_scope_items,</if>
             <if test="noticeScopeBuilding != null">notice_scope_building,</if>
             <if test="informationContent != null">information_content,</if>
+            <if test="communityId != null">community_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="informationType != null">#{informationType},</if>
@@ -113,6 +115,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="announcementScopeItems != null">#{announcementScopeItems},</if>
             <if test="noticeScopeBuilding != null">#{noticeScopeBuilding},</if>
             <if test="informationContent != null">#{informationContent},</if>
+            <if test="communityId != null">#{communityId},</if>
          </trim>
     </insert>
 
@@ -131,6 +134,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="announcementScopeItems != null">announcement_scope_items = #{announcementScopeItems},</if>
             <if test="noticeScopeBuilding != null">notice_scope_building = #{noticeScopeBuilding},</if>
             <if test="informationContent != null">information_content = #{informationContent},</if>
+            <if test="communityId != null">community_id = #{communityId},</if>
         </trim>
         where id = #{id}
     </update>

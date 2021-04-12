@@ -12,10 +12,7 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">资讯类型：</label>
                 <div class="col-sm-8">
-                    <select name="informationType" class="form-control m-b">
-                        <option value="">所有</option>
-                    </select>
-                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                    <input name="informationType" th:field="*{informationType}" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
@@ -92,6 +89,15 @@
                 <div class="col-sm-8">
                     <input type="hidden" class="form-control" th:field="*{informationContent}">
                     <div class="summernote" id="informationContent"></div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">所属社区：</label>
+                <div class="col-sm-8">
+                   	<select name="communityId" th:field="*{communityId}" class="form-control" th:with="type=${@community.getCommunity()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.communityName}" th:value="${data.id}"></option>
+			 	    </select>
                 </div>
             </div>
         </form>
