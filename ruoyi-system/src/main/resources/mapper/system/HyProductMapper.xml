@@ -136,7 +136,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         c.poster_address,
         l.lable_name,
         d.deatil_picture,
-        b.business_name
+        b.business_name,
+        e.retail_price,
+        e.market_price
         from 
         hy_product p
         LEFT JOIN hy_shop s ON  p.shop_id=s.id
@@ -145,6 +147,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         LEFT JOIN hy_lable l ON p.lable_id=l.id
         LEFT JOIN hy_deatil_picture d ON d.product_id=p.id
         LEFT JOIN hy_business b ON s.business_id=b.id
+        LEFT JOIN hy_set_meal e ON p.id=e.product_id
        	ORDER BY  p.product_order_by DESC 
         
     </sql>

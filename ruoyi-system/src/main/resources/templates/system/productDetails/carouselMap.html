@@ -114,8 +114,10 @@
     <div id="d2" style="border-top:1px dashed #cccccc;height: 1px;overflow:hidden"></div>
     <span id=p5 th:text="${product.briefIntroduction}">套餐中“一小”是指身高在1.2m以下的儿童</span>
     <div id="d4" class="well">商家信息</div>
+    
     <input id="productId" type="hidden" th:value="${product.id}">
     <input id="businessId" type="hidden" th:value="${shop.businessId}" th:text="${shop.businessId}">
+    
     <a href="/system/map"><span id="p6" class="glyphicon glyphicon-map-marker"></a></span><span id="p7" th:text="${shop.shopAddress}">艾博丽思大酒店<br>长春市高新区硅谷大街888号 （轻轨三号线电台街站对面）</span>
     <a id="a20" class="glyphicon glyphicon-earphone" th:text="${shop.contactNumber}">电话</a>
     <div  style="width: 100%;height: 100px; overflow: hidden;">
@@ -127,7 +129,7 @@
   </div>
   </div>
   </section>
-  <th:block th:include="include :: footer" /><!-- align="right" -->
+  <th:block th:include="include :: footer" />
 </body>
 <script type="text/javascript">
 //得到第一个轮播图设置active显示

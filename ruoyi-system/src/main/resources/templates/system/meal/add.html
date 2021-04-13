@@ -72,6 +72,24 @@
         });
 
         function submitHandler() {
+        	var userId = $("#userId").val();
+        	var retailPrice = $("#retailPrice").val;
+        	var number = $("#number").val();
+        	var state = $("#state").val();
+        	$.ajax({
+                type: "post",
+                datatype: "json",
+                url:  prefix + '/add',
+                data: {"userId":userId,"number":number,"state":state},
+                async: true,
+                success: function (result) {
+                    console.log(result);
+					if (typeof callback == "function") {
+						 $("#noticeTable").bootstrapTable('refresh');
+       	                callback(result)						;
+       	            }
+       	            $.operate.successCallback(result);
+        	
             if ($.validate.form()) {
                 $.operate.save(prefix + "/add", $('#form-meal-add').serialize());
             }

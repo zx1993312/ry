@@ -66,7 +66,7 @@ s {
 
 		<center>
 			<div id="d1">
-				<div th:each="p:${list}">
+				
 					<!-- <div th:each="h:${relist}">
 						<div th:each="o:${reList}"> -->
 							<div>
@@ -85,7 +85,8 @@ s {
 
 
 
-<div>
+							<div th:each="p:${list}">
+								<div>
 									<a th:href="'/system/productDetailsCM/list?id='+${p.id}"><img
 										width="1000px" height="400px"
 										th:src="'/img/'+${p.hyPicture.pcitureAddress}"></a><br> <a
