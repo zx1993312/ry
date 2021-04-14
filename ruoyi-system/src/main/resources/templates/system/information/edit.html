@@ -108,6 +108,47 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/information";
         $("#form-information-edit").validate({
+        	rules : {
+				informationType : {
+					required : true,
+					maxlength:20,
+				},
+				source : {
+					maxlength:255,
+				},
+				title : {
+					required : true,
+					maxlength:30,
+				},
+				importantAnnouncement : {
+					required : true,
+					maxlength:2,
+				},
+				state : {
+					required : true,
+					maxlength:50,
+				},
+				historyOperator : {
+					required : true,
+					maxlength:50,
+				},
+				announcementScopeItems : {
+					required : true,
+					maxlength:255,
+				},
+				noticeScopeBuilding : {
+					required : true,
+					maxlength:255,
+				},
+				informationContent : {
+					required : true,
+					maxlength:255,
+				},
+				communityId : {
+					required : true,
+					maxlength:50,
+				},
+			},
             focusCleanup: true
         });
 

@@ -68,6 +68,33 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/community"
         $("#form-community-add").validate({
+			rules : {
+				title : {
+					maxlength:100,
+				},
+				introductionContent : {
+					maxlength:255,
+				},
+				communityName : {
+					required : true,
+					maxlength:50,
+				},
+				communityProvince : {
+					required : true,
+					maxlength:50,
+				},
+				communityCity : {
+					required : true,
+					maxlength:50,
+				},
+				communityArea : {
+					required : true,
+					maxlength:50,
+				},
+				communityAddress : {
+					maxlength:100,
+				},
+			},
             focusCleanup: true
         });
 

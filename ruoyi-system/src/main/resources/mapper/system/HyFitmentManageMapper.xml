@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyFitmentManageMapper">
+    
+    <resultMap type="HyFitmentManage" id="HyFitmentManageResult">
+        <result property="id"    column="id"    />
+        <result property="fitmentManageState"    column="fitment_manage_state"    />
+        <result property="fitmentManageContent"    column="fitment_manage_content"    />
+        <result property="fitmentManageExpect"    column="fitment_manage_expect"    />
+        <result property="ownerRegistrationId"    column="owner_registration_id"    />
+        <association property="hyOwnerRegistration" column="id" 
+        javaType="HyOwnerRegistration" resultMap="HyOwnerRegistrationResult" />
+    </resultMap>
+	
+	<resultMap type="HyOwnerRegistration"
+		id="HyOwnerRegistrationResult">
+		<result property="id" column="id" />
+		<result property="ownerName" column="owner_name" />
+		<result property="houseNum" column="house_num" />
+		<result property="fixedTelephone" column="fixed_telephone" />
+		<result property="mobilePhone" column="mobile_phone" />
+		<result property="idCardNum" column="id_card_num" />
+		<result property="suplierCategory" column="suplier_category" />
+		<result property="lockedNot" column="locked_not" />
+		<result property="accessNum" column="access_num" />
+		<result property="certificateName" column="certificate_name" />
+		<result property="customerCategoy" column="customer_categoy" />
+		<result property="faxPhone" column="fax_phone" />
+		<result property="contactAddress" column="contact_address" />
+		<result property="postalCode" column="postal_code" />
+		<result property="postalPreson" column="postal_preson" />
+		<result property="eMail" column="e_mail" />
+		<result property="phoneAccount" column="phone_account" />
+		<result property="bindingPhoneNum" column="binding_phone_num" />
+		<result property="coOwner" column="co_owner" />
+		<result property="ownerIdentification"
+			column="owner_identification" />
+		<result property="firName" column="fir_name" />
+		<result property="secName" column="sec_name" />
+		<result property="gender" column="gender" />
+		<result property="nationality" column="nationality" />
+		<result property="birthDate" column="birth_date" />
+		<result property="workUnit" column="work_unit" />
+		<result property="ownerJob" column="owner_job" />
+		<result property="ownerHobby" column="owner_hobby" />
+		<result property="ownerId" column="owner_id" />
+		<result property="taxpayerNum" column="taxpayer_num" />
+		<result property="ownerAddPhone" column="owner_add_phone" />
+		<result property="bankAccount" column="bank_account" />
+		<result property="collectionCategory"
+			column="collection_category" />
+		<result property="bankType" column="bank_type" />
+		<result property="bankNum" column="bank_num" />
+		<result property="bankAccountName" column="bank_account_name" />
+	</resultMap>
+	
+    <sql id="selectHyFitmentManageVo">
+        select 
+        m.id, 
+        m.fitment_manage_state, 
+        m.fitment_manage_content, 
+        m.fitment_manage_expect, 
+        m.owner_registration_id,
+        o.owner_name 
+        from 
+        hy_fitment_manage m
+        LEFT JOIN hy_owner_registration o ON m.owner_registration_id = o.id
+    </sql>
+
+    <select id="selectHyFitmentManageList" parameterType="HyFitmentManage" resultMap="HyFitmentManageResult">
+        <include refid="selectHyFitmentManageVo"/>
+        <where>  
+            <if test="fitmentManageState != null  and fitmentManageState != ''"> and m.fitment_manage_state = #{fitmentManageState}</if>
+            <if test="fitmentManageContent != null  and fitmentManageContent != ''"> and m.fitment_manage_content = #{fitmentManageContent}</if>
+            <if test="fitmentManageExpect != null "> and m.fitment_manage_expect = #{fitmentManageExpect}</if>
+            <if test="ownerRegistrationId != null "> and m.owner_registration_id = #{ownerRegistrationId}</if>
+            <if test="hyOwnerRegistration != null and hyOwnerRegistration != ''">
+            <if test="hyOwnerRegistration.ownerName != null and hyOwnerRegistration.ownerName != ''"> and o.owner_name = #{hyOwnerRegistration.ownerName}</if>
+            </if>
+        </where>
+    </select>
+    
+    <select id="selectHyFitmentManageById" parameterType="Long" resultMap="HyFitmentManageResult">
+        <include refid="selectHyFitmentManageVo"/>
+        where m.id = #{id}
+    </select>
+        
+    <insert id="insertHyFitmentManage" parameterType="HyFitmentManage" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_fitment_manage
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fitmentManageState != null">fitment_manage_state,</if>
+            <if test="fitmentManageContent != null">fitment_manage_content,</if>
+            <if test="fitmentManageExpect != null">fitment_manage_expect,</if>
+            <if test="ownerRegistrationId != null">owner_registration_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fitmentManageState != null">#{fitmentManageState},</if>
+            <if test="fitmentManageContent != null">#{fitmentManageContent},</if>
+            <if test="fitmentManageExpect != null">#{fitmentManageExpect},</if>
+            <if test="ownerRegistrationId != null">#{ownerRegistrationId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyFitmentManage" parameterType="HyFitmentManage">
+        update hy_fitment_manage
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fitmentManageState != null">fitment_manage_state = #{fitmentManageState},</if>
+            <if test="fitmentManageContent != null">fitment_manage_content = #{fitmentManageContent},</if>
+            <if test="fitmentManageExpect != null">fitment_manage_expect = #{fitmentManageExpect},</if>
+            <if test="ownerRegistrationId != null">owner_registration_id = #{ownerRegistrationId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyFitmentManageById" parameterType="Long">
+        delete from hy_fitment_manage where id = #{id}
+    </delete>
+
+    <delete id="deleteHyFitmentManageByIds" parameterType="String">
+        delete from hy_fitment_manage where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyReportMapper">
+    
+    <resultMap type="HyReport" id="HyReportResult">
+        <result property="id"    column="id"    />
+        <result property="reportName"    column="report_name"    />
+        <result property="reportPhone"    column="report_phone"    />
+        <result property="reportAddress"    column="report_address"    />
+        <result property="reportClassify"    column="report_classify"    />
+        <result property="reportContent"    column="report_content"    />
+        <result property="reportDate"    column="report_date"    />
+        <result property="reportQuality"    column="report_quality"    />
+        <result property="reportState"    column="report_state"    />
+        <result property="reportAudit"    column="report_audit"    />
+        <result property="reportEvaluate"    column="report_evaluate"    />
+        <result property="reportCost"    column="report_cost"    />
+        <result property="reportVisit"    column="report_visit"    />
+        <result property="quartersId"    column="quarters_id"    />
+        <association property="hyResidentialQuarters"
+			column="id" javaType="HyResidentialQuarters"
+			resultMap="HyResidentialQuartersResult" />
+    </resultMap>
+
+	<resultMap type="HyResidentialQuarters" id="HyResidentialQuartersResult">
+        <result property="id"    column="id"    />
+        <result property="communityAddress"    column="community_address"    />
+        <result property="communityName"    column="community_name"    />
+        <result property="contacts"    column="contacts"    />
+        <result property="contactNumber"    column="contact_number"    />
+        <result property="contactQq"    column="Contact_QQ"    />
+        <result property="city"    column="city"    />
+        <result property="area"    column="area"    />
+        <result property="county"    column="county"    />
+        <result property="address"    column="address"    />
+        <result property="longitude"    column="longitude"    />
+        <result property="latitude"    column="latitude"    />
+        <result property="customerLink"    column="customer_link"    />
+        <result property="externalLinks"    column="external_links"    />
+        <result property="propertyId"    column="property_id"    />
+    </resultMap>
+
+    <sql id="selectHyReportVo">
+        select 
+        r.id, 
+        r.report_name, 
+        r.report_phone, 
+        r.report_address, 
+        r.report_classify, 
+        r.report_content, 
+        r.report_date, 
+        r.report_quality, 
+        r.report_state, 
+        r.report_audit, 
+        r.report_evaluate, 
+        r.report_cost, 
+        r.report_visit, 
+        r.quarters_id,
+        q.community_name 
+        from 
+        hy_report r
+        LEFT JOIN hy_residential_quarters q ON r.quarters_id=q.id
+    </sql>
+
+    <select id="selectHyReportList" parameterType="HyReport" resultMap="HyReportResult">
+        <include refid="selectHyReportVo"/>
+        <where>  
+            <if test="reportName != null  and reportName != ''"> and r.report_name like concat('%', #{reportName}, '%')</if>
+            <if test="reportPhone != null  and reportPhone != ''"> and r.report_phone = #{reportPhone}</if>
+            <if test="reportAddress != null  and reportAddress != ''"> and r.report_address = #{reportAddress}</if>
+            <if test="reportClassify != null  and reportClassify != ''"> and r.report_classify = #{reportClassify}</if>
+            <if test="reportContent != null  and reportContent != ''"> and r.report_content = #{reportContent}</if>
+            <if test="reportDate != null "> and r.report_date = #{reportDate}</if>
+            <if test="reportQuality != null  and reportQuality != ''"> and r.report_quality = #{reportQuality}</if>
+            <if test="reportState != null  and reportState != ''"> and r.report_state = #{reportState}</if>
+            <if test="reportAudit != null  and reportAudit != ''"> and r.report_audit = #{reportAudit}</if>
+            <if test="reportEvaluate != null  and reportEvaluate != ''"> and r.report_evaluate = #{reportEvaluate}</if>
+            <if test="reportCost != null "> and r.report_cost = #{reportCost}</if>
+            <if test="reportVisit != null  and reportVisit != ''"> and r.report_visit = #{reportVisit}</if>
+            <if test="quartersId != null "> and r.quarters_id = #{quartersId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyReportById" parameterType="Long" resultMap="HyReportResult">
+        <include refid="selectHyReportVo"/>
+        where r.id = #{id}
+    </select>
+        
+    <insert id="insertHyReport" parameterType="HyReport" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_report
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="reportName != null">report_name,</if>
+            <if test="reportPhone != null">report_phone,</if>
+            <if test="reportAddress != null">report_address,</if>
+            <if test="reportClassify != null">report_classify,</if>
+            <if test="reportContent != null">report_content,</if>
+            <if test="reportDate != null">report_date,</if>
+            <if test="reportQuality != null">report_quality,</if>
+            <if test="reportState != null">report_state,</if>
+            <if test="reportAudit != null">report_audit,</if>
+            <if test="reportEvaluate != null">report_evaluate,</if>
+            <if test="reportCost != null">report_cost,</if>
+            <if test="reportVisit != null">report_visit,</if>
+            <if test="quartersId != null">quarters_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="reportName != null">#{reportName},</if>
+            <if test="reportPhone != null">#{reportPhone},</if>
+            <if test="reportAddress != null">#{reportAddress},</if>
+            <if test="reportClassify != null">#{reportClassify},</if>
+            <if test="reportContent != null">#{reportContent},</if>
+            <if test="reportDate != null">#{reportDate},</if>
+            <if test="reportQuality != null">#{reportQuality},</if>
+            <if test="reportState != null">#{reportState},</if>
+            <if test="reportAudit != null">#{reportAudit},</if>
+            <if test="reportEvaluate != null">#{reportEvaluate},</if>
+            <if test="reportCost != null">#{reportCost},</if>
+            <if test="reportVisit != null">#{reportVisit},</if>
+            <if test="quartersId != null">#{quartersId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyReport" parameterType="HyReport">
+        update hy_report
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="reportName != null">report_name = #{reportName},</if>
+            <if test="reportPhone != null">report_phone = #{reportPhone},</if>
+            <if test="reportAddress != null">report_address = #{reportAddress},</if>
+            <if test="reportClassify != null">report_classify = #{reportClassify},</if>
+            <if test="reportContent != null">report_content = #{reportContent},</if>
+            <if test="reportDate != null">report_date = #{reportDate},</if>
+            <if test="reportQuality != null">report_quality = #{reportQuality},</if>
+            <if test="reportState != null">report_state = #{reportState},</if>
+            <if test="reportAudit != null">report_audit = #{reportAudit},</if>
+            <if test="reportEvaluate != null">report_evaluate = #{reportEvaluate},</if>
+            <if test="reportCost != null">report_cost = #{reportCost},</if>
+            <if test="reportVisit != null">report_visit = #{reportVisit},</if>
+            <if test="quartersId != null">quarters_id = #{quartersId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyReportById" parameterType="Long">
+        delete from hy_report where id = #{id}
+    </delete>
+
+    <delete id="deleteHyReportByIds" parameterType="String">
+        delete from hy_report where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

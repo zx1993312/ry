@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('维修费用列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>订单号：</label>
+                                <input type="text" name="orderNumber"/>
+                            </li>
+                            <li>
+                                <label>用户姓名：</label>
+                                <input type="text" name="userName"/>
+                            </li>
+                            <li>
+                                <label>电话：</label>
+                                <input type="text" name="maintenancePhone"/>
+                            </li>
+                            <li>
+                                <label>地址：</label>
+                                <input type="text" name="maintenanceAddress"/>
+                            </li>
+                            <li>
+                                <label>总价：</label>
+                                <input type="text" name="maintenanceTotal"/>
+                            </li>
+                            <li>
+                                <label>支付状态：</label>
+                                <input type="text" name="payState"/>
+                            </li>
+                            <li>
+                                <label>支付方式：</label>
+                                <input type="text" name="payWay"/>
+                            </li>
+                            <li>
+                                <label>处理人：</label>
+                                <input type="text" name="historyOperator"/>
+                            </li>
+                            <li>
+                                <label>报事管理人：</label>
+                                <select id="reportId" name="reportId" class="form-control" th:with="type=${@report.getReport()}">
+									<option value="">请选择</option>
+									<option th:if="data!=null" th:each="data:${type}" th:text="${data.reportName}" th:value="${data.id}"></option>
+						 	    </select>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:maintenance:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:maintenance:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:maintenance:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:maintenance:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:maintenance:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:maintenance:remove')}]];
+        var prefix = ctx + "system/maintenance";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "维修费用",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '维修费用id',
+                    visible: false
+                },
+                {
+                    field: 'orderNumber',
+                    title: '订单号'
+                },
+                {
+                    field: 'userName',
+                    title: '用户姓名'
+                },
+                {
+                    field: 'maintenancePhone',
+                    title: '电话'
+                },
+                {
+                    field: 'maintenanceAddress',
+                    title: '地址'
+                },
+                {
+                    field: 'maintenanceTotal',
+                    title: '总价'
+                },
+                {
+                    field: 'payState',
+                    title: '支付状态'
+                },
+                {
+                    field: 'payWay',
+                    title: '支付方式'
+                },
+                {
+                    field: 'historyOperator',
+                    title: '处理人'
+                },
+                {
+                    field: 'hyReport.reportName',
+                    title: '报事管理人'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

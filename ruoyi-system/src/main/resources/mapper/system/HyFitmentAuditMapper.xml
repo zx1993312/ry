@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyFitmentAuditMapper">
+    
+    <resultMap type="HyFitmentAudit" id="HyFitmentAuditResult">
+        <result property="id"    column="id"    />
+        <result property="pictureAddress"    column="picture_address"    />
+        <result property="fitmentAuditAgree"    column="fitment_audit_agree"    />
+        <result property="houseInfId"    column="house_inf_id"    />
+        <association property="hyHouseInf" column="id"
+			javaType="HyHouseInf" resultMap="HyHouseInfResult" />
+    </resultMap>
+	
+	<resultMap type="HyHouseInf" id="HyHouseInfResult">
+		<result property="id" column="id" />
+		<result property="building" column="building" />
+		<result property="houseNumber" column="house_number" />
+		<result property="houseName" column="house_name" />
+		<result property="builtUpArea" column="built_up_area" />
+		<result property="groupArea" column="group_area" />
+		<result property="unit" column="unit" />
+		<result property="floor" column="floor" />
+		<result property="sameUnitNumber" column="same_unit_number" />
+		<result property="areaType" column="area_type" />
+		<result property="bilingArea" column="biling_area" />
+		<result property="insideArea" column="inside_area" />
+		<result property="sharedArea" column="shared_area" />
+		<result property="gardenArea" column="garden_area" />
+		<result property="basementArea" column="basement_area" />
+		<result property="sharedLobbyArea" column="shared_lobby_area" />
+		<result property="sharedLayersArea" column="shared_layers_area" />
+		<result property="shareRatio" column="share_ratio" />
+		<result property="buildingStructure"
+			column="building_structure" />
+		<result property="parametersPer" column="parameters_per" />
+		<result property="houseLayout" column="house_layout" />
+		<result property="floorHeight" column="floor_height" />
+		<result property="natureProperty" column="nature_property" />
+		<result property="natureUse" column="nature_use" />
+		<result property="usageStatus" column="usage_status" />
+		<result property="occupancyStatus" column="occupancy_status" />
+		<result property="deliveryStatus" column="delivery_status" />
+		<result property="houseType" column="house_type" />
+		<result property="salesStatus" column="sales_status" />
+		<result property="purchaseContract" column="purchase_contract" />
+		<result property="marketingNum" column="marketing_num" />
+		<result property="deliveryStatusBefore" column="delivery_status_before" />
+		<result property="changeDate" column="change_date" />
+		<result property="changePerson" column="change_person" />
+		<result property="remark" column="remark" />
+	</resultMap>
+
+    <sql id="selectHyFitmentAuditVo">
+        select 
+        a.id,  
+        a.picture_address, 
+        a.fitment_audit_agree, 
+        a.house_inf_id,
+        h.house_name 
+        from 
+        hy_fitment_audit a
+        LEFT JOIN hy_house_inf h ON a.house_inf_id = h.id
+    </sql>
+
+    <select id="selectHyFitmentAuditList" parameterType="HyFitmentAudit" resultMap="HyFitmentAuditResult">
+        <include refid="selectHyFitmentAuditVo"/>
+        <where>  
+            <if test="pictureAddress != null  and pictureAddress != ''"> and  a.picture_address = #{pictureAddress}</if>
+            <if test="fitmentAuditAgree != null "> and a.fitment_audit_agree = #{fitmentAuditAgree}</if>
+            <if test="houseInfId != null "> and a.house_inf_id = #{houseInfId}</if>
+            <if test="hyHouseInf != null and hyHouseInf != ''">
+            <if test="hyHouseInf.houseName != null and hyHouseInf.houseName != ''"> and h.house_name = #{hyHouseInf.houseName}</if>
+            </if>
+        </where>
+    </select>
+    
+    <select id="selectHyFitmentAuditById" parameterType="Long" resultMap="HyFitmentAuditResult">
+        <include refid="selectHyFitmentAuditVo"/>
+        where a.id = #{id}
+    </select>
+        
+    <insert id="insertHyFitmentAudit" parameterType="HyFitmentAudit" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_fitment_audit
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pictureAddress != null">picture_address,</if>
+            <if test="fitmentAuditAgree != null">fitment_audit_agree,</if>
+            <if test="houseInfId != null">house_inf_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pictureAddress != null">#{pictureAddress},</if>
+            <if test="fitmentAuditAgree != null">#{fitmentAuditAgree},</if>
+            <if test="houseInfId != null">#{houseInfId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyFitmentAudit" parameterType="HyFitmentAudit">
+        update hy_fitment_audit
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="pictureAddress != null">picture_address = #{pictureAddress},</if>
+            <if test="fitmentAuditAgree != null">fitment_audit_agree = #{fitmentAuditAgree},</if>
+            <if test="houseInfId != null">house_inf_id = #{houseInfId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyFitmentAuditById" parameterType="Long">
+        delete from hy_fitment_audit where id = #{id}
+    </delete>
+
+    <delete id="deleteHyFitmentAuditByIds" parameterType="String">
+        delete from hy_fitment_audit where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

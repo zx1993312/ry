@@ -14,29 +14,62 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="address"    column="address"    />
         <result property="abreak"    column="abreak"    />
         <result property="communityId"    column="community_id"    />
+        <association property="hyCommunity" column="id"
+			javaType="HyCommunity" resultMap="HyCommunityResult" />
     </resultMap>
-
+    
+	<resultMap type="HyCommunity" id="HyCommunityResult">
+		<result property="id" column="id" />
+		<result property="title" column="title" />
+		<result property="releaseTime" column="release_time" />
+		<result property="introductionContent"
+			column="introduction_content" />
+		<result property="communityName"
+			column="community_name" />
+		<result property="communityProvince"
+			column="community_province" />
+		<result property="communityCity"
+			column="community_city" />
+		<result property="communityArea"
+			column="community_area" />
+		<result property="communityAddress"
+			column="community_address" />
+	</resultMap>
+	
     <sql id="selectHyCommunitySupportVo">
-        select id, matching_types, matching_type, contacts, matching_name, contact_number, address, abreak, community_id from hy_community_support
+        select 
+        s.id, 
+        s.matching_types, 
+        s.matching_type, 
+        s.contacts, 
+        s.matching_name, 
+        s.contact_number, 
+        s.address, 
+        s.abreak, 
+        s.community_id,
+        c.community_name 
+        from 
+        hy_community_support s
+        LEFT JOIN hy_community c ON s.community_id = c.id
     </sql>
 
     <select id="selectHyCommunitySupportList" parameterType="HyCommunitySupport" resultMap="HyCommunitySupportResult">
         <include refid="selectHyCommunitySupportVo"/>
         <where>  
-            <if test="matchingTypes != null "> and matching_types = #{matchingTypes}</if>
-            <if test="matchingType != null "> and matching_type = #{matchingType}</if>
-            <if test="contacts != null  and contacts != ''"> and contacts = #{contacts}</if>
-            <if test="matchingName != null  and matchingName != ''"> and matching_name like concat('%', #{matchingName}, '%')</if>
-            <if test="contactNumber != null "> and contact_number = #{contactNumber}</if>
-            <if test="address != null  and address != ''"> and address = #{address}</if>
-            <if test="abreak != null  and abreak != ''"> and abreak = #{abreak}</if>
-            <if test="communityId != null "> and community_id = #{communityId}</if>
+            <if test="matchingTypes != null "> and s.matching_types = #{matchingTypes}</if>
+            <if test="matchingType != null "> and s.matching_type = #{matchingType}</if>
+            <if test="contacts != null  and contacts != ''"> and s.contacts = #{contacts}</if>
+            <if test="matchingName != null  and matchingName != ''"> and s.matching_name like concat('%', #{matchingName}, '%')</if>
+            <if test="contactNumber != null "> and s.contact_number = #{contactNumber}</if>
+            <if test="address != null  and address != ''"> and s.address = #{address}</if>
+            <if test="abreak != null  and abreak != ''"> and s.abreak = #{abreak}</if>
+            <if test="communityId != null "> and s.community_id = #{communityId}</if>
         </where>
     </select>
     
     <select id="selectHyCommunitySupportById" parameterType="Long" resultMap="HyCommunitySupportResult">
         <include refid="selectHyCommunitySupportVo"/>
-        where id = #{id}
+        where s.id = #{id}
     </select>
         
     <insert id="insertHyCommunitySupport" parameterType="HyCommunitySupport">

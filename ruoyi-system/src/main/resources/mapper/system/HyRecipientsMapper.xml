@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyRecipientsMapper">
+    
+    <resultMap type="HyRecipients" id="HyRecipientsResult">
+        <result property="id"    column="id"    />
+        <result property="personType"    column="person_type"    />
+        <result property="recipientsDept"    column="recipients_dept"    />
+        <result property="recipientsEmployee"    column="recipients_employee"    />
+        <result property="recipientsName"    column="recipients_name"    />
+        <result property="notificationWay"    column="notification_way"    />
+        <result property="recipientsProvince"    column="recipients_province"    />
+        <result property="recipientsCity"    column="recipients_city"    />
+        <result property="recipientsArea"    column="recipients_area"    />
+        <result property="reportId"    column="report_id"    />
+        <association property="hyReport"
+			column="id" javaType="HyReport"
+			resultMap="HyReportResult" />
+    </resultMap>
+
+		<resultMap type="HyReport" id="HyReportResult">
+        <result property="id"    column="id"    />
+        <result property="reportName"    column="report_name"    />
+        <result property="reportPhone"    column="report_phone"    />
+        <result property="reportAddress"    column="report_address"    />
+        <result property="reportClassify"    column="report_classify"    />
+        <result property="reportContent"    column="report_content"    />
+        <result property="reportDate"    column="report_date"    />
+        <result property="reportQuality"    column="report_quality"    />
+        <result property="reportState"    column="report_state"    />
+        <result property="reportAudit"    column="report_audit"    />
+        <result property="reportEvaluate"    column="report_evaluate"    />
+        <result property="reportCost"    column="report_cost"    />
+        <result property="reportVisit"    column="report_visit"    />
+        <result property="quartersId"    column="quarters_id"    />
+    </resultMap>
+
+    <sql id="selectHyRecipientsVo">
+        select 
+        c.id, 
+        c.person_type, 
+        c.recipients_dept, 
+        c.recipients_employee, 
+        c.recipients_name, 
+        c.notification_way, 
+        c.recipients_province, 
+        c.recipients_city, 
+        c.recipients_area, 
+        c.report_id,
+        r.report_name 
+        from 
+        hy_recipients c
+        LEFT JOIN hy_report r ON c.report_id=r.id
+    </sql>
+
+    <select id="selectHyRecipientsList" parameterType="HyRecipients" resultMap="HyRecipientsResult">
+        <include refid="selectHyRecipientsVo"/>
+        <where>  
+            <if test="personType != null  and personType != ''"> and c.person_type = #{personType}</if>
+            <if test="recipientsDept != null  and recipientsDept != ''"> and c.recipients_dept = #{recipientsDept}</if>
+            <if test="recipientsEmployee != null  and recipientsEmployee != ''"> and c.recipients_employee = #{recipientsEmployee}</if>
+            <if test="recipientsName != null  and recipientsName != ''"> and c.recipients_name like concat('%', #{recipientsName}, '%')</if>
+            <if test="notificationWay != null  and notificationWay != ''"> and c.notification_way = #{notificationWay}</if>
+            <if test="recipientsProvince != null  and recipientsProvince != ''"> and c.recipients_province = #{recipientsProvince}</if>
+            <if test="recipientsCity != null  and recipientsCity != ''"> and c.recipients_city = #{recipientsCity}</if>
+            <if test="recipientsArea != null  and recipientsArea != ''"> and c.recipients_area = #{recipientsArea}</if>
+            <if test="reportId != null "> and c.report_id = #{reportId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyRecipientsById" parameterType="Long" resultMap="HyRecipientsResult">
+        <include refid="selectHyRecipientsVo"/>
+        where c.id = #{id}
+    </select>
+        
+    <insert id="insertHyRecipients" parameterType="HyRecipients" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_recipients
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="personType != null">person_type,</if>
+            <if test="recipientsDept != null">recipients_dept,</if>
+            <if test="recipientsEmployee != null">recipients_employee,</if>
+            <if test="recipientsName != null">recipients_name,</if>
+            <if test="notificationWay != null">notification_way,</if>
+            <if test="recipientsProvince != null">recipients_province,</if>
+            <if test="recipientsCity != null">recipients_city,</if>
+            <if test="recipientsArea != null">recipients_area,</if>
+            <if test="reportId != null">report_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="personType != null">#{personType},</if>
+            <if test="recipientsDept != null">#{recipientsDept},</if>
+            <if test="recipientsEmployee != null">#{recipientsEmployee},</if>
+            <if test="recipientsName != null">#{recipientsName},</if>
+            <if test="notificationWay != null">#{notificationWay},</if>
+            <if test="recipientsProvince != null">#{recipientsProvince},</if>
+            <if test="recipientsCity != null">#{recipientsCity},</if>
+            <if test="recipientsArea != null">#{recipientsArea},</if>
+            <if test="reportId != null">#{reportId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyRecipients" parameterType="HyRecipients">
+        update hy_recipients
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="personType != null">person_type = #{personType},</if>
+            <if test="recipientsDept != null">recipients_dept = #{recipientsDept},</if>
+            <if test="recipientsEmployee != null">recipients_employee = #{recipientsEmployee},</if>
+            <if test="recipientsName != null">recipients_name = #{recipientsName},</if>
+            <if test="notificationWay != null">notification_way = #{notificationWay},</if>
+            <if test="recipientsProvince != null">recipients_province = #{recipientsProvince},</if>
+            <if test="recipientsCity != null">recipients_city = #{recipientsCity},</if>
+            <if test="recipientsArea != null">recipients_area = #{recipientsArea},</if>
+            <if test="reportId != null">report_id = #{reportId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyRecipientsById" parameterType="Long">
+        delete from hy_recipients where id = #{id}
+    </delete>
+
+    <delete id="deleteHyRecipientsByIds" parameterType="String">
+        delete from hy_recipients where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

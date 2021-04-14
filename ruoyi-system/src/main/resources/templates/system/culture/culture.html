@@ -15,9 +15,12 @@
                                 <input type="text" name="title"/>
                             </li>
                             <li>
-                                <label>社区id：</label>
-                                <input type="text" name="communityId"/>
-                            </li>
+                			<label>所属社区：</label>
+			                   	<select name="communityId" class="form-control" th:with="type=${@community.getCommunity()}">
+									<option value="">请选择</option>
+									<option th:if="data!=null" th:each="data:${type}" th:text="${data.communityName}" th:value="${data.id}"></option>
+						 	    </select>
+                			</li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                                 <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>

@@ -36,6 +36,20 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/culture"
         $("#form-culture-add").validate({
+        	rules : {
+				title : {
+					required : true,
+					maxlength:50,
+				},
+				informationContent : {
+					required : true,
+					maxlength:255,
+				},
+				communityId : {
+					required : true,
+					maxlength:50,
+				},
+			},
             focusCleanup: true
         });
 

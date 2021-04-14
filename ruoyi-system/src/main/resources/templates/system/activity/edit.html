@@ -54,6 +54,24 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/activity";
         $("#form-activity-edit").validate({
+        	rules : {
+				title : {
+					required : true,
+					maxlength:50,
+				},
+				informationContent : {
+					required : true,
+					maxlength:255,
+				},
+				activityAddress : {
+					required : true,
+					maxlength:255,
+				},
+				communityId : {
+					required : true,
+					maxlength:50,
+				},
+			},
             focusCleanup: true
         });
 

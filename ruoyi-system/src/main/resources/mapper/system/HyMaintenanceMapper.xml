@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyMaintenanceMapper">
+    
+    <resultMap type="HyMaintenance" id="HyMaintenanceResult">
+        <result property="id"    column="id"    />
+        <result property="orderNumber"    column="order_number"    />
+        <result property="userName"    column="user_name"    />
+        <result property="maintenancePhone"    column="maintenance_phone"    />
+        <result property="maintenanceAddress"    column="maintenance_address"    />
+        <result property="maintenanceTotal"    column="maintenance_total"    />
+        <result property="payState"    column="pay_state"    />
+        <result property="payWay"    column="pay_way"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="historyOperator"    column="history_operator"    />
+        <result property="reportId"    column="report_id"    />
+         <association property="hyReport"
+			column="id" javaType="HyReport"
+			resultMap="HyReportResult" />
+    </resultMap>
+
+	<resultMap type="HyReport" id="HyReportResult">
+        <result property="id"    column="id"    />
+        <result property="reportName"    column="report_name"    />
+        <result property="reportPhone"    column="report_phone"    />
+        <result property="reportAddress"    column="report_address"    />
+        <result property="reportClassify"    column="report_classify"    />
+        <result property="reportContent"    column="report_content"    />
+        <result property="reportDate"    column="report_date"    />
+        <result property="reportQuality"    column="report_quality"    />
+        <result property="reportState"    column="report_state"    />
+        <result property="reportAudit"    column="report_audit"    />
+        <result property="reportEvaluate"    column="report_evaluate"    />
+        <result property="reportCost"    column="report_cost"    />
+        <result property="reportVisit"    column="report_visit"    />
+        <result property="quartersId"    column="quarters_id"    />
+    </resultMap>
+	
+    <sql id="selectHyMaintenanceVo">
+        select 
+        m.id, 
+        m.order_number, 
+        m.user_name, 
+        m.maintenance_phone, 
+        m.maintenance_address, 
+        m.maintenance_total, 
+        m.pay_state, 
+        m.pay_way, 
+        m.create_time, 
+        m.history_operator, 
+        m.report_id,
+        r.report_name 
+        from 
+        hy_maintenance m
+        LEFT JOIN hy_report r ON m.report_id=r.id
+    </sql>
+
+    <select id="selectHyMaintenanceList" parameterType="HyMaintenance" resultMap="HyMaintenanceResult">
+        <include refid="selectHyMaintenanceVo"/>
+        <where>  
+            <if test="orderNumber != null  and orderNumber != ''"> and m.order_number = #{orderNumber}</if>
+            <if test="userName != null  and userName != ''"> and m.user_name like concat('%', #{userName}, '%')</if>
+            <if test="maintenancePhone != null  and maintenancePhone != ''"> and m.maintenance_phone = #{maintenancePhone}</if>
+            <if test="maintenanceAddress != null  and maintenanceAddress != ''"> and m.maintenance_address = #{maintenanceAddress}</if>
+            <if test="maintenanceTotal != null  and maintenanceTotal != ''"> and m.maintenance_total = #{maintenanceTotal}</if>
+            <if test="payState != null  and payState != ''"> and m.pay_state = #{payState}</if>
+            <if test="payWay != null  and payWay != ''"> and m.pay_way = #{payWay}</if>
+            <if test="historyOperator != null  and historyOperator != ''"> and m.history_operator = #{historyOperator}</if>
+            <if test="reportId != null "> and m.report_id = #{reportId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyMaintenanceById" parameterType="Long" resultMap="HyMaintenanceResult">
+        <include refid="selectHyMaintenanceVo"/>
+        where m.id = #{id}
+    </select>
+        
+    <insert id="insertHyMaintenance" parameterType="HyMaintenance" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_maintenance
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderNumber != null">order_number,</if>
+            <if test="userName != null">user_name,</if>
+            <if test="maintenancePhone != null">maintenance_phone,</if>
+            <if test="maintenanceAddress != null">maintenance_address,</if>
+            <if test="maintenanceTotal != null">maintenance_total,</if>
+            <if test="payState != null">pay_state,</if>
+            <if test="payWay != null">pay_way,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="historyOperator != null">history_operator,</if>
+            <if test="reportId != null">report_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderNumber != null">#{orderNumber},</if>
+            <if test="userName != null">#{userName},</if>
+            <if test="maintenancePhone != null">#{maintenancePhone},</if>
+            <if test="maintenanceAddress != null">#{maintenanceAddress},</if>
+            <if test="maintenanceTotal != null">#{maintenanceTotal},</if>
+            <if test="payState != null">#{payState},</if>
+            <if test="payWay != null">#{payWay},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="historyOperator != null">#{historyOperator},</if>
+            <if test="reportId != null">#{reportId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyMaintenance" parameterType="HyMaintenance">
+        update hy_maintenance
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderNumber != null">order_number = #{orderNumber},</if>
+            <if test="userName != null">user_name = #{userName},</if>
+            <if test="maintenancePhone != null">maintenance_phone = #{maintenancePhone},</if>
+            <if test="maintenanceAddress != null">maintenance_address = #{maintenanceAddress},</if>
+            <if test="maintenanceTotal != null">maintenance_total = #{maintenanceTotal},</if>
+            <if test="payState != null">pay_state = #{payState},</if>
+            <if test="payWay != null">pay_way = #{payWay},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="historyOperator != null">history_operator = #{historyOperator},</if>
+            <if test="reportId != null">report_id = #{reportId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyMaintenanceById" parameterType="Long">
+        delete from hy_maintenance where id = #{id}
+    </delete>
+
+    <delete id="deleteHyMaintenanceByIds" parameterType="String">
+        delete from hy_maintenance where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

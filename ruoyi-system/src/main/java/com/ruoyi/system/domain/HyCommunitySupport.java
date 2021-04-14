@@ -51,6 +51,9 @@ public class HyCommunitySupport extends BaseEntity
     @Excel(name = "社区id")
     private Long communityId;
 
+    /** 社区表 */
+    @Excel(name = "社区表")
+    private HyCommunity hyCommunity;
     public void setId(Long id) 
     {
         this.id = id;
@@ -133,18 +136,21 @@ public class HyCommunitySupport extends BaseEntity
         return communityId;
     }
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("matchingTypes", getMatchingTypes())
-            .append("matchingType", getMatchingType())
-            .append("contacts", getContacts())
-            .append("matchingName", getMatchingName())
-            .append("contactNumber", getContactNumber())
-            .append("address", getAddress())
-            .append("break", getAbreak())
-            .append("communityId", getCommunityId())
-            .toString();
-    }
+    public HyCommunity getHyCommunity() {
+		return hyCommunity;
+	}
+
+	public void setHyCommunity(HyCommunity hyCommunity) {
+		this.hyCommunity = hyCommunity;
+	}
+
+	@Override
+	public String toString() {
+		return "HyCommunitySupport [id=" + id + ", matchingTypes=" + matchingTypes + ", matchingType=" + matchingType
+				+ ", contacts=" + contacts + ", matchingName=" + matchingName + ", contactNumber=" + contactNumber
+				+ ", address=" + address + ", abreak=" + abreak + ", communityId=" + communityId + ", hyCommunity="
+				+ hyCommunity + "]";
+	}
+
+	
 }
