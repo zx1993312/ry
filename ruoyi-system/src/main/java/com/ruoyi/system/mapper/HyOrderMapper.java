@@ -27,6 +27,8 @@ public interface HyOrderMapper
      */
     public List<HyOrder> selectHyOrderList(HyOrder hyOrder);
     
+    public HyOrder selectId(HyOrder hyOrder);
+    
     /**
      * 查询订单列表(测试方法)
      * 

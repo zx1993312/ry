@@ -18,6 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         from 
         hy_deatil_picture
     </sql>
+    
 
     <select id="selectHyDeatilPictureList" parameterType="HyDeatilPicture" resultMap="HyDeatilPictureResult">
         <include refid="selectHyDeatilPictureVo"/>

@@ -182,7 +182,7 @@
 			}
 			</script>
 	
-			
+			  
 		
 		<span class="glyphicon glyphicon-exclamation-sign" style="color: blue;">
 		</span><span>此为定制套餐，无正当理由不可退改，购买即视为认同此说明及使用规则，如遇使用问题可咨询客服。</span>
@@ -196,6 +196,7 @@
 	  	</div>
 	  	</form>
 	  	</div>
+	  	<input id="orderId" type="hidden" th:value="${hyOrder.id}" th:text="${hyOrder.id}">
   	<th:block th:include="include :: footer" />
   	<!-- <script th:inline="javascript">
         var prefix = ctx + "system/productDetailsSA"
@@ -214,21 +215,19 @@
         	console.log('1');
         }
     </script> -->
-     <!-- <script type="text/javascript">
+    <script type="text/javascript">
 	var prefix = ctx + "system/meal"
 	var prefix1 = ctx + "system/order" 
-	function add(){
-	
-		/* var imagepath = $("#remarks").val(); */
-    	var userId = 2;
-    	var retailPrice = $("#retailPrice").val;
+	function submitHandler(){
+		//var orderId = $("#orderId").val();
+    	var retailPrice = $("#i2").val();
     	var number = $("#number").val();
-    	var state = "2";
+    	var state = "1";
     	$.ajax({
             type: "post",
             datatype: "json",
-            url:  prefix + '/add',
-            data: {"retailPrice":retailPrice,"userId":userId,"number":number,"state":state},
+            url:  prefix1 + '/edit',
+            data: {"retailPrice":retailPrice,/* "orderId":orderId, */"number":number,"state":state},
             async: true,
             success: function (result) {
                 //console.log(result);
@@ -239,7 +238,7 @@
             }
         });
 	}
-</script>  -->
+</script>
 </body>
 <script type="text/javascript" src="../bootstrap3/jquery.min.js"></script>
 <script type="text/javascript" src="../bootstrap3/js/bootstrap.js"></script>

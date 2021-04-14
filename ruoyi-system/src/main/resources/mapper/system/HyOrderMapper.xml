@@ -121,6 +121,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where 1=1
     </sql>
     
+    <sql id="selectId">
+    	select
+    	o.id, 
+        o.user_id, 
+        o.user_picture,
+        o.order_number, 
+        o.unit_price, 
+        o.number,
+        o.state,
+        o.create_time,
+        o.product_id
+        from 
+        hy_order o
+        where 1=1 
+        ORDER BY o.id DESC LIMIT 0,1
+    </sql>
+    
     <sql id="selectHyOrderState">
      select 
         o.id, 
@@ -145,6 +162,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="hyProduct != null and hyProduct != ''">
             <if test="hyProduct.productName != null and hyProduct.productName != ''"> and p.product_name = #{hyProduct.productName}</if>
             </if>
+    </select>
+    
+   <select id="selectId" parameterType="HyOrder" resultMap="HyOrderResult">
+        <include refid="selectId"/>
     </select>
     
     <select id="selectHyOrderListTest" parameterType="HyOrder" resultMap="HyOrderResult">

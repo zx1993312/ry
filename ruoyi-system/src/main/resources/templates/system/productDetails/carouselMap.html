@@ -82,8 +82,8 @@
         <li data-target="#myCarousel" data-slide-to="2"></li>
     </ol>   
     <!-- 轮播（Carousel）项目 -->
-    <div th:each="deatilPicture:${deatilPicture}" class="carousel-inner">
-        <div class="item">
+    <div class="carousel-inner">
+        <div th:each="deatilPicture:${deatilPicture}" class="item">
             <img id="i20" th:src="'/img/'+${deatilPicture.deatilPicture}" alt="First slide">
             <div class="carousel-caption"></div>
         </div>
@@ -116,7 +116,7 @@
     <div id="d4" class="well">商家信息</div>
     
     <input id="productId" type="hidden" th:value="${product.id}">
-    <input id="businessId" type="hidden" th:value="${shop.businessId}" th:text="${shop.businessId}">
+    <input id="businessId" type="hidden" th:value="${shop.businessId}">
     
     <a href="/system/map"><span id="p6" class="glyphicon glyphicon-map-marker"></a></span><span id="p7" th:text="${shop.shopAddress}">艾博丽思大酒店<br>长春市高新区硅谷大街888号 （轻轨三号线电台街站对面）</span>
     <a id="a20" class="glyphicon glyphicon-earphone" th:text="${shop.contactNumber}">电话</a>
@@ -132,10 +132,10 @@
   <th:block th:include="include :: footer" />
 </body>
 <script type="text/javascript">
-//得到第一个轮播图设置active显示
-$(".item").eq(0).attr("class","item active");
-//让轮播图自己移动
-$("#myCarousel").carousel("cycle");
+	//得到第一个轮播图设置active显示
+	$(".item").eq(0).attr("class","item active");
+	//让轮播图自己移动
+	$("#myCarousel").carousel("cycle");
 </script>
 <!-- <script type="text/javascript" src="../bootstrap3/jquery.min.js"></script>
 <script type="text/javascript" src="../bootstrap3/js/bootstrap.js"></script>

@@ -63,6 +63,10 @@ public class HyOrderServiceImpl implements IHyOrderService
         return hyOrderMapper.selectHyOrderList(hyOrder);
     }
     
+    public HyOrder selectId(HyOrder hyOrder) {
+    	return hyOrderMapper.selectId(hyOrder);
+    }
+    
     /**
      * 查询订单列表（测试方法）
      * 
@@ -103,17 +107,7 @@ public class HyOrderServiceImpl implements IHyOrderService
     @Override
     public int updateHyOrder(String ids,HyOrder hyOrder)
     {
-    	if(!"".equals(ids)&&hyOrder!=null) {
-    	System.out.println("===============hyOrder============="+hyOrder);
-    	String ida [] = ids.split(",");
-    	for(String id:ida) {
-    		Long idd = Long.valueOf(id);
-    		hyOrder.setId(idd);
-    		hyOrderMapper.updateHyOrder(hyOrder);
-    	}
-    	return 1;
-    	}
-        return 0;
+        return hyOrderMapper.updateHyOrder(hyOrder);
     }
 
     /**

@@ -19,6 +19,7 @@ import com.ruoyi.system.domain.HyPicture;
 import com.ruoyi.system.domain.HyProduct;
 import com.ruoyi.system.domain.HySetMeal;
 import com.ruoyi.system.domain.HyUser;
+import com.ruoyi.system.service.IHyOrderService;
 import com.ruoyi.system.service.IHyPictureService;
 import com.ruoyi.system.service.IHyProductService;
 import com.ruoyi.system.service.IHySetMealService;
@@ -50,7 +51,7 @@ public class HyShoppingAffirmController extends BaseController
     private IHyUserService hyUserService;
     
     @Autowired
-	private IHyPictureService hyPictureService;
+	private IHyOrderService hyOrderService;
     
     @Autowired
 	private IHySetMealService hySetMealService;
@@ -94,7 +95,8 @@ public class HyShoppingAffirmController extends BaseController
     	HyProduct product = hyProductService.selectHyId(Long.parseLong(id));
 		mmap.put("product", product);
 		
-       
+		HyOrder hyOrder = hyOrderService.selectId(new HyOrder());
+		mmap.put("hyOrder",hyOrder);
         
 		return prefix + "/shoppingAffirm";
 
