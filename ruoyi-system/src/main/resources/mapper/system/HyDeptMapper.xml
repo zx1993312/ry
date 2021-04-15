@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyDeptMapper">
+    
+    <resultMap type="HyDept" id="HyDeptResult">
+        <result property="id"    column="id"    />
+        <result property="deptName"    column="dept_name"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="leader"    column="leader"    />
+        <result property="propertyId"    column="property_id"    />
+        <association property="hyProperty" column="id"
+			javaType="HyProperty" resultMap="HyPropertyResult" />
+    </resultMap>
+
+	<resultMap type="HyProperty" id="HyPropertyResult">
+        <result property="id"    column="id"    />
+        <result property="propertyName"    column="property_name"    />
+        <result property="propertyPhone"    column="property_phone"    />
+        <result property="propertyIntroduce"    column="property_introduce"    />
+        <result property="creationTime"    column="creation_time"    />
+        <result property="propertyPictureAddress"    column="property_picture_address"    />
+        <result property="propertyPictureAddress"    column="property_picture_address"    />
+    </resultMap>
+
+    <sql id="selectHyDeptVo">
+        select 
+        d.id, 
+        d.dept_name, 
+        d.create_time, 
+        d.leader, 
+        d.property_id,
+        p.property_name 
+        from 
+        hy_dept d
+        LEFT JOIN hy_property p ON d.property_id = p.id
+    </sql>
+
+    <select id="selectHyDeptList" parameterType="HyDept" resultMap="HyDeptResult">
+        <include refid="selectHyDeptVo"/>
+        <where>  
+            <if test="deptName != null  and deptName != ''"> and d.dept_name like concat('%', #{deptName}, '%')</if>
+            <if test="leader != null  and leader != ''"> and d.leader = #{leader}</if>
+            <if test="propertyId != null "> and d.property_id = #{propertyId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyDeptById" parameterType="Long" resultMap="HyDeptResult">
+        <include refid="selectHyDeptVo"/>
+        where d.id = #{id}
+    </select>
+        
+    <insert id="insertHyDept" parameterType="HyDept" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_dept
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="deptName != null">dept_name,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="leader != null">leader,</if>
+            <if test="propertyId != null">property_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="deptName != null">#{deptName},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="leader != null">#{leader},</if>
+            <if test="propertyId != null">#{propertyId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyDept" parameterType="HyDept">
+        update hy_dept
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="deptName != null">dept_name = #{deptName},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="leader != null">leader = #{leader},</if>
+            <if test="propertyId != null">property_id = #{propertyId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyDeptById" parameterType="Long">
+        delete from hy_dept where id = #{id}
+    </delete>
+
+    <delete id="deleteHyDeptByIds" parameterType="String">
+        delete from hy_dept where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -26,15 +26,26 @@
                                 <label>地址：</label>
                                 <input type="text" name="maintenanceAddress"/>
                             </li>
-                            <li>
+<!--                             <li>
                                 <label>总价：</label>
                                 <input type="text" name="maintenanceTotal"/>
                             </li>
-                            <li>
+ -->                        <li>
                                 <label>支付状态：</label>
-                                <input type="text" name="payState"/>
+                                <select name="payState" class="form-control " >
+			                      <option value="">请选择</option>
+			                      <option value="1">未支付</option>
+			                      <option value="2">已支付</option>
+			                     </select>
                             </li>
-                            <li>
+                       		<li>
+                                <label>选择小区：</label>
+			                     <select id="propertyId" name="propertyId" class="form-control" th:with="type=${@property.getProperty()}">
+									<option value="">请选择</option>
+									<option th:if="data!=null" th:each="data:${type}" th:text="${data.propertyName}" th:value="${data.id}"></option>
+						 	    </select>
+                            </li>
+                            <!-- <li>
                                 <label>支付方式：</label>
                                 <input type="text" name="payWay"/>
                             </li>
@@ -48,30 +59,22 @@
 									<option value="">请选择</option>
 									<option th:if="data!=null" th:each="data:${type}" th:text="${data.reportName}" th:value="${data.id}"></option>
 						 	    </select>
-                            </li>
+                            </li> -->
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                                 <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.table.exportExcel()" shiro:hasPermission="system:maintenance:export"><i class="fa fa-download"></i> 导出 </a>
                             </li>
                         </ul>
                     </div>
                 </form>
             </div>
 
-            <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:maintenance:add">
-                    <i class="fa fa-plus"></i> 添加
-                </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:maintenance:edit">
-                    <i class="fa fa-edit"></i> 修改
-                </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:maintenance:remove">
-                    <i class="fa fa-remove"></i> 删除
-                </a>
+            <!-- <div class="btn-group-sm" id="toolbar" role="group">
                 <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:maintenance:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
-            </div>
+            </div> -->
             <div class="col-sm-12 select-table table-striped">
                 <table id="bootstrap-table"></table>
             </div>
@@ -105,7 +108,7 @@
                 },
                 {
                     field: 'userName',
-                    title: '用户姓名'
+                    title: '姓名'
                 },
                 {
                     field: 'maintenancePhone',
@@ -121,20 +124,32 @@
                 },
                 {
                     field: 'payState',
-                    title: '支付状态'
+                    title: '支付状态',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case "" : value =  "请选择";break;
+	                    	case "1" : value =  "未支付";break;
+	                    	case "2" : value =  "已支付";break;
+	                	}
+		            	return value;
+		            }
                 },
                 {
                     field: 'payWay',
                     title: '支付方式'
                 },
                 {
+                    field: 'createTime',
+                    title: '下单时间'
+                },
+                {
                     field: 'historyOperator',
                     title: '处理人'
                 },
-                {
+               /*  {
                     field: 'hyReport.reportName',
                     title: '报事管理人'
-                },
+                }, */
                 {
                     title: '操作',
                     align: 'center',

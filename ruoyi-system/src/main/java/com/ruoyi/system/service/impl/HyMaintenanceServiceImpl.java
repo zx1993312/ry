@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.ruoyi.system.mapper.HyMaintenanceMapper;
+import com.ruoyi.system.mapper.HyResidentialQuartersMapper;
 import com.ruoyi.system.domain.HyMaintenance;
+import com.ruoyi.system.domain.HyResidentialQuarters;
 import com.ruoyi.system.service.IHyMaintenanceService;
 import com.ruoyi.common.core.text.Convert;
 
@@ -22,6 +24,8 @@ public class HyMaintenanceServiceImpl implements IHyMaintenanceService
     @Autowired
     private HyMaintenanceMapper hyMaintenanceMapper;
 
+    @Autowired
+    private HyResidentialQuartersMapper hyResidentialQuartersMapper;
     /**
      * 查询维修费用
      * 
@@ -56,6 +60,15 @@ public class HyMaintenanceServiceImpl implements IHyMaintenanceService
     @Override
     public int insertHyMaintenance(HyMaintenance hyMaintenance)
     {
+    	HyResidentialQuarters hyResidentialQuarters = new HyResidentialQuarters();
+    	String address = hyMaintenance.getMaintenanceAddress();
+    	String[] quarters = address.split("-");
+    	String communityName = quarters[0];
+    	hyResidentialQuarters.setCommunityName(communityName);
+    	List<HyResidentialQuarters> list = hyResidentialQuartersMapper.selectHyResidentialQuartersList(hyResidentialQuarters);
+    	hyResidentialQuarters = list.get(0);
+    	Long quartersId = hyResidentialQuarters.getId();
+    	hyMaintenance.setQuartersId(quartersId);
         hyMaintenance.setCreateTime(DateUtils.getNowDate());
         return hyMaintenanceMapper.insertHyMaintenance(hyMaintenance);
     }

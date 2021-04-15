@@ -21,6 +21,10 @@ public class HyRecipients extends BaseEntity
     /** 人员类型 */
     @Excel(name = "人员类型")
     private String personType;
+    
+    /** 选择物业 */
+    @Excel(name = "选择物业")
+    private String recipientsProperty;
 
     /** 选择部门 */
     @Excel(name = "选择部门")
@@ -33,10 +37,18 @@ public class HyRecipients extends BaseEntity
     /** 姓名 */
     @Excel(name = "姓名")
     private String recipientsName;
+    
+    /** 电话 */
+    @Excel(name = "电话")
+    private String recipientsPhone;
 
     /** 通知方式 */
     @Excel(name = "通知方式")
     private String notificationWay;
+    
+    /** 通知类型*/
+    @Excel(name = "通知类型")
+    private String notificationType;
 
     /** 省/直辖市 */
     @Excel(name = "省/直辖市")
@@ -49,14 +61,6 @@ public class HyRecipients extends BaseEntity
     /** 区/县 */
     @Excel(name = "区/县")
     private String recipientsArea;
-
-    /** 报事管理id */
-    @Excel(name = "报事管理id")
-    private Long reportId;
-    
-    /** 报事管理表 */
-    @Excel(name = "报事管理表")
-    private HyReport hyReport;
 
     public void setId(Long id) 
     {
@@ -76,7 +80,15 @@ public class HyRecipients extends BaseEntity
     {
         return personType;
     }
-    public void setRecipientsDept(String recipientsDept) 
+    public String getRecipientsProperty() {
+		return recipientsProperty;
+	}
+
+	public void setRecipientsProperty(String recipientsProperty) {
+		this.recipientsProperty = recipientsProperty;
+	}
+
+	public void setRecipientsDept(String recipientsDept) 
     {
         this.recipientsDept = recipientsDept;
     }
@@ -103,7 +115,16 @@ public class HyRecipients extends BaseEntity
     {
         return recipientsName;
     }
-    public void setNotificationWay(String notificationWay) 
+    
+    public String getRecipientsPhone() {
+		return recipientsPhone;
+	}
+
+	public void setRecipientsPhone(String recipientsPhone) {
+		this.recipientsPhone = recipientsPhone;
+	}
+
+	public void setNotificationWay(String notificationWay) 
     {
         this.notificationWay = notificationWay;
     }
@@ -112,7 +133,16 @@ public class HyRecipients extends BaseEntity
     {
         return notificationWay;
     }
-    public void setRecipientsProvince(String recipientsProvince) 
+    
+    public String getNotificationType() {
+		return notificationType;
+	}
+
+	public void setNotificationType(String notificationType) {
+		this.notificationType = notificationType;
+	}
+
+	public void setRecipientsProvince(String recipientsProvince) 
     {
         this.recipientsProvince = recipientsProvince;
     }
@@ -139,32 +169,22 @@ public class HyRecipients extends BaseEntity
     {
         return recipientsArea;
     }
-    public void setReportId(Long reportId) 
-    {
-        this.reportId = reportId;
-    }
-
-    public Long getReportId() 
-    {
-        return reportId;
-    }
-
-    public HyReport getHyReport() {
-		return hyReport;
-	}
-
-	public void setHyReport(HyReport hyReport) {
-		this.hyReport = hyReport;
-	}
 
 	@Override
 	public String toString() {
-		return "HyRecipients [id=" + id + ", personType=" + personType + ", recipientsDept=" + recipientsDept
-				+ ", recipientsEmployee=" + recipientsEmployee + ", recipientsName=" + recipientsName
-				+ ", notificationWay=" + notificationWay + ", recipientsProvince=" + recipientsProvince
-				+ ", recipientsCity=" + recipientsCity + ", recipientsArea=" + recipientsArea + ", reportId=" + reportId
-				+ ", hyReport=" + hyReport + "]";
+		return "HyRecipients [id=" + id + ", personType=" + personType + ", recipientsProperty=" + recipientsProperty
+				+ ", recipientsDept=" + recipientsDept + ", recipientsEmployee=" + recipientsEmployee
+				+ ", recipientsName=" + recipientsName + ", recipientsPhone=" + recipientsPhone + ", notificationWay="
+				+ notificationWay + ", notificationType=" + notificationType + ", recipientsProvince="
+				+ recipientsProvince + ", recipientsCity=" + recipientsCity + ", recipientsArea=" + recipientsArea
+				+ "]";
 	}
+
+	
+
+	
+
+	
 
 	
 }

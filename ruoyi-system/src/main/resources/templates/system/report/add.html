@@ -11,13 +11,19 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">姓名：</label>
                 <div class="col-sm-8">
-                    <input name="reportName" class="form-control" type="text">
-                </div>
+                <select id="recipientsId" name="recipientsId" class="form-control" th:with="type=${@recipients.getRecipients()}">
+					<option value="">请选择</option>
+					<option th:if="data!=null" th:each="data:${type}" th:text="${data.recipientsName}" th:value="${data.id}"></option>
+		 	    </select>
+		 	    </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">手机：</label>
                 <div class="col-sm-8">
-                    <input name="reportPhone" class="form-control" type="text">
+                <select id="recipientsId" name="recipientsId" class="form-control" th:with="type=${@recipients.getRecipients()}">
+					<option value="">请选择</option>
+					<option th:if="data!=null" th:each="data:${type}" th:text="${data.recipientsPhone}" th:value="${data.id}"></option>
+		 	    </select>
                 </div>
             </div>
             <div class="form-group">    
@@ -40,36 +46,20 @@
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">日期：</label>
-                <div class="col-sm-8">
-                    <div class="input-group date">
-                        <input name="reportDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">    
                 <label class="col-sm-3 control-label">质保：</label>
                 <div class="col-sm-8">
                     <input name="reportQuality" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">状态：</label>
-                <div class="col-sm-8">
-                    <input name="reportState" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">审核：</label>
-                <div class="col-sm-8">
-                    <input name="reportAudit" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
                 <label class="col-sm-3 control-label">评价：</label>
                 <div class="col-sm-8">
-                    <input name="reportEvaluate" class="form-control" type="text">
+                    <select name="reportEvaluate" class="form-control " >
+                      <option value="">请选择</option>
+                      <option value="1">满意</option>
+                      <option value="2">良好</option>
+                      <option value="3">不满意</option>
+                     </select>
                 </div>
             </div>
             <div class="form-group">    

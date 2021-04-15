@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('装修审核列表')" />
+    <th:block th:include="include :: header('员工列表')" />
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -11,23 +11,19 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                <label>实地审核图片地址：</label>
-                                <input type="text" name=" fitmentAuditPictureAddress"/>
+                                <label>员工姓名：</label>
+                                <input type="text" name="employeeName"/>
                             </li>
                             <li>
-                                <label>是否同意：</label>
-                                <select name="fitmentAuditAgree" class="form-control " >
-			                      <option value="">请选择</option>
-			                      <option value=1>是</option>
-			                      <option value=2>否</option>
-			                     </select>
+                                <label>员工电话：</label>
+                                <input type="text" name="employeePhone"/>
                             </li>
                             <li>
-                                <label>所属房屋：</label>
-                                <select id="houseInfId" name="houseInfId" class="form-control" th:with="type=${@houseInf.getHouseInf()}">
+                                <label>所属部门：</label>
+                                <select id="deptId" name="deptId" class="form-control" th:with="type=${@dept.getDept()}">
 									<option value="">请选择</option>
-									<option th:if="data!=null" th:each="data:${type}" th:text="${data.houseName}" th:value="${data.id}"></option>
-						 	    </select>
+									<option th:if="data!=null" th:each="data:${type}" th:text="${data.deptName}" th:value="${data.id}"></option>
+					 	    	</select>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -39,16 +35,16 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:audit:add">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:employee:add">
                     <i class="fa fa-plus"></i> 添加
                 </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:audit:edit">
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:employee:edit">
                     <i class="fa fa-edit"></i> 修改
                 </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:audit:remove">
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:employee:remove">
                     <i class="fa fa-remove"></i> 删除
                 </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:audit:export">
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:employee:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
             </div>
@@ -59,9 +55,9 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('system:audit:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('system:audit:remove')}]];
-        var prefix = ctx + "system/audits";
+        var editFlag = [[${@permission.hasPermi('system:employee:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:employee:remove')}]];
+        var prefix = ctx + "system/employee";
 
         $(function() {
             var options = {
@@ -70,34 +66,26 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "装修审核",
+                modalName: "员工",
                 columns: [{
                     checkbox: true
                 },
                 {
                     field: 'id',
-                    title: '装修审核id',
+                    title: '员工id',
                     visible: false
                 },
                 {
-                    field: 'pictureAddress',
-                    title: '实地审核图片地址'
+                    field: 'employeeName',
+                    title: '员工姓名'
                 },
                 {
-                    field: 'fitmentAuditAgree',
-                    title: '是否同意',
-                    formatter: function(value, item, index) {
-                    	switch(value){
-	                    	case "" : value =  "请选择";break;
-	                    	case 1 : value =  "同意";break;
-	                    	case 2 : value =  "不同意";break;
-	                	}
-		            	return value;
-		            }
+                    field: 'employeePhone',
+                    title: '员工电话'
                 },
                 {
-                    field: 'hyHouseInf.houseName',
-                    title: '所属房屋'
+                    field: 'hyDept.deptName',
+                    title: '所属部门'
                 },
                 {
                     title: '操作',

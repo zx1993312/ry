@@ -21,14 +21,6 @@ public class HyReport extends BaseEntity
     /** 报事管理id */
     private Long id;
 
-    /** 姓名 */
-    @Excel(name = "姓名")
-    private String reportName;
-
-    /** 手机 */
-    @Excel(name = "手机")
-    private String reportPhone;
-
     /** 地址 */
     @Excel(name = "地址")
     private String reportAddress;
@@ -77,6 +69,14 @@ public class HyReport extends BaseEntity
     /** 小区表 */
     @Excel(name = "小区表")
     private HyResidentialQuarters hyResidentialQuarters;
+    
+    /** 接收员id */
+    @Excel(name = "接收员id")
+    private Long recipientsId;
+    
+    /** 接收员表 */
+    @Excel(name = "接收员表")
+    private HyRecipients hyRecipients;
 
     public void setId(Long id) 
     {
@@ -86,24 +86,6 @@ public class HyReport extends BaseEntity
     public Long getId() 
     {
         return id;
-    }
-    public void setReportName(String reportName) 
-    {
-        this.reportName = reportName;
-    }
-
-    public String getReportName() 
-    {
-        return reportName;
-    }
-    public void setReportPhone(String reportPhone) 
-    {
-        this.reportPhone = reportPhone;
-    }
-
-    public String getReportPhone() 
-    {
-        return reportPhone;
     }
     public void setReportAddress(String reportAddress) 
     {
@@ -212,16 +194,37 @@ public class HyReport extends BaseEntity
 	public void setHyResidentialQuarters(HyResidentialQuarters hyResidentialQuarters) {
 		this.hyResidentialQuarters = hyResidentialQuarters;
 	}
+	
+	public Long getRecipientsId() {
+		return recipientsId;
+	}
+
+	public void setRecipientsId(Long recipientsId) {
+		this.recipientsId = recipientsId;
+	}
+
+	public HyRecipients getHyRecipients() {
+		return hyRecipients;
+	}
+
+	public void setHyRecipients(HyRecipients hyRecipients) {
+		this.hyRecipients = hyRecipients;
+	}
 
 	@Override
 	public String toString() {
-		return "HyReport [id=" + id + ", reportName=" + reportName + ", reportPhone=" + reportPhone + ", reportAddress="
-				+ reportAddress + ", reportClassify=" + reportClassify + ", reportContent=" + reportContent
-				+ ", reportDate=" + reportDate + ", reportQuality=" + reportQuality + ", reportState=" + reportState
-				+ ", reportAudit=" + reportAudit + ", reportEvaluate=" + reportEvaluate + ", reportCost=" + reportCost
-				+ ", reportVisit=" + reportVisit + ", quartersId=" + quartersId + ", hyResidentialQuarters="
-				+ hyResidentialQuarters + "]";
+		return "HyReport [id=" + id + ", reportAddress=" + reportAddress + ", reportClassify=" + reportClassify
+				+ ", reportContent=" + reportContent + ", reportDate=" + reportDate + ", reportQuality=" + reportQuality
+				+ ", reportState=" + reportState + ", reportAudit=" + reportAudit + ", reportEvaluate=" + reportEvaluate
+				+ ", reportCost=" + reportCost + ", reportVisit=" + reportVisit + ", quartersId=" + quartersId
+				+ ", hyResidentialQuarters=" + hyResidentialQuarters + ", recipientsId=" + recipientsId
+				+ ", hyRecipients=" + hyRecipients + "]";
 	}
+
+	
+
+	
+	
 
 	
 }

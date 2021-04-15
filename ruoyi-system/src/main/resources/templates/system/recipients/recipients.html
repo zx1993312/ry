@@ -10,21 +10,20 @@
                 <form id="formId">
                     <div class="select-list">
                         <ul>
-                            <li>
+                            <!-- <li>
                                 <label>人员类型：</label>
                                 <select name="personType">
-                                    <option value="">所有</option>
-                                    <option value="-1">代码生成请选择字典属性</option>
+                                    <option value="">请选择</option>
                                 </select>
-                            </li>
+                            </li> -->
                             <li>
                                 <label>选择部门：</label>
                                 <input type="text" name="recipientsDept"/>
                             </li>
-                            <li>
+                            <!-- <li>
                                 <label>选择员工：</label>
                                 <input type="text" name="recipientsEmployee"/>
-                            </li>
+                            </li> -->
                             <li>
                                 <label>姓名：</label>
                                 <input type="text" name="recipientsName"/>
@@ -33,7 +32,7 @@
                                 <label>通知方式：</label>
                                 <input type="text" name="notificationWay"/>
                             </li>
-                            <li>
+                            <!-- <li>
                                 <label>省/直辖市：</label>
                                 <input type="text" name="recipientsProvince"/>
                             </li>
@@ -44,14 +43,7 @@
                             <li>
                                 <label>区/县：</label>
                                 <input type="text" name="recipientsArea"/>
-                            </li>
-                            <li>
-                                <label>报事管理人：</label>
-                                <select id="reportId" name="reportId" class="form-control" th:with="type=${@report.getReport()}">
-									<option value="">请选择</option>
-									<option th:if="data!=null" th:each="data:${type}" th:text="${data.reportName}" th:value="${data.id}"></option>
-						 	    </select>
-                            </li>
+                            </li> -->
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                                 <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
@@ -62,17 +54,8 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:recipients:add">
-                    <i class="fa fa-plus"></i> 添加
-                </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:recipients:edit">
-                    <i class="fa fa-edit"></i> 修改
-                </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:recipients:remove">
-                    <i class="fa fa-remove"></i> 删除
-                </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:recipients:export">
-                    <i class="fa fa-download"></i> 导出
+                <a class="btn btn-primary" onclick="$.operate.add()" shiro:hasPermission="system:recipients:add">
+                    <i class="fa fa-plus"></i> 添加接收员
                 </a>
             </div>
             <div class="col-sm-12 select-table table-striped">
@@ -102,7 +85,7 @@
                     title: '接收员id',
                     visible: false
                 },
-                {
+                /* {
                     field: 'personType',
                     title: '人员类型'
                 },
@@ -113,16 +96,30 @@
                 {
                     field: 'recipientsEmployee',
                     title: '选择员工'
-                },
+                }, */
                 {
                     field: 'recipientsName',
                     title: '姓名'
                 },
                 {
                     field: 'notificationWay',
-                    title: '通知方式'
+                    title: '通知方式',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case "" : value =  "请选择";break;
+	                    	case "1" : value =  "暂不启用";break;
+	                    	case "2" : value =  "模板消息通知";break;
+	                    	case "3" : value =  "短信通知";break;
+	                    	case "4" : value =  "全部通知";break;
+	                	}
+		            	return value;
+		            }
                 },
                 {
+                    field: '1',
+                    title: '处理单数'
+                },
+                /* {
                     field: 'recipientsProvince',
                     title: '省/直辖市'
                 },
@@ -133,18 +130,14 @@
                 {
                     field: 'recipientsArea',
                     title: '区/县'
-                },
-                {
-                    field: 'hyReport.reportName',
-                    title: '报事管理人'
-                },
+                }, */
                 {
                     title: '操作',
                     align: 'center',
                     formatter: function(value, row, index) {
                         var actions = [];
-                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        actions.push('<a class="btn btn-primary btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        /* actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>'); */
                         return actions.join('');
                     }
                 }]

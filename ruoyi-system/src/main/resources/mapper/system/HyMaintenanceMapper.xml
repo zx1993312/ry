@@ -15,27 +15,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="payWay"    column="pay_way"    />
         <result property="createTime"    column="create_time"    />
         <result property="historyOperator"    column="history_operator"    />
-        <result property="reportId"    column="report_id"    />
-         <association property="hyReport"
-			column="id" javaType="HyReport"
-			resultMap="HyReportResult" />
-    </resultMap>
-
-	<resultMap type="HyReport" id="HyReportResult">
-        <result property="id"    column="id"    />
-        <result property="reportName"    column="report_name"    />
-        <result property="reportPhone"    column="report_phone"    />
-        <result property="reportAddress"    column="report_address"    />
-        <result property="reportClassify"    column="report_classify"    />
-        <result property="reportContent"    column="report_content"    />
-        <result property="reportDate"    column="report_date"    />
-        <result property="reportQuality"    column="report_quality"    />
-        <result property="reportState"    column="report_state"    />
-        <result property="reportAudit"    column="report_audit"    />
-        <result property="reportEvaluate"    column="report_evaluate"    />
-        <result property="reportCost"    column="report_cost"    />
-        <result property="reportVisit"    column="report_visit"    />
         <result property="quartersId"    column="quarters_id"    />
+         <association property="hyResidentialQuarters"
+			column="id" javaType="HyResidentialQuarters"
+			resultMap="HyResidentialQuartersResult" />
+    </resultMap>
+	
+	<resultMap type="HyResidentialQuarters" id="HyResidentialQuartersResult">
+        <result property="id"    column="id"    />
+        <result property="communityAddress"    column="community_address"    />
+        <result property="communityName"    column="community_name"    />
+        <result property="contacts"    column="contacts"    />
+        <result property="contactNumber"    column="contact_number"    />
+        <result property="contactQq"    column="Contact_QQ"    />
+        <result property="city"    column="city"    />
+        <result property="area"    column="area"    />
+        <result property="county"    column="county"    />
+        <result property="address"    column="address"    />
+        <result property="longitude"    column="longitude"    />
+        <result property="latitude"    column="latitude"    />
+        <result property="customerLink"    column="customer_link"    />
+        <result property="externalLinks"    column="external_links"    />
+        <result property="propertyId"    column="property_id"    />
     </resultMap>
 	
     <sql id="selectHyMaintenanceVo">
@@ -50,11 +51,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         m.pay_way, 
         m.create_time, 
         m.history_operator, 
-        m.report_id,
-        r.report_name 
+        m.quarters_id,
+        q.community_name,
+        q.community_address 
         from 
         hy_maintenance m
-        LEFT JOIN hy_report r ON m.report_id=r.id
+        LEFT JOIN hy_residential_quarters q ON m.quarters_id=q.id
     </sql>
 
     <select id="selectHyMaintenanceList" parameterType="HyMaintenance" resultMap="HyMaintenanceResult">
@@ -68,7 +70,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="payState != null  and payState != ''"> and m.pay_state = #{payState}</if>
             <if test="payWay != null  and payWay != ''"> and m.pay_way = #{payWay}</if>
             <if test="historyOperator != null  and historyOperator != ''"> and m.history_operator = #{historyOperator}</if>
-            <if test="reportId != null "> and m.report_id = #{reportId}</if>
+            <if test="quartersId != null "> and m.quarters_id = #{quartersId}</if>
         </where>
     </select>
     
@@ -81,27 +83,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         insert into hy_maintenance
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="orderNumber != null">order_number,</if>
+            <!-- order_number, -->
             <if test="userName != null">user_name,</if>
             <if test="maintenancePhone != null">maintenance_phone,</if>
             <if test="maintenanceAddress != null">maintenance_address,</if>
             <if test="maintenanceTotal != null">maintenance_total,</if>
-            <if test="payState != null">pay_state,</if>
+            pay_state,
             <if test="payWay != null">pay_way,</if>
             <if test="createTime != null">create_time,</if>
-            <if test="historyOperator != null">history_operator,</if>
-            <if test="reportId != null">report_id,</if>
+            history_operator,
+            <if test="quartersId != null">quarters_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="orderNumber != null">#{orderNumber},</if>
+            <!-- UUID(), -->
             <if test="userName != null">#{userName},</if>
             <if test="maintenancePhone != null">#{maintenancePhone},</if>
             <if test="maintenanceAddress != null">#{maintenanceAddress},</if>
             <if test="maintenanceTotal != null">#{maintenanceTotal},</if>
-            <if test="payState != null">#{payState},</if>
+            "1",
             <if test="payWay != null">#{payWay},</if>
             <if test="createTime != null">#{createTime},</if>
-            <if test="historyOperator != null">#{historyOperator},</if>
-            <if test="reportId != null">#{reportId},</if>
+            "管理员",
+            <if test="quartersId != null">#{quartersId},</if>
          </trim>
     </insert>
 
@@ -117,7 +121,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="payWay != null">pay_way = #{payWay},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
             <if test="historyOperator != null">history_operator = #{historyOperator},</if>
-            <if test="reportId != null">report_id = #{reportId},</if>
+            <if test="quartersId != null">quarters_id = #{quartersId},</if>
         </trim>
         where id = #{id}
     </update>
