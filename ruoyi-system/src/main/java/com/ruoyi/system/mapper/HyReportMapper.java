@@ -42,7 +42,15 @@ public interface HyReportMapper
      * @return 结果
      */
     public int updateHyReport(HyReport hyReport);
-
+    
+    /**
+     * 一键全部审核
+     * 
+     * @param hyReport 报事管理
+     * @return 结果
+     */
+    public int updateAudit(HyReport hyReport);
+    
     /**
      * 删除报事管理
      * 
@@ -58,4 +66,5 @@ public interface HyReportMapper
      * @return 结果
      */
     public int deleteHyReportByIds(String[] ids);
+
 }

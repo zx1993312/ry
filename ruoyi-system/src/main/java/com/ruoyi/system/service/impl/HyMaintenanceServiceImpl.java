@@ -70,6 +70,7 @@ public class HyMaintenanceServiceImpl implements IHyMaintenanceService
     	Long quartersId = hyResidentialQuarters.getId();
     	hyMaintenance.setQuartersId(quartersId);
         hyMaintenance.setCreateTime(DateUtils.getNowDate());
+        
         return hyMaintenanceMapper.insertHyMaintenance(hyMaintenance);
     }
 

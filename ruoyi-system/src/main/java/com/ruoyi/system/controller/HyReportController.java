@@ -138,6 +138,21 @@ public class HyReportController extends BaseController
     {
         return toAjax(hyReportService.updateHyReport(hyReport));
     }
+    /**
+     * 一键全部审核
+     */
+    @ApiOperation("报事管理")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyReport", value = "项目实体类hyReport", required = true),
+    })
+    @RequiresPermissions("system:report:edit")
+    @Log(title = "报事管理", businessType = BusinessType.UPDATE)
+    @PostMapping("/edits")
+    @ResponseBody
+    public AjaxResult edits(HyReport hyReport)
+    {
+    	return toAjax(hyReportService.updateAudit(hyReport));
+    }
 
     /**
      * 删除报事管理

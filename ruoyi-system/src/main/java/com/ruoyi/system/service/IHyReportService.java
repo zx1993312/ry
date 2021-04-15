@@ -42,7 +42,15 @@ public interface IHyReportService
      * @return 结果
      */
     public int updateHyReport(HyReport hyReport);
-
+    
+    /**
+     * 一键全部审核
+     * 
+     * @param hyReport 报事管理
+     * @return 结果
+     */
+    public int updateAudit(HyReport hyReport);
+    
     /**
      * 批量删除报事管理
      * 
@@ -58,4 +66,5 @@ public interface IHyReportService
      * @return 结果
      */
     public int deleteHyReportById(Long id);
+
 }

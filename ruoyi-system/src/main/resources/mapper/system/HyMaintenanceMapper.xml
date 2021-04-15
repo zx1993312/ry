@@ -16,6 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="createTime"    column="create_time"    />
         <result property="historyOperator"    column="history_operator"    />
         <result property="quartersId"    column="quarters_id"    />
+        <result property="reportId"    column="report_id"    />
          <association property="hyResidentialQuarters"
 			column="id" javaType="HyResidentialQuarters"
 			resultMap="HyResidentialQuartersResult" />
@@ -52,6 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         m.create_time, 
         m.history_operator, 
         m.quarters_id,
+        m.report_id,
         q.community_name,
         q.community_address 
         from 
@@ -71,6 +73,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="payWay != null  and payWay != ''"> and m.pay_way = #{payWay}</if>
             <if test="historyOperator != null  and historyOperator != ''"> and m.history_operator = #{historyOperator}</if>
             <if test="quartersId != null "> and m.quarters_id = #{quartersId}</if>
+            <if test="reportId != null "> and m.report_id = #{reportId}</if>
         </where>
     </select>
     
@@ -93,6 +96,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createTime != null">create_time,</if>
             history_operator,
             <if test="quartersId != null">quarters_id,</if>
+            <if test="reportId != null">report_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="orderNumber != null">#{orderNumber},</if>
@@ -106,6 +110,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createTime != null">#{createTime},</if>
             "管理员",
             <if test="quartersId != null">#{quartersId},</if>
+            <if test="reportId != null">#{reportId},</if>
          </trim>
     </insert>
 
@@ -122,6 +127,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createTime != null">create_time = #{createTime},</if>
             <if test="historyOperator != null">history_operator = #{historyOperator},</if>
             <if test="quartersId != null">quarters_id = #{quartersId},</if>
+            <if test="reportId != null">report_id = #{reportId},</if>
         </trim>
         where id = #{id}
     </update>

@@ -70,6 +70,17 @@ public class HyReportServiceImpl implements IHyReportService
     {
         return hyReportMapper.updateHyReport(hyReport);
     }
+    
+    /**
+     * 一键全部审核
+     * 
+     * @param hyReport 报事管理
+     * @return 结果
+     */
+    @Override
+	public int updateAudit(HyReport hyReport) {
+		return hyReportMapper.updateAudit(hyReport);
+	}
 
     /**
      * 删除报事管理对象
@@ -96,4 +107,5 @@ public class HyReportServiceImpl implements IHyReportService
     {
         return hyReportMapper.deleteHyReportById(id);
     }
+
 }

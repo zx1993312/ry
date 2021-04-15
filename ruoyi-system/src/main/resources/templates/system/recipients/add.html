@@ -9,11 +9,14 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">人员类型：</label>
                 <div class="col-sm-8">
-                    <select name="personType" class="form-control m-b">
-                        <option value="">请选择</option>
-                        <option value="1">物业人员</option>
-                        <option value="2">外部人员</option>
-                    </select>
+                	<div class="col-sm-9">
+            			<label class="radio-box">
+               		 		<input type="radio" checked="checked" th:value="1" th:text="物业人员" name="personType">
+               		 	</label>
+            			<label class="radio-box">
+                			<input type="radio" th:value="2" th:text="外部人员" name="personType">
+                		</label>
+        			</div>
                 </div>
             </div>
             <div class="form-group">    
@@ -41,29 +44,38 @@
                 </div>
             </div>
             <div class="form-group">    
+                <label class="col-sm-3 control-label">电话：</label>
+                <div class="col-sm-8">
+                    <input name="recipientsPhone" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
                 <label class="col-sm-3 control-label">通知方式：</label>
                 <div class="col-sm-8">
-                    <select name="notificationWay" class="form-control m-b">
-                        <option value="">请选择</option>
-                        <option value="1">暂不启用</option>
-                        <option value="2">模板消息通知</option>
-                        <option value="3">短信通知</option>
-                        <option value="4">全部通知</option>
-                    </select>
+                	<div class="col-sm-9">
+            			<label class="radio-box">
+               		 		<input type="radio" checked="checked" th:value="1" th:text="暂不启用" name="notificationWay">
+               		 	</label>
+            			<label class="radio-box">
+                			<input type="radio" th:value="2" th:text="模板消息通知" name="notificationWay">
+                		</label>
+            			<label class="radio-box">
+                			<input type="radio" th:value="3" th:text="短信通知" name="notificationWay">
+                		</label>
+            			<label class="radio-box">
+                			<input type="radio" th:value="4" th:text="全部通知" name="notificationWay">
+                		</label>
+        			</div>
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">通知类型：</label>
                 <div class="col-sm-8">
-                    <select name="notificationType" class="form-control m-b">
-                        <option value="">请选择</option>
-                        <option value="1">健身器材</option>
-                        <option value="2">水电维修</option>
-                        <option value="3">公共照明</option>
-                        <option value="4">漏水</option>
-                        <option value="5">公共设施</option>
-                        <option value="6">取暖</option>
-                    </select>
+                    <div class="col-sm-9" th:with="type=${@dict.getType('hy_recipients')}">
+                    <label  th:each="dict : ${type}" class="check-box">
+                    	<input name="notificationType" type="checkbox" th:text="${dict.dictLabel}" th:value="${dict.dictValue}">
+                    </label>
+        			</div>
                 </div>
             </div>
             <div class="form-group">    

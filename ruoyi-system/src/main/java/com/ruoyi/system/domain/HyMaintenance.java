@@ -49,6 +49,10 @@ public class HyMaintenance extends BaseEntity
     /** 处理人 */
     @Excel(name = "处理人")
     private String historyOperator;
+    
+    /** 报事管理id */
+    @Excel(name = "报事管理id")
+    private Long reportId;
 
     /** 小区id */
     @Excel(name = "小区id")
@@ -139,18 +143,20 @@ public class HyMaintenance extends BaseEntity
     {
         return historyOperator;
     }
-    public void setQuartersId(Long quartersId) 
+    public Long getReportId() {
+		return reportId;
+	}
+	public void setReportId(Long reportId) {
+		this.reportId = reportId;
+	}
+	public void setQuartersId(Long quartersId) 
     {
         this.quartersId = quartersId;
     }
-
     public Long getQuartersId() 
     {
         return quartersId;
     }
-
-    
-
 	public HyResidentialQuarters getHyResidentialQuarters() {
 		return hyResidentialQuarters;
 	}
@@ -164,9 +170,11 @@ public class HyMaintenance extends BaseEntity
 		return "HyMaintenance [id=" + id + ", orderNumber=" + orderNumber + ", userName=" + userName
 				+ ", maintenancePhone=" + maintenancePhone + ", maintenanceAddress=" + maintenanceAddress
 				+ ", maintenanceTotal=" + maintenanceTotal + ", payState=" + payState + ", payWay=" + payWay
-				+ ", historyOperator=" + historyOperator + ", quartersId=" + quartersId + ", hyResidentialQuarters="
-				+ hyResidentialQuarters + "]";
+				+ ", historyOperator=" + historyOperator + ", reportId=" + reportId + ", quartersId=" + quartersId
+				+ ", hyResidentialQuarters=" + hyResidentialQuarters + "]";
 	}
+
+	
 
 	
 

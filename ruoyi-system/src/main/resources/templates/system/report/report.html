@@ -100,6 +100,11 @@
             <div class="col-sm-12 select-table table-striped">
                 <table id="bootstrap-table"></table>
             </div>
+            <div class="btn-group-sm" id="toolbar" role="group">
+             <a style="float: left" class="btn btn-warning" onclick="edit()">
+               		 一键全部审核
+             </a>
+            </div>
         </div>
     </div>
     <th:block th:include="include :: footer" />
@@ -203,7 +208,7 @@
                     align: 'center',
                     formatter: function(value, row, index) {
                         var actions = [];
-                        actions.push('<a class="btn btn-primary btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="add(\'' + row.hyRecipients.recipientsName+','+row.hyRecipients.recipientsPhone+','+row.reportAddress+','+row.reportCost+','+row.hyResidentialQuarters.communityName + '\')"><i class="fa fa-edit"></i>处理报修</a> ');
+                        actions.push('<a class="btn btn-primary btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="add(\'' + row.hyRecipients.recipientsName+','+row.hyRecipients.recipientsPhone+','+row.reportAddress+','+row.reportCost+','+row.hyResidentialQuarters.communityName+','+row.reportAudit+','+row.reportState+','+row.id + '\')"><i class="fa fa-edit"></i>处理报修</a> ');
                         /* actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>'); */
                         return actions.join('');
                     }
@@ -212,7 +217,7 @@
             $.table.init(options);
         });
         var prefix1 = ctx + "system/maintenance";
-        var arr = [{},{},{},{},{}];
+        var arr = [{},{},{},{},{},{},{},{}];
         function add(row){
         	arr= row.split(",");
         	var orderNumber = new Date().getTime();
@@ -220,12 +225,54 @@
         	var maintenancePhone = arr[1]+"";
         	var maintenanceAddress = arr[4]+"-"+arr[2]+"";
         	var maintenanceTotal = arr[3]+"";
-        	$.ajax({
+        	var reportAudit = arr[5];
+        	var reportState = arr[6];
+        	var id = arr[7];
+        	if(reportAudit=="2"&&reportState=="1"){
+        		$.ajax({
+                    type: "post",
+                    datatype: "json",
+                    url:  prefix1 + '/add',
+                    data: {"orderNumber":orderNumber,"userName":userName,"maintenancePhone":maintenancePhone,
+                    	"maintenanceAddress":maintenanceAddress,"maintenanceTotal":maintenanceTotal,"reportId":id},
+                    async: true,
+                    success: function (result) {
+                        //console.log(result);
+        				if (typeof callback == "function") {
+           	                callback(result);
+           	            }
+           	            $.operate.successCallback(result);
+                    }
+                });
+        		$.ajax({
+                    type: "post",
+                    datatype: "json",
+                    url:  prefix + '/edit',
+                    data: {"id":id,"reportState":"2"},
+                    async: true,
+                    success: function (result) {
+                        //console.log(result);
+        				if (typeof callback == "function") {
+           	                callback(result);
+           	            }
+           	            $.operate.successCallback(result);
+                    }
+                });
+        	}else if(reportAudit!="2"){
+            	$.modal.alertWarning("该条报修审核没有通过");
+        	}else if(reportState=="2"){
+            	$.modal.alertWarning("该条报修正在处理中...");
+        	}else if(reportState=="3"){
+            	$.modal.alertWarning("该条报修已经被处理");
+        	}
+
+        };
+        function edit(){
+    		$.ajax({
                 type: "post",
                 datatype: "json",
-                url:  prefix1 + '/add',
-                data: {"orderNumber":orderNumber,"userName":userName,"maintenancePhone":maintenancePhone,
-                	"maintenanceAddress":maintenanceAddress,"maintenanceTotal":maintenanceTotal},
+                url:  prefix + '/edits',
+                data: {"reportAudit":"2"},
                 async: true,
                 success: function (result) {
                     //console.log(result);
