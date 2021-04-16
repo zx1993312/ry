@@ -1,5 +1,6 @@
 package com.ruoyi.system.controller;
 
+import java.io.IOException;
 import java.util.List;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.alibaba.fastjson.JSONException;
+import com.github.qcloudsms.SmsSingleSender;
+import com.github.qcloudsms.SmsSingleSenderResult;
+import com.github.qcloudsms.httpclient.HTTPException;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.system.domain.HyReport;
@@ -113,6 +119,21 @@ public class HyReportController extends BaseController
      */
     @ApiOperation("报事管理")
     @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "id", value = "主键id", required = true),
+    })
+    @GetMapping("/detail/{id}")
+    public String detail(@PathVariable("id") Long id, ModelMap mmap)
+    {
+    	HyReport hyReport = hyReportService.selectHyReportById(id);
+    	mmap.put("hyReport", hyReport);
+    	return prefix + "/detail";
+    }
+    
+    /**
+     * 修改报事管理
+     */
+    @ApiOperation("报事管理")
+    @ApiImplicitParams({ 
 		@ApiImplicitParam(name = "id", value = "主键id", required = true),
 	})
     @GetMapping("/edit/{id}")
@@ -169,4 +190,39 @@ public class HyReportController extends BaseController
     {
         return toAjax(hyReportService.deleteHyReportByIds(ids));
     }
+    
+    /**
+     * 发送推送
+     */
+/*    @ApiOperation("报事管理")
+    @ApiImplicitParams({ 
+		@ApiImplicitParam(name = "phone", value = "phone", required = true),
+	})
+    @RequiresPermissions("system:report:remove")
+    @Log(title = "报事管理", businessType = BusinessType.DELETE)
+    @PostMapping( "/send")
+    @ResponseBody
+    public void send(String phone)
+    {
+        int appId = 1400507916;
+        String appKey = "cb557ebf356684d1380e57d04c6290ce";
+        int templateId = 926030;
+        String smsSign = "航宇智慧物业";
+        int appId = 1400330563;
+        String appKey = "ef1e3d4f939cdf086c096be552920371";
+        int templateId = 308731;
+        String smsSign = "CNXFS";
+        try {
+        	String[] params = {};
+			SmsSingleSender sender = new SmsSingleSender(appId, appKey);
+			SmsSingleSenderResult result = sender.sendWithParam("86", phone, templateId,params, smsSign,"","");
+			System.out.println(result);
+		} catch (HTTPException e) {
+			e.printStackTrace();
+		}catch (JSONException e) {
+			e.printStackTrace();
+		}catch (IOException e) {
+			e.printStackTrace();
+		}
+    }*/
 }

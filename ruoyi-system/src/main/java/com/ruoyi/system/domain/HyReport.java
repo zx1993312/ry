@@ -61,6 +61,10 @@ public class HyReport extends BaseEntity
     /** 回访 */
     @Excel(name = "回访")
     private String reportVisit;
+    
+    /** 推送 */
+    @Excel(name = "推送")
+    private String reportPush;
 
     /** 小区id */
     @Excel(name = "小区id")
@@ -177,7 +181,15 @@ public class HyReport extends BaseEntity
     {
         return reportVisit;
     }
-    public void setQuartersId(Long quartersId) 
+    public String getReportPush() {
+		return reportPush;
+	}
+
+	public void setReportPush(String reportPush) {
+		this.reportPush = reportPush;
+	}
+
+	public void setQuartersId(Long quartersId) 
     {
         this.quartersId = quartersId;
     }
@@ -216,10 +228,12 @@ public class HyReport extends BaseEntity
 		return "HyReport [id=" + id + ", reportAddress=" + reportAddress + ", reportClassify=" + reportClassify
 				+ ", reportContent=" + reportContent + ", reportDate=" + reportDate + ", reportQuality=" + reportQuality
 				+ ", reportState=" + reportState + ", reportAudit=" + reportAudit + ", reportEvaluate=" + reportEvaluate
-				+ ", reportCost=" + reportCost + ", reportVisit=" + reportVisit + ", quartersId=" + quartersId
-				+ ", hyResidentialQuarters=" + hyResidentialQuarters + ", recipientsId=" + recipientsId
-				+ ", hyRecipients=" + hyRecipients + "]";
+				+ ", reportCost=" + reportCost + ", reportVisit=" + reportVisit + ", reportPush=" + reportPush
+				+ ", quartersId=" + quartersId + ", hyResidentialQuarters=" + hyResidentialQuarters + ", recipientsId="
+				+ recipientsId + ", hyRecipients=" + hyRecipients + "]";
 	}
+
+	
 
 	
 

@@ -16,6 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="reportEvaluate"    column="report_evaluate"    />
         <result property="reportCost"    column="report_cost"    />
         <result property="reportVisit"    column="report_visit"    />
+        <result property="reportPush"    column="report_push"    />
         <result property="quartersId"    column="quarters_id"    />
         <result property="recipientsId"    column="recipients_id"    />
         <association property="hyResidentialQuarters"
@@ -71,6 +72,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         r.report_evaluate, 
         r.report_cost, 
         r.report_visit, 
+        r.report_push, 
         r.quarters_id,
         r.recipients_id,
         q.community_name,
@@ -95,6 +97,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="reportEvaluate != null  and reportEvaluate != ''"> and r.report_evaluate = #{reportEvaluate}</if>
             <if test="reportCost != null "> and r.report_cost = #{reportCost}</if>
             <if test="reportVisit != null  and reportVisit != ''"> and r.report_visit = #{reportVisit}</if>
+            <if test="reportPush != null  and reportPush != ''"> and r.report_push = #{reportPush}</if>
             <if test="quartersId != null "> and r.quarters_id = #{quartersId}</if>
             <if test="recipientsId != null "> and r.recipients_id = #{recipientsId}</if>
         </where>
@@ -118,6 +121,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="reportEvaluate != null">report_evaluate,</if>
             <if test="reportCost != null">report_cost,</if>
             <if test="reportVisit != null">report_visit,</if>
+            <if test="reportPush != null">report_push,</if>
             <if test="quartersId != null">quarters_id,</if>
             <if test="recipientsId != null">recipients_id,</if>
          </trim>
@@ -132,6 +136,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="reportEvaluate != null">#{reportEvaluate},</if>
             <if test="reportCost != null">#{reportCost},</if>
             <if test="reportVisit != null">#{reportVisit},</if>
+            <if test="reportPush != null">#{reportPush},</if>
             <if test="quartersId != null">#{quartersId},</if>
             <if test="recipientsId != null">#{recipientsId},</if>
          </trim>
@@ -150,6 +155,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="reportEvaluate != null">report_evaluate = #{reportEvaluate},</if>
             <if test="reportCost != null">report_cost = #{reportCost},</if>
             <if test="reportVisit != null">report_visit = #{reportVisit},</if>
+            <if test="reportPush != null">report_push = #{reportPush},</if>
             <if test="quartersId != null">quarters_id = #{quartersId},</if>
             <if test="recipientsId != null">recipients_id = #{recipientsId},</if>
         </trim>

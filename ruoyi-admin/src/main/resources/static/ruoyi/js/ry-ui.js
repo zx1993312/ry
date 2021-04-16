@@ -1096,6 +1096,23 @@ var table = {
                 };
             	$.modal.openOptions(options);
             },
+            // 推送记录
+            details: function(id, width, height) {
+            	table.set();
+            	var _url = $.operate.detailUrl(id);
+            	var options = {
+            			title: table.options.modalName + "推送记录",
+            			width: width,
+            			height: height,
+            			url: _url,
+            			skin: 'layui-layer-gray', 
+            			btn: ['关闭'],
+            			yes: function (index, layero) {
+            				layer.close(index);
+            			}
+            	};
+            	$.modal.openOptions(options);
+            },
             // 详细访问地址
             detailUrl: function(id) {
             	var url = "/404.html";

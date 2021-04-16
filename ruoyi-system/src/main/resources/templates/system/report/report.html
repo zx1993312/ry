@@ -109,6 +109,7 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
+    var detailFlag = [[${@permission.hasPermi('system:report:detail')}]];
         var editFlag = [[${@permission.hasPermi('system:report:edit')}]];
         var removeFlag = [[${@permission.hasPermi('system:report:remove')}]];
         var prefix = ctx + "system/report";
@@ -117,6 +118,7 @@
             var options = {
                 url: prefix + "/list",
                 createUrl: prefix + "/add",
+                detailUrl: prefix + "/detail/{id}",
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
@@ -200,6 +202,11 @@
                     title: '回访'
                 },
                 {
+                    field: 'reportPush',
+                    title: '推送',
+                    visible: false
+                },
+                {
                     field: 'hyResidentialQuarters.communityName',
                     title: '所属小区'
                 },
@@ -208,8 +215,10 @@
                     align: 'center',
                     formatter: function(value, row, index) {
                         var actions = [];
-                        actions.push('<a class="btn btn-primary btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="add(\'' + row.hyRecipients.recipientsName+','+row.hyRecipients.recipientsPhone+','+row.reportAddress+','+row.reportCost+','+row.hyResidentialQuarters.communityName+','+row.reportAudit+','+row.reportState+','+row.id + '\')"><i class="fa fa-edit"></i>处理报修</a> ');
+                        actions.push('<a class="btn btn-primary btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="add(\'' + row.hyRecipients.recipientsName+','+row.hyRecipients.recipientsPhone+','+row.reportAddress+','+row.reportCost+','+row.hyResidentialQuarters.communityName+','+row.reportAudit+','+row.reportState+','+row.id + '\')">处理报修</a> ');
                         /* actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>'); */
+                        actions.push('<a class="btn btn-warning btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="send(\'' + row.hyRecipients.recipientsPhone+','+row.reportState+','+row.reportPush+','+row.id + '\')">推送</a>');
+                        actions.push('<a class="btn btn-success btn-xs ' + detailFlag + '" href="javascript:void(0)" onclick="$.operate.details(\'' + row.id + '\')">推送记录</a> ');
                         return actions.join('');
                     }
                 }]
@@ -282,6 +291,52 @@
        	            $.operate.successCallback(result);
                 }
             });
+        }
+        var agg = [{},{},{},{}];
+        function send(row){
+        	agg = row.split(",");
+        	var phone = agg[0]+"";
+        	var reportState = agg[1]+"";
+        	var reportPush = agg[2]+"";
+        	var id = agg[3]+"";
+        	if(reportState=="2"&&reportPush=="1"){
+       		 $.ajax({
+                 type: "post",
+                 datatype: "json",
+                 url:  prefix + '/send',
+                 data: {"phone":phone},
+                 async: true,
+                 success: function (result) {
+                     //console.log(result);
+     				if (typeof callback == "function") {
+        	                callback(result);
+        	            }
+        	            $.operate.successCallback(result);
+                 }
+             }); 
+       		 
+       		$.ajax({
+                type: "post",
+                datatype: "json",
+                url:  prefix + '/edit',
+                data: {"id":id,"reportPush":"2"},
+                async: true,
+                success: function (result) {
+                    //console.log(result);
+    				if (typeof callback == "function") {
+       	                callback(result);
+       	            }
+       	            $.operate.successCallback(result);
+                }
+            });
+        	}else if(reportState=="1"){
+        		$.modal.alertWarning("该条报修未处理");
+        	}else if(reportState=="3"){
+        		$.modal.alertWarning("该条报修已处理");
+        	}else if(reportPush=="2"){
+        		$.modal.alertWarning("该条报修已推送");
+        	}
+
         }
     </script>
 </body>
