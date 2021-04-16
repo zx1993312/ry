@@ -79,27 +79,28 @@
         			</div>
                 </div>
             </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">省/直辖市：</label>
-                <div class="col-sm-8">
-                    <input name="recipientsProvince" th:field="*{recipientsProvince}" class="form-control" type="text">
+            <div id="element1" class="row">
+                <div class="col-sm-offset-2 col-sm-3">
+                    <select class="province form-control m-b" th:field="*{recipientsProvince}" name="recipientsProvince" id="province" data-first-title="选择省"  th:with="type=${@area.getProvince()}" onchange="changeCity()">
+	                  <option value="">省/直辖市</option>
+	                  <option th:each="dict : ${type}" th:text="${dict.areaname}" th:value="${dict.id}"></option>
+	                </select>
+			    </div>
+                <div class="col-sm-3">
+	                <select class="city form-control m-b" th:field="*{recipientsCity}" name="recipientsCity" id="city" data-first-title="选择市" onchange="changeArea()" disabled="disabled">
+	                  <option value="">市/直辖区</option>
+	                </select>
                 </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">市/直辖区：</label>
-                <div class="col-sm-8">
-                    <input name="recipientsCity" th:field="*{recipientsCity}" class="form-control" type="text">
+                <div class="col-sm-3">
+	                <select class="area form-control m-b" th:field="*{recipientsArea}" name="recipientsArea" id="area" data-first-title="选择地区" disabled="disabled">
+	                  <option value="">区/县</option>
+	                </select>
                 </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">区/县：</label>
-                <div class="col-sm-8">
-                    <input name="recipientsArea" th:field="*{recipientsArea}" class="form-control" type="text">
-                </div>
-            </div>
+             </div> 
         </form>
     </div>
     <th:block th:include="include :: footer" />
+    <th:block th:include="include :: jquery-cxselect-js" />
     <script th:inline="javascript">
         var prefix = ctx + "system/recipients";
         $("#form-recipients-edit").validate({
@@ -111,6 +112,55 @@
                 $.operate.save(prefix + "/edit", $('#form-recipients-edit').serialize());
             }
         }
+        //省市区
+        function changeCity(){
+   			$("#city").removeAttr("disabled");
+   			$.ajax({
+                url: "/area/getCity",
+                data: {parentid : $("#province").val()},
+                dataType : 'json',
+                type: 'POST',
+                success: function (result) {
+                	var optArr = [];
+                	$("#city").empty();
+					$("#city").append("<option value=\"\">请选择</option>");
+                    for (var i = 0; i < result.length; i++) {
+                    	$("#city").append("<option value=" + result[i].id + ">" + result[i].areaname + "</option>");
+                    }
+                        
+                    // 缺一不可  
+                    $("#city").selectpicker('refresh');
+                    $("#city").selectpicker('render');
+
+					console.log(result);
+                }
+            });
+   		}
+   		
+   		function changeArea(){
+   			$("#area").removeAttr("disabled");
+   			console.log($("#city").val());
+   			$.ajax({
+                url: "/area/getCity",
+                data: {parentid : $("#city").val()},
+                dataType : 'json',
+                type: 'POST',
+                success: function (result) {
+                	var optArr = [];
+                	$("#area").empty();
+					$("#area").append("<option value=\"\">请选择</option>");
+                    for (var i = 0; i < result.length; i++) {
+                    	$("#area").append("<option value=" + result[i].areaname + ">" + result[i].areaname + "</option>");
+                    }
+                        
+                    // 缺一不可  
+                    $("#area").selectpicker('refresh');
+                    $("#area").selectpicker('render');
+
+					console.log(result);
+                }
+            });
+   		}
     </script>
 </body>
 </html>
