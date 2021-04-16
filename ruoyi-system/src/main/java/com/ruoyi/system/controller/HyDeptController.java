@@ -64,6 +64,22 @@ public class HyDeptController extends BaseController
         List<HyDept> list = hyDeptService.selectHyDeptList(hyDept);
         return getDataTable(list);
     }
+    
+    /**
+     * 查询所有部门信息
+     */
+    @ApiOperation("部门")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyDept", value = "项目实体类hyDept", required = true),
+    })
+    @RequiresPermissions("system:dept:list")
+    @PostMapping("/lists")
+    @ResponseBody
+    public List<HyDept> lists(HyDept hyDept)
+    {
+    	return hyDeptService.selectHyDeptList(hyDept);
+    	
+    }
 
     /**
      * 导出部门列表

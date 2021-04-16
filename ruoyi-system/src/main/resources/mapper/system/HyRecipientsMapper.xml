@@ -10,7 +10,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="recipientsProperty"    column="recipients_property"    />
         <result property="recipientsDept"    column="recipients_dept"    />
         <result property="recipientsEmployee"    column="recipients_employee"    />
-        <result property="recipientsName"    column="recipients_name"    />
         <result property="recipientsPhone"    column="recipients_phone"    />
         <result property="notificationWay"    column="notification_way"    />
         <result property="notificationType"    column="notification_type"    />
@@ -26,7 +25,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         c.recipients_property, 
         c.recipients_dept, 
         c.recipients_employee, 
-        c.recipients_name, 
         c.recipients_phone, 
         c.notification_way, 
         c.notification_type, 
@@ -44,7 +42,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="recipientsProperty != null  and recipientsProperty != ''"> and c.recipients_property = #{recipientsProperty}</if>
             <if test="recipientsDept != null  and recipientsDept != ''"> and c.recipients_dept = #{recipientsDept}</if>
             <if test="recipientsEmployee != null  and recipientsEmployee != ''"> and c.recipients_employee = #{recipientsEmployee}</if>
-            <if test="recipientsName != null  and recipientsName != ''"> and c.recipients_name like concat('%', #{recipientsName}, '%')</if>
             <if test="recipientsPhone != null  and recipientsPhone != ''"> and c.recipients_phone like concat('%', #{recipientsPhone}, '%')</if>
             <if test="notificationWay != null  and notificationWay != ''"> and c.notification_way = #{notificationWay}</if>
             <if test="notificationType != null  and notificationType != ''"> and c.notification_type = #{notificationType}</if>
@@ -66,7 +63,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="recipientsProperty != null">recipients_property,</if>
             <if test="recipientsDept != null">recipients_dept,</if>
             <if test="recipientsEmployee != null">recipients_employee,</if>
-            <if test="recipientsName != null">recipients_name,</if>
             <if test="recipientsPhone != null">recipients_phone,</if>
             <if test="notificationWay != null">notification_way,</if>
             <if test="notificationType != null">notification_type,</if>
@@ -79,7 +75,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="recipientsProperty != null">#{recipientsProperty},</if>
             <if test="recipientsDept != null">#{recipientsDept},</if>
             <if test="recipientsEmployee != null">#{recipientsEmployee},</if>
-            <if test="recipientsName != null">#{recipientsName},</if>
             <if test="recipientsPhone != null">#{recipientsPhone},</if>
             <if test="notificationWay != null">#{notificationWay},</if>
             <if test="notificationType != null">#{notificationType},</if>
@@ -96,7 +91,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="recipientsProperty != null">recipients_property = #{recipientsProperty},</if>
             <if test="recipientsDept != null">recipients_dept = #{recipientsDept},</if>
             <if test="recipientsEmployee != null">recipients_employee = #{recipientsEmployee},</if>
-            <if test="recipientsName != null">recipients_name = #{recipientsName},</if>
             <if test="recipientsPhone != null">recipients_phone = #{recipientsPhone},</if>
             <if test="notificationWay != null">notification_way = #{notificationWay},</if>
             <if test="notificationType != null">notification_type = #{notificationType},</if>

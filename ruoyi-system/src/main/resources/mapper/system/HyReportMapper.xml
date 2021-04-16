@@ -32,7 +32,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="personType"    column="person_type"    />
         <result property="recipientsDept"    column="recipients_dept"    />
         <result property="recipientsEmployee"    column="recipients_employee"    />
-        <result property="recipientsName"    column="recipients_name"    />
         <result property="recipientsPhone"    column="recipients_phone"    />
         <result property="notificationWay"    column="notification_way"    />
         <result property="recipientsProvince"    column="recipients_province"    />
@@ -76,7 +75,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         r.quarters_id,
         r.recipients_id,
         q.community_name,
-        e.recipients_name,
+        e.recipients_employee,
         e.recipients_phone 
         from 
         hy_report r

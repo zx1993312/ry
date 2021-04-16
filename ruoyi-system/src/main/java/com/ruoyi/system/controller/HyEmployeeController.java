@@ -64,6 +64,21 @@ public class HyEmployeeController extends BaseController
         List<HyEmployee> list = hyEmployeeService.selectHyEmployeeList(hyEmployee);
         return getDataTable(list);
     }
+    
+    /**
+     * 查询所有员工信息
+     */
+    @ApiOperation("员工")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyEmployee", value = "项目实体类hyEmployee", required = true),
+    })
+    @RequiresPermissions("system:employee:list")
+    @PostMapping("/lists")
+    @ResponseBody
+    public List<HyEmployee> lists(HyEmployee hyEmployee)
+    {
+    	return hyEmployeeService.selectHyEmployeeList(hyEmployee);
+    }
 
     /**
      * 导出员工列表

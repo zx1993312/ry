@@ -34,10 +34,6 @@ public class HyRecipients extends BaseEntity
     @Excel(name = "选择员工")
     private String recipientsEmployee;
 
-    /** 姓名 */
-    @Excel(name = "姓名")
-    private String recipientsName;
-    
     /** 电话 */
     @Excel(name = "电话")
     private String recipientsPhone;
@@ -106,16 +102,6 @@ public class HyRecipients extends BaseEntity
     {
         return recipientsEmployee;
     }
-    public void setRecipientsName(String recipientsName) 
-    {
-        this.recipientsName = recipientsName;
-    }
-
-    public String getRecipientsName() 
-    {
-        return recipientsName;
-    }
-    
     public String getRecipientsPhone() {
 		return recipientsPhone;
 	}
@@ -174,11 +160,11 @@ public class HyRecipients extends BaseEntity
 	public String toString() {
 		return "HyRecipients [id=" + id + ", personType=" + personType + ", recipientsProperty=" + recipientsProperty
 				+ ", recipientsDept=" + recipientsDept + ", recipientsEmployee=" + recipientsEmployee
-				+ ", recipientsName=" + recipientsName + ", recipientsPhone=" + recipientsPhone + ", notificationWay="
-				+ notificationWay + ", notificationType=" + notificationType + ", recipientsProvince="
-				+ recipientsProvince + ", recipientsCity=" + recipientsCity + ", recipientsArea=" + recipientsArea
-				+ "]";
+				+ ", recipientsPhone=" + recipientsPhone + ", notificationWay=" + notificationWay
+				+ ", notificationType=" + notificationType + ", recipientsProvince=" + recipientsProvince
+				+ ", recipientsCity=" + recipientsCity + ", recipientsArea=" + recipientsArea + "]";
 	}
+
 
 	
 

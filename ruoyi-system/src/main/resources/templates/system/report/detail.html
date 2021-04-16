@@ -14,7 +14,7 @@
                 <div class="col-sm-8">
                 <select id="recipientsId" name="recipientsId" th:field="*{recipientsId}" class="form-control" th:with="type=${@recipients.getRecipients()}" disabled="disabled">
 					<option value="">请选择</option>
-					<option th:if="data!=null" th:each="data:${type}" th:text="${data.recipientsName}" th:value="${data.id}"></option>
+					<option th:if="data!=null" th:each="data:${type}" th:text="${data.recipientsEmployee}" th:value="${data.id}"></option>
 		 	    </select>
                 </div>
             </div>
