@@ -34,12 +34,20 @@
                	 </div>
             </div>
             <div class="form-group">
+				<label class="col-sm-2 control-label">产品信息缩略图：</label>
+				<div class="col-sm-10">
+					<input name="pcitureAddress" id="pic" class="form-control" type="hidden">
+					<a id="url"><img th:src="*{pcitureAddress}" style="width: 90px;height: 90px"></a>
+					<input type="file" id="abc">
+				</div>
+			</div>
+            <!-- <div class="form-group">
                 <label class="font-noraml">产品信息缩略图：</label>
                 <div class="file-loading">
 		            <input type="file" name="imagepath" data-ref="hyPicturePcitureAddress"  class="myfile" value=""/> 
 		        </div>
             </div>
-		            <input type="hidden" name="hyPicturePcitureAddress" id="remarks" value="">
+		            <input type="hidden" name="hyPicturePcitureAddress" id="remarks" value=""> -->
             <div class="form-group">
                 <label class="font-noraml">产品多图：</label>
                 <div class="file-loading">
@@ -103,11 +111,49 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/product"
         $("#form-product-add").validate({
+        	rules : {
+        		shopId : {
+					required : true,
+				},
+				productName : {
+					required : true,
+					maxlength:50,
+				},
+				briefIntroduction : {
+					maxlength:255,
+				},
+				soldNumber : {
+					maxlength:30,
+				},
+				stockNumber : {
+					required : true,
+					maxlength:30,
+				},
+				lableId : {
+					required : true,
+				},
+				customerServiceTel : {
+					maxlength:11,
+				},
+				state : {
+					required : true,
+					maxlength:2,
+				},
+			},
             focusCleanup: true
         });
 
         function submitHandler() {
-        	var pcitureAddress = $("#remarks").val();
+        	if ($('#imagepaths').val() == ""|| $('#imagepaths').val() == null) {
+        		  $.modal.alertWarning("请先选择产品多图");
+        		  return;
+        		 }
+        	if ($('#pic').val() == ""|| $('#pic').val() == null) {
+        		  $.modal.alertWarning("请先选择产品信息缩略图");
+        		  return;
+        		 }
+        	//var pcitureAddress = $("#remarks").val();
+        	var pcitureAddress = $("#pic").val();
         	var imagepaths = $("#imagepaths").val();
         	var shopId = $("#shopId").val();
         	var productName = $("#productName").val();
@@ -196,7 +242,7 @@
                 }
             });
         });
-        $(document).ready(function () {
+/*         $(document).ready(function () {
         	//上传产品缩略图操作
 	        $(".myfile").fileinput({
 	        	uploadUrl : prefix + '/uploadFile', //接受请求地址
@@ -243,10 +289,34 @@
 	            console.log("文件正在上传。。。。");
 	        });
             
-        });
-        $(document).ready(function () {
+        }); */
+        //上传产品缩略图操作
+        $("#abc").change(function () {
+			var data = new FormData();
+			data.append("file", $("#abc")[0].files[0]);
+			$.ajax({
+				type: "POST",
+				url: ctx + "common/upload",
+				data: data,
+				cache: false,
+				contentType: false,
+				processData: false,
+				dataType: 'json',
+				success: function(result) {
+					// alert(JSON.stringify(result))
+					if (result.code == web_status.SUCCESS) {
+						$("#url img").attr("src",result.fileName)
+						$("#pic").val(result.fileName)
+					}
+				},
+				error: function(error) {
+					alert("图片上传失败。");
+				}
+			});
+		});
+      	//上传产品多图操作
+         $(document).ready(function () {
         	var imgPath = '';
-        	//上传产品多图操作
 	        $(".yourfile").fileinput({
 	        	uploadUrl : prefix + '/uploadFile2', //接受请求地址
 	            uploadAsync: true, //默认异步上传
@@ -294,6 +364,7 @@
 	        });
             
         });
+        
     </script>
 </body>
 </html>

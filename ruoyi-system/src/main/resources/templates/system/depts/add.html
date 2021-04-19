@@ -33,6 +33,20 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/depts"
         $("#form-dept-add").validate({
+        	rules : {
+        		deptName : {
+					required : true,
+					maxlength:50,
+				},
+				leader : {
+					required : true,
+					maxlength:20,
+				},
+				propertyId : {
+					required : true,
+					maxlength:11,
+				},
+			},
             focusCleanup: true
         });
 

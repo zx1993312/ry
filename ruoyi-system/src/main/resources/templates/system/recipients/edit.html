@@ -105,6 +105,45 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/recipients";
         $("#form-recipients-edit").validate({
+        	rules : {
+        		personType : {
+					required : true,
+					maxlength:20,
+				},
+				recipientsProperty : {
+					required : true,
+				},
+				recipientsDept : {
+					required : true,
+				},
+				recipientsEmployee : {
+					required : true,
+				},
+				recipientsPhone : {
+					required : true,
+					maxlength:11,
+				},
+				notificationWay : {
+					required : true,
+					maxlength:255,
+				},
+				notificationType : {
+					required : true,
+					maxlength:255,
+				},
+				recipientsProvince : {
+					required : true,
+					maxlength:50,
+				},
+				recipientsCity : {
+					required : true,
+					maxlength:50,
+				},
+				recipientsArea : {
+					required : true,
+					maxlength:50,
+				},
+			},
             focusCleanup: true
         });
 

@@ -89,7 +89,7 @@ s {
 								<div>
 									<a th:href="'/system/productDetailsCM/list?id='+${p.id}"><img
 										width="1000px" height="400px"
-										th:src="'/img/'+${p.hyPicture.pcitureAddress}"></a><br> <a
+										th:src="${p.hyPicture.pcitureAddress}"></a><br> <a
 										th:text="${p.briefIntroduction}"></a><br> ¥<span id="b1"
 										th:text="${p.hySetMeal.retailPrice}"></span><br>
 									<hr>
