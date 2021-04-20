@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增台账管理物料列')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-bill-add">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">物料列表编号：</label>
+                <div class="col-sm-8">
+                    <input name="billCode" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">物料类型：</label>
+                <div class="col-sm-8">
+                    <select name="materialType" class="form-control m-b">
+                        <option value="">所有</option>
+                    </select>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">物料用途：</label>
+                <div class="col-sm-8">
+                    <input name="materialUse" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">库存数量：</label>
+                <div class="col-sm-8">
+                    <input name="materialNumber" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">是否在库：</label>
+                <div class="col-sm-8">
+                    <input name="state" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">物料id：</label>
+                <div class="col-sm-8">
+                    <input name="materialId" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/bill"
+        $("#form-bill-add").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-bill-add').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

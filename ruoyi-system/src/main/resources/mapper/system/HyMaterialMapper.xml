@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyMaterialMapper">
+    
+    <resultMap type="HyMaterial" id="HyMaterialResult">
+        <result property="id"    column="id"    />
+        <result property="materialCode"    column="material_code"    />
+        <result property="materialName"    column="material_name"    />
+        <result property="materialType"    column="material_type"    />
+        <result property="materialUnit"    column="material_unit"    />
+        <result property="materialNumber"    column="material_number"    />
+        <result property="materialAddress"    column="material_address"    />
+        <result property="materialDept"    column="material_dept"    />
+        <result property="materialSupplier"    column="material_supplier"    />
+        <result property="materialCommute"    column="material_commute"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="state"    column="state"    />
+    </resultMap>
+
+    <sql id="selectHyMaterialVo">
+        select id, material_code, material_name, material_type, material_unit, material_number, material_address, material_dept, material_supplier, material_commute, create_time, state from hy_material
+    </sql>
+
+    <select id="selectHyMaterialList" parameterType="HyMaterial" resultMap="HyMaterialResult">
+        <include refid="selectHyMaterialVo"/>
+        <where>  
+            <if test="materialCode != null "> and material_code = #{materialCode}</if>
+            <if test="materialName != null  and materialName != ''"> and material_name like concat('%', #{materialName}, '%')</if>
+            <if test="materialType != null  and materialType != ''"> and material_type = #{materialType}</if>
+            <if test="materialUnit != null  and materialUnit != ''"> and material_unit = #{materialUnit}</if>
+            <if test="materialNumber != null "> and material_number = #{materialNumber}</if>
+            <if test="materialAddress != null  and materialAddress != ''"> and material_address = #{materialAddress}</if>
+            <if test="materialDept != null  and materialDept != ''"> and material_dept = #{materialDept}</if>
+            <if test="materialSupplier != null  and materialSupplier != ''"> and material_supplier = #{materialSupplier}</if>
+            <if test="materialCommute != null  and materialCommute != ''"> and material_commute = #{materialCommute}</if>
+            <if test="state != null  and state != ''"> and state = #{state}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyMaterialById" parameterType="Long" resultMap="HyMaterialResult">
+        <include refid="selectHyMaterialVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyMaterial" parameterType="HyMaterial" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_material
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="materialCode != null">material_code,</if>
+            <if test="materialName != null">material_name,</if>
+            <if test="materialType != null">material_type,</if>
+            <if test="materialUnit != null">material_unit,</if>
+            <if test="materialNumber != null">material_number,</if>
+            <if test="materialAddress != null">material_address,</if>
+            <if test="materialDept != null">material_dept,</if>
+            <if test="materialSupplier != null">material_supplier,</if>
+            <if test="materialCommute != null">material_commute,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="state != null">state,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="materialCode != null">#{materialCode},</if>
+            <if test="materialName != null">#{materialName},</if>
+            <if test="materialType != null">#{materialType},</if>
+            <if test="materialUnit != null">#{materialUnit},</if>
+            <if test="materialNumber != null">#{materialNumber},</if>
+            <if test="materialAddress != null">#{materialAddress},</if>
+            <if test="materialDept != null">#{materialDept},</if>
+            <if test="materialSupplier != null">#{materialSupplier},</if>
+            <if test="materialCommute != null">#{materialCommute},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="state != null">#{state},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyMaterial" parameterType="HyMaterial">
+        update hy_material
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="materialCode != null">material_code = #{materialCode},</if>
+            <if test="materialName != null">material_name = #{materialName},</if>
+            <if test="materialType != null">material_type = #{materialType},</if>
+            <if test="materialUnit != null">material_unit = #{materialUnit},</if>
+            <if test="materialNumber != null">material_number = #{materialNumber},</if>
+            <if test="materialAddress != null">material_address = #{materialAddress},</if>
+            <if test="materialDept != null">material_dept = #{materialDept},</if>
+            <if test="materialSupplier != null">material_supplier = #{materialSupplier},</if>
+            <if test="materialCommute != null">material_commute = #{materialCommute},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="state != null">state = #{state},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyMaterialById" parameterType="Long">
+        delete from hy_material where id = #{id}
+    </delete>
+
+    <delete id="deleteHyMaterialByIds" parameterType="String">
+        delete from hy_material where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

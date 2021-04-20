@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改出库管理')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-delivery-edit" th:object="${hyDelivery}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">出库编号：</label>
+                <div class="col-sm-8">
+                    <input name="deliveryCode" th:field="*{deliveryCode}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">领取人：</label>
+                <div class="col-sm-8">
+                    <input name="deliveryReceiver" th:field="*{deliveryReceiver}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">领取部门：</label>
+                <div class="col-sm-8">
+                    <input name="deliveryDept" th:field="*{deliveryDept}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">经办人：</label>
+                <div class="col-sm-8">
+                    <input name="deliveryOperator" th:field="*{deliveryOperator}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">审核部门：</label>
+                <div class="col-sm-8">
+                    <input name="operatorAuditDept" th:field="*{operatorAuditDept}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">审核人：</label>
+                <div class="col-sm-8">
+                    <input name="operatorAuditPerson" th:field="*{operatorAuditPerson}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">物料类型：</label>
+                <div class="col-sm-8">
+                    <select name="operatorType" class="form-control m-b">
+                        <option value="">所有</option>
+                    </select>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">物料用途：</label>
+                <div class="col-sm-8">
+                    <input name="operatorUse" th:field="*{operatorUse}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">领取数量：</label>
+                <div class="col-sm-8">
+                    <input name="operatorNumber" th:field="*{operatorNumber}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">提料人id：</label>
+                <div class="col-sm-8">
+                    <input name="liftingId" th:field="*{liftingId}" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/delivery";
+        $("#form-delivery-edit").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-delivery-edit').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

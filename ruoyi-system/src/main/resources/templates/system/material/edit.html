@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改物料')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-material-edit" th:object="${hyMaterial}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">物料编号：</label>
+                <div class="col-sm-8">
+                    <input name="materialCode" th:field="*{materialCode}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">物料名称：</label>
+                <div class="col-sm-8">
+                    <input name="materialName" th:field="*{materialName}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">物料类型：</label>
+                <div class="col-sm-8">
+                    <select name="materialType" class="form-control m-b">
+                        <option value="">所有</option>
+                    </select>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">计量单位：</label>
+                <div class="col-sm-8">
+                    <input name="materialUnit" th:field="*{materialUnit}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">库存数量：</label>
+                <div class="col-sm-8">
+                    <input name="materialNumber" th:field="*{materialNumber}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">储存位置：</label>
+                <div class="col-sm-8">
+                    <input name="materialAddress" th:field="*{materialAddress}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">入库部门：</label>
+                <div class="col-sm-8">
+                    <input name="materialDept" th:field="*{materialDept}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">供应商：</label>
+                <div class="col-sm-8">
+                    <input name="materialSupplier" th:field="*{materialSupplier}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">上交采购单据：</label>
+                <div class="col-sm-8">
+                    <input name="materialCommute" th:field="*{materialCommute}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">审核状态：</label>
+                <div class="col-sm-8">
+                    <input name="state" th:field="*{state}" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/material";
+        $("#form-material-edit").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-material-edit').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyLiftingMapper">
+    
+    <resultMap type="HyLifting" id="HyLiftingResult">
+        <result property="id"    column="id"    />
+        <result property="materialName"    column="material_name"    />
+        <result property="materialType"    column="material_type"    />
+        <result property="materialNumber"    column="material_number"    />
+        <result property="materialUse"    column="material_use"    />
+        <result property="isreturn"    column="isreturn"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="depts"    column="depts"    />
+        <result property="proposer"    column="proposer"    />
+        <result property="unit"    column="unit"    />
+        <result property="auditor"    column="auditor"    />
+        <result property="checkName"    column="check_name"    />
+        <result property="billId"    column="bill_id"    />
+        <result property="specimenId"    column="specimen_id"    />
+        <result property="checkId"    column="check_id"    />
+    </resultMap>
+
+    <sql id="selectHyLiftingVo">
+        select id, material_name, material_type, material_number, material_use, isreturn, create_time, depts, proposer, unit, auditor, check_name, bill_id, specimen_id, check_id from hy_lifting
+    </sql>
+
+    <select id="selectHyLiftingList" parameterType="HyLifting" resultMap="HyLiftingResult">
+        <include refid="selectHyLiftingVo"/>
+        <where>  
+            <if test="materialName != null  and materialName != ''"> and material_name like concat('%', #{materialName}, '%')</if>
+            <if test="materialType != null  and materialType != ''"> and material_type = #{materialType}</if>
+            <if test="materialNumber != null "> and material_number = #{materialNumber}</if>
+            <if test="materialUse != null  and materialUse != ''"> and material_use = #{materialUse}</if>
+            <if test="isreturn != null  and isreturn != ''"> and isreturn = #{isreturn}</if>
+            <if test="depts != null  and depts != ''"> and depts = #{depts}</if>
+            <if test="proposer != null  and proposer != ''"> and proposer = #{proposer}</if>
+            <if test="unit != null  and unit != ''"> and unit = #{unit}</if>
+            <if test="auditor != null  and auditor != ''"> and auditor = #{auditor}</if>
+            <if test="checkName != null  and checkName != ''"> and check_name like concat('%', #{checkName}, '%')</if>
+            <if test="billId != null "> and bill_id = #{billId}</if>
+            <if test="specimenId != null "> and specimen_id = #{specimenId}</if>
+            <if test="checkId != null "> and check_id = #{checkId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyLiftingById" parameterType="Long" resultMap="HyLiftingResult">
+        <include refid="selectHyLiftingVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyLifting" parameterType="HyLifting" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_lifting
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="materialName != null">material_name,</if>
+            <if test="materialType != null">material_type,</if>
+            <if test="materialNumber != null">material_number,</if>
+            <if test="materialUse != null">material_use,</if>
+            <if test="isreturn != null">isreturn,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="depts != null">depts,</if>
+            <if test="proposer != null">proposer,</if>
+            <if test="unit != null">unit,</if>
+            <if test="auditor != null">auditor,</if>
+            <if test="checkName != null">check_name,</if>
+            <if test="billId != null">bill_id,</if>
+            <if test="specimenId != null">specimen_id,</if>
+            <if test="checkId != null">check_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="materialName != null">#{materialName},</if>
+            <if test="materialType != null">#{materialType},</if>
+            <if test="materialNumber != null">#{materialNumber},</if>
+            <if test="materialUse != null">#{materialUse},</if>
+            <if test="isreturn != null">#{isreturn},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="depts != null">#{depts},</if>
+            <if test="proposer != null">#{proposer},</if>
+            <if test="unit != null">#{unit},</if>
+            <if test="auditor != null">#{auditor},</if>
+            <if test="checkName != null">#{checkName},</if>
+            <if test="billId != null">#{billId},</if>
+            <if test="specimenId != null">#{specimenId},</if>
+            <if test="checkId != null">#{checkId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyLifting" parameterType="HyLifting">
+        update hy_lifting
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="materialName != null">material_name = #{materialName},</if>
+            <if test="materialType != null">material_type = #{materialType},</if>
+            <if test="materialNumber != null">material_number = #{materialNumber},</if>
+            <if test="materialUse != null">material_use = #{materialUse},</if>
+            <if test="isreturn != null">isreturn = #{isreturn},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="depts != null">depts = #{depts},</if>
+            <if test="proposer != null">proposer = #{proposer},</if>
+            <if test="unit != null">unit = #{unit},</if>
+            <if test="auditor != null">auditor = #{auditor},</if>
+            <if test="checkName != null">check_name = #{checkName},</if>
+            <if test="billId != null">bill_id = #{billId},</if>
+            <if test="specimenId != null">specimen_id = #{specimenId},</if>
+            <if test="checkId != null">check_id = #{checkId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyLiftingById" parameterType="Long">
+        delete from hy_lifting where id = #{id}
+    </delete>
+
+    <delete id="deleteHyLiftingByIds" parameterType="String">
+        delete from hy_lifting where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

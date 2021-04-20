@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyBillMapper">
+    
+    <resultMap type="HyBill" id="HyBillResult">
+        <result property="id"    column="id"    />
+        <result property="billCode"    column="bill_code"    />
+        <result property="materialType"    column="material_type"    />
+        <result property="materialUse"    column="material_use"    />
+        <result property="materialNumber"    column="material_number"    />
+        <result property="state"    column="state"    />
+        <result property="materialId"    column="material_id"    />
+        <result property="materrialAudit"    column="materrial_audit"    />
+    </resultMap>
+
+    <sql id="selectHyBillVo">
+        select id, bill_code, material_type, material_use, material_number, state, material_id, materrial_audit from hy_bill
+    </sql>
+
+    <select id="selectHyBillList" parameterType="HyBill" resultMap="HyBillResult">
+        <include refid="selectHyBillVo"/>
+        <where>  
+            <if test="billCode != null "> and bill_code = #{billCode}</if>
+            <if test="materialType != null  and materialType != ''"> and material_type = #{materialType}</if>
+            <if test="materialUse != null  and materialUse != ''"> and material_use = #{materialUse}</if>
+            <if test="materialNumber != null "> and material_number = #{materialNumber}</if>
+            <if test="state != null  and state != ''"> and state = #{state}</if>
+            <if test="materialId != null "> and material_id = #{materialId}</if>
+            <if test="materrialAudit != null  and materrialAudit != ''"> and materrial_audit = #{materrialAudit}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyBillById" parameterType="Long" resultMap="HyBillResult">
+        <include refid="selectHyBillVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyBill" parameterType="HyBill" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_bill
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="billCode != null">bill_code,</if>
+            <if test="materialType != null">material_type,</if>
+            <if test="materialUse != null">material_use,</if>
+            <if test="materialNumber != null">material_number,</if>
+            <if test="state != null">state,</if>
+            <if test="materialId != null">material_id,</if>
+            <if test="materrialAudit != null">materrial_audit,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="billCode != null">#{billCode},</if>
+            <if test="materialType != null">#{materialType},</if>
+            <if test="materialUse != null">#{materialUse},</if>
+            <if test="materialNumber != null">#{materialNumber},</if>
+            <if test="state != null">#{state},</if>
+            <if test="materialId != null">#{materialId},</if>
+            <if test="materrialAudit != null">#{materrialAudit},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyBill" parameterType="HyBill">
+        update hy_bill
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="billCode != null">bill_code = #{billCode},</if>
+            <if test="materialType != null">material_type = #{materialType},</if>
+            <if test="materialUse != null">material_use = #{materialUse},</if>
+            <if test="materialNumber != null">material_number = #{materialNumber},</if>
+            <if test="state != null">state = #{state},</if>
+            <if test="materialId != null">material_id = #{materialId},</if>
+            <if test="materrialAudit != null">materrial_audit = #{materrialAudit},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyBillById" parameterType="Long">
+        delete from hy_bill where id = #{id}
+    </delete>
+
+    <delete id="deleteHyBillByIds" parameterType="String">
+        delete from hy_bill where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

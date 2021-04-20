@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyCheckMapper">
+    
+    <resultMap type="HyCheck" id="HyCheckResult">
+        <result property="id"    column="id"    />
+        <result property="dept"    column="dept"    />
+        <result property="code"    column="code"    />
+        <result property="name"    column="name"    />
+        <result property="employeeId"    column="employee_id"    />
+        <result property="deptId"    column="dept_id"    />
+    </resultMap>
+
+    <sql id="selectHyCheckVo">
+        select id, dept, code, name, employee_id, dept_id from hy_check
+    </sql>
+
+    <select id="selectHyCheckList" parameterType="HyCheck" resultMap="HyCheckResult">
+        <include refid="selectHyCheckVo"/>
+        <where>  
+            <if test="dept != null  and dept != ''"> and dept = #{dept}</if>
+            <if test="code != null  and code != ''"> and code = #{code}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="employeeId != null "> and employee_id = #{employeeId}</if>
+            <if test="deptId != null "> and dept_id = #{deptId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyCheckById" parameterType="Long" resultMap="HyCheckResult">
+        <include refid="selectHyCheckVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyCheck" parameterType="HyCheck" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_check
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="dept != null">dept,</if>
+            <if test="code != null">code,</if>
+            <if test="name != null">name,</if>
+            <if test="employeeId != null">employee_id,</if>
+            <if test="deptId != null">dept_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="dept != null">#{dept},</if>
+            <if test="code != null">#{code},</if>
+            <if test="name != null">#{name},</if>
+            <if test="employeeId != null">#{employeeId},</if>
+            <if test="deptId != null">#{deptId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyCheck" parameterType="HyCheck">
+        update hy_check
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="dept != null">dept = #{dept},</if>
+            <if test="code != null">code = #{code},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="employeeId != null">employee_id = #{employeeId},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyCheckById" parameterType="Long">
+        delete from hy_check where id = #{id}
+    </delete>
+
+    <delete id="deleteHyCheckByIds" parameterType="String">
+        delete from hy_check where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

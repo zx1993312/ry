@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('盘点管理列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>物料编号：</label>
+                                <input type="text" name="materialCode"/>
+                            </li>
+                            <li>
+                                <label>物料名称：</label>
+                                <input type="text" name="materialName"/>
+                            </li>
+                            <li>
+                                <label>物料类型：</label>
+                                <select name="materialType">
+                                    <option value="">所有</option>
+                                    <option value="-1">代码生成请选择字典属性</option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>存储位置：</label>
+                                <input type="text" name="materialAddress"/>
+                            </li>
+                            <li>
+                                <label>库存数量：</label>
+                                <input type="text" name="materialNumber"/>
+                            </li>
+                            <li>
+                                <label>审核状态：</label>
+                                <input type="text" name="state"/>
+                            </li>
+                            <li>
+                                <label>物料id：</label>
+                                <input type="text" name="materialId"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:inventory:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:inventory:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:inventory:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:inventory:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:inventory:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:inventory:remove')}]];
+        var prefix = ctx + "system/inventory";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "盘点管理",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '盘点管理id',
+                    visible: false
+                },
+                {
+                    field: 'materialCode',
+                    title: '物料编号'
+                },
+                {
+                    field: 'materialName',
+                    title: '物料名称'
+                },
+                {
+                    field: 'materialType',
+                    title: '物料类型'
+                },
+                {
+                    field: 'materialAddress',
+                    title: '存储位置'
+                },
+                {
+                    field: 'materialNumber',
+                    title: '库存数量'
+                },
+                {
+                    field: 'state',
+                    title: '审核状态'
+                },
+                {
+                    field: 'materialId',
+                    title: '物料id'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyDeliveryMapper">
+    
+    <resultMap type="HyDelivery" id="HyDeliveryResult">
+        <result property="id"    column="id"    />
+        <result property="deliveryCode"    column="delivery_code"    />
+        <result property="deliveryReceiver"    column="delivery_receiver"    />
+        <result property="deliveryDept"    column="delivery_dept"    />
+        <result property="deliveryOperator"    column="delivery_operator"    />
+        <result property="operatorAuditDept"    column="operator_audit_dept"    />
+        <result property="operatorAuditPerson"    column="operator_audit_person"    />
+        <result property="operatorType"    column="operator_type"    />
+        <result property="operatorUse"    column="operator_use"    />
+        <result property="operatorNumber"    column="operator_number"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="liftingId"    column="lifting_id"    />
+    </resultMap>
+
+    <sql id="selectHyDeliveryVo">
+        select id, delivery_code, delivery_receiver, delivery_dept, delivery_operator, operator_audit_dept, operator_audit_person, operator_type, operator_use, operator_number, create_time, lifting_id from hy_delivery
+    </sql>
+
+    <select id="selectHyDeliveryList" parameterType="HyDelivery" resultMap="HyDeliveryResult">
+        <include refid="selectHyDeliveryVo"/>
+        <where>  
+            <if test="deliveryCode != null "> and delivery_code = #{deliveryCode}</if>
+            <if test="deliveryReceiver != null  and deliveryReceiver != ''"> and delivery_receiver = #{deliveryReceiver}</if>
+            <if test="deliveryDept != null  and deliveryDept != ''"> and delivery_dept = #{deliveryDept}</if>
+            <if test="deliveryOperator != null  and deliveryOperator != ''"> and delivery_operator = #{deliveryOperator}</if>
+            <if test="operatorAuditDept != null  and operatorAuditDept != ''"> and operator_audit_dept = #{operatorAuditDept}</if>
+            <if test="operatorAuditPerson != null  and operatorAuditPerson != ''"> and operator_audit_person = #{operatorAuditPerson}</if>
+            <if test="operatorType != null  and operatorType != ''"> and operator_type = #{operatorType}</if>
+            <if test="operatorUse != null  and operatorUse != ''"> and operator_use = #{operatorUse}</if>
+            <if test="operatorNumber != null "> and operator_number = #{operatorNumber}</if>
+            <if test="liftingId != null "> and lifting_id = #{liftingId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyDeliveryById" parameterType="Long" resultMap="HyDeliveryResult">
+        <include refid="selectHyDeliveryVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyDelivery" parameterType="HyDelivery" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_delivery
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="deliveryCode != null">delivery_code,</if>
+            <if test="deliveryReceiver != null">delivery_receiver,</if>
+            <if test="deliveryDept != null">delivery_dept,</if>
+            <if test="deliveryOperator != null">delivery_operator,</if>
+            <if test="operatorAuditDept != null">operator_audit_dept,</if>
+            <if test="operatorAuditPerson != null">operator_audit_person,</if>
+            <if test="operatorType != null">operator_type,</if>
+            <if test="operatorUse != null">operator_use,</if>
+            <if test="operatorNumber != null">operator_number,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="liftingId != null">lifting_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="deliveryCode != null">#{deliveryCode},</if>
+            <if test="deliveryReceiver != null">#{deliveryReceiver},</if>
+            <if test="deliveryDept != null">#{deliveryDept},</if>
+            <if test="deliveryOperator != null">#{deliveryOperator},</if>
+            <if test="operatorAuditDept != null">#{operatorAuditDept},</if>
+            <if test="operatorAuditPerson != null">#{operatorAuditPerson},</if>
+            <if test="operatorType != null">#{operatorType},</if>
+            <if test="operatorUse != null">#{operatorUse},</if>
+            <if test="operatorNumber != null">#{operatorNumber},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="liftingId != null">#{liftingId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyDelivery" parameterType="HyDelivery">
+        update hy_delivery
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="deliveryCode != null">delivery_code = #{deliveryCode},</if>
+            <if test="deliveryReceiver != null">delivery_receiver = #{deliveryReceiver},</if>
+            <if test="deliveryDept != null">delivery_dept = #{deliveryDept},</if>
+            <if test="deliveryOperator != null">delivery_operator = #{deliveryOperator},</if>
+            <if test="operatorAuditDept != null">operator_audit_dept = #{operatorAuditDept},</if>
+            <if test="operatorAuditPerson != null">operator_audit_person = #{operatorAuditPerson},</if>
+            <if test="operatorType != null">operator_type = #{operatorType},</if>
+            <if test="operatorUse != null">operator_use = #{operatorUse},</if>
+            <if test="operatorNumber != null">operator_number = #{operatorNumber},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="liftingId != null">lifting_id = #{liftingId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyDeliveryById" parameterType="Long">
+        delete from hy_delivery where id = #{id}
+    </delete>
+
+    <delete id="deleteHyDeliveryByIds" parameterType="String">
+        delete from hy_delivery where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

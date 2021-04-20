@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('出入库记录列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>物料编号：</label>
+                                <input type="text" name="materialCode"/>
+                            </li>
+                            <li>
+                                <label>物料名称：</label>
+                                <input type="text" name="materialName"/>
+                            </li>
+                            <li>
+                                <label>物料类型：</label>
+                                <select name="materialType">
+                                    <option value="">所有</option>
+                                    <option value="-1">代码生成请选择字典属性</option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>入库次数：</label>
+                                <input type="text" name="warehouseNumber"/>
+                            </li>
+                            <li>
+                                <label>出库次数：</label>
+                                <input type="text" name="outboundNumber"/>
+                            </li>
+                            <li>
+                                <label>入库时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择入库时间" name="warehouseTime"/>
+                            </li>
+                            <li>
+                                <label>出库时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择出库时间" name="outboundTime"/>
+                            </li>
+                            <li>
+                                <label>供应商是否在库：</label>
+                                <input type="text" name="state"/>
+                            </li>
+                            <li>
+                                <label>物料id：</label>
+                                <input type="text" name="materialId"/>
+                            </li>
+                            <li>
+                                <label>出库id：</label>
+                                <input type="text" name="deliveryId"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:record:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:record:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:record:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:record:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:record:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:record:remove')}]];
+        var prefix = ctx + "system/record";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "出入库记录",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '出入库记录id',
+                    visible: false
+                },
+                {
+                    field: 'materialCode',
+                    title: '物料编号'
+                },
+                {
+                    field: 'materialName',
+                    title: '物料名称'
+                },
+                {
+                    field: 'materialType',
+                    title: '物料类型'
+                },
+                {
+                    field: 'warehouseNumber',
+                    title: '入库次数'
+                },
+                {
+                    field: 'outboundNumber',
+                    title: '出库次数'
+                },
+                {
+                    field: 'warehouseTime',
+                    title: '入库时间'
+                },
+                {
+                    field: 'outboundTime',
+                    title: '出库时间'
+                },
+                {
+                    field: 'state',
+                    title: '供应商是否在库'
+                },
+                {
+                    field: 'materialId',
+                    title: '物料id'
+                },
+                {
+                    field: 'deliveryId',
+                    title: '出库id'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

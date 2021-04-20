@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyStockRecordMapper">
+    
+    <resultMap type="HyStockRecord" id="HyStockRecordResult">
+        <result property="id"    column="id"    />
+        <result property="materialCode"    column="material_code"    />
+        <result property="materialName"    column="material_name"    />
+        <result property="materialType"    column="material_type"    />
+        <result property="warehouseNumber"    column="warehouse_number"    />
+        <result property="outboundNumber"    column="outbound_number"    />
+        <result property="warehouseTime"    column="warehouse_time"    />
+        <result property="outboundTime"    column="outbound_time"    />
+        <result property="state"    column="state"    />
+        <result property="materialId"    column="material_id"    />
+        <result property="deliveryId"    column="delivery_id"    />
+    </resultMap>
+
+    <sql id="selectHyStockRecordVo">
+        select id, material_code, material_name, material_type, warehouse_number, outbound_number, warehouse_time, outbound_time, state, material_id, delivery_id from hy_stock_record
+    </sql>
+
+    <select id="selectHyStockRecordList" parameterType="HyStockRecord" resultMap="HyStockRecordResult">
+        <include refid="selectHyStockRecordVo"/>
+        <where>  
+            <if test="materialCode != null "> and material_code = #{materialCode}</if>
+            <if test="materialName != null  and materialName != ''"> and material_name like concat('%', #{materialName}, '%')</if>
+            <if test="materialType != null  and materialType != ''"> and material_type = #{materialType}</if>
+            <if test="warehouseNumber != null "> and warehouse_number = #{warehouseNumber}</if>
+            <if test="outboundNumber != null "> and outbound_number = #{outboundNumber}</if>
+            <if test="warehouseTime != null "> and warehouse_time = #{warehouseTime}</if>
+            <if test="outboundTime != null "> and outbound_time = #{outboundTime}</if>
+            <if test="state != null  and state != ''"> and state = #{state}</if>
+            <if test="materialId != null "> and material_id = #{materialId}</if>
+            <if test="deliveryId != null "> and delivery_id = #{deliveryId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyStockRecordById" parameterType="Long" resultMap="HyStockRecordResult">
+        <include refid="selectHyStockRecordVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyStockRecord" parameterType="HyStockRecord" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_stock_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="materialCode != null">material_code,</if>
+            <if test="materialName != null">material_name,</if>
+            <if test="materialType != null">material_type,</if>
+            <if test="warehouseNumber != null">warehouse_number,</if>
+            <if test="outboundNumber != null">outbound_number,</if>
+            <if test="warehouseTime != null">warehouse_time,</if>
+            <if test="outboundTime != null">outbound_time,</if>
+            <if test="state != null">state,</if>
+            <if test="materialId != null">material_id,</if>
+            <if test="deliveryId != null">delivery_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="materialCode != null">#{materialCode},</if>
+            <if test="materialName != null">#{materialName},</if>
+            <if test="materialType != null">#{materialType},</if>
+            <if test="warehouseNumber != null">#{warehouseNumber},</if>
+            <if test="outboundNumber != null">#{outboundNumber},</if>
+            <if test="warehouseTime != null">#{warehouseTime},</if>
+            <if test="outboundTime != null">#{outboundTime},</if>
+            <if test="state != null">#{state},</if>
+            <if test="materialId != null">#{materialId},</if>
+            <if test="deliveryId != null">#{deliveryId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyStockRecord" parameterType="HyStockRecord">
+        update hy_stock_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="materialCode != null">material_code = #{materialCode},</if>
+            <if test="materialName != null">material_name = #{materialName},</if>
+            <if test="materialType != null">material_type = #{materialType},</if>
+            <if test="warehouseNumber != null">warehouse_number = #{warehouseNumber},</if>
+            <if test="outboundNumber != null">outbound_number = #{outboundNumber},</if>
+            <if test="warehouseTime != null">warehouse_time = #{warehouseTime},</if>
+            <if test="outboundTime != null">outbound_time = #{outboundTime},</if>
+            <if test="state != null">state = #{state},</if>
+            <if test="materialId != null">material_id = #{materialId},</if>
+            <if test="deliveryId != null">delivery_id = #{deliveryId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyStockRecordById" parameterType="Long">
+        delete from hy_stock_record where id = #{id}
+    </delete>
+
+    <delete id="deleteHyStockRecordByIds" parameterType="String">
+        delete from hy_stock_record where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

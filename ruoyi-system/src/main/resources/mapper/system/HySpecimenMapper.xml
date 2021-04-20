@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HySpecimenMapper">
+    
+    <resultMap type="HySpecimen" id="HySpecimenResult">
+        <result property="id"    column="id"    />
+        <result property="dept"    column="dept"    />
+        <result property="code"    column="code"    />
+        <result property="name"    column="name"    />
+        <result property="employeeId"    column="employee_id"    />
+        <result property="deptId"    column="dept_id"    />
+    </resultMap>
+
+    <sql id="selectHySpecimenVo">
+        select id, dept, code, name, employee_id, dept_id from hy_specimen
+    </sql>
+
+    <select id="selectHySpecimenList" parameterType="HySpecimen" resultMap="HySpecimenResult">
+        <include refid="selectHySpecimenVo"/>
+        <where>  
+            <if test="dept != null  and dept != ''"> and dept = #{dept}</if>
+            <if test="code != null  and code != ''"> and code = #{code}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="employeeId != null "> and employee_id = #{employeeId}</if>
+            <if test="deptId != null "> and dept_id = #{deptId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHySpecimenById" parameterType="Long" resultMap="HySpecimenResult">
+        <include refid="selectHySpecimenVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHySpecimen" parameterType="HySpecimen">
+        insert into hy_specimen
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="dept != null">dept,</if>
+            <if test="code != null">code,</if>
+            <if test="name != null">name,</if>
+            <if test="employeeId != null">employee_id,</if>
+            <if test="deptId != null">dept_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="dept != null">#{dept},</if>
+            <if test="code != null">#{code},</if>
+            <if test="name != null">#{name},</if>
+            <if test="employeeId != null">#{employeeId},</if>
+            <if test="deptId != null">#{deptId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHySpecimen" parameterType="HySpecimen">
+        update hy_specimen
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="dept != null">dept = #{dept},</if>
+            <if test="code != null">code = #{code},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="employeeId != null">employee_id = #{employeeId},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHySpecimenById" parameterType="Long">
+        delete from hy_specimen where id = #{id}
+    </delete>
+
+    <delete id="deleteHySpecimenByIds" parameterType="String">
+        delete from hy_specimen where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
