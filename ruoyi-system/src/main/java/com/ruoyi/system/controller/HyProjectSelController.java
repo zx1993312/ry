@@ -51,6 +51,7 @@ public class HyProjectSelController extends BaseController {
 	@ResponseBody
 	public TableDataInfo list(HyProjectSel hyProjectSel) {
 		startPage();
+		hyProjectSel.setDataTypeName("hy_delivery_status");
 		List<HyProjectSel> list = hyProjectSelService.selectProjectSelList(hyProjectSel);
 		return getDataTable(list);
 	}

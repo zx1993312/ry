@@ -24,7 +24,7 @@ public interface HyProjectSelMapper {
 	 * @return
 	 */
 	@Select("<script>" + 
-				"select dict_label,remark from sys_dict_data where 1=1 and dict_type='hy_delivery_status'" + 
+				"select dict_label,remark from sys_dict_data where 1=1 and dict_type= #{dataTypeName}" + 
 				" <if test=\"dictLabel != null and dictLabel != ''\"> and dict_label = #{dictLabel}</if>" + 
 				" <if test=\"remark != null and remark != '' \"> and remark = #{remark}</if>" + 
 			"</script>")

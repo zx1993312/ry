@@ -83,7 +83,6 @@ public class SysDictDataServiceImpl implements ISysDictDataService
     @Override
     public int insertDictData(SysDictData dictData)
     {
-    	dictData.setDictType("hy_product");
         int row = dictDataMapper.insertDictData(dictData);
         if (row > 0)
         {
