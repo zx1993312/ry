@@ -11,27 +11,12 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                <label>物料编号：</label>
-                                <input type="text" name="materialCode"/>
-                            </li>
-                            <li>
                                 <label>物料名称：</label>
-                                <input type="text" name="materialName"/>
+                                <input type="text" name="hyMaterial.materialName"/>
                             </li>
                             <li>
                                 <label>物料类型：</label>
-                                <select name="materialType">
-                                    <option value="">所有</option>
-                                    <option value="-1">代码生成请选择字典属性</option>
-                                </select>
-                            </li>
-                            <li>
-                                <label>入库次数：</label>
-                                <input type="text" name="warehouseNumber"/>
-                            </li>
-                            <li>
-                                <label>出库次数：</label>
-                                <input type="text" name="outboundNumber"/>
+                                <input type="text" name="hyMaterial.materialType"/>
                             </li>
                             <li>
                                 <label>入库时间：</label>
@@ -44,14 +29,6 @@
                             <li>
                                 <label>供应商是否在库：</label>
                                 <input type="text" name="state"/>
-                            </li>
-                            <li>
-                                <label>物料id：</label>
-                                <input type="text" name="materialId"/>
-                            </li>
-                            <li>
-                                <label>出库id：</label>
-                                <input type="text" name="deliveryId"/>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -104,15 +81,15 @@
                     visible: false
                 },
                 {
-                    field: 'materialCode',
+                    field: 'hyMaterial.materialCode',
                     title: '物料编号'
                 },
                 {
-                    field: 'materialName',
+                    field: 'hyMaterial.materialName',
                     title: '物料名称'
                 },
                 {
-                    field: 'materialType',
+                    field: 'hyMaterial.materialType',
                     title: '物料类型'
                 },
                 {
@@ -134,14 +111,6 @@
                 {
                     field: 'state',
                     title: '供应商是否在库'
-                },
-                {
-                    field: 'materialId',
-                    title: '物料id'
-                },
-                {
-                    field: 'deliveryId',
-                    title: '出库id'
                 },
                 {
                     title: '操作',

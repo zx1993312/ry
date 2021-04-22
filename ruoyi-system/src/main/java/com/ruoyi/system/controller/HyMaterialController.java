@@ -138,6 +138,22 @@ public class HyMaterialController extends BaseController
     {
         return toAjax(hyMaterialService.updateHyMaterial(hyMaterial));
     }
+    
+    /**
+     * 修改保存物料
+     */
+    @ApiOperation("物料")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyMaterial", value = "项目实体类hyMaterial", required = true),
+    })
+    @RequiresPermissions("system:material:edit")
+    @Log(title = "物料", businessType = BusinessType.UPDATE)
+    @PostMapping("/edits")
+    @ResponseBody
+    public AjaxResult edit(HyMaterial hyMaterial)
+    {
+    	return toAjax(hyMaterialService.updateHyMaterials(hyMaterial));
+    }
 
     /**
      * 删除物料

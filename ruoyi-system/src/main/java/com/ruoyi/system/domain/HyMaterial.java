@@ -57,7 +57,23 @@ public class HyMaterial extends BaseEntity
     /** 审核状态 */
     @Excel(name = "审核状态")
     private String state;
-
+    
+    /** 审核人 */
+    @Excel(name = "审核人")
+    private String specimen;
+    
+    /** 审核部门 */
+    @Excel(name = "审核部门")
+    private String specimendept;
+    
+    /** 盘点人 */
+    @Excel(name = "盘点人")
+    private String checkmen;
+    
+    /** 审核管理id */
+    @Excel(name = "审核管理id")
+    private Long assessorId;
+    
     public void setId(Long id) 
     {
         this.id = id;
@@ -158,21 +174,53 @@ public class HyMaterial extends BaseEntity
         return state;
     }
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("materialCode", getMaterialCode())
-            .append("materialName", getMaterialName())
-            .append("materialType", getMaterialType())
-            .append("materialUnit", getMaterialUnit())
-            .append("materialNumber", getMaterialNumber())
-            .append("materialAddress", getMaterialAddress())
-            .append("materialDept", getMaterialDept())
-            .append("materialSupplier", getMaterialSupplier())
-            .append("materialCommute", getMaterialCommute())
-            .append("createTime", getCreateTime())
-            .append("state", getState())
-            .toString();
-    }
+	public String getSpecimen() {
+		return specimen;
+	}
+
+	public void setSpecimen(String specimen) {
+		this.specimen = specimen;
+	}
+
+	public String getSpecimendept() {
+		return specimendept;
+	}
+
+	public void setSpecimendept(String specimendept) {
+		this.specimendept = specimendept;
+	}
+
+	public String getCheckmen() {
+		return checkmen;
+	}
+
+	public void setCheckmen(String checkmen) {
+		this.checkmen = checkmen;
+	}
+
+	public Long getAssessorId() {
+		return assessorId;
+	}
+
+	public void setAssessorId(Long assessorId) {
+		this.assessorId = assessorId;
+	}
+
+	@Override
+	public String toString() {
+		return "HyMaterial [id=" + id + ", materialCode=" + materialCode + ", materialName=" + materialName
+				+ ", materialType=" + materialType + ", materialUnit=" + materialUnit + ", materialNumber="
+				+ materialNumber + ", materialAddress=" + materialAddress + ", materialDept=" + materialDept
+				+ ", materialSupplier=" + materialSupplier + ", materialCommute=" + materialCommute + ", state=" + state
+				+ ", specimen=" + specimen + ", specimendept=" + specimendept + ", checkmen=" + checkmen
+				+ ", assessorId=" + assessorId + "]";
+	}
+
+	
+
+	
+
+	
+
+	
 }

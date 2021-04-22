@@ -57,7 +57,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="materialSupplier != null">material_supplier,</if>
             <if test="materialCommute != null">material_commute,</if>
             <if test="createTime != null">create_time,</if>
-            <if test="state != null">state,</if>
+            state,
+            <if test="specimen != null">specimen,</if>
+            <if test="specimendept != null">specimendept,</if>
+            <if test="checkmen != null">checkmen,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="materialCode != null">#{materialCode},</if>
@@ -70,7 +73,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="materialSupplier != null">#{materialSupplier},</if>
             <if test="materialCommute != null">#{materialCommute},</if>
             <if test="createTime != null">#{createTime},</if>
-            <if test="state != null">#{state},</if>
+            "1",
+            <if test="specimen != null">#{specimen},</if>
+            <if test="checkmen != null">#{checkmen},</if>
          </trim>
     </insert>
 
@@ -88,6 +93,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="materialCommute != null">material_commute = #{materialCommute},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
             <if test="state != null">state = #{state},</if>
+            <if test="specimen != null">specimen = #{specimen},</if>
+            <if test="specimendept != null">specimendept = #{specimendept},</if>
+            <if test="checkmen != null">checkmen = #{checkmen},</if>
         </trim>
         where id = #{id}
     </update>

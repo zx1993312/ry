@@ -6,9 +6,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <resultMap type="HyStockRecord" id="HyStockRecordResult">
         <result property="id"    column="id"    />
-        <result property="materialCode"    column="material_code"    />
-        <result property="materialName"    column="material_name"    />
-        <result property="materialType"    column="material_type"    />
         <result property="warehouseNumber"    column="warehouse_number"    />
         <result property="outboundNumber"    column="outbound_number"    />
         <result property="warehouseTime"    column="warehouse_time"    />
@@ -16,39 +13,69 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="state"    column="state"    />
         <result property="materialId"    column="material_id"    />
         <result property="deliveryId"    column="delivery_id"    />
+        <association property="hyMaterial" column="id"
+			javaType="HyMaterial" resultMap="HyMaterialResult" />
     </resultMap>
-
+	
+	<resultMap type="HyMaterial" id="HyMaterialResult">
+        <result property="id"    column="id"    />
+        <result property="materialCode"    column="material_code"    />
+        <result property="materialName"    column="material_name"    />
+        <result property="materialType"    column="material_type"    />
+        <result property="materialUnit"    column="material_unit"    />
+        <result property="materialNumber"    column="material_number"    />
+        <result property="materialAddress"    column="material_address"    />
+        <result property="materialDept"    column="material_dept"    />
+        <result property="materialSupplier"    column="material_supplier"    />
+        <result property="materialCommute"    column="material_commute"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="state"    column="state"    />
+    </resultMap>
+	
     <sql id="selectHyStockRecordVo">
-        select id, material_code, material_name, material_type, warehouse_number, outbound_number, warehouse_time, outbound_time, state, material_id, delivery_id from hy_stock_record
+        select 
+        s.id, 
+        s.warehouse_number, 
+        s.outbound_number, 
+        s.warehouse_time, 
+        s.outbound_time, 
+        s.state, 
+        s.material_id, 
+        s.delivery_id,
+        m.material_code,
+        m.material_name,
+        m.material_type
+        from 
+        hy_stock_record s
+        LEFT JOIN hy_material m ON s.material_id = m.id
     </sql>
 
     <select id="selectHyStockRecordList" parameterType="HyStockRecord" resultMap="HyStockRecordResult">
         <include refid="selectHyStockRecordVo"/>
         <where>  
-            <if test="materialCode != null "> and material_code = #{materialCode}</if>
-            <if test="materialName != null  and materialName != ''"> and material_name like concat('%', #{materialName}, '%')</if>
-            <if test="materialType != null  and materialType != ''"> and material_type = #{materialType}</if>
-            <if test="warehouseNumber != null "> and warehouse_number = #{warehouseNumber}</if>
-            <if test="outboundNumber != null "> and outbound_number = #{outboundNumber}</if>
-            <if test="warehouseTime != null "> and warehouse_time = #{warehouseTime}</if>
-            <if test="outboundTime != null "> and outbound_time = #{outboundTime}</if>
-            <if test="state != null  and state != ''"> and state = #{state}</if>
-            <if test="materialId != null "> and material_id = #{materialId}</if>
-            <if test="deliveryId != null "> and delivery_id = #{deliveryId}</if>
+            <if test="hyMaterial != null ">
+            <if test="hyMaterial.materialName != null and hyMaterial.materialName !=''"> and m.material_name = #{hyMaterial.materialName}</if>
+            <if test="hyMaterial.materialType != null and hyMaterial.materialName !=''"> and m.material_type = #{hyMaterial.materialType}</if>
+            </if>
+            <if test="warehouseNumber != null "> and s.warehouse_number = #{warehouseNumber}</if>
+            <if test="outboundNumber != null "> and s.outbound_number = #{outboundNumber}</if>
+            <if test="warehouseTime != null "> and s.warehouse_time = #{warehouseTime}</if>
+            <if test="outboundTime != null "> and s.outbound_time = #{outboundTime}</if>
+            <if test="state != null  and state != ''"> and s.state = #{state}</if>
+            <if test="materialId != null "> and s.material_id = #{materialId}</if>
+            <if test="deliveryId != null "> and s.delivery_id = #{deliveryId}</if>
+            and m.state ="3"
         </where>
     </select>
     
     <select id="selectHyStockRecordById" parameterType="Long" resultMap="HyStockRecordResult">
         <include refid="selectHyStockRecordVo"/>
-        where id = #{id}
+        where s.id = #{id}
     </select>
         
     <insert id="insertHyStockRecord" parameterType="HyStockRecord" useGeneratedKeys="true" keyProperty="id">
         insert into hy_stock_record
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="materialCode != null">material_code,</if>
-            <if test="materialName != null">material_name,</if>
-            <if test="materialType != null">material_type,</if>
             <if test="warehouseNumber != null">warehouse_number,</if>
             <if test="outboundNumber != null">outbound_number,</if>
             <if test="warehouseTime != null">warehouse_time,</if>
@@ -58,9 +85,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="deliveryId != null">delivery_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="materialCode != null">#{materialCode},</if>
-            <if test="materialName != null">#{materialName},</if>
-            <if test="materialType != null">#{materialType},</if>
             <if test="warehouseNumber != null">#{warehouseNumber},</if>
             <if test="outboundNumber != null">#{outboundNumber},</if>
             <if test="warehouseTime != null">#{warehouseTime},</if>
@@ -74,9 +98,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateHyStockRecord" parameterType="HyStockRecord">
         update hy_stock_record
         <trim prefix="SET" suffixOverrides=",">
-            <if test="materialCode != null">material_code = #{materialCode},</if>
-            <if test="materialName != null">material_name = #{materialName},</if>
-            <if test="materialType != null">material_type = #{materialType},</if>
             <if test="warehouseNumber != null">warehouse_number = #{warehouseNumber},</if>
             <if test="outboundNumber != null">outbound_number = #{outboundNumber},</if>
             <if test="warehouseTime != null">warehouse_time = #{warehouseTime},</if>

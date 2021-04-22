@@ -53,6 +53,10 @@ public class HyLifting extends BaseEntity
     /** 审核人 */
     @Excel(name = "审核人")
     private String auditor;
+    
+    /** 审核状态 */
+    @Excel(name = "审核状态")
+    private String state;
 
     /** 盘点员 */
     @Excel(name = "盘点员")
@@ -160,7 +164,15 @@ public class HyLifting extends BaseEntity
     {
         return auditor;
     }
-    public void setCheckName(String checkName) 
+    public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public void setCheckName(String checkName) 
     {
         this.checkName = checkName;
     }
@@ -197,24 +209,14 @@ public class HyLifting extends BaseEntity
         return checkId;
     }
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("materialName", getMaterialName())
-            .append("materialType", getMaterialType())
-            .append("materialNumber", getMaterialNumber())
-            .append("materialUse", getMaterialUse())
-            .append("isreturn", getIsreturn())
-            .append("createTime", getCreateTime())
-            .append("depts", getDepts())
-            .append("proposer", getProposer())
-            .append("unit", getUnit())
-            .append("auditor", getAuditor())
-            .append("checkName", getCheckName())
-            .append("billId", getBillId())
-            .append("specimenId", getSpecimenId())
-            .append("checkId", getCheckId())
-            .toString();
-    }
+	@Override
+	public String toString() {
+		return "HyLifting [id=" + id + ", materialName=" + materialName + ", materialType=" + materialType
+				+ ", materialNumber=" + materialNumber + ", materialUse=" + materialUse + ", isreturn=" + isreturn
+				+ ", depts=" + depts + ", proposer=" + proposer + ", unit=" + unit + ", auditor=" + auditor + ", state="
+				+ state + ", checkName=" + checkName + ", billId=" + billId + ", specimenId=" + specimenId
+				+ ", checkId=" + checkId + "]";
+	}
+
+    
 }

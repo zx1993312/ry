@@ -16,6 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="proposer"    column="proposer"    />
         <result property="unit"    column="unit"    />
         <result property="auditor"    column="auditor"    />
+        <result property="state"    column="state"    />
         <result property="checkName"    column="check_name"    />
         <result property="billId"    column="bill_id"    />
         <result property="specimenId"    column="specimen_id"    />
@@ -23,7 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectHyLiftingVo">
-        select id, material_name, material_type, material_number, material_use, isreturn, create_time, depts, proposer, unit, auditor, check_name, bill_id, specimen_id, check_id from hy_lifting
+        select id, material_name, material_type, material_number, material_use, isreturn, create_time, depts, proposer, unit, auditor, state, check_name, bill_id, specimen_id, check_id from hy_lifting
     </sql>
 
     <select id="selectHyLiftingList" parameterType="HyLifting" resultMap="HyLiftingResult">
@@ -38,6 +39,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="proposer != null  and proposer != ''"> and proposer = #{proposer}</if>
             <if test="unit != null  and unit != ''"> and unit = #{unit}</if>
             <if test="auditor != null  and auditor != ''"> and auditor = #{auditor}</if>
+            <if test="state != null  and state != ''"> and state = #{state}</if>
             <if test="checkName != null  and checkName != ''"> and check_name like concat('%', #{checkName}, '%')</if>
             <if test="billId != null "> and bill_id = #{billId}</if>
             <if test="specimenId != null "> and specimen_id = #{specimenId}</if>
@@ -63,6 +65,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="proposer != null">proposer,</if>
             <if test="unit != null">unit,</if>
             <if test="auditor != null">auditor,</if>
+            <if test="state != null">state,</if>
             <if test="checkName != null">check_name,</if>
             <if test="billId != null">bill_id,</if>
             <if test="specimenId != null">specimen_id,</if>
@@ -79,6 +82,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="proposer != null">#{proposer},</if>
             <if test="unit != null">#{unit},</if>
             <if test="auditor != null">#{auditor},</if>
+            <if test="state != null">#{state},</if>
             <if test="checkName != null">#{checkName},</if>
             <if test="billId != null">#{billId},</if>
             <if test="specimenId != null">#{specimenId},</if>
@@ -99,6 +103,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="proposer != null">proposer = #{proposer},</if>
             <if test="unit != null">unit = #{unit},</if>
             <if test="auditor != null">auditor = #{auditor},</if>
+            <if test="state != null">state = #{state},</if>
             <if test="checkName != null">check_name = #{checkName},</if>
             <if test="billId != null">bill_id = #{billId},</if>
             <if test="specimenId != null">specimen_id = #{specimenId},</if>

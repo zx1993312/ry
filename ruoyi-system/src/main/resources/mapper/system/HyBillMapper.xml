@@ -7,28 +7,65 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="HyBill" id="HyBillResult">
         <result property="id"    column="id"    />
         <result property="billCode"    column="bill_code"    />
-        <result property="materialType"    column="material_type"    />
         <result property="materialUse"    column="material_use"    />
-        <result property="materialNumber"    column="material_number"    />
-        <result property="state"    column="state"    />
+        <result property="isStock"    column="is_stock"    />
         <result property="materialId"    column="material_id"    />
-        <result property="materrialAudit"    column="materrial_audit"    />
+        <association property="hyMaterial" column="id"
+			javaType="HyMaterial" resultMap="HyMaterialResult" />
+    </resultMap>
+    
+    <resultMap type="HyMaterial" id="HyMaterialResult">
+        <result property="id"    column="id"    />
+        <result property="materialCode"    column="material_code"    />
+        <result property="materialName"    column="material_name"    />
+        <result property="materialType"    column="material_type"    />
+        <result property="materialUnit"    column="material_unit"    />
+        <result property="materialNumber"    column="material_number"    />
+        <result property="materialAddress"    column="material_address"    />
+        <result property="materialDept"    column="material_dept"    />
+        <result property="materialSupplier"    column="material_supplier"    />
+        <result property="materialCommute"    column="material_commute"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="state"    column="state"    />
+        <result property="specimen"    column="specimen"    />
+        <result property="specimendept"    column="specimendept"    />
+        <result property="checkmen"    column="checkmen"    />
     </resultMap>
 
     <sql id="selectHyBillVo">
-        select id, bill_code, material_type, material_use, material_number, state, material_id, materrial_audit from hy_bill
+        select 
+        b.id, 
+        b.bill_code, 
+        b.material_use, 
+        b.is_stock, 
+        b.time,
+        b.material_id,
+        m.material_type, 
+        m.material_number, 
+        m.material_address, 
+        m.state,
+        m.create_time,
+        m.specimen,
+		m.specimendept,
+		m.checkmen
+        from 
+        hy_bill b
+        LEFT JOIN hy_material m ON b.material_id = m.id
     </sql>
 
     <select id="selectHyBillList" parameterType="HyBill" resultMap="HyBillResult">
         <include refid="selectHyBillVo"/>
         <where>  
-            <if test="billCode != null "> and bill_code = #{billCode}</if>
-            <if test="materialType != null  and materialType != ''"> and material_type = #{materialType}</if>
-            <if test="materialUse != null  and materialUse != ''"> and material_use = #{materialUse}</if>
-            <if test="materialNumber != null "> and material_number = #{materialNumber}</if>
-            <if test="state != null  and state != ''"> and state = #{state}</if>
-            <if test="materialId != null "> and material_id = #{materialId}</if>
-            <if test="materrialAudit != null  and materrialAudit != ''"> and materrial_audit = #{materrialAudit}</if>
+            <if test="time != null "> and b.time = #{time}</if>
+            <if test="materialUse != null  and materialUse != ''"> and b.material_use = #{materialUse}</if>
+            <if test="isStock != null  and isStock != ''"> and b.is_stock = #{isStock}</if>
+            <if test="time != null  and time != ''"> and b.time = #{time}</if>
+            <if test="materialId != null "> and b.material_id = #{materialId}</if>
+            <if test="hyMaterial != null "> 
+			<if test="hyMaterial.materialType != null  and hyMaterial.materialType != ''"> and m.material_type = #{hyMaterial.materialType}</if>
+            <if test="hyMaterial.materialNumber != null "> and m.material_number = #{hyMaterial.materialNumber}</if>
+			</if>
+            and m.state = "3"
         </where>
     </select>
     
@@ -40,22 +77,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="insertHyBill" parameterType="HyBill" useGeneratedKeys="true" keyProperty="id">
         insert into hy_bill
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="billCode != null">bill_code,</if>
-            <if test="materialType != null">material_type,</if>
+            bill_code,
             <if test="materialUse != null">material_use,</if>
-            <if test="materialNumber != null">material_number,</if>
-            <if test="state != null">state,</if>
+            <if test="isStock != null">is_stock,</if>
+            <if test="time != null">time,</if>
             <if test="materialId != null">material_id,</if>
-            <if test="materrialAudit != null">materrial_audit,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="billCode != null">#{billCode},</if>
-            <if test="materialType != null">#{materialType},</if>
+            UUID(),
             <if test="materialUse != null">#{materialUse},</if>
-            <if test="materialNumber != null">#{materialNumber},</if>
-            <if test="state != null">#{state},</if>
+            <if test="isStock != null">#{isStock},</if>
+            <if test="time != null">#{time},</if>
             <if test="materialId != null">#{materialId},</if>
-            <if test="materrialAudit != null">#{materrialAudit},</if>
          </trim>
     </insert>
 
@@ -63,12 +96,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update hy_bill
         <trim prefix="SET" suffixOverrides=",">
             <if test="billCode != null">bill_code = #{billCode},</if>
-            <if test="materialType != null">material_type = #{materialType},</if>
             <if test="materialUse != null">material_use = #{materialUse},</if>
-            <if test="materialNumber != null">material_number = #{materialNumber},</if>
-            <if test="state != null">state = #{state},</if>
+            <if test="isStock != null">is_stock = #{isStock},</if>
+            <if test="time != null">time = #{time},</if>
             <if test="materialId != null">material_id = #{materialId},</if>
-            <if test="materrialAudit != null">materrial_audit = #{materrialAudit},</if>
         </trim>
         where id = #{id}
     </update>

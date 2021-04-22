@@ -41,6 +41,10 @@ public class HyDelivery extends BaseEntity
     /** 审核人 */
     @Excel(name = "审核人")
     private String operatorAuditPerson;
+    
+    /** 审核状态 */
+    @Excel(name = "审核状态")
+    private String state;
 
     /** 物料类型 */
     @Excel(name = "物料类型")
@@ -121,7 +125,15 @@ public class HyDelivery extends BaseEntity
     {
         return operatorAuditPerson;
     }
-    public void setOperatorType(String operatorType) 
+    public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public void setOperatorType(String operatorType) 
     {
         this.operatorType = operatorType;
     }
@@ -158,21 +170,14 @@ public class HyDelivery extends BaseEntity
         return liftingId;
     }
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("deliveryCode", getDeliveryCode())
-            .append("deliveryReceiver", getDeliveryReceiver())
-            .append("deliveryDept", getDeliveryDept())
-            .append("deliveryOperator", getDeliveryOperator())
-            .append("operatorAuditDept", getOperatorAuditDept())
-            .append("operatorAuditPerson", getOperatorAuditPerson())
-            .append("operatorType", getOperatorType())
-            .append("operatorUse", getOperatorUse())
-            .append("operatorNumber", getOperatorNumber())
-            .append("createTime", getCreateTime())
-            .append("liftingId", getLiftingId())
-            .toString();
-    }
+	@Override
+	public String toString() {
+		return "HyDelivery [id=" + id + ", deliveryCode=" + deliveryCode + ", deliveryReceiver=" + deliveryReceiver
+				+ ", deliveryDept=" + deliveryDept + ", deliveryOperator=" + deliveryOperator + ", operatorAuditDept="
+				+ operatorAuditDept + ", operatorAuditPerson=" + operatorAuditPerson + ", state=" + state
+				+ ", operatorType=" + operatorType + ", operatorUse=" + operatorUse + ", operatorNumber="
+				+ operatorNumber + ", liftingId=" + liftingId + "]";
+	}
+
+   
 }

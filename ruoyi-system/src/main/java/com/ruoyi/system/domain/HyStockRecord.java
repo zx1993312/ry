@@ -20,18 +20,6 @@ public class HyStockRecord extends BaseEntity
     /** 出入库记录id */
     private Long id;
 
-    /** 物料编号 */
-    @Excel(name = "物料编号")
-    private Long materialCode;
-
-    /** 物料名称 */
-    @Excel(name = "物料名称")
-    private String materialName;
-
-    /** 物料类型 */
-    @Excel(name = "物料类型")
-    private String materialType;
-
     /** 入库次数 */
     @Excel(name = "入库次数")
     private Long warehouseNumber;
@@ -57,6 +45,10 @@ public class HyStockRecord extends BaseEntity
     /** 物料id */
     @Excel(name = "物料id")
     private Long materialId;
+    
+    /** 物料表 */
+    @Excel(name = "物料表")
+    private HyMaterial hyMaterial;
 
     /** 出库id */
     @Excel(name = "出库id")
@@ -70,33 +62,6 @@ public class HyStockRecord extends BaseEntity
     public Long getId() 
     {
         return id;
-    }
-    public void setMaterialCode(Long materialCode) 
-    {
-        this.materialCode = materialCode;
-    }
-
-    public Long getMaterialCode() 
-    {
-        return materialCode;
-    }
-    public void setMaterialName(String materialName) 
-    {
-        this.materialName = materialName;
-    }
-
-    public String getMaterialName() 
-    {
-        return materialName;
-    }
-    public void setMaterialType(String materialType) 
-    {
-        this.materialType = materialType;
-    }
-
-    public String getMaterialType() 
-    {
-        return materialType;
     }
     public void setWarehouseNumber(Long warehouseNumber) 
     {
@@ -152,7 +117,16 @@ public class HyStockRecord extends BaseEntity
     {
         return materialId;
     }
-    public void setDeliveryId(Long deliveryId) 
+    
+    public HyMaterial getHyMaterial() {
+		return hyMaterial;
+	}
+
+	public void setHyMaterial(HyMaterial hyMaterial) {
+		this.hyMaterial = hyMaterial;
+	}
+
+	public void setDeliveryId(Long deliveryId) 
     {
         this.deliveryId = deliveryId;
     }
@@ -162,20 +136,11 @@ public class HyStockRecord extends BaseEntity
         return deliveryId;
     }
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("materialCode", getMaterialCode())
-            .append("materialName", getMaterialName())
-            .append("materialType", getMaterialType())
-            .append("warehouseNumber", getWarehouseNumber())
-            .append("outboundNumber", getOutboundNumber())
-            .append("warehouseTime", getWarehouseTime())
-            .append("outboundTime", getOutboundTime())
-            .append("state", getState())
-            .append("materialId", getMaterialId())
-            .append("deliveryId", getDeliveryId())
-            .toString();
-    }
+	@Override
+	public String toString() {
+		return "HyStockRecord [id=" + id + ", warehouseNumber=" + warehouseNumber + ", outboundNumber=" + outboundNumber
+				+ ", warehouseTime=" + warehouseTime + ", outboundTime=" + outboundTime + ", state=" + state
+				+ ", materialId=" + materialId + ", hyMaterial=" + hyMaterial + ", deliveryId=" + deliveryId + "]";
+	}
+
 }

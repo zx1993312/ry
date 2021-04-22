@@ -2,19 +2,27 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ruoyi.system.mapper.HyInventoryMapper">
+<mapper namespace="com.ruoyi.system.mapper.HyAssessorMapper">
+    
+    <resultMap type="HyAssessor" id="HyAssessorResult">
+        <result property="id"    column="id"    />
+        <result property="materialId"    column="material_id"    />
+        <result property="specimenId"    column="specimen_id"    />
+        <association property="hyInventory" column="id"
+			javaType="HyInventory" resultMap="HyInventoryResult" />
+        <association property="hyMaterial" column="id"
+			javaType="HyMaterial" resultMap="HyMaterialResult" />
+        <association property="hySpecimen" column="id"
+			javaType="HySpecimen" resultMap="HySpecimenResult" />
+    </resultMap>
     
     <resultMap type="HyInventory" id="HyInventoryResult">
         <result property="id"    column="id"    />
         <result property="materialId"    column="material_id"    />
         <result property="checkId"    column="check_id"    />
-        <association property="hyMaterial" column="id"
-			javaType="HyMaterial" resultMap="HyMaterialResult" />
-        <association property="hyCheck" column="id"
-			javaType="HyCheck" resultMap="HyCheckResult" />
     </resultMap>
 	
-	<resultMap type="HyCheck" id="HyCheckResult">
+	<resultMap type="HySpecimen" id="HySpecimenResult">
         <result property="id"    column="id"    />
         <result property="employeeId"    column="employee_id"    />
         <result property="deptId"    column="dept_id"    />
@@ -23,8 +31,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<association property="hyEmployee" column="id"
 			javaType="HyEmployee" resultMap="HyEmployeeResult" />
     </resultMap>
-
-	 <resultMap type="HyDept" id="HyDeptResult">
+	
+	<resultMap type="HyDept" id="HyDeptResult">
         <result property="id"    column="id"    />
         <result property="deptName"    column="dept_name"    />
         <result property="createTime"    column="create_time"    />
@@ -52,68 +60,81 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="materialCommute"    column="material_commute"    />
         <result property="createTime"    column="create_time"    />
         <result property="state"    column="state"    />
+        <result property="checkmen"    column="checkmen"    />
     </resultMap>
 	
-    <sql id="selectHyInventoryVo">
+    <sql id="selectHyAssessorVo">
         select 
-        i.id, 
-        i.material_id,
-        i.check_id,
+        a.id, 
+        a.material_id,
+        a.specimen_id,
         m.material_code, 
         m.material_name, 
         m.material_type, 
+        m.material_unit, 
         m.material_number, 
-        m.material_address,
-        d.dept_name, 
+        m.material_address, 
+        m.material_dept, 
+        m.material_supplier, 
+        m.material_commute, 
+        m.create_time, 
+        m.state,
+        m.checkmen,
+        i.check_id,
+        d.dept_name,
         e.employee_name
-        from hy_inventory i
-        LEFT JOIN hy_material m ON i.material_id = m.id
-        LEFT JOIN hy_check c ON i.check_id = c.id
-        LEFT JOIN hy_dept d ON c.dept_id = d.id
-        LEFT JOIN hy_employee e ON c.employee_id = e.id
+        from 
+        hy_assessor a
+        LEFT JOIN hy_material m ON a.material_id = m.id
+        LEFT JOIN hy_inventory i ON a.material_id = i.material_id
+        LEFT JOIN hy_specimen s ON a.specimen_id = s.id
+        LEFT JOIN hy_dept d ON s.dept_id = d.id
+        LEFT JOIN hy_employee e ON s.employee_id = e.id
     </sql>
-
-    <select id="selectHyInventoryList" parameterType="HyInventory" resultMap="HyInventoryResult">
-        <include refid="selectHyInventoryVo"/>
-        <where> 
-        	 <if test="checkId != null"> and i.check_id = #{checkId}</if>
+	
+    <select id="selectHyAssessorList" parameterType="HyAssessor" resultMap="HyAssessorResult">
+        <include refid="selectHyAssessorVo"/>
+        <where>  
             <if test="hyMaterial != null">
              <if test="hyMaterial.materialCode != null and hyMaterial.materialCode != ''"> and m.material_code = #{hyMaterial.materialCode}</if>
              <if test="hyMaterial.materialName != null and hyMaterial.materialName != ''"> and m.material_name = #{hyMaterial.materialName}</if>
             </if>
+            and m.state = "2"
         </where>
     </select>
     
-    <select id="selectHyInventoryById" parameterType="Long" resultMap="HyInventoryResult">
-        <include refid="selectHyInventoryVo"/>
-        where i.id = #{id}
+    <select id="selectHyAssessorById" parameterType="Long" resultMap="HyAssessorResult">
+        <include refid="selectHyAssessorVo"/>
+        where a.id = #{id}
     </select>
         
-    <insert id="insertHyInventory" parameterType="HyInventory" useGeneratedKeys="true" keyProperty="id">
-        insert into hy_inventory
+    <insert id="insertHyAssessor" parameterType="HyAssessor">
+        insert into hy_assessor
         <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
             <if test="materialId != null">material_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
             <if test="materialId != null">#{materialId},</if>
          </trim>
     </insert>
 
-    <update id="updateHyInventory" parameterType="HyInventory">
-        update hy_inventory
+    <update id="updateHyAssessor" parameterType="HyAssessor">
+        update hy_assessor
         <trim prefix="SET" suffixOverrides=",">
             <if test="materialId != null">material_id = #{materialId},</if>
-            <if test="checkId != null">check_id = #{checkId},</if>
+            <if test="specimenId != null">specimen_id = #{specimenId},</if>
         </trim>
         where id = #{id}
     </update>
 
-    <delete id="deleteHyInventoryById" parameterType="Long">
-        delete from hy_inventory where id = #{id}
+    <delete id="deleteHyAssessorById" parameterType="Long">
+        delete from hy_assessor where id = #{id}
     </delete>
 
-    <delete id="deleteHyInventoryByIds" parameterType="String">
-        delete from hy_inventory where id in 
+    <delete id="deleteHyAssessorByIds" parameterType="String">
+        delete from hy_assessor where id in 
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

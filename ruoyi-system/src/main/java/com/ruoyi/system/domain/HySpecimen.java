@@ -18,25 +18,21 @@ public class HySpecimen extends BaseEntity
     /** 接收员id */
     private Long id;
 
-    /** 部门 */
-    @Excel(name = "部门")
-    private String dept;
-
-    /** 工号 */
-    @Excel(name = "工号")
-    private String code;
-
-    /** 姓名 */
-    @Excel(name = "姓名")
-    private String name;
-
     /** 员工id */
     @Excel(name = "员工id")
     private Long employeeId;
 
+    /** 员工表 */
+    @Excel(name = "员工表")
+    private HyEmployee hyEmployee;
+    
     /** 部门id */
     @Excel(name = "部门id")
     private Long deptId;
+    
+    /** 部门表 */
+    @Excel(name = "部门表")
+    private HyDept hyDept;
 
     public void setId(Long id) 
     {
@@ -46,33 +42,6 @@ public class HySpecimen extends BaseEntity
     public Long getId() 
     {
         return id;
-    }
-    public void setDept(String dept) 
-    {
-        this.dept = dept;
-    }
-
-    public String getDept() 
-    {
-        return dept;
-    }
-    public void setCode(String code) 
-    {
-        this.code = code;
-    }
-
-    public String getCode() 
-    {
-        return code;
-    }
-    public void setName(String name) 
-    {
-        this.name = name;
-    }
-
-    public String getName() 
-    {
-        return name;
     }
     public void setEmployeeId(Long employeeId) 
     {
@@ -93,15 +62,27 @@ public class HySpecimen extends BaseEntity
         return deptId;
     }
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("dept", getDept())
-            .append("code", getCode())
-            .append("name", getName())
-            .append("employeeId", getEmployeeId())
-            .append("deptId", getDeptId())
-            .toString();
-    }
+    public HyEmployee getHyEmployee() {
+		return hyEmployee;
+	}
+
+	public void setHyEmployee(HyEmployee hyEmployee) {
+		this.hyEmployee = hyEmployee;
+	}
+
+	public HyDept getHyDept() {
+		return hyDept;
+	}
+
+	public void setHyDept(HyDept hyDept) {
+		this.hyDept = hyDept;
+	}
+
+	@Override
+	public String toString() {
+		return "HySpecimen [id=" + id + ", employeeId=" + employeeId + ", hyEmployee=" + hyEmployee + ", deptId="
+				+ deptId + ", hyDept=" + hyDept + "]";
+	}
+
+	
 }

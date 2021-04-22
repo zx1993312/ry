@@ -1,0 +1,115 @@
+package com.ruoyi.system.service.impl;
+
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import com.ruoyi.system.mapper.HyAssessorMapper;
+import com.ruoyi.system.mapper.HyMaterialMapper;
+import com.ruoyi.system.controller.HyMaterialController;
+import com.ruoyi.system.domain.HyAssessor;
+import com.ruoyi.system.domain.HyMaterial;
+import com.ruoyi.system.service.IHyAssessorService;
+import com.ruoyi.common.core.text.Convert;
+
+/**
+ * 审核管理Service业务层处理
+ * 
+ * @author Administrator
+ * @date 2021-04-21
+ */
+@Service
+public class HyAssessorServiceImpl implements IHyAssessorService 
+{
+    @Autowired
+    private HyAssessorMapper hyAssessorMapper;
+    
+    @Autowired
+    private HyMaterialServiceImpl hyMaterialServiceImpl;
+
+    /**
+     * 查询审核管理
+     * 
+     * @param id 审核管理ID
+     * @return 审核管理
+     */
+    @Override
+    public HyAssessor selectHyAssessorById(Long id)
+    {
+        return hyAssessorMapper.selectHyAssessorById(id);
+    }
+
+    /**
+     * 查询审核管理列表
+     * 
+     * @param hyAssessor 审核管理
+     * @return 审核管理
+     */
+    @Override
+    public List<HyAssessor> selectHyAssessorList(HyAssessor hyAssessor)
+    {
+        return hyAssessorMapper.selectHyAssessorList(hyAssessor);
+    }
+
+    /**
+     * 新增审核管理
+     * 
+     * @param hyAssessor 审核管理
+     * @return 结果
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public int insertHyAssessor(HyAssessor hyAssessor)
+    {
+        return hyAssessorMapper.insertHyAssessor(hyAssessor);
+    }
+
+    /**
+     * 修改审核管理
+     * 
+     * @param hyAssessor 审核管理
+     * @return 结果
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public int updateHyAssessor(HyAssessor hyAssessor)
+    {
+    	hyAssessorMapper.updateHyAssessor(hyAssessor);
+    	List<HyAssessor> list = hyAssessorMapper.selectHyAssessorList(hyAssessor);
+    	hyAssessor = list.get(0);
+    	HyMaterial hyMaterial = new HyMaterial();
+    	hyMaterial.setAssessorId(hyAssessor.getId());
+    	hyMaterial.setId(hyAssessor.getMaterialId());
+    	hyMaterial.setState("3");
+    	hyMaterial.setSpecimen(hyAssessor.getHySpecimen().getHyEmployee().getEmployeeName());
+    	hyMaterial.setSpecimendept(hyAssessor.getHySpecimen().getHyDept().getDeptName());
+    	//hyMaterialMapper.updateHyMaterial(hyMaterial);
+        return hyMaterialServiceImpl.updateHyMaterials(hyMaterial);
+    }
+
+    /**
+     * 删除审核管理对象
+     * 
+     * @param ids 需要删除的数据ID
+     * @return 结果
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public int deleteHyAssessorByIds(String ids)
+    {
+        return hyAssessorMapper.deleteHyAssessorByIds(Convert.toStrArray(ids));
+    }
+
+    /**
+     * 删除审核管理信息
+     * 
+     * @param id 审核管理ID
+     * @return 结果
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public int deleteHyAssessorById(Long id)
+    {
+        return hyAssessorMapper.deleteHyAssessorById(id);
+    }
+}

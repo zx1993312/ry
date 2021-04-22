@@ -12,23 +12,11 @@
                         <ul>
                             <li>
                                 <label>部门：</label>
-                                <input type="text" name="dept"/>
-                            </li>
-                            <li>
-                                <label>工号：</label>
-                                <input type="text" name="code"/>
+                                <input type="text" name="deptId"/>
                             </li>
                             <li>
                                 <label>姓名：</label>
-                                <input type="text" name="name"/>
-                            </li>
-                            <li>
-                                <label>员工id：</label>
                                 <input type="text" name="employeeId"/>
-                            </li>
-                            <li>
-                                <label>部门id：</label>
-                                <input type="text" name="deptId"/>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -81,24 +69,12 @@
                     visible: false
                 },
                 {
-                    field: 'dept',
+                    field: 'hyDept.deptName',
                     title: '部门'
                 },
                 {
-                    field: 'code',
-                    title: '工号'
-                },
-                {
-                    field: 'name',
+                    field: 'hyEmployee.employeeName',
                     title: '姓名'
-                },
-                {
-                    field: 'employeeId',
-                    title: '员工id'
-                },
-                {
-                    field: 'deptId',
-                    title: '部门id'
                 },
                 {
                     title: '操作',

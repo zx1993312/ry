@@ -42,6 +42,14 @@ public interface IHyMaterialService
      * @return 结果
      */
     public int updateHyMaterial(HyMaterial hyMaterial);
+    
+    /**
+     * 修改物料
+     * 
+     * @param hyMaterial 物料
+     * @return 结果
+     */
+    public int updateHyMaterials(HyMaterial hyMaterial);
 
     /**
      * 批量删除物料

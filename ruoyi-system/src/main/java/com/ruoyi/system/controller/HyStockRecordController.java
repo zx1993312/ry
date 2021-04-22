@@ -62,6 +62,7 @@ public class HyStockRecordController extends BaseController
     {
         startPage();
         List<HyStockRecord> list = hyStockRecordService.selectHyStockRecordList(hyStockRecord);
+        System.out.println("list==========="+list);
         return getDataTable(list);
     }
 

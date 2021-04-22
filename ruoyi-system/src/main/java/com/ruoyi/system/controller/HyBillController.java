@@ -62,6 +62,7 @@ public class HyBillController extends BaseController
     {
         startPage();
         List<HyBill> list = hyBillService.selectHyBillList(hyBill);
+        System.out.println("===list==="+list);
         return getDataTable(list);
     }
 

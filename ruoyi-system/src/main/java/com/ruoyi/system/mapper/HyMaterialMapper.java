@@ -1,6 +1,10 @@
 package com.ruoyi.system.mapper;
 
 import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+
 import com.ruoyi.system.domain.HyMaterial;
 
 /**

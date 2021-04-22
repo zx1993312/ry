@@ -1,33 +1,33 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
-    <th:block th:include="include :: header('修改盘点管理')" />
+    <th:block th:include="include :: header('修改审核管理')" />
 </head>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-inventory-edit" th:object="${hyInventory}">
+        <form class="form-horizontal m" id="form-assessor-edit" th:object="${hyAssessor}">
             <input name="id" th:field="*{id}" type="hidden">
             <div class="form-group">    
-                <label class="col-sm-3 control-label">盘点员：</label>
+                <label class="col-sm-3 control-label">审核人：</label>
                 <div class="col-sm-8">
-                    <select name="checkId" class="form-control" th:with="type=${@check.getCheck()}">
+                	<select name="specimenId" class="form-control" th:with="type=${@specimen.getSpecimen()}">
 						<option value="">请选择</option>
 						<option th:if="data!=null" th:each="data:${type}" th:text="${data.hyEmployee.employeeName}" th:value="${data.id}"></option>
-			 	    </select>
-                </div>
+			 		</select>
+			 	</div>
             </div>
         </form>
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var prefix = ctx + "system/inventory";
-        $("#form-inventory-edit").validate({
+        var prefix = ctx + "system/assessor";
+        $("#form-assessor-edit").validate({
             focusCleanup: true
         });
 
         function submitHandler() {
             if ($.validate.form()) {
-                $.operate.save(prefix + "/edit", $('#form-inventory-edit').serialize());
+            	$.operate.save(prefix + "/edit", $('#form-assessor-edit').serialize());
             }
         }
     </script>

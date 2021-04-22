@@ -16,10 +16,7 @@
                             </li>
                             <li>
                                 <label>物料类型：</label>
-                                <select name="materialType">
-                                    <option value="">所有</option>
-                                    <option value="-1">代码生成请选择字典属性</option>
-                                </select>
+                                <input type="text" name="hyMaterial.materialType"/>
                             </li>
                             <li>
                                 <label>物料用途：</label>
@@ -27,15 +24,11 @@
                             </li>
                             <li>
                                 <label>库存数量：</label>
-                                <input type="text" name="materialNumber"/>
+                                <input type="text" name="hyMaterial.materialNumber"/>
                             </li>
                             <li>
                                 <label>是否在库：</label>
-                                <input type="text" name="state"/>
-                            </li>
-                            <li>
-                                <label>物料id：</label>
-                                <input type="text" name="materialId"/>
+                                <input type="text" name="isStock"/>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -92,7 +85,7 @@
                     title: '物料列表编号'
                 },
                 {
-                    field: 'materialType',
+                    field: 'hyMaterial.materialType',
                     title: '物料类型'
                 },
                 {
@@ -100,20 +93,37 @@
                     title: '物料用途'
                 },
                 {
-                    field: 'materialNumber',
+                    field: 'hyMaterial.materialNumber',
                     title: '库存数量'
                 },
                 {
-                    field: 'state',
+                    field: 'isStock',
                     title: '是否在库'
                 },
                 {
-                    field: 'materialId',
-                    title: '物料id'
+                    field: 'hyMaterial.state',
+                    title: '审核状态',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case "" : value =  "";break;
+	                    	case "1" : value =  "未审核";break;
+	                    	case "2" : value =  "审核中";break;
+	                    	case "3" : value =  "已审核";break;
+	                	}
+		            	return value;
+		            }
                 },
                 {
-                    field: 'materrialAudit',
-                    title: '审核状态'
+                    field: 'hyMaterial.checkmen',
+                    title: '经办人'
+                },
+                {
+                    field: 'hyMaterial.specimen',
+                    title: '审核人'
+                },
+                {
+                    field: 'hyMaterial.specimendept',
+                    title: '审核部门'
                 },
                 {
                     title: '操作',

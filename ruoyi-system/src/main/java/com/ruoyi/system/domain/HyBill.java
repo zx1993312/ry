@@ -20,31 +20,28 @@ public class HyBill extends BaseEntity
 
     /** 物料列表编号 */
     @Excel(name = "物料列表编号")
-    private Long billCode;
-
-    /** 物料类型 */
-    @Excel(name = "物料类型")
-    private String materialType;
+    private String billCode;
 
     /** 物料用途 */
     @Excel(name = "物料用途")
     private String materialUse;
 
-    /** 库存数量 */
-    @Excel(name = "库存数量")
-    private Long materialNumber;
-
     /** 是否在库 */
     @Excel(name = "是否在库")
-    private String state;
+    private String isStock;
+    
+    /** 是否在库 */
+    @Excel(name = "是否在库")
+    private String time;
 
     /** 物料id */
     @Excel(name = "物料id")
     private Long materialId;
-
-    /** 审核状态 */
-    @Excel(name = "审核状态")
-    private String materrialAudit;
+    
+    /** 物料表 */
+    @Excel(name = "物料表")
+    private HyMaterial hyMaterial;
+    
 
     public void setId(Long id) 
     {
@@ -55,23 +52,14 @@ public class HyBill extends BaseEntity
     {
         return id;
     }
-    public void setBillCode(Long billCode) 
+    public void setBillCode(String billCode) 
     {
         this.billCode = billCode;
     }
 
-    public Long getBillCode() 
+    public String getBillCode() 
     {
         return billCode;
-    }
-    public void setMaterialType(String materialType) 
-    {
-        this.materialType = materialType;
-    }
-
-    public String getMaterialType() 
-    {
-        return materialType;
     }
     public void setMaterialUse(String materialUse) 
     {
@@ -82,25 +70,26 @@ public class HyBill extends BaseEntity
     {
         return materialUse;
     }
-    public void setMaterialNumber(Long materialNumber) 
-    {
-        this.materialNumber = materialNumber;
-    }
+    
+    
 
-    public Long getMaterialNumber() 
-    {
-        return materialNumber;
-    }
-    public void setState(String state) 
-    {
-        this.state = state;
-    }
+    public String getIsStock() {
+		return isStock;
+	}
 
-    public String getState() 
-    {
-        return state;
-    }
-    public void setMaterialId(Long materialId) 
+	public void setIsStock(String isStock) {
+		this.isStock = isStock;
+	}
+
+	public String getTime() {
+		return time;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
+	}
+
+	public void setMaterialId(Long materialId) 
     {
         this.materialId = materialId;
     }
@@ -109,27 +98,29 @@ public class HyBill extends BaseEntity
     {
         return materialId;
     }
-    public void setMaterrialAudit(String materrialAudit) 
-    {
-        this.materrialAudit = materrialAudit;
-    }
+    
+    public HyMaterial getHyMaterial() {
+		return hyMaterial;
+	}
 
-    public String getMaterrialAudit() 
-    {
-        return materrialAudit;
-    }
+	public void setHyMaterial(HyMaterial hyMaterial) {
+		this.hyMaterial = hyMaterial;
+	}
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("billCode", getBillCode())
-            .append("materialType", getMaterialType())
-            .append("materialUse", getMaterialUse())
-            .append("materialNumber", getMaterialNumber())
-            .append("state", getState())
-            .append("materialId", getMaterialId())
-            .append("materrialAudit", getMaterrialAudit())
-            .toString();
-    }
+	@Override
+	public String toString() {
+		return "HyBill [id=" + id + ", billCode=" + billCode + ", materialUse=" + materialUse + ", isStock=" + isStock
+				+ ", time=" + time + ", materialId=" + materialId + ", hyMaterial=" + hyMaterial + "]";
+	}
+
+
+
+	
+
+	
+	
+
+	
+
+	
 }

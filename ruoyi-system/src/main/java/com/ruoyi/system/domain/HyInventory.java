@@ -18,33 +18,21 @@ public class HyInventory extends BaseEntity
     /** 盘点管理id */
     private Long id;
 
-    /** 物料编号 */
-    @Excel(name = "物料编号")
-    private Long materialCode;
-
-    /** 物料名称 */
-    @Excel(name = "物料名称")
-    private Long materialName;
-
-    /** 物料类型 */
-    @Excel(name = "物料类型")
-    private String materialType;
-
-    /** 存储位置 */
-    @Excel(name = "存储位置")
-    private String materialAddress;
-
-    /** 库存数量 */
-    @Excel(name = "库存数量")
-    private Long materialNumber;
-
-    /** 审核状态 */
-    @Excel(name = "审核状态")
-    private String state;
-
     /** 物料id */
     @Excel(name = "物料id")
     private Long materialId;
+    
+    /** 物料表 */
+    @Excel(name = "物料表")
+    private HyMaterial hyMaterial;
+    
+    /** 盘点员id */
+    @Excel(name = "盘点员id")
+    private Long checkId;
+    
+    /** 物料表 */
+    @Excel(name = "物料表")
+    private HyCheck hyCheck;
 
     public void setId(Long id) 
     {
@@ -54,60 +42,6 @@ public class HyInventory extends BaseEntity
     public Long getId() 
     {
         return id;
-    }
-    public void setMaterialCode(Long materialCode) 
-    {
-        this.materialCode = materialCode;
-    }
-
-    public Long getMaterialCode() 
-    {
-        return materialCode;
-    }
-    public void setMaterialName(Long materialName) 
-    {
-        this.materialName = materialName;
-    }
-
-    public Long getMaterialName() 
-    {
-        return materialName;
-    }
-    public void setMaterialType(String materialType) 
-    {
-        this.materialType = materialType;
-    }
-
-    public String getMaterialType() 
-    {
-        return materialType;
-    }
-    public void setMaterialAddress(String materialAddress) 
-    {
-        this.materialAddress = materialAddress;
-    }
-
-    public String getMaterialAddress() 
-    {
-        return materialAddress;
-    }
-    public void setMaterialNumber(Long materialNumber) 
-    {
-        this.materialNumber = materialNumber;
-    }
-
-    public Long getMaterialNumber() 
-    {
-        return materialNumber;
-    }
-    public void setState(String state) 
-    {
-        this.state = state;
-    }
-
-    public String getState() 
-    {
-        return state;
     }
     public void setMaterialId(Long materialId) 
     {
@@ -119,17 +53,41 @@ public class HyInventory extends BaseEntity
         return materialId;
     }
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("materialCode", getMaterialCode())
-            .append("materialName", getMaterialName())
-            .append("materialType", getMaterialType())
-            .append("materialAddress", getMaterialAddress())
-            .append("materialNumber", getMaterialNumber())
-            .append("state", getState())
-            .append("materialId", getMaterialId())
-            .toString();
-    }
+	public HyMaterial getHyMaterial() {
+		return hyMaterial;
+	}
+
+	public void setHyMaterial(HyMaterial hyMaterial) {
+		this.hyMaterial = hyMaterial;
+	}
+	
+	public Long getCheckId() {
+		return checkId;
+	}
+
+	public void setCheckId(Long checkId) {
+		this.checkId = checkId;
+	}
+	
+
+	public HyCheck getHyCheck() {
+		return hyCheck;
+	}
+
+	public void setHyCheck(HyCheck hyCheck) {
+		this.hyCheck = hyCheck;
+	}
+
+	@Override
+	public String toString() {
+		return "HyInventory [id=" + id + ", materialId=" + materialId + ", hyMaterial=" + hyMaterial + ", checkId="
+				+ checkId + ", hyCheck=" + hyCheck + "]";
+	}
+
+
+	
+
+	
+
+    
 }

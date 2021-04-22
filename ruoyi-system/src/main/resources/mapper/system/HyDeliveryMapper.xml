@@ -12,6 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="deliveryOperator"    column="delivery_operator"    />
         <result property="operatorAuditDept"    column="operator_audit_dept"    />
         <result property="operatorAuditPerson"    column="operator_audit_person"    />
+        <result property="state"    column="state"    />
         <result property="operatorType"    column="operator_type"    />
         <result property="operatorUse"    column="operator_use"    />
         <result property="operatorNumber"    column="operator_number"    />
@@ -20,7 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectHyDeliveryVo">
-        select id, delivery_code, delivery_receiver, delivery_dept, delivery_operator, operator_audit_dept, operator_audit_person, operator_type, operator_use, operator_number, create_time, lifting_id from hy_delivery
+        select id, delivery_code, delivery_receiver, delivery_dept, delivery_operator, operator_audit_dept, operator_audit_person, state, operator_type, operator_use, operator_number, create_time, lifting_id from hy_delivery
     </sql>
 
     <select id="selectHyDeliveryList" parameterType="HyDelivery" resultMap="HyDeliveryResult">
@@ -32,6 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="deliveryOperator != null  and deliveryOperator != ''"> and delivery_operator = #{deliveryOperator}</if>
             <if test="operatorAuditDept != null  and operatorAuditDept != ''"> and operator_audit_dept = #{operatorAuditDept}</if>
             <if test="operatorAuditPerson != null  and operatorAuditPerson != ''"> and operator_audit_person = #{operatorAuditPerson}</if>
+            <if test="state != null  and state != ''"> and state = #{state}</if>
             <if test="operatorType != null  and operatorType != ''"> and operator_type = #{operatorType}</if>
             <if test="operatorUse != null  and operatorUse != ''"> and operator_use = #{operatorUse}</if>
             <if test="operatorNumber != null "> and operator_number = #{operatorNumber}</if>
@@ -53,6 +55,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="deliveryOperator != null">delivery_operator,</if>
             <if test="operatorAuditDept != null">operator_audit_dept,</if>
             <if test="operatorAuditPerson != null">operator_audit_person,</if>
+            <if test="state != null">state,</if>
             <if test="operatorType != null">operator_type,</if>
             <if test="operatorUse != null">operator_use,</if>
             <if test="operatorNumber != null">operator_number,</if>
@@ -66,6 +69,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="deliveryOperator != null">#{deliveryOperator},</if>
             <if test="operatorAuditDept != null">#{operatorAuditDept},</if>
             <if test="operatorAuditPerson != null">#{operatorAuditPerson},</if>
+            <if test="state != null">#{state},</if>
             <if test="operatorType != null">#{operatorType},</if>
             <if test="operatorUse != null">#{operatorUse},</if>
             <if test="operatorNumber != null">#{operatorNumber},</if>
@@ -83,6 +87,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="deliveryOperator != null">delivery_operator = #{deliveryOperator},</if>
             <if test="operatorAuditDept != null">operator_audit_dept = #{operatorAuditDept},</if>
             <if test="operatorAuditPerson != null">operator_audit_person = #{operatorAuditPerson},</if>
+            <if test="state != null">state = #{state},</if>
             <if test="operatorType != null">operator_type = #{operatorType},</if>
             <if test="operatorUse != null">operator_use = #{operatorUse},</if>
             <if test="operatorNumber != null">operator_number = #{operatorNumber},</if>

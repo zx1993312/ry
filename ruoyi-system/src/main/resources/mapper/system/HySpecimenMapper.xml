@@ -6,48 +6,64 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <resultMap type="HySpecimen" id="HySpecimenResult">
         <result property="id"    column="id"    />
-        <result property="dept"    column="dept"    />
-        <result property="code"    column="code"    />
-        <result property="name"    column="name"    />
         <result property="employeeId"    column="employee_id"    />
         <result property="deptId"    column="dept_id"    />
+        <association property="hyDept" column="id"
+			javaType="HyDept" resultMap="HyDeptResult" />
+		<association property="hyEmployee" column="id"
+			javaType="HyEmployee" resultMap="HyEmployeeResult" />
     </resultMap>
-
+	
+	<resultMap type="HyDept" id="HyDeptResult">
+        <result property="id"    column="id"    />
+        <result property="deptName"    column="dept_name"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="leader"    column="leader"    />
+        <result property="propertyId"    column="property_id"    />
+    </resultMap>
+	
+	<resultMap type="HyEmployee" id="HyEmployeeResult">
+        <result property="id"    column="id"    />
+        <result property="employeeName"    column="employee_name"    />
+        <result property="employeePhone"    column="employee_phone"    />
+        <result property="deptId"    column="dept_id"    />
+    </resultMap>
+	
     <sql id="selectHySpecimenVo">
-        select id, dept, code, name, employee_id, dept_id from hy_specimen
+        select 
+        s.id, 
+        s.employee_id, 
+        s.dept_id,
+        d.dept_name,
+        e.employee_name 
+        from 
+        hy_specimen s
+        LEFT JOIN hy_dept d ON s.dept_id = d.id
+        LEFT JOIN hy_employee e ON s.employee_id = e.id
     </sql>
 
     <select id="selectHySpecimenList" parameterType="HySpecimen" resultMap="HySpecimenResult">
         <include refid="selectHySpecimenVo"/>
         <where>  
-            <if test="dept != null  and dept != ''"> and dept = #{dept}</if>
-            <if test="code != null  and code != ''"> and code = #{code}</if>
-            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
-            <if test="employeeId != null "> and employee_id = #{employeeId}</if>
-            <if test="deptId != null "> and dept_id = #{deptId}</if>
+            <if test="employeeId != null "> and s.employee_id = #{employeeId}</if>
+            <if test="deptId != null "> and s.dept_id = #{deptId}</if>
         </where>
     </select>
     
     <select id="selectHySpecimenById" parameterType="Long" resultMap="HySpecimenResult">
         <include refid="selectHySpecimenVo"/>
-        where id = #{id}
+        where s.id = #{id}
     </select>
         
     <insert id="insertHySpecimen" parameterType="HySpecimen">
         insert into hy_specimen
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
-            <if test="dept != null">dept,</if>
-            <if test="code != null">code,</if>
-            <if test="name != null">name,</if>
             <if test="employeeId != null">employee_id,</if>
             <if test="deptId != null">dept_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id},</if>
-            <if test="dept != null">#{dept},</if>
-            <if test="code != null">#{code},</if>
-            <if test="name != null">#{name},</if>
             <if test="employeeId != null">#{employeeId},</if>
             <if test="deptId != null">#{deptId},</if>
          </trim>
@@ -56,9 +72,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateHySpecimen" parameterType="HySpecimen">
         update hy_specimen
         <trim prefix="SET" suffixOverrides=",">
-            <if test="dept != null">dept = #{dept},</if>
-            <if test="code != null">code = #{code},</if>
-            <if test="name != null">name = #{name},</if>
             <if test="employeeId != null">employee_id = #{employeeId},</if>
             <if test="deptId != null">dept_id = #{deptId},</if>
         </trim>
