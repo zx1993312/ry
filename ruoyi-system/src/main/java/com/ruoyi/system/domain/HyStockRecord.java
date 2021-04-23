@@ -50,10 +50,6 @@ public class HyStockRecord extends BaseEntity
     @Excel(name = "物料表")
     private HyMaterial hyMaterial;
 
-    /** 出库id */
-    @Excel(name = "出库id")
-    private Long deliveryId;
-
     public void setId(Long id) 
     {
         this.id = id;
@@ -126,21 +122,12 @@ public class HyStockRecord extends BaseEntity
 		this.hyMaterial = hyMaterial;
 	}
 
-	public void setDeliveryId(Long deliveryId) 
-    {
-        this.deliveryId = deliveryId;
-    }
-
-    public Long getDeliveryId() 
-    {
-        return deliveryId;
-    }
-
 	@Override
 	public String toString() {
 		return "HyStockRecord [id=" + id + ", warehouseNumber=" + warehouseNumber + ", outboundNumber=" + outboundNumber
 				+ ", warehouseTime=" + warehouseTime + ", outboundTime=" + outboundTime + ", state=" + state
-				+ ", materialId=" + materialId + ", hyMaterial=" + hyMaterial + ", deliveryId=" + deliveryId + "]";
+				+ ", materialId=" + materialId + ", hyMaterial=" + hyMaterial + "]";
 	}
+
 
 }

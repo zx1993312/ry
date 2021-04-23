@@ -34,10 +34,14 @@ public class HyAssessor extends BaseEntity
     @Excel(name = "接收员表")
     private HySpecimen hySpecimen;
     
+    /** 盘点员表 */
+    @Excel(name = "盘点员表")
+    private HyCheck hyCheck;
+    
     /** 盘点管理表 */
     @Excel(name = "盘点管理表")
     private HyInventory hyInventory;
-
+    
     public void setId(Long id) 
     {
         this.id = id;
@@ -81,6 +85,14 @@ public class HyAssessor extends BaseEntity
 		this.hySpecimen = hySpecimen;
 	}
 
+	public HyCheck getHyCheck() {
+		return hyCheck;
+	}
+
+	public void setHyCheck(HyCheck hyCheck) {
+		this.hyCheck = hyCheck;
+	}
+
 	public HyInventory getHyInventory() {
 		return hyInventory;
 	}
@@ -92,8 +104,12 @@ public class HyAssessor extends BaseEntity
 	@Override
 	public String toString() {
 		return "HyAssessor [id=" + id + ", materialId=" + materialId + ", hyMaterial=" + hyMaterial + ", specimenId="
-				+ specimenId + ", hySpecimen=" + hySpecimen + ", hyInventory=" + hyInventory + "]";
+				+ specimenId + ", hySpecimen=" + hySpecimen + ", hyCheck=" + hyCheck + ", hyInventory=" + hyInventory
+				+ "]";
 	}
+
+
+
 
 	
 

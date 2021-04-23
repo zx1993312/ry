@@ -10,64 +10,61 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">出库编号：</label>
                 <div class="col-sm-8">
-                    <input name="deliveryCode" th:field="*{deliveryCode}" class="form-control" type="text">
+                    <input name="deliveryCode" th:field="*{deliveryCode}" class="form-control" type="text" disabled="disabled">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">领取时间：</label>
+                <div class="col-sm-8">
+                    <input name="hyLifting.createTime" th:field="*{hyLifting.createTime}" class="form-control" type="text" disabled="disabled">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">领取人：</label>
                 <div class="col-sm-8">
-                    <input name="deliveryReceiver" th:field="*{deliveryReceiver}" class="form-control" type="text">
+                    <input name="hyLifting.proposer" th:field="*{hyLifting.proposer}" class="form-control" type="text" disabled="disabled">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">领取部门：</label>
                 <div class="col-sm-8">
-                    <input name="deliveryDept" th:field="*{deliveryDept}" class="form-control" type="text">
+                    <input name="hyLifting.depts" th:field="*{hyLifting.depts}" class="form-control" type="text" disabled="disabled">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">经办人：</label>
                 <div class="col-sm-8">
-                    <input name="deliveryOperator" th:field="*{deliveryOperator}" class="form-control" type="text">
+                    <input name="hyLifting.hyMaterial.checkmen" th:field="*{hyLifting.hyMaterial.checkmen}" class="form-control" type="text" disabled="disabled">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">审核部门：</label>
                 <div class="col-sm-8">
-                    <input name="operatorAuditDept" th:field="*{operatorAuditDept}" class="form-control" type="text">
+                    <input name="hyLifting.hyMaterial.specimendept" th:field="*{hyLifting.hyMaterial.specimendept}" class="form-control" type="text" disabled="disabled">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">审核人：</label>
                 <div class="col-sm-8">
-                    <input name="operatorAuditPerson" th:field="*{operatorAuditPerson}" class="form-control" type="text">
+					<input name="hyLifting.hyMaterial.specimen" th:field="*{hyLifting.hyMaterial.specimen}" class="form-control" type="text" disabled="disabled">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">物料类型：</label>
                 <div class="col-sm-8">
-                    <select name="operatorType" class="form-control m-b">
-                        <option value="">所有</option>
-                    </select>
-                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                    <input name="hyLifting.hyMaterial.materialType" th:field="*{hyLifting.hyMaterial.materialType}" class="form-control" type="text" disabled="disabled">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">物料用途：</label>
                 <div class="col-sm-8">
-                    <input name="operatorUse" th:field="*{operatorUse}" class="form-control" type="text">
+                    <input name="hyLifting.materialUse" th:field="*{hyLifting.materialUse}" class="form-control" type="text" disabled="disabled">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">领取数量：</label>
                 <div class="col-sm-8">
-                    <input name="operatorNumber" th:field="*{operatorNumber}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">提料人id：</label>
-                <div class="col-sm-8">
-                    <input name="liftingId" th:field="*{liftingId}" class="form-control" type="text">
+                    <input name="hyLifting.materialNumber" th:field="*{hyLifting.materialNumber}" class="form-control" type="text" disabled="disabled">
                 </div>
             </div>
         </form>

@@ -7,73 +7,91 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="HyDelivery" id="HyDeliveryResult">
         <result property="id"    column="id"    />
         <result property="deliveryCode"    column="delivery_code"    />
-        <result property="deliveryReceiver"    column="delivery_receiver"    />
-        <result property="deliveryDept"    column="delivery_dept"    />
-        <result property="deliveryOperator"    column="delivery_operator"    />
-        <result property="operatorAuditDept"    column="operator_audit_dept"    />
-        <result property="operatorAuditPerson"    column="operator_audit_person"    />
-        <result property="state"    column="state"    />
-        <result property="operatorType"    column="operator_type"    />
-        <result property="operatorUse"    column="operator_use"    />
-        <result property="operatorNumber"    column="operator_number"    />
-        <result property="createTime"    column="create_time"    />
         <result property="liftingId"    column="lifting_id"    />
+        <association property="hyLifting" column="id"
+			javaType="HyLifting" resultMap="HyLiftingResult" />
     </resultMap>
 
+	<resultMap type="HyLifting" id="HyLiftingResult">
+        <result property="id"    column="id"    />
+        <result property="materialNumber"    column="material_number"    />
+        <result property="materialUse"    column="material_use"    />
+        <result property="isreturn"    column="isreturn"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="depts"    column="depts"    />
+        <result property="proposer"    column="proposer"    />
+        <result property="materialId"    column="material_id"    />
+        <association property="hyMaterial" column="id"
+			javaType="HyMaterial" resultMap="HyMaterialResult" />
+    </resultMap>
+	
+	<resultMap type="HyMaterial" id="HyMaterialResult">
+        <result property="id"    column="id"    />
+        <result property="materialCode"    column="material_code"    />
+        <result property="materialName"    column="material_name"    />
+        <result property="materialType"    column="material_type"    />
+        <result property="materialUnit"    column="material_unit"    />
+        <result property="materialNumber"    column="material_number"    />
+        <result property="materialAddress"    column="material_address"    />
+        <result property="materialDept"    column="material_dept"    />
+        <result property="materialSupplier"    column="material_supplier"    />
+        <result property="materialCommute"    column="material_commute"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="state"    column="state"    />
+        <result property="specimen"    column="specimen"    />
+        <result property="specimendept"    column="specimendept"    />
+        <result property="checkmen"    column="checkmen"    />
+    </resultMap>
+    
     <sql id="selectHyDeliveryVo">
-        select id, delivery_code, delivery_receiver, delivery_dept, delivery_operator, operator_audit_dept, operator_audit_person, state, operator_type, operator_use, operator_number, create_time, lifting_id from hy_delivery
+        select 
+        d.id, 
+        d.delivery_code, 
+        d.lifting_id,
+        l.create_time,
+        l.proposer,
+        l.depts,
+        l.material_use,
+        l.material_number,
+        m.checkmen,
+        m.specimendept,
+        m.specimen,
+        m.material_type
+        from hy_delivery d
+        LEFT JOIN hy_lifting l ON d.lifting_id = l.id
+        LEFT JOIN hy_material m ON l.material_id = m.id
     </sql>
 
     <select id="selectHyDeliveryList" parameterType="HyDelivery" resultMap="HyDeliveryResult">
         <include refid="selectHyDeliveryVo"/>
         <where>  
-            <if test="deliveryCode != null "> and delivery_code = #{deliveryCode}</if>
-            <if test="deliveryReceiver != null  and deliveryReceiver != ''"> and delivery_receiver = #{deliveryReceiver}</if>
-            <if test="deliveryDept != null  and deliveryDept != ''"> and delivery_dept = #{deliveryDept}</if>
-            <if test="deliveryOperator != null  and deliveryOperator != ''"> and delivery_operator = #{deliveryOperator}</if>
-            <if test="operatorAuditDept != null  and operatorAuditDept != ''"> and operator_audit_dept = #{operatorAuditDept}</if>
-            <if test="operatorAuditPerson != null  and operatorAuditPerson != ''"> and operator_audit_person = #{operatorAuditPerson}</if>
-            <if test="state != null  and state != ''"> and state = #{state}</if>
-            <if test="operatorType != null  and operatorType != ''"> and operator_type = #{operatorType}</if>
-            <if test="operatorUse != null  and operatorUse != ''"> and operator_use = #{operatorUse}</if>
-            <if test="operatorNumber != null "> and operator_number = #{operatorNumber}</if>
-            <if test="liftingId != null "> and lifting_id = #{liftingId}</if>
+            <if test="hyLifting!= null ">
+             <if test="hyLifting.createTime != null and hyLifting.createTime != ''"> and l.create_time = #{hyLifting.createTime}</if>
+             <if test="hyLifting.materialUse != null and hyLifting.materialUse != ''"> and l.material_use = #{hyLifting.materialUse}</if>
+             <if test="hyLifting.proposer != null and hyLifting.proposer != ''"> and l.proposer = #{hyLifting.proposer}</if>
+            <if test="hyLifting.hyMaterial != null ">
+             <if test="hyLifting.hyMaterial.materialType != null and hyLifting.hyMaterial.materialType != ''"> and m.material_type = #{hyLifting.hyMaterial.materialType}</if>
+             <if test="hyLifting.hyMaterial.checkmen != null and hyLifting.hyMaterial.checkmen != ''"> and m.checkmen = #{hyLifting.hyMaterial.checkmen}</if>
+            </if>
+            </if>
+            <if test="deliveryCode != null "> and d.delivery_code = #{deliveryCode}</if>
+            <if test="liftingId != null "> and d.lifting_id = #{liftingId}</if>
         </where>
     </select>
     
     <select id="selectHyDeliveryById" parameterType="Long" resultMap="HyDeliveryResult">
         <include refid="selectHyDeliveryVo"/>
-        where id = #{id}
+        where d.id = #{id}
     </select>
         
     <insert id="insertHyDelivery" parameterType="HyDelivery" useGeneratedKeys="true" keyProperty="id">
         insert into hy_delivery
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="deliveryCode != null">delivery_code,</if>
-            <if test="deliveryReceiver != null">delivery_receiver,</if>
-            <if test="deliveryDept != null">delivery_dept,</if>
-            <if test="deliveryOperator != null">delivery_operator,</if>
-            <if test="operatorAuditDept != null">operator_audit_dept,</if>
-            <if test="operatorAuditPerson != null">operator_audit_person,</if>
-            <if test="state != null">state,</if>
-            <if test="operatorType != null">operator_type,</if>
-            <if test="operatorUse != null">operator_use,</if>
-            <if test="operatorNumber != null">operator_number,</if>
-            <if test="createTime != null">create_time,</if>
+            delivery_code,
             <if test="liftingId != null">lifting_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="deliveryCode != null">#{deliveryCode},</if>
-            <if test="deliveryReceiver != null">#{deliveryReceiver},</if>
-            <if test="deliveryDept != null">#{deliveryDept},</if>
-            <if test="deliveryOperator != null">#{deliveryOperator},</if>
-            <if test="operatorAuditDept != null">#{operatorAuditDept},</if>
-            <if test="operatorAuditPerson != null">#{operatorAuditPerson},</if>
-            <if test="state != null">#{state},</if>
-            <if test="operatorType != null">#{operatorType},</if>
-            <if test="operatorUse != null">#{operatorUse},</if>
-            <if test="operatorNumber != null">#{operatorNumber},</if>
-            <if test="createTime != null">#{createTime},</if>
+            UUID(),
             <if test="liftingId != null">#{liftingId},</if>
          </trim>
     </insert>
@@ -81,17 +99,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateHyDelivery" parameterType="HyDelivery">
         update hy_delivery
         <trim prefix="SET" suffixOverrides=",">
-            <if test="deliveryCode != null">delivery_code = #{deliveryCode},</if>
-            <if test="deliveryReceiver != null">delivery_receiver = #{deliveryReceiver},</if>
-            <if test="deliveryDept != null">delivery_dept = #{deliveryDept},</if>
-            <if test="deliveryOperator != null">delivery_operator = #{deliveryOperator},</if>
-            <if test="operatorAuditDept != null">operator_audit_dept = #{operatorAuditDept},</if>
-            <if test="operatorAuditPerson != null">operator_audit_person = #{operatorAuditPerson},</if>
-            <if test="state != null">state = #{state},</if>
-            <if test="operatorType != null">operator_type = #{operatorType},</if>
-            <if test="operatorUse != null">operator_use = #{operatorUse},</if>
-            <if test="operatorNumber != null">operator_number = #{operatorNumber},</if>
-            <if test="createTime != null">create_time = #{createTime},</if>
+            delivery_code = UUID(),
             <if test="liftingId != null">lifting_id = #{liftingId},</if>
         </trim>
         where id = #{id}

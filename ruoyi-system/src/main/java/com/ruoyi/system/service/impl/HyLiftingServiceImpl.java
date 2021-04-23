@@ -5,8 +5,15 @@ import com.ruoyi.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.ruoyi.system.mapper.HyAssessorMapper;
+import com.ruoyi.system.mapper.HyInventoryMapper;
 import com.ruoyi.system.mapper.HyLiftingMapper;
+import com.ruoyi.system.mapper.HyMaterialMapper;
+import com.ruoyi.system.domain.HyAssessor;
+import com.ruoyi.system.domain.HyInventory;
 import com.ruoyi.system.domain.HyLifting;
+import com.ruoyi.system.domain.HyMaterial;
 import com.ruoyi.system.service.IHyLiftingService;
 import com.ruoyi.common.core.text.Convert;
 
@@ -21,7 +28,12 @@ public class HyLiftingServiceImpl implements IHyLiftingService
 {
     @Autowired
     private HyLiftingMapper hyLiftingMapper;
+    
+    @Autowired
+    private HyMaterialMapper hyMaterialMapper;
 
+    @Autowired
+    private HyAssessorMapper assessorMapper;
     /**
      * 查询提料人
      * 
@@ -56,6 +68,16 @@ public class HyLiftingServiceImpl implements IHyLiftingService
     @Override
     public int insertHyLifting(HyLifting hyLifting)
     {
+    	HyMaterial hyMaterial = new HyMaterial();
+    	Long materialId = hyLifting.getMaterialId();
+    	hyMaterial = hyMaterialMapper.selectHyMaterialById(materialId);
+    	Long MaterialNumber = (hyMaterial.getMaterialNumber()-hyLifting.getMaterialNumber());
+    	hyMaterial.setMaterialNumber(MaterialNumber);
+    	hyMaterial.setState("2");
+    	hyMaterialMapper.updateHyMaterial(hyMaterial);
+    	HyAssessor hyAssessor = new HyAssessor();
+    	hyAssessor.setMaterialId(materialId);
+    	assessorMapper.insertHyAssessor(hyAssessor);
         hyLifting.setCreateTime(DateUtils.getNowDate());
         return hyLiftingMapper.insertHyLifting(hyLifting);
     }

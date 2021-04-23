@@ -125,7 +125,7 @@ public class HyAssessorController extends BaseController
     }
 
     /**
-     * 修改保存审核管理
+     * 修改保存审核管理入库
      */
     @ApiOperation("审核管理")
     @ApiImplicitParams({ 
@@ -138,6 +138,22 @@ public class HyAssessorController extends BaseController
     public AjaxResult editSave(HyAssessor hyAssessor)
     {
         return toAjax(hyAssessorService.updateHyAssessor(hyAssessor));
+    }
+    
+    /**
+     * 修改保存审核管理出库
+     */
+    @ApiOperation("审核管理")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyAssessor", value = "项目实体类hyAssessor", required = true),
+    })
+    @RequiresPermissions("system:assessor:edit")
+    @Log(title = "审核管理", businessType = BusinessType.UPDATE)
+    @PostMapping("/edits")
+    @ResponseBody
+    public AjaxResult edits(HyAssessor hyAssessor)
+    {
+    	return toAjax(hyAssessorService.updateHyAssessors(hyAssessor));
     }
 
     /**

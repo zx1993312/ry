@@ -38,7 +38,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         b.bill_code, 
         b.material_use, 
         b.is_stock, 
-        b.time,
         b.material_id,
         m.material_type, 
         m.material_number, 
@@ -56,7 +55,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectHyBillList" parameterType="HyBill" resultMap="HyBillResult">
         <include refid="selectHyBillVo"/>
         <where>  
-            <if test="time != null "> and b.time = #{time}</if>
             <if test="materialUse != null  and materialUse != ''"> and b.material_use = #{materialUse}</if>
             <if test="isStock != null  and isStock != ''"> and b.is_stock = #{isStock}</if>
             <if test="time != null  and time != ''"> and b.time = #{time}</if>
@@ -65,7 +63,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="hyMaterial.materialType != null  and hyMaterial.materialType != ''"> and m.material_type = #{hyMaterial.materialType}</if>
             <if test="hyMaterial.materialNumber != null "> and m.material_number = #{hyMaterial.materialNumber}</if>
 			</if>
-            and m.state = "3"
         </where>
     </select>
     
@@ -80,14 +77,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             bill_code,
             <if test="materialUse != null">material_use,</if>
             <if test="isStock != null">is_stock,</if>
-            <if test="time != null">time,</if>
             <if test="materialId != null">material_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             UUID(),
             <if test="materialUse != null">#{materialUse},</if>
             <if test="isStock != null">#{isStock},</if>
-            <if test="time != null">#{time},</if>
             <if test="materialId != null">#{materialId},</if>
          </trim>
     </insert>
@@ -98,7 +93,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="billCode != null">bill_code = #{billCode},</if>
             <if test="materialUse != null">material_use = #{materialUse},</if>
             <if test="isStock != null">is_stock = #{isStock},</if>
-            <if test="time != null">time = #{time},</if>
             <if test="materialId != null">material_id = #{materialId},</if>
         </trim>
         where id = #{id}

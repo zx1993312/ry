@@ -6,7 +6,7 @@
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
         <form class="form-horizontal m" id="form-specimen-add">
-                    	<div class="form-group">    
+            <div class="form-group">    
 			    <label class="col-sm-3 control-label">选择部门：</label>
                 	<div class="col-sm-8">
 	                	<select class="city form-control m-b" name="deptId" id="dept" data-first-title="选择部门" th:with="type=${@dept.getDept()}" onchange="changeEmployee()">
@@ -29,6 +29,16 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/specimen"
         $("#form-specimen-add").validate({
+        	rules : {
+        		deptId : {
+					required : true,
+					maxlength:11,
+				},
+				employeeId : {
+					required : true,
+					maxlength:11,
+				},
+			},
             focusCleanup: true
         });
 

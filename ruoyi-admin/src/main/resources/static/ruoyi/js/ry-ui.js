@@ -1200,26 +1200,33 @@ var table = {
             	}
             },
             // 审核
-            edit3: function(id,checkId) {
+            edit3: function(id,checkId,specimen) {
             	table.set();
-            	if(checkId!="null"){
-            		debugger;
-	            	if($.common.isEmpty(id) && table.options.type == table_type.bootstrapTreeTable) {
-	            	    var row = $("#" + table.options.id).bootstrapTreeTable('getSelections')[0];
-	            	    if ($.common.isEmpty(row)) {
-	            	        $.modal.alertWarning("请至少选择一条记录");
-	            	        return;
-	            	    }
-	            	    var url = table.options.updateUrl.replace("{id}", row[table.options.uniqueId]);
-	             	    $.modal.open("修改" + table.options.modalName, url);
-	            	    
-	            	} else {
-	            	    $.modal.open("修改" + table.options.modalName, $.operate.editUrl(id));
-	            	}
-            	}else {
-            		$.modal.alertWarning("盘点员正在盘点，请通知盘点员先盘点之后再审核！");
-            		return;
-                }
+            	if(specimen!="null"){
+            		$.modal.confirm("确认要审核该条" + table.options.modalName  + "条数据吗?", function() {
+                		var url = table.options.updateUrls;
+                   	    var data = { "id": id };
+                   	    $.operate.submit(url, "post", "json", data);
+                	});
+            	}else{
+                	if(checkId!="null"){
+    	            	if($.common.isEmpty(id) && table.options.type == table_type.bootstrapTreeTable) {
+    	            	    var row = $("#" + table.options.id).bootstrapTreeTable('getSelections')[0];
+    	            	    if ($.common.isEmpty(row)) {
+    	            	        $.modal.alertWarning("请至少选择一条记录");
+    	            	        return;
+    	            	    }
+    	            	    var url = table.options.updateUrl.replace("{id}", row[table.options.uniqueId]);
+    	             	    $.modal.open("修改" + table.options.modalName, url);
+    	            	    
+    	            	} else {
+    	            	    $.modal.open("修改" + table.options.modalName, $.operate.editUrl(id));
+    	            	}
+                	}else {
+                		$.modal.alertWarning("盘点员正在盘点，请通知盘点员先盘点之后再审核！");
+                		return;
+                    }
+            	}
             },
             // 一键结算
             edit2: function(id) {

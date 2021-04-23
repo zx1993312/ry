@@ -78,6 +78,40 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/material";
         $("#form-material-edit").validate({
+        	rules : {
+        		materialName : {
+					required : true,
+					maxlength:20,
+				},
+				materialType : {
+					required : true,
+					maxlength:20,
+				},
+				materialUnit : {
+					required : true,
+					maxlength:20,
+				},
+				materialNumber : {
+					required : true,
+					maxlength:11,
+				},
+				materialAddress : {
+					required : true,
+					maxlength:255,
+				},
+				materialDept : {
+					required : true,
+					maxlength:20,
+				},
+				materialSupplier : {
+					required : true,
+					maxlength:20,
+				},
+				materialCommute : {
+					required : true,
+					maxlength:255,
+				},
+			},
             focusCleanup: true
         });
 

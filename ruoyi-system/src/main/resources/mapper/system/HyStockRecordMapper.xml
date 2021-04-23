@@ -12,7 +12,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="outboundTime"    column="outbound_time"    />
         <result property="state"    column="state"    />
         <result property="materialId"    column="material_id"    />
-        <result property="deliveryId"    column="delivery_id"    />
         <association property="hyMaterial" column="id"
 			javaType="HyMaterial" resultMap="HyMaterialResult" />
     </resultMap>
@@ -41,7 +40,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         s.outbound_time, 
         s.state, 
         s.material_id, 
-        s.delivery_id,
         m.material_code,
         m.material_name,
         m.material_type
@@ -55,7 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
             <if test="hyMaterial != null ">
             <if test="hyMaterial.materialName != null and hyMaterial.materialName !=''"> and m.material_name = #{hyMaterial.materialName}</if>
-            <if test="hyMaterial.materialType != null and hyMaterial.materialName !=''"> and m.material_type = #{hyMaterial.materialType}</if>
+            <if test="hyMaterial.materialType != null and hyMaterial.materialType !=''"> and m.material_type = #{hyMaterial.materialType}</if>
             </if>
             <if test="warehouseNumber != null "> and s.warehouse_number = #{warehouseNumber}</if>
             <if test="outboundNumber != null "> and s.outbound_number = #{outboundNumber}</if>
@@ -63,8 +61,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="outboundTime != null "> and s.outbound_time = #{outboundTime}</if>
             <if test="state != null  and state != ''"> and s.state = #{state}</if>
             <if test="materialId != null "> and s.material_id = #{materialId}</if>
-            <if test="deliveryId != null "> and s.delivery_id = #{deliveryId}</if>
-            and m.state ="3"
         </where>
     </select>
     
@@ -82,7 +78,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="outboundTime != null">outbound_time,</if>
             <if test="state != null">state,</if>
             <if test="materialId != null">material_id,</if>
-            <if test="deliveryId != null">delivery_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="warehouseNumber != null">#{warehouseNumber},</if>
@@ -91,7 +86,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="outboundTime != null">#{outboundTime},</if>
             <if test="state != null">#{state},</if>
             <if test="materialId != null">#{materialId},</if>
-            <if test="deliveryId != null">#{deliveryId},</if>
          </trim>
     </insert>
 
@@ -104,7 +98,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="outboundTime != null">outbound_time = #{outboundTime},</if>
             <if test="state != null">state = #{state},</if>
             <if test="materialId != null">material_id = #{materialId},</if>
-            <if test="deliveryId != null">delivery_id = #{deliveryId},</if>
         </trim>
         where id = #{id}
     </update>

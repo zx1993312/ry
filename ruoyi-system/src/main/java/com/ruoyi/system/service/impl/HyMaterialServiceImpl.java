@@ -132,9 +132,11 @@ public class HyMaterialServiceImpl implements IHyMaterialService
     	hyAssessorMapper.deleteHyAssessorById(assessorId);
     	HyBill hyBill = new HyBill();
     	hyBill.setMaterialId(materialId);
+    	hyBill.setIsStock("是");
     	hyBillMapper.insertHyBill(hyBill);
     	HyStockRecord hyStockRecord = new HyStockRecord();
     	hyStockRecord.setMaterialId(materialId);
+    	hyStockRecord.setState("是");
     	List<HyStockRecord> list2 = hyStockRecordMapper.selectHyStockRecordList(hyStockRecord);
     	if(list2.size()!=0) {
     		Long warehouseNumber1 = list2.get(0).getWarehouseNumber();

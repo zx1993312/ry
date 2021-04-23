@@ -39,6 +39,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
     
+    <select id="selectHyMaterialLists" parameterType="HyMaterial" resultMap="HyMaterialResult">
+        <include refid="selectHyMaterialVo"/>
+        <where>  
+            <if test="materialCode != null "> and material_code = #{materialCode}</if>
+            <if test="materialName != null  and materialName != ''"> and material_name like concat('%', #{materialName}, '%')</if>
+            <if test="materialType != null  and materialType != ''"> and material_type = #{materialType}</if>
+            <if test="materialUnit != null  and materialUnit != ''"> and material_unit = #{materialUnit}</if>
+            <if test="materialNumber != null "> and material_number = #{materialNumber}</if>
+            <if test="materialAddress != null  and materialAddress != ''"> and material_address = #{materialAddress}</if>
+            <if test="materialDept != null  and materialDept != ''"> and material_dept = #{materialDept}</if>
+            <if test="materialSupplier != null  and materialSupplier != ''"> and material_supplier = #{materialSupplier}</if>
+            <if test="materialCommute != null  and materialCommute != ''"> and material_commute = #{materialCommute}</if>
+            and state = "3"
+        </where>
+    </select>
+    
     <select id="selectHyMaterialById" parameterType="Long" resultMap="HyMaterialResult">
         <include refid="selectHyMaterialVo"/>
         where id = #{id}

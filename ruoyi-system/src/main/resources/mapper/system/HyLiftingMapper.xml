@@ -6,108 +6,110 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <resultMap type="HyLifting" id="HyLiftingResult">
         <result property="id"    column="id"    />
-        <result property="materialName"    column="material_name"    />
-        <result property="materialType"    column="material_type"    />
         <result property="materialNumber"    column="material_number"    />
         <result property="materialUse"    column="material_use"    />
         <result property="isreturn"    column="isreturn"    />
         <result property="createTime"    column="create_time"    />
         <result property="depts"    column="depts"    />
         <result property="proposer"    column="proposer"    />
-        <result property="unit"    column="unit"    />
-        <result property="auditor"    column="auditor"    />
-        <result property="state"    column="state"    />
-        <result property="checkName"    column="check_name"    />
-        <result property="billId"    column="bill_id"    />
-        <result property="specimenId"    column="specimen_id"    />
-        <result property="checkId"    column="check_id"    />
+        <result property="materialId"    column="material_id"    />
+        <association property="hyMaterial" column="id"
+			javaType="HyMaterial" resultMap="HyMaterialResult" />
     </resultMap>
 
+	<resultMap type="HyMaterial" id="HyMaterialResult">
+        <result property="id"    column="id"    />
+        <result property="materialCode"    column="material_code"    />
+        <result property="materialName"    column="material_name"    />
+        <result property="materialType"    column="material_type"    />
+        <result property="materialUnit"    column="material_unit"    />
+        <result property="materialNumber"    column="material_number"    />
+        <result property="materialAddress"    column="material_address"    />
+        <result property="materialDept"    column="material_dept"    />
+        <result property="materialSupplier"    column="material_supplier"    />
+        <result property="materialCommute"    column="material_commute"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="state"    column="state"    />
+        <result property="specimen"    column="specimen"    />
+        <result property="specimendept"    column="specimendept"    />
+        <result property="checkmen"    column="checkmen"    />
+    </resultMap>
+    
     <sql id="selectHyLiftingVo">
-        select id, material_name, material_type, material_number, material_use, isreturn, create_time, depts, proposer, unit, auditor, state, check_name, bill_id, specimen_id, check_id from hy_lifting
+        select 
+        l.id, 
+        l.material_number, 
+        l.material_use, 
+        l.isreturn, 
+        l.create_time, 
+        l.depts, 
+        l.proposer, 
+        l.material_id, 
+        m.material_name, 
+        m.material_type, 
+        m.state,
+        m.specimendept, 
+        m.specimen,
+        m.checkmen
+        from 
+        hy_lifting l
+        LEFT JOIN hy_material m ON l.material_id = m.id
     </sql>
 
     <select id="selectHyLiftingList" parameterType="HyLifting" resultMap="HyLiftingResult">
         <include refid="selectHyLiftingVo"/>
         <where>  
-            <if test="materialName != null  and materialName != ''"> and material_name like concat('%', #{materialName}, '%')</if>
-            <if test="materialType != null  and materialType != ''"> and material_type = #{materialType}</if>
-            <if test="materialNumber != null "> and material_number = #{materialNumber}</if>
-            <if test="materialUse != null  and materialUse != ''"> and material_use = #{materialUse}</if>
-            <if test="isreturn != null  and isreturn != ''"> and isreturn = #{isreturn}</if>
-            <if test="depts != null  and depts != ''"> and depts = #{depts}</if>
-            <if test="proposer != null  and proposer != ''"> and proposer = #{proposer}</if>
-            <if test="unit != null  and unit != ''"> and unit = #{unit}</if>
-            <if test="auditor != null  and auditor != ''"> and auditor = #{auditor}</if>
-            <if test="state != null  and state != ''"> and state = #{state}</if>
-            <if test="checkName != null  and checkName != ''"> and check_name like concat('%', #{checkName}, '%')</if>
-            <if test="billId != null "> and bill_id = #{billId}</if>
-            <if test="specimenId != null "> and specimen_id = #{specimenId}</if>
-            <if test="checkId != null "> and check_id = #{checkId}</if>
+            <if test="hyMaterial != null ">
+			<if test="hyMaterial.materialName != null "> and m.material_name = #{hyMaterial.materialName}</if>
+			<if test="hyMaterial.materialType != null "> and m.material_type = #{hyMaterial.materialType}</if>
+			<if test="hyMaterial.checkmen != null "> and m.checkmen = #{hyMaterial.checkmen}</if>
+			</if>
+            <if test="materialNumber != null "> and l.material_number = #{materialNumber}</if>
+            <if test="materialUse != null  and materialUse != ''"> and l.material_use = #{materialUse}</if>
+            <if test="isreturn != null  and isreturn != ''"> and l.isreturn = #{isreturn}</if>
+            <if test="depts != null  and depts != ''"> and l.depts = #{depts}</if>
+            <if test="proposer != null  and proposer != ''"> and l.proposer = #{proposer}</if>
+            <if test="materialId != null "> and l.material_id = #{materialId}</if>
         </where>
     </select>
     
     <select id="selectHyLiftingById" parameterType="Long" resultMap="HyLiftingResult">
         <include refid="selectHyLiftingVo"/>
-        where id = #{id}
+        where l.id = #{id}
     </select>
         
     <insert id="insertHyLifting" parameterType="HyLifting" useGeneratedKeys="true" keyProperty="id">
         insert into hy_lifting
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="materialName != null">material_name,</if>
-            <if test="materialType != null">material_type,</if>
             <if test="materialNumber != null">material_number,</if>
             <if test="materialUse != null">material_use,</if>
             <if test="isreturn != null">isreturn,</if>
             <if test="createTime != null">create_time,</if>
             <if test="depts != null">depts,</if>
             <if test="proposer != null">proposer,</if>
-            <if test="unit != null">unit,</if>
-            <if test="auditor != null">auditor,</if>
-            <if test="state != null">state,</if>
-            <if test="checkName != null">check_name,</if>
-            <if test="billId != null">bill_id,</if>
-            <if test="specimenId != null">specimen_id,</if>
-            <if test="checkId != null">check_id,</if>
+            <if test="materialId != null">material_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="materialName != null">#{materialName},</if>
-            <if test="materialType != null">#{materialType},</if>
             <if test="materialNumber != null">#{materialNumber},</if>
             <if test="materialUse != null">#{materialUse},</if>
             <if test="isreturn != null">#{isreturn},</if>
             <if test="createTime != null">#{createTime},</if>
             <if test="depts != null">#{depts},</if>
             <if test="proposer != null">#{proposer},</if>
-            <if test="unit != null">#{unit},</if>
-            <if test="auditor != null">#{auditor},</if>
-            <if test="state != null">#{state},</if>
-            <if test="checkName != null">#{checkName},</if>
-            <if test="billId != null">#{billId},</if>
-            <if test="specimenId != null">#{specimenId},</if>
-            <if test="checkId != null">#{checkId},</if>
+            <if test="materialId != null">#{materialId},</if>
          </trim>
     </insert>
 
     <update id="updateHyLifting" parameterType="HyLifting">
         update hy_lifting
         <trim prefix="SET" suffixOverrides=",">
-            <if test="materialName != null">material_name = #{materialName},</if>
-            <if test="materialType != null">material_type = #{materialType},</if>
             <if test="materialNumber != null">material_number = #{materialNumber},</if>
             <if test="materialUse != null">material_use = #{materialUse},</if>
             <if test="isreturn != null">isreturn = #{isreturn},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
             <if test="depts != null">depts = #{depts},</if>
             <if test="proposer != null">proposer = #{proposer},</if>
-            <if test="unit != null">unit = #{unit},</if>
-            <if test="auditor != null">auditor = #{auditor},</if>
-            <if test="state != null">state = #{state},</if>
-            <if test="checkName != null">check_name = #{checkName},</if>
-            <if test="billId != null">bill_id = #{billId},</if>
-            <if test="specimenId != null">specimen_id = #{specimenId},</if>
-            <if test="checkId != null">check_id = #{checkId},</if>
+            <if test="materialId != null">material_id = #{materialId},</if>
         </trim>
         where id = #{id}
     </update>

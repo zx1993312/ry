@@ -36,12 +36,20 @@ public interface IHyAssessorService
     public int insertHyAssessor(HyAssessor hyAssessor);
 
     /**
-     * 修改审核管理
+     * 修改审核管理入库
      * 
      * @param hyAssessor 审核管理
      * @return 结果
      */
     public int updateHyAssessor(HyAssessor hyAssessor);
+    
+    /**
+     * 修改审核管理出库
+     * 
+     * @param hyAssessor 审核管理
+     * @return 结果
+     */
+    public int updateHyAssessors(HyAssessor hyAssessor);
 
     /**
      * 批量删除审核管理

@@ -8,33 +8,20 @@
         <form class="form-horizontal m" id="form-check-edit" th:object="${hyCheck}">
             <input name="id" th:field="*{id}" type="hidden">
             <div class="form-group">    
-                <label class="col-sm-3 control-label">部门：</label>
-                <div class="col-sm-8">
-                    <input name="dept" th:field="*{dept}" class="form-control" type="text">
-                </div>
+			    <label class="col-sm-3 control-label">选择部门：</label>
+                	<div class="col-sm-8">
+	                	<select class="city form-control m-b" name="deptId" id="dept" th:field="*{deptId}" data-first-title="选择部门" th:with="type=${@dept.getDept()}" onchange="changeEmployee()">
+	                 	 <option value="">请选择</option>
+	                 	 <option th:each="dict : ${type}" th:text="${dict.deptName}" th:value="${dict.id}"></option>
+	                	</select>
+                	</div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">工号：</label>
-                <div class="col-sm-8">
-                    <input name="code" th:field="*{code}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">姓名：</label>
-                <div class="col-sm-8">
-                    <input name="name" th:field="*{name}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">员工id：</label>
-                <div class="col-sm-8">
-                    <input name="employeeId" th:field="*{employeeId}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">部门id：</label>
-                <div class="col-sm-8">
-                    <input name="deptId" th:field="*{deptId}" class="form-control" type="text">
+               <label class="col-sm-3 control-label">选择员工：</label>
+               	<div class="col-sm-8">
+	                <select class="area form-control m-b" name="employeeId" id="employee" th:field="*{employeeId}" data-first-title="选择员工" disabled="disabled">
+	                  <option value="">请选择</option>
+	                </select>
                 </div>
             </div>
         </form>
@@ -43,6 +30,16 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/check";
         $("#form-check-edit").validate({
+        	rules : {
+        		deptId : {
+					required : true,
+					maxlength:11,
+				},
+				employeeId : {
+					required : true,
+					maxlength:11,
+				},
+			},
             focusCleanup: true
         });
 
@@ -51,6 +48,31 @@
                 $.operate.save(prefix + "/edit", $('#form-check-edit').serialize());
             }
         }
+        
+        var prefix2 = ctx + "system/employee"
+   		function changeEmployee(){
+   			$("#employee").removeAttr("disabled");
+   			$.ajax({
+                url: prefix2 + "/lists",
+                data: {deptId : $("#dept").val()},
+                dataType : 'json',
+                type: 'POST',
+                success: function (result) {
+                	var optArr = [];
+                	$("#employee").empty();
+					$("#employee").append("<option value=\"\">请选择</option>");
+                    for (var i = 0; i < result.length; i++) {
+                    	$("#employee").append("<option value=" + result[i].id + ">" + result[i].employeeName + "</option>");
+                    }
+                        
+                    // 缺一不可  
+                    $("#employee").selectpicker('refresh');
+                    $("#employee").selectpicker('render');
+
+					console.log(result);
+                }
+            });
+   		}
     </script>
 </body>
 </html>

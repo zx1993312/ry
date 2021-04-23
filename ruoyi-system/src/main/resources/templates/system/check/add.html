@@ -29,6 +29,16 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/check"
         $("#form-check-add").validate({
+        	rules : {
+        		deptId : {
+					required : true,
+					maxlength:11,
+				},
+				employeeId : {
+					required : true,
+					maxlength:11,
+				},
+			},
             focusCleanup: true
         });
 

@@ -30,6 +30,14 @@ public interface HyMaterialMapper
      * @return 物料集合
      */
     public List<HyMaterial> selectHyMaterialList(HyMaterial hyMaterial);
+    
+    /**
+     * 查询已审核的物料列表
+     * 
+     * @param hyMaterial 物料
+     * @return 物料集合
+     */
+    public List<HyMaterial> selectHyMaterialLists(HyMaterial hyMaterial);
 
     /**
      * 新增物料

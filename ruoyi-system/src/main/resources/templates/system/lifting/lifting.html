@@ -12,14 +12,11 @@
                         <ul>
                             <li>
                                 <label>物料名称：</label>
-                                <input type="text" name="materialName"/>
+                                <input type="text" name="hyMaterial.materialName"/>
                             </li>
                             <li>
                                 <label>物料类型：</label>
-                                <select name="materialType">
-                                    <option value="">所有</option>
-                                    <option value="-1">代码生成请选择字典属性</option>
-                                </select>
+                                <input type="text" name="hyMaterial.materialType"/>
                             </li>
                             <li>
                                 <label>需求数量：</label>
@@ -43,19 +40,7 @@
                             </li>
                             <li>
                                 <label>盘点员：</label>
-                                <input type="text" name="checkName"/>
-                            </li>
-                            <li>
-                                <label>物料列表id：</label>
-                                <input type="text" name="billId"/>
-                            </li>
-                            <li>
-                                <label>接收员id：</label>
-                                <input type="text" name="specimenId"/>
-                            </li>
-                            <li>
-                                <label>盘点员id：</label>
-                                <input type="text" name="checkId"/>
+                                <input type="text" name="hyMaterial.checkmen"/>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -108,11 +93,11 @@
                     visible: false
                 },
                 {
-                    field: 'materialName',
+                    field: 'hyMaterial.materialName',
                     title: '物料名称'
                 },
                 {
-                    field: 'materialType',
+                    field: 'hyMaterial.materialType',
                     title: '物料类型'
                 },
                 {
@@ -136,28 +121,20 @@
                     title: '申请人'
                 },
                 {
-                    field: 'unit',
+                    field: 'hyMaterial.specimendept',
                     title: '审核单位'
                 },
                 {
-                    field: 'auditor',
+                    field: 'hyMaterial.specimen',
                     title: '审核人'
                 },
                 {
-                    field: 'checkName',
+                    field: 'hyMaterial.checkmen',
                     title: '盘点员'
                 },
                 {
-                    field: 'billId',
-                    title: '物料列表id'
-                },
-                {
-                    field: 'specimenId',
-                    title: '接收员id'
-                },
-                {
-                    field: 'checkId',
-                    title: '盘点员id'
+                    field: 'createTime',
+                    title: '申请时间'
                 },
                 {
                     title: '操作',

@@ -60,6 +60,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="materialCommute"    column="material_commute"    />
         <result property="createTime"    column="create_time"    />
         <result property="state"    column="state"    />
+        <result property="specimen"    column="specimen"    />
+        <result property="specimendept"    column="specimendept"    />
         <result property="checkmen"    column="checkmen"    />
     </resultMap>
 	
@@ -79,6 +81,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         m.material_commute, 
         m.create_time, 
         m.state,
+        m.specimendept,
+        m.specimen,
         m.checkmen,
         i.check_id,
         d.dept_name,
@@ -86,7 +90,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         from 
         hy_assessor a
         LEFT JOIN hy_material m ON a.material_id = m.id
-        LEFT JOIN hy_inventory i ON a.material_id = i.material_id
+        LEFT JOIN hy_inventory i ON i.material_id = a.material_id
         LEFT JOIN hy_specimen s ON a.specimen_id = s.id
         LEFT JOIN hy_dept d ON s.dept_id = d.id
         LEFT JOIN hy_employee e ON s.employee_id = e.id

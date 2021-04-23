@@ -17,18 +17,11 @@ public class HyLifting extends BaseEntity
 
     /** 提料人id */
     private Long id;
-
-    /** 物料名称 */
-    @Excel(name = "物料名称")
-    private String materialName;
-
-    /** 物料类型 */
-    @Excel(name = "物料类型")
-    private String materialType;
-
+    
     /** 需求数量 */
     @Excel(name = "需求数量")
     private Long materialNumber;
+
 
     /** 物料用途 */
     @Excel(name = "物料用途")
@@ -46,33 +39,13 @@ public class HyLifting extends BaseEntity
     @Excel(name = "申请人")
     private String proposer;
 
-    /** 审核单位 */
-    @Excel(name = "审核单位")
-    private String unit;
-
-    /** 审核人 */
-    @Excel(name = "审核人")
-    private String auditor;
+    /** 物料id */
+    @Excel(name = "物料id")
+    private Long materialId;
     
-    /** 审核状态 */
-    @Excel(name = "审核状态")
-    private String state;
-
-    /** 盘点员 */
-    @Excel(name = "盘点员")
-    private String checkName;
-
-    /** 物料列表id */
-    @Excel(name = "物料列表id")
-    private Long billId;
-
-    /** 接收员id */
-    @Excel(name = "接收员id")
-    private Long specimenId;
-
-    /** 盘点员id */
-    @Excel(name = "盘点员id")
-    private Long checkId;
+    /** 物料表 */
+    @Excel(name = "物料表")
+    private HyMaterial hyMaterial;
 
     public void setId(Long id) 
     {
@@ -83,34 +56,15 @@ public class HyLifting extends BaseEntity
     {
         return id;
     }
-    public void setMaterialName(String materialName) 
-    {
-        this.materialName = materialName;
-    }
+    public Long getMaterialNumber() {
+		return materialNumber;
+	}
 
-    public String getMaterialName() 
-    {
-        return materialName;
-    }
-    public void setMaterialType(String materialType) 
-    {
-        this.materialType = materialType;
-    }
+	public void setMaterialNumber(Long materialNumber) {
+		this.materialNumber = materialNumber;
+	}
 
-    public String getMaterialType() 
-    {
-        return materialType;
-    }
-    public void setMaterialNumber(Long materialNumber) 
-    {
-        this.materialNumber = materialNumber;
-    }
-
-    public Long getMaterialNumber() 
-    {
-        return materialNumber;
-    }
-    public void setMaterialUse(String materialUse) 
+	public void setMaterialUse(String materialUse) 
     {
         this.materialUse = materialUse;
     }
@@ -146,77 +100,35 @@ public class HyLifting extends BaseEntity
     {
         return proposer;
     }
-    public void setUnit(String unit) 
-    {
-        this.unit = unit;
-    }
-
-    public String getUnit() 
-    {
-        return unit;
-    }
-    public void setAuditor(String auditor) 
-    {
-        this.auditor = auditor;
-    }
-
-    public String getAuditor() 
-    {
-        return auditor;
-    }
-    public String getState() {
-		return state;
+    public Long getMaterialId() {
+		return materialId;
 	}
 
-	public void setState(String state) {
-		this.state = state;
+	public void setMaterialId(Long materialId) {
+		this.materialId = materialId;
 	}
 
-	public void setCheckName(String checkName) 
-    {
-        this.checkName = checkName;
-    }
+	public HyMaterial getHyMaterial() {
+		return hyMaterial;
+	}
 
-    public String getCheckName() 
-    {
-        return checkName;
-    }
-    public void setBillId(Long billId) 
-    {
-        this.billId = billId;
-    }
-
-    public Long getBillId() 
-    {
-        return billId;
-    }
-    public void setSpecimenId(Long specimenId) 
-    {
-        this.specimenId = specimenId;
-    }
-
-    public Long getSpecimenId() 
-    {
-        return specimenId;
-    }
-    public void setCheckId(Long checkId) 
-    {
-        this.checkId = checkId;
-    }
-
-    public Long getCheckId() 
-    {
-        return checkId;
-    }
+	public void setHyMaterial(HyMaterial hyMaterial) {
+		this.hyMaterial = hyMaterial;
+	}
 
 	@Override
 	public String toString() {
-		return "HyLifting [id=" + id + ", materialName=" + materialName + ", materialType=" + materialType
-				+ ", materialNumber=" + materialNumber + ", materialUse=" + materialUse + ", isreturn=" + isreturn
-				+ ", depts=" + depts + ", proposer=" + proposer + ", unit=" + unit + ", auditor=" + auditor + ", state="
-				+ state + ", checkName=" + checkName + ", billId=" + billId + ", specimenId=" + specimenId
-				+ ", checkId=" + checkId + "]";
+		return "HyLifting [id=" + id + ", materialNumber=" + materialNumber + ", materialUse=" + materialUse
+				+ ", isreturn=" + isreturn + ", depts=" + depts + ", proposer=" + proposer + ", materialId="
+				+ materialId + ", hyMaterial=" + hyMaterial + "]";
 	}
+
+	
+
+
+	
+
+	
 
     
 }
