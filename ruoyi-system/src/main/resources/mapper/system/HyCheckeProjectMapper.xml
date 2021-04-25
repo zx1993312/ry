@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyCheckeProjectMapper">
+    
+    <resultMap type="HyCheckeProject" id="HyCheckeProjectResult">
+        <result property="id"    column="id"    />
+        <result property="type"    column="type"    />
+        <result property="standard"    column="standard"    />
+        <result property="isMeasured"    column="is_measured"    />
+        <result property="referenceValue"    column="reference_value"    />
+        <result property="measuredValue"    column="measured_value"    />
+        <result property="explains"    column="explains"    />
+        <result property="inspectionInstructions"    column="inspection_instructions"    />
+        <result property="projectPicture"    column="project_picture"    />
+        <result property="detailPicture"    column="detail_picture"    />
+        <result property="problemDescription"    column="problem_description"    />
+        <result property="patrolLongitude"    column="patrol_longitude"    />
+        <result property="patrolLatitude"    column="patrol_latitude"    />
+        <result property="nodeId"    column="node_id"    />
+    </resultMap>
+
+    <sql id="selectHyCheckeProjectVo">
+        select id, type, standard, is_measured, reference_value, measured_value, explains, inspection_instructions, project_picture, detail_picture, problem_description, patrol_longitude, patrol_latitude, node_id from hy_checke_project
+    </sql>
+
+    <select id="selectHyCheckeProjectList" parameterType="HyCheckeProject" resultMap="HyCheckeProjectResult">
+        <include refid="selectHyCheckeProjectVo"/>
+        <where>  
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="standard != null  and standard != ''"> and standard = #{standard}</if>
+            <if test="isMeasured != null  and isMeasured != ''"> and is_measured = #{isMeasured}</if>
+            <if test="referenceValue != null  and referenceValue != ''"> and reference_value = #{referenceValue}</if>
+            <if test="measuredValue != null  and measuredValue != ''"> and measured_value = #{measuredValue}</if>
+            <if test="explains != null  and explains != ''"> and explains = #{explains}</if>
+            <if test="inspectionInstructions != null  and inspectionInstructions != ''"> and inspection_instructions = #{inspectionInstructions}</if>
+            <if test="projectPicture != null  and projectPicture != ''"> and project_picture = #{projectPicture}</if>
+            <if test="detailPicture != null  and detailPicture != ''"> and detail_picture = #{detailPicture}</if>
+            <if test="problemDescription != null  and problemDescription != ''"> and problem_description = #{problemDescription}</if>
+            <if test="patrolLongitude != null  and patrolLongitude != ''"> and patrol_longitude = #{patrolLongitude}</if>
+            <if test="patrolLatitude != null  and patrolLatitude != ''"> and patrol_latitude = #{patrolLatitude}</if>
+            <if test="nodeId != null "> and node_id = #{nodeId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyCheckeProjectById" parameterType="Long" resultMap="HyCheckeProjectResult">
+        <include refid="selectHyCheckeProjectVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyCheckeProject" parameterType="HyCheckeProject" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_checke_project
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="type != null">type,</if>
+            <if test="standard != null">standard,</if>
+            <if test="isMeasured != null">is_measured,</if>
+            <if test="referenceValue != null">reference_value,</if>
+            <if test="measuredValue != null">measured_value,</if>
+            <if test="explains != null">explains,</if>
+            <if test="inspectionInstructions != null">inspection_instructions,</if>
+            <if test="projectPicture != null">project_picture,</if>
+            <if test="detailPicture != null">detail_picture,</if>
+            <if test="problemDescription != null">problem_description,</if>
+            <if test="patrolLongitude != null">patrol_longitude,</if>
+            <if test="patrolLatitude != null">patrol_latitude,</if>
+            <if test="nodeId != null">node_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="type != null">#{type},</if>
+            <if test="standard != null">#{standard},</if>
+            <if test="isMeasured != null">#{isMeasured},</if>
+            <if test="referenceValue != null">#{referenceValue},</if>
+            <if test="measuredValue != null">#{measuredValue},</if>
+            <if test="explains != null">#{explains},</if>
+            <if test="inspectionInstructions != null">#{inspectionInstructions},</if>
+            <if test="projectPicture != null">#{projectPicture},</if>
+            <if test="detailPicture != null">#{detailPicture},</if>
+            <if test="problemDescription != null">#{problemDescription},</if>
+            <if test="patrolLongitude != null">#{patrolLongitude},</if>
+            <if test="patrolLatitude != null">#{patrolLatitude},</if>
+            <if test="nodeId != null">#{nodeId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyCheckeProject" parameterType="HyCheckeProject">
+        update hy_checke_project
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="type != null">type = #{type},</if>
+            <if test="standard != null">standard = #{standard},</if>
+            <if test="isMeasured != null">is_measured = #{isMeasured},</if>
+            <if test="referenceValue != null">reference_value = #{referenceValue},</if>
+            <if test="measuredValue != null">measured_value = #{measuredValue},</if>
+            <if test="explains != null">explains = #{explains},</if>
+            <if test="inspectionInstructions != null">inspection_instructions = #{inspectionInstructions},</if>
+            <if test="projectPicture != null">project_picture = #{projectPicture},</if>
+            <if test="detailPicture != null">detail_picture = #{detailPicture},</if>
+            <if test="problemDescription != null">problem_description = #{problemDescription},</if>
+            <if test="patrolLongitude != null">patrol_longitude = #{patrolLongitude},</if>
+            <if test="patrolLatitude != null">patrol_latitude = #{patrolLatitude},</if>
+            <if test="nodeId != null">node_id = #{nodeId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyCheckeProjectById" parameterType="Long">
+        delete from hy_checke_project where id = #{id}
+    </delete>
+
+    <delete id="deleteHyCheckeProjectByIds" parameterType="String">
+        delete from hy_checke_project where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

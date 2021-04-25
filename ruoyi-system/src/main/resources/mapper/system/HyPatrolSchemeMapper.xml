@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyPatrolSchemeMapper">
+    
+    <resultMap type="HyPatrolScheme" id="HyPatrolSchemeResult">
+        <result property="id"    column="id"    />
+        <result property="documentNumber"    column="document_number"    />
+        <result property="plannedTime"    column="planned_time"    />
+        <result property="planRange"    column="plan_range"    />
+        <result property="planAnnual"    column="plan_annual"    />
+        <result property="planner"    column="planner"    />
+        <result property="checkPeople"    column="check_people"    />
+        <result property="inspectionTime"    column="inspection_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="makeTime"    column="make_time"    />
+        <result property="documentMaker"    column="document_maker"    />
+        <result property="revisionTime"    column="revision_time"    />
+        <result property="reviser"    column="reviser"    />
+        <result property="isCheck"    column="is_check"    />
+        <result property="auditTime"    column="audit_time"    />
+        <result property="auditor"    column="auditor"    />
+        <result property="actualInspectionTime"    column="actual_inspection_time"    />
+        <result property="inspectionStatus"    column="inspection_status"    />
+        <result property="changeStatus"    column="change_status"    />
+        <result property="inspectionInstructions"    column="inspection_instructions"    />
+        <result property="deptId"    column="deptId"    />
+    </resultMap>
+
+    <sql id="selectHyPatrolSchemeVo">
+        select id, document_number, planned_time, plan_range, plan_annual, planner, check_people, inspection_time, remark, make_time, document_maker, revision_time, reviser, is_check, audit_time, auditor, actual_inspection_time, inspection_status, change_status, inspection_instructions, deptId from hy_patrol_scheme
+    </sql>
+
+    <select id="selectHyPatrolSchemeList" parameterType="HyPatrolScheme" resultMap="HyPatrolSchemeResult">
+        <include refid="selectHyPatrolSchemeVo"/>
+        <where>  
+            <if test="documentNumber != null  and documentNumber != ''"> and document_number = #{documentNumber}</if>
+            <if test="plannedTime != null "> and planned_time = #{plannedTime}</if>
+            <if test="planRange != null  and planRange != ''"> and plan_range = #{planRange}</if>
+            <if test="planAnnual != null  and planAnnual != ''"> and plan_annual = #{planAnnual}</if>
+            <if test="planner != null  and planner != ''"> and planner = #{planner}</if>
+            <if test="checkPeople != null  and checkPeople != ''"> and check_people = #{checkPeople}</if>
+            <if test="inspectionTime != null "> and inspection_time = #{inspectionTime}</if>
+            <if test="makeTime != null "> and make_time = #{makeTime}</if>
+            <if test="documentMaker != null  and documentMaker != ''"> and document_maker = #{documentMaker}</if>
+            <if test="revisionTime != null "> and revision_time = #{revisionTime}</if>
+            <if test="reviser != null  and reviser != ''"> and reviser = #{reviser}</if>
+            <if test="isCheck != null  and isCheck != ''"> and is_check = #{isCheck}</if>
+            <if test="auditTime != null "> and audit_time = #{auditTime}</if>
+            <if test="auditor != null  and auditor != ''"> and auditor = #{auditor}</if>
+            <if test="actualInspectionTime != null "> and actual_inspection_time = #{actualInspectionTime}</if>
+            <if test="inspectionStatus != null  and inspectionStatus != ''"> and inspection_status = #{inspectionStatus}</if>
+            <if test="changeStatus != null  and changeStatus != ''"> and change_status = #{changeStatus}</if>
+            <if test="inspectionInstructions != null  and inspectionInstructions != ''"> and inspection_instructions = #{inspectionInstructions}</if>
+            <if test="deptId != null "> and deptId = #{deptId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyPatrolSchemeById" parameterType="Long" resultMap="HyPatrolSchemeResult">
+        <include refid="selectHyPatrolSchemeVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyPatrolScheme" parameterType="HyPatrolScheme" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_patrol_scheme
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="documentNumber != null">document_number,</if>
+            <if test="plannedTime != null">planned_time,</if>
+            <if test="planRange != null">plan_range,</if>
+            <if test="planAnnual != null">plan_annual,</if>
+            <if test="planner != null">planner,</if>
+            <if test="checkPeople != null">check_people,</if>
+            <if test="inspectionTime != null">inspection_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="makeTime != null">make_time,</if>
+            <if test="documentMaker != null">document_maker,</if>
+            <if test="revisionTime != null">revision_time,</if>
+            <if test="reviser != null">reviser,</if>
+            <if test="isCheck != null">is_check,</if>
+            <if test="auditTime != null">audit_time,</if>
+            <if test="auditor != null">auditor,</if>
+            <if test="actualInspectionTime != null">actual_inspection_time,</if>
+            <if test="inspectionStatus != null">inspection_status,</if>
+            <if test="changeStatus != null">change_status,</if>
+            <if test="inspectionInstructions != null">inspection_instructions,</if>
+            <if test="deptId != null">deptId,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="documentNumber != null">#{documentNumber},</if>
+            <if test="plannedTime != null">#{plannedTime},</if>
+            <if test="planRange != null">#{planRange},</if>
+            <if test="planAnnual != null">#{planAnnual},</if>
+            <if test="planner != null">#{planner},</if>
+            <if test="checkPeople != null">#{checkPeople},</if>
+            <if test="inspectionTime != null">#{inspectionTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="makeTime != null">#{makeTime},</if>
+            <if test="documentMaker != null">#{documentMaker},</if>
+            <if test="revisionTime != null">#{revisionTime},</if>
+            <if test="reviser != null">#{reviser},</if>
+            <if test="isCheck != null">#{isCheck},</if>
+            <if test="auditTime != null">#{auditTime},</if>
+            <if test="auditor != null">#{auditor},</if>
+            <if test="actualInspectionTime != null">#{actualInspectionTime},</if>
+            <if test="inspectionStatus != null">#{inspectionStatus},</if>
+            <if test="changeStatus != null">#{changeStatus},</if>
+            <if test="inspectionInstructions != null">#{inspectionInstructions},</if>
+            <if test="deptId != null">#{deptId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyPatrolScheme" parameterType="HyPatrolScheme">
+        update hy_patrol_scheme
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="documentNumber != null">document_number = #{documentNumber},</if>
+            <if test="plannedTime != null">planned_time = #{plannedTime},</if>
+            <if test="planRange != null">plan_range = #{planRange},</if>
+            <if test="planAnnual != null">plan_annual = #{planAnnual},</if>
+            <if test="planner != null">planner = #{planner},</if>
+            <if test="checkPeople != null">check_people = #{checkPeople},</if>
+            <if test="inspectionTime != null">inspection_time = #{inspectionTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="makeTime != null">make_time = #{makeTime},</if>
+            <if test="documentMaker != null">document_maker = #{documentMaker},</if>
+            <if test="revisionTime != null">revision_time = #{revisionTime},</if>
+            <if test="reviser != null">reviser = #{reviser},</if>
+            <if test="isCheck != null">is_check = #{isCheck},</if>
+            <if test="auditTime != null">audit_time = #{auditTime},</if>
+            <if test="auditor != null">auditor = #{auditor},</if>
+            <if test="actualInspectionTime != null">actual_inspection_time = #{actualInspectionTime},</if>
+            <if test="inspectionStatus != null">inspection_status = #{inspectionStatus},</if>
+            <if test="changeStatus != null">change_status = #{changeStatus},</if>
+            <if test="inspectionInstructions != null">inspection_instructions = #{inspectionInstructions},</if>
+            <if test="deptId != null">deptId = #{deptId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyPatrolSchemeById" parameterType="Long">
+        delete from hy_patrol_scheme where id = #{id}
+    </delete>
+
+    <delete id="deleteHyPatrolSchemeByIds" parameterType="String">
+        delete from hy_patrol_scheme where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

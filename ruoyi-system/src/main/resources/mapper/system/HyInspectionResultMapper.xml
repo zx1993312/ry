@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyInspectionResultMapper">
+    
+    <resultMap type="HyInspectionResult" id="HyInspectionResultResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="type"    column="type"    />
+        <result property="normal"    column="normal"    />
+        <result property="explains"    column="explains"    />
+    </resultMap>
+
+    <sql id="selectHyInspectionResultVo">
+        select id, name, type, normal, explains from hy_inspection_result
+    </sql>
+
+    <select id="selectHyInspectionResultList" parameterType="HyInspectionResult" resultMap="HyInspectionResultResult">
+        <include refid="selectHyInspectionResultVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="normal != null  and normal != ''"> and normal = #{normal}</if>
+            <if test="explains != null  and explains != ''"> and explains = #{explains}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyInspectionResultById" parameterType="Long" resultMap="HyInspectionResultResult">
+        <include refid="selectHyInspectionResultVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyInspectionResult" parameterType="HyInspectionResult" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_inspection_result
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="type != null">type,</if>
+            <if test="normal != null">normal,</if>
+            <if test="explains != null">explains,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="type != null">#{type},</if>
+            <if test="normal != null">#{normal},</if>
+            <if test="explains != null">#{explains},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyInspectionResult" parameterType="HyInspectionResult">
+        update hy_inspection_result
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="normal != null">normal = #{normal},</if>
+            <if test="explains != null">explains = #{explains},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyInspectionResultById" parameterType="Long">
+        delete from hy_inspection_result where id = #{id}
+    </delete>
+
+    <delete id="deleteHyInspectionResultByIds" parameterType="String">
+        delete from hy_inspection_result where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

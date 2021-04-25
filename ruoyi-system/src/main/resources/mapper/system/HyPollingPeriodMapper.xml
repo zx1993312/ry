@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyPollingPeriodMapper">
+    
+    <resultMap type="HyPollingPeriod" id="HyPollingPeriodResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="type"    column="type"    />
+        <result property="intervalValue"    column="interval_value"    />
+        <result property="isStart"    column="is_start"    />
+    </resultMap>
+
+    <sql id="selectHyPollingPeriodVo">
+        select id, name, type, interval_value, is_start from hy_polling_period
+    </sql>
+
+    <select id="selectHyPollingPeriodList" parameterType="HyPollingPeriod" resultMap="HyPollingPeriodResult">
+        <include refid="selectHyPollingPeriodVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="intervalValue != null  and intervalValue != ''"> and interval_value = #{intervalValue}</if>
+            <if test="isStart != null  and isStart != ''"> and is_start = #{isStart}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyPollingPeriodById" parameterType="Long" resultMap="HyPollingPeriodResult">
+        <include refid="selectHyPollingPeriodVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyPollingPeriod" parameterType="HyPollingPeriod" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_polling_period
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="type != null">type,</if>
+            <if test="intervalValue != null">interval_value,</if>
+            <if test="isStart != null">is_start,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="type != null">#{type},</if>
+            <if test="intervalValue != null">#{intervalValue},</if>
+            <if test="isStart != null">#{isStart},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyPollingPeriod" parameterType="HyPollingPeriod">
+        update hy_polling_period
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="intervalValue != null">interval_value = #{intervalValue},</if>
+            <if test="isStart != null">is_start = #{isStart},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyPollingPeriodById" parameterType="Long">
+        delete from hy_polling_period where id = #{id}
+    </delete>
+
+    <delete id="deleteHyPollingPeriodByIds" parameterType="String">
+        delete from hy_polling_period where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

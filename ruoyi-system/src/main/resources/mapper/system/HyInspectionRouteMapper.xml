@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyInspectionRouteMapper">
+    
+    <resultMap type="HyInspectionRoute" id="HyInspectionRouteResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="type"    column="type"    />
+        <result property="remark"    column="remark"    />
+        <result property="schemeId"    column="schemeId"    />
+        <result property="deptId"    column="deptId"    />
+    </resultMap>
+
+    <sql id="selectHyInspectionRouteVo">
+        select id, name, type, remark, schemeId, deptId from hy_inspection_route
+    </sql>
+
+    <select id="selectHyInspectionRouteList" parameterType="HyInspectionRoute" resultMap="HyInspectionRouteResult">
+        <include refid="selectHyInspectionRouteVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="schemeId != null "> and schemeId = #{schemeId}</if>
+            <if test="deptId != null "> and deptId = #{deptId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyInspectionRouteById" parameterType="Long" resultMap="HyInspectionRouteResult">
+        <include refid="selectHyInspectionRouteVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyInspectionRoute" parameterType="HyInspectionRoute" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_inspection_route
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="type != null">type,</if>
+            <if test="remark != null">remark,</if>
+            <if test="schemeId != null">schemeId,</if>
+            <if test="deptId != null">deptId,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="type != null">#{type},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="schemeId != null">#{schemeId},</if>
+            <if test="deptId != null">#{deptId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyInspectionRoute" parameterType="HyInspectionRoute">
+        update hy_inspection_route
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="schemeId != null">schemeId = #{schemeId},</if>
+            <if test="deptId != null">deptId = #{deptId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyInspectionRouteById" parameterType="Long">
+        delete from hy_inspection_route where id = #{id}
+    </delete>
+
+    <delete id="deleteHyInspectionRouteByIds" parameterType="String">
+        delete from hy_inspection_route where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

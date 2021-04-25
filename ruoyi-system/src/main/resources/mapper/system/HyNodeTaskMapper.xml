@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyNodeTaskMapper">
+    
+    <resultMap type="HyNodeTask" id="HyNodeTaskResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="inspectionWay"    column="inspection_way"    />
+        <result property="remark"    column="remark"    />
+        <result property="nodeId"    column="node_id"    />
+    </resultMap>
+
+    <sql id="selectHyNodeTaskVo">
+        select id, name, inspection_way, remark, node_id from hy_node_task
+    </sql>
+
+    <select id="selectHyNodeTaskList" parameterType="HyNodeTask" resultMap="HyNodeTaskResult">
+        <include refid="selectHyNodeTaskVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="inspectionWay != null  and inspectionWay != ''"> and inspection_way = #{inspectionWay}</if>
+            <if test="nodeId != null "> and node_id = #{nodeId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyNodeTaskById" parameterType="Long" resultMap="HyNodeTaskResult">
+        <include refid="selectHyNodeTaskVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyNodeTask" parameterType="HyNodeTask" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_node_task
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="inspectionWay != null">inspection_way,</if>
+            <if test="remark != null">remark,</if>
+            <if test="nodeId != null">node_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="inspectionWay != null">#{inspectionWay},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="nodeId != null">#{nodeId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyNodeTask" parameterType="HyNodeTask">
+        update hy_node_task
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="inspectionWay != null">inspection_way = #{inspectionWay},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="nodeId != null">node_id = #{nodeId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyNodeTaskById" parameterType="Long">
+        delete from hy_node_task where id = #{id}
+    </delete>
+
+    <delete id="deleteHyNodeTaskByIds" parameterType="String">
+        delete from hy_node_task where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

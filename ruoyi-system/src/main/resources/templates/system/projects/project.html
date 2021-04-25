@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('巡检项目列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>巡检类型：</label>
+                                <select name="type">
+                                    <option value="">所有</option>
+                                    <option value="-1">代码生成请选择字典属性</option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>标准：</label>
+                                <input type="text" name="standard"/>
+                            </li>
+                            <li>
+                                <label>是否测量：</label>
+                                <input type="text" name="isMeasured"/>
+                            </li>
+                            <li>
+                                <label>参考值：</label>
+                                <input type="text" name="referenceValue"/>
+                            </li>
+                            <li>
+                                <label>测量值：</label>
+                                <input type="text" name="measuredValue"/>
+                            </li>
+                            <li>
+                                <label>说明：</label>
+                                <input type="text" name="explains"/>
+                            </li>
+                            <li>
+                                <label>巡检说明：</label>
+                                <input type="text" name="inspectionInstructions"/>
+                            </li>
+                            <li>
+                                <label>巡检项目图片：</label>
+                                <input type="text" name="projectPicture"/>
+                            </li>
+                            <li>
+                                <label>巡检项目明细图片：</label>
+                                <input type="text" name="detailPicture"/>
+                            </li>
+                            <li>
+                                <label>问题描述：</label>
+                                <input type="text" name="problemDescription"/>
+                            </li>
+                            <li>
+                                <label>巡检项目经度：</label>
+                                <input type="text" name="patrolLongitude"/>
+                            </li>
+                            <li>
+                                <label>巡检项目纬度：</label>
+                                <input type="text" name="patrolLatitude"/>
+                            </li>
+                            <li>
+                                <label>巡检节点id：</label>
+                                <input type="text" name="nodeId"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:project:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:project:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:project:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:project:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:project:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:project:remove')}]];
+        var prefix = ctx + "system/projects";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "巡检项目",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '巡检项目id',
+                    visible: false
+                },
+                {
+                    field: 'type',
+                    title: '巡检类型'
+                },
+                {
+                    field: 'standard',
+                    title: '标准'
+                },
+                {
+                    field: 'isMeasured',
+                    title: '是否测量'
+                },
+                {
+                    field: 'referenceValue',
+                    title: '参考值'
+                },
+                {
+                    field: 'measuredValue',
+                    title: '测量值'
+                },
+                {
+                    field: 'explains',
+                    title: '说明'
+                },
+                {
+                    field: 'inspectionInstructions',
+                    title: '巡检说明'
+                },
+                {
+                    field: 'projectPicture',
+                    title: '巡检项目图片'
+                },
+                {
+                    field: 'detailPicture',
+                    title: '巡检项目明细图片'
+                },
+                {
+                    field: 'problemDescription',
+                    title: '问题描述'
+                },
+                {
+                    field: 'patrolLongitude',
+                    title: '巡检项目经度'
+                },
+                {
+                    field: 'patrolLatitude',
+                    title: '巡检项目纬度'
+                },
+                {
+                    field: 'nodeId',
+                    title: '巡检节点id'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>
