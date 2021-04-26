@@ -6,12 +6,28 @@
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
         <form class="form-horizontal m" id="form-check-add">
-        	<div class="form-group">    
+        	<div class="form-group">
+            	<label class="col-sm-3 control-label">选择物业：</label>
+                	<div class="col-sm-8">
+                    	<select class="province form-control m-b" id="property" data-first-title="选择物业"  th:with="type=${@dept.getDept()}" onchange="changeDept()">
+	                  		<option value="">请选择</option>
+	                  		<option th:each="dict : ${type}" th:text="${dict.deptName}" th:value="${dict.deptId}"></option>
+	                	</select>
+			    	</div>
+			</div> 
+			<div class="form-group">    
 			    <label class="col-sm-3 control-label">选择部门：</label>
                 	<div class="col-sm-8">
-	                	<select class="city form-control m-b" name="deptId" id="dept" data-first-title="选择部门" th:with="type=${@dept.getDept()}" onchange="changeEmployee()">
+	                	<select class="city form-control m-b" id="dept" data-first-title="选择部门" disabled="disabled" onchange="changeDepts()">
 	                 	 <option value="">请选择</option>
-	                 	 <option th:each="dict : ${type}" th:text="${dict.deptName}" th:value="${dict.id}"></option>
+	                	</select>
+                	</div>
+            </div>
+			<div class="form-group">    
+			    <label class="col-sm-3 control-label">选择部门：</label>
+                	<div class="col-sm-8">
+	                	<select class="city form-control m-b" name="deptId" id="depts" data-first-title="选择部门" disabled="disabled" onchange="changeEmployee()">
+	                 	 <option value="">请选择</option>
 	                	</select>
                 	</div>
             </div>
@@ -48,20 +64,70 @@
             }
         }
         
-   		var prefix2 = ctx + "system/employee"
-   		function changeEmployee(){
-   			$("#employee").removeAttr("disabled");
+        var prefix1 = ctx + "system/dept"
+        //物业部门员工
+        function changeDept(){
+   			$("#dept").removeAttr("disabled");
    			$.ajax({
-                url: prefix2 + "/lists",
-                data: {deptId : $("#dept").val()},
+                url: prefix1 + "/list",
+                data: {parentId : $("#property").val()},
                 dataType : 'json',
                 type: 'POST',
                 success: function (result) {
                 	var optArr = [];
+                	$("#dept").empty();
+					$("#dept").append("<option value=\"\">请选择</option>");
+                    for (var i = 0; i < result.length; i++) {
+                    	$("#dept").append("<option value=" + result[i].deptId + ">" + result[i].deptName + "</option>");
+                    }
+                        
+                    // 缺一不可  
+                    $("#dept").selectpicker('refresh');
+                    $("#dept").selectpicker('render');
+
+					console.log(result);
+                }
+            });
+   		}
+        function changeDepts(){
+   			$("#depts").removeAttr("disabled");
+   			$.ajax({
+                url: prefix1 + "/list",
+                data: {parentId : $("#dept").val()},
+                dataType : 'json',
+                type: 'POST',
+                success: function (result) {
+                	console.log(result);
+                	var optArr = [];
+                	$("#depts").empty();
+					$("#depts").append("<option value=\"\">请选择</option>");
+                    for (var i = 0; i < result.length; i++) {
+                    	$("#depts").append("<option value=" + result[i].deptId + ">" + result[i].deptName + "</option>");
+                    }
+                        
+                    // 缺一不可  
+                    $("#depts").selectpicker('refresh');
+                    $("#depts").selectpicker('render');
+
+					console.log(result);
+                }
+            });
+   		}
+   		var prefix2 = ctx + "system/user"
+   		function changeEmployee(){
+   			$("#employee").removeAttr("disabled");
+   			$.ajax({
+                url: prefix2 + "/lists",
+                data: {deptId : $("#depts").val()},
+                dataType : 'json',
+                type: 'POST',
+                success: function (result) {
+                	console.log(result);
+                	var optArr = [];
                 	$("#employee").empty();
 					$("#employee").append("<option value=\"\">请选择</option>");
                     for (var i = 0; i < result.length; i++) {
-                    	$("#employee").append("<option value=" + result[i].id + ">" + result[i].employeeName + "</option>");
+                    	$("#employee").append("<option value=" + result[i].userId + ">" + result[i].userName + "</option>");
                     }
                         
                     // 缺一不可  

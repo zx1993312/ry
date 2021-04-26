@@ -2,8 +2,29 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <th:block th:include="include :: header('巡检节点列表')" />
+    <th:block th:include="include :: layout-latest-css" />
+	<th:block th:include="include :: ztree-css" />
 </head>
 <body class="gray-bg">
+<div class="ui-layout-west">
+	<div class="box box-main">
+			<div class="box-header">
+				<div class="box-title">
+					<i class="fa icon-grid"></i> 组织机构
+				</div>
+				<div class="box-tools pull-right">
+				    <a type="button" class="btn btn-box-tool" href="#" onclick="costProject()" title="管理部门"><i class="fa fa-edit"></i></a>
+					<button type="button" class="btn btn-box-tool" id="btnExpand" title="展开" style="display:none;"><i class="fa fa-chevron-up"></i></button>
+					<button type="button" class="btn btn-box-tool" id="btnCollapse" title="折叠"><i class="fa fa-chevron-down"></i></button>
+					<button type="button" class="btn btn-box-tool" id="btnRefresh" title="刷新部门"><i class="fa fa-refresh"></i></button>
+				</div>
+			</div>
+			<div class="ui-layout-content">
+				<div id="tree" class="ztree"></div>
+			</div>
+		</div>
+	</div>
+	<div class="ui-layout-center">
      <div class="container-div">
         <div class="row">
             <div class="col-sm-12 search-collapse">
@@ -62,13 +83,34 @@
             </div>
         </div>
     </div>
+     </div>
     <th:block th:include="include :: footer" />
+    <th:block th:include="include :: layout-latest-js" />
+	<th:block th:include="include :: ztree-js" />
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('system:node:edit')}]];
         var removeFlag = [[${@permission.hasPermi('system:node:remove')}]];
         var prefix = ctx + "system/node";
 
-        $(function() {
+		$(function() {
+		    var panehHidden = false;
+		    if ($(this).width() < 769) {
+		        panehHidden = true;
+		    }
+		    $('body').layout({ initClosed: panehHidden, west__size: 185 });
+	     	// 回到顶部绑定
+	    	if ($.fn.toTop !== undefined) {
+	    		var opt = {
+	    			win:$('.ui-layout-center'),
+	    			doc:$('.ui-layout-center')
+	    		};
+	    		$('#scroll-up').toTop(opt);
+	    	}
+		    queryNodeList();
+		    queryDeptTree();
+		});
+        
+        function queryNodeList() {
             var options = {
                 url: prefix + "/list",
                 createUrl: prefix + "/add",
@@ -124,7 +166,43 @@
                 }]
             };
             $.table.init(options);
-        });
+        }
+       
+        
+        
+        //组织架构
+        function queryDeptTree()
+		{
+			var url = ctx + "system/dept/treeData";
+			var options = {
+		        url: url,
+		        expandLevel: 2,
+		        onClick : zOnClick
+		    };
+			$.tree.init(options);
+			
+			function zOnClick(event, treeId, treeNode) {
+				$("#deptId").val(treeNode.id);
+				$("#parentId").val(treeNode.pId);
+				$.table.search();
+			}
+		}
+		
+		$('#btnExpand').click(function() {
+			$._tree.expandAll(true);
+		    $(this).hide();
+		    $('#btnCollapse').show();
+		});
+		
+		$('#btnCollapse').click(function() {
+			$._tree.expandAll(false);
+		    $(this).hide();
+		    $('#btnExpand').show();
+		});
+		
+		$('#btnRefresh').click(function() {
+			queryDeptTree();
+		});
     </script>
 </body>
 </html>

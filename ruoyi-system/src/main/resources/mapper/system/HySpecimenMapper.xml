@@ -8,26 +8,53 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="id"    column="id"    />
         <result property="employeeId"    column="employee_id"    />
         <result property="deptId"    column="dept_id"    />
-        <association property="hyDept" column="id"
-			javaType="HyDept" resultMap="HyDeptResult" />
-		<association property="hyEmployee" column="id"
-			javaType="HyEmployee" resultMap="HyEmployeeResult" />
+        <association property="sysDept" column="id"
+			javaType="SysDept" resultMap="SysDeptResult" />
+		<association property="sysUser" column="id"
+			javaType="SysUser" resultMap="SysUserResult" />
     </resultMap>
 	
-	<resultMap type="HyDept" id="HyDeptResult">
-        <result property="id"    column="id"    />
-        <result property="deptName"    column="dept_name"    />
-        <result property="createTime"    column="create_time"    />
-        <result property="leader"    column="leader"    />
-        <result property="propertyId"    column="property_id"    />
-    </resultMap>
+	<resultMap type="SysDept" id="SysDeptResult">
+		<id     property="deptId"     column="dept_id"     />
+		<result property="parentId"   column="parent_id"   />
+		<result property="ancestors"  column="ancestors"   />
+		<result property="deptName"   column="dept_name"   />
+		<result property="orderNum"   column="order_num"   />
+		<result property="leader"     column="leader"      />
+		<result property="phone"      column="phone"       />
+		<result property="email"      column="email"       />
+		<result property="status"     column="status"      />
+		<result property="delFlag"    column="del_flag"    />
+		<result property="parentName" column="parent_name" />
+		<result property="createBy"   column="create_by"   />
+		<result property="createTime" column="create_time" />
+		<result property="updateBy"   column="update_by"   />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
 	
-	<resultMap type="HyEmployee" id="HyEmployeeResult">
-        <result property="id"    column="id"    />
-        <result property="employeeName"    column="employee_name"    />
-        <result property="employeePhone"    column="employee_phone"    />
-        <result property="deptId"    column="dept_id"    />
-    </resultMap>
+	<resultMap type="SysUser" id="SysUserResult">
+		<id     property="userId"        column="user_id"         />
+		<result property="deptId"        column="dept_id"         />
+		<result property="loginName"     column="login_name"      />
+		<result property="userName"      column="user_name"       />
+		<result property="userType"      column="user_type"       />
+		<result property="email"         column="email"           />
+		<result property="phonenumber"   column="phonenumber"     />
+		<result property="sex"           column="sex"             />
+		<result property="avatar"        column="avatar"          />
+		<result property="password"      column="password"        />
+		<result property="salt"          column="salt"            />
+		<result property="status"        column="status"          />
+		<result property="delFlag"       column="del_flag"        />
+		<result property="loginIp"       column="login_ip"        />
+		<result property="loginDate"     column="login_date"      />
+		<result property="pwdUpdateDate" column="pwd_update_date" />
+		<result property="createBy"      column="create_by"       />
+		<result property="createTime"    column="create_time"     />
+		<result property="updateBy"      column="update_by"       />
+		<result property="updateTime"    column="update_time"     />
+		<result property="remark"        column="remark"          />
+	</resultMap>
 	
     <sql id="selectHySpecimenVo">
         select 
@@ -35,11 +62,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         s.employee_id, 
         s.dept_id,
         d.dept_name,
-        e.employee_name 
+        u.user_name 
         from 
         hy_specimen s
-        LEFT JOIN hy_dept d ON s.dept_id = d.id
-        LEFT JOIN hy_employee e ON s.employee_id = e.id
+        LEFT JOIN sys_dept d ON s.dept_id = d.dept_id
+        LEFT JOIN sys_user u ON s.employee_id = u.user_id
     </sql>
 
     <select id="selectHySpecimenList" parameterType="HySpecimen" resultMap="HySpecimenResult">

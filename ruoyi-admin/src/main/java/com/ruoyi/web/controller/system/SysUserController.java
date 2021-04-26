@@ -71,6 +71,14 @@ public class SysUserController extends BaseController {
 		List<SysUser> list = userService.selectUserList(user);
 		return getDataTable(list);
 	}
+	
+	@RequiresPermissions("system:user:list")
+	@PostMapping("/lists")
+	@ResponseBody
+	public List<SysUser> lists(SysUser user) {
+		List<SysUser> list = userService.selectUserLists(user);
+		return list;
+	}
 
 	@Log(title = "用户管理", businessType = BusinessType.EXPORT)
 	@RequiresPermissions("system:user:export")

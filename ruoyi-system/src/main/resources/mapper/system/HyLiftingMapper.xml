@@ -60,11 +60,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectHyLiftingVo"/>
         <where>  
             <if test="hyMaterial != null ">
-			<if test="hyMaterial.materialName != null "> and m.material_name = #{hyMaterial.materialName}</if>
-			<if test="hyMaterial.materialType != null "> and m.material_type = #{hyMaterial.materialType}</if>
-			<if test="hyMaterial.checkmen != null "> and m.checkmen = #{hyMaterial.checkmen}</if>
+			<if test="hyMaterial.materialName != null and hyMaterial.materialName != ''"> and m.material_name = #{hyMaterial.materialName}</if>
+			<if test="hyMaterial.materialType != null and hyMaterial.materialType != ''"> and m.material_type = #{hyMaterial.materialType}</if>
+			<if test="hyMaterial.checkmen != null and hyMaterial.checkmen != ''"> and m.checkmen = #{hyMaterial.checkmen}</if>
 			</if>
-            <if test="materialNumber != null "> and l.material_number = #{materialNumber}</if>
+            <if test="materialNumber != null and materialNumber != ''"> and l.material_number = #{materialNumber}</if>
             <if test="materialUse != null  and materialUse != ''"> and l.material_use = #{materialUse}</if>
             <if test="isreturn != null  and isreturn != ''"> and l.isreturn = #{isreturn}</if>
             <if test="depts != null  and depts != ''"> and l.depts = #{depts}</if>

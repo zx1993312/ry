@@ -104,8 +104,8 @@ public class HyAssessorServiceImpl implements IHyAssessorService
     	hyMaterial.setAssessorId(hyAssessor.getId());
     	hyMaterial.setId(hyAssessor.getMaterialId());
     	hyMaterial.setState("3");
-    	hyMaterial.setSpecimen(hyAssessor.getHySpecimen().getHyEmployee().getEmployeeName());
-    	hyMaterial.setSpecimendept(hyAssessor.getHySpecimen().getHyDept().getDeptName());
+    	hyMaterial.setSpecimen(hyAssessor.getHySpecimen().getSysUser().getUserName());
+    	hyMaterial.setSpecimendept(hyAssessor.getHySpecimen().getSysDept().getDeptName());
     	//hyMaterialMapper.updateHyMaterial(hyMaterial);
         return hyMaterialServiceImpl.updateHyMaterials(hyMaterial);
     }

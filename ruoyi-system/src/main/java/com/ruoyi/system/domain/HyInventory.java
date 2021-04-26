@@ -30,8 +30,8 @@ public class HyInventory extends BaseEntity
     @Excel(name = "盘点员id")
     private Long checkId;
     
-    /** 物料表 */
-    @Excel(name = "物料表")
+    /** 盘点员表 */
+    @Excel(name = "盘点员表")
     private HyCheck hyCheck;
 
     public void setId(Long id) 

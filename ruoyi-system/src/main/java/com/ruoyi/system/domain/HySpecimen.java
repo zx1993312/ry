@@ -4,6 +4,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
+import com.ruoyi.common.core.domain.entity.SysDept;
+import com.ruoyi.common.core.domain.entity.SysUser;
 
 /**
  * 接收员对象 hy_specimen
@@ -24,7 +26,7 @@ public class HySpecimen extends BaseEntity
 
     /** 员工表 */
     @Excel(name = "员工表")
-    private HyEmployee hyEmployee;
+    private SysUser sysUser;
     
     /** 部门id */
     @Excel(name = "部门id")
@@ -32,7 +34,7 @@ public class HySpecimen extends BaseEntity
     
     /** 部门表 */
     @Excel(name = "部门表")
-    private HyDept hyDept;
+    private SysDept sysDept;
 
     public void setId(Long id) 
     {
@@ -62,27 +64,29 @@ public class HySpecimen extends BaseEntity
         return deptId;
     }
 
-    public HyEmployee getHyEmployee() {
-		return hyEmployee;
+
+	public SysUser getSysUser() {
+		return sysUser;
 	}
 
-	public void setHyEmployee(HyEmployee hyEmployee) {
-		this.hyEmployee = hyEmployee;
+	public void setSysUser(SysUser sysUser) {
+		this.sysUser = sysUser;
 	}
 
-	public HyDept getHyDept() {
-		return hyDept;
+	public SysDept getSysDept() {
+		return sysDept;
 	}
 
-	public void setHyDept(HyDept hyDept) {
-		this.hyDept = hyDept;
+	public void setSysDept(SysDept sysDept) {
+		this.sysDept = sysDept;
 	}
 
 	@Override
 	public String toString() {
-		return "HySpecimen [id=" + id + ", employeeId=" + employeeId + ", hyEmployee=" + hyEmployee + ", deptId="
-				+ deptId + ", hyDept=" + hyDept + "]";
+		return "HySpecimen [id=" + id + ", employeeId=" + employeeId + ", sysUser=" + sysUser + ", deptId=" + deptId
+				+ ", sysDept=" + sysDept + "]";
 	}
+
 
 	
 }

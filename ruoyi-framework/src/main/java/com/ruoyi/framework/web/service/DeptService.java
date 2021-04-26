@@ -5,24 +5,27 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ruoyi.system.domain.HyDept;
+import com.ruoyi.common.core.domain.entity.SysDept;
 import com.ruoyi.system.domain.HyShop;
-import com.ruoyi.system.mapper.HyDeptMapper;
+import com.ruoyi.system.mapper.SysDeptMapper;
 
 @Service("dept")
 public class DeptService {
 	
 	@Autowired
-	HyDeptMapper hydeptMapper;
+	SysDeptMapper sysDeptMapper;
 	
 	/**
-	 * 根据字典类型查询字典数据信息
+	 * 查询所有物业方法
 	 * 
 	 * @param dictType 字典类型
 	 * @return  参数键值
 	 */
-	public List<HyDept> getDept(){
-		return hydeptMapper.selectHyDeptList(new HyDept());
+	public List<SysDept> getDept(){
+		SysDept sysDept = new SysDept();
+		Long parentId = (long)0;
+		sysDept.setParentId(parentId);
+		return sysDeptMapper.selectDeptList(sysDept);
 		
 	}
 }

@@ -26,6 +26,6 @@ public class HyMapController extends BaseController {
 	@RequiresPermissions("system:business:view")
 	@GetMapping()
 	public String business() {
-		return prefix + "/baidu";
+		return prefix + "/map";
 	}
 }

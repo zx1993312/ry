@@ -39,6 +39,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         b.material_use, 
         b.is_stock, 
         b.material_id,
+        m.material_name,
         m.material_type, 
         m.material_number, 
         m.material_address, 
@@ -55,11 +56,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectHyBillList" parameterType="HyBill" resultMap="HyBillResult">
         <include refid="selectHyBillVo"/>
         <where>  
+            <if test="billCode != null  and billCode != ''"> and b.bill_code = #{billCode}</if>
             <if test="materialUse != null  and materialUse != ''"> and b.material_use = #{materialUse}</if>
             <if test="isStock != null  and isStock != ''"> and b.is_stock = #{isStock}</if>
             <if test="time != null  and time != ''"> and b.time = #{time}</if>
             <if test="materialId != null "> and b.material_id = #{materialId}</if>
             <if test="hyMaterial != null "> 
+			<if test="hyMaterial.materialName != null  and hyMaterial.materialName != ''"> and m.material_name = #{hyMaterial.materialName}</if>
 			<if test="hyMaterial.materialType != null  and hyMaterial.materialType != ''"> and m.material_type = #{hyMaterial.materialType}</if>
             <if test="hyMaterial.materialNumber != null "> and m.material_number = #{hyMaterial.materialNumber}</if>
 			</if>

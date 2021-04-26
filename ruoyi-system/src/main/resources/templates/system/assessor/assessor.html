@@ -111,11 +111,11 @@
                     title: '上交采购单据'
                 },
                 {
-                    field: 'hySpecimen.hyEmployee.employeeName',
+                    field: 'hySpecimen.sysUser.userName',
                     title: '审核人'
                 },
                 {
-                    field: 'hySpecimen.hyDept.deptName',
+                    field: 'hySpecimen.sysDept.deptName',
                     title: '审核部门'
                 },
                 {
@@ -156,7 +156,6 @@
                     align: 'center',
                     formatter: function(value, row, index) {
                         var actions = [];
-                        //actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="edit(\'' + row.id+','+row.materialId+','+row.hySpecimen.hyEmployee.employeeName+','+row.hySpecimen.hyDept.deptName+','+row.hyInventory.checkId + '\')"><i class="fa fa-edit"></i>审核通过</a> ');
                         actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit3(\'' + row.id+'\',\''+row.hyInventory.checkId+'\',\''+row.hyMaterial.specimen + '\')"><i class="fa fa-edit"></i>审核</a> ');
                         //actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
                         return actions.join('');

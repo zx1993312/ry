@@ -126,7 +126,7 @@ public class HyMaterialServiceImpl implements IHyMaterialService
     	hyCheck.setId(checkId);
     	List<HyCheck> list1 = hyCheckMapper.selectHyCheckList(hyCheck);
     	hyCheck = list1.get(0);
-    	String checkmen = hyCheck.getHyEmployee().getEmployeeName();
+    	String checkmen = hyCheck.getSysUser().getUserName();
     	hyMaterial.setCheckmen(checkmen);
     	Long assessorId = hyMaterial.getAssessorId();
     	hyAssessorMapper.deleteHyAssessorById(assessorId);
