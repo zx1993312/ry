@@ -6,40 +6,82 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <resultMap type="HyNodeTask" id="HyNodeTaskResult">
         <result property="id"    column="id"    />
-        <result property="name"    column="name"    />
+        <result property="taskName"    column="task_name"    />
         <result property="inspectionWay"    column="inspection_way"    />
         <result property="remark"    column="remark"    />
         <result property="nodeId"    column="node_id"    />
+        <association property="hyCheckeNode" column="id"
+			javaType="HyCheckeNode" resultMap="HyCheckeNodeResult" />
     </resultMap>
 
+	<resultMap type="HyCheckeNode" id="HyCheckeNodeResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="address"    column="address"    />
+        <result property="scanCode"    column="scan_code"    />
+        <result property="longitude"    column="longitude"    />
+        <result property="latitude"    column="latitude"    />
+        <result property="remark"    column="remark"    />
+        <result property="deptId"    column="dept_id"    />
+        <association property="sysDept" column="id"
+			javaType="SysDept" resultMap="SysDeptResult" />
+    </resultMap>
+	
+	<resultMap type="SysDept" id="SysDeptResult">
+		<id     property="deptId"     column="dept_id"     />
+		<result property="parentId"   column="parent_id"   />
+		<result property="ancestors"  column="ancestors"   />
+		<result property="deptName"   column="dept_name"   />
+		<result property="orderNum"   column="order_num"   />
+		<result property="leader"     column="leader"      />
+		<result property="phone"      column="phone"       />
+		<result property="email"      column="email"       />
+		<result property="status"     column="status"      />
+		<result property="delFlag"    column="del_flag"    />
+		<result property="parentName" column="parent_name" />
+		<result property="createBy"   column="create_by"   />
+	</resultMap>
+
     <sql id="selectHyNodeTaskVo">
-        select id, name, inspection_way, remark, node_id from hy_node_task
+        select 
+        t.id, 
+        t.task_name, 
+        t.inspection_way, 
+        t.remark, 
+        t.node_id,
+        n.name,
+        n.address,
+        d.dept_name
+        from 
+        hy_node_task t
+        LEFT JOIN  hy_checke_node n ON t.node_id = n.id
+        LEFT JOIN sys_dept d ON n.dept_id = d.dept_id
     </sql>
 
     <select id="selectHyNodeTaskList" parameterType="HyNodeTask" resultMap="HyNodeTaskResult">
         <include refid="selectHyNodeTaskVo"/>
         <where>  
-            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
-            <if test="inspectionWay != null  and inspectionWay != ''"> and inspection_way = #{inspectionWay}</if>
-            <if test="nodeId != null "> and node_id = #{nodeId}</if>
+            <if test="taskName != null  and taskName != ''"> and t.task_name like concat('%', #{taskName}, '%')</if>
+            <if test="inspectionWay != null  and inspectionWay != ''"> and t.inspection_way = #{inspectionWay}</if>
+            <if test="nodeId != null "> and t.node_id = #{nodeId}</if>
         </where>
     </select>
     
     <select id="selectHyNodeTaskById" parameterType="Long" resultMap="HyNodeTaskResult">
         <include refid="selectHyNodeTaskVo"/>
-        where id = #{id}
+        where t.id = #{id}
     </select>
         
     <insert id="insertHyNodeTask" parameterType="HyNodeTask" useGeneratedKeys="true" keyProperty="id">
         insert into hy_node_task
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="name != null">name,</if>
+            <if test="taskName != null">task_name,</if>
             <if test="inspectionWay != null">inspection_way,</if>
             <if test="remark != null">remark,</if>
             <if test="nodeId != null">node_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="name != null">#{name},</if>
+            <if test="taskName != null">#{taskName},</if>
             <if test="inspectionWay != null">#{inspectionWay},</if>
             <if test="remark != null">#{remark},</if>
             <if test="nodeId != null">#{nodeId},</if>
@@ -49,7 +91,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateHyNodeTask" parameterType="HyNodeTask">
         update hy_node_task
         <trim prefix="SET" suffixOverrides=",">
-            <if test="name != null">name = #{name},</if>
+            <if test="taskName != null">task_name = #{taskName},</if>
             <if test="inspectionWay != null">inspection_way = #{inspectionWay},</if>
             <if test="remark != null">remark = #{remark},</if>
             <if test="nodeId != null">node_id = #{nodeId},</if>

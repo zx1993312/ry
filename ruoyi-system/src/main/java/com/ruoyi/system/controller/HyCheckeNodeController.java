@@ -64,6 +64,22 @@ public class HyCheckeNodeController extends BaseController
         List<HyCheckeNode> list = hyCheckeNodeService.selectHyCheckeNodeList(hyCheckeNode);
         return getDataTable(list);
     }
+    
+    /**
+     * 查询巡检节点列表
+     */
+    @ApiOperation("巡检节点")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyCheckeNode", value = "项目实体类hyCheckeNode", required = true),
+    })
+    @RequiresPermissions("system:node:list")
+    @PostMapping("/lists")
+    @ResponseBody
+    public List<HyCheckeNode> lists(HyCheckeNode hyCheckeNode)
+    {
+    	List<HyCheckeNode> list = hyCheckeNodeService.selectHyCheckeNodeList(hyCheckeNode);
+    	return list;
+    }
 
     /**
      * 导出巡检节点列表

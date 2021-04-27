@@ -52,6 +52,15 @@ public class SysDeptController extends BaseController
         List<SysDept> deptList = deptService.selectDeptList(dept);
         return deptList;
     }
+    
+    @RequiresPermissions("system:dept:list")
+    @PostMapping("/lists")
+    @ResponseBody
+    public List<SysDept> lists(SysDept dept)
+    {
+    	List<SysDept> deptList = deptService.selectDeptLists(dept);
+    	return deptList;
+    }
 
     /**
      * 新增部门

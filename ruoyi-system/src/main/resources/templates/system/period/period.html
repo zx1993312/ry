@@ -17,8 +17,12 @@
                             <li>
                                 <label>巡检周期类型：</label>
                                 <select name="type">
-                                    <option value="">所有</option>
-                                    <option value="-1">代码生成请选择字典属性</option>
+                                    <option value="">请选择</option>
+                                    <option value="1">分钟</option>
+                                    <option value="2">小时</option>
+                                    <option value="3">天</option>
+                                    <option value="4">周</option>
+                                    <option value="5">月</option>
                                 </select>
                             </li>
                             <li>
@@ -27,7 +31,11 @@
                             </li>
                             <li>
                                 <label>是否启动：</label>
-                                <input type="text" name="isStart"/>
+                                <select name="isStart">
+                                    <option value="">请选择</option>
+                                    <option value="1">是</option>
+                                    <option value="2">否</option>
+                                </select>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -85,7 +93,18 @@
                 },
                 {
                     field: 'type',
-                    title: '巡检周期类型'
+                    title: '巡检周期类型',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case "" : value =  "请选择";break;
+	                    	case "1" : value =  "分钟";break;
+	                    	case "2" : value =  "小时";break;
+	                    	case "3" : value =  "天";break;
+	                    	case "4" : value =  "周";break;
+	                    	case "5" : value =  "月";break;
+	                	}
+		            	return value;
+		            }
                 },
                 {
                     field: 'intervalValue',
@@ -93,7 +112,15 @@
                 },
                 {
                     field: 'isStart',
-                    title: '是否启动'
+                    title: '是否启动',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case "" : value =  "请选择";break;
+	                    	case "1" : value =  "是";break;
+	                    	case "2" : value =  "否";break;
+	                	}
+		            	return value;
+		            }
                 },
                 {
                     title: '操作',

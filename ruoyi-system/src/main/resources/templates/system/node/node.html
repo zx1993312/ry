@@ -52,8 +52,8 @@
                                 <input type="text" name="latitude"/>
                             </li>
                             <li>
-                                <label>组织机构id：</label>
-                                <input type="text" name="deptId"/>
+                                <label>组织机构：</label>
+                                <input type="text" name="sysDept.deptName"/>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -151,8 +151,8 @@
                     title: '备注'
                 },
                 {
-                    field: 'deptId',
-                    title: '组织机构id'
+                    field: 'sysDept.deptName',
+                    title: '组织机构'
                 },
                 {
                     title: '操作',

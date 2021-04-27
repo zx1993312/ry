@@ -20,15 +20,19 @@ public class HyNodeTask extends BaseEntity
 
     /** 名称 */
     @Excel(name = "名称")
-    private String name;
+    private String taskName;
 
     /** 巡检方式 */
     @Excel(name = "巡检方式")
     private String inspectionWay;
 
-    /** 巡检节点d */
-    @Excel(name = "巡检节点d")
+    /** 巡检节点id */
+    @Excel(name = "巡检节点id")
     private Long nodeId;
+    
+    /** 巡检节点表 */
+    @Excel(name = "巡检节点表")
+    private HyCheckeNode hyCheckeNode;
 
     public void setId(Long id) 
     {
@@ -39,14 +43,14 @@ public class HyNodeTask extends BaseEntity
     {
         return id;
     }
-    public void setName(String name) 
+    public void setTaskName(String taskName) 
     {
-        this.name = name;
+        this.taskName = taskName;
     }
 
-    public String getName() 
+    public String getTaskName() 
     {
-        return name;
+        return taskName;
     }
     public void setInspectionWay(String inspectionWay) 
     {
@@ -67,14 +71,18 @@ public class HyNodeTask extends BaseEntity
         return nodeId;
     }
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("name", getName())
-            .append("inspectionWay", getInspectionWay())
-            .append("remark", getRemark())
-            .append("nodeId", getNodeId())
-            .toString();
-    }
+    public HyCheckeNode getHyCheckeNode() {
+		return hyCheckeNode;
+	}
+
+	public void setHyCheckeNode(HyCheckeNode hyCheckeNode) {
+		this.hyCheckeNode = hyCheckeNode;
+	}
+
+	@Override
+	public String toString() {
+		return "HyNodeTask [id=" + id + ", taskName=" + taskName + ", inspectionWay=" + inspectionWay + ", nodeId="
+				+ nodeId + ", hyCheckeNode=" + hyCheckeNode + "]";
+	}
+
 }

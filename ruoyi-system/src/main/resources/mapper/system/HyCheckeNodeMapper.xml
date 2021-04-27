@@ -12,28 +12,57 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="longitude"    column="longitude"    />
         <result property="latitude"    column="latitude"    />
         <result property="remark"    column="remark"    />
-        <result property="deptId"    column="deptId"    />
+        <result property="deptId"    column="dept_id"    />
+        <association property="sysDept" column="id"
+			javaType="SysDept" resultMap="SysDeptResult" />
     </resultMap>
-
+	
+	<resultMap type="SysDept" id="SysDeptResult">
+		<id     property="deptId"     column="dept_id"     />
+		<result property="parentId"   column="parent_id"   />
+		<result property="ancestors"  column="ancestors"   />
+		<result property="deptName"   column="dept_name"   />
+		<result property="orderNum"   column="order_num"   />
+		<result property="leader"     column="leader"      />
+		<result property="phone"      column="phone"       />
+		<result property="email"      column="email"       />
+		<result property="status"     column="status"      />
+		<result property="delFlag"    column="del_flag"    />
+		<result property="parentName" column="parent_name" />
+		<result property="createBy"   column="create_by"   />
+	</resultMap>
+	
     <sql id="selectHyCheckeNodeVo">
-        select id, name, address, scan_code, longitude, latitude, remark, deptId from hy_checke_node
+        select 
+        n.id, 
+        n.name, 
+        n.address, 
+        n.scan_code, 
+        n.longitude, 
+        n.latitude, 
+        n.remark, 
+        n.dept_id,
+        d.dept_name
+        from 
+        hy_checke_node n
+        LEFT JOIN sys_dept d ON n.dept_id = d.dept_id
     </sql>
 
     <select id="selectHyCheckeNodeList" parameterType="HyCheckeNode" resultMap="HyCheckeNodeResult">
         <include refid="selectHyCheckeNodeVo"/>
         <where>  
-            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
-            <if test="address != null  and address != ''"> and address = #{address}</if>
-            <if test="scanCode != null  and scanCode != ''"> and scan_code = #{scanCode}</if>
-            <if test="longitude != null  and longitude != ''"> and longitude = #{longitude}</if>
-            <if test="latitude != null  and latitude != ''"> and latitude = #{latitude}</if>
-            <if test="deptId != null "> and deptId = #{deptId}</if>
+            <if test="name != null  and name != ''"> and n.name like concat('%', #{name}, '%')</if>
+            <if test="address != null  and address != ''"> and n.address = #{address}</if>
+            <if test="scanCode != null  and scanCode != ''"> and n.scan_code = #{scanCode}</if>
+            <if test="longitude != null  and longitude != ''"> and n.longitude = #{longitude}</if>
+            <if test="latitude != null  and latitude != ''"> and n.latitude = #{latitude}</if>
+            <if test="deptId != null "> and n.dept_id = #{deptId}</if>
         </where>
     </select>
     
     <select id="selectHyCheckeNodeById" parameterType="Long" resultMap="HyCheckeNodeResult">
         <include refid="selectHyCheckeNodeVo"/>
-        where id = #{id}
+        where n.id = #{id}
     </select>
         
     <insert id="insertHyCheckeNode" parameterType="HyCheckeNode" useGeneratedKeys="true" keyProperty="id">
@@ -45,7 +74,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="longitude != null">longitude,</if>
             <if test="latitude != null">latitude,</if>
             <if test="remark != null">remark,</if>
-            <if test="deptId != null">deptId,</if>
+            <if test="deptId != null">dept_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="name != null">#{name},</if>
@@ -67,7 +96,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="longitude != null">longitude = #{longitude},</if>
             <if test="latitude != null">latitude = #{latitude},</if>
             <if test="remark != null">remark = #{remark},</if>
-            <if test="deptId != null">deptId = #{deptId},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
         </trim>
         where id = #{id}
     </update>

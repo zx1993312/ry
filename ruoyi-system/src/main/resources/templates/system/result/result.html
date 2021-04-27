@@ -17,13 +17,21 @@
                             <li>
                                 <label>巡检类别：</label>
                                 <select name="type">
-                                    <option value="">所有</option>
-                                    <option value="-1">代码生成请选择字典属性</option>
+                                    <option value="">请选择</option>
+                                    <option value="1">设备巡检</option>
+                                    <option value="2">秩序巡检</option>
+                                    <option value="3">环境巡检</option>
+                                    <option value="4">绿化巡检</option>
+                                    <option value="5">安防巡检 </option>
                                 </select>
                             </li>
                             <li>
                                 <label>是否正常：</label>
-                                <input type="text" name="normal"/>
+                                <select name="normal">
+                                    <option value="">请选择</option>
+                                    <option value="1">是</option>
+                                    <option value="2">否</option>
+                                </select>
                             </li>
                             <li>
                                 <label>说明：</label>
@@ -85,11 +93,30 @@
                 },
                 {
                     field: 'type',
-                    title: '巡检类别'
+                    title: '巡检类别',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case "" : value =  "请选择";break;
+	                    	case "1" : value =  "设备巡检";break;
+	                    	case "2" : value =  "秩序巡检";break;
+	                    	case "3" : value =  "环境巡检";break;
+	                    	case "4" : value =  "绿化巡检";break;
+	                    	case "5" : value =  "安防巡检";break;
+	                	}
+		            	return value;
+		            }
                 },
                 {
                     field: 'normal',
-                    title: '是否正常'
+                    title: '是否正常',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case "" : value =  "请选择";break;
+	                    	case "1" : value =  "是";break;
+	                    	case "2" : value =  "否";break;
+	                	}
+		            	return value;
+		            }
                 },
                 {
                     field: 'explains',

@@ -8,50 +8,73 @@
         <form class="form-horizontal m" id="form-node-edit" th:object="${hyCheckeNode}">
             <input name="id" th:field="*{id}" type="hidden">
             <div class="form-group">    
-                <label class="col-sm-3 control-label">巡检节点名称：</label>
-                <div class="col-sm-8">
+                <label class="col-sm-2 control-label">巡检节点名称：</label>
+                <div class="col-sm-4">
                     <input name="name" th:field="*{name}" class="form-control" type="text">
                 </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">巡检节点地址：</label>
-                <div class="col-sm-8">
+                <label class="col-sm-2 control-label">巡检节点地址：</label>
+                <div class="col-sm-4">
                     <input name="address" th:field="*{address}" class="form-control" type="text">
                 </div>
             </div>
+              <div class="form-group">
+            	<label class="col-sm-2 control-label">选择物业：</label>
+                	<div class="col-sm-4">
+                    	<select class="province form-control m-b" id="property" data-first-title="选择物业"  th:with="type=${@dept.getDept()}" onchange="changeDept()">
+	                  		<option value="">请选择</option>
+	                  		<option th:each="dict : ${type}" th:text="${dict.deptName}" th:value="${dict.deptId}"></option>
+	                	</select>
+			    	</div>
+		    	<label class="col-sm-2 control-label">选择部门：</label>
+	               	<div class="col-sm-4">
+	                	<select class="city form-control m-b" id="dept" data-first-title="选择部门" disabled="disabled" onchange="changeDepts()">
+	                 	 <option value="">请选择</option>
+	                	</select>
+	               	</div>
+			</div> 
+             <div class="form-group">    
+             	<label class="col-sm-2 control-label">选择部门：</label>
+                	<div class="col-sm-4">
+	                	<select class="city form-control m-b" th:field="*{deptId}" name="deptId" id="depts" data-first-title="选择部门" disabled="disabled">
+	                 	 <option value="">请选择</option>
+	                	</select>
+                	</div>
+                <label class="col-sm-2 control-label">房间：</label>
+                <div class="col-sm-4">
+                    <input name="deptId" th:field="*{deptId}" class="form-control" type="text">
+                </div>
+            </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">扫描码：</label>
-                <div class="col-sm-8">
+                <label class="col-sm-2 control-label">扫描码：</label>
+                <div class="col-sm-4">
                     <input name="scanCode" th:field="*{scanCode}" class="form-control" type="text">
                 </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">经度：</label>
-                <div class="col-sm-8">
-                    <input name="longitude" th:field="*{longitude}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">纬度：</label>
-                <div class="col-sm-8">
-                    <input name="latitude" th:field="*{latitude}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">备注：</label>
-                <div class="col-sm-8">
+                <label class="col-sm-2 control-label">备注：</label>
+                <div class="col-sm-4">
                     <input name="remark" th:field="*{remark}" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">组织机构id：</label>
-                <div class="col-sm-8">
-                    <input name="deptId" th:field="*{deptId}" class="form-control" type="text">
+                <label class="col-sm-2 control-label">经度：</label>
+                <div class="col-sm-4">
+                    <input id="longitude" name="longitude" th:field="*{longitude}" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">纬度：</label>
+                <div class="col-sm-4">
+                    <input id="latitude" name="latitude" th:field="*{latitude}" class="form-control" type="text">
+                </div>
+            </div>
+ 			<div class="form-group">
+                <label class="col-sm-2">巡检地图：</label>
+                <div class="col-sm-10">
+                	<div id="container" style="width:600px;height:400px"></div>
+                    <!-- <iframe id="map" src="/system/map" frameBorder="0" width="600" scrolling="no" height="400"></iframe> -->
                 </div>
             </div>
         </form>
     </div>
     <th:block th:include="include :: footer" />
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=DD279b2a90afdf0ae7a3796787a0742e"></script> 
     <script th:inline="javascript">
         var prefix = ctx + "system/node";
         $("#form-node-edit").validate({
@@ -63,6 +86,26 @@
                 $.operate.save(prefix + "/edit", $('#form-node-edit').serialize());
             }
         }
+        //创建map组件
+        var map = new BMap.Map("container"); 
+        //var mapStyle={  style : "dark" }  // 创建地图实例  
+        var lng = $("#longitude").val();
+        var lat = $("#latitude").val();
+        var point = new BMap.Point(lng,lat);  // 创建点坐标  
+        var marker = new BMap.Marker(point);        // 创建标注    
+        map.centerAndZoom(point, 15);                 // 初始化地图，设置中心点坐标和地图级别  
+        map.enableScrollWheelZoom(true); 
+        map.addControl(new BMap.NavigationControl());
+        //map.setMapStyle(mapStyle);
+        map.addOverlay(marker); 
+        marker.enableDragging();
+        marker.addEventListener("dragend", function(e){    
+            alert("当前位置：" + e.point.lng + ", " + e.point.lat);   
+            var lng = e.point.lng;
+            var lat = e.point.lat;
+            $("#longitude").val(lng);
+            $("#latitude").val(lat);
+        })   
     </script>
 </body>
 </html>
