@@ -6,151 +6,88 @@
 </head>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-scheme-add">
+        <form class="form-horizontal m" id="form-scheme-add" th:object="${hyPatrolScheme}">
             <div class="form-group">    
-                <label class="col-sm-3 control-label">单据号：</label>
-                <div class="col-sm-8">
-                    <input name="documentNumber" class="form-control" type="text">
+                <label class="col-sm-2 control-label">单据号：</label>
+                <div class="col-sm-4">
+                    <input th:field="*{documentNumber}" th:value="*{documentNumber}" class="form-control" type="text" disabled="disabled">
+                    <input name="documentNumber" th:value="*{documentNumber}" class="form-control" type="hidden">
                 </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">计划时间：</label>
-                <div class="col-sm-8">
+                <label class="col-sm-2 control-label">计划时间：</label>
+                <div class="col-sm-4">
                     <div class="input-group date">
-                        <input name="plannedTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <input th:field="*{plannedTime}" th:value="*{plannedTime}" class="form-control" placeholder="yyyy-MM-dd" type="text"  disabled="disabled">
+                        <input name="plannedTime" th:field="*{plannedTime}" th:value="*{plannedTime}" class="form-control" placeholder="yyyy-MM-dd" type="hidden">
                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                     </div>
                 </div>
             </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">计划区间：</label>
-                <div class="col-sm-8">
-                    <input name="planRange" class="form-control" type="text">
+            <div class="form-group">
+            	<label class="col-sm-2 control-label">选择物业：</label>
+                	<div class="col-sm-4">
+                    	<select class="province form-control m-b" id="property" data-first-title="选择物业"  th:with="type=${@dept.getDept()}" onchange="changeDept()">
+	                  		<option value="">请选择</option>
+	                  		<option th:each="dict : ${type}" th:text="${dict.deptName}" th:value="${dict.deptId}"></option>
+	                	</select>
+			    	</div>
+			    <label class="col-sm-2 control-label">选择项目：</label>
+                	<div class="col-sm-4">
+	                	<select class="city form-control m-b" id="dept" data-first-title="选择项目" disabled="disabled" onchange="changeDepts()">
+	                 	 <option value="">请选择</option>
+	                	</select>
+                	</div>
+			</div> 
+            <div class="form-group">
+            	<label class="col-sm-2 control-label">组织机构：</label>
+                <div class="col-sm-4">
+                    <select class="city form-control m-b" name="deptId" id="depts" data-first-title="选择部门" disabled="disabled" onchange="changeEmployee()">
+	                 	 <option value="">请选择</option>
+	                </select>
+                </div> 
+                <label class="col-sm-2 control-label">计划区间：</label>
+                <div class="col-sm-4">
+                     <select name="planRange" class="form-control m-b">
+	                     <option value="">请选择</option>
+	                     <option value="1">01-年度</option>
+	                     <option value="2">02-第一季度</option>
+	                     <option value="3">03-第二季度</option>
+	                     <option value="4">04-第四季度</option>
+	                     <option value="5">05-一月份</option>
+	                     <option value="6">06-二月份</option>
+	                     <option value="7">07-三月份</option>
+	                     <option value="8">08-四月份</option>
+	                     <option value="9">09-五月份</option>
+	                     <option value="10">10-六月份</option>
+	                     <option value="11">11-七月份</option>
+	                     <option value="12">12-八月份</option>
+	                     <option value="13">13-九月份</option>
+	                     <option value="14">14-十月份</option>
+	                     <option value="15">15-十一月份</option>
+	                     <option value="16">16-十二月份</option>
+	                     <option value="17">17-周</option>
+	                     <option value="18">18-日</option>
+                     </select>
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">计划年度：</label>
-                <div class="col-sm-8">
-                    <input name="planAnnual" class="form-control" type="text">
+                <label class="col-sm-2 control-label">计划年度：</label>
+                <div class="col-sm-4">
+                    <input th:field="*{planAnnual}" th:value="*{planAnnual}" class="form-control" type="text" disabled="disabled">
+                    <input name="planAnnual" th:field="*{planAnnual}" th:value="*{planAnnual}" class="form-control" type="hidden">
+                </div>
+                <label class="col-sm-2 control-label">巡检人：</label>
+                <div class="col-sm-4">
+                    <input id="checkPeople" name="checkPeople" class="form-control" type="text" onclick="selectUser()">
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">计划人：</label>
-                <div class="col-sm-8">
+                <label class="col-sm-2 control-label">计划人：</label>
+                <div class="col-sm-4">
                     <input name="planner" class="form-control" type="text">
                 </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">巡检人：</label>
-                <div class="col-sm-8">
-                    <input name="checkPeople" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">巡检时间：</label>
-                <div class="col-sm-8">
-                    <div class="input-group date">
-                        <input name="inspectionTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">备注：</label>
-                <div class="col-sm-8">
+                <label class="col-sm-2 control-label">备注：</label>
+                <div class="col-sm-4">
                     <input name="remark" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">制单时间：</label>
-                <div class="col-sm-8">
-                    <div class="input-group date">
-                        <input name="makeTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">制单人：</label>
-                <div class="col-sm-8">
-                    <input name="documentMaker" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">修订时间：</label>
-                <div class="col-sm-8">
-                    <div class="input-group date">
-                        <input name="revisionTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">修订人：</label>
-                <div class="col-sm-8">
-                    <input name="reviser" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">是否审核：</label>
-                <div class="col-sm-8">
-                    <input name="isCheck" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">审核时间：</label>
-                <div class="col-sm-8">
-                    <div class="input-group date">
-                        <input name="auditTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">审核人：</label>
-                <div class="col-sm-8">
-                    <input name="auditor" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">实际巡检时间：</label>
-                <div class="col-sm-8">
-                    <div class="input-group date">
-                        <input name="actualInspectionTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">巡检状态：</label>
-                <div class="col-sm-8">
-                    <div class="radio-box">
-                        <input type="radio" name="inspectionStatus" value="">
-                        <label th:for="inspectionStatus" th:text="未知"></label>
-                    </div>
-                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">变更巡检状态原因：</label>
-                <div class="col-sm-8">
-                    <div class="radio-box">
-                        <input type="radio" name="changeStatus" value="">
-                        <label th:for="changeStatus" th:text="未知"></label>
-                    </div>
-                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">巡检说明：</label>
-                <div class="col-sm-8">
-                    <input name="inspectionInstructions" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">组织机构id：</label>
-                <div class="col-sm-8">
-                    <input name="deptId" class="form-control" type="text">
                 </div>
             </div>
         </form>
@@ -168,7 +105,6 @@
                 $.operate.save(prefix + "/add", $('#form-scheme-add').serialize());
             }
         }
-
         $("input[name='plannedTime']").datetimepicker({
             format: "yyyy-mm-dd",
             minView: "month",
@@ -204,6 +140,85 @@
             minView: "month",
             autoclose: true
         });
+        
+        function selectUser(){
+			  $.modal.open("员工管理页面","/system/selectUser");	
+	        }
+        
+        var prefix1 = ctx + "system/dept"
+        //物业部门员工
+        function changeDept(){
+   			$("#dept").removeAttr("disabled");
+   			$.ajax({
+                url: prefix1 + "/list",
+                data: {parentId : $("#property").val()},
+                dataType : 'json',
+                type: 'POST',
+                success: function (result) {
+                	var optArr = [];
+                	$("#dept").empty();
+					$("#dept").append("<option value=\"\">请选择</option>");
+                    for (var i = 0; i < result.length; i++) {
+                    	$("#dept").append("<option value=" + result[i].deptId + ">" + result[i].deptName + "</option>");
+                    }
+                        
+                    // 缺一不可  
+                    $("#dept").selectpicker('refresh');
+                    $("#dept").selectpicker('render');
+
+					console.log(result);
+                }
+            });
+   		}
+        function changeDepts(){
+   			$("#depts").removeAttr("disabled");
+   			$.ajax({
+                url: prefix1 + "/list",
+                data: {parentId : $("#dept").val()},
+                dataType : 'json',
+                type: 'POST',
+                success: function (result) {
+                	console.log(result);
+                	var optArr = [];
+                	$("#depts").empty();
+					$("#depts").append("<option value=\"\">请选择</option>");
+                    for (var i = 0; i < result.length; i++) {
+                    	$("#depts").append("<option value=" + result[i].deptId + ">" + result[i].deptName + "</option>");
+                    }
+                        
+                    // 缺一不可  
+                    $("#depts").selectpicker('refresh');
+                    $("#depts").selectpicker('render');
+
+					console.log(result);
+                }
+            });
+   		}
+   		var prefix2 = ctx + "system/user"
+   		function changeEmployee(){
+   			$("#employee").removeAttr("disabled");
+   			$.ajax({
+                url: prefix2 + "/lists",
+                data: {deptId : $("#depts").val()},
+                dataType : 'json',
+                type: 'POST',
+                success: function (result) {
+                	console.log(result);
+                	var optArr = [];
+                	$("#employee").empty();
+					$("#employee").append("<option value=\"\">请选择</option>");
+                    for (var i = 0; i < result.length; i++) {
+                    	$("#employee").append("<option value=" + result[i].userId + ">" + result[i].userName + "</option>");
+                    }
+                        
+                    // 缺一不可  
+                    $("#employee").selectpicker('refresh');
+                    $("#employee").selectpicker('render');
+
+					console.log(result);
+                }
+            });
+   		}
     </script>
 </body>
 </html>

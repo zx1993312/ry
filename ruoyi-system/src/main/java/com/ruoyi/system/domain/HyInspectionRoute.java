@@ -4,6 +4,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
+import com.ruoyi.common.core.domain.entity.SysDept;
 
 /**
  * 巡检线路对象 hy_inspection_route
@@ -33,6 +34,10 @@ public class HyInspectionRoute extends BaseEntity
     /** 组织机构id */
     @Excel(name = "组织机构id")
     private Long deptId;
+    
+    /** 组织机构表 */
+    @Excel(name = "组织机构表")
+    private SysDept sysDept;
 
     public void setId(Long id) 
     {
@@ -80,7 +85,15 @@ public class HyInspectionRoute extends BaseEntity
         return deptId;
     }
 
-    @Override
+    public SysDept getSysDept() {
+		return sysDept;
+	}
+
+	public void setSysDept(SysDept sysDept) {
+		this.sysDept = sysDept;
+	}
+
+	@Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
@@ -89,6 +102,7 @@ public class HyInspectionRoute extends BaseEntity
             .append("remark", getRemark())
             .append("schemeId", getSchemeId())
             .append("deptId", getDeptId())
+            .append("sysDept", getSysDept())
             .toString();
     }
 }

@@ -36,9 +36,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectHyPatrolSchemeVo"/>
         <where>  
             <if test="documentNumber != null  and documentNumber != ''"> and document_number = #{documentNumber}</if>
-            <if test="plannedTime != null "> and planned_time = #{plannedTime}</if>
+            <if test="plannedTime != null  and plannedTime != ''"> and planned_time = #{plannedTime}</if>
             <if test="planRange != null  and planRange != ''"> and plan_range = #{planRange}</if>
-            <if test="planAnnual != null  and planAnnual != ''"> and plan_annual = #{planAnnual}</if>
+            <if test="planAnnual != null and planAnnual != ''"> and plan_annual = #{planAnnual}</if>
             <if test="planner != null  and planner != ''"> and planner = #{planner}</if>
             <if test="checkPeople != null  and checkPeople != ''"> and check_people = #{checkPeople}</if>
             <if test="inspectionTime != null "> and inspection_time = #{inspectionTime}</if>

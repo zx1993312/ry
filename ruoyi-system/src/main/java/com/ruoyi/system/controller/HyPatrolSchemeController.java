@@ -1,5 +1,9 @@
 package com.ruoyi.system.controller;
 
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +26,7 @@ import io.swagger.annotations.ApiOperation;
 
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
 
@@ -87,8 +92,19 @@ public class HyPatrolSchemeController extends BaseController
      * 新增巡检计划
      */
     @GetMapping("/add")
-    public String add()
+    public String add(ModelMap mmap)
     {
+    	HyPatrolScheme hyPatrolScheme = new HyPatrolScheme();
+       	hyPatrolScheme.setDocumentNumber(new Date().getTime());
+       	Date DateTime = new Date();
+       	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
+        String dateString = formatter.format(DateTime);  
+       	hyPatrolScheme.setPlannedTime(dateString);
+       	Calendar date = Calendar.getInstance();
+       	String year = String.valueOf(date.get(Calendar.YEAR));
+       	hyPatrolScheme.setPlanAnnual(year);
+       	System.out.println("hyPatrolScheme========"+hyPatrolScheme);
+    	mmap.put("hyPatrolScheme", hyPatrolScheme);
         return prefix + "/add";
     }
 

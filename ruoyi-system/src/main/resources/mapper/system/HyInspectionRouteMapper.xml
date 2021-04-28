@@ -9,27 +9,54 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="name"    column="name"    />
         <result property="type"    column="type"    />
         <result property="remark"    column="remark"    />
-        <result property="schemeId"    column="schemeId"    />
-        <result property="deptId"    column="deptId"    />
+        <result property="schemeId"    column="scheme_id"    />
+        <result property="deptId"    column="dept_id"    />
+        <association property="sysDept" column="id"
+			javaType="SysDept" resultMap="SysDeptResult" />
     </resultMap>
-
+	
+	<resultMap type="SysDept" id="SysDeptResult">
+		<id     property="deptId"     column="dept_id"     />
+		<result property="parentId"   column="parent_id"   />
+		<result property="ancestors"  column="ancestors"   />
+		<result property="deptName"   column="dept_name"   />
+		<result property="orderNum"   column="order_num"   />
+		<result property="leader"     column="leader"      />
+		<result property="phone"      column="phone"       />
+		<result property="email"      column="email"       />
+		<result property="status"     column="status"      />
+		<result property="delFlag"    column="del_flag"    />
+		<result property="parentName" column="parent_name" />
+		<result property="createBy"   column="create_by"   />
+	</resultMap>
+	
     <sql id="selectHyInspectionRouteVo">
-        select id, name, type, remark, schemeId, deptId from hy_inspection_route
+        select 
+        i.id, 
+        i.name, 
+        i.type, 
+        i.remark, 
+        i.scheme_id, 
+        i.dept_id,
+        d.dept_name 
+        from 
+        hy_inspection_route i
+        LEFT JOIN sys_dept d ON i.dept_id = d.dept_id
     </sql>
 
     <select id="selectHyInspectionRouteList" parameterType="HyInspectionRoute" resultMap="HyInspectionRouteResult">
         <include refid="selectHyInspectionRouteVo"/>
         <where>  
-            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
-            <if test="type != null  and type != ''"> and type = #{type}</if>
-            <if test="schemeId != null "> and schemeId = #{schemeId}</if>
-            <if test="deptId != null "> and deptId = #{deptId}</if>
+            <if test="name != null  and name != ''"> and i.name like concat('%', #{name}, '%')</if>
+            <if test="type != null  and type != ''"> and i.type = #{type}</if>
+            <if test="schemeId != null "> and i.scheme_id = #{schemeId}</if>
+            <if test="deptId != null "> and i.dept_id = #{deptId}</if>
         </where>
     </select>
     
     <select id="selectHyInspectionRouteById" parameterType="Long" resultMap="HyInspectionRouteResult">
         <include refid="selectHyInspectionRouteVo"/>
-        where id = #{id}
+        where i.id = #{id}
     </select>
         
     <insert id="insertHyInspectionRoute" parameterType="HyInspectionRoute" useGeneratedKeys="true" keyProperty="id">
@@ -38,8 +65,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="name != null">name,</if>
             <if test="type != null">type,</if>
             <if test="remark != null">remark,</if>
-            <if test="schemeId != null">schemeId,</if>
-            <if test="deptId != null">deptId,</if>
+            <if test="schemeId != null">scheme_id,</if>
+            <if test="deptId != null">dept_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="name != null">#{name},</if>
@@ -56,8 +83,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="name != null">name = #{name},</if>
             <if test="type != null">type = #{type},</if>
             <if test="remark != null">remark = #{remark},</if>
-            <if test="schemeId != null">schemeId = #{schemeId},</if>
-            <if test="deptId != null">deptId = #{deptId},</if>
+            <if test="schemeId != null">scheme_id = #{schemeId},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
         </trim>
         where id = #{id}
     </update>

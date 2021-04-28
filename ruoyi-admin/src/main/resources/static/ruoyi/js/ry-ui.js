@@ -1881,7 +1881,6 @@ modal_status = {
 
 //校验年份
 jQuery.validator.addMethod("isYear", function(value, element){
-	debugger;
 	var ereg = /^[12][0-9]{3}$/;
 	return this.optional(element) || (ereg.test(value));
 }, "请输入正确的年份");

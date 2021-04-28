@@ -6,39 +6,55 @@
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
         <form class="form-horizontal m" id="form-route-add">
+        	<div class="form-group">
+            	<label class="col-sm-2 control-label">选择物业：</label>
+                	<div class="col-sm-4">
+                    	<select class="province form-control m-b" id="property" data-first-title="选择物业"  th:with="type=${@dept.getDept()}" onchange="changeDept()">
+	                  		<option value="">请选择</option>
+	                  		<option th:each="dict : ${type}" th:text="${dict.deptName}" th:value="${dict.deptId}"></option>
+	                	</select>
+			    	</div>
+		    	<label class="col-sm-2 control-label">选择部门：</label>
+	               	<div class="col-sm-4">
+	                	<select class="city form-control m-b" id="dept" data-first-title="选择部门" disabled="disabled" onchange="changeDepts()">
+	                 	 <option value="">请选择</option>
+	                	</select>
+	               	</div>
+			</div> 
             <div class="form-group">    
-                <label class="col-sm-3 control-label">巡检线路名称：</label>
-                <div class="col-sm-8">
+                <label class="col-sm-2 control-label">巡检线路名称：</label>
+                <div class="col-sm-4">
                     <input name="name" class="form-control" type="text">
                 </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">巡检类别：</label>
-                <div class="col-sm-8">
-                    <select name="type" class="form-control m-b">
-                        <option value="">所有</option>
-                    </select>
-                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                <label class="col-sm-2 control-label">组织机构：</label>
+                <div class="col-sm-4">
+	                	<select class="city form-control m-b" name="deptId" id="depts" data-first-title="选择部门" disabled="disabled">
+	                 	 <option value="">请选择</option>
+	                	</select>
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">备注：</label>
-                <div class="col-sm-8">
+                <label class="col-sm-2 control-label">巡检类别：</label>
+                <div class="col-sm-4">
+                    <select name="type" class="form-control m-b">
+                        <option value="">请选择</option>
+                        <option value="1">01-设备巡检</option>
+                        <option value="2">02-秩序巡检</option>
+                        <option value="3">03-环境巡检</option>
+                        <option value="4">04-安防巡检</option>
+                    </select>
+                </div>
+                <label class="col-sm-2 control-label">备注：</label>
+                <div class="col-sm-4">
                     <input name="remark" class="form-control" type="text">
                 </div>
             </div>
-            <div class="form-group">    
+            <!-- <div class="form-group">    
                 <label class="col-sm-3 control-label">巡检计划id：</label>
                 <div class="col-sm-8">
                     <input name="schemeId" class="form-control" type="text">
                 </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">组织机构id：</label>
-                <div class="col-sm-8">
-                    <input name="deptId" class="form-control" type="text">
-                </div>
-            </div>
+            </div> -->
         </form>
     </div>
     <th:block th:include="include :: footer" />
@@ -53,6 +69,56 @@
                 $.operate.save(prefix + "/add", $('#form-route-add').serialize());
             }
         }
+        
+        var prefix1 = ctx + "system/dept"
+        //物业部门员工
+        function changeDept(){
+   			$("#dept").removeAttr("disabled");
+   			$.ajax({
+                url: prefix1 + "/list",
+                data: {parentId : $("#property").val()},
+                dataType : 'json',
+                type: 'POST',
+                success: function (result) {
+                	var optArr = [];
+                	$("#dept").empty();
+					$("#dept").append("<option value=\"\">请选择</option>");
+                    for (var i = 0; i < result.length; i++) {
+                    	$("#dept").append("<option value=" + result[i].deptId + ">" + result[i].deptName + "</option>");
+                    }
+                        
+                    // 缺一不可  
+                    $("#dept").selectpicker('refresh');
+                    $("#dept").selectpicker('render');
+
+					console.log(result);
+                }
+            });
+   		}
+        function changeDepts(){
+   			$("#depts").removeAttr("disabled");
+   			$.ajax({
+                url: prefix1 + "/list",
+                data: {parentId : $("#dept").val()},
+                dataType : 'json',
+                type: 'POST',
+                success: function (result) {
+                	console.log(result);
+                	var optArr = [];
+                	$("#depts").empty();
+					$("#depts").append("<option value=\"\">请选择</option>");
+                    for (var i = 0; i < result.length; i++) {
+                    	$("#depts").append("<option value=" + result[i].deptId + ">" + result[i].deptName + "</option>");
+                    }
+                        
+                    // 缺一不可  
+                    $("#depts").selectpicker('refresh');
+                    $("#depts").selectpicker('render');
+
+					console.log(result);
+                }
+            });
+   		}
     </script>
 </body>
 </html>

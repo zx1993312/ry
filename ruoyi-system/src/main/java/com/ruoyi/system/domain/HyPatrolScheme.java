@@ -22,12 +22,11 @@ public class HyPatrolScheme extends BaseEntity
 
     /** 单据号 */
     @Excel(name = "单据号")
-    private String documentNumber;
+    private Long documentNumber;
 
     /** 计划时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "计划时间", width = 30, dateFormat = "yyyy-MM-dd")
-    private Date plannedTime;
+    @Excel(name = "计划时间")
+    private String plannedTime;
 
     /** 计划区间 */
     @Excel(name = "计划区间")
@@ -111,21 +110,21 @@ public class HyPatrolScheme extends BaseEntity
     {
         return id;
     }
-    public void setDocumentNumber(String documentNumber) 
+    public void setDocumentNumber(Long documentNumber) 
     {
         this.documentNumber = documentNumber;
     }
 
-    public String getDocumentNumber() 
+    public Long getDocumentNumber() 
     {
         return documentNumber;
     }
-    public void setPlannedTime(Date plannedTime) 
+    public void setPlannedTime(String plannedTime) 
     {
         this.plannedTime = plannedTime;
     }
 
-    public Date getPlannedTime() 
+    public String getPlannedTime() 
     {
         return plannedTime;
     }
