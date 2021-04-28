@@ -20,7 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="patrolLatitude"    column="patrol_latitude"    />
         <result property="nodeId"    column="node_id"    />
     </resultMap>
-
+	
     <sql id="selectHyCheckeProjectVo">
         select id, type, standard, is_measured, reference_value, measured_value, explains, inspection_instructions, project_picture, detail_picture, problem_description, patrol_longitude, patrol_latitude, node_id from hy_checke_project
     </sql>

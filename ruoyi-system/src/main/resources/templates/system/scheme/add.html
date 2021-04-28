@@ -46,27 +46,10 @@
                 </div> 
                 <label class="col-sm-2 control-label">计划区间：</label>
                 <div class="col-sm-4">
-                     <select name="planRange" class="form-control m-b">
-	                     <option value="">请选择</option>
-	                     <option value="1">01-年度</option>
-	                     <option value="2">02-第一季度</option>
-	                     <option value="3">03-第二季度</option>
-	                     <option value="4">04-第四季度</option>
-	                     <option value="5">05-一月份</option>
-	                     <option value="6">06-二月份</option>
-	                     <option value="7">07-三月份</option>
-	                     <option value="8">08-四月份</option>
-	                     <option value="9">09-五月份</option>
-	                     <option value="10">10-六月份</option>
-	                     <option value="11">11-七月份</option>
-	                     <option value="12">12-八月份</option>
-	                     <option value="13">13-九月份</option>
-	                     <option value="14">14-十月份</option>
-	                     <option value="15">15-十一月份</option>
-	                     <option value="16">16-十二月份</option>
-	                     <option value="17">17-周</option>
-	                     <option value="18">18-日</option>
-                     </select>
+                	<select name="planRange" class="form-control" th:with="type=${@dict.getType('hy_patrol_scheme')}">
+						<option value="">请选择</option>
+						<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+			 	    </select>
                 </div>
             </div>
             <div class="form-group">    

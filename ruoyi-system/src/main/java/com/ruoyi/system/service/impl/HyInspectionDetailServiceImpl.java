@@ -10,7 +10,7 @@ import com.ruoyi.system.service.IHyInspectionDetailService;
 import com.ruoyi.common.core.text.Convert;
 
 /**
- * 巡检项目明细Service业务层处理
+ * 巡检线路明细Service业务层处理
  * 
  * @author Administrator
  * @date 2021-04-25
@@ -22,10 +22,10 @@ public class HyInspectionDetailServiceImpl implements IHyInspectionDetailService
     private HyInspectionDetailMapper hyInspectionDetailMapper;
 
     /**
-     * 查询巡检项目明细
+     * 查询巡检线路明细
      * 
-     * @param id 巡检项目明细ID
-     * @return 巡检项目明细
+     * @param id 巡检线路明细ID
+     * @return 巡检线路明细
      */
     @Override
     public HyInspectionDetail selectHyInspectionDetailById(Long id)
@@ -34,10 +34,10 @@ public class HyInspectionDetailServiceImpl implements IHyInspectionDetailService
     }
 
     /**
-     * 查询巡检项目明细列表
+     * 查询巡检线路明细列表
      * 
-     * @param hyInspectionDetail 巡检项目明细
-     * @return 巡检项目明细
+     * @param hyInspectionDetail 巡检线路明细
+     * @return 巡检线路明细
      */
     @Override
     public List<HyInspectionDetail> selectHyInspectionDetailList(HyInspectionDetail hyInspectionDetail)
@@ -46,9 +46,9 @@ public class HyInspectionDetailServiceImpl implements IHyInspectionDetailService
     }
 
     /**
-     * 新增巡检项目明细
+     * 新增巡检线路明细
      * 
-     * @param hyInspectionDetail 巡检项目明细
+     * @param hyInspectionDetail 巡检线路明细
      * @return 结果
      */
     @Transactional(rollbackFor = Exception.class)
@@ -59,9 +59,9 @@ public class HyInspectionDetailServiceImpl implements IHyInspectionDetailService
     }
 
     /**
-     * 修改巡检项目明细
+     * 修改巡检线路明细
      * 
-     * @param hyInspectionDetail 巡检项目明细
+     * @param hyInspectionDetail 巡检线路明细
      * @return 结果
      */
     @Transactional(rollbackFor = Exception.class)
@@ -72,7 +72,7 @@ public class HyInspectionDetailServiceImpl implements IHyInspectionDetailService
     }
 
     /**
-     * 删除巡检项目明细对象
+     * 删除巡检线路明细对象
      * 
      * @param ids 需要删除的数据ID
      * @return 结果
@@ -85,9 +85,9 @@ public class HyInspectionDetailServiceImpl implements IHyInspectionDetailService
     }
 
     /**
-     * 删除巡检项目明细信息
+     * 删除巡检线路明细信息
      * 
-     * @param id 巡检项目明细ID
+     * @param id 巡检线路明细ID
      * @return 结果
      */
     @Transactional(rollbackFor = Exception.class)

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('巡检计划列表')" />
+    <th:block th:include="include :: header('巡检执行情况表')" />
     <th:block th:include="include :: layout-latest-css" />
 	<th:block th:include="include :: ztree-css" />
 </head>
@@ -56,7 +56,7 @@
                             </li>
                             <li>
                                 <label>巡检人：</label>
-                                <input type="text" id="checkPeople" name="checkPeople"  onclick="selectUser()"/>
+                                <input type="text" name="checkPeople"/>
                             </li>
                             <li>
                                 <label>计划人：</label>
@@ -72,7 +72,7 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:scheme:add">
+               <!--  <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:scheme:add">
                     <i class="fa fa-plus"></i> 添加
                 </a>
                 <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:scheme:edit">
@@ -80,7 +80,7 @@
                 </a>
                 <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:scheme:remove">
                     <i class="fa fa-remove"></i> 删除
-                </a>
+                </a> -->
                 <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:scheme:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
@@ -97,7 +97,7 @@
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('system:scheme:edit')}]];
         var removeFlag = [[${@permission.hasPermi('system:scheme:remove')}]];
-        var prefix = ctx + "system/scheme";
+        var prefix = ctx + "system/performance";
 		
         $(function() {
         	
@@ -139,38 +139,81 @@
                     title: '单据号'
                 },
                 {
-                    field: 'plannedTime',
-                    title: '计划时间'
+                    field: 'inspectionTime',
+                    title: '巡检时间'
                 },
                 {
-                    field: 'deptId',
-                    title: '组织机构'
+                    field: 'inspectionStatus',
+                    title: '巡检状态'
                 },
                 {
+                    field: 'checkPeople',
+                    title: '巡检人'
+                },
+                {
+                    field: 'actualInspectionTime',
+                    title: '实际巡检时间'
+                },
+                {
+                    field: 'id',
+                    title: '序号'
+                },
+                {
+                    field: 'hyCheckeNode.name',
+                    title: '节点名称'
+                },
+                {
+                    field: 'hyCheckeNode.address',
+                    title: '节点地址'
+                },
+                {
+                    field: 'hyCheckeProject.explains',
+                    title: '节点巡检项目'
+                },
+                {
+                    field: 'hyInspectionDetail.inspectionTime',
+                    title: '巡检时间点'
+                },
+                {
+                    field: 'hyCheckeProject.type',
+                    title: '类型'
+                },
+                {
+                    field: '',
+                    title: '设备'
+                },
+                {
+                    field: 'hyCheckeProject.standard',
+                    title: '标准'
+                },
+                {
+                    field: 'isCheck',
+                    title: '是否审核'
+                },
+                /* {
                     field: 'planRange',
                     title: '计划区间',
                     formatter: function(value, item, index) {
                     	switch(value){
 	                    	case "" : value =  "请选择";break;
-	                    	case "年度" : value =  "年度";break;
-	                    	case "第一季度" : value =  "第一季度";break;
-	                    	case "第二季度" : value =  "第二季度";break;
-	                    	case "第三季度" : value =  "第三季度";break;
-	                    	case "第四季度" : value =  "第四季度";break;
-	                    	case "一月份" : value =  "一月份";break;
-	                    	case "二月份" : value =  "二月份";break;
-	                    	case "三月份" : value =  "三月份";break;
-	                    	case "四月份" : value =  "四月份";break;
-	                    	case "五月份" : value =  "五月份";break;
-	                    	case "六月份" : value =  "六月份";break;
-	                    	case "七月份" : value =  "七月份";break;
-	                    	case "八月份" : value =  "八月份";break;
-	                    	case "九月份" : value =  "九月份";break;
-	                    	case "十月份" : value =  "十月份";break;
-	                    	case "十一月份" : value =  "十一月份";break;
-	                    	case "十二月份" : value =  "十二月份";break;
-	                    	case "周" : value =  "周";break;
-	                    	case "日" : value =  "日";break;
+	                    	case "1" : value =  "年度";break;
+	                    	case "2" : value =  "第一季度";break;
+	                    	case "3" : value =  "第二季度";break;
+	                    	case "4" : value =  "第四季度";break;
+	                    	case "5" : value =  "一月份";break;
+	                    	case "6" : value =  "二月份";break;
+	                    	case "7" : value =  "三月份";break;
+	                    	case "8" : value =  "四月份";break;
+	                    	case "9" : value =  "五月份";break;
+	                    	case "10" : value =  "六月份";break;
+	                    	case "11" : value =  "七月份";break;
+	                    	case "12" : value =  "八月份";break;
+	                    	case "13" : value =  "九月份";break;
+	                    	case "14" : value =  "十月份";break;
+	                    	case "15" : value =  "十一月份";break;
+	                    	case "16" : value =  "十二月份";break;
+	                    	case "17" : value =  "周";break;
+	                    	case "18" : value =  "日";break;
 	                	}
 		            	return value;
 		            }
@@ -183,13 +226,10 @@
                     field: 'planner',
                     title: '计划人'
                 },
+                
                 {
-                    field: 'checkPeople',
-                    title: '巡检人'
-                },
-                {
-                    field: 'inspectionTime',
-                    title: '巡检时间'
+                    field: 'plannedTime',
+                    title: '计划时间'
                 },
                 {
                     field: 'remark',
@@ -212,25 +252,15 @@
                     title: '修订人'
                 },
                 {
-                    field: 'isCheck',
-                    title: '是否审核'
-                },
-                {
                     field: 'auditTime',
                     title: '审核时间'
                 },
                 {
                     field: 'auditor',
                     title: '审核人'
-                },
-                /* {
-                    field: 'actualInspectionTime',
-                    title: '实际巡检时间'
-                },
-                {
-                    field: 'inspectionStatus',
-                    title: '巡检状态'
-                },
+                }, */
+                /* 
+                
                 {
                     field: 'changeStatus',
                     title: '变更巡检状态原因'
@@ -239,7 +269,7 @@
                     field: 'inspectionInstructions',
                     title: '巡检说明'
                 }, */
-                {
+                /* {
                     title: '操作',
                     align: 'center',
                     formatter: function(value, row, index) {
@@ -248,15 +278,10 @@
                         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
                         return actions.join('');
                     }
-                }]
+                } */]
             };
             $.table.init(options);
         };
-        
-        function selectUser(){
-			  $.modal.open("员工管理页面","/system/selectUser");	
-	        }
-        
         //组织架构
         function queryDeptTree()
 		{

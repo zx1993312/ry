@@ -26,14 +26,14 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
- * 巡检项目明细Controller
+ * 巡检线路明细Controller
  * 
  * @author Administrator
  * @date 2021-04-25
  */
 @Controller
 @RequestMapping("/system/detail")
-@Api(tags = "巡检项目明细Controller")
+@Api(tags = "巡检线路明细Controller")
 public class HyInspectionDetailController extends BaseController
 {
     private String prefix = "system/detail";
@@ -49,11 +49,11 @@ public class HyInspectionDetailController extends BaseController
     }
 
     /**
-     * 查询巡检项目明细列表
+     * 查询巡检线路明细列表
      */
-    @ApiOperation("巡检项目明细")
+    @ApiOperation("巡检线路明细")
     @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyInspectionDetail", value = "项目实体类hyInspectionDetail", required = true),
+		@ApiImplicitParam(name = "hyInspectionDetail", value = "线路实体类hyInspectionDetail", required = true),
 	})
     @RequiresPermissions("system:detail:list")
     @PostMapping("/list")
@@ -66,14 +66,14 @@ public class HyInspectionDetailController extends BaseController
     }
 
     /**
-     * 导出巡检项目明细列表
+     * 导出巡检线路明细列表
      */
-    @ApiOperation("巡检项目明细")
+    @ApiOperation("巡检线路明细")
     @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyInspectionDetail", value = "项目实体类hyInspectionDetail", required = true),
+		@ApiImplicitParam(name = "hyInspectionDetail", value = "线路实体类hyInspectionDetail", required = true),
 	})
     @RequiresPermissions("system:detail:export")
-    @Log(title = "巡检项目明细", businessType = BusinessType.EXPORT)
+    @Log(title = "巡检线路明细", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ResponseBody
     public AjaxResult export(HyInspectionDetail hyInspectionDetail)
@@ -84,7 +84,7 @@ public class HyInspectionDetailController extends BaseController
     }
 
     /**
-     * 新增巡检项目明细
+     * 新增巡检线路明细
      */
     @GetMapping("/add")
     public String add()
@@ -93,14 +93,14 @@ public class HyInspectionDetailController extends BaseController
     }
 
     /**
-     * 新增保存巡检项目明细
+     * 新增保存巡检线路明细
      */
-    @ApiOperation("巡检项目明细")
+    @ApiOperation("巡检线路明细")
     @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyInspectionDetail", value = "项目实体类hyInspectionDetail", required = true),
+		@ApiImplicitParam(name = "hyInspectionDetail", value = "线路实体类hyInspectionDetail", required = true),
 	})
     @RequiresPermissions("system:detail:add")
-    @Log(title = "巡检项目明细", businessType = BusinessType.INSERT)
+    @Log(title = "巡检线路明细", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(HyInspectionDetail hyInspectionDetail)
@@ -109,9 +109,9 @@ public class HyInspectionDetailController extends BaseController
     }
 
     /**
-     * 修改巡检项目明细
+     * 修改巡检线路明细
      */
-    @ApiOperation("巡检项目明细")
+    @ApiOperation("巡检线路明细")
     @ApiImplicitParams({ 
 		@ApiImplicitParam(name = "id", value = "主键id", required = true),
 	})
@@ -124,14 +124,14 @@ public class HyInspectionDetailController extends BaseController
     }
 
     /**
-     * 修改保存巡检项目明细
+     * 修改保存巡检线路明细
      */
-    @ApiOperation("巡检项目明细")
+    @ApiOperation("巡检线路明细")
     @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyInspectionDetail", value = "项目实体类hyInspectionDetail", required = true),
+		@ApiImplicitParam(name = "hyInspectionDetail", value = "线路实体类hyInspectionDetail", required = true),
 	})
     @RequiresPermissions("system:detail:edit")
-    @Log(title = "巡检项目明细", businessType = BusinessType.UPDATE)
+    @Log(title = "巡检线路明细", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(HyInspectionDetail hyInspectionDetail)
@@ -140,14 +140,14 @@ public class HyInspectionDetailController extends BaseController
     }
 
     /**
-     * 删除巡检项目明细
+     * 删除巡检线路明细
      */
-    @ApiOperation("巡检项目明细")
+    @ApiOperation("巡检线路明细")
     @ApiImplicitParams({ 
 		@ApiImplicitParam(name = "ids", value = "ids", required = true),
 	})
     @RequiresPermissions("system:detail:remove")
-    @Log(title = "巡检项目明细", businessType = BusinessType.DELETE)
+    @Log(title = "巡检线路明细", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")
     @ResponseBody
     public AjaxResult remove(String ids)

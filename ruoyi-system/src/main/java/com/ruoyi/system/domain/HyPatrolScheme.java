@@ -100,6 +100,18 @@ public class HyPatrolScheme extends BaseEntity
     /** 组织机构id */
     @Excel(name = "组织机构id")
     private Long deptId;
+    
+    /** 巡检节点表 */
+    @Excel(name = "巡检节点表")
+    private HyCheckeNode hyCheckeNode;
+    
+    /** 巡检项目表 */
+    @Excel(name = "巡检项目表")
+    private HyCheckeProject hyCheckeProject;
+    
+    /** 巡检线路明细表 */
+    @Excel(name = "巡检线路明细表")
+    private HyInspectionDetail hyInspectionDetail;
 
     public void setId(Long id) 
     {
@@ -282,30 +294,43 @@ public class HyPatrolScheme extends BaseEntity
         return deptId;
     }
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("documentNumber", getDocumentNumber())
-            .append("plannedTime", getPlannedTime())
-            .append("planRange", getPlanRange())
-            .append("planAnnual", getPlanAnnual())
-            .append("planner", getPlanner())
-            .append("checkPeople", getCheckPeople())
-            .append("inspectionTime", getInspectionTime())
-            .append("remark", getRemark())
-            .append("makeTime", getMakeTime())
-            .append("documentMaker", getDocumentMaker())
-            .append("revisionTime", getRevisionTime())
-            .append("reviser", getReviser())
-            .append("isCheck", getIsCheck())
-            .append("auditTime", getAuditTime())
-            .append("auditor", getAuditor())
-            .append("actualInspectionTime", getActualInspectionTime())
-            .append("inspectionStatus", getInspectionStatus())
-            .append("changeStatus", getChangeStatus())
-            .append("inspectionInstructions", getInspectionInstructions())
-            .append("deptId", getDeptId())
-            .toString();
-    }
+    public HyCheckeNode getHyCheckeNode() {
+		return hyCheckeNode;
+	}
+
+	public void setHyCheckeNode(HyCheckeNode hyCheckeNode) {
+		this.hyCheckeNode = hyCheckeNode;
+	}
+
+	public HyCheckeProject getHyCheckeProject() {
+		return hyCheckeProject;
+	}
+
+	public void setHyCheckeProject(HyCheckeProject hyCheckeProject) {
+		this.hyCheckeProject = hyCheckeProject;
+	}
+
+
+	public HyInspectionDetail getHyInspectionDetail() {
+		return hyInspectionDetail;
+	}
+
+	public void setHyInspectionDetail(HyInspectionDetail hyInspectionDetail) {
+		this.hyInspectionDetail = hyInspectionDetail;
+	}
+
+	@Override
+	public String toString() {
+		return "HyPatrolScheme [id=" + id + ", documentNumber=" + documentNumber + ", plannedTime=" + plannedTime
+				+ ", planRange=" + planRange + ", planAnnual=" + planAnnual + ", planner=" + planner + ", checkPeople="
+				+ checkPeople + ", inspectionTime=" + inspectionTime + ", makeTime=" + makeTime + ", documentMaker="
+				+ documentMaker + ", revisionTime=" + revisionTime + ", reviser=" + reviser + ", isCheck=" + isCheck
+				+ ", auditTime=" + auditTime + ", auditor=" + auditor + ", actualInspectionTime=" + actualInspectionTime
+				+ ", inspectionStatus=" + inspectionStatus + ", changeStatus=" + changeStatus
+				+ ", inspectionInstructions=" + inspectionInstructions + ", deptId=" + deptId + ", hyCheckeNode="
+				+ hyCheckeNode + ", hyCheckeProject=" + hyCheckeProject + ", hyInspectionDetail=" + hyInspectionDetail
+				+ "]";
+	}
+
+
 }

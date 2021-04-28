@@ -77,6 +77,36 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/node"
         $("#form-node-add").validate({
+        	rules : {
+        		name : {
+					required : true,
+					maxlength:20,
+				},
+				address : {
+					required : true,
+					maxlength:255,
+				},
+				scanCode : {
+					required : true,
+					maxlength:255,
+				},
+				longitude : {
+					required : true,
+					maxlength:255,
+				},
+				latitude : {
+					required : true,
+					maxlength:255,
+				},
+				remark : {
+					required : true,
+					maxlength:255,
+				},
+				deptId : {
+					required : true,
+					maxlength:11,
+				},
+			},
             focusCleanup: true
         });
 

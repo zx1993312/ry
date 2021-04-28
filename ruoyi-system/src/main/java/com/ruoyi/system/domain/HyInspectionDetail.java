@@ -8,7 +8,7 @@ import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
- * 巡检项目明细对象 hy_inspection_detail
+ * 巡检线路明细对象 hy_inspection_detail
  * 
  * @author Administrator
  * @date 2021-04-25
@@ -17,7 +17,7 @@ public class HyInspectionDetail extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
-    /** 巡检项目明细id */
+    /** 巡检线路明细id */
     private Long id;
 
     /** 序号 */
