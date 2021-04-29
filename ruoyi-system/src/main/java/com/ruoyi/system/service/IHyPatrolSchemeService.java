@@ -26,6 +26,14 @@ public interface IHyPatrolSchemeService
      * @return 巡检计划集合
      */
     public List<HyPatrolScheme> selectHyPatrolSchemeList(HyPatrolScheme hyPatrolScheme);
+    
+    /**
+     * 查询巡检计划明细列表
+     * 
+     * @param hyPatrolScheme 巡检计划
+     * @return 巡检计划集合
+     */
+    public List<HyPatrolScheme> selectHyPatrolSchemeDetailList(HyPatrolScheme hyPatrolScheme);
 
     /**
      * 新增巡检计划

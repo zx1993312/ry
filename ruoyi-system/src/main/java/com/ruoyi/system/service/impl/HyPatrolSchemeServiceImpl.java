@@ -44,6 +44,18 @@ public class HyPatrolSchemeServiceImpl implements IHyPatrolSchemeService
     {
         return hyPatrolSchemeMapper.selectHyPatrolSchemeList(hyPatrolScheme);
     }
+    
+    /**
+     * 查询巡检计划明细列表
+     * 
+     * @param hyPatrolScheme 巡检计划
+     * @return 巡检计划
+     */
+    @Override
+    public List<HyPatrolScheme> selectHyPatrolSchemeDetailList(HyPatrolScheme hyPatrolScheme)
+    {
+    	return hyPatrolSchemeMapper.selectHyPatrolSchemeDetailList(hyPatrolScheme);
+    }
 
     /**
      * 新增巡检计划

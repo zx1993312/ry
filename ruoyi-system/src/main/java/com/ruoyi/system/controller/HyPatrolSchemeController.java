@@ -69,6 +69,23 @@ public class HyPatrolSchemeController extends BaseController
         List<HyPatrolScheme> list = hyPatrolSchemeService.selectHyPatrolSchemeList(hyPatrolScheme);
         return getDataTable(list);
     }
+    
+    /**
+     * 查询巡检计划明细列表
+     */
+    @ApiOperation("巡检计划")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyPatrolScheme", value = "项目实体类hyPatrolScheme", required = true),
+    })
+    @RequiresPermissions("system:scheme:list")
+    @PostMapping("/lists")
+    @ResponseBody
+    public TableDataInfo lists(HyPatrolScheme hyPatrolScheme)
+    {
+    	startPage();
+    	List<HyPatrolScheme> list = hyPatrolSchemeService.selectHyPatrolSchemeDetailList(hyPatrolScheme);
+    	return getDataTable(list);
+    }
 
     /**
      * 导出巡检计划列表

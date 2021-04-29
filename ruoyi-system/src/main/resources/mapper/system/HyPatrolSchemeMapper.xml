@@ -57,6 +57,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
     
+    <select id="selectHyPatrolSchemeDetailList" parameterType="HyPatrolScheme" resultMap="HyPatrolSchemeResult">
+        <include refid="selectHyPatrolSchemeVo"/>
+    </select>
+    
     <select id="selectHyPatrolSchemeById" parameterType="Long" resultMap="HyPatrolSchemeResult">
         <include refid="selectHyPatrolSchemeVo"/>
         where id = #{id}

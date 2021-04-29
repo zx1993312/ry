@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('巡检线路列表')" />
+    <th:block th:include="include :: header('节点巡检任务列表')" />
     <th:block th:include="include :: layout-latest-css" />
 	<th:block th:include="include :: ztree-css" />
 </head>
@@ -17,53 +17,58 @@
     <th:block th:include="include :: layout-latest-js" />
 	<th:block th:include="include :: ztree-js" />
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('system:route:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('system:route:remove')}]];
-        var prefix = ctx + "system/route";
+        var editFlag = [[${@permission.hasPermi('system:task:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:task:remove')}]];
+        var prefix = ctx + "system/task";
 
         $(function() {
             var options = {
+            		showSearch: false,
+    		        showRefresh: false,
+    		        showToggle: false,
+    		        showColumns: false,
                 url: prefix + "/list",
                 createUrl: prefix + "/add",
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "巡检线路",
+                modalName: "节点巡检任务",
                 columns: [{
                     checkbox: true
                 },
                 {
                     field: 'id',
-                    title: '巡检线路id',
+                    title: '节点巡检任务id',
                     visible: false
                 },
                 {
-                    field: 'name',
-                    title: '巡检线路名称'
+                    field: 'taskName',
+                    title: '名称'
                 },
                 {
-                    field: 'sysDept.deptName',
-                    title: '组织机构'
-                },
-                {
-                    field: 'type',
-                    title: '巡检类别',
+                    field: 'inspectionWay',
+                    title: '巡检方式',
                     formatter: function(value, item, index) {
                     	switch(value){
 	                    	case "" : value =  "请选择";break;
 	                    	case "1" : value =  "设备巡检";break;
-	                    	case "2" : value =  "秩序巡检";break;
-	                    	case "3" : value =  "环境巡检";break;
-	                    	case "4" : value =  "安防巡检";break;
+	                    	case "2" : value =  "区域巡检";break;
 	                	}
 		            	return value;
 		            }
                 },
                 {
+                    field: 'hyCheckeNode.name',
+                    title: '巡检节点名称'
+                },
+                {
+                    field: 'hyCheckeNode.sysDept.deptName',
+                    title: '组织机构'
+                },
+                {
                     field: 'remark',
                     title: '备注'
                 }/* ,
-                
                 {
                     title: '操作',
                     align: 'center',
@@ -78,11 +83,11 @@
             $.table.init(options);
         });
         function submitHandler() {
-        	var name = $.table.selectColumns('name');
-        	if(name == ''){
+        	var id = $.table.selectColumns('id');
+        	if(id == ''){
         		$.modal.alertWarning("请至少选择一条记录");
         	}else{
-        		$("#table1",window.parent.document).val(name);
+        		$("#taskId",window.parent.document).val(id);
         	}
         	$.modal.close();
         }
