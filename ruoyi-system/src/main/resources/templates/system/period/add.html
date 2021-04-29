@@ -43,6 +43,22 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/period"
         $("#form-period-add").validate({
+        	rules : {
+        		name : {
+					required : true,
+					maxlength:20,
+				},
+				type : {
+					maxlength:20,
+				},
+				intervalValue : {
+					required : true,
+					maxlength:255,
+				},
+				isStart : {
+					maxlength:2,
+				},
+			},
             focusCleanup: true
         });
 

@@ -78,6 +78,38 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/scheme";
         $("#form-scheme-edit").validate({
+        	rules : {
+        		documentNumber : {
+					required : true,
+					maxlength:255,
+				},
+				plannedTime : {
+					required : true,
+					maxlength:255,
+				},
+				deptId : {
+					required : true,
+					maxlength:11,
+				},
+				planRange : {
+					required : true,
+					maxlength:20,
+				},
+				planAnnual : {
+					required : true,
+					maxlength:4,
+				},
+				checkPeople : {
+					required : true,
+					maxlength:20,
+				},
+				planner : {
+					maxlength:20,
+				},
+				remark : {
+					maxlength:255,
+				},
+			},
             focusCleanup: true
         });
 

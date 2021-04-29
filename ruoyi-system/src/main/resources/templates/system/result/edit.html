@@ -43,6 +43,23 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/result";
         $("#form-result-edit").validate({
+        	rules : {
+        		name : {
+					required : true,
+					maxlength:20,
+				},
+				type : {
+					required : true,
+					maxlength:20,
+				},
+				normal : {
+					maxlength:2,
+				},
+				explains : {
+					required : true,
+					maxlength:255,
+				},
+			},
             focusCleanup: true
         });
 

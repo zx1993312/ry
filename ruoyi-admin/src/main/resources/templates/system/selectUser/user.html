@@ -68,19 +68,19 @@
 			            field: 'phonenumber',
 			            title: '手机'
 			        },
-			        {
+			        /* {
 			        	visible: editFlag == 'hidden' ? false : true,
 			        	title: '用户状态',
 			        	align: 'center',
 			        	formatter: function (value, row, index) {
 			        		return statusTools(row);
 			        	}
-			        },
+			        }, */
 			        {
 			            field: 'createTime',
 			            title: '创建时间',
 			            sortable: true
-			        },
+			        }/* ,
 			        {
 			            title: '操作',
 			            align: 'center',
@@ -94,19 +94,19 @@
 			                actions.push('<a tabindex="0" class="btn btn-info btn-xs" role="button" data-container="body" data-placement="left" data-toggle="popover" data-html="true" data-trigger="hover" data-content="' + more.join('') + '"><i class="fa fa-chevron-circle-right"></i>更多操作</a>');
 			                return actions.join('');
 			            }
-			        }]
+			        } */]
 			    };
 			    $.table.init(options);
 		});
 
 		/* 用户状态显示 */
-		function statusTools(row) {
+		/* function statusTools(row) {
 		    if (row.status == 1) {
     			return '<i class=\"fa fa-toggle-off text-info fa-2x\" onclick="enable(\'' + row.userId + '\')"></i> ';
     		} else {
     			return '<i class=\"fa fa-toggle-on text-info fa-2x\" onclick="disable(\'' + row.userId + '\')"></i> ';
     		}
-		}
+		} */
 		
 		function submitHandler() {
         	var userName = $.table.selectColumns('userName');

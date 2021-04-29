@@ -62,6 +62,27 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/route";
         $("#form-route-edit").validate({
+        	rules : {
+        		name : {
+					required : true,
+					maxlength:20,
+				},
+				type : {
+					required : true,
+					maxlength:20,
+				},
+				remark : {
+					maxlength:255,
+				},
+				schemeId : {
+					required : true,
+					maxlength:11,
+				},
+				deptId : {
+					required : true,
+					maxlength:11,
+				},
+			},
             focusCleanup: true
         });
 

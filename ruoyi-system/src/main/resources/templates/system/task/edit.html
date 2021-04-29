@@ -49,6 +49,22 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/task";
         $("#form-task-edit").validate({
+        	rules : {
+        		taskName : {
+					required : true,
+					maxlength:20,
+				},
+				inspectionWay : {
+					maxlength:20,
+				},
+				remark : {
+					maxlength:255,
+				},
+				nodeId : {
+					required : true,
+					maxlength:11,
+				},
+			},
             focusCleanup: true
         });
 

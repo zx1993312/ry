@@ -41,7 +41,7 @@
                             </li>
                             <li>
                                 <label>巡检线路：</label>
-                                <input type="text" name="planner"/>
+                               <input type="text" id="planner" name="planner" onclick="selectRouter()"/>
                             </li>
                             <li>
                                 <label>巡检状态：</label>
@@ -253,7 +253,11 @@
         
         function selectUser(){
 			  $.modal.open("员工管理页面","/system/selectUser");	
-	        }
+	        };
+        
+        function selectRouter(){
+			  $.modal.open("巡检路线页面","/system/selectRouter");	
+	        };
         
         //组织架构
         function queryDeptTree()
