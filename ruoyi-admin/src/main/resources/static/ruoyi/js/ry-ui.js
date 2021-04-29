@@ -883,6 +883,7 @@ var table = {
             },
             // 弹出层指定宽度
             open: function (title, url, width, height, callback) {
+            	debugger;
             	// 如果是移动端，就使用自适应大小弹窗
             	if ($.common.isMobile()) {
             	    width = 'auto';
@@ -1183,6 +1184,11 @@ var table = {
             addUrl: function(id) {
             	var url = $.common.isEmpty(id) ? table.options.createUrl.replace("{id}", "") : table.options.createUrl.replace("{id}", id);
                 return url;
+            },
+            // 添加信息
+            addOtherWidth: function(id) {
+            	table.set();
+            	$.modal.open("添加" + table.options.modalName, $.operate.addUrl(id),"1300","650");
             },
             // 修改信息
             edit: function(id) {
