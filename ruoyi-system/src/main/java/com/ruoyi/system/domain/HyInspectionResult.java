@@ -20,7 +20,7 @@ public class HyInspectionResult extends BaseEntity
 
     /** 巡检结果名称 */
     @Excel(name = "巡检结果名称")
-    private String name;
+    private String resultName;
 
     /** 巡检类别 */
     @Excel(name = "巡检类别")
@@ -33,6 +33,9 @@ public class HyInspectionResult extends BaseEntity
     /** 说明 */
     @Excel(name = "说明")
     private String explains;
+    
+    /** 巡检计划id */
+    private Long schemeId;
 
     public void setId(Long id) 
     {
@@ -43,16 +46,15 @@ public class HyInspectionResult extends BaseEntity
     {
         return id;
     }
-    public void setName(String name) 
-    {
-        this.name = name;
-    }
+    public String getResultName() {
+		return resultName;
+	}
 
-    public String getName() 
-    {
-        return name;
-    }
-    public void setType(String type) 
+	public void setResultName(String resultName) {
+		this.resultName = resultName;
+	}
+
+	public void setType(String type) 
     {
         this.type = type;
     }
@@ -80,14 +82,23 @@ public class HyInspectionResult extends BaseEntity
         return explains;
     }
 
-    @Override
+    public Long getSchemeId() {
+		return schemeId;
+	}
+
+	public void setSchemeId(Long schemeId) {
+		this.schemeId = schemeId;
+	}
+
+	@Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
-            .append("name", getName())
+            .append("resultName", getResultName())
             .append("type", getType())
             .append("normal", getNormal())
             .append("explains", getExplains())
+            .append("schemeId", getSchemeId())
             .toString();
     }
 }

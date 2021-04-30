@@ -217,7 +217,7 @@
                     title: '序号'
                 },
                 {
-                    field: '',
+                    field: 'hyCheckeNode.name',
                     title: '巡检节点'
                 },                
                 {
@@ -338,11 +338,11 @@
                                         title: '序号'
                                     },
                                     {
-                                        field: 'nodeId',
+                                        field: 'hyCheckeNode.name',
                                         title: '节点'
                                     },
                                     {
-                                        field: 'taskId',
+                                        field: 'hyNodeTask.taskName',
                                         title: '节点巡检任务'
                                     },
                                     {
@@ -350,11 +350,11 @@
                                         title: '类型'
                                     },
                                     {
-                                        field: '',
+                                        field: 'hyPatrolScheme.inspectionTime',
                                         title: '巡检时间'
                                     },
                                     {
-                                        field: '',
+                                        field: 'hyCheckeNode.address',
                                         title: '地点'
                                     },
                                     {
@@ -423,7 +423,7 @@
                     		        onClickCell:function(field, value, row, $element){
                     				    $.modal.open("节点巡检任务", "/system/selectTask/");
                     		        },
-                                    columns: [{
+                    		        columns: [{
                                         checkbox: true
                                     },
                                     {
@@ -431,11 +431,11 @@
                                         title: '序号'
                                     },
                                     {
-                                        field: 'nodeId',
+                                        field: 'hyCheckeNode.name',
                                         title: '节点'
                                     },
                                     {
-                                        field: 'taskId',
+                                        field: 'hyNodeTask.taskName',
                                         title: '节点巡检任务'
                                     },
                                     {
@@ -443,11 +443,11 @@
                                         title: '类型'
                                     },
                                     {
-                                        field: '',
+                                        field: 'hyPatrolScheme.inspectionTime',
                                         title: '巡检时间'
                                     },
                                     {
-                                        field: '',
+                                        field: 'hyCheckeNode.address',
                                         title: '地点'
                                     },
                                     {

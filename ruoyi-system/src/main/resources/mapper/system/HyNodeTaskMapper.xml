@@ -51,6 +51,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         t.node_id,
         n.name,
         n.address,
+        n.scan_code,
         d.dept_name
         from 
         hy_node_task t

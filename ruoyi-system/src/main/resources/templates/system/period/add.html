@@ -9,7 +9,7 @@
             <div class="form-group">    
                 <label class="col-sm-2 control-label">巡检周期名称：</label>
                 <div class="col-sm-4">
-                    <input name="name" class="form-control" type="text">
+                    <input name="periodName" class="form-control" type="text">
                 </div>
                 <label class="col-sm-2 control-label">巡检周期类型：</label>
                 <div class="col-sm-4">
@@ -44,7 +44,7 @@
         var prefix = ctx + "system/period"
         $("#form-period-add").validate({
         	rules : {
-        		name : {
+        		periodName : {
 					required : true,
 					maxlength:20,
 				},

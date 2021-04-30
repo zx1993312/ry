@@ -69,6 +69,18 @@ public class HyCheckeProject extends BaseEntity
     /** 巡检节点id */
     @Excel(name = "巡检节点id")
     private Long nodeId;
+    
+    /** 巡检节点表 */
+    @Excel(name = "巡检节点表")
+    private HyCheckeNode hyCheckeNode;
+    
+    /** 节点巡检任务表 */
+    @Excel(name = "节点巡检任务表")
+    private HyNodeTask hyNodeTask;
+    
+    /** 巡检计划表 */
+    @Excel(name = "巡检计划表")
+    private HyPatrolScheme hyPatrolScheme;
 
     public void setId(Long id) 
     {
@@ -197,7 +209,33 @@ public class HyCheckeProject extends BaseEntity
         return nodeId;
     }
 
-    @Override
+    public HyCheckeNode getHyCheckeNode() {
+		return hyCheckeNode;
+	}
+
+	public void setHyCheckeNode(HyCheckeNode hyCheckeNode) {
+		this.hyCheckeNode = hyCheckeNode;
+	}
+
+	public HyNodeTask getHyNodeTask() {
+		return hyNodeTask;
+	}
+
+	public void setHyNodeTask(HyNodeTask hyNodeTask) {
+		this.hyNodeTask = hyNodeTask;
+	}
+
+	
+
+	public HyPatrolScheme getHyPatrolScheme() {
+		return hyPatrolScheme;
+	}
+
+	public void setHyPatrolScheme(HyPatrolScheme hyPatrolScheme) {
+		this.hyPatrolScheme = hyPatrolScheme;
+	}
+
+	@Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
@@ -214,6 +252,9 @@ public class HyCheckeProject extends BaseEntity
             .append("patrolLongitude", getPatrolLongitude())
             .append("patrolLatitude", getPatrolLatitude())
             .append("nodeId", getNodeId())
+            .append("hyCheckeNode", getHyCheckeNode())
+            .append("hyNodeTask", getHyNodeTask())
+            .append("hyPatrolScheme", getHyPatrolScheme())
             .toString();
     }
 }

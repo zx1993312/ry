@@ -101,18 +101,30 @@ public class HyPatrolScheme extends BaseEntity
     @Excel(name = "组织机构id")
     private Long deptId;
     
-    /** 巡检节点表 */
-    @Excel(name = "巡检节点表")
+    /** 节点巡检表 */
+    @Excel(name = "节点巡检表")
     private HyCheckeNode hyCheckeNode;
     
     /** 巡检项目表 */
     @Excel(name = "巡检项目表")
     private HyCheckeProject hyCheckeProject;
     
+    /** 巡检线路表 */
+    @Excel(name = "巡检线路表")
+    private HyInspectionRoute hyInspectionRoute;
+    
     /** 巡检线路明细表 */
     @Excel(name = "巡检线路明细表")
     private HyInspectionDetail hyInspectionDetail;
-
+    
+    /** 巡检周期表 */
+    @Excel(name = "巡检周期表")
+    private HyPollingPeriod hyPollingPeriod;
+    
+    /** 巡检结果表 */
+    @Excel(name = "巡检结果表")
+    private HyInspectionResult hyInspectionResult;
+    
     public void setId(Long id) 
     {
         this.id = id;
@@ -294,7 +306,24 @@ public class HyPatrolScheme extends BaseEntity
         return deptId;
     }
 
-    public HyCheckeNode getHyCheckeNode() {
+
+	public HyInspectionRoute getHyInspectionRoute() {
+		return hyInspectionRoute;
+	}
+
+	public void setHyInspectionRoute(HyInspectionRoute hyInspectionRoute) {
+		this.hyInspectionRoute = hyInspectionRoute;
+	}
+
+	public HyPollingPeriod getHyPollingPeriod() {
+		return hyPollingPeriod;
+	}
+
+	public void setHyPollingPeriod(HyPollingPeriod hyPollingPeriod) {
+		this.hyPollingPeriod = hyPollingPeriod;
+	}
+
+	public HyCheckeNode getHyCheckeNode() {
 		return hyCheckeNode;
 	}
 
@@ -310,13 +339,20 @@ public class HyPatrolScheme extends BaseEntity
 		this.hyCheckeProject = hyCheckeProject;
 	}
 
-
 	public HyInspectionDetail getHyInspectionDetail() {
 		return hyInspectionDetail;
 	}
 
 	public void setHyInspectionDetail(HyInspectionDetail hyInspectionDetail) {
 		this.hyInspectionDetail = hyInspectionDetail;
+	}
+
+	public HyInspectionResult getHyInspectionResult() {
+		return hyInspectionResult;
+	}
+
+	public void setHyInspectionResult(HyInspectionResult hyInspectionResult) {
+		this.hyInspectionResult = hyInspectionResult;
 	}
 
 	@Override
@@ -328,9 +364,11 @@ public class HyPatrolScheme extends BaseEntity
 				+ ", auditTime=" + auditTime + ", auditor=" + auditor + ", actualInspectionTime=" + actualInspectionTime
 				+ ", inspectionStatus=" + inspectionStatus + ", changeStatus=" + changeStatus
 				+ ", inspectionInstructions=" + inspectionInstructions + ", deptId=" + deptId + ", hyCheckeNode="
-				+ hyCheckeNode + ", hyCheckeProject=" + hyCheckeProject + ", hyInspectionDetail=" + hyInspectionDetail
-				+ "]";
+				+ hyCheckeNode + ", hyCheckeProject=" + hyCheckeProject + ", hyInspectionRoute=" + hyInspectionRoute
+				+ ", hyInspectionDetail=" + hyInspectionDetail + ", hyPollingPeriod=" + hyPollingPeriod
+				+ ", hyInspectionResult=" + hyInspectionResult + "]";
 	}
+
 
 
 }

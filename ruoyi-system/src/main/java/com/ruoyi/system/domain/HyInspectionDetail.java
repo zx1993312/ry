@@ -36,6 +36,14 @@ public class HyInspectionDetail extends BaseEntity
     /** 节点巡检任务id */
     @Excel(name = "节点巡检任务id")
     private Long taskId;
+    
+    /** 节点巡检任务表 */
+    @Excel(name = "节点巡检任务表")
+    private HyNodeTask hyNodeTask;
+    
+    /** 巡检节点表 */
+    @Excel(name = "巡检节点表")
+    private HyCheckeNode hyCheckeNode;
 
     public void setId(Long id) 
     {
@@ -83,7 +91,23 @@ public class HyInspectionDetail extends BaseEntity
         return taskId;
     }
 
-    @Override
+    public HyNodeTask getHyNodeTask() {
+		return hyNodeTask;
+	}
+
+	public void setHyNodeTask(HyNodeTask hyNodeTask) {
+		this.hyNodeTask = hyNodeTask;
+	}
+
+	public HyCheckeNode getHyCheckeNode() {
+		return hyCheckeNode;
+	}
+
+	public void setHyCheckeNode(HyCheckeNode hyCheckeNode) {
+		this.hyCheckeNode = hyCheckeNode;
+	}
+
+	@Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
@@ -92,6 +116,8 @@ public class HyInspectionDetail extends BaseEntity
             .append("remark", getRemark())
             .append("routeId", getRouteId())
             .append("taskId", getTaskId())
+            .append("hyNodeTask", getHyNodeTask())
+            .append("hyCheckeNode", getHyCheckeNode())
             .toString();
     }
 }

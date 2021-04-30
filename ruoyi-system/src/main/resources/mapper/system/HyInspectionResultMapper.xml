@@ -6,23 +6,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <resultMap type="HyInspectionResult" id="HyInspectionResultResult">
         <result property="id"    column="id"    />
-        <result property="name"    column="name"    />
+        <result property="resultName"    column="result_name"    />
         <result property="type"    column="type"    />
         <result property="normal"    column="normal"    />
         <result property="explains"    column="explains"    />
+        <result property="schemeId"    column="scheme_id"    />
     </resultMap>
 
     <sql id="selectHyInspectionResultVo">
-        select id, name, type, normal, explains from hy_inspection_result
+        select id, result_name, type, normal, explains, scheme_id from hy_inspection_result
     </sql>
 
     <select id="selectHyInspectionResultList" parameterType="HyInspectionResult" resultMap="HyInspectionResultResult">
         <include refid="selectHyInspectionResultVo"/>
         <where>  
-            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="resultName != null  and resultName != ''"> and result_name like concat('%', #{resultName}, '%')</if>
             <if test="type != null  and type != ''"> and type = #{type}</if>
             <if test="normal != null  and normal != ''"> and normal = #{normal}</if>
             <if test="explains != null  and explains != ''"> and explains = #{explains}</if>
+            <if test="schemeId != null  and schemeId != ''"> and scheme_id = #{schemeId}</if>
         </where>
     </select>
     
@@ -34,26 +36,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="insertHyInspectionResult" parameterType="HyInspectionResult" useGeneratedKeys="true" keyProperty="id">
         insert into hy_inspection_result
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="name != null">name,</if>
+            <if test="resultName != null">result_name,</if>
             <if test="type != null">type,</if>
             <if test="normal != null">normal,</if>
             <if test="explains != null">explains,</if>
+            <if test="schemeId != null">scheme_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="name != null">#{name},</if>
+            <if test="resultName != null">#{resultName},</if>
             <if test="type != null">#{type},</if>
             <if test="normal != null">#{normal},</if>
             <if test="explains != null">#{explains},</if>
+            <if test="schemeId != null">#{schemeId},</if>
          </trim>
     </insert>
 
     <update id="updateHyInspectionResult" parameterType="HyInspectionResult">
         update hy_inspection_result
         <trim prefix="SET" suffixOverrides=",">
-            <if test="name != null">name = #{name},</if>
+            <if test="resultName != null">result_name = #{resultName},</if>
             <if test="type != null">type = #{type},</if>
             <if test="normal != null">normal = #{normal},</if>
             <if test="explains != null">explains = #{explains},</if>
+            <if test="schemeId != null">scheme_id = #{schemeId},</if>
         </trim>
         where id = #{id}
     </update>

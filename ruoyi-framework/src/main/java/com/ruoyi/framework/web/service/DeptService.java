@@ -26,6 +26,8 @@ public class DeptService {
 		Long parentId = (long)0;
 		sysDept.setParentId(parentId);
 		return sysDeptMapper.selectDeptList(sysDept);
-		
+	}
+	public List<SysDept> getDepts(){
+		return sysDeptMapper.selectDeptLists(new SysDept());
 	}
 }

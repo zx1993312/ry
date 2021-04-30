@@ -6,23 +6,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <resultMap type="HyPollingPeriod" id="HyPollingPeriodResult">
         <result property="id"    column="id"    />
-        <result property="name"    column="name"    />
+        <result property="periodName"    column="period_name"    />
         <result property="type"    column="type"    />
         <result property="intervalValue"    column="interval_value"    />
         <result property="isStart"    column="is_start"    />
+        <result property="schemeId"    column="scheme_id"    />
     </resultMap>
 
     <sql id="selectHyPollingPeriodVo">
-        select id, name, type, interval_value, is_start from hy_polling_period
+        select id, period_name, type, interval_value, is_start, scheme_id from hy_polling_period
     </sql>
 
     <select id="selectHyPollingPeriodList" parameterType="HyPollingPeriod" resultMap="HyPollingPeriodResult">
         <include refid="selectHyPollingPeriodVo"/>
         <where>  
-            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="periodName != null  and periodName != ''"> and period_name like concat('%', #{periodName}, '%')</if>
             <if test="type != null  and type != ''"> and type = #{type}</if>
             <if test="intervalValue != null  and intervalValue != ''"> and interval_value = #{intervalValue}</if>
             <if test="isStart != null  and isStart != ''"> and is_start = #{isStart}</if>
+            <if test="schemeId != null  and schemeId != ''"> and scheme_id = #{schemeId}</if>
         </where>
     </select>
     
@@ -34,26 +36,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="insertHyPollingPeriod" parameterType="HyPollingPeriod" useGeneratedKeys="true" keyProperty="id">
         insert into hy_polling_period
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="name != null">name,</if>
+            <if test="periodName != null">period_name,</if>
             <if test="type != null">type,</if>
             <if test="intervalValue != null">interval_value,</if>
             <if test="isStart != null">is_start,</if>
+            <if test="schemeId != null">scheme_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="name != null">#{name},</if>
+            <if test="periodName != null">#{periodName},</if>
             <if test="type != null">#{type},</if>
             <if test="intervalValue != null">#{intervalValue},</if>
             <if test="isStart != null">#{isStart},</if>
+            <if test="schemeId != null">#{schemeId},</if>
          </trim>
     </insert>
 
     <update id="updateHyPollingPeriod" parameterType="HyPollingPeriod">
         update hy_polling_period
         <trim prefix="SET" suffixOverrides=",">
-            <if test="name != null">name = #{name},</if>
+            <if test="periodName != null">period_name = #{periodName},</if>
             <if test="type != null">type = #{type},</if>
             <if test="intervalValue != null">interval_value = #{intervalValue},</if>
             <if test="isStart != null">is_start = #{isStart},</if>
+            <if test="schemeId != null">scheme_id = #{schemeId},</if>
         </trim>
         where id = #{id}
     </update>

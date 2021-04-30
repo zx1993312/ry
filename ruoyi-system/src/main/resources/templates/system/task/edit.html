@@ -14,7 +14,7 @@
                 </div>
                 <label class="col-sm-2 control-label">巡检节点：</label>
                 <div class="col-sm-4">
-                    <select id="nodeId" name="nodeId" th:field="*{nodeId}" class="form-control" th:with="type=${@node.getNode()}" onclick="address()">
+                    <select id="nodeId" name="nodeId" th:field="*{nodeId}" class="form-control" th:with="type=${@node.getNode()}" onchange="changeAddress()">
 						<option value="">请选择</option>
 						<option th:if="data!=null" th:each="data:${type}" th:text="${data.name}" th:value="${data.id}"></option>
 			 	    </select>
@@ -73,9 +73,39 @@
                 $.operate.save(prefix + "/edit", $('#form-task-edit').serialize());
             }
         };
-        
-        function address(){
-        	
+		function changeAddress(){
+   			$.ajax({
+                url: prefix1 + "/lists",
+                data: {id : $("#nodeId").val()},
+                dataType : 'json',
+                type: 'POST',
+                success: function (result) {
+                	var optArr = [];
+                	$("#address").empty();
+					$("#address").val(result[0].address);
+					$("#depts").empty();
+					$("#depts").val(result[0].deptId);
+                    // 缺一不可  
+                    $("#address").selectpicker('refresh');
+                    $("#address").selectpicker('render');
+                    $("#depts").selectpicker('refresh');
+                    $("#depts").selectpicker('render');
+                }
+            });
+   			$.ajax({
+			    url: prefix2 + "/lists",
+			    data: {deptId : $("#depts").val()},
+			    dataType : 'json',
+			    type: 'POST',
+			    success: function (result) {
+			    	$("#dept").empty();
+					$("#dept").val(result[0].deptName);
+			                    // 缺一不可  
+			                    $("#dept").selectpicker('refresh');
+			                    $("#dept").selectpicker('render');
+					   	}
+			});
+   			
         };
     </script>
 </body>

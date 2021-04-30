@@ -20,7 +20,7 @@ public class HyPollingPeriod extends BaseEntity
 
     /** 巡检周期名称 */
     @Excel(name = "巡检周期名称")
-    private String name;
+    private String periodName;
 
     /** 巡检周期类型 */
     @Excel(name = "巡检周期类型")
@@ -33,6 +33,9 @@ public class HyPollingPeriod extends BaseEntity
     /** 是否启动 */
     @Excel(name = "是否启动")
     private String isStart;
+    
+    /** 巡检计划id */
+    private Long schemeId;
 
     public void setId(Long id) 
     {
@@ -43,14 +46,14 @@ public class HyPollingPeriod extends BaseEntity
     {
         return id;
     }
-    public void setName(String name) 
+    public void setPeriodName(String periodName) 
     {
-        this.name = name;
+        this.periodName = periodName;
     }
 
-    public String getName() 
+    public String getPeriodName() 
     {
-        return name;
+        return periodName;
     }
     public void setType(String type) 
     {
@@ -80,14 +83,23 @@ public class HyPollingPeriod extends BaseEntity
         return isStart;
     }
 
-    @Override
+    public Long getSchemeId() {
+		return schemeId;
+	}
+
+	public void setSchemeId(Long schemeId) {
+		this.schemeId = schemeId;
+	}
+
+	@Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
-            .append("name", getName())
+            .append("periodName", getPeriodName())
             .append("type", getType())
             .append("intervalValue", getIntervalValue())
             .append("isStart", getIsStart())
+            .append("schemeId", getSchemeId())
             .toString();
     }
 }

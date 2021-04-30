@@ -13,8 +13,8 @@
                             <li>
                                 <label>巡检类型：</label>
                                 <select name="type">
-                                    <option value="">所有</option>
-                                    <option value="-1">代码生成请选择字典属性</option>
+                                    <option value="">请选择</option>
+                                    <option value="1">类型</option>
                                 </select>
                             </li>
                             <li>
@@ -62,8 +62,11 @@
                                 <input type="text" name="patrolLatitude"/>
                             </li>
                             <li>
-                                <label>巡检节点id：</label>
-                                <input type="text" name="nodeId"/>
+                                <label>巡检节点：</label>
+                                <select name="nodeId" class="form-control" th:with="type=${@node.getNode()}">
+										<option value="">请选择</option>
+										<option th:if="data!=null" th:each="data : ${type}" th:text="${data.name}" th:value="${data.id}"></option>
+								</select>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -117,7 +120,14 @@
                 },
                 {
                     field: 'type',
-                    title: '巡检类型'
+                    title: '巡检类型',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case "" : value =  "请选择";break;
+	                    	case "1" : value =  "类型";break;
+	                	}
+		            	return value;
+		            }
                 },
                 {
                     field: 'standard',
@@ -164,8 +174,8 @@
                     title: '巡检项目纬度'
                 },
                 {
-                    field: 'nodeId',
-                    title: '巡检节点id'
+                    field: 'hyCheckeNode.name',
+                    title: '巡检节点'
                 },
                 {
                     title: '操作',

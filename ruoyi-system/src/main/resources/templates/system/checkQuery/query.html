@@ -33,7 +33,13 @@
                         <ul>
                             <li>
                                 <label>巡检时间：</label>
-                                <input type="text" class="time-input" placeholder="请选择计划时间" name="inspectionTime"/>
+                                <input type="text" class="time-input" placeholder="请选择巡检时间" name="inspectionTime"/>
+                            </li>
+                            <li>
+                                <label>实际巡检时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择实际巡检时间" name="actualInspectionTime"/>
+                            </li>
+                            <li>
                             </li>
                             <li>
                                 <label>巡检人：</label>
@@ -107,6 +113,8 @@
         var editFlag = [[${@permission.hasPermi('system:scheme:edit')}]];
         var removeFlag = [[${@permission.hasPermi('system:scheme:remove')}]];
         var prefix = ctx + "system/scheme";
+        
+        
 		
         $(function() {
         	
@@ -126,6 +134,8 @@
 		    querySchemeList();
 		    queryDeptTree();
 		    tab(1);
+		    
+		    
         });
         
         function querySchemeList() {
@@ -157,8 +167,12 @@
                     title: '巡检人'
                 },
                 {
-                    field: 'deptId',
+                    field: 'hyCheckeNode.sysDept.deptName',
                     title: '组织机构'
+                },
+                {
+                    field: 'hyInspectionRoute.name',
+                    title: '巡检线路'
                 },
                 {
                     field: 'actualInspectionTime',
@@ -209,63 +223,7 @@
 	                	}
 		            	return value;
 		            }
-                },
-                /* {
-                    field: 'planRange',
-                    title: '计划区间',
-                    formatter: function(value, item, index) {
-                    	switch(value){
-	                    	case "" : value =  "请选择";break;
-	                    	case "1" : value =  "年度";break;
-	                    	case "2" : value =  "第一季度";break;
-	                    	case "3" : value =  "第二季度";break;
-	                    	case "4" : value =  "第四季度";break;
-	                    	case "5" : value =  "一月份";break;
-	                    	case "6" : value =  "二月份";break;
-	                    	case "7" : value =  "三月份";break;
-	                    	case "8" : value =  "四月份";break;
-	                    	case "9" : value =  "五月份";break;
-	                    	case "10" : value =  "六月份";break;
-	                    	case "11" : value =  "七月份";break;
-	                    	case "12" : value =  "八月份";break;
-	                    	case "13" : value =  "九月份";break;
-	                    	case "14" : value =  "十月份";break;
-	                    	case "15" : value =  "十一月份";break;
-	                    	case "16" : value =  "十二月份";break;
-	                    	case "17" : value =  "周";break;
-	                    	case "18" : value =  "日";break;
-	                	}
-		            	return value;
-		            }
-                },
-                {
-                    field: 'planAnnual',
-                    title: '计划年度'
-                },
-                {
-                    field: 'planner',
-                    title: '计划人'
-                }, */
-                
-                /* 
-                {
-                    field: 'changeStatus',
-                    title: '变更巡检状态原因'
-                },
-                {
-                    field: 'inspectionInstructions',
-                    title: '巡检说明'
-                }, */
-                /* {
-                    title: '操作',
-                    align: 'center',
-                    formatter: function(value, row, index) {
-                        var actions = [];
-                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
-                        return actions.join('');
-                    }
-                } */]
+                }]
             };
             $.table.init(options);
         };
@@ -311,13 +269,12 @@
 		$('#btnRefresh').click(function() {
 			queryDeptTree();
 		});
-		
-		var prefix1 = ctx + "system/performance";
+
         function tab(value){
     		console.log(value);
     		if(value == 1){
     	        $.ajax({
-                    url: prefix1 + "/list",
+                    url: prefix + "/list",
                     cache: false,
                     contentType: false,
                     processData: false,
@@ -330,7 +287,7 @@
                         		        showRefresh: false,
                         		        showToggle: false,
                         		        showColumns: false,
-                		                url: prefix1 + "/list",
+                		                url: prefix + "/list",
                 		                createUrl: prefix + "/add",
                 		                updateUrl: prefix + "/edit/{id}",
                 		                removeUrl: prefix + "/remove",
@@ -350,26 +307,6 @@
                 		                    visible: false
                 		                },
                 		                {
-                		                    field: 'documentNumber',
-                		                    title: '单据号'
-                		                },
-                		                {
-                		                    field: 'inspectionTime',
-                		                    title: '巡检时间'
-                		                },
-                		                {
-                		                    field: 'inspectionStatus',
-                		                    title: '巡检状态'
-                		                },
-                		                {
-                		                    field: 'checkPeople',
-                		                    title: '巡检人'
-                		                },
-                		                {
-                		                    field: 'actualInspectionTime',
-                		                    title: '实际巡检时间'
-                		                },
-                		                {
                 		                    field: 'hyInspectionDetail.code',
                 		                    title: '序号'
                 		                },
@@ -378,20 +315,31 @@
                 		                    title: '节点名称'
                 		                },
                 		                {
+                		                    field: 'hyCheckeNode.longitude',
+                		                    title: '经度'
+                		                },
+                		                {
+                		                    field: 'hyCheckeNode.latitude',
+                		                    title: '纬度'
+                		                },
+                		                {
                 		                    field: 'hyCheckeNode.address',
                 		                    title: '节点地址'
                 		                },
                 		                {
-                		                    field: 'hyCheckeProject.explains',
-                		                    title: '节点巡检项目'
-                		                },
-                		                {
-                		                    field: 'hyInspectionDetail.inspectionTime',
-                		                    title: '巡检时间点'
+                		                    field: 'inspectionTime',
+                		                    title: '巡检时间'
                 		                },
                 		                {
                 		                    field: 'hyCheckeProject.type',
-                		                    title: '类型'
+                		                    title: '类型',
+                		                    formatter: function(value, item, index) {
+                		                    	switch(value){
+                			                    	case "" : value =  "请选择";break;
+                			                    	case "1" : value =  "类型";break;
+                			                	}
+                				            	return value;
+                				            }
                 		                },
                 		                {
                 		                    field: '',
@@ -405,95 +353,38 @@
                 		                    field: 'isCheck',
                 		                    title: '是否审核'
                 		                },
-                		                /* {
-                		                    field: 'planRange',
-                		                    title: '计划区间',
-                		                    formatter: function(value, item, index) {
-                		                    	switch(value){
-                			                    	case "" : value =  "请选择";break;
-                			                    	case "1" : value =  "年度";break;
-                			                    	case "2" : value =  "第一季度";break;
-                			                    	case "3" : value =  "第二季度";break;
-                			                    	case "4" : value =  "第四季度";break;
-                			                    	case "5" : value =  "一月份";break;
-                			                    	case "6" : value =  "二月份";break;
-                			                    	case "7" : value =  "三月份";break;
-                			                    	case "8" : value =  "四月份";break;
-                			                    	case "9" : value =  "五月份";break;
-                			                    	case "10" : value =  "六月份";break;
-                			                    	case "11" : value =  "七月份";break;
-                			                    	case "12" : value =  "八月份";break;
-                			                    	case "13" : value =  "九月份";break;
-                			                    	case "14" : value =  "十月份";break;
-                			                    	case "15" : value =  "十一月份";break;
-                			                    	case "16" : value =  "十二月份";break;
-                			                    	case "17" : value =  "周";break;
-                			                    	case "18" : value =  "日";break;
-                			                	}
-                				            	return value;
-                				            }
+                		                {
+                		                    field: 'hyCheckeProject.referenceValue',
+                		                    title: '参考值'
                 		                },
                 		                {
-                		                    field: 'planAnnual',
-                		                    title: '计划年度'
+                		                    field: 'hyCheckeProject.patrolLongitude',
+                		                    title: '巡检经度'
                 		                },
                 		                {
-                		                    field: 'planner',
-                		                    title: '计划人'
-                		                },
-                		                
-                		                {
-                		                    field: 'plannedTime',
-                		                    title: '计划时间'
+                		                    field: 'hyCheckeProject.patrolLatitude',
+                		                    title: '巡检纬度'
                 		                },
                 		                {
-                		                    field: 'remark',
-                		                    title: '备注'
+                		                    field: '',
+                		                    title: '巡检距离'
                 		                },
                 		                {
-                		                    field: 'makeTime',
-                		                    title: '制单时间'
+                		                    field: 'hyCheckeProject.measuredValue',
+                		                    title: '测量值'
                 		                },
                 		                {
-                		                    field: 'documentMaker',
-                		                    title: '制单人'
+                		                    field: 'inspectionTime',
+                		                    title: '巡检时间'
                 		                },
                 		                {
-                		                    field: 'revisionTime',
-                		                    title: '修订时间'
+                		                    field: 'checkPeople',
+                		                    title: '巡检人'
                 		                },
                 		                {
-                		                    field: 'reviser',
-                		                    title: '修订人'
-                		                },
-                		                {
-                		                    field: 'auditTime',
-                		                    title: '审核时间'
-                		                },
-                		                {
-                		                    field: 'auditor',
-                		                    title: '审核人'
-                		                }, */
-                		                /* 
-                		                
-                		                {
-                		                    field: 'changeStatus',
-                		                    title: '变更巡检状态原因'
-                		                },
-                		                {
-                		                    field: 'inspectionInstructions',
-                		                    title: '巡检说明'
-                		                }, */
-                		                /* {
-                		                    title: '操作',
-                		                    align: 'center',
-                		                    formatter: function(value, row, index) {
-                		                        var actions = [];
-                		                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-                		                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
-                		                        return actions.join('');
-                		                    }
-                		                } */]
+                		                    field: 'hyInspectionResult.resultName',
+                		                    title: '巡检结果'
+                		                }]
                 		            };
                 	            $.table.initOtherTable(options);
                         }  else {

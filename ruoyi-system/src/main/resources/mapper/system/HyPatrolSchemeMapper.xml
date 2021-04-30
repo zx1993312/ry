@@ -26,34 +26,173 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="changeStatus"    column="change_status"    />
         <result property="inspectionInstructions"    column="inspection_instructions"    />
         <result property="deptId"    column="deptId"    />
+        <association property="hyInspectionRoute" column="id"
+			javaType="HyInspectionRoute" resultMap="HyInspectionRouteResult" />
+        <association property="hyPollingPeriod" column="id"
+			javaType="HyPollingPeriod" resultMap="HyPollingPeriodResult" />
+        <association property="hyCheckeNode" column="id"
+			javaType="HyCheckeNode" resultMap="HyCheckeNodeResult" />
+        <association property="hyCheckeProject" column="id"
+			javaType="HyCheckeProject" resultMap="HyCheckeProjectResult" />
+        <association property="hyInspectionDetail" column="id"
+			javaType="HyInspectionDetail" resultMap="HyInspectionDetailResult" />
+        <association property="hyInspectionResult" column="id"
+			javaType="HyInspectionResult" resultMap="HyInspectionResultResult" />
     </resultMap>
-
+    
+    <resultMap type="HyInspectionResult" id="HyInspectionResultResult">
+        <result property="id"    column="id"    />
+        <result property="resultName"    column="result_name"    />
+        <result property="type"    column="type"    />
+        <result property="normal"    column="normal"    />
+        <result property="explains"    column="explains"    />
+    </resultMap>
+    
+    <resultMap type="HyInspectionDetail" id="HyInspectionDetailResult">
+        <result property="id"    column="id"    />
+        <result property="code"    column="code"    />
+        <result property="inspectionTime"    column="inspection_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="routeId"    column="route_id"    />
+        <result property="taskId"    column="task_id"    />
+    </resultMap>
+    
+    <resultMap type="HyCheckeProject" id="HyCheckeProjectResult">
+        <result property="id"    column="id"    />
+        <result property="type"    column="type"    />
+        <result property="standard"    column="standard"    />
+        <result property="isMeasured"    column="is_measured"    />
+        <result property="referenceValue"    column="reference_value"    />
+        <result property="measuredValue"    column="measured_value"    />
+        <result property="explains"    column="explains"    />
+        <result property="inspectionInstructions"    column="inspection_instructions"    />
+        <result property="projectPicture"    column="project_picture"    />
+        <result property="detailPicture"    column="detail_picture"    />
+        <result property="problemDescription"    column="problem_description"    />
+        <result property="patrolLongitude"    column="patrol_longitude"    />
+        <result property="patrolLatitude"    column="patrol_latitude"    />
+        <result property="nodeId"    column="node_id"    />
+    </resultMap>
+	
+	<resultMap type="HyCheckeNode" id="HyCheckeNodeResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="address"    column="address"    />
+        <result property="scanCode"    column="scan_code"    />
+        <result property="longitude"    column="longitude"    />
+        <result property="latitude"    column="latitude"    />
+        <result property="remark"    column="remark"    />
+        <result property="deptId"    column="dept_id"    />
+        <association property="sysDept" column="id"
+			javaType="SysDept" resultMap="SysDeptResult" />
+    </resultMap>
+    
+    <resultMap type="SysDept" id="SysDeptResult">
+		<id     property="deptId"     column="dept_id"     />
+		<result property="parentId"   column="parent_id"   />
+		<result property="ancestors"  column="ancestors"   />
+		<result property="deptName"   column="dept_name"   />
+		<result property="orderNum"   column="order_num"   />
+		<result property="leader"     column="leader"      />
+		<result property="phone"      column="phone"       />
+		<result property="email"      column="email"       />
+		<result property="status"     column="status"      />
+		<result property="delFlag"    column="del_flag"    />
+		<result property="parentName" column="parent_name" />
+		<result property="createBy"   column="create_by"   />
+	</resultMap>
+	
+	<resultMap type="HyInspectionRoute" id="HyInspectionRouteResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="type"    column="type"    />
+        <result property="remark"    column="remark"    />
+        <result property="schemeId"    column="scheme_id"    />
+        <result property="deptId"    column="dept_id"    />
+    </resultMap>
+	
+	<resultMap type="HyPollingPeriod" id="HyPollingPeriodResult">
+        <result property="id"    column="id"    />
+        <result property="periodName"    column="period_name"    />
+        <result property="type"    column="type"    />
+        <result property="intervalValue"    column="interval_value"    />
+        <result property="isStart"    column="is_start"    />
+    </resultMap>
+	
     <sql id="selectHyPatrolSchemeVo">
-        select id, document_number, planned_time, plan_range, plan_annual, planner, check_people, inspection_time, remark, make_time, document_maker, revision_time, reviser, is_check, audit_time, auditor, actual_inspection_time, inspection_status, change_status, inspection_instructions, deptId from hy_patrol_scheme
+        select 
+        s.id, 
+        s.document_number, 
+        s.planned_time, 
+        s.plan_range, 
+        s.plan_annual, 
+        s.planner, 
+        s.check_people, 
+        s.inspection_time, 
+        s.remark, 
+        s.make_time, 
+        s.document_maker, 
+        s.revision_time, 
+        s.reviser, 
+        s.is_check, 
+        s.audit_time, 
+        s.auditor, 
+        s.actual_inspection_time, 
+        s.inspection_status,
+        s.change_status, 
+        s.inspection_instructions, 
+        s.deptId,
+        r.name,
+        p.period_name,
+        n.name,
+        n.longitude,
+        n.latitude,
+        c.explains,
+        n.address,
+        c.type,
+        c.standard,
+        c.measured_value,
+        c.reference_value,
+        c.patrol_longitude,
+        c.patrol_latitude,
+        d.code,
+        d.inspection_time,
+        h.result_name,
+        e.dept_name
+        from 
+        hy_patrol_scheme s
+        LEFT JOIN hy_inspection_route r ON  r.scheme_id=s.id
+        LEFT JOIN hy_polling_period p ON  p.scheme_id=s.id
+        LEFT JOIN hy_inspection_detail d ON  d.route_id=r.id
+        LEFT JOIN hy_node_task t ON  d.task_id=t.id
+        LEFT JOIN hy_checke_node n ON  t.node_id=n.id
+        LEFT JOIN hy_checke_project c ON  c.node_id=n.id
+        LEFT JOIN hy_inspection_result h ON  h.scheme_id=s.id
+        LEFT JOIN sys_dept e ON  n.dept_id=e.dept_id
     </sql>
 
     <select id="selectHyPatrolSchemeList" parameterType="HyPatrolScheme" resultMap="HyPatrolSchemeResult">
         <include refid="selectHyPatrolSchemeVo"/>
         <where>  
-            <if test="documentNumber != null  and documentNumber != ''"> and document_number = #{documentNumber}</if>
-            <if test="plannedTime != null  and plannedTime != ''"> and planned_time = #{plannedTime}</if>
-            <if test="planRange != null  and planRange != ''"> and plan_range = #{planRange}</if>
-            <if test="planAnnual != null and planAnnual != ''"> and plan_annual = #{planAnnual}</if>
-            <if test="planner != null  and planner != ''"> and planner = #{planner}</if>
-            <if test="checkPeople != null  and checkPeople != ''"> and check_people = #{checkPeople}</if>
-            <if test="inspectionTime != null "> and inspection_time = #{inspectionTime}</if>
-            <if test="makeTime != null "> and make_time = #{makeTime}</if>
-            <if test="documentMaker != null  and documentMaker != ''"> and document_maker = #{documentMaker}</if>
-            <if test="revisionTime != null "> and revision_time = #{revisionTime}</if>
-            <if test="reviser != null  and reviser != ''"> and reviser = #{reviser}</if>
-            <if test="isCheck != null  and isCheck != ''"> and is_check = #{isCheck}</if>
-            <if test="auditTime != null "> and audit_time = #{auditTime}</if>
-            <if test="auditor != null  and auditor != ''"> and auditor = #{auditor}</if>
-            <if test="actualInspectionTime != null "> and actual_inspection_time = #{actualInspectionTime}</if>
-            <if test="inspectionStatus != null  and inspectionStatus != ''"> and inspection_status = #{inspectionStatus}</if>
-            <if test="changeStatus != null  and changeStatus != ''"> and change_status = #{changeStatus}</if>
-            <if test="inspectionInstructions != null  and inspectionInstructions != ''"> and inspection_instructions = #{inspectionInstructions}</if>
-            <if test="deptId != null "> and deptId = #{deptId}</if>
+            <if test="documentNumber != null  and documentNumber != ''"> and s.document_number = #{documentNumber}</if>
+            <if test="plannedTime != null  and plannedTime != ''"> and s.planned_time = #{plannedTime}</if>
+            <if test="planRange != null  and planRange != ''"> and s.plan_range = #{planRange}</if>
+            <if test="planAnnual != null and planAnnual != ''"> and s.plan_annual = #{planAnnual}</if>
+            <if test="planner != null  and planner != ''"> and s.planner = #{planner}</if>
+            <if test="checkPeople != null  and checkPeople != ''"> and s.check_people = #{checkPeople}</if>
+            <if test="inspectionTime != null "> and s.inspection_time = #{inspectionTime}</if>
+            <if test="makeTime != null "> and s.make_time = #{makeTime}</if>
+            <if test="documentMaker != null  and documentMaker != ''"> and s.document_maker = #{documentMaker}</if>
+            <if test="revisionTime != null "> and s.revision_time = #{revisionTime}</if>
+            <if test="reviser != null  and reviser != ''"> and s.reviser = #{reviser}</if>
+            <if test="isCheck != null  and isCheck != ''"> and s.is_check = #{isCheck}</if>
+            <if test="auditTime != null "> and s.audit_time = #{auditTime}</if>
+            <if test="auditor != null  and auditor != ''"> and s.auditor = #{auditor}</if>
+            <if test="actualInspectionTime != null "> and s.actual_inspection_time = #{actualInspectionTime}</if>
+            <if test="inspectionStatus != null  and inspectionStatus != ''"> and s.inspection_status = #{inspectionStatus}</if>
+            <if test="changeStatus != null  and changeStatus != ''"> and s.change_status = #{changeStatus}</if>
+            <if test="inspectionInstructions != null  and inspectionInstructions != ''"> and s.inspection_instructions = #{inspectionInstructions}</if>
+            <if test="deptId != null "> and s.deptId = #{deptId}</if>
         </where>
     </select>
     
@@ -63,7 +202,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <select id="selectHyPatrolSchemeById" parameterType="Long" resultMap="HyPatrolSchemeResult">
         <include refid="selectHyPatrolSchemeVo"/>
-        where id = #{id}
+        where s.id = #{id}
     </select>
         
     <insert id="insertHyPatrolScheme" parameterType="HyPatrolScheme" useGeneratedKeys="true" keyProperty="id">

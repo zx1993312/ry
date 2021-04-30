@@ -53,7 +53,10 @@
                             </li>
                             <li>
                                 <label>组织机构：</label>
-                                <input type="text" name="sysDept.deptName"/>
+                                <select name="deptId" class="form-control" th:with="type=${@dept.getDepts()}">
+										<option value="">请选择</option>
+										<option th:if="data!=null" th:each="data : ${type}" th:text="${data.deptName}" th:value="${data.deptId}"></option>
+								</select>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>

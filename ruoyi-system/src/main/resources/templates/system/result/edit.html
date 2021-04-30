@@ -10,7 +10,7 @@
             <div class="form-group">    
                 <label class="col-sm-2 control-label">巡检结果名称：</label>
                 <div class="col-sm-4">
-                    <input name="name" th:field="*{name}" class="form-control" type="text">
+                    <input name="resultName" th:field="*{resultName}" class="form-control" type="text">
                 </div>
                 <label class="col-sm-2 control-label">巡检类别：</label>
                 <div class="col-sm-4">
@@ -44,7 +44,7 @@
         var prefix = ctx + "system/result";
         $("#form-result-edit").validate({
         	rules : {
-        		name : {
+        		resultName : {
 					required : true,
 					maxlength:20,
 				},

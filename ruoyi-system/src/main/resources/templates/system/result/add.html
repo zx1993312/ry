@@ -9,7 +9,7 @@
             <div class="form-group">    
                 <label class="col-sm-2 control-label">巡检结果名称：</label>
                 <div class="col-sm-4">
-                    <input name="name" class="form-control" type="text">
+                    <input name="resultName" class="form-control" type="text">
                 </div>
                 <label class="col-sm-2 control-label">巡检类别：</label>
                 <div class="col-sm-4">
@@ -26,7 +26,7 @@
             <div class="form-group">    
                 <label class="col-sm-2 control-label">是否正常：</label>
                 <div class="col-sm-2">
-                    <input name="normal" value="1" type="radio">是
+                    <input name="normal" value="1" type="radio" checked="checked">是
                 </div>
                 <div class="col-sm-2">
                     <input name="normal" value="2" type="radio">否
@@ -43,7 +43,7 @@
         var prefix = ctx + "system/result"
         $("#form-result-add").validate({
         	rules : {
-        		name : {
+        		resultName : {
 					required : true,
 					maxlength:20,
 				},

@@ -19,34 +19,111 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="patrolLongitude"    column="patrol_longitude"    />
         <result property="patrolLatitude"    column="patrol_latitude"    />
         <result property="nodeId"    column="node_id"    />
+        <association property="hyCheckeNode" column="id"
+			javaType="HyCheckeNode" resultMap="HyCheckeNodeResult" />
+		<association property="hyNodeTask" column="id"
+			javaType="HyNodeTask" resultMap="HyNodeTaskResult" />
+		<association property="hyPatrolScheme" column="id"
+			javaType="HyPatrolScheme" resultMap="HyPatrolSchemeResult" />
+    </resultMap>
+    
+    <resultMap type="HyCheckeNode" id="HyCheckeNodeResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="address"    column="address"    />
+        <result property="scanCode"    column="scan_code"    />
+        <result property="longitude"    column="longitude"    />
+        <result property="latitude"    column="latitude"    />
+        <result property="remark"    column="remark"    />
+        <result property="deptId"    column="dept_id"    />
+    </resultMap>
+	
+	<resultMap type="HyNodeTask" id="HyNodeTaskResult">
+        <result property="id"    column="id"    />
+        <result property="taskName"    column="task_name"    />
+        <result property="inspectionWay"    column="inspection_way"    />
+        <result property="remark"    column="remark"    />
+        <result property="nodeId"    column="node_id"    />
+    </resultMap>
+	
+	<resultMap type="HyPatrolScheme" id="HyPatrolSchemeResult">
+        <result property="id"    column="id"    />
+        <result property="documentNumber"    column="document_number"    />
+        <result property="plannedTime"    column="planned_time"    />
+        <result property="planRange"    column="plan_range"    />
+        <result property="planAnnual"    column="plan_annual"    />
+        <result property="planner"    column="planner"    />
+        <result property="checkPeople"    column="check_people"    />
+        <result property="inspectionTime"    column="inspection_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="makeTime"    column="make_time"    />
+        <result property="documentMaker"    column="document_maker"    />
+        <result property="revisionTime"    column="revision_time"    />
+        <result property="reviser"    column="reviser"    />
+        <result property="isCheck"    column="is_check"    />
+        <result property="auditTime"    column="audit_time"    />
+        <result property="auditor"    column="auditor"    />
+        <result property="actualInspectionTime"    column="actual_inspection_time"    />
+        <result property="inspectionStatus"    column="inspection_status"    />
+        <result property="changeStatus"    column="change_status"    />
+        <result property="inspectionInstructions"    column="inspection_instructions"    />
+        <result property="deptId"    column="deptId"    />
     </resultMap>
 	
     <sql id="selectHyCheckeProjectVo">
-        select id, type, standard, is_measured, reference_value, measured_value, explains, inspection_instructions, project_picture, detail_picture, problem_description, patrol_longitude, patrol_latitude, node_id from hy_checke_project
+        select 
+        c.id, 
+        c.type, 
+        c.standard, 
+        c.is_measured, 
+        c.reference_value, 
+        c.measured_value, 
+        c.explains, 
+        c.inspection_instructions, 
+        c.project_picture, 
+        c.detail_picture, 
+        c.problem_description, 
+        c.patrol_longitude, 
+        c.patrol_latitude, 
+        c.node_id,
+        n.name,
+        t.task_name,
+        s.inspection_time,
+        n.address
+        from 
+        hy_checke_project c
+        LEFT JOIN hy_checke_node n ON c.node_id = n.id
+        LEFT JOIN hy_node_task t ON t.node_id = n.id
+        LEFT JOIN hy_inspection_detail d ON d.task_id = t.id
+        LEFT JOIN hy_inspection_route r ON d.route_id = r.id
+        LEFT JOIN hy_patrol_scheme s ON r.scheme_id = s.id
     </sql>
 
     <select id="selectHyCheckeProjectList" parameterType="HyCheckeProject" resultMap="HyCheckeProjectResult">
         <include refid="selectHyCheckeProjectVo"/>
         <where>  
-            <if test="type != null  and type != ''"> and type = #{type}</if>
-            <if test="standard != null  and standard != ''"> and standard = #{standard}</if>
-            <if test="isMeasured != null  and isMeasured != ''"> and is_measured = #{isMeasured}</if>
-            <if test="referenceValue != null  and referenceValue != ''"> and reference_value = #{referenceValue}</if>
-            <if test="measuredValue != null  and measuredValue != ''"> and measured_value = #{measuredValue}</if>
-            <if test="explains != null  and explains != ''"> and explains = #{explains}</if>
-            <if test="inspectionInstructions != null  and inspectionInstructions != ''"> and inspection_instructions = #{inspectionInstructions}</if>
-            <if test="projectPicture != null  and projectPicture != ''"> and project_picture = #{projectPicture}</if>
-            <if test="detailPicture != null  and detailPicture != ''"> and detail_picture = #{detailPicture}</if>
-            <if test="problemDescription != null  and problemDescription != ''"> and problem_description = #{problemDescription}</if>
-            <if test="patrolLongitude != null  and patrolLongitude != ''"> and patrol_longitude = #{patrolLongitude}</if>
-            <if test="patrolLatitude != null  and patrolLatitude != ''"> and patrol_latitude = #{patrolLatitude}</if>
-            <if test="nodeId != null "> and node_id = #{nodeId}</if>
+            <if test="type != null  and type != ''"> and c.type = #{type}</if>
+            <if test="standard != null  and standard != ''"> and c.standard = #{standard}</if>
+            <if test="isMeasured != null  and isMeasured != ''"> and c.is_measured = #{isMeasured}</if>
+            <if test="referenceValue != null  and referenceValue != ''"> and c.reference_value = #{referenceValue}</if>
+            <if test="measuredValue != null  and measuredValue != ''"> and c.measured_value = #{measuredValue}</if>
+            <if test="explains != null  and explains != ''"> and c.explains = #{explains}</if>
+            <if test="inspectionInstructions != null  and inspectionInstructions != ''"> and c.inspection_instructions = #{inspectionInstructions}</if>
+            <if test="projectPicture != null  and projectPicture != ''"> and c.project_picture = #{projectPicture}</if>
+            <if test="detailPicture != null  and detailPicture != ''"> and c.detail_picture = #{detailPicture}</if>
+            <if test="problemDescription != null  and problemDescription != ''"> and c.problem_description = #{problemDescription}</if>
+            <if test="patrolLongitude != null  and patrolLongitude != ''"> and c.patrol_longitude = #{patrolLongitude}</if>
+            <if test="patrolLatitude != null  and patrolLatitude != ''"> and c.patrol_latitude = #{patrolLatitude}</if>
+            <if test="nodeId != null "> and c.node_id = #{nodeId}</if>
+            <if test="hyCheckeNode != null and hyCheckeNode != ''">
+            	<if test="hyCheckeNode.name != null and hyCheckeNode.name != ''"> and n.name = #{hyCheckeNode.name}</if>
+            </if>
         </where>
     </select>
     
     <select id="selectHyCheckeProjectById" parameterType="Long" resultMap="HyCheckeProjectResult">
         <include refid="selectHyCheckeProjectVo"/>
-        where id = #{id}
+        where c.id = #{id}
     </select>
         
     <insert id="insertHyCheckeProject" parameterType="HyCheckeProject" useGeneratedKeys="true" keyProperty="id">

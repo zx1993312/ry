@@ -11,25 +11,59 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="remark"    column="remark"    />
         <result property="routeId"    column="route_id"    />
         <result property="taskId"    column="task_id"    />
+        <association property="hyNodeTask" column="id"
+			javaType="HyNodeTask" resultMap="HyNodeTaskResult" />
+        <association property="hyCheckeNode" column="id"
+			javaType="HyCheckeNode" resultMap="HyCheckeNodeResult" />
     </resultMap>
-
+	
+	<resultMap type="HyNodeTask" id="HyNodeTaskResult">
+        <result property="id"    column="id"    />
+        <result property="taskName"    column="task_name"    />
+        <result property="inspectionWay"    column="inspection_way"    />
+        <result property="remark"    column="remark"    />
+        <result property="nodeId"    column="node_id"    />
+    </resultMap>
+	
+	<resultMap type="HyCheckeNode" id="HyCheckeNodeResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="address"    column="address"    />
+        <result property="scanCode"    column="scan_code"    />
+        <result property="longitude"    column="longitude"    />
+        <result property="latitude"    column="latitude"    />
+        <result property="remark"    column="remark"    />
+        <result property="deptId"    column="dept_id"    />
+    </resultMap>
+	
     <sql id="selectHyInspectionDetailVo">
-        select id, code, inspection_time, remark, route_id, task_id from hy_inspection_detail
+        select 
+        d.id, 
+        d.code, 
+        d.inspection_time, 
+        d.remark, 
+        d.route_id, 
+        d.task_id,
+        n.name 
+        from 
+        hy_inspection_detail d
+        LEFT JOIN hy_node_task t ON d.task_id = t.id
+        LEFT JOIN hy_checke_node n ON t.node_id = n.id
     </sql>
 
     <select id="selectHyInspectionDetailList" parameterType="HyInspectionDetail" resultMap="HyInspectionDetailResult">
         <include refid="selectHyInspectionDetailVo"/>
         <where>  
-            <if test="code != null  and code != ''"> and code = #{code}</if>
-            <if test="inspectionTime != null "> and inspection_time = #{inspectionTime}</if>
-            <if test="routeId != null "> and route_id = #{routeId}</if>
-            <if test="taskId != null "> and task_id = #{taskId}</if>
+            <if test="code != null  and code != ''"> and d.code = #{code}</if>
+            <if test="inspectionTime != null "> and d.inspection_time = #{inspectionTime}</if>
+            <if test="routeId != null "> and d.route_id = #{routeId}</if>
+            <if test="taskId != null "> and d.task_id = #{taskId}</if>
         </where>
     </select>
     
     <select id="selectHyInspectionDetailById" parameterType="Long" resultMap="HyInspectionDetailResult">
         <include refid="selectHyInspectionDetailVo"/>
-        where id = #{id}
+        where d.id = #{id}
     </select>
         
     <insert id="insertHyInspectionDetail" parameterType="HyInspectionDetail" useGeneratedKeys="true" keyProperty="id">
