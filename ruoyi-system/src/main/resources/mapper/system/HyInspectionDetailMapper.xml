@@ -44,7 +44,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         d.remark, 
         d.route_id, 
         d.task_id,
-        n.name 
+        n.name,
+        t.task_name 
         from 
         hy_inspection_detail d
         LEFT JOIN hy_node_task t ON d.task_id = t.id

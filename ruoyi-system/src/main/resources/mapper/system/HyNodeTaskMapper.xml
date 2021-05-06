@@ -65,6 +65,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="taskName != null  and taskName != ''"> and t.task_name like concat('%', #{taskName}, '%')</if>
             <if test="inspectionWay != null  and inspectionWay != ''"> and t.inspection_way = #{inspectionWay}</if>
             <if test="nodeId != null "> and t.node_id = #{nodeId}</if>
+            <if test="hyCheckeNode != null and hyCheckeNode != ''">
+            	<if test="hyCheckeNode.deptId != null"> and n.dept_id = #{hyCheckeNode.deptId}</if>
+            </if>
         </where>
     </select>
     

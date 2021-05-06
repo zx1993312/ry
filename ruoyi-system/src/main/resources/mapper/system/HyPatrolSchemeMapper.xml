@@ -25,7 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="inspectionStatus"    column="inspection_status"    />
         <result property="changeStatus"    column="change_status"    />
         <result property="inspectionInstructions"    column="inspection_instructions"    />
-        <result property="deptId"    column="deptId"    />
+        <result property="deptId"    column="dept_id"    />
         <association property="hyInspectionRoute" column="id"
 			javaType="HyInspectionRoute" resultMap="HyInspectionRouteResult" />
         <association property="hyPollingPeriod" column="id"
@@ -104,7 +104,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<resultMap type="HyInspectionRoute" id="HyInspectionRouteResult">
         <result property="id"    column="id"    />
-        <result property="name"    column="name"    />
+        <result property="routeName"    column="route_name"    />
         <result property="type"    column="type"    />
         <result property="remark"    column="remark"    />
         <result property="schemeId"    column="scheme_id"    />
@@ -141,8 +141,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         s.inspection_status,
         s.change_status, 
         s.inspection_instructions, 
-        s.deptId,
-        r.name,
+        s.dept_id,
+        r.route_name,
         p.period_name,
         n.name,
         n.longitude,
@@ -192,7 +192,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="inspectionStatus != null  and inspectionStatus != ''"> and s.inspection_status = #{inspectionStatus}</if>
             <if test="changeStatus != null  and changeStatus != ''"> and s.change_status = #{changeStatus}</if>
             <if test="inspectionInstructions != null  and inspectionInstructions != ''"> and s.inspection_instructions = #{inspectionInstructions}</if>
-            <if test="deptId != null "> and s.deptId = #{deptId}</if>
+            <if test="deptId != null "> and s.dept_id = #{deptId}</if>
         </where>
     </select>
     
@@ -227,7 +227,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="inspectionStatus != null">inspection_status,</if>
             <if test="changeStatus != null">change_status,</if>
             <if test="inspectionInstructions != null">inspection_instructions,</if>
-            <if test="deptId != null">deptId,</if>
+            <if test="deptId != null">dept_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="documentNumber != null">#{documentNumber},</if>
@@ -275,7 +275,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="inspectionStatus != null">inspection_status = #{inspectionStatus},</if>
             <if test="changeStatus != null">change_status = #{changeStatus},</if>
             <if test="inspectionInstructions != null">inspection_instructions = #{inspectionInstructions},</if>
-            <if test="deptId != null">deptId = #{deptId},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
         </trim>
         where id = #{id}
     </update>

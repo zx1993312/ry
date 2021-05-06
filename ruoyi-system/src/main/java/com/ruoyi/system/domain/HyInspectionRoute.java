@@ -21,7 +21,7 @@ public class HyInspectionRoute extends BaseEntity
 
     /** 巡检线路名称 */
     @Excel(name = "巡检线路名称")
-    private String name;
+    private String routeName;
 
     /** 巡检类别 */
     @Excel(name = "巡检类别")
@@ -48,14 +48,14 @@ public class HyInspectionRoute extends BaseEntity
     {
         return id;
     }
-    public void setName(String name) 
+    public void setRouteName(String routeName) 
     {
-        this.name = name;
+        this.routeName = routeName;
     }
 
-    public String getName() 
+    public String getRouteName() 
     {
-        return name;
+        return routeName;
     }
     public void setType(String type) 
     {
@@ -97,7 +97,7 @@ public class HyInspectionRoute extends BaseEntity
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
-            .append("name", getName())
+            .append("routeName", getRouteName())
             .append("type", getType())
             .append("remark", getRemark())
             .append("schemeId", getSchemeId())

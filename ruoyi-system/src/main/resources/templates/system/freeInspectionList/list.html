@@ -27,6 +27,18 @@
 	<div class="ui-layout-center">
      <div class="container-div">
         <div class="row">
+        	<div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <!-- <label>组织机构：</label> -->
+                                <input type="hidden" name="deptId" id="deptId"/>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
             <div class="btn-group-sm" id="toolbar" role="group">
 <!--                 <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:scheme:add">
                     <i class="fa fa-plus"></i> 添加
@@ -74,7 +86,6 @@
         var prefix = ctx + "system/scheme";
 		
         $(function() {
-        	
         	var panehHidden = false;
 		    if ($(this).width() < 769) {
 		        panehHidden = true;
@@ -88,11 +99,30 @@
 	    		};
 	    		$('#scroll-up').toTop(opt);
 	    	}
+	    	tab(1);
 		    querySchemeList();
 		    queryDeptTree();
-		    tab(1);
+		    
         });
         
+
+        //组织架构
+        function queryDeptTree()
+		{
+			var url = ctx + "system/dept/treeData";
+			var options = {
+		        url: url,
+		        expandLevel: 2,
+		        onClick : zOnClick
+		    };
+			$.tree.init(options);
+			
+			function zOnClick(event, treeId, treeNode) {
+				$("#deptId").val(treeNode.id);
+				$.table.searchs();
+			}
+		}
+		
         function querySchemeList() {
             var options = {
                 url: prefix + "/list",
@@ -158,25 +188,9 @@
                 }]
             };
             $.table.init(options);
+            
         };
-        //组织架构
-        function queryDeptTree()
-		{
-			var url = ctx + "system/dept/treeData";
-			var options = {
-		        url: url,
-		        expandLevel: 2,
-		        onClick : zOnClick
-		    };
-			$.tree.init(options);
-			
-			function zOnClick(event, treeId, treeNode) {
-				$("#deptId").val(treeNode.id);
-				$("#parentId").val(treeNode.pId);
-				$.table.search();
-			}
-		}
-		
+        
 		$('#btnExpand').click(function() {
 			$._tree.expandAll(true);
 		    $(this).hide();
@@ -192,12 +206,11 @@
 		$('#btnRefresh').click(function() {
 			queryDeptTree();
 		});
-		var prefix1 = ctx + "system/scheme";
         function tab(value){
     		console.log(value);
     		if(value == 1){
     	        $.ajax({
-                    url: prefix1 + "/list",
+                    url: prefix + "/list",
                     cache: false,
                     contentType: false,
                     processData: false,
@@ -210,7 +223,7 @@
                     		        showRefresh: false,
                     		        showToggle: false,
                     		        showColumns: false,
-                                    url: prefix1 + "/list",
+                                    url: prefix + "/list",
                                     createUrl: prefix + "/add",
                                     updateUrl: prefix + "/edit/{id}",
                                     removeUrl: prefix + "/remove",

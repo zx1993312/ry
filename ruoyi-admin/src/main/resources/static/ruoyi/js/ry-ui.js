@@ -467,6 +467,17 @@ var table = {
                     $("#" + table.options.id).bootstrapTable('refresh', params);
                 }
             },
+            // 搜索-默认第一个form
+            searchs: function(formId, tableId) {
+            	table.set(tableId);
+            	table.options.formId = $.common.isEmpty(formId) ? $('form').attr('id') : formId;
+            	var params = $.common.isEmpty(tableId) ? $("#" + table.options.id).bootstrapTable('getOptions') : $("#" + tableId).bootstrapTable('getOptions');
+            	if($.common.isNotEmpty(tableId)){
+            		$("#" + tableId).bootstrapTable('refresh', params);
+            	} else{
+            		$("#bootstrap-table").bootstrapTable('refresh', params);
+            	}
+            },
             // 导出数据
             exportExcel: function(formId) {
                 table.set();

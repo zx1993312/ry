@@ -39,7 +39,9 @@
                                 <label>实际巡检时间：</label>
                                 <input type="text" class="time-input" placeholder="请选择实际巡检时间" name="actualInspectionTime"/>
                             </li>
-                            <li>
+                           	<li>
+                            	<label>组织机构：</label>
+                                <input type="text" name="deptId" id="deptId"/>
                             </li>
                             <li>
                                 <label>巡检人：</label>
@@ -134,8 +136,6 @@
 		    querySchemeList();
 		    queryDeptTree();
 		    tab(1);
-		    
-		    
         });
         
         function querySchemeList() {
@@ -171,7 +171,7 @@
                     title: '组织机构'
                 },
                 {
-                    field: 'hyInspectionRoute.name',
+                    field: 'hyInspectionRoute.routeName',
                     title: '巡检线路'
                 },
                 {
@@ -249,8 +249,7 @@
 			
 			function zOnClick(event, treeId, treeNode) {
 				$("#deptId").val(treeNode.id);
-				$("#parentId").val(treeNode.pId);
-				$.table.search();
+				$.table.searchs();
 			}
 		}
 		

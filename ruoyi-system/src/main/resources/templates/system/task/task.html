@@ -32,6 +32,9 @@
                     <div class="select-list">
                         <ul>
                             <li>
+                                <input id="deptId" type="hidden" name="hyCheckeNode.deptId"/>
+                            </li>
+                            <li>
                                 <label>名称：</label>
                                 <input type="text" name="TaskName"/>
                             </li>
@@ -178,7 +181,6 @@
 			
 			function zOnClick(event, treeId, treeNode) {
 				$("#deptId").val(treeNode.id);
-				$("#parentId").val(treeNode.pId);
 				$.table.search();
 			}
 		}

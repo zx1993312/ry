@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <resultMap type="HyInspectionRoute" id="HyInspectionRouteResult">
         <result property="id"    column="id"    />
-        <result property="name"    column="name"    />
+        <result property="routeName"    column="route_name"    />
         <result property="type"    column="type"    />
         <result property="remark"    column="remark"    />
         <result property="schemeId"    column="scheme_id"    />
@@ -33,7 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <sql id="selectHyInspectionRouteVo">
         select 
         i.id, 
-        i.name, 
+        i.route_name, 
         i.type, 
         i.remark, 
         i.scheme_id, 
@@ -47,7 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectHyInspectionRouteList" parameterType="HyInspectionRoute" resultMap="HyInspectionRouteResult">
         <include refid="selectHyInspectionRouteVo"/>
         <where>  
-            <if test="name != null  and name != ''"> and i.name like concat('%', #{name}, '%')</if>
+            <if test="routeName != null  and routeName != ''"> and i.route_name like concat('%', #{routeName}, '%')</if>
             <if test="type != null  and type != ''"> and i.type = #{type}</if>
             <if test="schemeId != null "> and i.scheme_id = #{schemeId}</if>
             <if test="deptId != null "> and i.dept_id = #{deptId}</if>
@@ -62,14 +62,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="insertHyInspectionRoute" parameterType="HyInspectionRoute" useGeneratedKeys="true" keyProperty="id">
         insert into hy_inspection_route
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="name != null">name,</if>
+            <if test="routeName != null">route_name,</if>
             <if test="type != null">type,</if>
             <if test="remark != null">remark,</if>
             <if test="schemeId != null">scheme_id,</if>
             <if test="deptId != null">dept_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="name != null">#{name},</if>
+            <if test="routeName != null">#{routeName},</if>
             <if test="type != null">#{type},</if>
             <if test="remark != null">#{remark},</if>
             <if test="schemeId != null">#{schemeId},</if>
@@ -80,7 +80,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateHyInspectionRoute" parameterType="HyInspectionRoute">
         update hy_inspection_route
         <trim prefix="SET" suffixOverrides=",">
-            <if test="name != null">name = #{name},</if>
+            <if test="routeName != null">route_name = #{routeName},</if>
             <if test="type != null">type = #{type},</if>
             <if test="remark != null">remark = #{remark},</if>
             <if test="schemeId != null">scheme_id = #{schemeId},</if>

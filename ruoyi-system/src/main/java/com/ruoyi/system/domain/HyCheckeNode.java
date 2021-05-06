@@ -1,8 +1,6 @@
 package com.ruoyi.system.domain;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
+import com.ruoyi.common.annotation.Excel.Type;
 import com.ruoyi.common.core.domain.BaseEntity;
 import com.ruoyi.common.core.domain.entity.SysDept;
 
@@ -40,7 +38,7 @@ public class HyCheckeNode extends BaseEntity
     private String latitude;
 
     /** 组织机构id */
-    @Excel(name = "组织机构id")
+    @Excel(name = "组织机构id", type = Type.IMPORT)
     private Long deptId;
     
     /** 组织机构表 */
@@ -110,8 +108,7 @@ public class HyCheckeNode extends BaseEntity
     {
         return deptId;
     }
-
-    public SysDept getSysDept() {
+	public SysDept getSysDept() {
 		return sysDept;
 	}
 
@@ -125,5 +122,8 @@ public class HyCheckeNode extends BaseEntity
 				+ ", longitude=" + longitude + ", latitude=" + latitude + ", deptId=" + deptId + ", sysDept=" + sysDept
 				+ "]";
 	}
+
+
+	
 
 }

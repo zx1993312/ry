@@ -38,7 +38,7 @@
                     visible: false
                 },
                 {
-                    field: 'name',
+                    field: 'routeName',
                     title: '巡检线路名称'
                 },
                 {
@@ -78,11 +78,11 @@
             $.table.init(options);
         });
         function submitHandler() {
-        	var name = $.table.selectColumns('name');
-        	if(name == ''){
+        	var routeName = $.table.selectColumns('routeName');
+        	if(routeName == ''){
         		$.modal.alertWarning("请至少选择一条记录");
         	}else{
-        		$("#planner",window.parent.document).val(name);
+        		$("#planner",window.parent.document).val(routeName);
         	}
         	$.modal.close();
         }

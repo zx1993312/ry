@@ -32,6 +32,9 @@
                     <div class="select-list">
                         <ul>
                             <li>
+                                <input type="hidden" id="deptId" name="deptId">
+                            </li>
+                            <li>
                                 <label>巡检节点名称：</label>
                                 <input type="text" name="name"/>
                             </li>
@@ -51,13 +54,13 @@
                                 <label>纬度：</label>
                                 <input type="text" name="latitude"/>
                             </li>
-                            <li>
+                            <!-- <li>
                                 <label>组织机构：</label>
                                 <select name="deptId" class="form-control" th:with="type=${@dept.getDepts()}">
 										<option value="">请选择</option>
 										<option th:if="data!=null" th:each="data : ${type}" th:text="${data.deptName}" th:value="${data.deptId}"></option>
 								</select>
-                            </li>
+                            </li> -->
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                                 <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
@@ -186,10 +189,10 @@
 			
 			function zOnClick(event, treeId, treeNode) {
 				$("#deptId").val(treeNode.id);
-				$("#parentId").val(treeNode.pId);
 				$.table.search();
 			}
 		}
+        
 		
 		$('#btnExpand').click(function() {
 			$._tree.expandAll(true);
