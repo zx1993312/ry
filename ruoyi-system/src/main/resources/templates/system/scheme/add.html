@@ -25,14 +25,14 @@
             <div class="form-group">
             	<label class="col-sm-2 control-label">选择物业：</label>
                 	<div class="col-sm-4">
-                    	<select class="province form-control m-b" id="property" data-first-title="选择物业"  th:with="type=${@dept.getDept()}" onchange="changeDept()">
+                    	<select class="province form-control m-b" name="propertyId" id="property" data-first-title="选择物业"  th:with="type=${@dept.getDept()}" onchange="changeDept()">
 	                  		<option value="">请选择</option>
 	                  		<option th:each="dict : ${type}" th:text="${dict.deptName}" th:value="${dict.deptId}"></option>
 	                	</select>
 			    	</div>
 			    <label class="col-sm-2 control-label">选择项目：</label>
                 	<div class="col-sm-4">
-	                	<select class="city form-control m-b" id="dept" data-first-title="选择项目" disabled="disabled" onchange="changeDepts()">
+	                	<select class="city form-control m-b" name="parentId" id="dept" data-first-title="选择项目" disabled="disabled" onchange="changeDepts()">
 	                 	 <option value="">请选择</option>
 	                	</select>
                 	</div>

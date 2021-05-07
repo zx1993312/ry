@@ -101,6 +101,14 @@ public class HyPatrolScheme extends BaseEntity
     @Excel(name = "组织机构id")
     private Long deptId;
     
+    /** 项目id */
+    @Excel(name = "项目id")
+    private Long parentId;
+    
+    /** 物业id */
+    @Excel(name = "物业id")
+    private Long propertyId;
+    
     /** 节点巡检表 */
     @Excel(name = "节点巡检表")
     private HyCheckeNode hyCheckeNode;
@@ -306,6 +314,22 @@ public class HyPatrolScheme extends BaseEntity
         return deptId;
     }
 
+
+	public Long getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(Long parentId) {
+		this.parentId = parentId;
+	}
+
+	public Long getPropertyId() {
+		return propertyId;
+	}
+
+	public void setPropertyId(Long propertyId) {
+		this.propertyId = propertyId;
+	}
 
 	public HyInspectionRoute getHyInspectionRoute() {
 		return hyInspectionRoute;
