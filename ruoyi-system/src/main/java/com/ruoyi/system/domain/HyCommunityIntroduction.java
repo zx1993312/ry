@@ -25,6 +25,10 @@ public class HyCommunityIntroduction extends BaseEntity
     /** 社区id */
     @Excel(name = "社区id")
     private Long communityId;
+    
+    /** 社区表 */
+    @Excel(name = "社区表")
+    private HyCommunity hyCommunity;
 
     public void setId(Long id) 
     {
@@ -54,12 +58,21 @@ public class HyCommunityIntroduction extends BaseEntity
         return communityId;
     }
 
-    @Override
+    public HyCommunity getHyCommunity() {
+		return hyCommunity;
+	}
+
+	public void setHyCommunity(HyCommunity hyCommunity) {
+		this.hyCommunity = hyCommunity;
+	}
+
+	@Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
             .append("introductionPhotoAddress", getIntroductionPhotoAddress())
             .append("communityId", getCommunityId())
+            .append("hyCommunity", getHyCommunity())
             .toString();
     }
 }

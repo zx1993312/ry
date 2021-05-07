@@ -32,6 +32,14 @@ public class HySpecimen extends BaseEntity
     @Excel(name = "部门id")
     private Long deptId;
     
+    /** 项目id */
+    @Excel(name = "项目id")
+    private Long parentId;
+    
+    /** 物业id */
+    @Excel(name = "物业id")
+    private Long propertyId;
+    
     /** 部门表 */
     @Excel(name = "部门表")
     private SysDept sysDept;
@@ -81,11 +89,29 @@ public class HySpecimen extends BaseEntity
 		this.sysDept = sysDept;
 	}
 
+	public Long getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(Long parentId) {
+		this.parentId = parentId;
+	}
+
+	public Long getPropertyId() {
+		return propertyId;
+	}
+
+	public void setPropertyId(Long propertyId) {
+		this.propertyId = propertyId;
+	}
+
 	@Override
 	public String toString() {
 		return "HySpecimen [id=" + id + ", employeeId=" + employeeId + ", sysUser=" + sysUser + ", deptId=" + deptId
-				+ ", sysDept=" + sysDept + "]";
+				+ ", parentId=" + parentId + ", propertyId=" + propertyId + ", sysDept=" + sysDept + "]";
 	}
+
+	
 
 
 	

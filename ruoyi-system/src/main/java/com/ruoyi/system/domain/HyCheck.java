@@ -32,6 +32,14 @@ public class HyCheck extends BaseEntity
     @Excel(name = "部门id")
     private Long deptId;
     
+    /** 项目id */
+    @Excel(name = "项目id")
+    private Long parentId;
+    
+    /** 物业id */
+    @Excel(name = "物业id")
+    private Long propertyId;
+    
     /** 部门表 */
     @Excel(name = "部门表")
     private SysDept sysDept;
@@ -64,8 +72,21 @@ public class HyCheck extends BaseEntity
         return deptId;
     }
 
-    
+	public Long getParentId() {
+		return parentId;
+	}
 
+	public void setParentId(Long parentId) {
+		this.parentId = parentId;
+	}
+
+	public Long getPropertyId() {
+		return propertyId;
+	}
+
+	public void setPropertyId(Long propertyId) {
+		this.propertyId = propertyId;
+	}
 
 	public SysUser getSysUser() {
 		return sysUser;
@@ -86,8 +107,10 @@ public class HyCheck extends BaseEntity
 	@Override
 	public String toString() {
 		return "HyCheck [id=" + id + ", employeeId=" + employeeId + ", sysUser=" + sysUser + ", deptId=" + deptId
-				+ ", sysDept=" + sysDept + "]";
+				+ ", parentId=" + parentId + ", propertyId=" + propertyId + ", sysDept=" + sysDept + "]";
 	}
+
+	
 
 
 	

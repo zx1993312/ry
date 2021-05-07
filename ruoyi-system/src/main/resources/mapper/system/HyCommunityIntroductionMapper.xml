@@ -8,23 +8,50 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="id"    column="id"    />
         <result property="introductionPhotoAddress"    column="introduction_photo_address"    />
         <result property="communityId"    column="community_id"    />
+        <association property="hyCommunity" column="id"
+			javaType="HyCommunity" resultMap="HyCommunityResult" />
     </resultMap>
-
+	
+	<resultMap type="HyCommunity" id="HyCommunityResult">
+		<result property="id" column="id" />
+		<result property="title" column="title" />
+		<result property="releaseTime" column="release_time" />
+		<result property="introductionContent"
+			column="introduction_content" />
+		<result property="communityName"
+			column="community_name" />
+		<result property="communityProvince"
+			column="community_province" />
+		<result property="communityCity"
+			column="community_city" />
+		<result property="communityArea"
+			column="community_area" />
+		<result property="communityAddress"
+			column="community_address" />
+	</resultMap>
+	
     <sql id="selectHyCommunityIntroductionVo">
-        select id, introduction_photo_address, community_id from hy_community_introduction
+        select 
+        i.id, 
+        i.introduction_photo_address, 
+        i.community_id,
+        c.community_name 
+        from 
+        hy_community_introduction i
+        LEFT JOIN hy_community c ON i.community_id = c.id
     </sql>
 
     <select id="selectHyCommunityIntroductionList" parameterType="HyCommunityIntroduction" resultMap="HyCommunityIntroductionResult">
         <include refid="selectHyCommunityIntroductionVo"/>
         <where>  
-            <if test="introductionPhotoAddress != null  and introductionPhotoAddress != ''"> and introduction_photo_address = #{introductionPhotoAddress}</if>
-            <if test="communityId != null "> and community_id = #{communityId}</if>
+            <if test="introductionPhotoAddress != null  and introductionPhotoAddress != ''"> and i.introduction_photo_address = #{introductionPhotoAddress}</if>
+            <if test="communityId != null "> and i.community_id = #{communityId}</if>
         </where>
     </select>
     
     <select id="selectHyCommunityIntroductionById" parameterType="Long" resultMap="HyCommunityIntroductionResult">
         <include refid="selectHyCommunityIntroductionVo"/>
-        where id = #{id}
+        where i.id = #{id}
     </select>
         
     <insert id="insertHyCommunityIntroduction" parameterType="HyCommunityIntroduction">

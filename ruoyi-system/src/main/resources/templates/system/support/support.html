@@ -12,13 +12,16 @@
                         <ul>
                             <li>
                                 <label>配套种类：</label>
-                                <input type="text" name="matchingTypes"/>
+                                 <select name="matchingTypes">
+                                    <option value="">请选择</option>
+                                    <option value="1">房屋</option>
+                                </select>
                             </li>
                             <li>
                                 <label>配套类型：</label>
                                 <select name="matchingType">
-                                    <option value="">所有</option>
-                                    <option value="-1">代码生成请选择字典属性</option>
+                                    <option value="">请选择</option>
+                                    <option value="1">顶级配套</option>
                                 </select>
                             </li>
                             <li>
@@ -100,11 +103,25 @@
                 },
                 {
                     field: 'matchingTypes',
-                    title: '配套种类'
+                    title: '配套种类',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case "" : value =  "请选择";break;
+	                    	case 1 : value =  "房屋";break;
+	                	}
+		            	return value;
+		            }
                 },
                 {
                     field: 'matchingType',
-                    title: '配套类型'
+                    title: '配套类型',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case "" : value =  "请选择";break;
+	                    	case 1 : value =  "顶级配套";break;
+	                	}
+		            	return value;
+		            }
                 },
                 {
                     field: 'contacts',

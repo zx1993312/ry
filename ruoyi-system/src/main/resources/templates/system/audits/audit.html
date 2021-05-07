@@ -11,10 +11,6 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                <label>实地审核图片地址：</label>
-                                <input type="text" name=" fitmentAuditPictureAddress"/>
-                            </li>
-                            <li>
                                 <label>是否同意：</label>
                                 <select name="fitmentAuditAgree" class="form-control " >
 			                      <option value="">请选择</option>
@@ -81,7 +77,17 @@
                 },
                 {
                     field: 'pictureAddress',
-                    title: '实地审核图片地址'
+                    title: '实地审核图片地址',
+                    formatter: function(value, row, index) {
+				    	// 图片预览（注意：如存储在本地直接获取数据库路径，如有配置context-path需要使用ctx+路径）
+				    	// 如：/profile/upload/2019/08/08/3b7a839aced67397bac694d77611ce72.png
+				    		return $.table.imageView(value);
+				    		 /* if(index % 2 == 0){
+					    		return $.table.imageView(value);
+					    	}else {
+					    		return $.table.imageView(value);
+					    	}  */
+				    }
                 },
                 {
                     field: 'fitmentAuditAgree',

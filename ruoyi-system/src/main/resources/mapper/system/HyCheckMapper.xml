@@ -8,6 +8,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="id"    column="id"    />
         <result property="employeeId"    column="employee_id"    />
         <result property="deptId"    column="dept_id"    />
+        <result property="parentId"    column="parent_id"    />
+        <result property="propertyId"    column="property_id"    />
         <association property="sysDept" column="id"
 			javaType="SysDept" resultMap="SysDeptResult" />
 		<association property="sysUser" column="id"
@@ -61,6 +63,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         c.id, 
         c.employee_id, 
         c.dept_id,
+        c.parent_id,
+        c.property_id,
         d.dept_name,
         u.user_name 
         from 
@@ -88,11 +92,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         	<if test="id != null">id,</if>
             <if test="employeeId != null">employee_id,</if>
             <if test="deptId != null">dept_id,</if>
+            <if test="parentId != null">parent_id,</if>
+            <if test="propertyId != null">property_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
         	<if test="id != null">#{id},</if>
             <if test="employeeId != null">#{employeeId},</if>
             <if test="deptId != null">#{deptId},</if>
+            <if test="parentId != null">#{parentId},</if>
+            <if test="propertyId != null">#{propertyId},</if>
          </trim>
     </insert>
 
@@ -101,6 +109,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="SET" suffixOverrides=",">
             <if test="employeeId != null">employee_id = #{employeeId},</if>
             <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="parentId != null">parent_id = #{parentId},</if>
+            <if test="propertyId != null">property_id = #{propertyId},</if>
         </trim>
         where id = #{id}
     </update>
