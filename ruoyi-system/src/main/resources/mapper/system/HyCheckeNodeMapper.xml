@@ -13,6 +13,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="latitude"    column="latitude"    />
         <result property="remark"    column="remark"    />
         <result property="deptId"    column="dept_id"    />
+        <result property="parentId"    column="parent_id"    />
+        <result property="propertyId"    column="property_id"    />
         <association property="sysDept" column="id"
 			javaType="SysDept" resultMap="SysDeptResult" />
     </resultMap>
@@ -42,6 +44,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         n.latitude, 
         n.remark, 
         n.dept_id,
+        n.parent_id,
+        n.property_id,
         d.dept_name
         from 
         hy_checke_node n
@@ -75,6 +79,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="latitude != null">latitude,</if>
             <if test="remark != null">remark,</if>
             <if test="deptId != null">dept_id,</if>
+            <if test="parentId != null">parent_id,</if>
+            <if test="propertyId != null">property_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="name != null">#{name},</if>
@@ -84,6 +90,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="latitude != null">#{latitude},</if>
             <if test="remark != null">#{remark},</if>
             <if test="deptId != null">#{deptId},</if>
+            <if test="parentId != null">#{parentId},</if>
+            <if test="propertyId != null">#{propertyId},</if>
          </trim>
     </insert>
 
@@ -97,6 +105,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="latitude != null">latitude = #{latitude},</if>
             <if test="remark != null">remark = #{remark},</if>
             <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="parentId != null">parent_id = #{parentId},</if>
+            <if test="propertyId != null">property_id = #{propertyId},</if>
         </trim>
         where id = #{id}
     </update>

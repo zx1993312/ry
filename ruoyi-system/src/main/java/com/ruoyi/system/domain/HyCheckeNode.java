@@ -41,6 +41,14 @@ public class HyCheckeNode extends BaseEntity
     @Excel(name = "组织机构id", type = Type.IMPORT)
     private Long deptId;
     
+    /** 项目id */
+    @Excel(name = "项目id", type = Type.IMPORT)
+    private Long parentId;
+    
+    /** 物业id */
+    @Excel(name = "物业id", type = Type.IMPORT)
+    private Long propertyId;
+    
     /** 组织机构表 */
     @Excel(name = "组织机构表")
     private SysDept sysDept;
@@ -116,12 +124,29 @@ public class HyCheckeNode extends BaseEntity
 		this.sysDept = sysDept;
 	}
 
+	public Long getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(Long parentId) {
+		this.parentId = parentId;
+	}
+
+	public Long getPropertyId() {
+		return propertyId;
+	}
+
+	public void setPropertyId(Long propertyId) {
+		this.propertyId = propertyId;
+	}
+
 	@Override
 	public String toString() {
 		return "HyCheckeNode [id=" + id + ", name=" + name + ", address=" + address + ", scanCode=" + scanCode
-				+ ", longitude=" + longitude + ", latitude=" + latitude + ", deptId=" + deptId + ", sysDept=" + sysDept
-				+ "]";
+				+ ", longitude=" + longitude + ", latitude=" + latitude + ", deptId=" + deptId + ", parentId="
+				+ parentId + ", propertyId=" + propertyId + ", sysDept=" + sysDept + "]";
 	}
+
 
 
 	

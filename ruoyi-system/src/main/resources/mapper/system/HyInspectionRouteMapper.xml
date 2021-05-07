@@ -11,6 +11,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="remark"    column="remark"    />
         <result property="schemeId"    column="scheme_id"    />
         <result property="deptId"    column="dept_id"    />
+        <result property="parentId"    column="parent_id"    />
+        <result property="propertyId"    column="property_id"    />
         <association property="sysDept" column="id"
 			javaType="SysDept" resultMap="SysDeptResult" />
     </resultMap>
@@ -38,6 +40,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         i.remark, 
         i.scheme_id, 
         i.dept_id,
+        i.parent_id,
+        i.property_id,
         d.dept_name 
         from 
         hy_inspection_route i
@@ -67,6 +71,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="remark != null">remark,</if>
             <if test="schemeId != null">scheme_id,</if>
             <if test="deptId != null">dept_id,</if>
+            <if test="parentId != null">parent_id,</if>
+            <if test="propertyId != null">property_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="routeName != null">#{routeName},</if>
@@ -74,6 +80,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="remark != null">#{remark},</if>
             <if test="schemeId != null">#{schemeId},</if>
             <if test="deptId != null">#{deptId},</if>
+            <if test="parentId != null">#{parentId},</if>
+            <if test="propertyId != null">#{propertyId},</if>
          </trim>
     </insert>
 
@@ -85,6 +93,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="remark != null">remark = #{remark},</if>
             <if test="schemeId != null">scheme_id = #{schemeId},</if>
             <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="parentId != null">parent_id = #{parentId},</if>
+            <if test="propertyId != null">property_id = #{propertyId},</if>
         </trim>
         where id = #{id}
     </update>

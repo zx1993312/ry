@@ -1,5 +1,6 @@
 package com.ruoyi.system.service.impl;
 
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,6 +56,7 @@ public class HyInspectionDetailServiceImpl implements IHyInspectionDetailService
     @Override
     public int insertHyInspectionDetail(HyInspectionDetail hyInspectionDetail)
     {
+    	hyInspectionDetail.setCode(new Date().getTime());
         return hyInspectionDetailMapper.insertHyInspectionDetail(hyInspectionDetail);
     }
 

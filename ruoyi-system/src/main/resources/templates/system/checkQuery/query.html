@@ -40,8 +40,8 @@
                                 <input type="text" class="time-input" placeholder="请选择实际巡检时间" name="actualInspectionTime"/>
                             </li>
                            	<li>
-                            	<label>组织机构：</label>
-                                <input type="text" name="deptId" id="deptId"/>
+                            	<!-- <label>组织机构：</label> -->
+                                <input type="hidden" name="deptId" id="deptId"/>
                             </li>
                             <li>
                                 <label>巡检人：</label>
@@ -49,7 +49,7 @@
                             </li>
                             <li>
                                 <label>巡检线路：</label>
-                               <input type="text" id="planner" name="planner" onclick="selectRouter()"/>
+                               <input type="text" id="planner" name="hyInspectionRoute.routeName" onclick="selectRouter()"/>
                             </li>
                             <li>
                                 <label>巡检状态：</label>
@@ -62,7 +62,7 @@
                                 </select>
                             </li>
                             <li>
-                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.searchs()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                                 <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
                             </li>
                         </ul>

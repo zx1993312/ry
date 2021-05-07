@@ -22,7 +22,7 @@ public class HyInspectionDetail extends BaseEntity
 
     /** 序号 */
     @Excel(name = "序号")
-    private String code;
+    private Long code;
 
     /** 巡检时间点 */
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -54,12 +54,12 @@ public class HyInspectionDetail extends BaseEntity
     {
         return id;
     }
-    public void setCode(String code) 
+    public void setCode(Long code) 
     {
         this.code = code;
     }
 
-    public String getCode() 
+    public Long getCode() 
     {
         return code;
     }

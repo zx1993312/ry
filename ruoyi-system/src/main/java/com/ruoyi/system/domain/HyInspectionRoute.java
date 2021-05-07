@@ -35,6 +35,14 @@ public class HyInspectionRoute extends BaseEntity
     @Excel(name = "组织机构id")
     private Long deptId;
     
+    /** 项目id */
+    @Excel(name = "项目id")
+    private Long parentId;
+    
+    /** 物业id */
+    @Excel(name = "物业id")
+    private Long propertyId;
+    
     /** 组织机构表 */
     @Excel(name = "组织机构表")
     private SysDept sysDept;
@@ -85,7 +93,23 @@ public class HyInspectionRoute extends BaseEntity
         return deptId;
     }
 
-    public SysDept getSysDept() {
+    public Long getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(Long parentId) {
+		this.parentId = parentId;
+	}
+
+	public Long getPropertyId() {
+		return propertyId;
+	}
+
+	public void setPropertyId(Long propertyId) {
+		this.propertyId = propertyId;
+	}
+
+	public SysDept getSysDept() {
 		return sysDept;
 	}
 
@@ -102,6 +126,8 @@ public class HyInspectionRoute extends BaseEntity
             .append("remark", getRemark())
             .append("schemeId", getSchemeId())
             .append("deptId", getDeptId())
+            .append("parentId", getParentId())
+            .append("propertyId", getPropertyId())
             .append("sysDept", getSysDept())
             .toString();
     }

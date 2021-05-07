@@ -193,6 +193,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="changeStatus != null  and changeStatus != ''"> and s.change_status = #{changeStatus}</if>
             <if test="inspectionInstructions != null  and inspectionInstructions != ''"> and s.inspection_instructions = #{inspectionInstructions}</if>
             <if test="deptId != null "> and s.dept_id = #{deptId}</if>
+            <if test="hyInspectionRoute != null and hyInspectionRoute != ''">
+				<if test="hyInspectionRoute.routeName != null and hyInspectionRoute.routeName !=''"> and r.route_name = #{hyInspectionRoute.routeName}</if>
+			</if>
         </where>
     </select>
     
