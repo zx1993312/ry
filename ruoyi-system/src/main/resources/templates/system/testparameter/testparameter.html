@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('检测参数列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>检测参数名称：</label>
+                                <input type="text" name="parameterName"/>
+                            </li>
+                            <li>
+                                <label>参数值：</label>
+                                <input type="text" name="parameterValues"/>
+                            </li>
+                            <li>
+                                <label>最小值：</label>
+                                <input type="text" name="leastValue"/>
+                            </li>
+                            <li>
+                                <label>最大值：</label>
+                                <input type="text" name="maximumValue"/>
+                            </li>
+                            <li>
+                                <label>备注：</label>
+                                <input type="text" name="parameterRemark"/>
+                            </li>
+                            <li>
+                                <label>设备档案：</label>
+                                <select id="archivesId" name="archivesId" class="form-control" th:with="type=${@archives.getArchives()}">
+									<option value="">请选择</option>
+									<option th:if="data!=null" th:each="data:${type}" th:text="${data.archivesName}" th:value="${data.id}"></option>
+						 	    </select>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:testparameter:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:testparameter:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:testparameter:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:testparameter:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:testparameter:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:testparameter:remove')}]];
+        var prefix = ctx + "system/testparameter";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "检测参数",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '检测参数id',
+                    visible: false
+                },
+                {
+                    field: 'parameterName',
+                    title: '检测参数名称'
+                },
+                {
+                    field: 'parameterValues',
+                    title: '参数值'
+                },
+                {
+                    field: 'leastValue',
+                    title: '最小值'
+                },
+                {
+                    field: 'maximumValue',
+                    title: '最大值'
+                },
+                {
+                    field: 'parameterRemark',
+                    title: '备注'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

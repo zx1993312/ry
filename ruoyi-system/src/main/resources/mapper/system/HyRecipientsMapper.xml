@@ -8,6 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="id"    column="id"    />
         <result property="personType"    column="person_type"    />
         <result property="recipientsProperty"    column="recipients_property"    />
+        <result property="recipientsParent"    column="recipients_parent"    />
         <result property="recipientsDept"    column="recipients_dept"    />
         <result property="recipientsEmployee"    column="recipients_employee"    />
         <result property="recipientsPhone"    column="recipients_phone"    />
@@ -16,13 +17,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="recipientsProvince"    column="recipients_province"    />
         <result property="recipientsCity"    column="recipients_city"    />
         <result property="recipientsArea"    column="recipients_area"    />
+        <association property="sysUser"     column="id" javaType="SysUser" resultMap="SysUserResult" />
     </resultMap>
-
+	
+	<resultMap type="SysUser" id="SysUserResult">
+		<id     property="userId"        column="user_id"         />
+		<result property="deptId"        column="dept_id"         />
+		<result property="loginName"     column="login_name"      />
+		<result property="userName"      column="user_name"       />
+		<result property="userType"      column="user_type"       />
+		<result property="email"         column="email"           />
+		<result property="phonenumber"   column="phonenumber"     />
+		<result property="sex"           column="sex"             />
+		<result property="avatar"        column="avatar"          />
+		<result property="password"      column="password"        />
+		<result property="salt"          column="salt"            />
+		<result property="status"        column="status"          />
+		<result property="delFlag"       column="del_flag"        />
+		<result property="loginIp"       column="login_ip"        />
+		<result property="loginDate"     column="login_date"      />
+		<result property="pwdUpdateDate" column="pwd_update_date" />
+		<result property="createBy"      column="create_by"       />
+		<result property="createTime"    column="create_time"     />
+		<result property="updateBy"      column="update_by"       />
+		<result property="updateTime"    column="update_time"     />
+		<result property="remark"        column="remark"          />
+	</resultMap>
+	
     <sql id="selectHyRecipientsVo">
         select 
         c.id, 
         c.person_type, 
         c.recipients_property, 
+        c.recipients_parent, 
         c.recipients_dept, 
         c.recipients_employee, 
         c.recipients_phone, 
@@ -30,9 +57,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         c.notification_type, 
         c.recipients_province, 
         c.recipients_city, 
-        c.recipients_area
+        c.recipients_area,
+        u.user_name
         from 
         hy_recipients c
+        left join sys_user u on c.recipients_employee = u.user_id
     </sql>
 
     <select id="selectHyRecipientsList" parameterType="HyRecipients" resultMap="HyRecipientsResult">
@@ -40,6 +69,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
             <if test="personType != null  and personType != ''"> and c.person_type = #{personType}</if>
             <if test="recipientsProperty != null  and recipientsProperty != ''"> and c.recipients_property = #{recipientsProperty}</if>
+            <if test="recipientsParent != null  and recipientsParent != ''"> and c.recipients_parent = #{recipientsParent}</if>
             <if test="recipientsDept != null  and recipientsDept != ''"> and c.recipients_dept = #{recipientsDept}</if>
             <if test="recipientsEmployee != null  and recipientsEmployee != ''"> and c.recipients_employee = #{recipientsEmployee}</if>
             <if test="recipientsPhone != null  and recipientsPhone != ''"> and c.recipients_phone like concat('%', #{recipientsPhone}, '%')</if>
@@ -61,6 +91,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="personType != null">person_type,</if>
             <if test="recipientsProperty != null">recipients_property,</if>
+            <if test="recipientsParent != null">recipients_parent,</if>
             <if test="recipientsDept != null">recipients_dept,</if>
             <if test="recipientsEmployee != null">recipients_employee,</if>
             <if test="recipientsPhone != null">recipients_phone,</if>
@@ -73,6 +104,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="personType != null">#{personType},</if>
             <if test="recipientsProperty != null">#{recipientsProperty},</if>
+            <if test="recipientsParent != null">#{recipientsParent},</if>
             <if test="recipientsDept != null">#{recipientsDept},</if>
             <if test="recipientsEmployee != null">#{recipientsEmployee},</if>
             <if test="recipientsPhone != null">#{recipientsPhone},</if>
@@ -89,6 +121,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="SET" suffixOverrides=",">
             <if test="personType != null">person_type = #{personType},</if>
             <if test="recipientsProperty != null">recipients_property = #{recipientsProperty},</if>
+            <if test="recipientsParent != null">recipients_parent = #{recipientsParent},</if>
             <if test="recipientsDept != null">recipients_dept = #{recipientsDept},</if>
             <if test="recipientsEmployee != null">recipients_employee = #{recipientsEmployee},</if>
             <if test="recipientsPhone != null">recipients_phone = #{recipientsPhone},</if>

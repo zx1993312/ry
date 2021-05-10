@@ -23,33 +23,36 @@
             <div class="form-group">
             	<label class="col-sm-3 control-label">选择物业：</label>
                 	<div class="col-sm-8">
-	                	<select class="city form-control m-b" name="recipientsDept" th:field="*{recipientsProperty}" id="property" data-first-title="选择部门" th:with="type=${@dept.getDept()}" onchange="changeDept()">
+	                	<select class="city form-control m-b" name="recipientsProperty" th:field="*{recipientsProperty}" id="property" data-first-title="选择物业" th:with="type=${@dept.getDept()}" onchange="changeDept()">
 	                 	 <option value="">请选择</option>
-	                  		<option th:each="dict : ${type}" th:text="${dict.deptName}" th:value="${dict.deptId}"></option>
+	                  	<option th:each="dict : ${type}" th:text="${dict.deptName}" th:value="${dict.deptId}"></option>
 	                	</select>
 			    	</div>
 			</div> 
 			<div class="form-group">    
 			    <label class="col-sm-3 control-label">选择项目：</label>
                 	<div class="col-sm-8">
-	                	<select class="city form-control m-b" name="recipientsDept" id="dept" data-first-title="选择项目" disabled="disabled" onchange="changeDepts()">
+	                	<select class="city form-control m-b" name="recipientsParent" th:field="*{recipientsParent}" id="dept" data-first-title="选择项目" th:with="type=${@dept.getDepts()}" onchange="changeDepts()">
 	                 	 <option value="">请选择</option>
+	                 	 <option th:each="dict : ${type}" th:text="${dict.deptName}" th:value="${dict.deptId}"></option>
 	                	</select>
                 	</div>
             </div>
 			<div class="form-group">    
 			    <label class="col-sm-3 control-label">选择部门：</label>
                 	<div class="col-sm-8">
-	                	<select class="city form-control m-b" name="recipientsDept" id="depts" data-first-title="选择部门" disabled="disabled" onchange="changeEmployee()">
+	                	<select class="city form-control m-b" name="recipientsDept" th:field="*{recipientsDept}" id="depts" data-first-title="选择部门" th:with="type=${@dept.getDepts()}" onchange="changeEmployee()">
 	                 	 <option value="">请选择</option>
+	                 	 <option th:each="dict : ${type}" th:text="${dict.deptName}" th:value="${dict.deptId}"></option>
 	                	</select>
                 	</div>
             </div>
             <div class="form-group">    
                <label class="col-sm-3 control-label">选择员工：</label>
                	<div class="col-sm-8">
-	                <select class="area form-control m-b" name="recipientsEmployee" id="employee" data-first-title="选择员工" disabled="disabled" onclick="changePhone()">
-	                  <option value="">请选择</option>
+	                <select class="area form-control m-b" th:field="*{recipientsEmployee}" name="recipientsEmployee" id="employee" data-first-title="选择员工" th:with="type=${@employee.getEmployee()}" onclick="changePhone()">
+	                  <option value="">请选择</option> 
+	                  <option th:each="dict : ${type}" th:text="${dict.userName}" th:value="${dict.userId}"></option>
 	                </select>
                 </div>
             </div>
@@ -90,19 +93,21 @@
             </div>
             <div id="element1" class="row">
                 <div class="col-sm-offset-2 col-sm-3">
-                    <select class="province form-control m-b" th:field="*{recipientsProvince}" name="recipientsProvince" id="province" data-first-title="选择省"  th:with="type=${@area.getProvince()}" onchange="changeCity()">
+                    <select class="province form-control m-b" th:field="*{recipientsProvince}" name="recipientsProvince" id="province" data-first-title="选择省" th:with="type=${@area.getProvince()}" onchange="changeCity()">
 	                  <option value="">省/直辖市</option>
 	                  <option th:each="dict : ${type}" th:text="${dict.areaname}" th:value="${dict.id}"></option>
 	                </select>
 			    </div>
                 <div class="col-sm-3">
-	                <select class="city form-control m-b" name="recipientsCity" id="city" data-first-title="选择市" onchange="changeArea()" disabled="disabled">
+	                <select class="city form-control m-b" th:field="*{recipientsCity}" name="recipientsCity" id="city" data-first-title="选择市" th:with="type=${@area.getCityList()}" onchange="changeArea()">
 	                  <option value="">市/直辖区</option>
+	                  <option th:each="dict : ${type}" th:text="${dict.areaname}" th:value="${dict.id}"></option>
 	                </select>
                 </div>
                 <div class="col-sm-3">
-	                <select class="area form-control m-b" name="recipientsArea" id="area" data-first-title="选择地区" disabled="disabled">
+	                <select class="area form-control m-b" th:field="*{recipientsArea}" name="recipientsArea" id="area" th:with="type=${@area.getCityList()}" data-first-title="选择地区">
 	                  <option value="">区/县</option>
+	                  <option th:each="dict : ${type}" th:text="${dict.areaname}" th:value="${dict.id}"></option>
 	                </select>
                 </div>
              </div> 

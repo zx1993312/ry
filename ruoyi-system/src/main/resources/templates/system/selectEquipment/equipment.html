@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('设备类别列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:equipment:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:equipment:remove')}]];
+        var prefix = ctx + "system/equipment";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "设备类别",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '设备类别id',
+                    visible: false
+                },
+                {
+                    field: 'parentId',
+                    title: '父设备id',
+                    visible: false
+                },
+                {
+                    field: 'equipmentCode',
+                    title: '设备类别代码',
+                    visible: false
+                },
+                {
+                    field: 'equipmentName',
+                    title: '设备名称'
+                },
+                {
+                    field: 'equipmentExplains',
+                    title: '设备说明'
+                },
+                {
+                    field: 'equipmentDetail',
+                    title: '是否明细',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case '0' : value =  "否";break;
+	                    	case '1' : value =  "是";break;
+	                	}
+		            	return value;
+		            }
+                },
+                {
+                    field: 'sysDept.deptName',
+                    title: '组织机构'
+                }]
+            };
+            $.table.init(options);
+        });
+        function submitHandler() {
+        	var equipmentName = $.table.selectColumns('equipmentName');
+        	if(equipmentName == ''){
+        		$.modal.alertWarning("请至少选择一条记录");
+        	}else{
+        		$("#archivesSort",window.parent.document).val(equipmentName);
+        	}
+        	$.modal.close();
+        }
+    </script>
+</body>
+</html>

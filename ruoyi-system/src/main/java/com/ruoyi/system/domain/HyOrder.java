@@ -2,6 +2,7 @@ package com.ruoyi.system.domain;
 
 import java.util.Date;
 import com.ruoyi.common.annotation.Excel;
+import com.ruoyi.common.annotation.Excel.Type;
 import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
@@ -37,7 +38,7 @@ public class HyOrder extends BaseEntity
     @Excel(name = "数量")
     private Long number;
     /**订单状态*/
-    @Excel(name="订单状态")
+    @Excel(name="订单状态", readConverterExp = "1=已支付,2=已预约,3=已完成")
     private String state;
     /**用户表*/
     @Excel(name="用户表")
@@ -49,7 +50,7 @@ public class HyOrder extends BaseEntity
     @Excel(name="图片地址")
     private String fileName;
     /**创建时间*/
-    @Excel(name="创建时间")
+    @Excel(name="创建时间",width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss", type = Type.EXPORT)
     private Date createTime;
     
     /**产品id*/

@@ -4,6 +4,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
+import com.ruoyi.common.core.domain.entity.SysUser;
 
 /**
  * 接收员对象 hy_recipients
@@ -26,6 +27,10 @@ public class HyRecipients extends BaseEntity
     @Excel(name = "选择物业")
     private String recipientsProperty;
 
+    /** 选择项目 */
+    @Excel(name = "选择项目")
+    private String recipientsParent;
+    
     /** 选择部门 */
     @Excel(name = "选择部门")
     private String recipientsDept;
@@ -57,6 +62,10 @@ public class HyRecipients extends BaseEntity
     /** 区/县 */
     @Excel(name = "区/县")
     private String recipientsArea;
+    
+    /** 员工表 */
+    @Excel(name = "员工表")
+    private SysUser sysUser;
 
     public void setId(Long id) 
     {
@@ -82,6 +91,14 @@ public class HyRecipients extends BaseEntity
 
 	public void setRecipientsProperty(String recipientsProperty) {
 		this.recipientsProperty = recipientsProperty;
+	}
+
+	public String getRecipientsParent() {
+		return recipientsParent;
+	}
+
+	public void setRecipientsParent(String recipientsParent) {
+		this.recipientsParent = recipientsParent;
 	}
 
 	public void setRecipientsDept(String recipientsDept) 
@@ -156,21 +173,24 @@ public class HyRecipients extends BaseEntity
         return recipientsArea;
     }
 
+	public SysUser getSysUser() {
+		return sysUser;
+	}
+
+	public void setSysUser(SysUser sysUser) {
+		this.sysUser = sysUser;
+	}
+
 	@Override
 	public String toString() {
 		return "HyRecipients [id=" + id + ", personType=" + personType + ", recipientsProperty=" + recipientsProperty
-				+ ", recipientsDept=" + recipientsDept + ", recipientsEmployee=" + recipientsEmployee
-				+ ", recipientsPhone=" + recipientsPhone + ", notificationWay=" + notificationWay
-				+ ", notificationType=" + notificationType + ", recipientsProvince=" + recipientsProvince
-				+ ", recipientsCity=" + recipientsCity + ", recipientsArea=" + recipientsArea + "]";
+				+ ", recipientsParent=" + recipientsParent + ", recipientsDept=" + recipientsDept
+				+ ", recipientsEmployee=" + recipientsEmployee + ", recipientsPhone=" + recipientsPhone
+				+ ", notificationWay=" + notificationWay + ", notificationType=" + notificationType
+				+ ", recipientsProvince=" + recipientsProvince + ", recipientsCity=" + recipientsCity
+				+ ", recipientsArea=" + recipientsArea + ", sysUser=" + sysUser + "]";
 	}
 
-
 	
 
-	
-
-	
-
-	
 }

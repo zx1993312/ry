@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyTechnicalMapper">
+    
+    <resultMap type="HyTechnical" id="HyTechnicalResult">
+        <result property="id"    column="id"    />
+        <result property="technicalName"    column="technical_name"    />
+        <result property="technicalMachine"    column="technical_machine"    />
+        <result property="technicalElectric"    column="technical_electric"    />
+        <result property="technicalInstruction"    column="technical_instruction"    />
+        <result property="archivesId"    column="archives_id"    />
+    </resultMap>
+
+    <sql id="selectHyTechnicalVo">
+        select 
+        t.id, 
+        t.technical_name, 
+        t.technical_machine, 
+        t.technical_electric, 
+        t.technical_instruction, 
+        t.archives_id 
+        from 
+        hy_technical t
+        LEFT JOIN hy_equipment_archives e ON t.archives_id = e.id
+    </sql>
+
+    <select id="selectHyTechnicalList" parameterType="HyTechnical" resultMap="HyTechnicalResult">
+        <include refid="selectHyTechnicalVo"/>
+        <where>  
+            <if test="technicalName != null  and technicalName != ''"> and t.technical_name like concat('%', #{technicalName}, '%')</if>
+            <if test="technicalMachine != null  and technicalMachine != ''"> and t.technical_machine = #{technicalMachine}</if>
+            <if test="technicalElectric != null  and technicalElectric != ''"> and t.technical_electric = #{technicalElectric}</if>
+            <if test="technicalInstruction != null  and technicalInstruction != ''"> and t.technical_instruction = #{technicalInstruction}</if>
+            <if test="archivesId != null "> and t.archives_id = #{archivesId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyTechnicalById" parameterType="Long" resultMap="HyTechnicalResult">
+        <include refid="selectHyTechnicalVo"/>
+        where t.id = #{id}
+    </select>
+        
+    <insert id="insertHyTechnical" parameterType="HyTechnical" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_technical
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="technicalName != null">technical_name,</if>
+            <if test="technicalMachine != null">technical_machine,</if>
+            <if test="technicalElectric != null">technical_electric,</if>
+            <if test="technicalInstruction != null">technical_instruction,</if>
+            <if test="archivesId != null">archives_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="technicalName != null">#{technicalName},</if>
+            <if test="technicalMachine != null">#{technicalMachine},</if>
+            <if test="technicalElectric != null">#{technicalElectric},</if>
+            <if test="technicalInstruction != null">#{technicalInstruction},</if>
+            <if test="archivesId != null">#{archivesId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyTechnical" parameterType="HyTechnical">
+        update hy_technical
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="technicalName != null">technical_name = #{technicalName},</if>
+            <if test="technicalMachine != null">technical_machine = #{technicalMachine},</if>
+            <if test="technicalElectric != null">technical_electric = #{technicalElectric},</if>
+            <if test="technicalInstruction != null">technical_instruction = #{technicalInstruction},</if>
+            <if test="archivesId != null">archives_id = #{archivesId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyTechnicalById" parameterType="Long">
+        delete from hy_technical where id = #{id}
+    </delete>
+
+    <delete id="deleteHyTechnicalByIds" parameterType="String">
+        delete from hy_technical where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改设备档案')" />
+    <th:block th:include="include :: datetimepicker-css" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-archives-edit" th:object="${hyEquipmentArchives}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">设备编号：</label>
+                <div class="col-sm-2">
+                    <input name="archivesNumber" th:field="*{archivesNumber}" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">设备名称：</label>
+                <div class="col-sm-2">
+                    <input name="archivesName" th:field="*{archivesName}" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">设备类别：</label>
+                <div class="col-sm-2">
+                    <input name="archivesSort" th:field="*{archivesSort}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">制造厂家：</label>
+                <div class="col-sm-2">
+                    <input name="archivesManufacturers" th:field="*{archivesManufacturers}" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">型号：</label>
+                <div class="col-sm-2">
+                    <input name="archivesType" th:field="*{archivesType}" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">规格：</label>
+                <div class="col-sm-2">
+                    <input name="archivesSpecification" th:field="*{archivesSpecification}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">购置日期：</label>
+                <div class="col-sm-2">
+                    <div class="input-group date">
+                        <input name="acquisitionDate" th:value="${#dates.format(hyEquipmentArchives.acquisitionDate, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+                <label class="col-sm-2 control-label">出厂日期：</label>
+                <div class="col-sm-2">
+                    <div class="input-group date">
+                        <input name="releaseDate" th:value="${#dates.format(hyEquipmentArchives.releaseDate, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+                <label class="col-sm-2 control-label">出厂编号：</label>
+                <div class="col-sm-2">
+                    <input name="releaseNumber" th:field="*{releaseNumber}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">安装日期：</label>
+                <div class="col-sm-2">
+                    <div class="input-group date">
+                        <input name="installationDate" th:value="${#dates.format(hyEquipmentArchives.installationDate, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+                <label class="col-sm-2 control-label">安装单位：</label>
+                <div class="col-sm-2">
+                    <input name="installationUnit" th:field="*{installationUnit}" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">存放位置：</label>
+                <div class="col-sm-2">
+                    <input name="storeAddress" th:field="*{storeAddress}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">使用日期：</label>
+                <div class="col-sm-2">
+                    <div class="input-group date">
+                        <input name="useDate" th:value="${#dates.format(hyEquipmentArchives.useDate, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+                <label class="col-sm-2 control-label">使用年限：</label>
+                <div class="col-sm-2">
+                    <input name="userYear" th:field="*{userYear}" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">报废时间：</label>
+                <div class="col-sm-2">
+                    <div class="input-group date">
+                        <input name="discardTime" th:value="${#dates.format(hyEquipmentArchives.discardTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">质保开始日期：</label>
+                <div class="col-sm-2">
+                    <div class="input-group date">
+                        <input name="commencementDate" th:value="${#dates.format(hyEquipmentArchives.commencementDate, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+                <label class="col-sm-2 control-label">质保年限：</label>
+                <div class="col-sm-2">
+                    <input name="warrantyPeriod" th:field="*{warrantyPeriod}" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">质保结束日期：</label>
+                <div class="col-sm-2">
+                    <div class="input-group date">
+                        <input name="endDate" th:value="${#dates.format(hyEquipmentArchives.endDate, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">原值：</label>
+                <div class="col-sm-2">
+                    <input name="originalValue" th:field="*{originalValue}" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">折旧率：</label>
+                <div class="col-sm-2">
+                    <input name="depreciationRate" th:field="*{depreciationRate}" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">现估价：</label>
+                <div class="col-sm-2">
+                    <input name="nowPrice" th:field="*{nowPrice}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">已提折旧：</label>
+                <div class="col-sm-2">
+                    <input name="mentionDepreciation" th:field="*{mentionDepreciation}" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">净值：</label>
+                <div class="col-sm-2">
+                    <input name="netValue" th:field="*{netValue}" class="form-control" type="text">
+                </div>
+                 <label class="col-sm-2 control-label">设备图号：</label>
+                <div class="col-sm-2">
+                    <input name="equipmentDraw" th:field="*{equipmentDraw}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">使用范围：</label>
+                <div class="col-sm-2">
+                    <input name="useRange" th:field="*{useRange}" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">单位：</label>
+                <div class="col-sm-2">
+                    <input name="unit" th:field="*{unit}" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">数量：</label>
+                <div class="col-sm-2">
+                    <input name="number" th:field="*{number}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">  
+            	<label class="col-sm-2 control-label">设备责任人：</label>
+                <div class="col-sm-2">
+                    <select id="userId" name="userId" th:field="*{userId}" class="form-control" th:with="type=${@user.getUser()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.userName}" th:value="${data.userId}"></option>
+			 	    </select>
+                </div>  
+                <label class="col-sm-2 control-label">占地面积：</label>
+                <div class="col-sm-8">
+                    <input name="floorSpace" th:field="*{floorSpace}" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">组织机构：</label>
+                <div class="col-sm-2">
+                    <select id="deptId" th:field="*{deptId}" name="deptId" class="form-control" th:with="type=${@dept.getDepts()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.deptName}" th:value="${data.deptId}"></option>
+			 	    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">产权归属：</label>
+                <div class="col-sm-2">
+                    <input name="propertyOwnership" th:field="*{propertyOwnership}" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">使用说明书：</label>
+                <div class="col-sm-2">
+                    <input name="operationInstruction" th:field="*{operationInstruction}" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">技术资料：</label>
+                <div class="col-sm-2">
+                    <input name="technicalData" th:field="*{technicalData}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                 <label class="col-sm-3 control-label">备注：</label>
+                <div class="col-sm-8">
+                    <input name="remark" th:field="*{remark}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group"> 
+            	<label class="col-sm-2 control-label">图片：</label>
+                <div class="col-sm-2">
+                    <input name="archivesPicture" id="pic" class="form-control" type="hidden">
+					<a id="url"><img th:src="*{archivesPicture}" style="width: 90px;height: 90px"></a>
+					<input type="file" id="abc">
+                </div> 
+            	<label class="col-sm-2 control-label">使用状态：</label>
+                <div class="col-sm-2">
+                    <select name="useState" th:field="*{useState}" class="form-control ">
+                        <option value=''>请选择</option>
+                        <option value='1'>在用</option>
+                        <option value='2'>停用</option>
+                        <option value='3'>报废</option>
+                    </select>
+                </div>  
+                <label class="col-sm-2 control-label">扫描码：</label>
+                <div class="col-sm-2">
+                    <input name="scanCode" th:field="*{scanCode}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">正常期（年）：</label>
+                <div class="col-sm-8">
+                    <input name="normalEpoch" th:field="*{normalEpoch}" class="form-control" type="text">
+                </div>
+                <label class="col-sm-3 control-label">运维期（年）：</label>
+                <div class="col-sm-8">
+                    <input name="operationalPeriod" th:field="*{operationalPeriod}" class="form-control" type="text">
+                </div>
+                <label class="col-sm-3 control-label">最近检测日期：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input name="testDate" th:value="${#dates.format(hyEquipmentArchives.testDate, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+            	<label class="col-sm-2 control-label">所属设备：</label>
+                <div class="col-sm-2">
+                    <select id="equipmentId" th:field="*{equipmentId}" name="equipmentId" class="form-control" th:with="type=${@equipment.getEquipment()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.equipmentName}" th:value="${data.id}"></option>
+			 	    </select>
+                </div>
+                <label class="col-sm-2 control-label">设备等级：</label>
+                <div class="col-sm-2">
+                     <select name="equipmentLevel" th:field="*{equipmentLevel}" class="form-control ">
+                        <option value=''>请选择</option>
+                        <option value='1'>A级</option>
+                        <option value='2'>B级</option>
+                        <option value='3'>C级</option>
+                    </select>
+                </div>
+                <label class="col-sm-2 control-label">移交日期：</label>
+                <div class="col-sm-2">
+                    <div class="input-group date">
+                        <input name="handoverDate" th:value="${#dates.format(hyEquipmentArchives.handoverDate, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">是否强制检测：</label>
+                <div class="col-sm-1">
+                  <input name="compulsoryTest" th:field="*{compulsoryTest}" value='1' type="radio">是
+               </div>
+               <div class="col-sm-1">
+                   <input name="compulsoryTest" th:field="*{compulsoryTest}" value='0' type="radio">否
+               </div>
+                <label class="col-sm-2 control-label">强制检测周期：</label>
+                <div class="col-sm-2">
+                    <input name="inspectionPeriod" th:field="*{inspectionPeriod}" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">检测周期：</label>
+                <div class="col-sm-2">
+                    <input name="detectionPeriod" th:field="*{detectionPeriod}" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: datetimepicker-js" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/archives";
+        $("#form-archives-edit").validate({
+        	rules : {
+        		archivesNumber : {
+					required : true,
+					maxlength:20,
+				},
+				archivesName : {
+					required : true,
+					maxlength:20,
+				},
+				archivesSort : {
+					required : true,
+					maxlength:20,
+				},
+				deptId : {
+					required : true,
+					maxlength:20,
+				},
+				archivesManufacturers : {
+					maxlength:20,
+				},
+				archivesType : {
+					maxlength:20,
+				},
+				archivesSpecification : {
+					maxlength:20,
+				},
+				releaseNumber : {
+					maxlength:20,
+				},
+				installationUnit : {
+					maxlength:20,
+				},
+				storeAddress : {
+					maxlength:20,
+				},
+				userYear : {
+					maxlength:5,
+				},
+				userYear : {
+					maxlength:5,
+				},
+				warrantyPeriod : {
+					maxlength:5,
+				},
+				originalValue : {
+					maxlength:7,
+				},
+				depreciationRate : {
+					maxlength:5,
+				},
+				nowPrice : {
+					maxlength:7,
+				},
+				mentionDepreciation : {
+					maxlength:6,
+				},
+				netValue : {
+					maxlength:6,
+				},
+				equipmentDraw : {
+					maxlength:20,
+				},
+				useRange : {
+					maxlength:20,
+				},
+				unit : {
+					maxlength:20,
+				},
+				number : {
+					maxlength:7,
+				},
+				floorSpace : {
+					maxlength:7,
+				},
+				propertyOwnership : {
+					maxlength:20,
+				},
+				operationInstruction : {
+					maxlength:20,
+				},
+				technicalData : {
+					maxlength:20,
+				},
+				remark : {
+					maxlength:255,
+				},
+				useState : {
+					maxlength:1,
+				},
+				scanCode : {
+					maxlength:255,
+				},
+				archivesPicture : {
+					maxlength:255,
+				},
+				normalEpoch : {
+					maxlength:5,
+				},
+				operationalPeriod : {
+					maxlength:5,
+				},
+				compulsoryTest : {
+					maxlength:1,
+				},
+				inspectionPeriod : {
+					maxlength:20,
+				},
+				detectionPeriod : {
+					maxlength:20,
+				},
+				equipmentId : {
+					maxlength:11,
+				},
+				userId : {
+					maxlength:11,
+				},
+				deptId : {
+					maxlength:11,
+				},
+			},
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-archives-edit').serialize());
+            }
+        }
+
+        $("input[name='acquisitionDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='releaseDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='installationDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='useDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='discardTime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='commencementDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='endDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='testDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='handoverDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+      //上传图片操作
+        $("#abc").change(function () {
+			var data = new FormData();
+			data.append("file", $("#abc")[0].files[0]);
+			$.ajax({
+				type: "POST",
+				url: ctx + "common/upload",
+				data: data,
+				cache: false,
+				contentType: false,
+				processData: false,
+				dataType: 'json',
+				success: function(result) {
+					// alert(JSON.stringify(result))
+					if (result.code == web_status.SUCCESS) {
+						$("#url img").attr("src",result.fileName)
+						$("#pic").val(result.fileName)
+					}
+				},
+				error: function(error) {
+					alert("图片上传失败。");
+				}
+			});
+		});
+    </script>
+</body>
+</html>

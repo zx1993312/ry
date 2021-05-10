@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyEquipmentMapper">
+    
+    <resultMap type="HyEquipment" id="HyEquipmentResult">
+        <result property="id"    column="id"    />
+        <result property="parentId"    column="parent_id"    />
+        <result property="equipmentCode"    column="equipment_code"    />
+        <result property="equipmentName"    column="equipment_name"    />
+        <result property="equipmentExplains"    column="equipment_explains"    />
+        <result property="equipmentDetail"    column="equipment_detail"    />
+        <result property="deptId"    column="dept_id"    />
+        <association property="sysDept" column="id"
+			javaType="SysDept" resultMap="SysDeptResult" />
+    </resultMap>
+	
+	<resultMap type="SysDept" id="SysDeptResult">
+		<id     property="deptId"     column="dept_id"     />
+		<result property="parentId"   column="parent_id"   />
+		<result property="ancestors"  column="ancestors"   />
+		<result property="deptName"   column="dept_name"   />
+		<result property="orderNum"   column="order_num"   />
+		<result property="leader"     column="leader"      />
+		<result property="phone"      column="phone"       />
+		<result property="email"      column="email"       />
+		<result property="status"     column="status"      />
+		<result property="delFlag"    column="del_flag"    />
+		<result property="parentName" column="parent_name" />
+		<result property="createBy"   column="create_by"   />
+		<result property="createTime" column="create_time" />
+		<result property="updateBy"   column="update_by"   />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+	
+    <sql id="selectHyEquipmentVo">
+        select 
+        e.id, 
+        e.parent_id, 
+        e.equipment_code, 
+        e.equipment_name, 
+        e.equipment_explains, 
+        e.equipment_detail, 
+        e.dept_id,
+        d.dept_name 
+        from 
+        hy_equipment e
+        LEFT JOIN sys_dept d ON  e.dept_id=d.dept_id
+    </sql>
+
+    <select id="selectHyEquipmentList" parameterType="HyEquipment" resultMap="HyEquipmentResult">
+        <include refid="selectHyEquipmentVo"/>
+        <where>  
+            <if test="parentId != null "> and e.parent_id = #{parentId}</if>
+            <if test="equipmentCode != null  and equipmentCode != ''"> and e.equipment_code = #{equipmentCode}</if>
+            <if test="equipmentName != null  and equipmentName != ''"> and e.equipment_name like concat('%', #{equipmentName}, '%')</if>
+            <if test="equipmentExplains != null  and equipmentExplains != ''"> and e.equipment_explains = #{equipmentExplains}</if>
+            <if test="equipmentDetail != null  and equipmentDetail != ''"> and e.equipment_detail = #{equipmentDetail}</if>
+            <if test="deptId != null "> and e.dept_id = #{deptId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyEquipmentById" parameterType="Long" resultMap="HyEquipmentResult">
+        <include refid="selectHyEquipmentVo"/>
+        where e.id = #{id}
+    </select>
+        
+    <insert id="insertHyEquipment" parameterType="HyEquipment" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_equipment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="parentId != null">parent_id,</if>
+            <if test="equipmentCode != null">equipment_code,</if>
+            <if test="equipmentName != null">equipment_name,</if>
+            <if test="equipmentExplains != null">equipment_explains,</if>
+            <if test="equipmentDetail != null">equipment_detail,</if>
+            <if test="deptId != null">dept_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="parentId != null">#{parentId},</if>
+            <if test="equipmentCode != null">#{equipmentCode},</if>
+            <if test="equipmentName != null">#{equipmentName},</if>
+            <if test="equipmentExplains != null">#{equipmentExplains},</if>
+            <if test="equipmentDetail != null">#{equipmentDetail},</if>
+            <if test="deptId != null">#{deptId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyEquipment" parameterType="HyEquipment">
+        update hy_equipment
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="parentId != null">parent_id = #{parentId},</if>
+            <if test="equipmentCode != null">equipment_code = #{equipmentCode},</if>
+            <if test="equipmentName != null">equipment_name = #{equipmentName},</if>
+            <if test="equipmentExplains != null">equipment_explains = #{equipmentExplains},</if>
+            <if test="equipmentDetail != null">equipment_detail = #{equipmentDetail},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyEquipmentById" parameterType="Long">
+        delete from hy_equipment where id = #{id}
+    </delete>
+
+    <delete id="deleteHyEquipmentByIds" parameterType="String">
+        delete from hy_equipment where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

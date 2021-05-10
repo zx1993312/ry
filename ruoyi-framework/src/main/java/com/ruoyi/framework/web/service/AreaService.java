@@ -30,6 +30,14 @@ public class AreaService {
 	}
 	
 	/**
+	 * 查询所有
+	 * 
+	 * @return
+	 */
+	public List<HyArea> getCityList() {
+		return hyAreaMapper.selectChinaCityList();
+	}
+	/**
 	 * 查询所有市方法
 	 * 
 	 * @return

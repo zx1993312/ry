@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增设备档案')" />
+    <th:block th:include="include :: datetimepicker-css" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-archives-add">
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">设备编号：</label>
+                <div class="col-sm-2">
+                    <input name="archivesNumber" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">设备名称：</label>
+                <div class="col-sm-2">
+                    <input name="archivesName" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">设备类别：</label>
+                <div class="col-sm-2">
+                    <input id="archivesSort" name="archivesSort" class="form-control" type="text" onclick="selectEquipment()">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">制造厂家：</label>
+                <div class="col-sm-2">
+                    <input name="archivesManufacturers" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">型号：</label>
+                <div class="col-sm-2">
+                    <input name="archivesType" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">规格：</label>
+                <div class="col-sm-2">
+                    <input name="archivesSpecification" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">购置日期：</label>
+                <div class="col-sm-2">
+                    <div class="input-group date">
+                        <input name="acquisitionDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+                <label class="col-sm-2 control-label">出厂日期：</label>
+                <div class="col-sm-2">
+                    <div class="input-group date">
+                        <input name="releaseDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+                 <label class="col-sm-2 control-label">出厂编号：</label>
+                <div class="col-sm-2">
+                    <input name="releaseNumber" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">安装日期：</label>
+                <div class="col-sm-2">
+                    <div class="input-group date">
+                        <input name="installationDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+                <label class="col-sm-2 control-label">安装单位：</label>
+                <div class="col-sm-2">
+                    <input name="installationUnit" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">存放位置：</label>
+                <div class="col-sm-2">
+                    <input name="storeAddress" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">使用日期：</label>
+                <div class="col-sm-2">
+                    <div class="input-group date">
+                        <input name="useDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+                <label class="col-sm-2 control-label">使用年限：</label>
+                <div class="col-sm-2">
+                    <input name="userYear" class="form-control" type="text">
+                </div>
+                 <label class="col-sm-2 control-label">报废时间：</label>
+                <div class="col-sm-2">
+                    <div class="input-group date">
+                        <input name="discardTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">质保开始日期：</label>
+                <div class="col-sm-2">
+                    <div class="input-group date">
+                        <input name="commencementDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+                <label class="col-sm-2 control-label">质保年限：</label>
+                <div class="col-sm-2">
+                    <input name="warrantyPeriod" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">质保结束日期：</label>
+                <div class="col-sm-2">
+                    <div class="input-group date">
+                        <input name="endDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">原值：</label>
+                <div class="col-sm-2">
+                    <input name="originalValue" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">折旧率：</label>
+                <div class="col-sm-2">
+                    <input name="depreciationRate" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">现估价：</label>
+                <div class="col-sm-2">
+                    <input name="nowPrice" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">已提折旧：</label>
+                <div class="col-sm-2">
+                    <input name="mentionDepreciation" class="form-control" type="text">
+                </div>
+                 <label class="col-sm-2 control-label">净值：</label>
+                <div class="col-sm-2">
+                    <input name="netValue" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">设备图号：</label>
+                <div class="col-sm-2">
+                    <input name="equipmentDraw" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">使用范围：</label>
+                <div class="col-sm-2">
+                    <input name="useRange" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">单位：</label>
+                <div class="col-sm-2">
+                    <input name="unit" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">数量：</label>
+                <div class="col-sm-2">
+                    <input name="number" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+            	<label class="col-sm-2 control-label">设备责任人：</label>
+                <div class="col-sm-2">
+                    <select id="userId" name="userId" class="form-control" th:with="type=${@user.getUser()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.userName}" th:value="${data.userId}"></option>
+			 	    </select>
+                </div>
+                <label class="col-sm-2 control-label">占地面积：</label>
+                <div class="col-sm-2">
+                    <input name="floorSpace" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">组织机构：</label>
+                <div class="col-sm-2">
+                    <select id="deptId" name="deptId" class="form-control" th:with="type=${@dept.getDepts()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.deptName}" th:value="${data.deptId}"></option>
+			 	    </select>
+                </div>
+            </div>
+            <div class="form-group">  
+            	<label class="col-sm-2 control-label">产权归属：</label>
+                <div class="col-sm-2">
+                    <input name="propertyOwnership" class="form-control" type="text">
+                </div>  
+                <label class="col-sm-2 control-label">使用说明书：</label>
+                <div class="col-sm-2">
+                    <input name="operationInstruction" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">技术资料：</label>
+                <div class="col-sm-2">
+                    <input name="technicalData" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+            	<label class="col-sm-3 control-label">备注：</label>
+                <div class="col-sm-8">
+                    <input name="remark" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+            	<label class="col-sm-2 control-label">图片：</label>
+                <div class="col-sm-2">
+                    <input name="archivesPicture" id="pic" class="form-control" type="hidden">
+					<a id="url"><img th:src="*{archivesPicture}" style="width: 90px;height: 90px"></a>
+					<input type="file" id="abc">
+                </div>    
+                <label class="col-sm-2 control-label">使用状态：</label>
+                <div class="col-sm-2">
+                    <select name="useState" class="form-control ">
+                        <option value=''>请选择</option>
+                        <option value='1'>在用</option>
+                        <option value='2'>停用</option>
+                        <option value='3'>报废</option>
+                    </select>
+                </div>
+                <label class="col-sm-2 control-label">扫描码：</label>
+                <div class="col-sm-2">
+                    <input name="scanCode" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">正常期（年）：</label>
+                <div class="col-sm-2">
+                    <input name="normalEpoch" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">运维期（年）：</label>
+                <div class="col-sm-2">
+                    <input name="operationalPeriod" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">最近检测日期：</label>
+                <div class="col-sm-2">
+                    <div class="input-group date">
+                        <input name="testDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+            	<label class="col-sm-2 control-label">所属设备：</label>
+                <div class="col-sm-2">
+                    <select id="equipmentId" name="equipmentId" class="form-control" th:with="type=${@equipment.getEquipment()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.equipmentName}" th:value="${data.id}"></option>
+			 	    </select>
+                </div>
+                <label class="col-sm-2 control-label">设备等级：</label>
+                <div class="col-sm-2">
+                    <select name="equipmentLevel" class="form-control ">
+                        <option value=''>请选择</option>
+                        <option value='1'>A级</option>
+                        <option value='2'>B级</option>
+                        <option value='3'>C级</option>
+                    </select>
+                </div>
+                <label class="col-sm-2 control-label">移交日期：</label>
+                <div class="col-sm-2">
+                    <div class="input-group date">
+                        <input name="handoverDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">是否强制检测：</label>
+                <div class="col-sm-1">
+                  <input name="compulsoryTest" value='1' type="radio" checked="checked">是
+               </div>
+               <div class="col-sm-1">
+                   <input name="compulsoryTest" value='0' type="radio">否
+               </div>
+                <label class="col-sm-2 control-label">强制检测周期：</label>
+                <div class="col-sm-2">
+                    <input name="inspectionPeriod" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">检测周期：</label>
+                <div class="col-sm-2">
+                    <input name="detectionPeriod" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+        <div class="col-sm-12">
+			<div class="tabs-container">
+				<ul class="nav nav-tabs">
+					<li id="tab1li" class="active">
+						<a data-toggle="tab" href="#tab-1" aria-expanded="true" onclick="tab(1)">附属设备及配件附件</a>
+					</li>
+					
+					<li id="tab2li" class="">
+						<a data-toggle="tab" href="#tab-2" aria-expanded="false" onclick="tab(2)">技术参数</a>
+					</li>
+					
+					<li id="tab3li" class="">
+						<a data-toggle="tab" href="#tab-3" aria-expanded="false" onclick="tab(3)">检测参数</a>
+					</li>
+					
+					<li id="tab4li" class="">
+						<a data-toggle="tab" href="#tab-4" aria-expanded="false" onclick="tab(4)">保养项目</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="tab-content ">
+			<div id="tab-1" class="tab-pane active">
+				<div class="row">
+					<div class="col-sm-12 select-table table-striped">
+						<table id="table1"></table>
+					</div>
+				</div>
+			</div>
+		
+			<div id="tab-2" class="tab-pane ">
+				<div class="row">
+					<div class="col-sm-12 select-table table-striped">
+						<table id="table2"></table>
+					</div>
+				</div>
+			</div>
+			
+			<div id="tab-3" class="tab-pane ">
+				<div class="row">
+					<div class="col-sm-12 select-table table-striped">
+						<table id="table3"></table>
+					</div>
+				</div>
+			</div>
+			
+			<div id="tab-4" class="tab-pane ">
+				<div class="row">
+					<div class="col-sm-12 select-table table-striped">
+						<table id="table4"></table>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: datetimepicker-js" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/archives"
+        $("#form-archives-add").validate({
+        	rules : {
+        		archivesNumber : {
+					required : true,
+					maxlength:20,
+				},
+				archivesName : {
+					required : true,
+					maxlength:20,
+				},
+				archivesSort : {
+					required : true,
+					maxlength:20,
+				},
+				deptId : {
+					required : true,
+					maxlength:20,
+				},
+				archivesManufacturers : {
+					maxlength:20,
+				},
+				archivesType : {
+					maxlength:20,
+				},
+				archivesSpecification : {
+					maxlength:20,
+				},
+				releaseNumber : {
+					maxlength:20,
+				},
+				installationUnit : {
+					maxlength:20,
+				},
+				storeAddress : {
+					maxlength:20,
+				},
+				userYear : {
+					maxlength:5,
+				},
+				userYear : {
+					maxlength:5,
+				},
+				warrantyPeriod : {
+					maxlength:5,
+				},
+				originalValue : {
+					maxlength:7,
+				},
+				depreciationRate : {
+					maxlength:5,
+				},
+				nowPrice : {
+					maxlength:7,
+				},
+				mentionDepreciation : {
+					maxlength:6,
+				},
+				netValue : {
+					maxlength:6,
+				},
+				equipmentDraw : {
+					maxlength:20,
+				},
+				useRange : {
+					maxlength:20,
+				},
+				unit : {
+					maxlength:20,
+				},
+				number : {
+					maxlength:7,
+				},
+				floorSpace : {
+					maxlength:7,
+				},
+				propertyOwnership : {
+					maxlength:20,
+				},
+				operationInstruction : {
+					maxlength:20,
+				},
+				technicalData : {
+					maxlength:20,
+				},
+				remark : {
+					maxlength:255,
+				},
+				useState : {
+					maxlength:1,
+				},
+				scanCode : {
+					maxlength:255,
+				},
+				archivesPicture : {
+					maxlength:255,
+				},
+				normalEpoch : {
+					maxlength:5,
+				},
+				operationalPeriod : {
+					maxlength:5,
+				},
+				compulsoryTest : {
+					maxlength:1,
+				},
+				inspectionPeriod : {
+					maxlength:20,
+				},
+				detectionPeriod : {
+					maxlength:20,
+				},
+				equipmentId : {
+					maxlength:11,
+				},
+				userId : {
+					maxlength:11,
+				},
+				deptId : {
+					maxlength:11,
+				},
+			},
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-archives-add').serialize());
+            }
+        }
+
+        $("input[name='acquisitionDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='releaseDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='installationDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='useDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='discardTime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='commencementDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='endDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='testDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='handoverDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+        
+        function selectEquipment(){
+        	$.modal.open("设备类别","/system/selectEquipment");
+        }
+      //上传图片操作
+        $("#abc").change(function () {
+			var data = new FormData();
+			data.append("file", $("#abc")[0].files[0]);
+			$.ajax({
+				type: "POST",
+				url: ctx + "common/upload",
+				data: data,
+				cache: false,
+				contentType: false,
+				processData: false,
+				dataType: 'json',
+				success: function(result) {
+					// alert(JSON.stringify(result))
+					if (result.code == web_status.SUCCESS) {
+						$("#url img").attr("src",result.fileName)
+						$("#pic").val(result.fileName)
+					}
+				},
+				error: function(error) {
+					alert("图片上传失败。");
+				}
+			});
+		});
+      
+        var prefix1 = ctx + "system/accessories"
+        $(function() {
+            var options = {
+            		tableId : "table1",
+            		showSearch: false,
+    		        showRefresh: false,
+    		        showToggle: false,
+    		        showColumns: false,
+                url: prefix1 + "/list",
+                createUrl: prefix1 + "/add",
+                updateUrl: prefix1 + "/edit/{id}",
+                removeUrl: prefix1 + "/remove",
+                exportUrl: prefix1 + "/export",
+                modalName: "所属设备及配件附件",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '所属设备id',
+                    visible: false
+                },
+                {
+                    field: 'hyEquipmentArchives.archivesNumber',
+                    title: '编号'
+                },
+                {
+                    field: 'hyEquipmentArchives.archivesName',
+                    title: '名称'
+                },
+                {
+                    field: 'hyEquipmentArchives.number',
+                    title: '数量'
+                },
+                {
+                    field: 'hyEquipmentArchives.archivesSort',
+                    title: '设备类别'
+                },
+                {
+                    field: 'hyEquipmentArchives.unit',
+                    title: '单位'
+                },
+                {
+                    field: 'hyEquipmentArchives.archivesType',
+                    title: '规格型号'
+                },
+                {
+                    field: 'hyEquipmentArchives.useState',
+                    title: '使用状态',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case '' : value =  "请选择";break;
+	                    	case '1' : value =  "在用";break;
+	                    	case '2' : value =  "停用";break;
+	                    	case '3' : value =  "报废";break;
+	                	}
+		            	return value;
+		            }
+                },
+                {
+                    field: 'hyEquipmentArchives.equipmentLevel',
+                    title: '设备等级',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case '' : value =  "请选择";break;
+	                    	case '1' : value =  "A级";break;
+	                    	case '2' : value =  "B级";break;
+	                    	case '3' : value =  "C级";break;
+	                	}
+		             	return value;
+		            }
+                },
+                {
+                    field: 'hyEquipmentArchives.storeAddress',
+                    title: '存放位置'
+                },
+                {
+                    field: 'hyEquipmentArchives.archivesManufacturers',
+                    title: '制造商'
+                },
+                {
+                    field: 'performanceParameters',
+                    title: '主要性能参数'
+                },
+                {
+                    field: 'hyEquipmentArchives.remark',
+                    title: '备注'
+                }]
+            };
+            $.table.initOtherTable(options);
+        });
+        
+        function tab(value){
+    		console.log(value);
+    		if(value == 1){
+    	        $.ajax({
+                    url: prefix1 + "/list",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    type: 'POST',
+                    success: function (result) {
+                        if (result.code == web_status.SUCCESS) {
+                            var options = {
+                            		tableId : "table1",
+                            		showSearch: false,
+                    		        showRefresh: false,
+                    		        showToggle: false,
+                    		        showColumns: false,
+                                url: prefix1 + "/list",
+                                createUrl: prefix1 + "/add",
+                                updateUrl: prefix1 + "/edit/{id}",
+                                removeUrl: prefix1 + "/remove",
+                                exportUrl: prefix1 + "/export",
+                                modalName: "所属设备及配件附件",
+                                columns: [{
+                                    checkbox: true
+                                },
+                                {
+                                    field: 'id',
+                                    title: '所属设备id',
+                                    visible: false
+                                },
+                                {
+                                    field: 'hyEquipmentArchives.archivesNumber',
+                                    title: '编号'
+                                },
+                                {
+                                    field: 'hyEquipmentArchives.archivesName',
+                                    title: '名称'
+                                },
+                                {
+                                    field: 'hyEquipmentArchives.number',
+                                    title: '数量'
+                                },
+                                {
+                                    field: 'hyEquipmentArchives.archivesSort',
+                                    title: '设备类别'
+                                },
+                                {
+                                    field: 'hyEquipmentArchives.unit',
+                                    title: '单位'
+                                },
+                                {
+                                    field: 'hyEquipmentArchives.archivesType',
+                                    title: '规格型号'
+                                },
+                                {
+                                    field: 'hyEquipmentArchives.useState',
+                                    title: '使用状态',
+                                    formatter: function(value, item, index) {
+                                    	switch(value){
+                	                    	case '' : value =  "请选择";break;
+                	                    	case '1' : value =  "在用";break;
+                	                    	case '2' : value =  "停用";break;
+                	                    	case '3' : value =  "报废";break;
+                	                	}
+                		            	return value;
+                		            }
+                                },
+                                {
+                                    field: 'hyEquipmentArchives.equipmentLevel',
+                                    title: '设备等级',
+                                    formatter: function(value, item, index) {
+                                    	switch(value){
+                	                    	case '' : value =  "请选择";break;
+                	                    	case '1' : value =  "A级";break;
+                	                    	case '2' : value =  "B级";break;
+                	                    	case '3' : value =  "C级";break;
+                	                	}
+                		             	return value;
+                		            }
+                                },
+                                {
+                                    field: 'hyEquipmentArchives.storeAddress',
+                                    title: '存放位置'
+                                },
+                                {
+                                    field: 'hyEquipmentArchives.archivesManufacturers',
+                                    title: '制造商'
+                                },
+                                {
+                                    field: 'performanceParameters',
+                                    title: '主要性能参数'
+                                },
+                                {
+                                    field: 'hyEquipmentArchives.remark',
+                                    title: '备注'
+                                }]
+                            };
+                	            $.table.initOtherTable(options);
+                        }  else {
+                            $.modal.enable();
+                            $.modal.alertError(result.msg);
+                        }
+                    }
+                });
+    	        
+    			
+    		} else if(value == 2) {
+    			var prefix2 = ctx + "system/technical";
+    	        $.ajax({
+                    url: prefix2 + "/list",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    type: 'POST',
+                    success: function (result) {
+                        if (result.code == web_status.SUCCESS) {
+                            var options = {
+                            		tableId : "table2",
+                            		showSearch: false,
+                    		        showRefresh: false,
+                    		        showToggle: false,
+                    		        showColumns: false,
+                                    url: prefix2 + "/list",
+                                    createUrl: prefix2 + "/add",
+                                    updateUrl: prefix2 + "/edit/{id}",
+                                    removeUrl: prefix2 + "/remove",
+                                    exportUrl: prefix2 + "/export",
+                                    modalName: "技术参数",
+                                    columns: [{
+                                        checkbox: true
+                                    },
+                                    {
+                                        field: 'id',
+                                        title: '技术参数id',
+                                        visible: false
+                                    },
+                                    {
+                                        field: 'technicalName',
+                                        title: '参数名称'
+                                    },
+                                    {
+                                        field: 'technicalMachine',
+                                        title: '技术参数'
+                                    },
+                                    {
+                                        field: 'technicalElectric',
+                                        title: '技术参数'
+                                    },
+                                    {
+                                        field: 'technicalInstruction',
+                                        title: '补充说明'
+                                    }]
+                                };
+                	            $.table.initOtherTable(options);
+                        }  else {
+                            $.modal.enable();
+                            $.modal.alertError(result.msg);
+                        }
+                    }
+                });
+    		}else if(value == 3) {
+    			var prefix3 = ctx + "system/testparameter"
+
+    	        $.ajax({
+                    url: prefix3 + "/list",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    type: 'POST',
+                    success: function (result) {
+                        if (result.code == web_status.SUCCESS) {
+                            var options = {
+                            		tableId : "table3",
+                            		showSearch: false,
+                    		        showRefresh: false,
+                    		        showToggle: false,
+                    		        showColumns: false,
+                                    url: prefix3 + "/list",
+                                    createUrl: prefix3 + "/add",
+                                    updateUrl: prefix3 + "/edit/{id}",
+                                    removeUrl: prefix3 + "/remove",
+                                    exportUrl: prefix3 + "/export",
+                                    modalName: "检测参数",
+                                    columns: [{
+                                        checkbox: true
+                                    },
+                                    {
+                                        field: 'id',
+                                        title: '检测参数id',
+                                        visible: false
+                                    },
+                                    {
+                                        field: 'parameterName',
+                                        title: '检测参数名称'
+                                    },
+                                    {
+                                        field: 'parameterValues',
+                                        title: '参数值'
+                                    },
+                                    {
+                                        field: 'leastValue',
+                                        title: '最小值'
+                                    },
+                                    {
+                                        field: 'maximumValue',
+                                        title: '最大值'
+                                    },
+                                    {
+                                        field: 'parameterRemark',
+                                        title: '备注'
+                                    }]
+                                };
+                	            $.table.initOtherTable(options);
+                        }  else {
+                            $.modal.enable();
+                            $.modal.alertError(result.msg);
+                        }
+                    }
+                });
+    		}else if(value == 4) {
+    			var prefix4 = ctx + "system/maintenanceproject"
+
+    	        $.ajax({
+                    url: prefix4 + "/list",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    type: 'POST',
+                    success: function (result) {
+                        if (result.code == web_status.SUCCESS) {
+                            var options = {
+                            		tableId : "table4",
+                            		showSearch: false,
+                    		        showRefresh: false,
+                    		        showToggle: false,
+                    		        showColumns: false,
+                                    url: prefix4 + "/list",
+                                    createUrl: prefix4 + "/add",
+                                    updateUrl: prefix4 + "/edit/{id}",
+                                    removeUrl: prefix4 + "/remove",
+                                    exportUrl: prefix4 + "/export",
+                                    modalName: "保养项目",
+                                    columns: [{
+                                        checkbox: true
+                                    },
+                                    {
+                                        field: 'id',
+                                        title: '保养项目id',
+                                        visible: false
+                                    },
+                                    {
+                                        field: 'maintenanceItem',
+                                        title: '保养项目编号'
+                                    },
+                                    {
+                                        field: 'maintenanceContent',
+                                        title: '保养内容'
+                                    },
+                                    {
+                                        field: 'maintenanceStandards',
+                                        title: '保养标准'
+                                    },
+                                    {
+                                        field: 'maintenanceCycle',
+                                        title: '设备保养周期',
+                                        formatter: function(value, item, index) {
+                                        	switch(value){
+                    	                    	case '' : value =  "请选择";break;
+                    	                    	case '1' : value =  "年度";break;
+                    	                    	case '2' : value =  "半年度";break;
+                    	                    	case '3' : value =  "季度";break;
+                    	                    	case '4' : value =  "月度";break;
+                    	                    	case '5' : value =  "500小时";break;
+                    	                    	case '6' : value =  "半月度";break;
+                    	                    	case '7' : value =  "周";break;
+                    	                    	case '8' : value =  "日";break;
+                    	                	}
+                    		            	return value;
+                    		            }
+                                    }]
+                                };
+                	            $.table.initOtherTable(options);
+                        }  else {
+                            $.modal.enable();
+                            $.modal.alertError(result.msg);
+                        }
+                    }
+                });
+    		}
+    	}
+    </script>
+</body>
+</html>

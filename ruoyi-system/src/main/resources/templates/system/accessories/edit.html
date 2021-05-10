@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改所属设备及配件附件')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-accessories-edit" th:object="${hyAccessories}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">主要性能参数：</label>
+                <div class="col-sm-8">
+                    <input name="performanceParameters" th:field="*{performanceParameters}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">设备档案：</label>
+                <div class="col-sm-8">
+                    <select id="archivesId" th:field="*{archivesId}" name="archivesId" class="form-control" th:with="type=${@archives.getArchives()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.archivesName}" th:value="${data.id}"></option>
+			 	    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/accessories";
+        $("#form-accessories-edit").validate({
+        	rules : {
+        		performanceParameters : {
+					required : true,
+					maxlength:20,
+				},
+				archivesId : {
+					required : true,
+					maxlength:11,
+				},
+			},
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-accessories-edit').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

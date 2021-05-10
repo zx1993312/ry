@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增设备类别')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-equipment-add">
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">父设备：</label>
+                <div class="col-sm-4">
+                     <select id="parentId" name="parentId" class="form-control" th:with="type=${@equipment.getEquipment()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.equipmentName}" th:value="${data.id}"></option>
+			 	    </select>
+                </div>
+                <label class="col-sm-2 control-label">设备名称：</label>
+                <div class="col-sm-4">
+                    <input name="equipmentName" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">设备说明：</label>
+                <div class="col-sm-4">
+                    <input name="equipmentExplains" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">是否明细：</label>
+               <div class="col-sm-2">
+                  <input name="equipmentDetail" value='1' type="radio" checked="checked">是
+               </div>
+               <div class="col-sm-2">
+                   <input name="equipmentDetail" value='0' type="radio">否
+               </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">组织机构：</label>
+                <div class="col-sm-4">
+                    <select id="deptId" name="deptId" class="form-control" th:with="type=${@dept.getDepts()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.deptName}" th:value="${data.deptId}"></option>
+			 	    </select>
+                </div>
+            </div>
+        </form>
+         <div class="col-sm-6">
+			<div class="tabs-container">
+				<ul class="nav nav-tabs">
+					<li id="tab1li" class="active">
+						<a data-toggle="tab" href="#tab-1" aria-expanded="true" onclick="tab(1)">保养项目</a>
+					</li>
+					
+					<li id="tab2li" class="">
+						<a data-toggle="tab" href="#tab-2" aria-expanded="false" onclick="tab(2)">运行参数</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="tab-content ">
+			<div id="tab-1" class="tab-pane active">
+				<div class="row">
+					<div class="col-sm-12 select-table table-striped">
+						<table id="table1"></table>
+					</div>
+				</div>
+			</div>
+		
+			<div id="tab-2" class="tab-pane ">
+				<div class="row">
+					<div class="col-sm-12 select-table table-striped">
+						<table id="table2"></table>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/equipment"
+        $("#form-equipment-add").validate({
+        	rules : {
+        		parentId : {
+					required : true,
+					maxlength:11,
+				},
+				equipmentCode : {
+					required : true,
+					maxlength:20,
+				},
+				equipmentName : {
+					required : true,
+					maxlength:20,
+				},
+				deptId : {
+					required : true,
+					maxlength:11,
+				},
+				equipmentExplains : {
+					maxlength:255,
+				},
+			},
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-equipment-add').serialize());
+            }
+        }
+        
+        var prefix1 = ctx + "system/maintenanceproject"
+        $(function() {
+            var options = {
+            		tableId : "table1",
+            		showSearch: false,
+    		        showRefresh: false,
+    		        showToggle: false,
+    		        showColumns: false,
+                url: prefix1 + "/list",
+                createUrl: prefix1 + "/add",
+                updateUrl: prefix1 + "/edit/{id}",
+                removeUrl: prefix1 + "/remove",
+                exportUrl: prefix1 + "/export",
+                modalName: "保养项目",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '保养项目id',
+                    visible: false
+                },
+                {
+                    field: 'maintenanceItem',
+                    title: '保养项目编号'
+                },
+                {
+                    field: 'maintenanceContent',
+                    title: '保养内容'
+                },
+                {
+                    field: 'maintenanceStandards',
+                    title: '保养标准'
+                },
+                {
+                    field: 'maintenanceCycle',
+                    title: '设备保养周期',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case '' : value =  "请选择";break;
+	                    	case '1' : value =  "年度";break;
+	                    	case '2' : value =  "半年度";break;
+	                    	case '3' : value =  "季度";break;
+	                    	case '4' : value =  "月度";break;
+	                    	case '5' : value =  "500小时";break;
+	                    	case '6' : value =  "半月度";break;
+	                    	case '7' : value =  "周";break;
+	                    	case '8' : value =  "日";break;
+	                	}
+		            	return value;
+		            }
+                }]
+            };
+            $.table.initOtherTable(options);
+        });
+        
+        function tab(value){
+    		console.log(value);
+    		if(value == 1){
+    	        $.ajax({
+                    url: prefix1 + "/list",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    type: 'POST',
+                    success: function (result) {
+                        if (result.code == web_status.SUCCESS) {
+                            var options = {
+                            		tableId : "table1",
+                            		showSearch: false,
+                    		        showRefresh: false,
+                    		        showToggle: false,
+                    		        showColumns: false,
+                                url: prefix1 + "/list",
+                                createUrl: prefix1 + "/add",
+                                updateUrl: prefix1 + "/edit/{id}",
+                                removeUrl: prefix1 + "/remove",
+                                exportUrl: prefix1 + "/export",
+                                modalName: "保养项目",
+                                columns: [{
+                                    checkbox: true
+                                },
+                                {
+                                    field: 'id',
+                                    title: '保养项目id',
+                                    visible: false
+                                },
+                                {
+                                    field: 'maintenanceItem',
+                                    title: '保养项目编号'
+                                },
+                                {
+                                    field: 'maintenanceContent',
+                                    title: '保养内容'
+                                },
+                                {
+                                    field: 'maintenanceStandards',
+                                    title: '保养标准'
+                                },
+                                {
+                                    field: 'maintenanceCycle',
+                                    title: '设备保养周期'
+                                }]
+                            };
+                	            $.table.initOtherTable(options);
+                        }  else {
+                            $.modal.enable();
+                            $.modal.alertError(result.msg);
+                        }
+                    }
+                });
+    	        
+    			
+    		} else if(value == 2) {
+    			var prefix2 = ctx + "system/parameter";
+
+    	        $.ajax({
+                    url: prefix2 + "/list",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    type: 'POST',
+                    success: function (result) {
+                        if (result.code == web_status.SUCCESS) {
+                            var options = {
+                            		tableId : "table2",
+                            		showSearch: false,
+                    		        showRefresh: false,
+                    		        showToggle: false,
+                    		        showColumns: false,
+                                    url: prefix2 + "/list",
+                                    createUrl: prefix2 + "/add",
+                                    updateUrl: prefix2 + "/edit/{id}",
+                                    removeUrl: prefix2 + "/remove",
+                                    exportUrl: prefix2 + "/export",
+                                    modalName: "运行参数",
+                                    columns: [{
+                                        checkbox: true
+                                    },
+                                    {
+                                        field: 'id',
+                                        title: '运行参数id',
+                                        visible: false
+                                    },
+                                    {
+                                        field: 'operationParameter',
+                                        title: '设备运行参数项'
+                                    },
+                                    {
+                                        field: 'criticalValue',
+                                        title: '临界值'
+                                    },
+                                    {
+                                        field: 'isRequired',
+                                        title: '是否为必录项',
+                                        formatter: function(value, item, index) {
+                                        	switch(value){
+                    	                    	case '' : value =  "请选择";break;
+                    	                    	case '1' : value =  "是";break;
+                    	                    	case '0' : value =  "否";break;
+                    	                	}
+                    		            	return value;
+                    		            }
+                                    }]
+                                };
+                	            $.table.initOtherTable(options);
+                        }  else {
+                            $.modal.enable();
+                            $.modal.alertError(result.msg);
+                        }
+                    }
+                });
+    		}
+    	}
+    </script>
+</body>
+</html>

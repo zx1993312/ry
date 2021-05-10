@@ -19,6 +19,14 @@ public interface HyAreaMapper {
 	public List<HyArea> selectChinaProvince();
 
 	/**
+	 * 查询所有
+	 * 
+	 * @return
+	 */
+	@Select("select id, areaname, parentid, shortname, areacode, zipcode, pinyin, lng, lat, level, position, sort  from area")
+	public List<HyArea> selectChinaCityList();
+	
+	/**
 	 * 查询所有市
 	 * 
 	 * @return

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyMaintenanceprojectMapper">
+    
+    <resultMap type="HyMaintenanceproject" id="HyMaintenanceprojectResult">
+        <result property="id"    column="id"    />
+        <result property="maintenanceItem"    column="maintenance_item"    />
+        <result property="maintenanceContent"    column="maintenance_content"    />
+        <result property="maintenanceStandards"    column="maintenance_standards"    />
+        <result property="maintenanceCycle"    column="maintenance_cycle"    />
+        <result property="archivesId"    column="archives_id"    />
+        <result property="equipmentId"    column="equipment_id"    />
+    </resultMap>
+
+    <sql id="selectHyMaintenanceprojectVo">
+        select 
+        m.id, 
+        m.maintenance_item, 
+        m.maintenance_content, 
+        m.maintenance_standards, 
+        m.maintenance_cycle, 
+        m.archives_id, 
+        m.equipment_id 
+        from 
+        hy_maintenanceproject m
+        LEFT JOIN hy_equipment_archives a ON m.archives_id = a.id
+        LEFT JOIN hy_equipment e ON m.equipment_id = e.id
+    </sql>
+
+    <select id="selectHyMaintenanceprojectList" parameterType="HyMaintenanceproject" resultMap="HyMaintenanceprojectResult">
+        <include refid="selectHyMaintenanceprojectVo"/>
+        <where>  
+            <if test="maintenanceItem != null  and maintenanceItem != ''"> and m.maintenance_item = #{maintenanceItem}</if>
+            <if test="maintenanceContent != null  and maintenanceContent != ''"> and m.maintenance_content = #{maintenanceContent}</if>
+            <if test="maintenanceStandards != null  and maintenanceStandards != ''"> and m.maintenance_standards = #{maintenanceStandards}</if>
+            <if test="maintenanceCycle != null  and maintenanceCycle != ''"> and m.maintenance_cycle = #{maintenanceCycle}</if>
+            <if test="archivesId != null "> and m.archives_id = #{archivesId}</if>
+            <if test="equipmentId != null "> and m.equipment_id = #{equipmentId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyMaintenanceprojectById" parameterType="Long" resultMap="HyMaintenanceprojectResult">
+        <include refid="selectHyMaintenanceprojectVo"/>
+        where m.id = #{id}
+    </select>
+        
+    <insert id="insertHyMaintenanceproject" parameterType="HyMaintenanceproject" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_maintenanceproject
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="maintenanceItem != null">maintenance_item,</if>
+            <if test="maintenanceContent != null">maintenance_content,</if>
+            <if test="maintenanceStandards != null">maintenance_standards,</if>
+            <if test="maintenanceCycle != null">maintenance_cycle,</if>
+            <if test="archivesId != null">archives_id,</if>
+            <if test="equipmentId != null">equipment_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="maintenanceItem != null">#{maintenanceItem},</if>
+            <if test="maintenanceContent != null">#{maintenanceContent},</if>
+            <if test="maintenanceStandards != null">#{maintenanceStandards},</if>
+            <if test="maintenanceCycle != null">#{maintenanceCycle},</if>
+            <if test="archivesId != null">#{archivesId},</if>
+            <if test="equipmentId != null">#{equipmentId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyMaintenanceproject" parameterType="HyMaintenanceproject">
+        update hy_maintenanceproject
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="maintenanceItem != null">maintenance_item = #{maintenanceItem},</if>
+            <if test="maintenanceContent != null">maintenance_content = #{maintenanceContent},</if>
+            <if test="maintenanceStandards != null">maintenance_standards = #{maintenanceStandards},</if>
+            <if test="maintenanceCycle != null">maintenance_cycle = #{maintenanceCycle},</if>
+            <if test="archivesId != null">archives_id = #{archivesId},</if>
+            <if test="equipmentId != null">equipment_id = #{equipmentId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyMaintenanceprojectById" parameterType="Long">
+        delete from hy_maintenanceproject where id = #{id}
+    </delete>
+
+    <delete id="deleteHyMaintenanceprojectByIds" parameterType="String">
+        delete from hy_maintenanceproject where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

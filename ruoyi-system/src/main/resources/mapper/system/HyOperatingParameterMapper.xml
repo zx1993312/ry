@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyOperatingParameterMapper">
+    
+    <resultMap type="HyOperatingParameter" id="HyOperatingParameterResult">
+        <result property="id"    column="id"    />
+        <result property="operationParameter"    column="operation_parameter"    />
+        <result property="criticalValue"    column="critical_value"    />
+        <result property="isRequired"    column="is_required"    />
+        <result property="equipmentId"    column="equipment_id"    />
+    </resultMap>
+
+    <sql id="selectHyOperatingParameterVo">
+        select id, operation_parameter, critical_value, is_required, equipment_id from hy_operating_parameter
+    </sql>
+
+    <select id="selectHyOperatingParameterList" parameterType="HyOperatingParameter" resultMap="HyOperatingParameterResult">
+        <include refid="selectHyOperatingParameterVo"/>
+        <where>  
+            <if test="operationParameter != null  and operationParameter != ''"> and operation_parameter = #{operationParameter}</if>
+            <if test="criticalValue != null  and criticalValue != ''"> and critical_value = #{criticalValue}</if>
+            <if test="isRequired != null  and isRequired != ''"> and is_required = #{isRequired}</if>
+            <if test="equipmentId != null "> and equipment_id = #{equipmentId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyOperatingParameterById" parameterType="Long" resultMap="HyOperatingParameterResult">
+        <include refid="selectHyOperatingParameterVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyOperatingParameter" parameterType="HyOperatingParameter" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_operating_parameter
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="operationParameter != null">operation_parameter,</if>
+            <if test="criticalValue != null">critical_value,</if>
+            <if test="isRequired != null">is_required,</if>
+            <if test="equipmentId != null">equipment_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="operationParameter != null">#{operationParameter},</if>
+            <if test="criticalValue != null">#{criticalValue},</if>
+            <if test="isRequired != null">#{isRequired},</if>
+            <if test="equipmentId != null">#{equipmentId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyOperatingParameter" parameterType="HyOperatingParameter">
+        update hy_operating_parameter
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="operationParameter != null">operation_parameter = #{operationParameter},</if>
+            <if test="criticalValue != null">critical_value = #{criticalValue},</if>
+            <if test="isRequired != null">is_required = #{isRequired},</if>
+            <if test="equipmentId != null">equipment_id = #{equipmentId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyOperatingParameterById" parameterType="Long">
+        delete from hy_operating_parameter where id = #{id}
+    </delete>
+
+    <delete id="deleteHyOperatingParameterByIds" parameterType="String">
+        delete from hy_operating_parameter where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

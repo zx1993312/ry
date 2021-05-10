@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyEquipmentArchivesMapper">
+    
+    <resultMap type="HyEquipmentArchives" id="HyEquipmentArchivesResult">
+        <result property="id"    column="id"    />
+        <result property="archivesNumber"    column="archives_number"    />
+        <result property="archivesName"    column="archives_name"    />
+        <result property="archivesSort"    column="archives_sort"    />
+        <result property="archivesManufacturers"    column="archives_manufacturers"    />
+        <result property="archivesType"    column="archives_type"    />
+        <result property="archivesSpecification"    column="archives_specification"    />
+        <result property="acquisitionDate"    column="acquisition_date"    />
+        <result property="releaseDate"    column="release_date"    />
+        <result property="releaseNumber"    column="release_number"    />
+        <result property="installationDate"    column="installation_date"    />
+        <result property="installationUnit"    column="installation_unit"    />
+        <result property="storeAddress"    column="store_address"    />
+        <result property="useDate"    column="use_date"    />
+        <result property="userYear"    column="user_year"    />
+        <result property="discardTime"    column="discard_time"    />
+        <result property="commencementDate"    column="commencement_date"    />
+        <result property="warrantyPeriod"    column="warranty_period"    />
+        <result property="endDate"    column="end_date"    />
+        <result property="originalValue"    column="original_value"    />
+        <result property="depreciationRate"    column="depreciation_rate"    />
+        <result property="nowPrice"    column="now_price"    />
+        <result property="mentionDepreciation"    column="mention_depreciation"    />
+        <result property="netValue"    column="net_value"    />
+        <result property="equipmentDraw"    column="equipment_draw"    />
+        <result property="useRange"    column="use_range"    />
+        <result property="unit"    column="unit"    />
+        <result property="number"    column="number"    />
+        <result property="floorSpace"    column="floor_space"    />
+        <result property="propertyOwnership"    column="property_ownership"    />
+        <result property="operationInstruction"    column="operation_instruction"    />
+        <result property="technicalData"    column="technical_data"    />
+        <result property="remark"    column="remark"    />
+        <result property="useState"    column="use_state"    />
+        <result property="scanCode"    column="scan_code"    />
+        <result property="archivesPicture"    column="archives_picture"    />
+        <result property="normalEpoch"    column="normal_epoch"    />
+        <result property="operationalPeriod"    column="operational_period"    />
+        <result property="testDate"    column="test_date"    />
+        <result property="equipmentLevel"    column="equipment_level"    />
+        <result property="handoverDate"    column="handover_date"    />
+        <result property="compulsoryTest"    column="compulsory_test"    />
+        <result property="inspectionPeriod"    column="inspection_period"    />
+        <result property="detectionPeriod"    column="detection_period"    />
+        <result property="equipmentId"    column="equipment_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="deptId"    column="dept_id"    />
+        <association property="hyEquipment" column="id"
+			javaType="HyEquipment" resultMap="HyEquipmentResult" />
+		<association property="sysUser" column="id"
+			javaType="SysUser" resultMap="SysUserResult" />
+        <association property="sysDept" column="id"
+			javaType="SysDept" resultMap="SysDeptResult" />
+    </resultMap>
+    
+     <resultMap type="HyEquipment" id="HyEquipmentResult">
+        <result property="id"    column="id"    />
+        <result property="parentId"    column="parent_id"    />
+        <result property="equipmentCode"    column="equipment_code"    />
+        <result property="equipmentName"    column="equipment_name"    />
+        <result property="equipmentExplains"    column="equipment_explains"    />
+        <result property="equipmentDetail"    column="equipment_detail"    />
+        <result property="deptId"    column="dept_id"    />
+    </resultMap>
+	
+	<resultMap type="SysUser" id="SysUserResult">
+		<id     property="userId"        column="user_id"         />
+		<result property="deptId"        column="dept_id"         />
+		<result property="loginName"     column="login_name"      />
+		<result property="userName"      column="user_name"       />
+		<result property="userType"      column="user_type"       />
+		<result property="email"         column="email"           />
+		<result property="phonenumber"   column="phonenumber"     />
+		<result property="sex"           column="sex"             />
+		<result property="avatar"        column="avatar"          />
+		<result property="password"      column="password"        />
+		<result property="salt"          column="salt"            />
+		<result property="status"        column="status"          />
+		<result property="delFlag"       column="del_flag"        />
+		<result property="loginIp"       column="login_ip"        />
+		<result property="loginDate"     column="login_date"      />
+		<result property="pwdUpdateDate" column="pwd_update_date" />
+		<result property="createBy"      column="create_by"       />
+		<result property="createTime"    column="create_time"     />
+		<result property="updateBy"      column="update_by"       />
+		<result property="updateTime"    column="update_time"     />
+		<result property="remark"        column="remark"          />
+	</resultMap>
+	
+	<resultMap type="SysDept" id="SysDeptResult">
+		<id     property="deptId"     column="dept_id"     />
+		<result property="parentId"   column="parent_id"   />
+		<result property="ancestors"  column="ancestors"   />
+		<result property="deptName"   column="dept_name"   />
+		<result property="orderNum"   column="order_num"   />
+		<result property="leader"     column="leader"      />
+		<result property="phone"      column="phone"       />
+		<result property="email"      column="email"       />
+		<result property="status"     column="status"      />
+		<result property="delFlag"    column="del_flag"    />
+		<result property="parentName" column="parent_name" />
+		<result property="createBy"   column="create_by"   />
+		<result property="createTime" column="create_time" />
+		<result property="updateBy"   column="update_by"   />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+	
+    <sql id="selectHyEquipmentArchivesVo">
+        select 
+        a.id, 
+        a.archives_number, 
+        a.archives_name, 
+        a.archives_sort, 
+        a.archives_manufacturers, 
+        a.archives_type, 
+        a.archives_specification, 
+        a.acquisition_date, 
+        a.release_date, 
+        a.release_number, 
+        a.installation_date, 
+        a.installation_unit, 
+        a.store_address, 
+        a.use_date, 
+        a.user_year, 
+        a.discard_time, 
+        a.commencement_date, 
+        a.warranty_period, 
+        a.end_date, 
+        a.original_value, 
+        a.depreciation_rate, 
+        a.now_price, 
+        a.mention_depreciation, 
+        a.net_value, 
+        a.equipment_draw, 
+        a.use_range, 
+        a.unit, 
+        a.number, 
+        a.floor_space, 
+        a.property_ownership, 
+        a.operation_instruction, 
+        a.technical_data, 
+        a.remark, 
+        a.use_state, 
+        a.scan_code, 
+        a.archives_picture, 
+        a.normal_epoch, 
+        a.operational_period, 
+        a.test_date, 
+        a.equipment_level, 
+        a.handover_date, 
+        a.compulsory_test, 
+        a.inspection_period, 
+        a.detection_period, 
+        a.equipment_id, 
+        a.user_id, 
+        a.dept_id,
+        e.equipment_name,
+        u.user_name,
+        d.dept_name
+        from 
+        hy_equipment_archives a
+        LEFT JOIN hy_equipment e ON  a.equipment_id=e.id
+        LEFT JOIN sys_user u ON  a.user_id=u.user_id
+        LEFT JOIN sys_dept d ON  a.dept_id=d.dept_id
+    </sql>
+
+    <select id="selectHyEquipmentArchivesList" parameterType="HyEquipmentArchives" resultMap="HyEquipmentArchivesResult">
+        <include refid="selectHyEquipmentArchivesVo"/>
+        <where>  
+            <if test="archivesNumber != null  and archivesNumber != ''"> and a.archives_number = #{archivesNumber}</if>
+            <if test="archivesName != null  and archivesName != ''"> and a.archives_name like concat('%', #{archivesName}, '%')</if>
+            <if test="archivesSort != null  and archivesSort != ''"> and a.archives_sort = #{archivesSort}</if>
+            <if test="archivesManufacturers != null  and archivesManufacturers != ''"> and a.archives_manufacturers = #{archivesManufacturers}</if>
+            <if test="archivesType != null  and archivesType != ''"> and a.archives_type = #{archivesType}</if>
+            <if test="archivesSpecification != null  and archivesSpecification != ''"> and a.archives_specification = #{archivesSpecification}</if>
+            <if test="acquisitionDate != null "> and a.acquisition_date = #{acquisitionDate}</if>
+            <if test="releaseDate != null "> and a.release_date = #{releaseDate}</if>
+            <if test="releaseNumber != null  and releaseNumber != ''"> and a.release_number = #{releaseNumber}</if>
+            <if test="installationDate != null "> and a.installation_date = #{installationDate}</if>
+            <if test="installationUnit != null  and installationUnit != ''"> and a.installation_unit = #{installationUnit}</if>
+            <if test="storeAddress != null  and storeAddress != ''"> and a.store_address = #{storeAddress}</if>
+            <if test="useDate != null "> and a.use_date = #{useDate}</if>
+            <if test="userYear != null "> and a.user_year = #{userYear}</if>
+            <if test="discardTime != null "> and a.discard_time = #{discardTime}</if>
+            <if test="commencementDate != null "> and a.commencement_date = #{commencementDate}</if>
+            <if test="warrantyPeriod != null "> and a.warranty_period = #{warrantyPeriod}</if>
+            <if test="endDate != null "> and a.end_date = #{endDate}</if>
+            <if test="originalValue != null "> and a.original_value = #{originalValue}</if>
+            <if test="depreciationRate != null "> and a.depreciation_rate = #{depreciationRate}</if>
+            <if test="nowPrice != null "> and a.now_price = #{nowPrice}</if>
+            <if test="mentionDepreciation != null "> and a.mention_depreciation = #{mentionDepreciation}</if>
+            <if test="netValue != null "> and a.net_value = #{netValue}</if>
+            <if test="equipmentDraw != null  and equipmentDraw != ''"> and a.equipment_draw = #{equipmentDraw}</if>
+            <if test="useRange != null  and useRange != ''"> and a.use_range = #{useRange}</if>
+            <if test="unit != null  and unit != ''"> and a.unit = #{unit}</if>
+            <if test="number != null "> and a.number = #{number}</if>
+            <if test="floorSpace != null "> and a.floor_space = #{floorSpace}</if>
+            <if test="propertyOwnership != null  and propertyOwnership != ''"> and a.property_ownership = #{propertyOwnership}</if>
+            <if test="operationInstruction != null  and operationInstruction != ''"> and a.operation_instruction = #{operationInstruction}</if>
+            <if test="technicalData != null  and technicalData != ''"> and a.technical_data = #{technicalData}</if>
+            <if test="useState != null  and useState != ''"> and a.use_state = #{useState}</if>
+            <if test="scanCode != null  and scanCode != ''"> and a.scan_code = #{scanCode}</if>
+            <if test="archivesPicture != null  and archivesPicture != ''"> and a.archives_picture = #{archivesPicture}</if>
+            <if test="normalEpoch != null "> and a.normal_epoch = #{normalEpoch}</if>
+            <if test="operationalPeriod != null "> and a.operational_period = #{operationalPeriod}</if>
+            <if test="testDate != null "> and a.test_date = #{testDate}</if>
+            <if test="equipmentLevel != null  and equipmentLevel != ''"> and a.equipment_level = #{equipmentLevel}</if>
+            <if test="handoverDate != null "> and a.handover_date = #{handoverDate}</if>
+            <if test="compulsoryTest != null  and compulsoryTest != ''"> and a.compulsory_test = #{compulsoryTest}</if>
+            <if test="inspectionPeriod != null  and inspectionPeriod != ''"> and a.inspection_period = #{inspectionPeriod}</if>
+            <if test="detectionPeriod != null  and detectionPeriod != ''"> and a.detection_period = #{detectionPeriod}</if>
+            <if test="equipmentId != null "> and a.equipment_id = #{equipmentId}</if>
+            <if test="userId != null "> and a.user_id = #{userId}</if>
+            <if test="deptId != null "> and a.dept_id = #{deptId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyEquipmentArchivesById" parameterType="Long" resultMap="HyEquipmentArchivesResult">
+        <include refid="selectHyEquipmentArchivesVo"/>
+        where a.id = #{id}
+    </select>
+        
+    <insert id="insertHyEquipmentArchives" parameterType="HyEquipmentArchives" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_equipment_archives
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="archivesNumber != null">archives_number,</if>
+            <if test="archivesName != null">archives_name,</if>
+            <if test="archivesSort != null">archives_sort,</if>
+            <if test="archivesManufacturers != null">archives_manufacturers,</if>
+            <if test="archivesType != null">archives_type,</if>
+            <if test="archivesSpecification != null">archives_specification,</if>
+            <if test="acquisitionDate != null">acquisition_date,</if>
+            <if test="releaseDate != null">release_date,</if>
+            <if test="releaseNumber != null">release_number,</if>
+            <if test="installationDate != null">installation_date,</if>
+            <if test="installationUnit != null">installation_unit,</if>
+            <if test="storeAddress != null">store_address,</if>
+            <if test="useDate != null">use_date,</if>
+            <if test="userYear != null">user_year,</if>
+            <if test="discardTime != null">discard_time,</if>
+            <if test="commencementDate != null">commencement_date,</if>
+            <if test="warrantyPeriod != null">warranty_period,</if>
+            <if test="endDate != null">end_date,</if>
+            <if test="originalValue != null">original_value,</if>
+            <if test="depreciationRate != null">depreciation_rate,</if>
+            <if test="nowPrice != null">now_price,</if>
+            <if test="mentionDepreciation != null">mention_depreciation,</if>
+            <if test="netValue != null">net_value,</if>
+            <if test="equipmentDraw != null">equipment_draw,</if>
+            <if test="useRange != null">use_range,</if>
+            <if test="unit != null">unit,</if>
+            <if test="number != null">number,</if>
+            <if test="floorSpace != null">floor_space,</if>
+            <if test="propertyOwnership != null">property_ownership,</if>
+            <if test="operationInstruction != null">operation_instruction,</if>
+            <if test="technicalData != null">technical_data,</if>
+            <if test="remark != null">remark,</if>
+            <if test="useState != null">use_state,</if>
+            <if test="scanCode != null">scan_code,</if>
+            <if test="archivesPicture != null">archives_picture,</if>
+            <if test="normalEpoch != null">normal_epoch,</if>
+            <if test="operationalPeriod != null">operational_period,</if>
+            <if test="testDate != null">test_date,</if>
+            <if test="equipmentLevel != null">equipment_level,</if>
+            <if test="handoverDate != null">handover_date,</if>
+            <if test="compulsoryTest != null">compulsory_test,</if>
+            <if test="inspectionPeriod != null">inspection_period,</if>
+            <if test="detectionPeriod != null">detection_period,</if>
+            <if test="equipmentId != null">equipment_id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="deptId != null">dept_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="archivesNumber != null">#{archivesNumber},</if>
+            <if test="archivesName != null">#{archivesName},</if>
+            <if test="archivesSort != null">#{archivesSort},</if>
+            <if test="archivesManufacturers != null">#{archivesManufacturers},</if>
+            <if test="archivesType != null">#{archivesType},</if>
+            <if test="archivesSpecification != null">#{archivesSpecification},</if>
+            <if test="acquisitionDate != null">#{acquisitionDate},</if>
+            <if test="releaseDate != null">#{releaseDate},</if>
+            <if test="releaseNumber != null">#{releaseNumber},</if>
+            <if test="installationDate != null">#{installationDate},</if>
+            <if test="installationUnit != null">#{installationUnit},</if>
+            <if test="storeAddress != null">#{storeAddress},</if>
+            <if test="useDate != null">#{useDate},</if>
+            <if test="userYear != null">#{userYear},</if>
+            <if test="discardTime != null">#{discardTime},</if>
+            <if test="commencementDate != null">#{commencementDate},</if>
+            <if test="warrantyPeriod != null">#{warrantyPeriod},</if>
+            <if test="endDate != null">#{endDate},</if>
+            <if test="originalValue != null">#{originalValue},</if>
+            <if test="depreciationRate != null">#{depreciationRate},</if>
+            <if test="nowPrice != null">#{nowPrice},</if>
+            <if test="mentionDepreciation != null">#{mentionDepreciation},</if>
+            <if test="netValue != null">#{netValue},</if>
+            <if test="equipmentDraw != null">#{equipmentDraw},</if>
+            <if test="useRange != null">#{useRange},</if>
+            <if test="unit != null">#{unit},</if>
+            <if test="number != null">#{number},</if>
+            <if test="floorSpace != null">#{floorSpace},</if>
+            <if test="propertyOwnership != null">#{propertyOwnership},</if>
+            <if test="operationInstruction != null">#{operationInstruction},</if>
+            <if test="technicalData != null">#{technicalData},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="useState != null">#{useState},</if>
+            <if test="scanCode != null">#{scanCode},</if>
+            <if test="archivesPicture != null">#{archivesPicture},</if>
+            <if test="normalEpoch != null">#{normalEpoch},</if>
+            <if test="operationalPeriod != null">#{operationalPeriod},</if>
+            <if test="testDate != null">#{testDate},</if>
+            <if test="equipmentLevel != null">#{equipmentLevel},</if>
+            <if test="handoverDate != null">#{handoverDate},</if>
+            <if test="compulsoryTest != null">#{compulsoryTest},</if>
+            <if test="inspectionPeriod != null">#{inspectionPeriod},</if>
+            <if test="detectionPeriod != null">#{detectionPeriod},</if>
+            <if test="equipmentId != null">#{equipmentId},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="deptId != null">#{deptId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyEquipmentArchives" parameterType="HyEquipmentArchives">
+        update hy_equipment_archives
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="archivesNumber != null">archives_number = #{archivesNumber},</if>
+            <if test="archivesName != null">archives_name = #{archivesName},</if>
+            <if test="archivesSort != null">archives_sort = #{archivesSort},</if>
+            <if test="archivesManufacturers != null">archives_manufacturers = #{archivesManufacturers},</if>
+            <if test="archivesType != null">archives_type = #{archivesType},</if>
+            <if test="archivesSpecification != null">archives_specification = #{archivesSpecification},</if>
+            <if test="acquisitionDate != null">acquisition_date = #{acquisitionDate},</if>
+            <if test="releaseDate != null">release_date = #{releaseDate},</if>
+            <if test="releaseNumber != null">release_number = #{releaseNumber},</if>
+            <if test="installationDate != null">installation_date = #{installationDate},</if>
+            <if test="installationUnit != null">installation_unit = #{installationUnit},</if>
+            <if test="storeAddress != null">store_address = #{storeAddress},</if>
+            <if test="useDate != null">use_date = #{useDate},</if>
+            <if test="userYear != null">user_year = #{userYear},</if>
+            <if test="discardTime != null">discard_time = #{discardTime},</if>
+            <if test="commencementDate != null">commencement_date = #{commencementDate},</if>
+            <if test="warrantyPeriod != null">warranty_period = #{warrantyPeriod},</if>
+            <if test="endDate != null">end_date = #{endDate},</if>
+            <if test="originalValue != null">original_value = #{originalValue},</if>
+            <if test="depreciationRate != null">depreciation_rate = #{depreciationRate},</if>
+            <if test="nowPrice != null">now_price = #{nowPrice},</if>
+            <if test="mentionDepreciation != null">mention_depreciation = #{mentionDepreciation},</if>
+            <if test="netValue != null">net_value = #{netValue},</if>
+            <if test="equipmentDraw != null">equipment_draw = #{equipmentDraw},</if>
+            <if test="useRange != null">use_range = #{useRange},</if>
+            <if test="unit != null">unit = #{unit},</if>
+            <if test="number != null">number = #{number},</if>
+            <if test="floorSpace != null">floor_space = #{floorSpace},</if>
+            <if test="propertyOwnership != null">property_ownership = #{propertyOwnership},</if>
+            <if test="operationInstruction != null">operation_instruction = #{operationInstruction},</if>
+            <if test="technicalData != null">technical_data = #{technicalData},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="useState != null">use_state = #{useState},</if>
+            <if test="scanCode != null">scan_code = #{scanCode},</if>
+            <if test="archivesPicture != null">archives_picture = #{archivesPicture},</if>
+            <if test="normalEpoch != null">normal_epoch = #{normalEpoch},</if>
+            <if test="operationalPeriod != null">operational_period = #{operationalPeriod},</if>
+            <if test="testDate != null">test_date = #{testDate},</if>
+            <if test="equipmentLevel != null">equipment_level = #{equipmentLevel},</if>
+            <if test="handoverDate != null">handover_date = #{handoverDate},</if>
+            <if test="compulsoryTest != null">compulsory_test = #{compulsoryTest},</if>
+            <if test="inspectionPeriod != null">inspection_period = #{inspectionPeriod},</if>
+            <if test="detectionPeriod != null">detection_period = #{detectionPeriod},</if>
+            <if test="equipmentId != null">equipment_id = #{equipmentId},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyEquipmentArchivesById" parameterType="Long">
+        delete from hy_equipment_archives where id = #{id}
+    </delete>
+
+    <delete id="deleteHyEquipmentArchivesByIds" parameterType="String">
+        delete from hy_equipment_archives where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

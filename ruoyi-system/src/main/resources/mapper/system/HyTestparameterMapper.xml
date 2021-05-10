@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyTestparameterMapper">
+    
+    <resultMap type="HyTestparameter" id="HyTestparameterResult">
+        <result property="id"    column="id"    />
+        <result property="parameterName"    column="parameter_name"    />
+        <result property="parameterValues"    column="parameter_values"    />
+        <result property="leastValue"    column="least_value"    />
+        <result property="maximumValue"    column="maximum_value"    />
+        <result property="parameterRemark"    column="parameter_remark"    />
+        <result property="archivesId"    column="archives_id"    />
+    </resultMap>
+
+    <sql id="selectHyTestparameterVo">
+        select 
+        t.id, 
+        t.parameter_name, 
+        t.parameter_values, 
+        t.least_value, 
+        t.maximum_value, 
+        t.parameter_remark, 
+        t.archives_id 
+        from 
+        hy_testparameter t
+        LEFT JOIN hy_equipment_archives e ON t.archives_id = e.id
+    </sql>
+
+    <select id="selectHyTestparameterList" parameterType="HyTestparameter" resultMap="HyTestparameterResult">
+        <include refid="selectHyTestparameterVo"/>
+        <where>  
+            <if test="parameterName != null  and parameterName != ''"> and t.parameter_name like concat('%', #{parameterName}, '%')</if>
+            <if test="parameterValues != null  and parameterValues != ''"> and t.parameter_values = #{parameterValues}</if>
+            <if test="leastValue != null  and leastValue != ''"> and t.least_value = #{leastValue}</if>
+            <if test="maximumValue != null  and maximumValue != ''"> and t.maximum_value = #{maximumValue}</if>
+            <if test="parameterRemark != null  and parameterRemark != ''"> and t.parameter_remark = #{parameterRemark}</if>
+            <if test="archivesId != null "> and t.archives_id = #{archivesId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyTestparameterById" parameterType="Long" resultMap="HyTestparameterResult">
+        <include refid="selectHyTestparameterVo"/>
+        where t.id = #{id}
+    </select>
+        
+    <insert id="insertHyTestparameter" parameterType="HyTestparameter" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_testparameter
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="parameterName != null">parameter_name,</if>
+            <if test="parameterValues != null">parameter_values,</if>
+            <if test="leastValue != null">least_value,</if>
+            <if test="maximumValue != null">maximum_value,</if>
+            <if test="parameterRemark != null">parameter_remark,</if>
+            <if test="archivesId != null">archives_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="parameterName != null">#{parameterName},</if>
+            <if test="parameterValues != null">#{parameterValues},</if>
+            <if test="leastValue != null">#{leastValue},</if>
+            <if test="maximumValue != null">#{maximumValue},</if>
+            <if test="parameterRemark != null">#{parameterRemark},</if>
+            <if test="archivesId != null">#{archivesId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyTestparameter" parameterType="HyTestparameter">
+        update hy_testparameter
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="parameterName != null">parameter_name = #{parameterName},</if>
+            <if test="parameterValues != null">parameter_values = #{parameterValues},</if>
+            <if test="leastValue != null">least_value = #{leastValue},</if>
+            <if test="maximumValue != null">maximum_value = #{maximumValue},</if>
+            <if test="parameterRemark != null">parameter_remark = #{parameterRemark},</if>
+            <if test="archivesId != null">archives_id = #{archivesId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyTestparameterById" parameterType="Long">
+        delete from hy_testparameter where id = #{id}
+    </delete>
+
+    <delete id="deleteHyTestparameterByIds" parameterType="String">
+        delete from hy_testparameter where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

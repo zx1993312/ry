@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('设备档案列表')" />
+    <th:block th:include="include :: layout-latest-css" />
+	<th:block th:include="include :: ztree-css" />
+</head>
+<body class="gray-bg">
+<div class="ui-layout-west">
+	<div class="box box-main">
+			<div class="box-header">
+				<div class="box-title">
+					<i class="fa icon-grid"></i> 设备类型
+				</div>
+				<div class="box-tools pull-right">
+				    <a type="button" class="btn btn-box-tool" href="#" onclick="costProject()" title="管理部门"><i class="fa fa-edit"></i></a>
+					<button type="button" class="btn btn-box-tool" id="btnExpand" title="展开" style="display:none;"><i class="fa fa-chevron-up"></i></button>
+					<button type="button" class="btn btn-box-tool" id="btnCollapse" title="折叠"><i class="fa fa-chevron-down"></i></button>
+					<button type="button" class="btn btn-box-tool" id="btnRefresh" title="刷新部门"><i class="fa fa-refresh"></i></button>
+				</div>
+			</div>
+			<div class="ui-layout-content">
+				<div id="tree" class="ztree"></div>
+			</div>
+		</div>
+	</div>
+	<div class="ui-layout-center">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <!-- <li>
+                                <label>设备编号：</label>
+                                <input type="text" name="archivesNumber"/>
+                            </li>
+                            <li>
+                                <label>设备名称：</label>
+                                <input type="text" name="archivesName"/>
+                            </li>
+                            <li>
+                                <label>设备类别：</label>
+                                <input type="text" name="archivesSort"/>
+                            </li>
+                            <li>
+                                <label>制造厂家：</label>
+                                <input type="text" name="archivesManufacturers"/>
+                            </li>
+                            <li>
+                                <label>型号：</label>
+                                <select name="archivesType">
+                                    <option value="">所有</option>
+                                    <option value="-1">代码生成请选择字典属性</option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>规格：</label>
+                                <input type="text" name="archivesSpecification"/>
+                            </li>
+                            <li>
+                                <label>购置日期：</label>
+                                <input type="text" class="time-input" placeholder="请选择购置日期" name="acquisitionDate"/>
+                            </li>
+                            <li>
+                                <label>出厂日期：</label>
+                                <input type="text" class="time-input" placeholder="请选择出厂日期" name="releaseDate"/>
+                            </li>
+                            <li>
+                                <label>出厂编号：</label>
+                                <input type="text" name="releaseNumber"/>
+                            </li>
+                            <li>
+                                <label>安装日期：</label>
+                                <input type="text" class="time-input" placeholder="请选择安装日期" name="installationDate"/>
+                            </li>
+                            <li>
+                                <label>安装单位：</label>
+                                <input type="text" name="installationUnit"/>
+                            </li>
+                            <li>
+                                <label>存放位置：</label>
+                                <input type="text" name="storeAddress"/>
+                            </li>
+                            <li>
+                                <label>使用日期：</label>
+                                <input type="text" class="time-input" placeholder="请选择使用日期" name="useDate"/>
+                            </li>
+                            <li>
+                                <label>使用年限：</label>
+                                <input type="text" name="userYear"/>
+                            </li>
+                            <li>
+                                <label>报废时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择报废时间" name="discardTime"/>
+                            </li>
+                            <li>
+                                <label>质保开始日期：</label>
+                                <input type="text" class="time-input" placeholder="请选择质保开始日期" name="commencementDate"/>
+                            </li>
+                            <li>
+                                <label>质保年限：</label>
+                                <input type="text" name="warrantyPeriod"/>
+                            </li>
+                            <li>
+                                <label>质保结束日期：</label>
+                                <input type="text" class="time-input" placeholder="请选择质保结束日期" name="endDate"/>
+                            </li>
+                            <li>
+                                <label>原值：</label>
+                                <input type="text" name="originalValue"/>
+                            </li>
+                            <li>
+                                <label>折旧率：</label>
+                                <input type="text" name="depreciationRate"/>
+                            </li>
+                            <li>
+                                <label>现估价：</label>
+                                <input type="text" name="nowPrice"/>
+                            </li>
+                            <li>
+                                <label>已提折旧：</label>
+                                <input type="text" name="mentionDepreciation"/>
+                            </li>
+                            <li>
+                                <label>净值：</label>
+                                <input type="text" name="netValue"/>
+                            </li>
+                            <li>
+                                <label>设备图号：</label>
+                                <input type="text" name="equipmentDraw"/>
+                            </li>
+                            <li>
+                                <label>使用范围：</label>
+                                <input type="text" name="useRange"/>
+                            </li>
+                            <li>
+                                <label>单位：</label>
+                                <input type="text" name="unit"/>
+                            </li>
+                            <li>
+                                <label>数量：</label>
+                                <input type="text" name="number"/>
+                            </li>
+                            <li>
+                                <label>占地面积：</label>
+                                <input type="text" name="floorSpace"/>
+                            </li>
+                            <li>
+                                <label>产权归属：</label>
+                                <input type="text" name="propertyOwnership"/>
+                            </li>
+                            <li>
+                                <label>使用说明书：</label>
+                                <input type="text" name="operationInstruction"/>
+                            </li>
+                            <li>
+                                <label>技术资料：</label>
+                                <input type="text" name="technicalData"/>
+                            </li>
+                            <li>
+                                <label>使用状态：</label>
+                                <input type="text" name="useState"/>
+                            </li>
+                            <li>
+                                <label>扫描码：</label>
+                                <input type="text" name="scanCode"/>
+                            </li>
+                            <li>
+                                <label>图片：</label>
+                                <input type="text" name="archivesPicture"/>
+                            </li>
+                            <li>
+                                <label>正常期：</label>
+                                <input type="text" name="normalEpoch"/>
+                            </li>
+                            <li>
+                                <label>运维期：</label>
+                                <input type="text" name="operationalPeriod"/>
+                            </li>
+                            <li>
+                                <label>最近检测日期：</label>
+                                <input type="text" class="time-input" placeholder="请选择最近检测日期" name="testDate"/>
+                            </li>
+                            <li>
+                                <label>设备等级：</label>
+                                <input type="text" name="equipmentLevel"/>
+                            </li>
+                            <li>
+                                <label>移交日期：</label>
+                                <input type="text" class="time-input" placeholder="请选择移交日期" name="handoverDate"/>
+                            </li>
+                            <li>
+                                <label>是否强制检测：</label>
+                                <input type="text" name="compulsoryTest"/>
+                            </li>
+                            <li>
+                                <label>强制检测周期：</label>
+                                <input type="text" name="inspectionPeriod"/>
+                            </li>
+                            <li>
+                                <label>检测周期：</label>
+                                <input type="text" name="detectionPeriod"/>
+                            </li> -->
+                            <li>
+                                 <!-- <label>设备类别：</label>  -->
+                                <input type="hidden" id="equipmentId" name="equipmentId"/>
+                            </li>
+                            <!-- <li>
+                                <label>设备责任人：</label>
+                                <input type="text" name="userId"/>
+                            </li>
+                            <li>
+                                <label>组织机构：</label>
+                                <input type="text" name="deptId"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li> -->
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:archives:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:archives:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:archives:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:archives:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: layout-latest-js" />
+	<th:block th:include="include :: ztree-js" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:archives:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:archives:remove')}]];
+        var prefix = ctx + "system/archives";
+        $(function() {
+        	var panehHidden = false;
+		    if ($(this).width() < 769) {
+		        panehHidden = true;
+		    }
+		    $('body').layout({ initClosed: panehHidden, west__size: 185 });
+	     	// 回到顶部绑定
+	    	if ($.fn.toTop !== undefined) {
+	    		var opt = {
+	    			win:$('.ui-layout-center'),
+	    			doc:$('.ui-layout-center')
+	    		};
+	    		$('#scroll-up').toTop(opt);
+	    	}
+	    	queryArchivesList();
+		    queryDeptTree();
+		});
+        function queryArchivesList() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "设备档案",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '设备档案id',
+                    visible: false
+                },
+                {
+                    field: 'archivesNumber',
+                    title: '设备编号'
+                },
+                {
+                    field: 'archivesName',
+                    title: '设备名称'
+                },
+                {
+                    field: 'archivesSort',
+                    title: '设备类别'
+                },
+                {
+                    field: 'archivesManufacturers',
+                    title: '制造厂家'
+                },
+                {
+                    field: 'archivesType',
+                    title: '型号'
+                },
+                {
+                    field: 'archivesSpecification',
+                    title: '规格'
+                },
+                {
+                    field: 'acquisitionDate',
+                    title: '购置日期'
+                },
+                {
+                    field: 'releaseDate',
+                    title: '出厂日期'
+                },
+                {
+                    field: 'releaseNumber',
+                    title: '出厂编号'
+                },
+                {
+                    field: 'installationDate',
+                    title: '安装日期'
+                },
+                {
+                    field: 'installationUnit',
+                    title: '安装单位'
+                },
+                {
+                    field: 'storeAddress',
+                    title: '存放位置'
+                },
+                {
+                    field: 'useDate',
+                    title: '使用日期'
+                },
+                {
+                    field: 'userYear',
+                    title: '使用年限'
+                },
+                {
+                    field: 'discardTime',
+                    title: '报废时间'
+                },
+                {
+                    field: 'commencementDate',
+                    title: '质保开始日期'
+                },
+                {
+                    field: 'warrantyPeriod',
+                    title: '质保年限'
+                },
+                {
+                    field: 'endDate',
+                    title: '质保结束日期'
+                },
+                {
+                    field: 'originalValue',
+                    title: '原值'
+                },
+                {
+                    field: 'depreciationRate',
+                    title: '折旧率'
+                },
+                {
+                    field: 'nowPrice',
+                    title: '现估价'
+                },
+                {
+                    field: 'mentionDepreciation',
+                    title: '已提折旧'
+                },
+                {
+                    field: 'netValue',
+                    title: '净值'
+                },
+                {
+                    field: 'equipmentDraw',
+                    title: '设备图号'
+                },
+                {
+                    field: 'useRange',
+                    title: '使用范围'
+                },
+                {
+                    field: 'unit',
+                    title: '单位'
+                },
+                {
+                    field: 'number',
+                    title: '数量'
+                },
+                {
+                    field: 'floorSpace',
+                    title: '占地面积'
+                },
+                {
+                    field: 'propertyOwnership',
+                    title: '产权归属'
+                },
+                {
+                    field: 'operationInstruction',
+                    title: '使用说明书'
+                },
+                {
+                    field: 'technicalData',
+                    title: '技术资料'
+                },
+                {
+                    field: 'remark',
+                    title: '备注'
+                },
+                {
+                    field: 'useState',
+                    title: '使用状态',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case '' : value =  "请选择";break;
+	                    	case '1' : value =  "在用";break;
+	                    	case '2' : value =  "停用";break;
+	                    	case '3' : value =  "报废";break;
+	                	}
+		            	return value;
+		            }
+                },
+                {
+                    field: 'scanCode',
+                    title: '扫描码'
+                },
+                {
+                    field: 'archivesPicture',
+                    title: '图片',
+                    formatter: function(value, row, index) {
+				    	// 图片预览（注意：如存储在本地直接获取数据库路径，如有配置context-path需要使用ctx+路径）
+				    	// 如：/profile/upload/2019/08/08/3b7a839aced67397bac694d77611ce72.png
+				    		return $.table.imageView(value);
+				    		 /* if(index % 2 == 0){
+					    		return $.table.imageView(value);
+					    	}else {
+					    		return $.table.imageView(value);
+					    	}  */
+				    }
+                },
+                {
+                    field: 'normalEpoch',
+                    title: '正常期'
+                },
+                {
+                    field: 'operationalPeriod',
+                    title: '运维期'
+                },
+                {
+                    field: 'testDate',
+                    title: '最近检测日期'
+                },
+                {
+                    field: 'equipmentLevel',
+                    title: '设备等级',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case '' : value =  "请选择";break;
+	                    	case '1' : value =  "A级";break;
+	                    	case '2' : value =  "B级";break;
+	                    	case '3' : value =  "C级";break;
+	                	}
+		             	return value;
+		            }
+                },
+                {
+                    field: 'handoverDate',
+                    title: '移交日期'
+                },
+                {
+                    field: 'compulsoryTest',
+                    title: '是否强制检测',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case '' : value =  "请选择";break;
+	                    	case '0' : value =  "否";break;
+	                    	case '1' : value =  "是";break;
+	                	}
+		            	return value;
+		            }
+                },
+                {
+                    field: 'inspectionPeriod',
+                    title: '强制检测周期'
+                },
+                {
+                    field: 'detectionPeriod',
+                    title: '检测周期'
+                },
+                {
+                    field: 'hyEquipment.equipmentName',
+                    title: '设备类别'
+                },
+                {
+                    field: 'sysUser.userName',
+                    title: '设备责任人'
+                },
+                {
+                    field: 'sysDept.deptName',
+                    title: '组织机构'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        };
+        
+		function queryDeptTree()
+		{
+			var url = ctx + "system/equipment/equipmentList";
+			var options = {
+		        url: url,
+		        expandLevel: 2,
+		        onClick : zOnClick
+		    };
+			$.tree.init(options);
+			
+			function zOnClick(event, treeId, treeNode) {
+				$("#equipmentId").val(treeNode.id);
+				$.table.search();
+			}
+		}
+		
+		$('#btnExpand').click(function() {
+			$._tree.expandAll(true);
+		    $(this).hide();
+		    $('#btnCollapse').show();
+		});
+		
+		$('#btnCollapse').click(function() {
+			$._tree.expandAll(false);
+		    $(this).hide();
+		    $('#btnExpand').show();
+		});
+		
+		$('#btnRefresh').click(function() {
+			queryDeptTree();
+		});
+
+    </script>
+</body>
+</html>
