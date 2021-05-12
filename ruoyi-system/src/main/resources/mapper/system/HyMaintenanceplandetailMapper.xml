@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyMaintenanceplandetailMapper">
+    
+    <resultMap type="HyMaintenanceplandetail" id="HyMaintenanceplandetailResult">
+        <result property="id"    column="id"    />
+        <result property="maintenanceProject"    column="maintenance_project"    />
+        <result property="maintenanceRequirements"    column="maintenance_requirements"    />
+        <result property="executionDate"    column="execution_date"    />
+        <result property="finishDate"    column="finish_date"    />
+        <result property="executiveProject"    column="executive_project"    />
+        <result property="executiveArm"    column="executive_arm"    />
+        <result property="executor"    column="executor"    />
+        <result property="executed"    column="executed"    />
+        <result property="performJobs"    column="perform_jobs"    />
+        <result property="arrangementRemark"    column="arrangement_remark"    />
+        <result property="planId"    column="plan_id"    />
+        <result property="equipmentId"    column="equipment_id"    />
+        <result property="registrationId"    column="registration_id"    />
+        <association property="hyMaintenanceplan" column="id"
+			javaType="HyMaintenanceplan" resultMap="HyMaintenanceplanResult" />
+        <association property="hyEquipment" column="id"
+			javaType="HyEquipment" resultMap="HyEquipmentResult" />
+    </resultMap>
+	
+	<resultMap type="HyMaintenanceplan" id="HyMaintenanceplanResult">
+        <result property="id"    column="id"    />
+        <result property="planCode"    column="plan_code"    />
+        <result property="planName"    column="plan_name"    />
+        <result property="planDate"    column="plan_date"    />
+        <result property="maintainType"    column="maintain_type"    />
+        <result property="maintainLevel"    column="maintain_level"    />
+        <result property="maintainPeriod"    column="maintain_period"    />
+        <result property="planRemark"    column="plan_remark"    />
+        <result property="isAudit"    column="is_audit"    />
+        <result property="plansClose"    column="plans_close"    />
+        <result property="closedType"    column="closed_type"    />
+        <result property="preparedBy"    column="prepared_by"    />
+        <result property="makeTime"    column="make_time"    />
+        <result property="reviser"    column="reviser"    />
+        <result property="revisionTime"    column="revision_time"    />
+        <result property="content"    column="content"    />
+        <result property="specializedDepartment"    column="specialized_department"    />
+        <result property="planNumber"    column="plan_number"    />
+        <result property="equipmentId"    column="equipment_id"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="userId"    column="user_id"    />
+    </resultMap>
+	
+	<resultMap type="HyEquipment" id="HyEquipmentResult">
+        <result property="id"    column="id"    />
+        <result property="parentId"    column="parent_id"    />
+        <result property="equipmentCode"    column="equipment_code"    />
+        <result property="equipmentName"    column="equipment_name"    />
+        <result property="equipmentExplains"    column="equipment_explains"    />
+        <result property="equipmentDetail"    column="equipment_detail"    />
+        <result property="deptId"    column="dept_id"    />
+    </resultMap>
+	
+    <sql id="selectHyMaintenanceplandetailVo">
+        select 
+        d.id, 
+        d.maintenance_project, 
+        d.maintenance_requirements, 
+        d.execution_date, 
+        d.finish_date, 
+        d.executive_project, 
+        d.executive_arm, 
+        d.executor, 
+        d.executed, 
+        d.perform_jobs, 
+        d.arrangement_remark, 
+        d.plan_id, 
+        d.equipment_id, 
+        d.registration_id,
+        p.plan_name,
+        e.equipment_name
+        from 
+        hy_maintenanceplandetail d
+        LEFT JOIN hy_maintenanceplan p ON  d.plan_id=p.id
+        LEFT JOIN hy_equipment e ON  d.equipment_id=e.id
+    </sql>
+
+    <select id="selectHyMaintenanceplandetailList" parameterType="HyMaintenanceplandetail" resultMap="HyMaintenanceplandetailResult">
+        <include refid="selectHyMaintenanceplandetailVo"/>
+        <where>  
+            <if test="maintenanceProject != null  and maintenanceProject != ''"> and d.maintenance_project = #{maintenanceProject}</if>
+            <if test="maintenanceRequirements != null  and maintenanceRequirements != ''"> and d.maintenance_requirements = #{maintenanceRequirements}</if>
+            <if test="executionDate != null "> and d.execution_date = #{executionDate}</if>
+            <if test="finishDate != null "> and d.finish_date = #{finishDate}</if>
+            <if test="executiveProject != null  and executiveProject != ''"> and d.executive_project = #{executiveProject}</if>
+            <if test="executiveArm != null  and executiveArm != ''"> and d.executive_arm = #{executiveArm}</if>
+            <if test="executor != null  and executor != ''"> and d.executor = #{executor}</if>
+            <if test="executed != null  and executed != ''"> and d.executed = #{executed}</if>
+            <if test="performJobs != null  and performJobs != ''"> and d.perform_jobs = #{performJobs}</if>
+            <if test="arrangementRemark != null  and arrangementRemark != ''"> and d.arrangement_remark = #{arrangementRemark}</if>
+            <if test="planId != null "> and d.plan_id = #{planId}</if>
+            <if test="equipmentId != null "> and d.equipment_id = #{equipmentId}</if>
+            <if test="registrationId != null "> and d.registration_id = #{registrationId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyMaintenanceplandetailById" parameterType="Long" resultMap="HyMaintenanceplandetailResult">
+        <include refid="selectHyMaintenanceplandetailVo"/>
+        where d.id = #{id}
+    </select>
+        
+    <insert id="insertHyMaintenanceplandetail" parameterType="HyMaintenanceplandetail" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_maintenanceplandetail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="maintenanceProject != null">maintenance_project,</if>
+            <if test="maintenanceRequirements != null">maintenance_requirements,</if>
+            <if test="executionDate != null">execution_date,</if>
+            <if test="finishDate != null">finish_date,</if>
+            <if test="executiveProject != null">executive_project,</if>
+            <if test="executiveArm != null">executive_arm,</if>
+            <if test="executor != null">executor,</if>
+            <if test="executed != null">executed,</if>
+            <if test="performJobs != null">perform_jobs,</if>
+            <if test="arrangementRemark != null">arrangement_remark,</if>
+            <if test="planId != null">plan_id,</if>
+            <if test="equipmentId != null">equipment_id,</if>
+            <if test="registrationId != null">registration_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="maintenanceProject != null">#{maintenanceProject},</if>
+            <if test="maintenanceRequirements != null">#{maintenanceRequirements},</if>
+            <if test="executionDate != null">#{executionDate},</if>
+            <if test="finishDate != null">#{finishDate},</if>
+            <if test="executiveProject != null">#{executiveProject},</if>
+            <if test="executiveArm != null">#{executiveArm},</if>
+            <if test="executor != null">#{executor},</if>
+            <if test="executed != null">#{executed},</if>
+            <if test="performJobs != null">#{performJobs},</if>
+            <if test="arrangementRemark != null">#{arrangementRemark},</if>
+            <if test="planId != null">#{planId},</if>
+            <if test="equipmentId != null">#{equipmentId},</if>
+            <if test="registrationId != null">#{registrationId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyMaintenanceplandetail" parameterType="HyMaintenanceplandetail">
+        update hy_maintenanceplandetail
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="maintenanceProject != null">maintenance_project = #{maintenanceProject},</if>
+            <if test="maintenanceRequirements != null">maintenance_requirements = #{maintenanceRequirements},</if>
+            <if test="executionDate != null">execution_date = #{executionDate},</if>
+            <if test="finishDate != null">finish_date = #{finishDate},</if>
+            <if test="executiveProject != null">executive_project = #{executiveProject},</if>
+            <if test="executiveArm != null">executive_arm = #{executiveArm},</if>
+            <if test="executor != null">executor = #{executor},</if>
+            <if test="executed != null">executed = #{executed},</if>
+            <if test="performJobs != null">perform_jobs = #{performJobs},</if>
+            <if test="arrangementRemark != null">arrangement_remark = #{arrangementRemark},</if>
+            <if test="planId != null">plan_id = #{planId},</if>
+            <if test="equipmentId != null">equipment_id = #{equipmentId},</if>
+            <if test="registrationId != null">registration_id = #{registrationId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyMaintenanceplandetailById" parameterType="Long">
+        delete from hy_maintenanceplandetail where id = #{id}
+    </delete>
+
+    <delete id="deleteHyMaintenanceplandetailByIds" parameterType="String">
+        delete from hy_maintenanceplandetail where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

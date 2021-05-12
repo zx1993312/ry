@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyMaintenanceplanMapper">
+    
+    <resultMap type="HyMaintenanceplan" id="HyMaintenanceplanResult">
+        <result property="id"    column="id"    />
+        <result property="planCode"    column="plan_code"    />
+        <result property="planName"    column="plan_name"    />
+        <result property="planDate"    column="plan_date"    />
+        <result property="maintainType"    column="maintain_type"    />
+        <result property="maintainLevel"    column="maintain_level"    />
+        <result property="maintainPeriod"    column="maintain_period"    />
+        <result property="planRemark"    column="plan_remark"    />
+        <result property="isAudit"    column="is_audit"    />
+        <result property="plansClose"    column="plans_close"    />
+        <result property="closedType"    column="closed_type"    />
+        <result property="preparedBy"    column="prepared_by"    />
+        <result property="makeTime"    column="make_time"    />
+        <result property="reviser"    column="reviser"    />
+        <result property="revisionTime"    column="revision_time"    />
+        <result property="content"    column="content"    />
+        <result property="specializedDepartment"    column="specialized_department"    />
+        <result property="planNumber"    column="plan_number"    />
+        <result property="equipmentId"    column="equipment_id"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="userId"    column="user_id"    />
+        <association property="hyEquipment" column="id"
+			javaType="HyEquipment" resultMap="HyEquipmentResult" />
+        <association property="sysDept" column="id"
+			javaType="SysDept" resultMap="SysDeptResult" />
+        <association property="sysUser" column="id"
+			javaType="SysUser" resultMap="SysUserResult" />
+    </resultMap>
+	
+	 <resultMap type="HyEquipment" id="HyEquipmentResult">
+        <result property="id"    column="id"    />
+        <result property="parentId"    column="parent_id"    />
+        <result property="equipmentCode"    column="equipment_code"    />
+        <result property="equipmentName"    column="equipment_name"    />
+        <result property="equipmentExplains"    column="equipment_explains"    />
+        <result property="equipmentDetail"    column="equipment_detail"    />
+        <result property="deptId"    column="dept_id"    />
+    </resultMap>
+    
+    <resultMap type="SysDept" id="SysDeptResult">
+		<id     property="deptId"     column="dept_id"     />
+		<result property="parentId"   column="parent_id"   />
+		<result property="ancestors"  column="ancestors"   />
+		<result property="deptName"   column="dept_name"   />
+		<result property="orderNum"   column="order_num"   />
+		<result property="leader"     column="leader"      />
+		<result property="phone"      column="phone"       />
+		<result property="email"      column="email"       />
+		<result property="status"     column="status"      />
+		<result property="delFlag"    column="del_flag"    />
+		<result property="parentName" column="parent_name" />
+		<result property="createBy"   column="create_by"   />
+		<result property="createTime" column="create_time" />
+		<result property="updateBy"   column="update_by"   />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+	
+	<resultMap type="SysUser" id="SysUserResult">
+		<id     property="userId"        column="user_id"         />
+		<result property="deptId"        column="dept_id"         />
+		<result property="loginName"     column="login_name"      />
+		<result property="userName"      column="user_name"       />
+		<result property="userType"      column="user_type"       />
+		<result property="email"         column="email"           />
+		<result property="phonenumber"   column="phonenumber"     />
+		<result property="sex"           column="sex"             />
+		<result property="avatar"        column="avatar"          />
+		<result property="password"      column="password"        />
+		<result property="salt"          column="salt"            />
+		<result property="status"        column="status"          />
+		<result property="delFlag"       column="del_flag"        />
+		<result property="loginIp"       column="login_ip"        />
+		<result property="loginDate"     column="login_date"      />
+		<result property="pwdUpdateDate" column="pwd_update_date" />
+		<result property="createBy"      column="create_by"       />
+		<result property="createTime"    column="create_time"     />
+		<result property="updateBy"      column="update_by"       />
+		<result property="updateTime"    column="update_time"     />
+		<result property="remark"        column="remark"          />
+	</resultMap>
+	
+    <sql id="selectHyMaintenanceplanVo">
+        select 
+        m.id, 
+        m.plan_code, 
+        m.plan_name, 
+        m.plan_date, 
+        m.maintain_type, 
+        m.maintain_level, 
+        m.maintain_period, 
+        m.plan_remark, 
+        m.is_audit, 
+        m.plans_close, 
+        m.closed_type, 
+        m.prepared_by, 
+        m.make_time, 
+        m.reviser, 
+        m.revision_time, 
+        m.content, 
+        m.specialized_department, 
+        m.plan_number, 
+        m.equipment_id, 
+        m.dept_id, 
+        m.user_id,
+        e.equipment_name,
+        d.dept_name,
+        u.user_name
+        from 
+        hy_maintenanceplan m
+        LEFT JOIN Hy_equipment e ON m.equipment_id = e.id
+        LEFT JOIN sys_dept d ON m.dept_id = d.dept_id
+        LEFT JOIN sys_user u ON m.user_id = u.user_id
+    </sql>
+
+    <select id="selectHyMaintenanceplanList" parameterType="HyMaintenanceplan" resultMap="HyMaintenanceplanResult">
+        <include refid="selectHyMaintenanceplanVo"/>
+        <where>  
+            <if test="planCode != null  and planCode != ''"> and m.plan_code = #{planCode}</if>
+            <if test="planName != null  and planName != ''"> and m.plan_name like concat('%', #{planName}, '%')</if>
+            <if test="planDate != null "> and m.plan_date = #{planDate}</if>
+            <if test="maintainType != null  and maintainType != ''"> and m.maintain_type = #{maintainType}</if>
+            <if test="maintainLevel != null  and maintainLevel != ''"> and m.maintain_level = #{maintainLevel}</if>
+            <if test="maintainPeriod != null  and maintainPeriod != ''"> and m.maintain_period = #{maintainPeriod}</if>
+            <if test="planRemark != null  and planRemark != ''"> and m.plan_remark = #{planRemark}</if>
+            <if test="isAudit != null  and isAudit != ''"> and m.is_audit = #{isAudit}</if>
+            <if test="plansClose != null  and plansClose != ''"> and m.plans_close = #{plansClose}</if>
+            <if test="closedType != null  and closedType != ''"> and m.closed_type = #{closedType}</if>
+            <if test="preparedBy != null  and preparedBy != ''"> and m.prepared_by = #{preparedBy}</if>
+            <if test="makeTime != null "> and m.make_time = #{makeTime}</if>
+            <if test="reviser != null  and reviser != ''"> and m.reviser = #{reviser}</if>
+            <if test="revisionTime != null "> and m.revision_time = #{revisionTime}</if>
+            <if test="content != null  and content != ''"> and m.content = #{content}</if>
+            <if test="specializedDepartment != null  and specializedDepartment != ''"> and m.specialized_department = #{specializedDepartment}</if>
+            <if test="planNumber != null  and planNumber != ''"> and m.plan_number = #{planNumber}</if>
+            <if test="equipmentId != null "> and m.equipment_id = #{equipmentId}</if>
+            <if test="deptId != null "> and m.dept_id = #{deptId}</if>
+            <if test="userId != null "> and m.user_id = #{userId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyMaintenanceplanById" parameterType="Long" resultMap="HyMaintenanceplanResult">
+        <include refid="selectHyMaintenanceplanVo"/>
+        where m.id = #{id}
+    </select>
+        
+    <insert id="insertHyMaintenanceplan" parameterType="HyMaintenanceplan" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_maintenanceplan
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="planCode != null">plan_code,</if>
+            <if test="planName != null">plan_name,</if>
+            <if test="planDate != null">plan_date,</if>
+            <if test="maintainType != null">maintain_type,</if>
+            <if test="maintainLevel != null">maintain_level,</if>
+            <if test="maintainPeriod != null">maintain_period,</if>
+            <if test="planRemark != null">plan_remark,</if>
+            <if test="isAudit != null">is_audit,</if>
+            <if test="plansClose != null">plans_close,</if>
+            <if test="closedType != null">closed_type,</if>
+            <if test="preparedBy != null">prepared_by,</if>
+            <if test="makeTime != null">make_time,</if>
+            <if test="reviser != null">reviser,</if>
+            <if test="revisionTime != null">revision_time,</if>
+            <if test="content != null">content,</if>
+            <if test="specializedDepartment != null">specialized_department,</if>
+            <if test="planNumber != null">plan_number,</if>
+            <if test="equipmentId != null">equipment_id,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="userId != null">user_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="planCode != null">#{planCode},</if>
+            <if test="planName != null">#{planName},</if>
+            <if test="planDate != null">#{planDate},</if>
+            <if test="maintainType != null">#{maintainType},</if>
+            <if test="maintainLevel != null">#{maintainLevel},</if>
+            <if test="maintainPeriod != null">#{maintainPeriod},</if>
+            <if test="planRemark != null">#{planRemark},</if>
+            <if test="isAudit != null">#{isAudit},</if>
+            <if test="plansClose != null">#{plansClose},</if>
+            <if test="closedType != null">#{closedType},</if>
+            <if test="preparedBy != null">#{preparedBy},</if>
+            <if test="makeTime != null">#{makeTime},</if>
+            <if test="reviser != null">#{reviser},</if>
+            <if test="revisionTime != null">#{revisionTime},</if>
+            <if test="content != null">#{content},</if>
+            <if test="specializedDepartment != null">#{specializedDepartment},</if>
+            <if test="planNumber != null">#{planNumber},</if>
+            <if test="equipmentId != null">#{equipmentId},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="userId != null">#{userId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyMaintenanceplan" parameterType="HyMaintenanceplan">
+        update hy_maintenanceplan
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="planCode != null">plan_code = #{planCode},</if>
+            <if test="planName != null">plan_name = #{planName},</if>
+            <if test="planDate != null">plan_date = #{planDate},</if>
+            <if test="maintainType != null">maintain_type = #{maintainType},</if>
+            <if test="maintainLevel != null">maintain_level = #{maintainLevel},</if>
+            <if test="maintainPeriod != null">maintain_period = #{maintainPeriod},</if>
+            <if test="planRemark != null">plan_remark = #{planRemark},</if>
+            <if test="isAudit != null">is_audit = #{isAudit},</if>
+            <if test="plansClose != null">plans_close = #{plansClose},</if>
+            <if test="closedType != null">closed_type = #{closedType},</if>
+            <if test="preparedBy != null">prepared_by = #{preparedBy},</if>
+            <if test="makeTime != null">make_time = #{makeTime},</if>
+            <if test="reviser != null">reviser = #{reviser},</if>
+            <if test="revisionTime != null">revision_time = #{revisionTime},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="specializedDepartment != null">specialized_department = #{specializedDepartment},</if>
+            <if test="planNumber != null">plan_number = #{planNumber},</if>
+            <if test="equipmentId != null">equipment_id = #{equipmentId},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyMaintenanceplanById" parameterType="Long">
+        delete from hy_maintenanceplan where id = #{id}
+    </delete>
+
+    <delete id="deleteHyMaintenanceplanByIds" parameterType="String">
+        delete from hy_maintenanceplan where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

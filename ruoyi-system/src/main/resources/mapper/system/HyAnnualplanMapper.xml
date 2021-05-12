@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyAnnualplanMapper">
+    
+    <resultMap type="HyAnnualplan" id="HyAnnualplanResult">
+        <result property="id"    column="id"    />
+        <result property="documentNumber"    column="document_number"    />
+        <result property="year"    column="year"    />
+        <result property="isSelect"    column="is_select"    />
+        <result property="isAudit"    column="is_audit"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="equipmentId"    column="equipment_id"    />
+        <association property="sysDept" column="id"
+			javaType="SysDept" resultMap="SysDeptResult" />
+		<association property="hyEquipment" column="id"
+			javaType="HyEquipment" resultMap="HyEquipmentResult" />
+    </resultMap>
+	
+	<resultMap type="SysDept" id="SysDeptResult">
+		<id     property="deptId"     column="dept_id"     />
+		<result property="parentId"   column="parent_id"   />
+		<result property="ancestors"  column="ancestors"   />
+		<result property="deptName"   column="dept_name"   />
+		<result property="orderNum"   column="order_num"   />
+		<result property="leader"     column="leader"      />
+		<result property="phone"      column="phone"       />
+		<result property="email"      column="email"       />
+		<result property="status"     column="status"      />
+		<result property="delFlag"    column="del_flag"    />
+		<result property="parentName" column="parent_name" />
+		<result property="createBy"   column="create_by"   />
+		<result property="createTime" column="create_time" />
+		<result property="updateBy"   column="update_by"   />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+	
+	<resultMap type="HyEquipment" id="HyEquipmentResult">
+        <result property="id"    column="id"    />
+        <result property="parentId"    column="parent_id"    />
+        <result property="equipmentCode"    column="equipment_code"    />
+        <result property="equipmentName"    column="equipment_name"    />
+        <result property="equipmentExplains"    column="equipment_explains"    />
+        <result property="equipmentDetail"    column="equipment_detail"    />
+        <result property="deptId"    column="dept_id"    />
+    </resultMap>
+	
+    <sql id="selectHyAnnualplanVo">
+        select 
+        a.id, 
+        a.document_number, 
+        a.year, 
+        a.is_select, 
+        a.is_audit, 
+        a.dept_id, 
+        a.equipment_id,
+        e.equipment_name,
+        d.dept_name 
+        from 
+        hy_annualplan a
+        LEFT JOIN hy_equipment e ON a.equipment_id=e.id
+        LEFT JOIN sys_dept d ON a.dept_id=d.dept_id
+    </sql>
+
+    <select id="selectHyAnnualplanList" parameterType="HyAnnualplan" resultMap="HyAnnualplanResult">
+        <include refid="selectHyAnnualplanVo"/>
+        <where>  
+            <if test="documentNumber != null "> and a.document_number = #{documentNumber}</if>
+            <if test="year != null  and year != ''"> and a.year = #{year}</if>
+            <if test="isSelect != null  and isSelect != ''"> and a.is_select = #{isSelect}</if>
+            <if test="isAudit != null  and isAudit != ''"> and a.is_audit = #{isAudit}</if>
+            <if test="deptId != null "> and a.dept_id = #{deptId}</if>
+            <if test="equipmentId != null "> and a.equipment_id = #{equipmentId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyAnnualplanById" parameterType="Long" resultMap="HyAnnualplanResult">
+        <include refid="selectHyAnnualplanVo"/>
+        where a.id = #{id}
+    </select>
+        
+    <insert id="insertHyAnnualplan" parameterType="HyAnnualplan" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_annualplan
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="documentNumber != null">document_number,</if>
+            <if test="year != null">year,</if>
+            <if test="isSelect != null">is_select,</if>
+            <if test="isAudit != null">is_audit,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="equipmentId != null">equipment_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="documentNumber != null">#{documentNumber},</if>
+            <if test="year != null">#{year},</if>
+            <if test="isSelect != null">#{isSelect},</if>
+            <if test="isAudit != null">#{isAudit},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="equipmentId != null">#{equipmentId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyAnnualplan" parameterType="HyAnnualplan">
+        update hy_annualplan
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="documentNumber != null">document_number = #{documentNumber},</if>
+            <if test="year != null">year = #{year},</if>
+            <if test="isSelect != null">is_select = #{isSelect},</if>
+            <if test="isAudit != null">is_audit = #{isAudit},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="equipmentId != null">equipment_id = #{equipmentId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyAnnualplanById" parameterType="Long">
+        delete from hy_annualplan where id = #{id}
+    </delete>
+
+    <delete id="deleteHyAnnualplanByIds" parameterType="String">
+        delete from hy_annualplan where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

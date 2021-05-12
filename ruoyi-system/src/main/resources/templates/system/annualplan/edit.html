@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改年度保养计划')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-annualplan-edit" th:object="${hyAnnualplan}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">单据号：</label>
+                <div class="col-sm-8">
+                    <input name="documentNumber" th:field="*{documentNumber}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">年份：</label>
+                <div class="col-sm-8">
+                    <input name="year" th:field="*{year}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">是否显示全部设备：</label>
+                <div class="col-sm-8">
+                    <input name="isSelect" th:field="*{isSelect}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">是否审核：</label>
+                <div class="col-sm-8">
+                    <input name="isAudit" th:field="*{isAudit}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">组织机构：</label>
+                <div class="col-sm-8">
+                    <select class="form-control m-b" name="deptId" th:field="*{deptId}" data-first-title="选择部门" th:with="type=${@dept.getDepts()}">
+	                  		<option value="">请选择</option>
+	                  		<option th:each="dict : ${type}" th:text="${dict.deptName}" th:value="${dict.deptId}"></option>
+	                </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">设备类别：</label>
+                <div class="col-sm-8">
+                     <select id="equipmentId" name="equipmentId" th:field="*{equipmentId}" class="form-control" th:with="type=${@equipment.getEquipment()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.equipmentName}" th:value="${data.id}"></option>
+			 	    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/annualplan";
+        $("#form-annualplan-edit").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-annualplan-edit').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

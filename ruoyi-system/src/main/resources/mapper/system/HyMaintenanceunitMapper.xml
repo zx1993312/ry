@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyMaintenanceunitMapper">
+    
+    <resultMap type="HyMaintenanceunit" id="HyMaintenanceunitResult">
+        <result property="id"    column="id"    />
+        <result property="unitName"    column="unit_name"    />
+        <result property="unitAddress"    column="unit_address"    />
+        <result property="unitContact"    column="unit_contact"    />
+        <result property="unitPhone"    column="unit_phone"    />
+        <result property="unitCellphone"    column="unit_cellphone"    />
+        <result property="unitFax"    column="unit_fax"    />
+        <result property="unitPostcode"    column="unit_postcode"    />
+        <result property="unitRemark"    column="unit_remark"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="parentId"    column="parent_id"    />
+        <result property="propertyId"    column="property_id"    />
+        <association property="sysDept" column="id"
+			javaType="SysDept" resultMap="SysDeptResult" />
+    </resultMap>
+	
+	<resultMap type="SysDept" id="SysDeptResult">
+		<id     property="deptId"     column="dept_id"     />
+		<result property="parentId"   column="parent_id"   />
+		<result property="ancestors"  column="ancestors"   />
+		<result property="deptName"   column="dept_name"   />
+		<result property="orderNum"   column="order_num"   />
+		<result property="leader"     column="leader"      />
+		<result property="phone"      column="phone"       />
+		<result property="email"      column="email"       />
+		<result property="status"     column="status"      />
+		<result property="delFlag"    column="del_flag"    />
+		<result property="parentName" column="parent_name" />
+		<result property="createBy"   column="create_by"   />
+		<result property="createTime" column="create_time" />
+		<result property="updateBy"   column="update_by"   />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+	
+    <sql id="selectHyMaintenanceunitVo">
+        select 
+        m.id, 
+        m.unit_name, 
+        m.unit_address, 
+        m.unit_contact, 
+        m.unit_phone, 
+        m.unit_cellphone, 
+        m.unit_fax, 
+        m.unit_postcode, 
+        m.unit_remark, 
+        m.dept_id,
+        m.parent_id,
+        m.property_id,
+        d.dept_name 
+        from 
+        hy_maintenanceunit m
+        LEFT JOIN sys_dept d ON m.dept_id = d.dept_id
+    </sql>
+
+    <select id="selectHyMaintenanceunitList" parameterType="HyMaintenanceunit" resultMap="HyMaintenanceunitResult">
+        <include refid="selectHyMaintenanceunitVo"/>
+        <where>  
+            <if test="unitName != null  and unitName != ''"> and m.unit_name like concat('%', #{unitName}, '%')</if>
+            <if test="unitAddress != null  and unitAddress != ''"> and m.unit_address = #{unitAddress}</if>
+            <if test="unitContact != null  and unitContact != ''"> and m.unit_contact = #{unitContact}</if>
+            <if test="unitPhone != null  and unitPhone != ''"> and m.unit_phone = #{unitPhone}</if>
+            <if test="unitCellphone != null  and unitCellphone != ''"> and m.unit_cellphone = #{unitCellphone}</if>
+            <if test="unitFax != null  and unitFax != ''"> and m.unit_fax = #{unitFax}</if>
+            <if test="unitPostcode != null  and unitPostcode != ''"> and m.unit_postcode = #{unitPostcode}</if>
+            <if test="unitRemark != null  and unitRemark != ''"> and m.unit_remark = #{unitRemark}</if>
+            <if test="deptId != null "> and m.dept_id = #{deptId}</if>
+            <if test="parentId != null "> and m.parent_id = #{parentId}</if>
+            <if test="propertyId != null "> and m.property_id = #{propertyId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyMaintenanceunitById" parameterType="Long" resultMap="HyMaintenanceunitResult">
+        <include refid="selectHyMaintenanceunitVo"/>
+        where m.id = #{id}
+    </select>
+        
+    <insert id="insertHyMaintenanceunit" parameterType="HyMaintenanceunit" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_maintenanceunit
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="unitName != null">unit_name,</if>
+            <if test="unitAddress != null">unit_address,</if>
+            <if test="unitContact != null">unit_contact,</if>
+            <if test="unitPhone != null">unit_phone,</if>
+            <if test="unitCellphone != null">unit_cellphone,</if>
+            <if test="unitFax != null">unit_fax,</if>
+            <if test="unitPostcode != null">unit_postcode,</if>
+            <if test="unitRemark != null">unit_remark,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="parentId != null">parent_id,</if>
+            <if test="propertyId != null">property_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="unitName != null">#{unitName},</if>
+            <if test="unitAddress != null">#{unitAddress},</if>
+            <if test="unitContact != null">#{unitContact},</if>
+            <if test="unitPhone != null">#{unitPhone},</if>
+            <if test="unitCellphone != null">#{unitCellphone},</if>
+            <if test="unitFax != null">#{unitFax},</if>
+            <if test="unitPostcode != null">#{unitPostcode},</if>
+            <if test="unitRemark != null">#{unitRemark},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="parentId != null">#{parentId},</if>
+            <if test="propertyId != null">#{propertyId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyMaintenanceunit" parameterType="HyMaintenanceunit">
+        update hy_maintenanceunit
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="unitName != null">unit_name = #{unitName},</if>
+            <if test="unitAddress != null">unit_address = #{unitAddress},</if>
+            <if test="unitContact != null">unit_contact = #{unitContact},</if>
+            <if test="unitPhone != null">unit_phone = #{unitPhone},</if>
+            <if test="unitCellphone != null">unit_cellphone = #{unitCellphone},</if>
+            <if test="unitFax != null">unit_fax = #{unitFax},</if>
+            <if test="unitPostcode != null">unit_postcode = #{unitPostcode},</if>
+            <if test="unitRemark != null">unit_remark = #{unitRemark},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="parentId != null">parent_id = #{parentId},</if>
+            <if test="propertyId != null">property_id = #{propertyId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyMaintenanceunitById" parameterType="Long">
+        delete from hy_maintenanceunit where id = #{id}
+    </delete>
+
+    <delete id="deleteHyMaintenanceunitByIds" parameterType="String">
+        delete from hy_maintenanceunit where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

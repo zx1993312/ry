@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改设备保养物料')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-maintenancesupplies-edit" th:object="${hyMaintenancesupplies}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">物料名称：</label>
+                <div class="col-sm-8">
+                    <input name="suppliesName" th:field="*{suppliesName}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">物料规格：</label>
+                <div class="col-sm-8">
+                    <input name="suppliesSpecification" th:field="*{suppliesSpecification}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">物料品牌：</label>
+                <div class="col-sm-8">
+                    <input name="suppliesBrand" th:field="*{suppliesBrand}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">物料数量：</label>
+                <div class="col-sm-8">
+                    <input name="suppliesCount" th:field="*{suppliesCount}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">物料单价：</label>
+                <div class="col-sm-8">
+                    <input name="suppliesPrice" th:field="*{suppliesPrice}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">计量单位：</label>
+                <div class="col-sm-8">
+                    <input name="suppliesMeasurement" th:field="*{suppliesMeasurement}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">物料用途：</label>
+                <div class="col-sm-8">
+                    <input name="suppliesUse" th:field="*{suppliesUse}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">金额：</label>
+                <div class="col-sm-8">
+                    <input name="money" th:field="*{money}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">设备档案：</label>
+                <div class="col-sm-8">
+                    <select id="archivesId" name="archivesId" th:field="*{archivesId}" class="form-control" th:with="type=${@archives.getArchives()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.archivesName}" th:value="${data.id}"></option>
+			 	    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">设备类别：</label>
+                <div class="col-sm-8">
+                    <select id="equipmentId" name="equipmentId" th:field="*{equipmentId}" class="form-control" th:with="type=${@equipment.getEquipment()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.equipmentName}" th:value="${data.id}"></option>
+			 	    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">设备保养计划：</label>
+                <div class="col-sm-8">
+                    <select id="planId" name="planId" th:field="*{planId}" class="form-control" th:with="type=${@plan.getPlan()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.planName}" th:value="${data.id}"></option>
+			 	    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">设备保养登记：</label>
+                <div class="col-sm-8">
+                    <select id="registrationId" name="registrationId" th:field="*{registrationId}" class="form-control" th:with="type=${@registration.getRegistration()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.recordNumber}" th:value="${data.id}"></option>
+			 	    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/maintenancesupplies";
+        $("#form-maintenancesupplies-edit").validate({
+        	rules : {
+        		suppliesName : {
+					required : true,
+					maxlength:20,
+				},
+				suppliesSpecification : {
+					required : true,
+					maxlength:20,
+				},
+				suppliesBrand : {
+					required : true,
+					maxlength:20,
+				},
+				suppliesCount : {
+					required : true,
+					maxlength:20,
+				},
+				suppliesPrice : {
+					required : true,
+					maxlength:10,
+				},
+				suppliesMeasurement : {
+					required : true,
+					maxlength:20,
+				},
+				suppliesUse : {
+					required : true,
+					maxlength:255,
+				},
+				money : {
+					required : true,
+					maxlength:20,
+				},
+				archivesId : {
+					required : true,
+					maxlength:11,
+				},
+				equipmentId : {
+					required : true,
+					maxlength:11,
+				},
+				planId : {
+					required : true,
+					maxlength:11,
+				},
+				registrationId : {
+					required : true,
+					maxlength:11,
+				},
+			},
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-maintenancesupplies-edit').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

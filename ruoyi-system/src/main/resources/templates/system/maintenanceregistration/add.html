@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增设备保养登记')" />
+    <th:block th:include="include :: datetimepicker-css" />
+    <th:block th:include="include :: summernote-css" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-maintenanceregistration-add">
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">保养类别：</label>
+                <div class="col-sm-2">
+                     <select name="categories" class="form-control m-b">
+                        <option value=''>请选择</option>
+                        <option value='1'>自维</option>
+                        <option value='0'>外维</option>
+                    </select>
+                </div>
+                <label class="col-sm-2 control-label">保养计划号：</label>
+                <div class="col-sm-2">
+                    <input name="planNumber" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">专业部门：</label>
+                <div class="col-sm-2">
+                    <input name="specializedDepartment" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">  
+            	<label class="col-sm-2 control-label">选择执行计划：</label>
+                <div class="col-sm-2">
+                    <select class="form-control m-b" name="userId" data-first-title="选择员工" th:with="type=${@employee.getEmployee()}">
+	                  <option value="">请选择</option>
+	                  <option th:each="dict : ${type}" th:text="${dict.userName}" th:value="${dict.userId}"></option>
+	                </select>
+                </div>
+                <label class="col-sm-2 control-label">设备类别：</label>
+                <div class="col-sm-2">
+                    <select class="form-control m-b" name="equipmentId" data-first-title="选择员工" th:with="type=${@equipment.getEquipment()}">
+	                  <option value="">请选择</option>
+	                  <option th:each="dict : ${type}" th:text="${dict.equipmentName}" th:value="${dict.id}"></option>
+	                </select>
+                </div>  
+                <label class="col-sm-2 control-label">保养开始日期：</label>
+                <div class="col-sm-2">
+                    <div class="input-group date">
+                        <input name="startDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">保养内容：</label>
+                <div class="col-sm-4">
+                    <input type="hidden" class="form-control" name="maintenanceContent">
+                    <div class="summernote" id="maintenanceContent"></div>
+                </div>
+                <label class="col-sm-2 control-label">当前保养内容：</label>
+                <div class="col-sm-4">
+                    <input type="hidden" class="form-control" name="currentContent">
+                    <div class="summernote" id="currentContent"></div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">保养结束日期：</label>
+                <div class="col-sm-2">
+                    <div class="input-group date">
+                        <input name="endDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+                <label class="col-sm-2 control-label">工时：</label>
+                <div class="col-sm-2">
+                    <input name="manHour" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">负责人：</label>
+                <div class="col-sm-2">
+                    <input name="principal" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">保养费用：</label>
+                <div class="col-sm-2">
+                    <input name="upkeepCost" class="form-control" type="text">
+                </div>
+                 <label class="col-sm-2 control-label">保养单位：</label>
+                <div class="col-sm-2">
+                    <input name="upkeepUnit" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">备注：</label>
+                <div class="col-sm-2">
+                    <input name="registrationRemark" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">保养完成情况：</label>
+                <div class="col-sm-2">
+                    <input name="maintenanceCompletion" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">是否有异常：</label>
+                <div class="col-sm-1">
+                  <input name="isUnusual" value='1' type="radio">是
+               </div>
+               <div class="col-sm-1">
+                   <input name="isUnusual" value='0' type="radio" checked="checked">否
+               </div>
+                <label class="col-sm-2 control-label">验收时间：</label>
+                <div class="col-sm-2">
+                    <div class="input-group date">
+                        <input name="receptionTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">验收人：</label>
+                <div class="col-sm-2">
+                    <input name="acceptor" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">检查验收情况：</label>
+                <div class="col-sm-2">
+                    <input name="inspectionAcceptance" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">问题整改情况：</label>
+                <div class="col-sm-2">
+                    <input name="problemRectification" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: datetimepicker-js" />
+    <th:block th:include="include :: summernote-js" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/maintenanceregistration"
+        $("#form-maintenanceregistration-add").validate({
+        	rules : {
+        		categories : {
+					maxlength:20,
+				},
+				planNumber : {
+					required : true,
+					maxlength:255,
+				},
+				specializedDepartment : {
+					maxlength:255,
+				},
+				maintenanceContent : {
+					maxlength:255,
+				},
+				currentContent : {
+					maxlength:255,
+				},
+				manHour : {
+					maxlength:10,
+				},
+				principal : {
+					maxlength:20,
+				},
+				upkeepCost : {
+					maxlength:10,
+				},
+				upkeepUnit : {
+					maxlength:20,
+				},
+				registrationRemark : {
+					maxlength:255,
+				},
+				maintenanceCompletion : {
+					maxlength:255,
+				},
+				isUnusual : {
+					maxlength:1,
+				},
+				receptionTime : {
+					required : true,
+				},
+				acceptor : {
+					maxlength:20,
+				},
+				inspectionAcceptance : {
+					maxlength:255,
+				},
+				problemRectification : {
+					maxlength:255,
+				},
+				userId : {
+					required : true,
+					maxlength:11,
+				},
+				equipmentId : {
+					required : true,
+					maxlength:11,
+				},
+			},
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-maintenanceregistration-add').serialize());
+            }
+        }
+
+        $("input[name='startTime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='endTime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='startDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='endDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='receptionTime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $(function() {
+            $('.summernote').summernote({
+                lang: 'zh-CN',
+                callbacks: {
+                    onChange: function(contents, $edittable) {
+                        $("input[name='" + this.id + "']").val(contents);
+                    },
+                    onImageUpload: function(files) {
+                        var obj = this;
+                    	var data = new FormData();
+                    	data.append("file", files[0]);
+                    	$.ajax({
+                            type: "post",
+                            url: ctx + "common/upload",
+                    		data: data,
+                    		cache: false,
+                    		contentType: false,
+                    		processData: false,
+                    		dataType: 'json',
+                    		success: function(result) {
+                    		    if (result.code == web_status.SUCCESS) {
+                    		        $('#' + obj.id).summernote('insertImage', result.url);
+                    		    } else {
+                    		        $.modal.alertError(result.msg);
+                    		    }
+                    		},
+                    		error: function(error) {
+                    		    $.modal.alertWarning("图片上传失败。");
+                    		}
+                    	});
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

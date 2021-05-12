@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyMaintenancesuppliesMapper">
+    
+    <resultMap type="HyMaintenancesupplies" id="HyMaintenancesuppliesResult">
+        <result property="id"    column="id"    />
+        <result property="suppliesName"    column="supplies_name"    />
+        <result property="suppliesSpecification"    column="supplies_specification"    />
+        <result property="suppliesBrand"    column="supplies_brand"    />
+        <result property="suppliesCount"    column="supplies_count"    />
+        <result property="suppliesPrice"    column="supplies_price"    />
+        <result property="suppliesMeasurement"    column="supplies_measurement"    />
+        <result property="suppliesUse"    column="supplies_use"    />
+        <result property="money"    column="money"    />
+        <result property="archivesId"    column="archives_id"    />
+        <result property="equipmentId"    column="equipment_id"    />
+        <result property="planId"    column="plan_id"    />
+        <result property="registrationId"    column="registration_id"    />
+        <association property="hyEquipment" column="id"
+			javaType="HyEquipment" resultMap="HyEquipmentResult" />
+        <association property="hyMaintenanceplan" column="id"
+			javaType="HyMaintenanceplan" resultMap="HyMaintenanceplanResult" />
+        <association property="hyMaintenanceregistration" column="id"
+			javaType="HyMaintenanceregistration" resultMap="HyMaintenanceregistrationResult" />
+        <association property="hyEquipmentArchives" column="id"
+			javaType="HyEquipmentArchives" resultMap="HyEquipmentArchivesResult" />
+    </resultMap>
+	
+	<resultMap type="HyEquipment" id="HyEquipmentResult">
+        <result property="id"    column="id"    />
+        <result property="parentId"    column="parent_id"    />
+        <result property="equipmentCode"    column="equipment_code"    />
+        <result property="equipmentName"    column="equipment_name"    />
+        <result property="equipmentExplains"    column="equipment_explains"    />
+        <result property="equipmentDetail"    column="equipment_detail"    />
+        <result property="deptId"    column="dept_id"    />
+    </resultMap>
+	
+	<resultMap type="HyMaintenanceplan" id="HyMaintenanceplanResult">
+        <result property="id"    column="id"    />
+        <result property="planCode"    column="plan_code"    />
+        <result property="planName"    column="plan_name"    />
+        <result property="planDate"    column="plan_date"    />
+        <result property="maintainType"    column="maintain_type"    />
+        <result property="maintainLevel"    column="maintain_level"    />
+        <result property="maintainPeriod"    column="maintain_period"    />
+        <result property="planRemark"    column="plan_remark"    />
+        <result property="isAudit"    column="is_audit"    />
+        <result property="plansClose"    column="plans_close"    />
+        <result property="closedType"    column="closed_type"    />
+        <result property="preparedBy"    column="prepared_by"    />
+        <result property="makeTime"    column="make_time"    />
+        <result property="reviser"    column="reviser"    />
+        <result property="revisionTime"    column="revision_time"    />
+        <result property="content"    column="content"    />
+        <result property="specializedDepartment"    column="specialized_department"    />
+        <result property="planNumber"    column="plan_number"    />
+        <result property="equipmentId"    column="equipment_id"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="userId"    column="user_id"    />
+    </resultMap>
+    
+    <resultMap type="HyMaintenanceregistration" id="HyMaintenanceregistrationResult">
+        <result property="id"    column="id"    />
+        <result property="recordNumber"    column="record_number"    />
+        <result property="categories"    column="categories"    />
+        <result property="planNumber"    column="plan_number"    />
+        <result property="specializedDepartment"    column="specialized_department"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="maintenanceContent"    column="maintenance_content"    />
+        <result property="currentContent"    column="current_content"    />
+        <result property="startDate"    column="start_date"    />
+        <result property="endDate"    column="end_date"    />
+        <result property="manHour"    column="man_hour"    />
+        <result property="principal"    column="principal"    />
+        <result property="upkeepCost"    column="upkeep_cost"    />
+        <result property="upkeepUnit"    column="upkeep_unit"    />
+        <result property="registrationRemark"    column="registration_remark"    />
+        <result property="maintenanceCompletion"    column="maintenance_completion"    />
+        <result property="isUnusual"    column="is_unusual"    />
+        <result property="receptionTime"    column="reception_time"    />
+        <result property="acceptor"    column="acceptor"    />
+        <result property="inspectionAcceptance"    column="inspection_acceptance"    />
+        <result property="problemRectification"    column="problem_rectification"    />
+        <result property="userId"    column="user_id"    />
+        <result property="equipmentId"    column="equipment_id"    />
+    </resultMap>
+    
+    <resultMap type="HyEquipmentArchives" id="HyEquipmentArchivesResult">
+        <result property="id"    column="id"    />
+        <result property="archivesNumber"    column="archives_number"    />
+        <result property="archivesName"    column="archives_name"    />
+        <result property="archivesSort"    column="archives_sort"    />
+        <result property="archivesManufacturers"    column="archives_manufacturers"    />
+        <result property="archivesType"    column="archives_type"    />
+        <result property="archivesSpecification"    column="archives_specification"    />
+        <result property="acquisitionDate"    column="acquisition_date"    />
+        <result property="releaseDate"    column="release_date"    />
+        <result property="releaseNumber"    column="release_number"    />
+        <result property="installationDate"    column="installation_date"    />
+        <result property="installationUnit"    column="installation_unit"    />
+        <result property="storeAddress"    column="store_address"    />
+        <result property="useDate"    column="use_date"    />
+        <result property="userYear"    column="user_year"    />
+        <result property="discardTime"    column="discard_time"    />
+        <result property="commencementDate"    column="commencement_date"    />
+        <result property="warrantyPeriod"    column="warranty_period"    />
+        <result property="endDate"    column="end_date"    />
+        <result property="originalValue"    column="original_value"    />
+        <result property="depreciationRate"    column="depreciation_rate"    />
+        <result property="nowPrice"    column="now_price"    />
+        <result property="mentionDepreciation"    column="mention_depreciation"    />
+        <result property="netValue"    column="net_value"    />
+        <result property="equipmentDraw"    column="equipment_draw"    />
+        <result property="useRange"    column="use_range"    />
+        <result property="unit"    column="unit"    />
+        <result property="number"    column="number"    />
+        <result property="floorSpace"    column="floor_space"    />
+        <result property="propertyOwnership"    column="property_ownership"    />
+        <result property="operationInstruction"    column="operation_instruction"    />
+        <result property="technicalData"    column="technical_data"    />
+        <result property="remark"    column="remark"    />
+        <result property="useState"    column="use_state"    />
+        <result property="scanCode"    column="scan_code"    />
+        <result property="archivesPicture"    column="archives_picture"    />
+        <result property="normalEpoch"    column="normal_epoch"    />
+        <result property="operationalPeriod"    column="operational_period"    />
+        <result property="testDate"    column="test_date"    />
+        <result property="equipmentLevel"    column="equipment_level"    />
+        <result property="handoverDate"    column="handover_date"    />
+        <result property="compulsoryTest"    column="compulsory_test"    />
+        <result property="inspectionPeriod"    column="inspection_period"    />
+        <result property="detectionPeriod"    column="detection_period"    />
+        <result property="equipmentId"    column="equipment_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="deptId"    column="dept_id"    />
+    </resultMap>
+	
+    <sql id="selectHyMaintenancesuppliesVo">
+        select 
+        m.id, 
+        m.supplies_name, 
+        m.supplies_specification, 
+        m.supplies_brand, 
+        m.supplies_count, 
+        m.supplies_price, 
+        m.supplies_measurement, 
+        m.supplies_use, money, 
+        m.archives_id, 
+        m.equipment_id, 
+        m.plan_id, 
+        m.registration_id,
+        a.archives_name,
+        p.plan_code,
+        p.plan_name,
+        r.principal,
+        r.start_date,
+        r.end_date,
+        r.upkeep_unit,
+        e.equipment_name
+        from 
+        hy_maintenancesupplies m
+        LEFT JOIN hy_equipment e ON m.equipment_id=e.id
+        LEFT JOIN hy_maintenanceplan p ON m.plan_id=p.id
+        LEFT JOIN hy_maintenanceregistration r ON m.registration_id=r.id
+        LEFT JOIN hy_equipment_archives a ON m.archives_id=a.id
+    </sql>
+
+    <select id="selectHyMaintenancesuppliesList" parameterType="HyMaintenancesupplies" resultMap="HyMaintenancesuppliesResult">
+        <include refid="selectHyMaintenancesuppliesVo"/>
+        <where>  
+            <if test="suppliesName != null  and suppliesName != ''"> and m.supplies_name = #{suppliesName}</if>
+            <if test="suppliesSpecification != null  and suppliesSpecification != ''"> and m.supplies_specification = #{suppliesSpecification}</if>
+            <if test="suppliesBrand != null  and suppliesBrand != ''"> and m.supplies_brand = #{suppliesBrand}</if>
+            <if test="suppliesCount != null  and suppliesCount != ''"> and m.supplies_count = #{suppliesCount}</if>
+            <if test="suppliesPrice != null "> and m.supplies_price = #{suppliesPrice}</if>
+            <if test="suppliesMeasurement != null  and suppliesMeasurement != ''"> and m.supplies_measurement = #{suppliesMeasurement}</if>
+            <if test="suppliesUse != null  and suppliesUse != ''"> and m.supplies_use = #{suppliesUse}</if>
+            <if test="money != null  and money != ''"> and m.money = #{money}</if>
+            <if test="archivesId != null "> and m.archives_id = #{archivesId}</if>
+            <if test="equipmentId != null "> and m.equipment_id = #{equipmentId}</if>
+            <if test="planId != null "> and m.plan_id = #{planId}</if>
+            <if test="registrationId != null "> and m.registration_id = #{registrationId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyMaintenancesuppliesById" parameterType="Long" resultMap="HyMaintenancesuppliesResult">
+        <include refid="selectHyMaintenancesuppliesVo"/>
+        where m.id = #{id}
+    </select>
+        
+    <insert id="insertHyMaintenancesupplies" parameterType="HyMaintenancesupplies" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_maintenancesupplies
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="suppliesName != null">supplies_name,</if>
+            <if test="suppliesSpecification != null">supplies_specification,</if>
+            <if test="suppliesBrand != null">supplies_brand,</if>
+            <if test="suppliesCount != null">supplies_count,</if>
+            <if test="suppliesPrice != null">supplies_price,</if>
+            <if test="suppliesMeasurement != null">supplies_measurement,</if>
+            <if test="suppliesUse != null">supplies_use,</if>
+            <if test="money != null">money,</if>
+            <if test="archivesId != null">archives_id,</if>
+            <if test="equipmentId != null">equipment_id,</if>
+            <if test="planId != null">plan_id,</if>
+            <if test="registrationId != null">registration_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="suppliesName != null">#{suppliesName},</if>
+            <if test="suppliesSpecification != null">#{suppliesSpecification},</if>
+            <if test="suppliesBrand != null">#{suppliesBrand},</if>
+            <if test="suppliesCount != null">#{suppliesCount},</if>
+            <if test="suppliesPrice != null">#{suppliesPrice},</if>
+            <if test="suppliesMeasurement != null">#{suppliesMeasurement},</if>
+            <if test="suppliesUse != null">#{suppliesUse},</if>
+            <if test="money != null">#{money},</if>
+            <if test="archivesId != null">#{archivesId},</if>
+            <if test="equipmentId != null">#{equipmentId},</if>
+            <if test="planId != null">#{planId},</if>
+            <if test="registrationId != null">#{registrationId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyMaintenancesupplies" parameterType="HyMaintenancesupplies">
+        update hy_maintenancesupplies
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="suppliesName != null">supplies_name = #{suppliesName},</if>
+            <if test="suppliesSpecification != null">supplies_specification = #{suppliesSpecification},</if>
+            <if test="suppliesBrand != null">supplies_brand = #{suppliesBrand},</if>
+            <if test="suppliesCount != null">supplies_count = #{suppliesCount},</if>
+            <if test="suppliesPrice != null">supplies_price = #{suppliesPrice},</if>
+            <if test="suppliesMeasurement != null">supplies_measurement = #{suppliesMeasurement},</if>
+            <if test="suppliesUse != null">supplies_use = #{suppliesUse},</if>
+            <if test="money != null">money = #{money},</if>
+            <if test="archivesId != null">archives_id = #{archivesId},</if>
+            <if test="equipmentId != null">equipment_id = #{equipmentId},</if>
+            <if test="planId != null">plan_id = #{planId},</if>
+            <if test="registrationId != null">registration_id = #{registrationId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyMaintenancesuppliesById" parameterType="Long">
+        delete from hy_maintenancesupplies where id = #{id}
+    </delete>
+
+    <delete id="deleteHyMaintenancesuppliesByIds" parameterType="String">
+        delete from hy_maintenancesupplies where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

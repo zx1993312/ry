@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('设备保养计划列表')" />
+    <th:block th:include="include :: layout-latest-css" />
+	<th:block th:include="include :: ztree-css" />
+</head>
+<body class="gray-bg">
+<div class="ui-layout-west">
+	<div class="box box-main">
+			<div class="box-header">
+				<div class="box-title">
+					<i class="fa icon-grid"></i> 设备类型
+				</div>
+				<div class="box-tools pull-right">
+				    <a type="button" class="btn btn-box-tool" href="#" onclick="costProject()" title="管理部门"><i class="fa fa-edit"></i></a>
+					<button type="button" class="btn btn-box-tool" id="btnExpand" title="展开" style="display:none;"><i class="fa fa-chevron-up"></i></button>
+					<button type="button" class="btn btn-box-tool" id="btnCollapse" title="折叠"><i class="fa fa-chevron-down"></i></button>
+					<button type="button" class="btn btn-box-tool" id="btnRefresh" title="刷新部门"><i class="fa fa-refresh"></i></button>
+				</div>
+			</div>
+			<div class="ui-layout-content">
+				<div id="tree" class="ztree"></div>
+			</div>
+		</div>
+	</div>
+	<div class="ui-layout-center">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>计划编号：</label>
+                                <input type="text" name="planCode"/>
+                            </li>
+                            <li>
+                                <label>计划名称：</label>
+                                <input type="text" name="planName"/>
+                            </li>
+                            <li>
+                                <label>计划日期：</label>
+                                <input type="text" class="time-input" placeholder="请选择计划日期" name="planDate"/>
+                            </li>
+                            <li>
+                                <label>设备保养类别：</label>
+                                <select name="maintainType">
+                                    <option value=''>请选择</option>
+                                    <option value='1'>自维</option>
+                                    <option value='0'>外维</option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>设备保养等级：</label>
+                                <select name="maintainLevel">
+                                    <option value=''>请选择</option>
+                                    <option value='0'>日常保养</option>
+                                    <option value='1'>一级保养</option>
+                                    <option value='2'>二级保养</option>
+                                    <option value='3'>三级保养</option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>设备保养周期：</label>
+                                <input type="text" name="maintainPeriod"/>
+                            </li>
+                            <li>
+                                <label>备注：</label>
+                                <input type="text" name="planRemark"/>
+                            </li>
+                            <li>
+                                <label>设备类别：</label>
+                                <select id="equipmentId" name="equipmentId" class="form-control" th:with="type=${@equipment.getEquipment()}">
+									<option value="">请选择</option>
+									<option th:if="data!=null" th:each="data:${type}" th:text="${data.equipmentName}" th:value="${data.id}"></option>
+						 	    </select>
+                            </li>
+                            <li>
+                                <label>组织机构：</label>
+                                <select id="deptId" name="deptId" class="form-control" th:with="type=${@dept.getDepts()}">
+									<option value="">请选择</option>
+									<option th:if="data!=null" th:each="data:${type}" th:text="${data.deptName}" th:value="${data.deptId}"></option>
+						 	    </select>
+                            </li>
+                            <li>
+                                <label>计划负责人：</label>
+                                <select id="userId" name="userId" class="form-control" th:with="type=${@user.getUser()}">
+									<option value="">请选择</option>
+									<option th:if="data!=null" th:each="data:${type}" th:text="${data.userName}" th:value="${data.userId}"></option>
+						 	    </select>
+                            </li>
+                           <!--  <li>
+                                <label>是否审核：</label>
+                                <select name="isAudit">
+                                    <option value=''>请选择</option>
+                                    <option value='1'>是</option>
+                                    <option value='0'>否</option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>计划关闭：</label>
+                                <input type="text" name="plansClose"/>
+                            </li>
+                            <li>
+                                <label>关闭类型：</label>
+                                <select name="closedType">
+                                    <option value=''>请选择</option>
+                                    <option value='1'>关闭类型</option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>制单人：</label>
+                                <input type="text" name="preparedBy"/>
+                            </li>
+                            <li>
+                                <label>制单时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择制单时间" name="makeTime"/>
+                            </li>
+                            <li>
+                                <label>修订人：</label>
+                                <input type="text" name="reviser"/>
+                            </li>
+                            <li>
+                                <label>修订时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择修订时间" name="revisionTime"/>
+                            </li>
+                             -->
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:maintenanceplan:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:maintenanceplan:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:maintenanceplan:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:maintenanceplan:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: layout-latest-js" />
+	<th:block th:include="include :: ztree-js" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:maintenanceplan:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:maintenanceplan:remove')}]];
+        var prefix = ctx + "system/maintenanceplan";
+        $(function() {
+        	var panehHidden = false;
+		    if ($(this).width() < 769) {
+		        panehHidden = true;
+		    }
+		    $('body').layout({ initClosed: panehHidden, west__size: 185 });
+	     	// 回到顶部绑定
+	    	if ($.fn.toTop !== undefined) {
+	    		var opt = {
+	    			win:$('.ui-layout-center'),
+	    			doc:$('.ui-layout-center')
+	    		};
+	    		$('#scroll-up').toTop(opt);
+	    	}
+	    	queryMaintenanceplanList();
+		    queryDeptTree();
+		});
+        function queryMaintenanceplanList() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "设备保养计划",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '设备保养计划id',
+                    visible: false
+                },
+                {
+                    field: 'planCode',
+                    title: '计划编号'
+                },
+                {
+                    field: 'planName',
+                    title: '计划名称'
+                },
+                {
+                    field: 'planDate',
+                    title: '计划日期'
+                },
+                {
+                    field: 'hyEquipment.equipmentName',
+                    title: '设备类别'
+                },
+                {
+                    field: 'maintainType',
+                    title: '设备保养类别',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case '' : value =  "请选择";break;
+	                    	case '1' : value =  "自维";break;
+	                    	case '2' : value =  "外维";break;
+	                	}
+		            	return value;
+		            }
+                },
+                {
+                    field: 'maintainLevel',
+                    title: '设备保养等级',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case '' : value =  "请选择";break;
+	                    	case '0' : value =  "日常保养";break;
+	                    	case '1' : value =  "一级保养";break;
+	                    	case '2' : value =  "二级保养";break;
+	                    	case '3' : value =  "三级保养";break;
+	                	}
+		            	return value;
+		            }
+                },
+                {
+                    field: 'maintainPeriod',
+                    title: '设备保养周期'
+                },
+                {
+                    field: 'sysDept.deptName',
+                    title: '组织机构'
+                },
+                {
+                    field: 'isAudit',
+                    title: '是否审核',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case '' : value =  "请选择";break;
+	                    	case '1' : value =  "是";break;
+	                    	case '0' : value =  "否";break;
+	                	}
+		            	return value;
+		            }
+                },
+                {
+                    field: 'plansClose',
+                    title: '计划关闭'
+                },
+                {
+                    field: 'closedType',
+                    title: '关闭类型',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case '' : value =  "请选择";break;
+	                    	case '1' : value =  "关闭类型";break;
+	                	}
+		            	return value;
+		            }
+                },
+                {
+                    field: 'sysUser.userName',
+                    title: '计划负责人'
+                },
+                {
+                    field: 'preparedBy',
+                    title: '制单人'
+                },
+                {
+                    field: 'makeTime',
+                    title: '制单时间'
+                },
+                {
+                    field: 'reviser',
+                    title: '修订人'
+                },
+                {
+                    field: 'revisionTime',
+                    title: '修订时间'
+                },
+                {
+                    field: 'content',
+                    title: '设备保养项目内容'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        };
+        function queryDeptTree()
+		{
+			var url = ctx + "system/equipment/equipmentList";
+			var options = {
+		        url: url,
+		        expandLevel: 2,
+		        onClick : zOnClick
+		    };
+			$.tree.init(options);
+			
+			function zOnClick(event, treeId, treeNode) {
+				$("#equipmentId").val(treeNode.id);
+				$.table.search();
+			}
+		}
+		
+		$('#btnExpand').click(function() {
+			$._tree.expandAll(true);
+		    $(this).hide();
+		    $('#btnCollapse').show();
+		});
+		
+		$('#btnCollapse').click(function() {
+			$._tree.expandAll(false);
+		    $(this).hide();
+		    $('#btnExpand').show();
+		});
+		
+		$('#btnRefresh').click(function() {
+			queryDeptTree();
+		});
+    </script>
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增保养单位')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-maintenanceunit-add">
+        	<div class="form-group">
+            	<label class="col-sm-2 control-label">选择物业：</label>
+                	<div class="col-sm-4">
+                    	<select class="province form-control m-b" name="propertyId" id="property" data-first-title="选择物业"  th:with="type=${@dept.getDept()}" onchange="changeDept()">
+	                  		<option value="">请选择</option>
+	                  		<option th:each="dict : ${type}" th:text="${dict.deptName}" th:value="${dict.deptId}"></option>
+	                	</select>
+			    	</div>
+			    <label class="col-sm-2 control-label">选择项目：</label>
+                	<div class="col-sm-4">
+	                	<select class="city form-control m-b" name="parentId" id="dept" data-first-title="选择项目" disabled="disabled" onchange="changeDepts()">
+	                 	 <option value="">请选择</option>
+	                	</select>
+                	</div>
+			</div> 
+            <div class="form-group">
+            	<label class="col-sm-2 control-label">组织机构：</label>
+                <div class="col-sm-4">
+                    <select class="city form-control m-b" name="deptId" id="depts" data-first-title="选择部门" disabled="disabled" onchange="changeEmployee()">
+	                 	 <option value="">请选择</option>
+	                </select>
+                </div> 
+                <label class="col-sm-2 control-label">名称：</label>
+                <div class="col-sm-4">
+                	<input name="unitName" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">地址：</label>
+                <div class="col-sm-4">
+                    <input name="unitAddress" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">联系人：</label>
+                <div class="col-sm-4">
+                    <input name="unitContact" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">电话：</label>
+                <div class="col-sm-4">
+                    <input name="unitPhone" class="form-control" type="text">
+                </div>
+                 <label class="col-sm-2 control-label">手机：</label>
+                <div class="col-sm-4">
+                    <input name="unitCellphone" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">传真：</label>
+                <div class="col-sm-4">
+                    <input name="unitFax" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">邮编：</label>
+                <div class="col-sm-4">
+                    <input name="unitPostcode" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">备注：</label>
+                <div class="col-sm-8">
+                    <input name="unitRemark" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/maintenanceunit"
+        $("#form-maintenanceunit-add").validate({
+        	rules : {
+        		unitName : {
+					required : true,
+					maxlength:20,
+				},
+				unitAddress : {
+					maxlength:255,
+				},
+				unitContact : {
+					maxlength:20,
+				},
+				unitPhone : {
+					maxlength:11,
+				},
+				unitCellphone : {
+					maxlength:11,
+				},
+				unitFax : {
+					maxlength:255,
+				},
+				unitPostcode : {
+					maxlength:20,
+				},
+				unitRemark : {
+					maxlength:255,
+				},
+				deptId : {
+					required : true,
+					maxlength:11,
+				},
+				parentId : {
+					required : true,
+					maxlength:11,
+				},
+				propertyId : {
+					required : true,
+					maxlength:11,
+				},
+			},
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-maintenanceunit-add').serialize());
+            }
+        }
+        
+        var prefix1 = ctx + "system/dept"
+        //物业部门员工
+        function changeDept(){
+   			$("#dept").removeAttr("disabled");
+   			$.ajax({
+                url: prefix1 + "/list",
+                data: {parentId : $("#property").val()},
+                dataType : 'json',
+                type: 'POST',
+                success: function (result) {
+                	var optArr = [];
+                	$("#dept").empty();
+					$("#dept").append("<option value=\"\">请选择</option>");
+                    for (var i = 0; i < result.length; i++) {
+                    	$("#dept").append("<option value=" + result[i].deptId + ">" + result[i].deptName + "</option>");
+                    }
+                        
+                    // 缺一不可  
+                    $("#dept").selectpicker('refresh');
+                    $("#dept").selectpicker('render');
+
+					console.log(result);
+                }
+            });
+   		}
+        function changeDepts(){
+   			$("#depts").removeAttr("disabled");
+   			$.ajax({
+                url: prefix1 + "/list",
+                data: {parentId : $("#dept").val()},
+                dataType : 'json',
+                type: 'POST',
+                success: function (result) {
+                	console.log(result);
+                	var optArr = [];
+                	$("#depts").empty();
+					$("#depts").append("<option value=\"\">请选择</option>");
+                    for (var i = 0; i < result.length; i++) {
+                    	$("#depts").append("<option value=" + result[i].deptId + ">" + result[i].deptName + "</option>");
+                    }
+                        
+                    // 缺一不可  
+                    $("#depts").selectpicker('refresh');
+                    $("#depts").selectpicker('render');
+
+					console.log(result);
+                }
+            });
+   		}
+        
+   		var prefix2 = ctx + "system/user"
+   		function changeEmployee(){
+   			$("#employee").removeAttr("disabled");
+   			$.ajax({
+                url: prefix2 + "/lists",
+                data: {deptId : $("#depts").val()},
+                dataType : 'json',
+                type: 'POST',
+                success: function (result) {
+                	console.log(result);
+                	var optArr = [];
+                	$("#employee").empty();
+					$("#employee").append("<option value=\"\">请选择</option>");
+                    for (var i = 0; i < result.length; i++) {
+                    	$("#employee").append("<option value=" + result[i].userId + ">" + result[i].userName + "</option>");
+                    }
+                        
+                    // 缺一不可  
+                    $("#employee").selectpicker('refresh');
+                    $("#employee").selectpicker('render');
+
+					console.log(result);
+                }
+            });
+   		}
+    </script>
+</body>
+</html>

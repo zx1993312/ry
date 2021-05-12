@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyMaintenanceregistrationMapper">
+    
+    <resultMap type="HyMaintenanceregistration" id="HyMaintenanceregistrationResult">
+        <result property="id"    column="id"    />
+        <result property="recordNumber"    column="record_number"    />
+        <result property="categories"    column="categories"    />
+        <result property="planNumber"    column="plan_number"    />
+        <result property="specializedDepartment"    column="specialized_department"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="maintenanceContent"    column="maintenance_content"    />
+        <result property="currentContent"    column="current_content"    />
+        <result property="startDate"    column="start_date"    />
+        <result property="endDate"    column="end_date"    />
+        <result property="manHour"    column="man_hour"    />
+        <result property="principal"    column="principal"    />
+        <result property="upkeepCost"    column="upkeep_cost"    />
+        <result property="upkeepUnit"    column="upkeep_unit"    />
+        <result property="registrationRemark"    column="registration_remark"    />
+        <result property="maintenanceCompletion"    column="maintenance_completion"    />
+        <result property="isUnusual"    column="is_unusual"    />
+        <result property="receptionTime"    column="reception_time"    />
+        <result property="acceptor"    column="acceptor"    />
+        <result property="inspectionAcceptance"    column="inspection_acceptance"    />
+        <result property="problemRectification"    column="problem_rectification"    />
+        <result property="userId"    column="user_id"    />
+        <result property="equipmentId"    column="equipment_id"    />
+    </resultMap>
+
+    <sql id="selectHyMaintenanceregistrationVo">
+        select id, record_number, categories, plan_number, specialized_department, start_time, end_time, maintenance_content, current_content, start_date, end_date, man_hour, principal, upkeep_cost, upkeep_unit, registration_remark, maintenance_completion, is_unusual, reception_time, acceptor, inspection_acceptance, problem_rectification, user_id, equipment_id from hy_maintenanceregistration
+    </sql>
+
+    <select id="selectHyMaintenanceregistrationList" parameterType="HyMaintenanceregistration" resultMap="HyMaintenanceregistrationResult">
+        <include refid="selectHyMaintenanceregistrationVo"/>
+        <where>  
+            <if test="recordNumber != null  and recordNumber != ''"> and record_number = #{recordNumber}</if>
+            <if test="categories != null  and categories != ''"> and categories = #{categories}</if>
+            <if test="planNumber != null  and planNumber != ''"> and plan_number = #{planNumber}</if>
+            <if test="specializedDepartment != null  and specializedDepartment != ''"> and specialized_department = #{specializedDepartment}</if>
+            <if test="startTime != null "> and start_time = #{startTime}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+            <if test="maintenanceContent != null  and maintenanceContent != ''"> and maintenance_content = #{maintenanceContent}</if>
+            <if test="currentContent != null  and currentContent != ''"> and current_content = #{currentContent}</if>
+            <if test="startDate != null "> and start_date = #{startDate}</if>
+            <if test="endDate != null "> and end_date = #{endDate}</if>
+            <if test="manHour != null "> and man_hour = #{manHour}</if>
+            <if test="principal != null  and principal != ''"> and principal = #{principal}</if>
+            <if test="upkeepCost != null "> and upkeep_cost = #{upkeepCost}</if>
+            <if test="upkeepUnit != null  and upkeepUnit != ''"> and upkeep_unit = #{upkeepUnit}</if>
+            <if test="registrationRemark != null  and registrationRemark != ''"> and registration_remark = #{registrationRemark}</if>
+            <if test="maintenanceCompletion != null  and maintenanceCompletion != ''"> and maintenance_completion = #{maintenanceCompletion}</if>
+            <if test="isUnusual != null  and isUnusual != ''"> and is_unusual = #{isUnusual}</if>
+            <if test="receptionTime != null "> and reception_time = #{receptionTime}</if>
+            <if test="acceptor != null  and acceptor != ''"> and acceptor = #{acceptor}</if>
+            <if test="inspectionAcceptance != null  and inspectionAcceptance != ''"> and inspection_acceptance = #{inspectionAcceptance}</if>
+            <if test="problemRectification != null  and problemRectification != ''"> and problem_rectification = #{problemRectification}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="equipmentId != null "> and equipment_id = #{equipmentId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyMaintenanceregistrationById" parameterType="Long" resultMap="HyMaintenanceregistrationResult">
+        <include refid="selectHyMaintenanceregistrationVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyMaintenanceregistration" parameterType="HyMaintenanceregistration" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_maintenanceregistration
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="recordNumber != null">record_number,</if>
+            <if test="categories != null">categories,</if>
+            <if test="planNumber != null">plan_number,</if>
+            <if test="specializedDepartment != null">specialized_department,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="maintenanceContent != null">maintenance_content,</if>
+            <if test="currentContent != null">current_content,</if>
+            <if test="startDate != null">start_date,</if>
+            <if test="endDate != null">end_date,</if>
+            <if test="manHour != null">man_hour,</if>
+            <if test="principal != null">principal,</if>
+            <if test="upkeepCost != null">upkeep_cost,</if>
+            <if test="upkeepUnit != null">upkeep_unit,</if>
+            <if test="registrationRemark != null">registration_remark,</if>
+            <if test="maintenanceCompletion != null">maintenance_completion,</if>
+            <if test="isUnusual != null">is_unusual,</if>
+            <if test="receptionTime != null">reception_time,</if>
+            <if test="acceptor != null">acceptor,</if>
+            <if test="inspectionAcceptance != null">inspection_acceptance,</if>
+            <if test="problemRectification != null">problem_rectification,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="equipmentId != null">equipment_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="recordNumber != null">#{recordNumber},</if>
+            <if test="categories != null">#{categories},</if>
+            <if test="planNumber != null">#{planNumber},</if>
+            <if test="specializedDepartment != null">#{specializedDepartment},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="maintenanceContent != null">#{maintenanceContent},</if>
+            <if test="currentContent != null">#{currentContent},</if>
+            <if test="startDate != null">#{startDate},</if>
+            <if test="endDate != null">#{endDate},</if>
+            <if test="manHour != null">#{manHour},</if>
+            <if test="principal != null">#{principal},</if>
+            <if test="upkeepCost != null">#{upkeepCost},</if>
+            <if test="upkeepUnit != null">#{upkeepUnit},</if>
+            <if test="registrationRemark != null">#{registrationRemark},</if>
+            <if test="maintenanceCompletion != null">#{maintenanceCompletion},</if>
+            <if test="isUnusual != null">#{isUnusual},</if>
+            <if test="receptionTime != null">#{receptionTime},</if>
+            <if test="acceptor != null">#{acceptor},</if>
+            <if test="inspectionAcceptance != null">#{inspectionAcceptance},</if>
+            <if test="problemRectification != null">#{problemRectification},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="equipmentId != null">#{equipmentId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyMaintenanceregistration" parameterType="HyMaintenanceregistration">
+        update hy_maintenanceregistration
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="recordNumber != null">record_number = #{recordNumber},</if>
+            <if test="categories != null">categories = #{categories},</if>
+            <if test="planNumber != null">plan_number = #{planNumber},</if>
+            <if test="specializedDepartment != null">specialized_department = #{specializedDepartment},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="maintenanceContent != null">maintenance_content = #{maintenanceContent},</if>
+            <if test="currentContent != null">current_content = #{currentContent},</if>
+            <if test="startDate != null">start_date = #{startDate},</if>
+            <if test="endDate != null">end_date = #{endDate},</if>
+            <if test="manHour != null">man_hour = #{manHour},</if>
+            <if test="principal != null">principal = #{principal},</if>
+            <if test="upkeepCost != null">upkeep_cost = #{upkeepCost},</if>
+            <if test="upkeepUnit != null">upkeep_unit = #{upkeepUnit},</if>
+            <if test="registrationRemark != null">registration_remark = #{registrationRemark},</if>
+            <if test="maintenanceCompletion != null">maintenance_completion = #{maintenanceCompletion},</if>
+            <if test="isUnusual != null">is_unusual = #{isUnusual},</if>
+            <if test="receptionTime != null">reception_time = #{receptionTime},</if>
+            <if test="acceptor != null">acceptor = #{acceptor},</if>
+            <if test="inspectionAcceptance != null">inspection_acceptance = #{inspectionAcceptance},</if>
+            <if test="problemRectification != null">problem_rectification = #{problemRectification},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="equipmentId != null">equipment_id = #{equipmentId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyMaintenanceregistrationById" parameterType="Long">
+        delete from hy_maintenanceregistration where id = #{id}
+    </delete>
+
+    <delete id="deleteHyMaintenanceregistrationByIds" parameterType="String">
+        delete from hy_maintenanceregistration where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

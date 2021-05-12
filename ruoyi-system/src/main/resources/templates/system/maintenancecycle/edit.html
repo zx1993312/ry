@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改设备保养周期')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-maintenancecycle-edit" th:object="${hyMaintenancecycle}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">名称：</label>
+                <div class="col-sm-8">
+                    <input name="cycleName" th:field="*{cycleName}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">说明：</label>
+                <div class="col-sm-8">
+                    <input name="cycleExplains" th:field="*{cycleExplains}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">预设数据：</label>
+                <div class="col-sm-8">
+                    <input name="defaultData" th:field="*{defaultData}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">保养周期类型名：</label>
+                <div class="col-sm-8">
+                    <select name="cycleType" class="form-control m-b">
+                        <option value="">所有</option>
+                    </select>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">周期值：</label>
+                <div class="col-sm-8">
+                    <input name="periodicQuantity" th:field="*{periodicQuantity}" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/maintenancecycle";
+        $("#form-maintenancecycle-edit").validate({
+        	rules : {
+        		cycleName : {
+					required : true,
+					maxlength:20,
+				},
+				cycleExplains : {
+					required : true,
+					maxlength:255,
+				},
+				defaultData : {
+					required : true,
+					maxlength:1,
+				},
+				cycleType : {
+					required : true,
+					maxlength:20,
+				},
+				periodicQuantity : {
+					required : true,
+					maxlength:20,
+				},
+        	},
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-maintenancecycle-edit').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

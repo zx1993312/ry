@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyMaintenancecycleMapper">
+    
+    <resultMap type="HyMaintenancecycle" id="HyMaintenancecycleResult">
+        <result property="id"    column="id"    />
+        <result property="cycleName"    column="cycle_name"    />
+        <result property="cycleExplains"    column="cycle_explains"    />
+        <result property="defaultData"    column="default_data"    />
+        <result property="cycleType"    column="cycle_type"    />
+        <result property="periodicQuantity"    column="periodic_quantity"    />
+    </resultMap>
+
+    <sql id="selectHyMaintenancecycleVo">
+        select id, cycle_name, cycle_explains, default_data, cycle_type, periodic_quantity from hy_maintenancecycle
+    </sql>
+
+    <select id="selectHyMaintenancecycleList" parameterType="HyMaintenancecycle" resultMap="HyMaintenancecycleResult">
+        <include refid="selectHyMaintenancecycleVo"/>
+        <where>  
+            <if test="cycleName != null  and cycleName != ''"> and cycle_name like concat('%', #{cycleName}, '%')</if>
+            <if test="cycleExplains != null  and cycleExplains != ''"> and cycle_explains = #{cycleExplains}</if>
+            <if test="defaultData != null  and defaultData != ''"> and default_data = #{defaultData}</if>
+            <if test="cycleType != null  and cycleType != ''"> and cycle_type = #{cycleType}</if>
+            <if test="periodicQuantity != null  and periodicQuantity != ''"> and periodic_quantity = #{periodicQuantity}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyMaintenancecycleById" parameterType="Long" resultMap="HyMaintenancecycleResult">
+        <include refid="selectHyMaintenancecycleVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyMaintenancecycle" parameterType="HyMaintenancecycle" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_maintenancecycle
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cycleName != null">cycle_name,</if>
+            <if test="cycleExplains != null">cycle_explains,</if>
+            <if test="defaultData != null">default_data,</if>
+            <if test="cycleType != null">cycle_type,</if>
+            <if test="periodicQuantity != null">periodic_quantity,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cycleName != null">#{cycleName},</if>
+            <if test="cycleExplains != null">#{cycleExplains},</if>
+            <if test="defaultData != null">#{defaultData},</if>
+            <if test="cycleType != null">#{cycleType},</if>
+            <if test="periodicQuantity != null">#{periodicQuantity},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyMaintenancecycle" parameterType="HyMaintenancecycle">
+        update hy_maintenancecycle
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="cycleName != null">cycle_name = #{cycleName},</if>
+            <if test="cycleExplains != null">cycle_explains = #{cycleExplains},</if>
+            <if test="defaultData != null">default_data = #{defaultData},</if>
+            <if test="cycleType != null">cycle_type = #{cycleType},</if>
+            <if test="periodicQuantity != null">periodic_quantity = #{periodicQuantity},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyMaintenancecycleById" parameterType="Long">
+        delete from hy_maintenancecycle where id = #{id}
+    </delete>
+
+    <delete id="deleteHyMaintenancecycleByIds" parameterType="String">
+        delete from hy_maintenancecycle where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
