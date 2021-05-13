@@ -21,14 +21,20 @@
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">是否显示全部设备：</label>
-                <div class="col-sm-8">
-                    <input name="isSelect" th:field="*{isSelect}" class="form-control" type="text">
-                </div>
+               <div class="col-sm-4">
+                  <input name="isSelect" th:field="*{isSelect}" value='1' type="radio" checked="checked">是
+               </div>
+               <div class="col-sm-4">
+                   <input name="isSelect" th:field="*{isSelect}" value='0' type="radio">否
+               </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">是否审核：</label>
-                <div class="col-sm-8">
-                    <input name="isAudit" th:field="*{isAudit}" class="form-control" type="text">
+                <div class="col-sm-4">
+                  <input name="isAudit" th:field="*{isAudit}" value='1' type="radio" checked="checked">是
+                </div>
+                <div class="col-sm-4">
+                   <input name="isAudit" th:field="*{isAudit}" value='0' type="radio">否
                 </div>
             </div>
             <div class="form-group">    
@@ -55,6 +61,32 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/annualplan";
         $("#form-annualplan-edit").validate({
+        	rules : {
+        		documentNumber : {
+					required : true,
+					maxlength:255,
+				},
+				year : {
+					required : true,
+					maxlength:20,
+				},
+				isSelect : {
+					required : true,
+					maxlength:1,
+				},
+				isAudit : {
+					required : true,
+					maxlength:1,
+				},
+				deptId : {
+					required : true,
+					maxlength:11,
+				},
+				equipmentId : {
+					required : true,
+					maxlength:11,
+				},
+			},
             focusCleanup: true
         });
 

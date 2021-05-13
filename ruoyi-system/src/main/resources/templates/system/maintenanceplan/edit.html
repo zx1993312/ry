@@ -26,7 +26,7 @@
             <div class="form-group">  
             	<label class="col-sm-2 control-label">设备保养周期：</label>
                 <div class="col-sm-4">
-                    <input name="maintainPeriod" th:field="*{maintainPeriod}" class="form-control" type="text">
+                    <input name="maintainPeriod" th:field="*{maintainPeriod}" class="form-control" type="text"  onclick="selectPeriod()">
                 </div>  
                 <label class="col-sm-2 control-label">设备保养等级：</label>
                 <div class="col-sm-4">
@@ -260,6 +260,9 @@
                 $('#' + this.id).summernote('code', content);
             })
         });
+        function selectPeriod(){
+        	$.modal.open("设备保养周期一览表","/system/selectPeriod");
+        }
     </script>
 </body>
 </html>

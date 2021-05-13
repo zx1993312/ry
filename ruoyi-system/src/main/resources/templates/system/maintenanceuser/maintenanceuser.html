@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('年度保养计划列表')" />
-        <th:block th:include="include :: layout-latest-css" />
+    <th:block th:include="include :: header('保养设备列表')" />
+    <th:block th:include="include :: layout-latest-css" />
 	<th:block th:include="include :: ztree-css" />
 </head>
 <body class="gray-bg">
@@ -10,7 +10,7 @@
 	<div class="box box-main">
 			<div class="box-header">
 				<div class="box-title">
-					<i class="fa icon-grid"></i> 组织机构
+					<i class="fa icon-grid"></i> 设备类型
 				</div>
 				<div class="box-tools pull-right">
 				    <a type="button" class="btn btn-box-tool" href="#" onclick="costProject()" title="管理部门"><i class="fa fa-edit"></i></a>
@@ -27,36 +27,31 @@
 	<div class="ui-layout-center">
      <div class="container-div">
         <div class="row">
-            <div class="col-sm-12 search-collapse">
+<!--             <div class="col-sm-12 search-collapse">
                 <form id="formId">
                     <div class="select-list">
                         <ul>
                             <li>
-                                <label>单据号：</label>
-                                <input type="text" name="documentNumber"/>
-                            </li>
-                            <li>
-                                <label>年份：</label>
-                                <input type="text" name="year"/>
-                            </li>
-                            <li>
-                                <label>是否显示全部设备：</label>
-                                <select name="isSelect">
-                                    <option value="">请选择</option>
-                                    <option value="1">是</option>
-                                    <option value="0">否</option>
+                                <label>保养设备型号：</label>
+                                <select name="maintenanceequipmentType">
+                                    <option value="">所有</option>
+                                    <option value="-1">代码生成请选择字典属性</option>
                                 </select>
                             </li>
                             <li>
-                                <label>是否审核：</label>
-                                <select name="isAudit">
-                                    <option value="">请选择</option>
-                                    <option value="1">是</option>
-                                    <option value="0">否</option>
-                                </select>
+                                <label>保养设备规格：</label>
+                                <input type="text" name="maintenanceequipmentSpecification"/>
                             </li>
                             <li>
-                                <input type="hidden" id="deptId" name="deptId"/>
+                                <label>保养设备单位：</label>
+                                <input type="text" name="maintenanceequipmentUnit"/>
+                            </li>
+                            <li>
+                                <label>存放位置：</label>
+                                <input type="text" name="maintenanceequipmentPlace"/>
+                            </li>
+                            <li>
+                                <input type="hidden" id="equipmentId" name="equipmentId"/>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -68,19 +63,19 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:annualplan:add">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:maintenanceequipment:add">
                     <i class="fa fa-plus"></i> 添加
                 </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:annualplan:edit">
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:maintenanceequipment:edit">
                     <i class="fa fa-edit"></i> 修改
                 </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:annualplan:remove">
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:maintenanceequipment:remove">
                     <i class="fa fa-remove"></i> 删除
                 </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:annualplan:export">
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:maintenanceequipment:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
-            </div>
+            </div> -->
             <div class="col-sm-12 select-table table-striped">
                 <table id="bootstrap-table"></table>
             </div>
@@ -91,10 +86,9 @@
     <th:block th:include="include :: layout-latest-js" />
 	<th:block th:include="include :: ztree-js" />
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('system:annualplan:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('system:annualplan:remove')}]];
-        var prefix = ctx + "system/annualplan";
-        
+        var editFlag = [[${@permission.hasPermi('system:maintenanceequipment:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:maintenanceequipment:remove')}]];
+        var prefix = ctx + "system/maintenanceequipment";
         $(function() {
         	var panehHidden = false;
 		    if ($(this).width() < 769) {
@@ -109,66 +103,91 @@
 	    		};
 	    		$('#scroll-up').toTop(opt);
 	    	}
-		    queryAnnualplanList();
+	    	queryMaintenanceequipmentList();
 		    queryDeptTree();
 		});
-
-        function queryAnnualplanList(){
+        function queryMaintenanceequipmentList() {
             var options = {
                 url: prefix + "/list",
                 createUrl: prefix + "/add",
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "年度保养计划",
+                modalName: "保养设备",
                 columns: [{
                     checkbox: true
                 },
                 {
                     field: 'id',
-                    title: '年度保养计划id',
+                    title: '保养设备id',
                     visible: false
                 },
                 {
-                    field: 'documentNumber',
-                    title: '单据号'
+                    field: 'hyMaintenanceregistration.recordNumber',
+                    title: '保养记录号'
                 },
                 {
-                    field: 'year',
-                    title: '年份'
+                    field: 'hyMaintenanceregistration.startDate',
+                    title: '开始日期'
                 },
                 {
-                    field: 'isSelect',
-                    title: '是否显示全部设备',
+                    field: 'hyMaintenanceregistration.endDate',
+                    title: '结束日期'
+                },
+                {
+                    field: 'hyMaintenanceregistration.currentContent',
+                    title: '当前保养内容'
+                },
+                {
+                    field: 'hyMaintenanceregistration.maintenanceCompletion',
+                    title: '保养完成情况'
+                },
+                {
+                    field: 'hyMaintenanceregistration.inspectionAcceptance',
+                    title: '检查验收情况'
+                },
+                {
+                    field: 'hyMaintenanceregistration.problemRectification',
+                    title: '问题整改情况'
+                },
+                {
+                    field: 'hyMaintenanceplan.planCode',
+                    title: '保养计划编号'
+                },
+                {
+                    field: 'hyMaintenanceplan.planName',
+                    title: '保养计划名称'
+                },
+                {
+                    field: 'hyMaintenanceplan.maintainType',
+                    title: '设备保养类别',
                     formatter: function(value, item, index) {
                     	switch(value){
-	                    	case '' : value =  "";break;
-	                    	case '1' : value =  "是";break;
-	                    	case '0' : value =  "否";break;
+	                    	case '' : value =  "请选择";break;
+	                    	case '1' : value =  "自维";break;
+	                    	case '2' : value =  "外维";break;
 	                	}
 		            	return value;
 		            }
                 },
                 {
-                    field: 'isAudit',
-                    title: '是否审核',
+                    field: 'hyMaintenanceplan.maintainLevel',
+                    title: '设备保养等级',
                     formatter: function(value, item, index) {
                     	switch(value){
-	                    	case '' : value =  "";break;
-	                    	case '1' : value =  "是";break;
-	                    	case '0' : value =  "否";break;
+	                    	case '' : value =  "请选择";break;
+	                    	case '0' : value =  "日常保养";break;
+	                    	case '1' : value =  "一级保养";break;
+	                    	case '2' : value =  "二级保养";break;
+	                    	case '3' : value =  "三级保养";break;
 	                	}
 		            	return value;
 		            }
                 },
                 {
-                    field: 'sysDept.deptName',
-                    title: '组织机构'
-                },
-                {
-                    field: 'hyEquipment.equipmentName',
-                    title: '设备类别'
-                },
+                    field: 'hyMaintenanceplan.maintainPeriod',
+                    title: '设备保养周期'
+                }/* ,
                 {
                     title: '操作',
                     align: 'center',
@@ -178,14 +197,13 @@
                         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
                         return actions.join('');
                     }
-                }]
+                } */]
             };
             $.table.init(options);
         };
-      //组织架构
         function queryDeptTree()
 		{
-			var url = ctx + "system/dept/treeData";
+			var url = ctx + "system/equipment/equipmentList";
 			var options = {
 		        url: url,
 		        expandLevel: 2,
@@ -194,7 +212,7 @@
 			$.tree.init(options);
 			
 			function zOnClick(event, treeId, treeNode) {
-				$("#deptId").val(treeNode.id);
+				$("#equipmentId").val(treeNode.id);
 				$.table.search();
 			}
 		}
@@ -214,6 +232,7 @@
 		$('#btnRefresh').click(function() {
 			queryDeptTree();
 		});
+    </script>
     </script>
 </body>
 </html>

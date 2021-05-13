@@ -127,6 +127,49 @@
                 </div>
             </div>
         </form>
+                <div class="col-sm-12">
+			<div class="tabs-container">
+				<ul class="nav nav-tabs">
+					<li id="tab1li" class="active">
+						<a data-toggle="tab" href="#tab-1" aria-expanded="true" onclick="tab(1)">设备保养人员</a>
+					</li>
+					
+					<li id="tab2li" class="">
+						<a data-toggle="tab" href="#tab-2" aria-expanded="false" onclick="tab(2)">设备保养物料</a>
+					</li>
+					
+					<li id="tab3li" class="">
+						<a data-toggle="tab" href="#tab-3" aria-expanded="false" onclick="tab(3)">保养设备</a>
+					</li>
+					
+				</ul>
+			</div>
+		</div>
+		<div class="tab-content ">
+			<div id="tab-1" class="tab-pane active">
+				<div class="row">
+					<div class="col-sm-12 select-table table-striped">
+						<table id="table1"></table>
+					</div>
+				</div>
+			</div>
+		
+			<div id="tab-2" class="tab-pane ">
+				<div class="row">
+					<div class="col-sm-12 select-table table-striped">
+						<table id="table2"></table>
+					</div>
+				</div>
+			</div>
+
+			<div id="tab-3" class="tab-pane ">
+				<div class="row">
+					<div class="col-sm-12 select-table table-striped">
+						<table id="table3"></table>
+					</div>
+				</div>
+			</div>
+		</div>
     </div>
     <th:block th:include="include :: footer" />
     <th:block th:include="include :: datetimepicker-js" />
@@ -266,6 +309,294 @@
                 }
             });
         });
+        var prefix2 = ctx + "system/maintenanceplan";
+        $(function() {
+            var options = {
+            		tableId : "table1",
+            		showSearch: false,
+    		        showRefresh: false,
+    		        showToggle: false,
+    		        showColumns: false,
+                url: prefix2 + "/list",
+                createUrl: prefix2 + "/add",
+                updateUrl: prefix2 + "/edit/{id}",
+                removeUrl: prefix2 + "/remove",
+                exportUrl: prefix2 + "/export",
+                modalName: "设备保养人员",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '设备保养计划id',
+                    visible: false
+                },
+                {
+                    field: 'sysUser.userName',
+                    title: '职员'
+                },
+                {
+                    field: 'planRemark',
+                    title: '备注'
+                }]
+            };
+            $.table.initOtherTable(options);
+        });
+        
+        function tab(value){
+    		console.log(value);
+    		if(value == 1){
+    	        $.ajax({
+                    url: prefix2 + "/list",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    type: 'POST',
+                    success: function (result) {
+                        if (result.code == web_status.SUCCESS) {
+                            var options = {
+                            		tableId : "table1",
+                            		showSearch: false,
+                    		        showRefresh: false,
+                    		        showToggle: false,
+                    		        showColumns: false,
+                                url: prefix2 + "/list",
+                                createUrl: prefix2 + "/add",
+                                updateUrl: prefix2 + "/edit/{id}",
+                                removeUrl: prefix2 + "/remove",
+                                exportUrl: prefix2 + "/export",
+                                modalName: "设备保养人员",
+                                columns: [{
+                                    checkbox: true
+                                },
+                                {
+                                    field: 'id',
+                                    title: '设备保养计划id',
+                                    visible: false
+                                },
+                                {
+                                    field: 'sysUser.userName',
+                                    title: '职员'
+                                },
+                                {
+                                    field: 'planRemark',
+                                    title: '备注'
+                                }]
+                            };
+                	            $.table.initOtherTable(options);
+                        }  else {
+                            $.modal.enable();
+                            $.modal.alertError(result.msg);
+                        }
+                    }
+                });
+    	        
+    			
+    		} else if(value == 2) {
+    			var prefix3 = ctx + "system/maintenancesupplies";
+
+    	        $.ajax({
+                    url: prefix3 + "/list",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    type: 'POST',
+                    success: function (result) {
+                        if (result.code == web_status.SUCCESS) {
+                            var options = {
+                            		tableId : "table2",
+                            		showSearch: false,
+                    		        showRefresh: false,
+                    		        showToggle: false,
+                    		        showColumns: false,
+                                    url: prefix3 + "/list",
+                                    createUrl: prefix + "/add",
+                                    updateUrl: prefix + "/edit/{id}",
+                                    removeUrl: prefix + "/remove",
+                                    exportUrl: prefix + "/export",
+                                    modalName: "设备保养物料",
+                                    columns: [{
+                                        checkbox: true
+                                    },
+                                    {
+                                        field: 'id',
+                                        title: '设备保养物料id',
+                                        visible: false
+                                    },
+                                    {
+                                        field: 'hyMaintenanceplan.planCode',
+                                        title: '保养计划编号'
+                                    },
+                                    {
+                                        field: 'hyMaintenanceplan.planName',
+                                        title: '保养计划名称'
+                                    },
+                                    {
+                                        field: 'suppliesName',
+                                        title: '物料名称'
+                                    },
+                                    {
+                                        field: 'suppliesSpecification',
+                                        title: '物料规格'
+                                    },
+                                    {
+                                        field: 'suppliesBrand',
+                                        title: '物料品牌'
+                                    },
+                                    {
+                                        field: 'suppliesCount',
+                                        title: '物料数量'
+                                    },
+                                    {
+                                        field: 'suppliesPrice',
+                                        title: '物料单价'
+                                    },
+                                    {
+                                        field: 'suppliesMeasurement',
+                                        title: '计量单位'
+                                    },
+                                    {
+                                        field: 'money',
+                                        title: '金额'
+                                    },
+                                    {
+                                        field: 'suppliesUse',
+                                        title: '物料用途'
+                                    },
+                                    {
+                                        field: 'hyEquipmentArchives.archivesName',
+                                        title: '设备档案'
+                                    },
+                                    {
+                                        field: 'hyMaintenanceregistration.principal',
+                                        title: '责任人'
+                                    },
+                                    {
+                                        field: 'hyMaintenanceregistration.startDate',
+                                        title: '保养开始日期'
+                                    },
+                                    {
+                                        field: 'hyMaintenanceregistration.endDate',
+                                        title: '保养结束日期'
+                                    },
+                                    {
+                                        field: 'hyMaintenanceregistration.upkeepUnit',
+                                        title: '保养单位'
+                                    },
+                                    {
+                                        field: 'hyEquipment.equipmentName',
+                                        title: '设备类别'
+                                    }]
+                                };
+                	            $.table.initOtherTable(options);
+                        }  else {
+                            $.modal.enable();
+                            $.modal.alertError(result.msg);
+                        }
+                    }
+                });
+    		}else if(value == 3){
+    			console.log('进入到第三个');
+    			var editFlag = [[${@permission.hasPermi('system:set:edit')}]];
+    	        var removeFlag = [[${@permission.hasPermi('system:set:remove')}]];
+    	        var prefix4 = ctx + "system/maintenanceequipment";
+    	        
+    	        $.ajax({
+                    url: prefix4 + "/list",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    type: 'POST',
+                    success: function (result) {
+                        if (result.code == web_status.SUCCESS) {
+                            var options = {
+                            		tableId : "table3",
+                            		showSearch: false,
+                    		        showRefresh: false,
+                    		        showToggle: false,
+                    		        showColumns: false,
+                                    url: prefix4 + "/list",
+                                    createUrl: prefix + "/add",
+                                    updateUrl: prefix + "/edit/{id}",
+                                    removeUrl: prefix + "/remove",
+                                    exportUrl: prefix + "/export",
+                                    modalName: "保养设备",
+                                    columns: [{
+                                        checkbox: true
+                                    },
+                                    {
+                                        field: 'id',
+                                        title: '保养设备id',
+                                        visible: false
+                                    },
+                                    {
+                                        field: 'hyMaintenanceregistration.recordNumber',
+                                        title: '保养记录号'
+                                    },
+                                    {
+                                        field: 'hyMaintenanceplan.planCode',
+                                        title: '保养计划编号'
+                                    },
+                                    {
+                                        field: 'hyMaintenanceplan.planName',
+                                        title: '保养计划名称'
+                                    },
+                                    {
+                                        field: 'hyEquipmentArchives.archivesName',
+                                        title: '设备档案名称'
+                                    },
+                                    {
+                                        field: 'hyEquipment.equipmentName',
+                                        title: '设备类别'
+                                    },
+                                    {
+                                        field: 'hyMaintenanceplan.maintainType',
+                                        title: '设备保养类别'
+                                    },
+                                    {
+                                        field: 'hyMaintenanceplan.maintainPeriod',
+                                        title: '设备保养周期'
+                                    },
+                                    {
+                                        field: 'hyMaintenanceplan.maintainLevel',
+                                        title: '设备保养等级'
+                                    },
+                                    {
+                                        field: 'hyMaintenanceregistration.startDate',
+                                        title: '开始日期'
+                                    },
+                                    {
+                                        field: 'hyMaintenanceregistration.endDate',
+                                        title: '结束日期'
+                                    },
+                                    {
+                                        field: 'hyMaintenanceregistration.specializedDepartment',
+                                        title: '专业部门'
+                                    },
+                                    {
+                                        field: 'hyMaintenanceregistration.upkeepUnit',
+                                        title: '保养单位'
+                                    },
+                                    {
+                                        field: 'hyMaintenanceregistration.principal',
+                                        title: '负责人'
+                                    },
+                                    {
+                                        field: 'hyMaintenanceregistration.currentContent',
+                                        title: '当前保养内容'
+                                    }]
+                                };
+                                $.table.initOtherTable(options);
+                        }  else {
+                            $.modal.enable();
+                            $.modal.alertError(result.msg);
+                        }
+                    }
+                });
+                
+    		}
+    	} 
     </script>
+    
 </body>
 </html>

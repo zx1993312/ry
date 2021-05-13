@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('设备保养周期列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:maintenancecycle:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:maintenancecycle:remove')}]];
+        var prefix = ctx + "system/maintenancecycle";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "设备保养周期",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '设备保养周期id',
+                    visible: false
+                },
+                {
+                    field: 'cycleName',
+                    title: '名称'
+                },
+                {
+                    field: 'cycleExplains',
+                    title: '说明'
+                },
+                {
+                    field: 'defaultData',
+                    title: '预设数据'
+                },
+                {
+                    field: 'cycleType',
+                    title: '保养周期类型名',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case '1' : value =  "年度";break;
+	                    	case '2' : value =  "月";break;
+	                    	case '3' : value =  "日";break;
+	                    	case '4' : value =  "小时";break;
+	                	}
+		            	return value;
+		            }
+                },
+                {
+                    field: 'periodicQuantity',
+                    title: '周期值'
+                }]
+            };
+            $.table.init(options);
+        });
+        function submitHandler() {
+        	var cycleName = $.table.selectColumns('cycleName');
+        	if(cycleName == ''){
+        		$.modal.alertWarning("请至少选择一条记录");
+        	}else{
+        		$("#maintainPeriod",window.parent.document).val(cycleName);
+        	}
+        	$.modal.close();
+        }
+    </script>
+</body>
+</html>

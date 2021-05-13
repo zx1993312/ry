@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增保养设备')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-maintenanceequipment-add">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">保养设备型号：</label>
+                <div class="col-sm-8">
+                	<input name="maintenanceequipmentType" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">保养设备规格：</label>
+                <div class="col-sm-8">
+                    <input name="maintenanceequipmentSpecification" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">保养设备单位：</label>
+                <div class="col-sm-8">
+                    <input name="maintenanceequipmentUnit" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">存放位置：</label>
+                <div class="col-sm-8">
+                    <input name="maintenanceequipmentPlace" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">设备档案：</label>
+                <div class="col-sm-8">
+                    <select id="archivesId" name="archivesId" class="form-control" th:with="type=${@archives.getArchives()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.archivesName}" th:value="${data.id}"></option>
+			 	    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">设备类别：</label>
+                <div class="col-sm-8">
+                    <select id="equipmentId" name="equipmentId" class="form-control" th:with="type=${@equipment.getEquipment()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.equipmentName}" th:value="${data.id}"></option>
+			 	    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">设备保养计划：</label>
+                <div class="col-sm-8">
+                    <select id="planId" name="planId" class="form-control" th:with="type=${@plan.getPlan()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.planName}" th:value="${data.id}"></option>
+			 	    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">设备保养登记：</label>
+                <div class="col-sm-8">
+                    <select id="registrationId" name="registrationId" class="form-control" th:with="type=${@registration.getRegistration()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.recordNumber}" th:value="${data.id}"></option>
+			 	    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/maintenanceequipment"
+        $("#form-maintenanceequipment-add").validate({
+        	rules : {
+        		maintenanceequipmentType : {
+					required : true,
+					maxlength:20,
+				},
+				maintenanceequipmentSpecification : {
+					required : true,
+					maxlength:20,
+				},
+				maintenanceequipmentUnit : {
+					required : true,
+					maxlength:20,
+				},
+				maintenanceequipmentPlace : {
+					required : true,
+					maxlength:50,
+				},
+				equipmentId : {
+					required : true,
+					maxlength:11,
+				},
+				planId : {
+					required : true,
+					maxlength:11,
+				},
+				registrationId : {
+					required : true,
+					maxlength:11,
+				},
+			},
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-maintenanceequipment-add').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

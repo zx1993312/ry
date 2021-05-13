@@ -144,7 +144,15 @@
                 },
                 {
                     field: 'hyMaintenanceplan.maintainType',
-                    title: '设备保养类别'
+                    title: '设备保养类别',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case '' : value =  "请选择";break;
+	                    	case '1' : value =  "自维";break;
+	                    	case '2' : value =  "外维";break;
+	                	}
+		            	return value;
+		            }
                 },
                 {
                     field: 'hyMaintenanceplan.maintainPeriod',
@@ -152,7 +160,17 @@
                 },
                 {
                     field: 'hyMaintenanceplan.maintainLevel',
-                    title: '设备保养等级'
+                    title: '设备保养等级',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case '' : value =  "请选择";break;
+	                    	case '0' : value =  "日常保养";break;
+	                    	case '1' : value =  "一级保养";break;
+	                    	case '2' : value =  "二级保养";break;
+	                    	case '3' : value =  "三级保养";break;
+	                	}
+		            	return value;
+		            }
                 },
                 {
                     field: 'hyMaintenanceregistration.startDate',

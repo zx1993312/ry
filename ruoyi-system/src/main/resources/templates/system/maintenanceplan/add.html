@@ -25,7 +25,7 @@
             <div class="form-group">    
                 <label class="col-sm-2 control-label">设备保养周期：</label>
                 <div class="col-sm-4">
-                    <input name="maintainPeriod" class="form-control" type="text">
+                    <input id="maintainPeriod" name="maintainPeriod" class="form-control" type="text" onclick="selectPeriod()">
                 </div>
                 <label class="col-sm-2 control-label">设备保养等级：</label>
                 <div class="col-sm-4">
@@ -147,6 +147,36 @@
                 </div>
             </div>-->
         </form>
+        <div class="col-sm-6">
+			<div class="tabs-container">
+				<ul class="nav nav-tabs">
+					<li id="tab1li" class="active">
+						<a data-toggle="tab" href="#tab-1" aria-expanded="true" onclick="tab(1)">保养设备</a>
+					</li>
+					
+					<li id="tab2li" class="">
+						<a data-toggle="tab" href="#tab-2" aria-expanded="false" onclick="tab(2)">设备保养计划执行安排</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="tab-content ">
+			<div id="tab-1" class="tab-pane active">
+				<div class="row">
+					<div class="col-sm-12 select-table table-striped">
+						<table id="table1"></table>
+					</div>
+				</div>
+			</div>
+		
+			<div id="tab-2" class="tab-pane ">
+				<div class="row">
+					<div class="col-sm-12 select-table table-striped">
+						<table id="table2"></table>
+					</div>
+				</div>
+			</div>
+		</div>
     </div>
     <th:block th:include="include :: footer" />
     <th:block th:include="include :: datetimepicker-js" />
@@ -221,8 +251,46 @@
             minView: "month",
             autoclose: true
         });
-
+        var prefix1 = ctx + "system/maintenanceequipment";
         $(function() {
+            var options = {
+            		tableId : "table1",
+            		showSearch: false,
+    		        showRefresh: false,
+    		        showToggle: false,
+    		        showColumns: false,
+                url: prefix1 + "/list",
+                createUrl: prefix1 + "/add",
+                updateUrl: prefix1 + "/edit/{id}",
+                removeUrl: prefix1 + "/remove",
+                exportUrl: prefix1 + "/export",
+                modalName: "保养设备",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '保养设备id',
+                    visible: false
+                },
+                {
+                    field: 'maintenanceequipmentType',
+                    title: '保养设备型号'
+                },
+                {
+                    field: 'maintenanceequipmentSpecification',
+                    title: '保养设备规格'
+                },
+                {
+                    field: 'maintenanceequipmentUnit',
+                    title: '保养设备单位'
+                },
+                {
+                    field: 'maintenanceequipmentPlace',
+                    title: '存放位置'
+                }]
+            };
+            $.table.initOtherTable(options);
             $('.summernote').summernote({
                 lang: 'zh-CN',
                 callbacks: {
@@ -256,6 +324,147 @@
                 }
             });
         });
+        
+        function tab(value){
+    		console.log(value);
+    		if(value == 1){
+    	        $.ajax({
+                    url: prefix1 + "/list",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    type: 'POST',
+                    success: function (result) {
+                        if (result.code == web_status.SUCCESS) {
+                            var options = {
+                            		tableId : "table1",
+                            		showSearch: false,
+                    		        showRefresh: false,
+                    		        showToggle: false,
+                    		        showColumns: false,
+                                url: prefix1 + "/list",
+                                createUrl: prefix1 + "/add",
+                                updateUrl: prefix1 + "/edit/{id}",
+                                removeUrl: prefix1 + "/remove",
+                                exportUrl: prefix1 + "/export",
+                                modalName: "保养设备",
+                                columns: [{
+                                    checkbox: true
+                                },
+                                {
+                                    field: 'id',
+                                    title: '保养设备id',
+                                    visible: false
+                                },
+                                {
+                                    field: 'maintenanceequipmentType',
+                                    title: '保养设备型号'
+                                },
+                                {
+                                    field: 'maintenanceequipmentSpecification',
+                                    title: '保养设备规格'
+                                },
+                                {
+                                    field: 'maintenanceequipmentUnit',
+                                    title: '保养设备单位'
+                                },
+                                {
+                                    field: 'maintenanceequipmentPlace',
+                                    title: '存放位置'
+                                }]
+                            };
+                	            $.table.initOtherTable(options);
+                        }  else {
+                            $.modal.enable();
+                            $.modal.alertError(result.msg);
+                        }
+                    }
+                });
+    	        
+    			
+    		} else if(value == 2) {
+    			var prefix2 = ctx + "system/maintenanceplandetail";
+
+    	        $.ajax({
+                    url: prefix2 + "/list",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    type: 'POST',
+                    success: function (result) {
+                        if (result.code == web_status.SUCCESS) {
+                            var options = {
+                            		tableId : "table2",
+                            		showSearch: false,
+                    		        showRefresh: false,
+                    		        showToggle: false,
+                    		        showColumns: false,
+                                    url: prefix2 + "/list",
+                                    createUrl: prefix2 + "/add",
+                                    updateUrl: prefix2 + "/edit/{id}",
+                                    removeUrl: prefix2 + "/remove",
+                                    exportUrl: prefix2 + "/export",
+                                    modalName: "设备保养计划执行安排",
+                                    columns: [{
+                                        checkbox: true
+                                    },
+                                    {
+                                        field: 'id',
+                                        title: '设备保养计划执行安排id',
+                                        visible: false
+                                    },
+                                    {
+                                        field: 'hyMaintenanceplan.planName',
+                                        title: '设备保养计划名称'
+                                    },
+                                    {
+                                        field: 'hyEquipment.equipmentName',
+                                        title: '设备类别'
+                                    },
+                                    {
+                                        field: 'executionDate',
+                                        title: '计划执行日期'
+                                    },
+                                    {
+                                        field: 'executiveArm',
+                                        title: '执行部门'
+                                    },
+                                    {
+                                        field: 'performJobs',
+                                        title: '执行岗位'
+                                    },
+                                    {
+                                        field: 'executor',
+                                        title: '执行人'
+                                    },
+                                    {
+                                        field: 'maintenanceProject',
+                                        title: '保养项目'
+                                    },
+                                    {
+                                        field: 'executed',
+                                        title: '已执行',
+                                        formatter: function(value, item, index) {
+                                        	switch(value){
+                    	                    	case '1' : value =  "是";break;
+                    	                    	case '0' : value =  "否";break;
+                    	                	}
+                    		            	return value;
+                    		            }
+                                    }]
+                                };
+                	            $.table.initOtherTable(options);
+                        }  else {
+                            $.modal.enable();
+                            $.modal.alertError(result.msg);
+                        }
+                    }
+                });
+    		}
+    	} 
+        function selectPeriod(){
+        	$.modal.open("设备保养周期一览表","/system/selectPeriod");
+        }
     </script>
 </body>
 </html>
