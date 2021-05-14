@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('设备维修登记列表')" />
+    <th:block th:include="include :: layout-latest-css" />
+	<th:block th:include="include :: ztree-css" />
+</head>
+<body class="gray-bg">
+<div class="ui-layout-west">
+	<div class="box box-main">
+			<div class="box-header">
+				<div class="box-title">
+					<i class="fa icon-grid"></i> 设备类型
+				</div>
+				<div class="box-tools pull-right">
+				    <a type="button" class="btn btn-box-tool" href="#" onclick="costProject()" title="管理部门"><i class="fa fa-edit"></i></a>
+					<button type="button" class="btn btn-box-tool" id="btnExpand" title="展开" style="display:none;"><i class="fa fa-chevron-up"></i></button>
+					<button type="button" class="btn btn-box-tool" id="btnCollapse" title="折叠"><i class="fa fa-chevron-down"></i></button>
+					<button type="button" class="btn btn-box-tool" id="btnRefresh" title="刷新部门"><i class="fa fa-refresh"></i></button>
+				</div>
+			</div>
+			<div class="ui-layout-content">
+				<div id="tree" class="ztree"></div>
+			</div>
+		</div>
+	</div>
+	<div class="ui-layout-center">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <!-- <li>
+                                <label>维修单号：</label>
+                                <input type="text" name="repairOrder"/>
+                            </li>
+                            <li>
+                                <label>维修类别：</label>
+                                <input type="text" name="serviceCategory"/>
+                            </li>
+                            <li>
+                                <label>故障类别：</label>
+                                <input type="text" name="faultCategory"/>
+                            </li>
+                            <li>
+                                <label>故障发生时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择故障发生时间" name="failureTime"/>
+                            </li>
+                            <li>
+                                <label>故障情况：</label>
+                                <input type="text" name="faultCondition"/>
+                            </li>
+                            <li>
+                                <label>维修开始时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择维修开始时间" name="startTime"/>
+                            </li>
+                            <li>
+                                <label>维修结束时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择维修结束时间" name="endTime"/>
+                            </li>
+                            <li>
+                                <label>故障原因类别：</label>
+                                <select name="causeType">
+                                    <option value="">所有</option>
+                                    <option value="-1">代码生成请选择字典属性</option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>维修单位：</label>
+                                <input type="text" name="serviceUnit"/>
+                            </li>
+                            <li>
+                                <label>原因分析：</label>
+                                <input type="text" name="reasonAnalysis"/>
+                            </li>
+                            <li>
+                                <label>维修结果：</label>
+                                <input type="text" name="serviceResults"/>
+                            </li>
+                            <li>
+                                <label>维修费用：</label>
+                                <input type="text" name="serviceCosts"/>
+                            </li>
+                            <li>
+                                <label>是否审核：</label>
+                                <input type="text" name="isAudit"/>
+                            </li>
+                            <li>
+                                <label>专业部门：</label>
+                                <input type="text" name="specializedDepartment"/>
+                            </li>
+                            <li>
+                                <label>验收时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择验收时间" name="receptionTime"/>
+                            </li>
+                            <li>
+                                <label>验收人：</label>
+                                <input type="text" name="acceptor"/>
+                            </li>
+                            <li>
+                                <label>检查验收情况：</label>
+                                <input type="text" name="inspectionAcceptance"/>
+                            </li>
+                            <li>
+                                <label>问题整改情况：</label>
+                                <input type="text" name="problemRectification"/>
+                            </li>
+                            <li>
+                                <label>当前周期：</label>
+                                <input type="text" name="currentCycle"/>
+                            </li>
+                            <li>
+                                <label>当前年限：</label>
+                                <input type="text" name="currentYear"/>
+                            </li>
+                            <li>
+                                <label>调整年限：</label>
+                                <input type="text" name="adjustmentYear"/>
+                            </li>
+                            <li>
+                                <label>备注：</label>
+                                <input type="text" name="serviceRemark"/>
+                            </li>
+                            <li>
+                                <label>设备档案id：</label>
+                                <input type="text" name="archivesId"/>
+                            </li>
+                            <li>
+                                <label>员工id：</label>
+                                <input type="text" name="userId"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li> -->
+                            <li>
+                                <input type="hidden" id="equipmentId" name="equipmentId"/>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:serviceregistration:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:serviceregistration:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:serviceregistration:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:serviceregistration:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: layout-latest-js" />
+	<th:block th:include="include :: ztree-js" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:serviceregistration:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:serviceregistration:remove')}]];
+        var prefix = ctx + "system/serviceregistration";
+        
+        $(function() {
+        	var panehHidden = false;
+		    if ($(this).width() < 769) {
+		        panehHidden = true;
+		    }
+		    $('body').layout({ initClosed: panehHidden, west__size: 185 });
+	     	// 回到顶部绑定
+	    	if ($.fn.toTop !== undefined) {
+	    		var opt = {
+	    			win:$('.ui-layout-center'),
+	    			doc:$('.ui-layout-center')
+	    		};
+	    		$('#scroll-up').toTop(opt);
+	    	}
+	    	queryServiceregistrationList();
+		    queryDeptTree();
+		});
+
+        function queryServiceregistrationList() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "设备维修登记",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '设备维修登记id',
+                    visible: false
+                },
+                {
+                    field: 'repairOrder',
+                    title: '维修单号'
+                },
+                {
+                    field: 'hyEquipmentArchives.archivesName',
+                    title: '设备名称'
+                },
+                {
+                    field: 'hyEquipment.equipmentName',
+                    title: '设备类别'
+                },
+                {
+                    field: 'serviceCategory',
+                    title: '维修类别',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case "" : value =  "请选择";break;
+	                    	case '1' : value =  "自维";break;
+	                    	case '0' : value =  "外维";break;
+	                	}
+		            	return value;
+		            }
+                },
+                {
+                    field: 'faultCategory',
+                    title: '故障类别',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case "" : value =  "请选择";break;
+	                    	case '1' : value =  "机械故障";break;
+	                    	case '2' : value =  "突发事件";break;
+	                    	case '3' : value =  "电路故障";break;
+	                    	case '4' : value =  "签报";break;
+	                    	case '5' : value =  "内部维修";break;
+	                    	case '6' : value =  "日常维修";break;
+	                    	case '7' : value =  "合同";break;
+	                	}
+		            	return value;
+		            }
+                },
+                {
+                    field: 'failureTime',
+                    title: '故障发生时间'
+                },
+                {
+                    field: 'faultCondition',
+                    title: '故障情况'
+                },
+                {
+                    field: 'startTime',
+                    title: '维修开始时间'
+                },
+                {
+                    field: 'endTime',
+                    title: '维修结束时间'
+                },
+                /* {
+                    field: 'causeType',
+                    title: '故障原因类别'
+                },
+                {
+                    field: 'serviceUnit',
+                    title: '维修单位'
+                },
+                {
+                    field: 'reasonAnalysis',
+                    title: '原因分析'
+                }, */
+                {
+                    field: 'serviceResults',
+                    title: '维修结果'
+                },
+                {
+                    field: 'serviceCosts',
+                    title: '维修费用'
+                },
+                {
+                    field: 'sysUser.userName',
+                    title: '负责人'
+                },
+                {
+                    field: 'isAudit',
+                    title: '是否审核',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+                    	case "" : value =  "请选择";break;
+                    	case '1' : value =  "是";break;
+                    	case '0' : value =  "否";break;
+                	}
+	            	return value;
+	            }
+                },
+                {
+                    field: 'sysDept.deptName',
+                    title: '组织机构'
+                },
+                /* {
+                    field: 'specializedDepartment',
+                    title: '专业部门'
+                },
+                {
+                    field: 'receptionTime',
+                    title: '验收时间'
+                },
+                {
+                    field: 'acceptor',
+                    title: '验收人'
+                },
+                {
+                    field: 'inspectionAcceptance',
+                    title: '检查验收情况'
+                },
+                {
+                    field: 'problemRectification',
+                    title: '问题整改情况'
+                },
+                {
+                    field: 'currentCycle',
+                    title: '当前周期'
+                },
+                {
+                    field: 'currentYear',
+                    title: '当前年限'
+                },
+                {
+                    field: 'adjustmentYear',
+                    title: '调整年限'
+                },
+                {
+                    field: 'serviceRemark',
+                    title: '备注'
+                },
+                */
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        };
+        function queryDeptTree()
+		{
+			var url = ctx + "system/equipment/equipmentList";
+			var options = {
+		        url: url,
+		        expandLevel: 2,
+		        onClick : zOnClick
+		    };
+			$.tree.init(options);
+			
+			function zOnClick(event, treeId, treeNode) {
+				$("#equipmentId").val(treeNode.id);
+				$.table.search();
+			}
+		}
+		
+		$('#btnExpand').click(function() {
+			$._tree.expandAll(true);
+		    $(this).hide();
+		    $('#btnCollapse').show();
+		});
+		
+		$('#btnCollapse').click(function() {
+			$._tree.expandAll(false);
+		    $(this).hide();
+		    $('#btnExpand').show();
+		});
+		
+		$('#btnRefresh').click(function() {
+			queryDeptTree();
+		});
+    </script>
+</body>
+</html>

@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增设备维修登记')" />
+    <th:block th:include="include :: datetimepicker-css" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-serviceregistration-add">
+            <div class="form-group">  
+                <label class="col-sm-2 control-label">维修单号：</label>
+                <div class="col-sm-4">
+                    <input id="repairOrder" name="repairOrder" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">设备档案：</label>
+                <div class="col-sm-4">
+                    <select id="archivesId" name="archivesId" class="form-control" th:with="type=${@archives.getArchives()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.archivesName}" th:value="${data.id}"></option>
+			 	    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">维修类别：</label>
+                <div class="col-sm-4">
+                    <select name="serviceCategory" class="form-control m-b">
+                        <option value=''>请选择</option>
+                        <option value='1'>自维</option>
+                        <option value='0'>外维</option>
+                    </select>
+                </div>
+                <label class="col-sm-2 control-label">故障类别：</label>
+                <div class="col-sm-4">
+                    <select name="faultCategory" class="form-control m-b">
+                        <option value=''>请选择</option>
+                        <option value='1'>机械故障</option>
+                        <option value='2'>突发事件</option>
+                        <option value='3'>电路故障</option>
+                        <option value='4'>签报</option>
+                        <option value='5'>内部维修</option>
+                        <option value='6'>日常维修</option>
+                        <option value='7'>合同</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">故障发生时间：</label>
+                <div class="col-sm-4">
+                    <div class="input-group date">
+                        <input id="failureTime" name="failureTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+                <label class="col-sm-2 control-label">附属设备：</label>
+                <div class="col-sm-4">
+                    <select id="equipmentId" name="equipmentId" class="form-control" th:with="type=${@equipment.getEquipment()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.equipmentName}" th:value="${data.id}"></option>
+			 	    </select>
+                </div>
+            </div>
+            <div class="form-group">
+	            <label class="col-sm-3 control-label">故障情况：</label>
+	                <div class="col-sm-8">
+	                    <input name="faultCondition" class="form-control" type="text">
+	                </div>
+	        </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">维修开始时间：</label>
+                <div class="col-sm-4">
+                    <div class="input-group date">
+                        <input id="startTime" name="startTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+                <label class="col-sm-2 control-label">维修结束时间：</label>
+                <div class="col-sm-4">
+                    <div class="input-group date">
+                        <input name="endTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">故障原因类别：</label>
+                <div class="col-sm-4">
+                    <select name="causeType" class="form-control m-b">
+                        <option value=''>请选择</option>
+                        <option value='1'>操作不当</option>
+                        <option value='2'>设备老化</option>
+                        <option value='3'>保养缺失</option>
+                        <option value='4'>其他</option>
+                    </select>
+                </div>
+                <label class="col-sm-2 control-label">维修单位：</label>
+                <div class="col-sm-4">
+                    <input name="serviceUnit" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">原因分析：</label>
+                <div class="col-sm-8">
+                    <input name="reasonAnalysis" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">维修结果：</label>
+                <div class="col-sm-8">
+                    <input name="serviceResults" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">维修费用：</label>
+                <div class="col-sm-4">
+                    <input name="serviceCosts" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">专业部门：</label>
+                <div class="col-sm-4">
+                    <select class="form-control m-b" name="deptId" data-first-title="选择部门" th:with="type=${@dept.getDepts()}">
+                  		<option value="">请选择</option>
+                  		<option th:each="dict : ${type}" th:text="${dict.deptName}" th:value="${dict.deptId}"></option>
+                	</select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">验收时间：</label>
+                <div class="col-sm-4">
+                    <div class="input-group date">
+                        <input name="receptionTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+                <label class="col-sm-2 control-label">验收人：</label>
+                <div class="col-sm-4">
+                    <select class="form-control m-b" name="acceptor" data-first-title="选择员工" th:with="type=${@employee.getEmployee()}">
+	                  <option value="">请选择</option>
+	                  <option th:each="dict : ${type}" th:text="${dict.userName}" th:value="${dict.userName}"></option>
+	                </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">检查验收情况：</label>
+                <div class="col-sm-4">
+                    <input name="inspectionAcceptance" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">问题整改情况：</label>
+                <div class="col-sm-4">
+                    <input name="problemRectification" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+            	<label class="col-sm-2 control-label">负责人：</label>
+                <div class="col-sm-4">
+                    <select class="form-control m-b" name="userId" data-first-title="选择员工" th:with="type=${@employee.getEmployee()}">
+	                  <option value="">请选择</option>
+	                  <option th:each="dict : ${type}" th:text="${dict.userName}" th:value="${dict.userId}"></option>
+	                </select>
+                </div>    
+                <label class="col-sm-2 control-label">当前周期：</label>
+                <div class="col-sm-4">
+                    <input name="currentCycle" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">当前年限：</label>
+                <div class="col-sm-4">
+                    <input name="currentYear" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">调整年限：</label>
+                <div class="col-sm-4">
+                    <input name="adjustmentYear" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+            	<label class="col-sm-2 control-label">是否审核：</label>
+                <div class="col-sm-2">
+                  <input name="isAudit" value='1' type="radio" checked="checked">是
+                </div>
+                <div class="col-sm-2">
+                   <input name="isAudit" value='0' type="radio">否
+                </div>
+                <label class="col-sm-2 control-label">备注：</label>
+                <div class="col-sm-4">
+                    <input name="serviceRemark" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+        <div class="col-sm-6">
+			<div class="tabs-container">
+				<ul class="nav nav-tabs">
+					<li id="tab1li" class="active">
+						<a data-toggle="tab" href="#tab-1" aria-expanded="true" onclick="tab(1)">设备维修人员</a>
+					</li>
+					
+					<li id="tab2li" class="">
+						<a data-toggle="tab" href="#tab-2" aria-expanded="false" onclick="tab(2)">设备维修物料</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="tab-content ">
+			<div id="tab-1" class="tab-pane active">
+				<div class="row">
+					<div class="col-sm-12 select-table table-striped">
+						<table id="table1"></table>
+					</div>
+				</div>
+			</div>
+		
+			<div id="tab-2" class="tab-pane ">
+				<div class="row">
+					<div class="col-sm-12 select-table table-striped">
+						<table id="table2"></table>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: datetimepicker-js" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/serviceregistration"
+        $("#form-serviceregistration-add").validate({
+        	rules : {
+        		repairOrder : {
+					required : true,
+					maxlength:255,
+				},
+				archivesId : {
+					required : true,
+					maxlength:11,
+				},
+				faultCategory : {
+					required : true,
+					maxlength:1,
+				},
+				failureTime : {
+					required : true,
+				},
+				startTime : {
+					required : true,
+				},
+				serviceCategory : {
+					maxlength:1,
+				},
+				faultCondition : {
+					maxlength:255,
+				},
+				causeType : {
+					maxlength:1,
+				},
+				serviceUnit : {
+					maxlength:20,
+				},
+				reasonAnalysis : {
+					maxlength:255,
+				},
+				serviceResults : {
+					maxlength:255,
+				},
+				serviceCosts : {
+					maxlength:10,
+				},
+				isAudit : {
+					maxlength:1,
+				},
+				acceptor : {
+					maxlength:20,
+				},
+				inspectionAcceptance : {
+					maxlength:255,
+				},
+				problemRectification : {
+					maxlength:255,
+				},
+				currentCycle : {
+					maxlength:1,
+				},
+				currentYear : {
+					maxlength:10,
+				},
+				adjustmentYear : {
+					maxlength:20,
+				},
+				serviceRemark : {
+					maxlength:255,
+				},
+				equipmentId : {
+					required : true,
+					maxlength:11,
+				},
+				userId : {
+					required : true,
+					maxlength:11,
+				},
+				deptId : {
+					required : true,
+					maxlength:11,
+				},
+			},
+            focusCleanup: true
+        });
+        $(function() {
+        	var date = new Date();
+        	var time = date.getTime();
+        	var year = date.getFullYear();
+        	var Month = "0"+(date.getMonth()+1);
+        	var da = date.getDate();
+        	var dateStr = year+"-"+Month+"-"+da;
+        	$("#failureTime").val(dateStr);
+        	$("#startTime").val(dateStr);
+        	$("#repairOrder").val(time);
+            var options = {
+            		tableId : "table1",
+            		showSearch: false,
+    		        showRefresh: false,
+    		        showToggle: false,
+    		        showColumns: false,
+                    url: prefix + "/list",
+                    createUrl: prefix + "/add",
+                    updateUrl: prefix + "/edit/{id}",
+                    removeUrl: prefix + "/remove",
+                    exportUrl: prefix + "/export",
+                    modalName: "设备维修人员",
+                    columns: [{
+                        checkbox: true
+                    },
+                    {
+                        field: 'id',
+                        title: '设备维修登记id',
+                        visible: false
+                    },
+                    {
+                        field: 'sysUser.userName',
+                        title: '职员姓名'
+                    },
+                    {
+                        field: 'sysDept.deptName',
+                        title: '部门'
+                    },
+                    {
+                        field: 'repairOrder',
+                        title: '维修单号'
+                    },
+                    {
+                        field: 'hyEquipmentArchives.archivesName',
+                        title: '设备名称'
+                    },
+                    {
+                        field: 'hyEquipment.equipmentName',
+                        title: '设备类别'
+                    },
+                    {
+                        field: 'faultCategory',
+                        title: '故障类别',
+                        formatter: function(value, item, index) {
+                        	switch(value){
+    	                    	case "" : value =  "请选择";break;
+    	                    	case '1' : value =  "机械故障";break;
+    	                    	case '2' : value =  "突发事件";break;
+    	                    	case '3' : value =  "电路故障";break;
+    	                    	case '4' : value =  "签报";break;
+    	                    	case '5' : value =  "内部维修";break;
+    	                    	case '6' : value =  "日常维修";break;
+    	                    	case '7' : value =  "合同";break;
+    	                	}
+    		            	return value;
+    		            }
+                    },
+                    {
+                        field: 'failureTime',
+                        title: '故障发生时间'
+                    },
+                    {
+                        field: 'serviceCategory',
+                        title: '维修类别',
+                        formatter: function(value, item, index) {
+                        	switch(value){
+    	                    	case "" : value =  "请选择";break;
+    	                    	case '1' : value =  "自维";break;
+    	                    	case '0' : value =  "外维";break;
+    	                	}
+    		            	return value;
+    		            }
+                    },
+                    {
+                        field: 'startTime',
+                        title: '维修开始时间'
+                    },
+                    {
+                        field: 'endTime',
+                        title: '维修结束时间'
+                    },
+                    {
+                        field: 'faultCondition',
+                        title: '故障情况'
+                    },
+                    {
+                        field: 'serviceResults',
+                        title: '维修结果'
+                    },
+                    {
+                        field: 'sysDept.deptName',
+                        title: '组织机构'
+                    }]
+                };
+            $.table.initOtherTable(options);
+		});
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-serviceregistration-add').serialize());
+            }
+        }
+
+        $("input[name='failureTime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='startTime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='endTime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='receptionTime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+        
+        function tab(value){
+    		console.log(value);
+    		if(value == 1){
+    	        $.ajax({
+                    url: prefix + "/list",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    type: 'POST',
+                    success: function (result) {
+                        if (result.code == web_status.SUCCESS) {
+                            var options = {
+                            		tableId : "table1",
+                            		showSearch: false,
+                    		        showRefresh: false,
+                    		        showToggle: false,
+                    		        showColumns: false,
+                                url: prefix + "/list",
+                                createUrl: prefix + "/add",
+                                updateUrl: prefix + "/edit/{id}",
+                                removeUrl: prefix + "/remove",
+                                exportUrl: prefix + "/export",
+                                modalName: "设备维修人员",
+                                columns: [{
+                                    checkbox: true
+                                },
+                                {
+                                    field: 'id',
+                                    title: '设备维修登记id',
+                                    visible: false
+                                },
+                                {
+                                    field: 'sysUser.userName',
+                                    title: '职员姓名'
+                                },
+                                {
+                                    field: 'sysDept.deptName',
+                                    title: '部门'
+                                },
+                                {
+                                    field: 'repairOrder',
+                                    title: '维修单号'
+                                },
+                                {
+                                    field: 'hyEquipmentArchives.archivesName',
+                                    title: '设备名称'
+                                },
+                                {
+                                    field: 'hyEquipment.equipmentName',
+                                    title: '设备类别'
+                                },
+                                {
+                                    field: 'faultCategory',
+                                    title: '故障类别',
+                                    formatter: function(value, item, index) {
+                                    	switch(value){
+                	                    	case "" : value =  "请选择";break;
+                	                    	case '1' : value =  "机械故障";break;
+                	                    	case '2' : value =  "突发事件";break;
+                	                    	case '3' : value =  "电路故障";break;
+                	                    	case '4' : value =  "签报";break;
+                	                    	case '5' : value =  "内部维修";break;
+                	                    	case '6' : value =  "日常维修";break;
+                	                    	case '7' : value =  "合同";break;
+                	                	}
+                		            	return value;
+                		            }
+                                },
+                                {
+                                    field: 'failureTime',
+                                    title: '故障发生时间'
+                                },
+                                {
+                                    field: 'serviceCategory',
+                                    title: '维修类别',
+                                    formatter: function(value, item, index) {
+                                    	switch(value){
+                	                    	case "" : value =  "请选择";break;
+                	                    	case '1' : value =  "自维";break;
+                	                    	case '0' : value =  "外维";break;
+                	                	}
+                		            	return value;
+                		            }
+                                },
+                                {
+                                    field: 'startTime',
+                                    title: '维修开始时间'
+                                },
+                                {
+                                    field: 'endTime',
+                                    title: '维修结束时间'
+                                },
+                                {
+                                    field: 'faultCondition',
+                                    title: '故障情况'
+                                },
+                                {
+                                    field: 'serviceResults',
+                                    title: '维修结果'
+                                },
+                                {
+                                    field: 'sysDept.deptName',
+                                    title: '组织机构'
+                                }]
+                            };
+                	            $.table.initOtherTable(options);
+                        }  else {
+                            $.modal.enable();
+                            $.modal.alertError(result.msg);
+                        }
+                    }
+                });
+    		} else if(value == 2) {
+    			var prefix1 = ctx + "system/servicemateriel";
+
+    	        $.ajax({
+                    url: prefix1 + "/list",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    type: 'POST',
+                    success: function (result) {
+                        if (result.code == web_status.SUCCESS) {
+                            var options = {
+                            		tableId : "table2",
+                            		showSearch: false,
+                    		        showRefresh: false,
+                    		        showToggle: false,
+                    		        showColumns: false,
+                                    url: prefix1 + "/list",
+                                    createUrl: prefix1 + "/add",
+                                    updateUrl: prefix1 + "/edit/{id}",
+                                    removeUrl: prefix1 + "/remove",
+                                    exportUrl: prefix1 + "/export",
+                                    modalName: "设备维修物料",
+                                    columns: [{
+                                        checkbox: true
+                                    },
+                                    {
+                                        field: 'id',
+                                        title: '设备维修物料id',
+                                        visible: false
+                                    },
+                                    {
+                                        field: 'materielName',
+                                        title: '物料名称'
+                                    },
+                                    {
+                                        field: 'materielType',
+                                        title: '规格型号'
+                                    },
+                                    {
+                                        field: 'materielBrand',
+                                        title: '物料品牌'
+                                    },
+                                    {
+                                        field: 'materielCount',
+                                        title: '物料数量'
+                                    },
+                                    {
+                                        field: 'materielPrice',
+                                        title: '物料单价'
+                                    },
+                                    {
+                                        field: 'materielMoney',
+                                        title: '物料金额'
+                                    },
+                                    {
+                                        field: 'measuringUnit',
+                                        title: '计量单位'
+                                    },
+                                    {
+                                        field: 'materielUse',
+                                        title: '物料用途'
+                                    },
+                                    {
+                                        field: 'hyServiceregistration.repairOrder',
+                                        title: '维修编号'
+                                    },
+                                    {
+                                        field: 'hyEquipment.equipmentName',
+                                        title: '设备名称'
+                                    },
+                                    {
+                                        field: 'hyServiceregistration.faultCategory',
+                                        title: '故障类别',
+                                        formatter: function(value, item, index) {
+                                        	switch(value){
+                    	                    	case "" : value =  "请选择";break;
+                    	                    	case '1' : value =  "机械故障";break;
+                    	                    	case '2' : value =  "突发事件";break;
+                    	                    	case '3' : value =  "电路故障";break;
+                    	                    	case '4' : value =  "签报";break;
+                    	                    	case '5' : value =  "内部维修";break;
+                    	                    	case '6' : value =  "日常维修";break;
+                    	                    	case '7' : value =  "合同";break;
+                    	                	}
+                    		            	return value;
+                    		            }
+                                    },
+                                    {
+                                        field: 'hyServiceregistration.failureTime',
+                                        title: '故障发生时间'
+                                    }]
+                                };
+                	            $.table.initOtherTable(options);
+                        }  else {
+                            $.modal.enable();
+                            $.modal.alertError(result.msg);
+                        }
+                    }
+                });
+    		}
+    	} 
+    </script>
+</body>
+</html>

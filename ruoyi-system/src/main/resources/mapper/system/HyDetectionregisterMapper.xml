@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyDetectionregisterMapper">
+    
+    <resultMap type="HyDetectionregister" id="HyDetectionregisterResult">
+        <result property="id"    column="id"    />
+        <result property="documentNumber"    column="document_number"    />
+        <result property="inspector"    column="inspector"    />
+        <result property="inspectionDate"    column="inspection_date"    />
+        <result property="inspectionPeriod"    column="inspection_period"    />
+        <result property="inspectionUnit"    column="inspection_unit"    />
+        <result property="inspectionContent"    column="inspection_content"    />
+        <result property="inspectionResult"    column="inspection_result"    />
+        <result property="inspectionCost"    column="inspection_cost"    />
+        <result property="inspectionRemark"    column="inspection_remark"    />
+        <result property="isAudit"    column="is_audit"    />
+        <result property="equipmentId"    column="equipment_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="deptId"    column="dept_id"    />
+        <association property="hyEquipment" column="id"
+			javaType="HyEquipment" resultMap="HyEquipmentResult" />
+		<association property="sysDept" column="id"
+			javaType="SysDept" resultMap="SysDeptResult" />
+        <association property="sysUser" column="id"
+			javaType="SysUser" resultMap="SysUserResult" />
+    </resultMap>
+	
+	<resultMap type="HyEquipment" id="HyEquipmentResult">
+        <result property="id"    column="id"    />
+        <result property="parentId"    column="parent_id"    />
+        <result property="equipmentCode"    column="equipment_code"    />
+        <result property="equipmentName"    column="equipment_name"    />
+        <result property="equipmentExplains"    column="equipment_explains"    />
+        <result property="equipmentDetail"    column="equipment_detail"    />
+        <result property="deptId"    column="dept_id"    />
+    </resultMap>
+	
+	<resultMap type="SysDept" id="SysDeptResult">
+		<id     property="deptId"     column="dept_id"     />
+		<result property="parentId"   column="parent_id"   />
+		<result property="ancestors"  column="ancestors"   />
+		<result property="deptName"   column="dept_name"   />
+		<result property="orderNum"   column="order_num"   />
+		<result property="leader"     column="leader"      />
+		<result property="phone"      column="phone"       />
+		<result property="email"      column="email"       />
+		<result property="status"     column="status"      />
+		<result property="delFlag"    column="del_flag"    />
+		<result property="parentName" column="parent_name" />
+		<result property="createBy"   column="create_by"   />
+		<result property="createTime" column="create_time" />
+		<result property="updateBy"   column="update_by"   />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+	
+	<resultMap type="SysUser" id="SysUserResult">
+		<id     property="userId"        column="user_id"         />
+		<result property="deptId"        column="dept_id"         />
+		<result property="loginName"     column="login_name"      />
+		<result property="userName"      column="user_name"       />
+		<result property="userType"      column="user_type"       />
+		<result property="email"         column="email"           />
+		<result property="phonenumber"   column="phonenumber"     />
+		<result property="sex"           column="sex"             />
+		<result property="avatar"        column="avatar"          />
+		<result property="password"      column="password"        />
+		<result property="salt"          column="salt"            />
+		<result property="status"        column="status"          />
+		<result property="delFlag"       column="del_flag"        />
+		<result property="loginIp"       column="login_ip"        />
+		<result property="loginDate"     column="login_date"      />
+		<result property="pwdUpdateDate" column="pwd_update_date" />
+		<result property="createBy"      column="create_by"       />
+		<result property="createTime"    column="create_time"     />
+		<result property="updateBy"      column="update_by"       />
+		<result property="updateTime"    column="update_time"     />
+		<result property="remark"        column="remark"          />
+	</resultMap>
+	
+    <sql id="selectHyDetectionregisterVo">
+        select 
+        r.id, 
+        r.document_number, 
+        r.inspector, 
+        r.inspection_date, 
+        r.inspection_period, 
+        r.inspection_unit, 
+        r.inspection_content, 
+        r.inspection_result, 
+        r.inspection_cost, 
+        r.inspection_remark, 
+        r.is_audit, 
+        r.equipment_id, 
+        r.user_id, 
+        r.dept_id,
+        e.equipment_name,
+        d.dept_name,
+        u.user_name
+        from 
+        hy_detectionregister r
+        LEFT JOIN hy_equipment e ON r.equipment_id = e.id
+        LEFT JOIN sys_dept d ON r.dept_id = d.dept_id
+        LEFT JOIN sys_user u ON r.user_id = u.user_id
+    </sql>
+
+    <select id="selectHyDetectionregisterList" parameterType="HyDetectionregister" resultMap="HyDetectionregisterResult">
+        <include refid="selectHyDetectionregisterVo"/>
+        <where>  
+            <if test="documentNumber != null  and documentNumber != ''"> and r.document_number = #{documentNumber}</if>
+            <if test="inspector != null  and inspector != ''"> and r.inspector = #{inspector}</if>
+            <if test="inspectionDate != null "> and r.inspection_date = #{inspectionDate}</if>
+            <if test="inspectionPeriod != null  and inspectionPeriod != ''"> and r.inspection_period = #{inspectionPeriod}</if>
+            <if test="inspectionUnit != null  and inspectionUnit != ''"> and r.inspection_unit = #{inspectionUnit}</if>
+            <if test="inspectionContent != null  and inspectionContent != ''"> and r.inspection_content = #{inspectionContent}</if>
+            <if test="inspectionResult != null  and inspectionResult != ''"> and r.inspection_result = #{inspectionResult}</if>
+            <if test="inspectionCost != null "> and r.inspection_cost = #{inspectionCost}</if>
+            <if test="inspectionRemark != null  and inspectionRemark != ''"> and r.inspection_remark = #{inspectionRemark}</if>
+            <if test="isAudit != null  and isAudit != ''"> and r.is_audit = #{isAudit}</if>
+            <if test="equipmentId != null "> and r.equipment_id = #{equipmentId}</if>
+            <if test="userId != null "> and r.user_id = #{userId}</if>
+            <if test="deptId != null "> and r.dept_id = #{deptId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyDetectionregisterById" parameterType="Long" resultMap="HyDetectionregisterResult">
+        <include refid="selectHyDetectionregisterVo"/>
+        where r.id = #{id}
+    </select>
+        
+    <insert id="insertHyDetectionregister" parameterType="HyDetectionregister" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_detectionregister
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="documentNumber != null">document_number,</if>
+            <if test="inspector != null">inspector,</if>
+            <if test="inspectionDate != null">inspection_date,</if>
+            <if test="inspectionPeriod != null">inspection_period,</if>
+            <if test="inspectionUnit != null">inspection_unit,</if>
+            <if test="inspectionContent != null">inspection_content,</if>
+            <if test="inspectionResult != null">inspection_result,</if>
+            <if test="inspectionCost != null">inspection_cost,</if>
+            <if test="inspectionRemark != null">inspection_remark,</if>
+            <if test="isAudit != null">is_audit,</if>
+            <if test="equipmentId != null">equipment_id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="deptId != null">dept_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="documentNumber != null">#{documentNumber},</if>
+            <if test="inspector != null">#{inspector},</if>
+            <if test="inspectionDate != null">#{inspectionDate},</if>
+            <if test="inspectionPeriod != null">#{inspectionPeriod},</if>
+            <if test="inspectionUnit != null">#{inspectionUnit},</if>
+            <if test="inspectionContent != null">#{inspectionContent},</if>
+            <if test="inspectionResult != null">#{inspectionResult},</if>
+            <if test="inspectionCost != null">#{inspectionCost},</if>
+            <if test="inspectionRemark != null">#{inspectionRemark},</if>
+            <if test="isAudit != null">#{isAudit},</if>
+            <if test="equipmentId != null">#{equipmentId},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="deptId != null">#{deptId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyDetectionregister" parameterType="HyDetectionregister">
+        update hy_detectionregister
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="documentNumber != null">document_number = #{documentNumber},</if>
+            <if test="inspector != null">inspector = #{inspector},</if>
+            <if test="inspectionDate != null">inspection_date = #{inspectionDate},</if>
+            <if test="inspectionPeriod != null">inspection_period = #{inspectionPeriod},</if>
+            <if test="inspectionUnit != null">inspection_unit = #{inspectionUnit},</if>
+            <if test="inspectionContent != null">inspection_content = #{inspectionContent},</if>
+            <if test="inspectionResult != null">inspection_result = #{inspectionResult},</if>
+            <if test="inspectionCost != null">inspection_cost = #{inspectionCost},</if>
+            <if test="inspectionRemark != null">inspection_remark = #{inspectionRemark},</if>
+            <if test="isAudit != null">is_audit = #{isAudit},</if>
+            <if test="equipmentId != null">equipment_id = #{equipmentId},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyDetectionregisterById" parameterType="Long">
+        delete from hy_detectionregister where id = #{id}
+    </delete>
+
+    <delete id="deleteHyDetectionregisterByIds" parameterType="String">
+        delete from hy_detectionregister where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

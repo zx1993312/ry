@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改设备报废申请')" />
+    <th:block th:include="include :: datetimepicker-css" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-scrap-edit" th:object="${hyScrap}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">单据号：</label>
+                <div class="col-sm-2">
+                    <input name="documentNumber" th:field="*{documentNumber}" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">报废日期：</label>
+                <div class="col-sm-2">
+                    <div class="input-group date">
+                        <input name="scrapDate" th:value="${#dates.format(hyScrap.scrapDate, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+                <label class="col-sm-2 control-label">申请人：</label>
+                <div class="col-sm-2">
+                    <select class="form-control m-b" name="userId" data-first-title="选择员工" th:with="type=${@employee.getEmployee()}">
+	                  <option value="">请选择</option>
+	                  <option th:each="dict : ${type}" th:text="${dict.userName}" th:value="${dict.userId}"></option>
+	                </select>
+                </div>
+            </div>
+            <div class="form-group">   
+            	<label class="col-sm-2 control-label">设备档案：</label>
+                <div class="col-sm-2">
+                    <select id="archivesId" name="archivesId" th:field="*{archivesId}" class="form-control" th:with="type=${@archives.getArchives()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.archivesName}" th:value="${data.id}"></option>
+			 	    </select>
+                </div> 
+                <label class="col-sm-2 control-label">报废型号：</label>
+                <div class="col-sm-2">
+                	<input name="scrapType" th:field="*{scrapType}" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">生产厂家：</label>
+                <div class="col-sm-2">
+                    <input name="manufactureFactory" th:field="*{manufactureFactory}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">组织机构：</label>
+                <div class="col-sm-2">
+                    <select class="form-control m-b" name="deptId" th:field="*{deptId}" data-first-title="选择部门"  th:with="type=${@dept.getDepts()}">
+	                  		<option value="">请选择</option>
+	                  		<option th:each="dict : ${type}" th:text="${dict.deptName}" th:value="${dict.deptId}"></option>
+	                </select>
+                </div>
+                <label class="col-sm-2 control-label">保养计划：</label>
+                <div class="col-sm-2">
+                    <select id="planId" name="planId" th:field="*{planId}" class="form-control" th:with="type=${@plan.getPlan()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.planName}" th:value="${data.id}"></option>
+			 	    </select>
+                </div>
+                <label class="col-sm-2 control-label">是否审核：</label>
+                <div class="col-sm-1">
+                  <input name="isAudit" th:field="*{isAudit}" value='1' type="radio" checked="checked">是
+                </div>
+                <div class="col-sm-1">
+                   <input name="isAudit" th:field="*{isAudit}" value='0' type="radio">否
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">起用日期：</label>
+                <div class="col-sm-2">
+                    <div class="input-group date">
+                        <input name="commissioningDate" th:value="${#dates.format(hyScrap.commissioningDate, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+                <label class="col-sm-2 control-label">原值：</label>
+                <div class="col-sm-2">
+                    <input name="originalValue" th:field="*{originalValue}" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">现值：</label>
+                <div class="col-sm-2">
+                    <input name="presentValue" th:field="*{presentValue}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">服役过程：</label>
+                <div class="col-sm-6">
+                    <input name="serviceProcess" th:field="*{serviceProcess}" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">履历卡编号：</label>
+                <div class="col-sm-2">
+                    <input name="cardNumber" th:field="*{cardNumber}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">报废原因：</label>
+                <div class="col-sm-8">
+                    <input name="scrapReason" th:field="*{scrapReason}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">鉴定结论：</label>
+                <div class="col-sm-8">
+                    <input name="expertConclusion" th:field="*{expertConclusion}" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: datetimepicker-js" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/scrap";
+        $("#form-scrap-edit").validate({
+        	rules : {
+        		documentNumber : {
+   					required : true,
+   					maxlength:255,
+   				},
+   				scrapDate : {
+   					required : true,
+   				},
+   				userId : {
+   					required : true,
+   					maxlength:11,
+   				},
+   				archivesId : {
+   					required : true,
+   					maxlength:11,
+   				},
+   				scrapType : {
+   					required : true,
+   					maxlength:20,
+   				},
+   				manufactureFactory : {
+   					required : true,
+   					maxlength:20,
+   				},
+   				deptId : {
+   					required : true,
+   					maxlength:11,
+   				},
+   				planId : {
+   					required : true,
+   					maxlength:11,
+   				},
+   				isAudit : {
+   					required : true,
+   					maxlength:1,
+   				},
+   				commissioningDate : {
+   					required : true,
+   				},
+   				originalValue : {
+   					required : true,
+   					maxlength:10,
+   				},
+   				presentValue : {
+   					required : true,
+   					maxlength:10,
+   				},
+   				serviceProcess : {
+   					required : true,
+   					maxlength:255,
+   				},
+   				cardNumber : {
+   					required : true,
+   					maxlength:255,
+   				},
+   				scrapReason : {
+   					required : true,
+   					maxlength:255,
+   				},
+   				expertConclusion : {
+   					required : true,
+   					maxlength:255,
+   				},
+   			},
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-scrap-edit').serialize());
+            }
+        }
+
+        $("input[name='scrapDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='commissioningDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+    </script>
+</body>
+</html>

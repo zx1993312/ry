@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('保养设备列表')" />
+    <th:block th:include="include :: header('设备维修物料列表')" />
     <th:block th:include="include :: layout-latest-css" />
 	<th:block th:include="include :: ztree-css" />
 </head>
@@ -27,55 +27,75 @@
 	<div class="ui-layout-center">
      <div class="container-div">
         <div class="row">
-<!--             <div class="col-sm-12 search-collapse">
+            <div class="col-sm-12 search-collapse">
                 <form id="formId">
                     <div class="select-list">
                         <ul>
+                            <!-- <li>
+                                <label>物料名称：</label>
+                                <input type="text" name="materielName"/>
+                            </li>
                             <li>
-                                <label>保养设备型号：</label>
-                                <select name="maintenanceequipmentType">
+                                <label>规格型号：</label>
+                                <select name="materielType">
                                     <option value="">所有</option>
                                     <option value="-1">代码生成请选择字典属性</option>
                                 </select>
                             </li>
                             <li>
-                                <label>保养设备规格：</label>
-                                <input type="text" name="maintenanceequipmentSpecification"/>
+                                <label>物料品牌：</label>
+                                <input type="text" name="materielBrand"/>
                             </li>
                             <li>
-                                <label>保养设备单位：</label>
-                                <input type="text" name="maintenanceequipmentUnit"/>
+                                <label>物料数量：</label>
+                                <input type="text" name="materielCount"/>
                             </li>
                             <li>
-                                <label>存放位置：</label>
-                                <input type="text" name="maintenanceequipmentPlace"/>
+                                <label>物料单价：</label>
+                                <input type="text" name="materielPrice"/>
                             </li>
+                            <li>
+                                <label>计量单位：</label>
+                                <input type="text" name="measuringUnit"/>
+                            </li>
+                            <li>
+                                <label>物料金额：</label>
+                                <input type="text" name="materielMoney"/>
+                            </li>
+                            <li>
+                                <label>物料用途：</label>
+                                <input type="text" name="materielUse"/>
+                            </li>
+                            <li>
+                                <label>设备维修登记id：</label>
+                                <input type="text" name="registrationId"/>
+                            </li> -->
                             <li>
                                 <input type="hidden" id="equipmentId" name="equipmentId"/>
                             </li>
-                            <li>
+                            <!-- <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                                 <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
-                            </li>
+                            </li> -->
                         </ul>
                     </div>
                 </form>
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:maintenanceequipment:add">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:servicemateriel:add">
                     <i class="fa fa-plus"></i> 添加
                 </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:maintenanceequipment:edit">
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:servicemateriel:edit">
                     <i class="fa fa-edit"></i> 修改
                 </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:maintenanceequipment:remove">
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:servicemateriel:remove">
                     <i class="fa fa-remove"></i> 删除
                 </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:maintenanceequipment:export">
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:servicemateriel:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
-            </div> -->
+            </div>
             <div class="col-sm-12 select-table table-striped">
                 <table id="bootstrap-table"></table>
             </div>
@@ -86,9 +106,10 @@
     <th:block th:include="include :: layout-latest-js" />
 	<th:block th:include="include :: ztree-js" />
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('system:maintenanceequipment:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('system:maintenanceequipment:remove')}]];
-        var prefix = ctx + "system/maintenanceequipment";
+        var editFlag = [[${@permission.hasPermi('system:servicemateriel:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:servicemateriel:remove')}]];
+        var prefix = ctx + "system/servicemateriel";
+
         $(function() {
         	var panehHidden = false;
 		    if ($(this).width() < 769) {
@@ -103,91 +124,87 @@
 	    		};
 	    		$('#scroll-up').toTop(opt);
 	    	}
-	    	queryMaintenanceequipmentList();
+	    	queryServicematerielList();
 		    queryDeptTree();
 		});
-        function queryMaintenanceequipmentList() {
+        
+        function queryServicematerielList() {
             var options = {
                 url: prefix + "/list",
                 createUrl: prefix + "/add",
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "保养设备",
+                modalName: "设备维修物料",
                 columns: [{
                     checkbox: true
                 },
                 {
                     field: 'id',
-                    title: '保养设备id',
+                    title: '设备维修物料id',
                     visible: false
                 },
                 {
-                    field: 'hyMaintenanceregistration.recordNumber',
-                    title: '保养记录号'
+                    field: 'materielName',
+                    title: '物料名称'
                 },
                 {
-                    field: 'hyMaintenanceregistration.startDate',
-                    title: '开始日期'
+                    field: 'materielType',
+                    title: '规格型号'
                 },
                 {
-                    field: 'hyMaintenanceregistration.endDate',
-                    title: '结束日期'
+                    field: 'materielBrand',
+                    title: '物料品牌'
                 },
                 {
-                    field: 'hyMaintenanceregistration.currentContent',
-                    title: '当前保养内容'
+                    field: 'materielCount',
+                    title: '物料数量'
                 },
                 {
-                    field: 'hyMaintenanceregistration.maintenanceCompletion',
-                    title: '保养完成情况'
+                    field: 'materielPrice',
+                    title: '物料单价'
                 },
                 {
-                    field: 'hyMaintenanceregistration.inspectionAcceptance',
-                    title: '检查验收情况'
+                    field: 'materielMoney',
+                    title: '物料金额'
                 },
                 {
-                    field: 'hyMaintenanceregistration.problemRectification',
-                    title: '问题整改情况'
+                    field: 'measuringUnit',
+                    title: '计量单位'
                 },
                 {
-                    field: 'hyMaintenanceplan.planCode',
-                    title: '保养计划编号'
+                    field: 'materielUse',
+                    title: '物料用途'
                 },
                 {
-                    field: 'hyMaintenanceplan.planName',
-                    title: '保养计划名称'
+                    field: 'hyServiceregistration.repairOrder',
+                    title: '维修编号'
                 },
                 {
-                    field: 'hyMaintenanceplan.maintainType',
-                    title: '设备保养类别',
+                    field: 'hyEquipment.equipmentName',
+                    title: '设备名称'
+                },
+                {
+                    field: 'hyServiceregistration.faultCategory',
+                    title: '故障类别',
                     formatter: function(value, item, index) {
                     	switch(value){
-	                    	case '' : value =  "请选择";break;
-	                    	case '1' : value =  "自维";break;
-	                    	case '2' : value =  "外维";break;
+	                    	case "" : value =  "请选择";break;
+	                    	case '1' : value =  "机械故障";break;
+	                    	case '2' : value =  "突发事件";break;
+	                    	case '3' : value =  "电路故障";break;
+	                    	case '4' : value =  "签报";break;
+	                    	case '5' : value =  "内部维修";break;
+	                    	case '6' : value =  "日常维修";break;
+	                    	case '7' : value =  "合同";break;
 	                	}
 		            	return value;
 		            }
                 },
                 {
-                    field: 'hyMaintenanceplan.maintainLevel',
-                    title: '设备保养等级',
-                    formatter: function(value, item, index) {
-                    	switch(value){
-	                    	case '' : value =  "请选择";break;
-	                    	case '0' : value =  "日常保养";break;
-	                    	case '1' : value =  "一级保养";break;
-	                    	case '2' : value =  "二级保养";break;
-	                    	case '3' : value =  "三级保养";break;
-	                	}
-		            	return value;
-		            }
+                    field: 'hyServiceregistration.failureTime',
+                    title: '故障发生时间'
                 },
-                {
-                    field: 'hyMaintenanceplan.maintainPeriod',
-                    title: '设备保养周期'
-                }/* ,
                 {
                     title: '操作',
                     align: 'center',
@@ -197,7 +214,7 @@
                         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
                         return actions.join('');
                     }
-                } */]
+                }]
             };
             $.table.init(options);
         };

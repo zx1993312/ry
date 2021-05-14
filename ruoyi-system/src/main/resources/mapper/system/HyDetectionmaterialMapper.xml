@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyDetectionmaterialMapper">
+    
+    <resultMap type="HyDetectionmaterial" id="HyDetectionmaterialResult">
+        <result property="id"    column="id"    />
+        <result property="materialName"    column="material_name"    />
+        <result property="materialCount"    column="material_count"    />
+        <result property="materialPrice"    column="material_price"    />
+        <result property="materialMoney"    column="material_money"    />
+        <result property="materialBrand"    column="material_brand"    />
+        <result property="materialType"    column="material_type"    />
+        <result property="materialUse"    column="material_use"    />
+        <result property="equipmentId"    column="equipment_id"    />
+        <result property="registerId"    column="register_id"    />
+        <association property="hyEquipment" column="id"
+			javaType="HyEquipment" resultMap="HyEquipmentResult" />
+        <association property="hyDetectionregister" column="id"
+			javaType="HyDetectionregister" resultMap="HyDetectionregisterResult" />
+    </resultMap>
+    
+    <resultMap type="HyEquipment" id="HyEquipmentResult">
+        <result property="id"    column="id"    />
+        <result property="parentId"    column="parent_id"    />
+        <result property="equipmentCode"    column="equipment_code"    />
+        <result property="equipmentName"    column="equipment_name"    />
+        <result property="equipmentExplains"    column="equipment_explains"    />
+        <result property="equipmentDetail"    column="equipment_detail"    />
+        <result property="deptId"    column="dept_id"    />
+    </resultMap>
+    
+    <resultMap type="HyDetectionregister" id="HyDetectionregisterResult">
+        <result property="id"    column="id"    />
+        <result property="documentNumber"    column="document_number"    />
+        <result property="inspector"    column="inspector"    />
+        <result property="inspectionDate"    column="inspection_date"    />
+        <result property="inspectionPeriod"    column="inspection_period"    />
+        <result property="inspectionUnit"    column="inspection_unit"    />
+        <result property="inspectionContent"    column="inspection_content"    />
+        <result property="inspectionResult"    column="inspection_result"    />
+        <result property="inspectionCost"    column="inspection_cost"    />
+        <result property="inspectionRemark"    column="inspection_remark"    />
+        <result property="isAudit"    column="is_audit"    />
+        <result property="equipmentId"    column="equipment_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="deptId"    column="dept_id"    />
+        <association property="sysDept" column="id"
+			javaType="SysDept" resultMap="SysDeptResult" />
+        <association property="sysUser" column="id"
+			javaType="SysUser" resultMap="SysUserResult" />
+    </resultMap>
+	
+	<resultMap type="SysDept" id="SysDeptResult">
+		<id     property="deptId"     column="dept_id"     />
+		<result property="parentId"   column="parent_id"   />
+		<result property="ancestors"  column="ancestors"   />
+		<result property="deptName"   column="dept_name"   />
+		<result property="orderNum"   column="order_num"   />
+		<result property="leader"     column="leader"      />
+		<result property="phone"      column="phone"       />
+		<result property="email"      column="email"       />
+		<result property="status"     column="status"      />
+		<result property="delFlag"    column="del_flag"    />
+		<result property="parentName" column="parent_name" />
+		<result property="createBy"   column="create_by"   />
+		<result property="createTime" column="create_time" />
+		<result property="updateBy"   column="update_by"   />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+	
+	<resultMap type="SysUser" id="SysUserResult">
+		<id     property="userId"        column="user_id"         />
+		<result property="deptId"        column="dept_id"         />
+		<result property="loginName"     column="login_name"      />
+		<result property="userName"      column="user_name"       />
+		<result property="userType"      column="user_type"       />
+		<result property="email"         column="email"           />
+		<result property="phonenumber"   column="phonenumber"     />
+		<result property="sex"           column="sex"             />
+		<result property="avatar"        column="avatar"          />
+		<result property="password"      column="password"        />
+		<result property="salt"          column="salt"            />
+		<result property="status"        column="status"          />
+		<result property="delFlag"       column="del_flag"        />
+		<result property="loginIp"       column="login_ip"        />
+		<result property="loginDate"     column="login_date"      />
+		<result property="pwdUpdateDate" column="pwd_update_date" />
+		<result property="createBy"      column="create_by"       />
+		<result property="createTime"    column="create_time"     />
+		<result property="updateBy"      column="update_by"       />
+		<result property="updateTime"    column="update_time"     />
+		<result property="remark"        column="remark"          />
+	</resultMap>
+	
+    <sql id="selectHyDetectionmaterialVo">
+        select 
+        m.id, 
+        m.material_name, 
+        m.material_count, 
+        m.material_price, 
+        m.material_money, 
+        m.material_brand, 
+        m.material_type, 
+        m.material_use, 
+        m.equipment_id, 
+        m.register_id,
+        e.equipment_name,
+        r.document_number,
+        r.inspection_date,
+        r.inspection_content,
+        r.inspection_result,
+        r.inspection_unit,
+        r.inspection_period,
+        u.user_name,
+        r.inspection_cost,
+        d.dept_name
+        from 
+        hy_detectionmaterial m
+        LEFT JOIN Hy_equipment e ON m.equipment_id = e.id
+        LEFT JOIN hy_detectionregister r ON m.register_id = r.id
+        LEFT JOIN sys_dept d ON r.dept_id = d.dept_id
+        LEFT JOIN sys_user u ON r.user_id = u.user_id
+    </sql>
+
+    <select id="selectHyDetectionmaterialList" parameterType="HyDetectionmaterial" resultMap="HyDetectionmaterialResult">
+        <include refid="selectHyDetectionmaterialVo"/>
+        <where>  
+            <if test="materialName != null  and materialName != ''"> and m.material_name like concat('%', #{materialName}, '%')</if>
+            <if test="materialCount != null  and materialCount != ''"> and m.material_count = #{materialCount}</if>
+            <if test="materialPrice != null "> and m.material_price = #{materialPrice}</if>
+            <if test="materialMoney != null  and materialMoney != ''"> and m.material_money = #{materialMoney}</if>
+            <if test="materialBrand != null  and materialBrand != ''"> and m.material_brand = #{materialBrand}</if>
+            <if test="materialType != null  and materialType != ''"> and m.material_type = #{materialType}</if>
+            <if test="materialUse != null  and materialUse != ''"> and m.material_use = #{materialUse}</if>
+            <if test="equipmentId != null "> and m.equipment_id = #{equipmentId}</if>
+            <if test="registerId != null "> and m.register_id = #{registerId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyDetectionmaterialById" parameterType="Long" resultMap="HyDetectionmaterialResult">
+        <include refid="selectHyDetectionmaterialVo"/>
+        where m.id = #{id}
+    </select>
+        
+    <insert id="insertHyDetectionmaterial" parameterType="HyDetectionmaterial" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_detectionmaterial
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="materialName != null">material_name,</if>
+            <if test="materialCount != null">material_count,</if>
+            <if test="materialPrice != null">material_price,</if>
+            <if test="materialMoney != null">material_money,</if>
+            <if test="materialBrand != null">material_brand,</if>
+            <if test="materialType != null">material_type,</if>
+            <if test="materialUse != null">material_use,</if>
+            <if test="equipmentId != null">equipment_id,</if>
+            <if test="registerId != null">register_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="materialName != null">#{materialName},</if>
+            <if test="materialCount != null">#{materialCount},</if>
+            <if test="materialPrice != null">#{materialPrice},</if>
+            <if test="materialMoney != null">#{materialMoney},</if>
+            <if test="materialBrand != null">#{materialBrand},</if>
+            <if test="materialType != null">#{materialType},</if>
+            <if test="materialUse != null">#{materialUse},</if>
+            <if test="equipmentId != null">#{equipmentId},</if>
+            <if test="registerId != null">#{registerId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyDetectionmaterial" parameterType="HyDetectionmaterial">
+        update hy_detectionmaterial
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="materialName != null">material_name = #{materialName},</if>
+            <if test="materialCount != null">material_count = #{materialCount},</if>
+            <if test="materialPrice != null">material_price = #{materialPrice},</if>
+            <if test="materialMoney != null">material_money = #{materialMoney},</if>
+            <if test="materialBrand != null">material_brand = #{materialBrand},</if>
+            <if test="materialType != null">material_type = #{materialType},</if>
+            <if test="materialUse != null">material_use = #{materialUse},</if>
+            <if test="equipmentId != null">equipment_id = #{equipmentId},</if>
+            <if test="registerId != null">register_id = #{registerId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyDetectionmaterialById" parameterType="Long">
+        delete from hy_detectionmaterial where id = #{id}
+    </delete>
+
+    <delete id="deleteHyDetectionmaterialByIds" parameterType="String">
+        delete from hy_detectionmaterial where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

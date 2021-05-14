@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyServicematerielMapper">
+    
+    <resultMap type="HyServicemateriel" id="HyServicematerielResult">
+        <result property="id"    column="id"    />
+        <result property="materielName"    column="materiel_name"    />
+        <result property="materielType"    column="materiel_type"    />
+        <result property="materielBrand"    column="materiel_brand"    />
+        <result property="materielCount"    column="materiel_count"    />
+        <result property="materielPrice"    column="materiel_price"    />
+        <result property="measuringUnit"    column="measuring_unit"    />
+        <result property="materielMoney"    column="materiel_money"    />
+        <result property="materielUse"    column="materiel_use"    />
+        <result property="registrationId"    column="registration_id"    />
+        <result property="equipmentId"    column="equipment_id"    />
+        <association property="hyServiceregistration" column="id"
+			javaType="HyServiceregistration" resultMap="HyServiceregistrationResult" />
+		<association property="hyEquipment" column="id"
+			javaType="HyEquipment" resultMap="HyEquipmentResult" />
+    </resultMap>
+    
+    <resultMap type="HyServiceregistration" id="HyServiceregistrationResult">
+        <result property="id"    column="id"    />
+        <result property="repairOrder"    column="repair_order"    />
+        <result property="serviceCategory"    column="service_category"    />
+        <result property="faultCategory"    column="fault_category"    />
+        <result property="failureTime"    column="failure_time"    />
+        <result property="faultCondition"    column="fault_condition"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="causeType"    column="cause_type"    />
+        <result property="serviceUnit"    column="service_unit"    />
+        <result property="reasonAnalysis"    column="reason_analysis"    />
+        <result property="serviceResults"    column="service_results"    />
+        <result property="serviceCosts"    column="service_costs"    />
+        <result property="isAudit"    column="is_audit"    />
+        <result property="receptionTime"    column="reception_time"    />
+        <result property="acceptor"    column="acceptor"    />
+        <result property="inspectionAcceptance"    column="inspection_acceptance"    />
+        <result property="problemRectification"    column="problem_rectification"    />
+        <result property="currentCycle"    column="current_cycle"    />
+        <result property="currentYear"    column="current_year"    />
+        <result property="adjustmentYear"    column="adjustment_year"    />
+        <result property="serviceRemark"    column="service_remark"    />
+        <result property="archivesId"    column="archives_id"    />
+        <result property="equipmentId"    column="equipment_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="deptId"    column="dept_id"    />
+    </resultMap>
+
+	<resultMap type="HyEquipment" id="HyEquipmentResult">
+        <result property="id"    column="id"    />
+        <result property="parentId"    column="parent_id"    />
+        <result property="equipmentCode"    column="equipment_code"    />
+        <result property="equipmentName"    column="equipment_name"    />
+        <result property="equipmentExplains"    column="equipment_explains"    />
+        <result property="equipmentDetail"    column="equipment_detail"    />
+        <result property="deptId"    column="dept_id"    />
+    </resultMap>
+
+    <sql id="selectHyServicematerielVo">
+        select 
+        s.id, 
+        s.materiel_name, 
+        s.materiel_type, 
+        s.materiel_brand, 
+        s.materiel_count, 
+        s.materiel_price, 
+        s.measuring_unit, 
+        s.materiel_money, 
+        s.materiel_use, 
+        s.registration_id, 
+        s.equipment_id,
+        e.equipment_name,
+        r.repair_order,
+        r.fault_category,
+        r.failure_time
+        from 
+        hy_servicemateriel s
+        LEFT JOIN hy_serviceregistration r ON s.registration_id = r.id
+        LEFT JOIN hy_equipment e ON s.equipment_id = e.id
+    </sql>
+
+    <select id="selectHyServicematerielList" parameterType="HyServicemateriel" resultMap="HyServicematerielResult">
+        <include refid="selectHyServicematerielVo"/>
+        <where>  
+            <if test="materielName != null  and materielName != ''"> and s.materiel_name like concat('%', #{materielName}, '%')</if>
+            <if test="materielType != null  and materielType != ''"> and s.materiel_type = #{materielType}</if>
+            <if test="materielBrand != null  and materielBrand != ''"> and s.materiel_brand = #{materielBrand}</if>
+            <if test="materielCount != null  and materielCount != ''"> and s.materiel_count = #{materielCount}</if>
+            <if test="materielPrice != null "> and s.materiel_price = #{materielPrice}</if>
+            <if test="measuringUnit != null  and measuringUnit != ''"> and s.measuring_unit = #{measuringUnit}</if>
+            <if test="materielMoney != null  and materielMoney != ''"> and s.materiel_money = #{materielMoney}</if>
+            <if test="materielUse != null  and materielUse != ''"> and s.materiel_use = #{materielUse}</if>
+            <if test="registrationId != null "> and s.registration_id = #{registrationId}</if>
+            <if test="equipmentId != null "> and s.equipment_id = #{equipmentId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyServicematerielById" parameterType="Long" resultMap="HyServicematerielResult">
+        <include refid="selectHyServicematerielVo"/>
+        where s.id = #{id}
+    </select>
+        
+    <insert id="insertHyServicemateriel" parameterType="HyServicemateriel" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_servicemateriel
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="materielName != null">materiel_name,</if>
+            <if test="materielType != null">materiel_type,</if>
+            <if test="materielBrand != null">materiel_brand,</if>
+            <if test="materielCount != null">materiel_count,</if>
+            <if test="materielPrice != null">materiel_price,</if>
+            <if test="measuringUnit != null">measuring_unit,</if>
+            <if test="materielMoney != null">materiel_money,</if>
+            <if test="materielUse != null">materiel_use,</if>
+            <if test="registrationId != null">registration_id,</if>
+            <if test="equipmentId != null">equipment_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="materielName != null">#{materielName},</if>
+            <if test="materielType != null">#{materielType},</if>
+            <if test="materielBrand != null">#{materielBrand},</if>
+            <if test="materielCount != null">#{materielCount},</if>
+            <if test="materielPrice != null">#{materielPrice},</if>
+            <if test="measuringUnit != null">#{measuringUnit},</if>
+            <if test="materielMoney != null">#{materielMoney},</if>
+            <if test="materielUse != null">#{materielUse},</if>
+            <if test="registrationId != null">#{registrationId},</if>
+            <if test="equipmentId != null">#{equipmentId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyServicemateriel" parameterType="HyServicemateriel">
+        update hy_servicemateriel
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="materielName != null">materiel_name = #{materielName},</if>
+            <if test="materielType != null">materiel_type = #{materielType},</if>
+            <if test="materielBrand != null">materiel_brand = #{materielBrand},</if>
+            <if test="materielCount != null">materiel_count = #{materielCount},</if>
+            <if test="materielPrice != null">materiel_price = #{materielPrice},</if>
+            <if test="measuringUnit != null">measuring_unit = #{measuringUnit},</if>
+            <if test="materielMoney != null">materiel_money = #{materielMoney},</if>
+            <if test="materielUse != null">materiel_use = #{materielUse},</if>
+            <if test="registrationId != null">registration_id = #{registrationId},</if>
+            <if test="equipmentId != null">equipment_id = #{equipmentId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyServicematerielById" parameterType="Long">
+        delete from hy_servicemateriel where id = #{id}
+    </delete>
+
+    <delete id="deleteHyServicematerielByIds" parameterType="String">
+        delete from hy_servicemateriel where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

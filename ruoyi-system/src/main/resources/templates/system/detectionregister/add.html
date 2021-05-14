@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增设备检测登记')" />
+    <th:block th:include="include :: datetimepicker-css" />
+    <th:block th:include="include :: summernote-css" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-detectionregister-add">
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">单据号：</label>
+                <div class="col-sm-4">
+                    <input name="documentNumber" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">设备类别：</label>
+                <div class="col-sm-4">
+                    <select id="equipmentId" name="equipmentId" class="form-control" th:with="type=${@equipment.getEquipment()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.equipmentName}" th:value="${data.id}"></option>
+			 	    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">检测日期：</label>
+                <div class="col-sm-4">
+                    <div class="input-group date">
+                        <input name="inspectionDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+                <label class="col-sm-2 control-label">检测周期：</label>
+                <div class="col-sm-4">
+                    <input name="inspectionPeriod" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">  
+            	<label class="col-sm-2 control-label">责任人：</label>
+                <div class="col-sm-4">
+                    <select class="form-control m-b" name="userId" data-first-title="选择员工" th:with="type=${@employee.getEmployee()}">
+	                  <option value="">请选择</option>
+	                  <option th:each="dict : ${type}" th:text="${dict.userName}" th:value="${dict.userId}"></option>
+	                </select>
+                </div>  
+                <label class="col-sm-2 control-label">检测单位：</label>
+                <div class="col-sm-4">
+                    <input name="inspectionUnit" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">检测内容：</label>
+                <div class="col-sm-8">
+                    <input type="hidden" class="form-control" name="inspectionContent">
+                    <div class="summernote" id="inspectionContent"></div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">检测结果：</label>
+                <div class="col-sm-8">
+                    <input name="inspectionResult" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">检测费用：</label>
+                <div class="col-sm-4">
+                    <input name="inspectionCost" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">检测人：</label>
+                <div class="col-sm-4">
+                    <input name="inspector" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">检测备注：</label>
+                <div class="col-sm-8">
+                    <input name="inspectionRemark" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">是否审核：</label>
+                <div class="col-sm-2">
+                  <input name="isAudit" value='1' type="radio" checked="checked">是
+                </div>
+                <div class="col-sm-2">
+                   <input name="isAudit" value='0' type="radio">否
+                </div>
+                <label class="col-sm-2 control-label">专业部门：</label>
+                <div class="col-sm-4">
+                    <select class="form-control m-b" name="deptId" data-first-title="选择部门" th:with="type=${@dept.getDepts()}">
+                  		<option value="">请选择</option>
+                  		<option th:each="dict : ${type}" th:text="${dict.deptName}" th:value="${dict.deptId}"></option>
+                	</select>
+                </div>
+            </div>
+        </form>
+        <div class="col-sm-12">
+			<div class="tabs-container">
+				<ul class="nav nav-tabs">
+					<li id="tab1li" class="active">
+						<a data-toggle="tab" href="#tab-1" aria-expanded="true" onclick="tab(1)">检测设备</a>
+					</li>
+					
+					<li id="tab2li" class="">
+						<a data-toggle="tab" href="#tab-2" aria-expanded="false" onclick="tab(2)">设备检测人员</a>
+					</li>
+					
+					<li id="tab3li" class="">
+						<a data-toggle="tab" href="#tab-3" aria-expanded="false" onclick="tab(3)">设备检测物料</a>
+					</li>
+					
+				</ul>
+			</div>
+		</div>
+		<div class="tab-content ">
+			<div id="tab-1" class="tab-pane active">
+				<div class="row">
+					<div class="col-sm-12 select-table table-striped">
+						<table id="table1"></table>
+					</div>
+				</div>
+			</div>
+		
+			<div id="tab-2" class="tab-pane ">
+				<div class="row">
+					<div class="col-sm-12 select-table table-striped">
+						<table id="table2"></table>
+					</div>
+				</div>
+			</div>
+
+			<div id="tab-3" class="tab-pane ">
+				<div class="row">
+					<div class="col-sm-12 select-table table-striped">
+						<table id="table3"></table>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: datetimepicker-js" />
+    <th:block th:include="include :: summernote-js" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/detectionregister"
+        $("#form-detectionregister-add").validate({
+        	rules : {
+        		documentNumber : {
+   					required : true,
+   					maxlength:255,
+   				},
+   				equipmentId : {
+   					required : true,
+   					maxlength:11,
+   				},
+   				inspectionDate : {
+   					required : true,
+   				},
+   				inspectionPeriod : {
+   					required : true,
+   					maxlength:20,
+   				},
+   				userId : {
+   					required : true,
+   					maxlength:11,
+   				},
+   				inspectionUnit : {
+   					required : true,
+   					maxlength:20,
+   				},
+   				inspectionContent : {
+   					required : true,
+   					maxlength:255,
+   				},
+   				inspectionResult : {
+   					required : true,
+   					maxlength:255,
+   				},
+   				inspectionCost : {
+   					required : true,
+   					maxlength:10,
+   				},
+   				inspector : {
+   					required : true,
+   					maxlength:20,
+   				},
+   				inspectionRemark : {
+   					required : true,
+   					maxlength:255,
+   				},
+   				isAudit : {
+   					required : true,
+   					maxlength:1,
+   				},
+   				deptId : {
+   					required : true,
+   					maxlength:11,
+   				},
+   			},
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-detectionregister-add').serialize());
+            }
+        }
+
+        $("input[name='inspectionDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $(function() {
+            $('.summernote').summernote({
+                lang: 'zh-CN',
+                callbacks: {
+                    onChange: function(contents, $edittable) {
+                        $("input[name='" + this.id + "']").val(contents);
+                    },
+                    onImageUpload: function(files) {
+                        var obj = this;
+                    	var data = new FormData();
+                    	data.append("file", files[0]);
+                    	$.ajax({
+                            type: "post",
+                            url: ctx + "common/upload",
+                    		data: data,
+                    		cache: false,
+                    		contentType: false,
+                    		processData: false,
+                    		dataType: 'json',
+                    		success: function(result) {
+                    		    if (result.code == web_status.SUCCESS) {
+                    		        $('#' + obj.id).summernote('insertImage', result.url);
+                    		    } else {
+                    		        $.modal.alertError(result.msg);
+                    		    }
+                    		},
+                    		error: function(error) {
+                    		    $.modal.alertWarning("图片上传失败。");
+                    		}
+                    	});
+                    }
+                }
+            });
+            var prefix1 = ctx + "system/detectionequipment"
+            var options = {
+            		tableId : "table1",
+            		showSearch: false,
+    		        showRefresh: false,
+    		        showToggle: false,
+    		        showColumns: false,
+                url: prefix1 + "/list",
+                createUrl: prefix1 + "/add",
+                updateUrl: prefix1 + "/edit/{id}",
+                removeUrl: prefix1 + "/remove",
+                exportUrl: prefix1 + "/export",
+                modalName: "检测设备",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '检测设备id',
+                    visible: false
+                },
+                {
+                    field: 'hyEquipmentArchives.archivesName',
+                    title: '设备档案'
+                },
+                {
+                    field: 'detectionType',
+                    title: '型号'
+                },
+                {
+                    field: 'detectionSpecification',
+                    title: '规格'
+                },
+                {
+                    field: 'detectionUnit',
+                    title: '单位'
+                },
+                {
+                    field: 'min',
+                    title: '最小值'
+                },
+                {
+                    field: 'max',
+                    title: '最大值'
+                },
+                {
+                    field: 'measuredValue',
+                    title: '实测值'
+                }]
+            };
+            $.table.initOtherTable(options);
+        });
+        
+        function tab(value){
+    		console.log(value);
+    		if(value == 1){
+    	        $.ajax({
+                    url: prefix1 + "/list",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    type: 'POST',
+                    success: function (result) {
+                        if (result.code == web_status.SUCCESS) {
+                            var options = {
+                            		tableId : "table1",
+                            		showSearch: false,
+                    		        showRefresh: false,
+                    		        showToggle: false,
+                    		        showColumns: false,
+                                url: prefix1 + "/list",
+                                createUrl: prefix1 + "/add",
+                                updateUrl: prefix1 + "/edit/{id}",
+                                removeUrl: prefix1 + "/remove",
+                                exportUrl: prefix1 + "/export",
+                                modalName: "检测设备",
+                                columns: [{
+                                    checkbox: true
+                                },
+                                {
+                                    field: 'id',
+                                    title: '检测设备id',
+                                    visible: false
+                                },
+                                {
+                                    field: 'hyEquipmentArchives.archivesName',
+                                    title: '设备档案'
+                                },
+                                {
+                                    field: 'detectionType',
+                                    title: '型号'
+                                },
+                                {
+                                    field: 'detectionSpecification',
+                                    title: '规格'
+                                },
+                                {
+                                    field: 'detectionUnit',
+                                    title: '单位'
+                                },
+                                {
+                                    field: 'min',
+                                    title: '最小值'
+                                },
+                                {
+                                    field: 'max',
+                                    title: '最大值'
+                                },
+                                {
+                                    field: 'measuredValue',
+                                    title: '实测值'
+                                }]
+                            };
+                	            $.table.initOtherTable(options);
+                        }  else {
+                            $.modal.enable();
+                            $.modal.alertError(result.msg);
+                        }
+                    }
+                });
+    	        
+    			
+    		} else if(value == 2) {
+    			var prefix2 = ctx + "system/detectionregister";
+
+    	        $.ajax({
+                    url: prefix2 + "/list",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    type: 'POST',
+                    success: function (result) {
+                        if (result.code == web_status.SUCCESS) {
+                            var options = {
+                            		tableId : "table2",
+                            		showSearch: false,
+                    		        showRefresh: false,
+                    		        showToggle: false,
+                    		        showColumns: false,
+                                    url: prefix2 + "/list",
+                                    createUrl: prefix2 + "/add",
+                                    updateUrl: prefix2 + "/edit/{id}",
+                                    removeUrl: prefix2 + "/remove",
+                                    exportUrl: prefix2 + "/export",
+                                    modalName: "设备检测人员",
+                                    columns: [{
+                                        checkbox: true
+                                    },
+                                    {
+                                        field: 'id',
+                                        title: '设备检测登记id',
+                                        visible: false
+                                    },
+                                    {
+                                        field: 'documentNumber',
+                                        title: '单据号'
+                                    },
+                                    {
+                                        field: 'inspector',
+                                        title: '检测人'
+                                    },
+                                    {
+                                        field: 'inspectionDate',
+                                        title: '检测日期'
+                                    },
+                                    {
+                                        field: 'inspectionContent',
+                                        title: '检测内容'
+                                    },
+                                    {
+                                        field: 'inspectionResult',
+                                        title: '检测结果'
+                                    },
+                                    {
+                                        field: 'inspectionUnit',
+                                        title: '检测单位'
+                                    },
+                                    {
+                                        field: 'inspectionPeriod',
+                                        title: '检测周期'
+                                    },
+                                    {
+                                        field: 'sysUser.userName',
+                                        title: '责任人'
+                                    },
+                                    {
+                                        field: 'isAudit',
+                                        title: '是否审核',
+                                        formatter: function(value, item, index) {
+                                        	switch(value){
+                                        	case "" : value =  "请选择";break;
+                                        	case '1' : value =  "是";break;
+                                        	case '0' : value =  "否";break;
+                                    	}
+                    	            	return value;
+                    	            	}
+                                    },
+                                    {
+                                        field: 'sysDept.deptName',
+                                        title: '专业部门'
+                                    }]
+                                };
+                	            $.table.initOtherTable(options);
+                        }  else {
+                            $.modal.enable();
+                            $.modal.alertError(result.msg);
+                        }
+                    }
+                });
+    		}else if(value == 3){
+    			var editFlag = [[${@permission.hasPermi('system:set:edit')}]];
+    	        var removeFlag = [[${@permission.hasPermi('system:set:remove')}]];
+    	        var prefix3 = ctx + "system/detectionmaterial";
+    	        
+    	        $.ajax({
+                    url: prefix3 + "/list",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    type: 'POST',
+                    success: function (result) {
+                        if (result.code == web_status.SUCCESS) {
+                            var options = {
+                            		tableId : "table3",
+                            		showSearch: false,
+                    		        showRefresh: false,
+                    		        showToggle: false,
+                    		        showColumns: false,
+                                    url: prefix3 + "/list",
+                                    createUrl: prefix3 + "/add",
+                                    updateUrl: prefix3 + "/edit/{id}",
+                                    removeUrl: prefix3 + "/remove",
+                                    exportUrl: prefix3 + "/export",
+                                    modalName: "设备检测物料",
+                                    columns: [{
+                                        checkbox: true
+                                    },
+                                    {
+                                        field: 'id',
+                                        title: '设备检测物料id',
+                                        visible: false
+                                    },
+                                    {
+                                        field: 'materialName',
+                                        title: '物料名称'
+                                    },
+                                    {
+                                        field: 'materialCount',
+                                        title: '物料数量'
+                                    },
+                                    {
+                                        field: 'materialPrice',
+                                        title: '物料价格'
+                                    },
+                                    {
+                                        field: 'materialMoney',
+                                        title: '物料金额'
+                                    },
+                                    {
+                                        field: 'materialBrand',
+                                        title: '物料品牌'
+                                    },
+                                    {
+                                        field: 'materialType',
+                                        title: '物料型号'
+                                    },
+                                    {
+                                        field: 'materialUse',
+                                        title: '物料用途'
+                                    },
+                                    {
+                                        field: 'hyDetectionregister.documentNumber',
+                                        title: '检测编号'
+                                    },
+                                    {
+                                        field: 'hyEquipment.equipmentName',
+                                        title: '设备类别'
+                                    },
+                                    {
+                                        field: 'hyDetectionregister.inspectionDate',
+                                        title: '检测日期'
+                                    },
+                                    {
+                                        field: 'hyDetectionregister.inspectionContent',
+                                        title: '检测内容'
+                                    },
+                                    {
+                                        field: 'hyDetectionregister.inspectionResult',
+                                        title: '检测结果'
+                                    },
+                                    {
+                                        field: 'hyDetectionregister.inspectionUnit',
+                                        title: '检测单位'
+                                    },
+                                    {
+                                        field: 'hyDetectionregister.inspectionPeriod',
+                                        title: '检测周期'
+                                    },
+                                    {
+                                        field: 'hyDetectionregister.sysUser.userName',
+                                        title: '责任人'
+                                    },
+                                    {
+                                        field: 'hyDetectionregister.inspectionCost',
+                                        title: '检测费用'
+                                    },
+                                    {
+                                        field: 'hyDetectionregister.sysDept.deptName',
+                                        title: '专业部门'
+                                    }]
+                                };
+                                $.table.initOtherTable(options);
+                        }  else {
+                            $.modal.enable();
+                            $.modal.alertError(result.msg);
+                        }
+                    }
+                });
+                
+    		}
+    	} 
+    </script>
+</body>
+</html>

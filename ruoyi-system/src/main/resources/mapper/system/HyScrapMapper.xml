@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyScrapMapper">
+    
+    <resultMap type="HyScrap" id="HyScrapResult">
+        <result property="id"    column="id"    />
+        <result property="documentNumber"    column="document_number"    />
+        <result property="scrapDate"    column="scrap_date"    />
+        <result property="scrapType"    column="scrap_type"    />
+        <result property="manufactureFactory"    column="manufacture_factory"    />
+        <result property="commissioningDate"    column="commissioning_date"    />
+        <result property="originalValue"    column="original_value"    />
+        <result property="presentValue"    column="present_value"    />
+        <result property="serviceProcess"    column="service_process"    />
+        <result property="cardNumber"    column="card_number"    />
+        <result property="scrapReason"    column="scrap_reason"    />
+        <result property="expertConclusion"    column="expert_conclusion"    />
+        <result property="isAudit"    column="is_audit"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="archivesId"    column="archives_id"    />
+        <result property="planId"    column="plan_id"    />
+        <association property="sysDept" column="id"
+			javaType="SysDept" resultMap="SysDeptResult" />
+        <association property="sysUser"     column="id" 
+        	javaType="SysUser" resultMap="SysUserResult" />
+        <association property="hyEquipmentArchives"     column="id" 
+        	javaType="HyEquipmentArchives" resultMap="HyEquipmentArchivesResult" />
+        <association property="hyMaintenanceplan"     column="id" 
+        	javaType="HyMaintenanceplan" resultMap="HyMaintenanceplanResult" />
+    </resultMap>
+	
+	<resultMap type="SysDept" id="SysDeptResult">
+		<id     property="deptId"     column="dept_id"     />
+		<result property="parentId"   column="parent_id"   />
+		<result property="ancestors"  column="ancestors"   />
+		<result property="deptName"   column="dept_name"   />
+		<result property="orderNum"   column="order_num"   />
+		<result property="leader"     column="leader"      />
+		<result property="phone"      column="phone"       />
+		<result property="email"      column="email"       />
+		<result property="status"     column="status"      />
+		<result property="delFlag"    column="del_flag"    />
+		<result property="parentName" column="parent_name" />
+		<result property="createBy"   column="create_by"   />
+		<result property="createTime" column="create_time" />
+		<result property="updateBy"   column="update_by"   />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+	
+	<resultMap type="SysUser" id="SysUserResult">
+		<id     property="userId"        column="user_id"         />
+		<result property="deptId"        column="dept_id"         />
+		<result property="loginName"     column="login_name"      />
+		<result property="userName"      column="user_name"       />
+		<result property="userType"      column="user_type"       />
+		<result property="email"         column="email"           />
+		<result property="phonenumber"   column="phonenumber"     />
+		<result property="sex"           column="sex"             />
+		<result property="avatar"        column="avatar"          />
+		<result property="password"      column="password"        />
+		<result property="salt"          column="salt"            />
+		<result property="status"        column="status"          />
+		<result property="delFlag"       column="del_flag"        />
+		<result property="loginIp"       column="login_ip"        />
+		<result property="loginDate"     column="login_date"      />
+		<result property="pwdUpdateDate" column="pwd_update_date" />
+		<result property="createBy"      column="create_by"       />
+		<result property="createTime"    column="create_time"     />
+		<result property="updateBy"      column="update_by"       />
+		<result property="updateTime"    column="update_time"     />
+		<result property="remark"        column="remark"          />
+	</resultMap>
+	
+	<resultMap type="HyEquipmentArchives" id="HyEquipmentArchivesResult">
+        <result property="id"    column="id"    />
+        <result property="archivesNumber"    column="archives_number"    />
+        <result property="archivesName"    column="archives_name"    />
+        <result property="archivesSort"    column="archives_sort"    />
+        <result property="archivesManufacturers"    column="archives_manufacturers"    />
+        <result property="archivesType"    column="archives_type"    />
+        <result property="archivesSpecification"    column="archives_specification"    />
+        <result property="acquisitionDate"    column="acquisition_date"    />
+        <result property="releaseDate"    column="release_date"    />
+        <result property="releaseNumber"    column="release_number"    />
+        <result property="installationDate"    column="installation_date"    />
+        <result property="installationUnit"    column="installation_unit"    />
+        <result property="storeAddress"    column="store_address"    />
+        <result property="useDate"    column="use_date"    />
+        <result property="userYear"    column="user_year"    />
+        <result property="discardTime"    column="discard_time"    />
+        <result property="commencementDate"    column="commencement_date"    />
+        <result property="warrantyPeriod"    column="warranty_period"    />
+        <result property="endDate"    column="end_date"    />
+        <result property="originalValue"    column="original_value"    />
+        <result property="depreciationRate"    column="depreciation_rate"    />
+        <result property="nowPrice"    column="now_price"    />
+        <result property="mentionDepreciation"    column="mention_depreciation"    />
+        <result property="netValue"    column="net_value"    />
+        <result property="equipmentDraw"    column="equipment_draw"    />
+        <result property="useRange"    column="use_range"    />
+        <result property="unit"    column="unit"    />
+        <result property="number"    column="number"    />
+        <result property="floorSpace"    column="floor_space"    />
+        <result property="propertyOwnership"    column="property_ownership"    />
+        <result property="operationInstruction"    column="operation_instruction"    />
+        <result property="technicalData"    column="technical_data"    />
+        <result property="remark"    column="remark"    />
+        <result property="useState"    column="use_state"    />
+        <result property="scanCode"    column="scan_code"    />
+        <result property="archivesPicture"    column="archives_picture"    />
+        <result property="normalEpoch"    column="normal_epoch"    />
+        <result property="operationalPeriod"    column="operational_period"    />
+        <result property="testDate"    column="test_date"    />
+        <result property="equipmentLevel"    column="equipment_level"    />
+        <result property="handoverDate"    column="handover_date"    />
+        <result property="compulsoryTest"    column="compulsory_test"    />
+        <result property="inspectionPeriod"    column="inspection_period"    />
+        <result property="detectionPeriod"    column="detection_period"    />
+        <result property="equipmentId"    column="equipment_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="deptId"    column="dept_id"    />
+    </resultMap>
+	
+	<resultMap type="HyMaintenanceplan" id="HyMaintenanceplanResult">
+        <result property="id"    column="id"    />
+        <result property="planCode"    column="plan_code"    />
+        <result property="planName"    column="plan_name"    />
+        <result property="planDate"    column="plan_date"    />
+        <result property="maintainType"    column="maintain_type"    />
+        <result property="maintainLevel"    column="maintain_level"    />
+        <result property="maintainPeriod"    column="maintain_period"    />
+        <result property="planRemark"    column="plan_remark"    />
+        <result property="isAudit"    column="is_audit"    />
+        <result property="plansClose"    column="plans_close"    />
+        <result property="closedType"    column="closed_type"    />
+        <result property="preparedBy"    column="prepared_by"    />
+        <result property="makeTime"    column="make_time"    />
+        <result property="reviser"    column="reviser"    />
+        <result property="revisionTime"    column="revision_time"    />
+        <result property="content"    column="content"    />
+        <result property="specializedDepartment"    column="specialized_department"    />
+        <result property="planNumber"    column="plan_number"    />
+        <result property="equipmentId"    column="equipment_id"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="userId"    column="user_id"    />
+    </resultMap>
+	
+    <sql id="selectHyScrapVo">
+        select 
+        s.id, 
+        s.document_number, 
+        s.scrap_date, 
+        s.scrap_type, 
+        s.manufacture_factory, 
+        s.commissioning_date, 
+        s.original_value, 
+        s.present_value, 
+        s.service_process, 
+        s.card_number, 
+        s.scrap_reason, 
+        s.expert_conclusion, 
+        s.is_audit, 
+        s.dept_id, 
+        s.user_id, 
+        s.archives_id, 
+        s.plan_id,
+        a.archives_name,
+        u.user_name,
+        d.dept_name,
+        p.make_time,
+        p.prepared_by,
+        p.revision_time,
+        p.reviser
+        from 
+        hy_scrap s
+        LEFT JOIN sys_dept d ON s.dept_id = d.dept_id
+        LEFT JOIN sys_user u ON s.user_id = u.user_id
+        LEFT JOIN hy_equipment_archives a ON s.archives_id = a.id
+        LEFT JOIN hy_maintenanceplan p ON s.plan_id = p.id
+    </sql>
+
+    <select id="selectHyScrapList" parameterType="HyScrap" resultMap="HyScrapResult">
+        <include refid="selectHyScrapVo"/>
+        <where>  
+            <if test="documentNumber != null  and documentNumber != ''"> and s.document_number = #{documentNumber}</if>
+            <if test="scrapDate != null "> and s.scrap_date = #{scrapDate}</if>
+            <if test="scrapType != null  and scrapType != ''"> and s.scrap_type = #{scrapType}</if>
+            <if test="manufactureFactory != null  and manufactureFactory != ''"> and s.manufacture_factory = #{manufactureFactory}</if>
+            <if test="commissioningDate != null "> and s.commissioning_date = #{commissioningDate}</if>
+            <if test="originalValue != null "> and s.original_value = #{originalValue}</if>
+            <if test="presentValue != null "> and s.present_value = #{presentValue}</if>
+            <if test="serviceProcess != null  and serviceProcess != ''"> and s.service_process = #{serviceProcess}</if>
+            <if test="cardNumber != null  and cardNumber != ''"> and s.card_number = #{cardNumber}</if>
+            <if test="scrapReason != null  and scrapReason != ''"> and s.scrap_reason = #{scrapReason}</if>
+            <if test="expertConclusion != null  and expertConclusion != ''"> and s.expert_conclusion = #{expertConclusion}</if>
+            <if test="isAudit != null  and isAudit != ''"> and s.is_audit = #{isAudit}</if>
+            <if test="deptId != null "> and s.dept_id = #{deptId}</if>
+            <if test="userId != null "> and s.user_id = #{userId}</if>
+            <if test="archivesId != null "> and s.archives_id = #{archivesId}</if>
+            <if test="planId != null "> and s.plan_id = #{planId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyScrapById" parameterType="Long" resultMap="HyScrapResult">
+        <include refid="selectHyScrapVo"/>
+        where s.id = #{id}
+    </select>
+        
+    <insert id="insertHyScrap" parameterType="HyScrap">
+        insert into hy_scrap
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="documentNumber != null">document_number,</if>
+            <if test="scrapDate != null">scrap_date,</if>
+            <if test="scrapType != null">scrap_type,</if>
+            <if test="manufactureFactory != null">manufacture_factory,</if>
+            <if test="commissioningDate != null">commissioning_date,</if>
+            <if test="originalValue != null">original_value,</if>
+            <if test="presentValue != null">present_value,</if>
+            <if test="serviceProcess != null">service_process,</if>
+            <if test="cardNumber != null">card_number,</if>
+            <if test="scrapReason != null">scrap_reason,</if>
+            <if test="expertConclusion != null">expert_conclusion,</if>
+            <if test="isAudit != null">is_audit,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="archivesId != null">archives_id,</if>
+            <if test="planId != null">plan_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="documentNumber != null">#{documentNumber},</if>
+            <if test="scrapDate != null">#{scrapDate},</if>
+            <if test="scrapType != null">#{scrapType},</if>
+            <if test="manufactureFactory != null">#{manufactureFactory},</if>
+            <if test="commissioningDate != null">#{commissioningDate},</if>
+            <if test="originalValue != null">#{originalValue},</if>
+            <if test="presentValue != null">#{presentValue},</if>
+            <if test="serviceProcess != null">#{serviceProcess},</if>
+            <if test="cardNumber != null">#{cardNumber},</if>
+            <if test="scrapReason != null">#{scrapReason},</if>
+            <if test="expertConclusion != null">#{expertConclusion},</if>
+            <if test="isAudit != null">#{isAudit},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="archivesId != null">#{archivesId},</if>
+            <if test="planId != null">#{planId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyScrap" parameterType="HyScrap">
+        update hy_scrap
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="documentNumber != null">document_number = #{documentNumber},</if>
+            <if test="scrapDate != null">scrap_date = #{scrapDate},</if>
+            <if test="scrapType != null">scrap_type = #{scrapType},</if>
+            <if test="manufactureFactory != null">manufacture_factory = #{manufactureFactory},</if>
+            <if test="commissioningDate != null">commissioning_date = #{commissioningDate},</if>
+            <if test="originalValue != null">original_value = #{originalValue},</if>
+            <if test="presentValue != null">present_value = #{presentValue},</if>
+            <if test="serviceProcess != null">service_process = #{serviceProcess},</if>
+            <if test="cardNumber != null">card_number = #{cardNumber},</if>
+            <if test="scrapReason != null">scrap_reason = #{scrapReason},</if>
+            <if test="expertConclusion != null">expert_conclusion = #{expertConclusion},</if>
+            <if test="isAudit != null">is_audit = #{isAudit},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="archivesId != null">archives_id = #{archivesId},</if>
+            <if test="planId != null">plan_id = #{planId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyScrapById" parameterType="Long">
+        delete from hy_scrap where id = #{id}
+    </delete>
+
+    <delete id="deleteHyScrapByIds" parameterType="String">
+        delete from hy_scrap where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

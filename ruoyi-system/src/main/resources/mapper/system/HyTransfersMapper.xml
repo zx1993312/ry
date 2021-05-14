@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyTransfersMapper">
+    
+    <resultMap type="HyTransfers" id="HyTransfersResult">
+        <result property="id"    column="id"    />
+        <result property="documentNumber"    column="document_number"    />
+        <result property="applicationDate"    column="application_date"    />
+        <result property="allocationDate"    column="allocation_date"    />
+        <result property="isAudit"    column="is_audit"    />
+        <result property="proposer"    column="proposer"    />
+        <result property="auditor"    column="auditor"    />
+        <result property="auditTime"    column="audit_time"    />
+        <result property="preparedBy"    column="prepared_by"    />
+        <result property="makeTime"    column="make_time"    />
+        <result property="reviser"    column="reviser"    />
+        <result property="revisionTime"    column="revision_time"    />
+        <result property="transfersRemark"    column="transfers_remark"    />
+        <result property="deptId"    column="dept_id"    />
+        <association property="sysDept" column="id"
+			javaType="SysDept" resultMap="SysDeptResult" />
+    </resultMap>
+	
+	<resultMap type="SysDept" id="SysDeptResult">
+		<id     property="deptId"     column="dept_id"     />
+		<result property="parentId"   column="parent_id"   />
+		<result property="ancestors"  column="ancestors"   />
+		<result property="deptName"   column="dept_name"   />
+		<result property="orderNum"   column="order_num"   />
+		<result property="leader"     column="leader"      />
+		<result property="phone"      column="phone"       />
+		<result property="email"      column="email"       />
+		<result property="status"     column="status"      />
+		<result property="delFlag"    column="del_flag"    />
+		<result property="parentName" column="parent_name" />
+		<result property="createBy"   column="create_by"   />
+		<result property="createTime" column="create_time" />
+		<result property="updateBy"   column="update_by"   />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+	
+    <sql id="selectHyTransfersVo">
+        select 
+        t.id, 
+        t.document_number, 
+        t.application_date, 
+        t.allocation_date, 
+        t.is_audit, 
+        t.proposer, 
+        t.auditor, 
+        t.audit_time, 
+        t.prepared_by, 
+        t.make_time, 
+        t.reviser, 
+        t.revision_time, 
+        t.transfers_remark, 
+        t.dept_id,
+        d.dept_name
+        from 
+        hy_transfers t
+        LEFT JOIN sys_dept d ON t.dept_id = d.dept_id
+    </sql>
+
+    <select id="selectHyTransfersList" parameterType="HyTransfers" resultMap="HyTransfersResult">
+        <include refid="selectHyTransfersVo"/>
+        <where>  
+            <if test="documentNumber != null  and documentNumber != ''"> and t.document_number = #{documentNumber}</if>
+            <if test="applicationDate != null "> and t.application_date = #{applicationDate}</if>
+            <if test="allocationDate != null "> and t.allocation_date = #{allocationDate}</if>
+            <if test="isAudit != null  and isAudit != ''"> and t.is_audit = #{isAudit}</if>
+            <if test="proposer != null  and proposer != ''"> and t.proposer = #{proposer}</if>
+            <if test="auditor != null  and auditor != ''"> and t.auditor = #{auditor}</if>
+            <if test="auditTime != null "> and t.audit_time = #{auditTime}</if>
+            <if test="preparedBy != null  and preparedBy != ''"> and t.prepared_by = #{preparedBy}</if>
+            <if test="makeTime != null "> and t.make_time = #{makeTime}</if>
+            <if test="reviser != null  and reviser != ''"> and t.reviser = #{reviser}</if>
+            <if test="revisionTime != null "> and t.revision_time = #{revisionTime}</if>
+            <if test="transfersRemark != null  and transfersRemark != ''"> and t.transfers_remark = #{transfersRemark}</if>
+            <if test="deptId != null "> and t.dept_id = #{deptId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyTransfersById" parameterType="Long" resultMap="HyTransfersResult">
+        <include refid="selectHyTransfersVo"/>
+        where t.id = #{id}
+    </select>
+        
+    <insert id="insertHyTransfers" parameterType="HyTransfers" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_transfers
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="documentNumber != null">document_number,</if>
+            <if test="applicationDate != null">application_date,</if>
+            <if test="allocationDate != null">allocation_date,</if>
+            <if test="isAudit != null">is_audit,</if>
+            <if test="proposer != null">proposer,</if>
+            <if test="auditor != null">auditor,</if>
+            <if test="auditTime != null">audit_time,</if>
+            <if test="preparedBy != null">prepared_by,</if>
+            <if test="makeTime != null">make_time,</if>
+            <if test="reviser != null">reviser,</if>
+            <if test="revisionTime != null">revision_time,</if>
+            <if test="transfersRemark != null">transfers_remark,</if>
+            <if test="deptId != null">dept_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="documentNumber != null">#{documentNumber},</if>
+            <if test="applicationDate != null">#{applicationDate},</if>
+            <if test="allocationDate != null">#{allocationDate},</if>
+            <if test="isAudit != null">#{isAudit},</if>
+            <if test="proposer != null">#{proposer},</if>
+            <if test="auditor != null">#{auditor},</if>
+            <if test="auditTime != null">#{auditTime},</if>
+            <if test="preparedBy != null">#{preparedBy},</if>
+            <if test="makeTime != null">#{makeTime},</if>
+            <if test="reviser != null">#{reviser},</if>
+            <if test="revisionTime != null">#{revisionTime},</if>
+            <if test="transfersRemark != null">#{transfersRemark},</if>
+            <if test="deptId != null">#{deptId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyTransfers" parameterType="HyTransfers">
+        update hy_transfers
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="documentNumber != null">document_number = #{documentNumber},</if>
+            <if test="applicationDate != null">application_date = #{applicationDate},</if>
+            <if test="allocationDate != null">allocation_date = #{allocationDate},</if>
+            <if test="isAudit != null">is_audit = #{isAudit},</if>
+            <if test="proposer != null">proposer = #{proposer},</if>
+            <if test="auditor != null">auditor = #{auditor},</if>
+            <if test="auditTime != null">audit_time = #{auditTime},</if>
+            <if test="preparedBy != null">prepared_by = #{preparedBy},</if>
+            <if test="makeTime != null">make_time = #{makeTime},</if>
+            <if test="reviser != null">reviser = #{reviser},</if>
+            <if test="revisionTime != null">revision_time = #{revisionTime},</if>
+            <if test="transfersRemark != null">transfers_remark = #{transfersRemark},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyTransfersById" parameterType="Long">
+        delete from hy_transfers where id = #{id}
+    </delete>
+
+    <delete id="deleteHyTransfersByIds" parameterType="String">
+        delete from hy_transfers where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

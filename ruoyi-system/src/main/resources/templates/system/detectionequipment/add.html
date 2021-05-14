@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增检测设备')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-detectionequipment-add">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">型号：</label>
+                <div class="col-sm-8">
+                	<input name="detectionType" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">规格：</label>
+                <div class="col-sm-8">
+                    <input name="detectionSpecification" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">单位：</label>
+                <div class="col-sm-8">
+                    <input name="detectionUnit" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">最小值：</label>
+                <div class="col-sm-8">
+                    <input name="min" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">最大值：</label>
+                <div class="col-sm-8">
+                    <input name="max" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">实测值：</label>
+                <div class="col-sm-8">
+                    <input name="measuredValue" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">设备档案：</label>
+                <div class="col-sm-8">
+                    <select id="archivesId" name="archivesId" class="form-control" th:with="type=${@archives.getArchives()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.archivesName}" th:value="${data.id}"></option>
+			 	    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/detectionequipment"
+        $("#form-detectionequipment-add").validate({
+        	rules : {
+        		detectionType : {
+   					required : true,
+   					maxlength:20,
+   				},
+   				detectionSpecification : {
+   					required : true,
+   					maxlength:20,
+   				},
+   				detectionUnit : {
+   					required : true,
+   					maxlength:20,
+   				},
+   				min : {
+   					required : true,
+   					maxlength:20,
+   				},
+   				max : {
+   					required : true,
+   					maxlength:20,
+   				},
+   				measuredValue : {
+   					required : true,
+   					maxlength:20,
+   				},
+   				archivesId : {
+   					required : true,
+   					maxlength:11,
+   				},
+        	},
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-detectionequipment-add').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

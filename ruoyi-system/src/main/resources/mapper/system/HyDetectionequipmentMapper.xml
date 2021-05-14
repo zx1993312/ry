@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyDetectionequipmentMapper">
+    
+    <resultMap type="HyDetectionequipment" id="HyDetectionequipmentResult">
+        <result property="id"    column="id"    />
+        <result property="detectionType"    column="detection_type"    />
+        <result property="detectionSpecification"    column="detection_specification"    />
+        <result property="detectionUnit"    column="detection_unit"    />
+        <result property="min"    column="min"    />
+        <result property="max"    column="max"    />
+        <result property="measuredValue"    column="measured_value"    />
+        <result property="archivesId"    column="archives_id"    />
+        <association property="hyEquipmentArchives" column="id"
+			javaType="HyEquipmentArchives" resultMap="HyEquipmentArchivesResult" />
+    </resultMap>
+	
+	    <resultMap type="HyEquipmentArchives" id="HyEquipmentArchivesResult">
+        <result property="id"    column="id"    />
+        <result property="archivesNumber"    column="archives_number"    />
+        <result property="archivesName"    column="archives_name"    />
+        <result property="archivesSort"    column="archives_sort"    />
+        <result property="archivesManufacturers"    column="archives_manufacturers"    />
+        <result property="archivesType"    column="archives_type"    />
+        <result property="archivesSpecification"    column="archives_specification"    />
+        <result property="acquisitionDate"    column="acquisition_date"    />
+        <result property="releaseDate"    column="release_date"    />
+        <result property="releaseNumber"    column="release_number"    />
+        <result property="installationDate"    column="installation_date"    />
+        <result property="installationUnit"    column="installation_unit"    />
+        <result property="storeAddress"    column="store_address"    />
+        <result property="useDate"    column="use_date"    />
+        <result property="userYear"    column="user_year"    />
+        <result property="discardTime"    column="discard_time"    />
+        <result property="commencementDate"    column="commencement_date"    />
+        <result property="warrantyPeriod"    column="warranty_period"    />
+        <result property="endDate"    column="end_date"    />
+        <result property="originalValue"    column="original_value"    />
+        <result property="depreciationRate"    column="depreciation_rate"    />
+        <result property="nowPrice"    column="now_price"    />
+        <result property="mentionDepreciation"    column="mention_depreciation"    />
+        <result property="netValue"    column="net_value"    />
+        <result property="equipmentDraw"    column="equipment_draw"    />
+        <result property="useRange"    column="use_range"    />
+        <result property="unit"    column="unit"    />
+        <result property="number"    column="number"    />
+        <result property="floorSpace"    column="floor_space"    />
+        <result property="propertyOwnership"    column="property_ownership"    />
+        <result property="operationInstruction"    column="operation_instruction"    />
+        <result property="technicalData"    column="technical_data"    />
+        <result property="remark"    column="remark"    />
+        <result property="useState"    column="use_state"    />
+        <result property="scanCode"    column="scan_code"    />
+        <result property="archivesPicture"    column="archives_picture"    />
+        <result property="normalEpoch"    column="normal_epoch"    />
+        <result property="operationalPeriod"    column="operational_period"    />
+        <result property="testDate"    column="test_date"    />
+        <result property="equipmentLevel"    column="equipment_level"    />
+        <result property="handoverDate"    column="handover_date"    />
+        <result property="compulsoryTest"    column="compulsory_test"    />
+        <result property="inspectionPeriod"    column="inspection_period"    />
+        <result property="detectionPeriod"    column="detection_period"    />
+        <result property="equipmentId"    column="equipment_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="deptId"    column="dept_id"    />
+    </resultMap>
+	
+    <sql id="selectHyDetectionequipmentVo">
+        select 
+        e.id, 
+        e.detection_type, 
+        e.detection_specification, 
+        e.detection_unit, 
+        e.min, 
+        e.max, 
+        e.measured_value, 
+        e.archives_id,
+        a.archives_name
+        from 
+        hy_detectionequipment e
+        LEFT JOIN hy_equipment_archives a ON e.archives_id = a.id
+    </sql>
+
+    <select id="selectHyDetectionequipmentList" parameterType="HyDetectionequipment" resultMap="HyDetectionequipmentResult">
+        <include refid="selectHyDetectionequipmentVo"/>
+        <where>  
+            <if test="detectionType != null  and detectionType != ''"> and e.detection_type = #{detectionType}</if>
+            <if test="detectionSpecification != null  and detectionSpecification != ''"> and e.detection_specification = #{detectionSpecification}</if>
+            <if test="detectionUnit != null  and detectionUnit != ''"> and e.detection_unit = #{detectionUnit}</if>
+            <if test="min != null  and min != ''"> and e.min = #{min}</if>
+            <if test="max != null  and max != ''"> and e.max = #{max}</if>
+            <if test="measuredValue != null  and measuredValue != ''"> and e.measured_value = #{measuredValue}</if>
+            <if test="archivesId != null "> and e.archives_id = #{archivesId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyDetectionequipmentById" parameterType="Long" resultMap="HyDetectionequipmentResult">
+        <include refid="selectHyDetectionequipmentVo"/>
+        where e.id = #{id}
+    </select>
+        
+    <insert id="insertHyDetectionequipment" parameterType="HyDetectionequipment" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_detectionequipment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="detectionType != null">detection_type,</if>
+            <if test="detectionSpecification != null">detection_specification,</if>
+            <if test="detectionUnit != null">detection_unit,</if>
+            <if test="min != null">min,</if>
+            <if test="max != null">max,</if>
+            <if test="measuredValue != null">measured_value,</if>
+            <if test="archivesId != null">archives_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="detectionType != null">#{detectionType},</if>
+            <if test="detectionSpecification != null">#{detectionSpecification},</if>
+            <if test="detectionUnit != null">#{detectionUnit},</if>
+            <if test="min != null">#{min},</if>
+            <if test="max != null">#{max},</if>
+            <if test="measuredValue != null">#{measuredValue},</if>
+            <if test="archivesId != null">#{archivesId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyDetectionequipment" parameterType="HyDetectionequipment">
+        update hy_detectionequipment
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="detectionType != null">detection_type = #{detectionType},</if>
+            <if test="detectionSpecification != null">detection_specification = #{detectionSpecification},</if>
+            <if test="detectionUnit != null">detection_unit = #{detectionUnit},</if>
+            <if test="min != null">min = #{min},</if>
+            <if test="max != null">max = #{max},</if>
+            <if test="measuredValue != null">measured_value = #{measuredValue},</if>
+            <if test="archivesId != null">archives_id = #{archivesId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyDetectionequipmentById" parameterType="Long">
+        delete from hy_detectionequipment where id = #{id}
+    </delete>
+
+    <delete id="deleteHyDetectionequipmentByIds" parameterType="String">
+        delete from hy_detectionequipment where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改设备调拨一览')" />
+    <th:block th:include="include :: datetimepicker-css" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-transfers-edit" th:object="${hyTransfers}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">单据号：</label>
+                <div class="col-sm-4">
+                    <input name="documentNumber" th:field="*{documentNumber}" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">申请日期：</label>
+                <div class="col-sm-4">
+                    <div class="input-group date">
+                        <input name="applicationDate" th:value="${#dates.format(hyTransfers.applicationDate, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">调拨日期：</label>
+                <div class="col-sm-4">
+                    <div class="input-group date">
+                        <input name="allocationDate" th:value="${#dates.format(hyTransfers.allocationDate, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+                <label class="col-sm-2 control-label">是否审核：</label>
+                <div class="col-sm-2">
+                  <input name="isAudit" th:field="*{isAudit}" value='1' type="radio" checked="checked">是
+               </div>
+               <div class="col-sm-2">
+                   <input name="isAudit" th:field="*{isAudit}" value='0' type="radio">否
+               </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">申请人：</label>
+                <div class="col-sm-4">
+                    <input name="proposer" th:field="*{proposer}" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">调拨后机构：</label>
+                <div class="col-sm-4">
+                    <select class="form-control m-b" name="deptId" th:field="*{deptId}" data-first-title="选择部门" th:with="type=${@dept.getDepts()}">
+                  		<option value="">请选择</option>
+                  		<option th:each="dict : ${type}" th:text="${dict.deptName}" th:value="${dict.deptId}"></option>
+                	</select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">审核人：</label>
+                <div class="col-sm-4">
+                    <input name="auditor" th:field="*{auditor}" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">审核时间：</label>
+                <div class="col-sm-4">
+                    <div class="input-group date">
+                        <input name="auditTime" th:value="${#dates.format(hyTransfers.auditTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">制单人：</label>
+                <div class="col-sm-4">
+                    <input name="preparedBy" th:field="*{preparedBy}" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">制单时间：</label>
+                <div class="col-sm-4">
+                    <div class="input-group date">
+                        <input name="makeTime" th:value="${#dates.format(hyTransfers.makeTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">修订人：</label>
+                <div class="col-sm-4">
+                    <input name="reviser" th:field="*{reviser}" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">修订时间：</label>
+                <div class="col-sm-4">
+                    <div class="input-group date">
+                        <input name="revisionTime" th:value="${#dates.format(hyTransfers.revisionTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">备注：</label>
+                <div class="col-sm-8">
+                    <input name="transfersRemark" th:field="*{transfersRemark}" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: datetimepicker-js" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/transfers";
+        $("#form-transfers-edit").validate({
+        	rules : {
+        		documentNumber : {
+					required : true,
+					maxlength:255,
+				},
+				applicationDate : {
+					required : true,
+				},
+				allocationDate : {
+					required : true,
+				},
+				isAudit : {
+					required : true,
+					maxlength:1,
+				},
+				proposer : {
+					required : true,
+					maxlength:20,
+				},
+				deptId : {
+					required : true,
+					maxlength:11,
+				},
+				auditor : {
+					required : true,
+					maxlength:20,
+				},
+				auditTime : {
+					required : true,
+				},
+				preparedBy : {
+					required : true,
+					maxlength:20,
+				},
+				makeTime : {
+					required : true,
+				},
+				reviser : {
+					required : true,
+					maxlength:20,
+				},
+				revisionTime : {
+					required : true,
+				},
+				transfersRemark : {
+					required : true,
+					maxlength:255,
+				},
+			},
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-transfers-edit').serialize());
+            }
+        }
+
+        $("input[name='applicationDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='allocationDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='auditTime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='makeTime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='revisionTime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+    </script>
+</body>
+</html>

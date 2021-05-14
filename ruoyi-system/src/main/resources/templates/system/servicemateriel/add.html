@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增设备维修物料')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-servicemateriel-add">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">物料名称：</label>
+                <div class="col-sm-8">
+                    <input name="materielName" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">规格型号：</label>
+                <div class="col-sm-8">
+					<input name="materielType" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">物料品牌：</label>
+                <div class="col-sm-8">
+                    <input name="materielBrand" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">物料数量：</label>
+                <div class="col-sm-8">
+                    <input name="materielCount" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">物料单价：</label>
+                <div class="col-sm-8">
+                    <input name="materielPrice" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">计量单位：</label>
+                <div class="col-sm-8">
+                    <input name="measuringUnit" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">物料金额：</label>
+                <div class="col-sm-8">
+                    <input name="materielMoney" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">物料用途：</label>
+                <div class="col-sm-8">
+                    <input name="materielUse" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">设备维修登记：</label>
+                <div class="col-sm-8">
+                    <select id="registrationId" name="registrationId" class="form-control" th:with="type=${@serviceregistration.getServiceregistration()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.repairOrder}" th:value="${data.id}"></option>
+			 	    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">设备类别：</label>
+                <div class="col-sm-8">
+                    <select id="equipmentId" name="equipmentId" class="form-control" th:with="type=${@equipment.getEquipment()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.equipmentName}" th:value="${data.id}"></option>
+			 	    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/servicemateriel"
+        $("#form-servicemateriel-add").validate({
+        	rules : {
+        		materielName : {
+					required : true,
+					maxlength:20,
+				},
+				materielType : {
+					required : true,
+					maxlength:20,
+				},
+				materielBrand : {
+					required : true,
+					maxlength:20,
+				},
+				materielCount : {
+					required : true,
+					maxlength:20,
+				},
+				materielPrice : {
+					required : true,
+					maxlength:10,
+				},
+				measuringUnit : {
+					required : true,
+					maxlength:20,
+				},
+				materielMoney : {
+					required : true,
+					maxlength:20,
+				},
+				materielUse : {
+					required : true,
+					maxlength:255,
+				},
+				registrationId : {
+					required : true,
+					maxlength:11,
+				},
+				equipmentId : {
+					required : true,
+					maxlength:11,
+				},
+			},
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-servicemateriel-add').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

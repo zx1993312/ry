@@ -182,7 +182,6 @@ var table = {
                     fixedColumns: false,
                     fixedNumber: 0,
                     fixedRightNumber: 0,
-                    queryParams: $.table.queryParams,
                     rowStyle: {},
                 };
             	var options = $.extend(defaults, options);

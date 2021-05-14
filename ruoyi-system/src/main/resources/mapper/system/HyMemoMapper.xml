@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyMemoMapper">
+    
+    <resultMap type="HyMemo" id="HyMemoResult">
+        <result property="id"    column="id"    />
+        <result property="memoNo"    column="memo_no"    />
+        <result property="memoDate"    column="memo_date"    />
+        <result property="memoContent"    column="memo_content"    />
+        <result property="archivesId"    column="archives_id"    />
+        <result property="equipmentId"    column="equipment_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="deptId"    column="dept_id"    />
+        <association property="hyEquipmentArchives" column="id"
+			javaType="HyEquipmentArchives" resultMap="HyEquipmentArchivesResult" />
+		<association property="hyEquipment" column="id"
+			javaType="HyEquipment" resultMap="HyEquipmentResult" />
+        <association property="sysUser" column="id"
+			javaType="SysUser" resultMap="SysUserResult" />
+        <association property="sysDept" column="id"
+			javaType="SysDept" resultMap="SysDeptResult" />
+    </resultMap>
+    <resultMap type="SysUser" id="SysUserResult">
+		<id     property="userId"        column="user_id"         />
+		<result property="deptId"        column="dept_id"         />
+		<result property="loginName"     column="login_name"      />
+		<result property="userName"      column="user_name"       />
+		<result property="userType"      column="user_type"       />
+		<result property="email"         column="email"           />
+		<result property="phonenumber"   column="phonenumber"     />
+		<result property="sex"           column="sex"             />
+		<result property="avatar"        column="avatar"          />
+		<result property="password"      column="password"        />
+		<result property="salt"          column="salt"            />
+		<result property="status"        column="status"          />
+		<result property="delFlag"       column="del_flag"        />
+		<result property="loginIp"       column="login_ip"        />
+		<result property="loginDate"     column="login_date"      />
+		<result property="pwdUpdateDate" column="pwd_update_date" />
+		<result property="createBy"      column="create_by"       />
+		<result property="createTime"    column="create_time"     />
+		<result property="updateBy"      column="update_by"       />
+		<result property="updateTime"    column="update_time"     />
+		<result property="remark"        column="remark"          />
+	</resultMap>
+    
+    <resultMap type="SysDept" id="SysDeptResult">
+		<id     property="deptId"     column="dept_id"     />
+		<result property="parentId"   column="parent_id"   />
+		<result property="ancestors"  column="ancestors"   />
+		<result property="deptName"   column="dept_name"   />
+		<result property="orderNum"   column="order_num"   />
+		<result property="leader"     column="leader"      />
+		<result property="phone"      column="phone"       />
+		<result property="email"      column="email"       />
+		<result property="status"     column="status"      />
+		<result property="delFlag"    column="del_flag"    />
+		<result property="parentName" column="parent_name" />
+		<result property="createBy"   column="create_by"   />
+		<result property="createTime" column="create_time" />
+		<result property="updateBy"   column="update_by"   />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+	
+	<resultMap type="HyEquipmentArchives" id="HyEquipmentArchivesResult">
+        <result property="id"    column="id"    />
+        <result property="archivesNumber"    column="archives_number"    />
+        <result property="archivesName"    column="archives_name"    />
+        <result property="archivesSort"    column="archives_sort"    />
+        <result property="archivesManufacturers"    column="archives_manufacturers"    />
+        <result property="archivesType"    column="archives_type"    />
+        <result property="archivesSpecification"    column="archives_specification"    />
+        <result property="acquisitionDate"    column="acquisition_date"    />
+        <result property="releaseDate"    column="release_date"    />
+        <result property="releaseNumber"    column="release_number"    />
+        <result property="installationDate"    column="installation_date"    />
+        <result property="installationUnit"    column="installation_unit"    />
+        <result property="storeAddress"    column="store_address"    />
+        <result property="useDate"    column="use_date"    />
+        <result property="userYear"    column="user_year"    />
+        <result property="discardTime"    column="discard_time"    />
+        <result property="commencementDate"    column="commencement_date"    />
+        <result property="warrantyPeriod"    column="warranty_period"    />
+        <result property="endDate"    column="end_date"    />
+        <result property="originalValue"    column="original_value"    />
+        <result property="depreciationRate"    column="depreciation_rate"    />
+        <result property="nowPrice"    column="now_price"    />
+        <result property="mentionDepreciation"    column="mention_depreciation"    />
+        <result property="netValue"    column="net_value"    />
+        <result property="equipmentDraw"    column="equipment_draw"    />
+        <result property="useRange"    column="use_range"    />
+        <result property="unit"    column="unit"    />
+        <result property="number"    column="number"    />
+        <result property="floorSpace"    column="floor_space"    />
+        <result property="propertyOwnership"    column="property_ownership"    />
+        <result property="operationInstruction"    column="operation_instruction"    />
+        <result property="technicalData"    column="technical_data"    />
+        <result property="remark"    column="remark"    />
+        <result property="useState"    column="use_state"    />
+        <result property="scanCode"    column="scan_code"    />
+        <result property="archivesPicture"    column="archives_picture"    />
+        <result property="normalEpoch"    column="normal_epoch"    />
+        <result property="operationalPeriod"    column="operational_period"    />
+        <result property="testDate"    column="test_date"    />
+        <result property="equipmentLevel"    column="equipment_level"    />
+        <result property="handoverDate"    column="handover_date"    />
+        <result property="compulsoryTest"    column="compulsory_test"    />
+        <result property="inspectionPeriod"    column="inspection_period"    />
+        <result property="detectionPeriod"    column="detection_period"    />
+        <result property="equipmentId"    column="equipment_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="deptId"    column="dept_id"    />
+    </resultMap>
+		
+	 <resultMap type="HyEquipment" id="HyEquipmentResult">
+        <result property="id"    column="id"    />
+        <result property="parentId"    column="parent_id"    />
+        <result property="equipmentCode"    column="equipment_code"    />
+        <result property="equipmentName"    column="equipment_name"    />
+        <result property="equipmentExplains"    column="equipment_explains"    />
+        <result property="equipmentDetail"    column="equipment_detail"    />
+        <result property="deptId"    column="dept_id"    />
+    </resultMap>
+	
+    <sql id="selectHyMemoVo">
+        select 
+        m.id, 
+        m.memo_no, 
+        m.memo_date, 
+        m.memo_content, 
+        m.archives_id, 
+        m.equipment_id, 
+        m.user_id, 
+        m.dept_id,
+        a.archives_name,
+        u.user_name,
+        e.equipment_name,
+        d.dept_name
+        from hy_memo m
+        LEFT JOIN hy_equipment_archives a ON m.archives_id = a.id
+        LEFT JOIN hy_equipment e ON m.equipment_id = e.id
+        LEFT JOIN sys_user u ON m.user_id = u.user_id
+        LEFT JOIN sys_dept d ON m.dept_id = d.dept_id
+    </sql>
+
+    <select id="selectHyMemoList" parameterType="HyMemo" resultMap="HyMemoResult">
+        <include refid="selectHyMemoVo"/>
+        <where>  
+            <if test="memoNo != null "> and m.memo_no = #{memoNo}</if>
+            <if test="memoDate != null "> and m.memo_date = #{memoDate}</if>
+            <if test="memoContent != null  and memoContent != ''"> and m.memo_content = #{memoContent}</if>
+            <if test="archivesId != null "> and m.archives_id = #{archivesId}</if>
+            <if test="equipmentId != null "> and m.equipment_id = #{equipmentId}</if>
+            <if test="userId != null "> and m.user_id = #{userId}</if>
+            <if test="deptId != null "> and m.dept_id = #{deptId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyMemoById" parameterType="Long" resultMap="HyMemoResult">
+        <include refid="selectHyMemoVo"/>
+        where m.id = #{id}
+    </select>
+        
+    <insert id="insertHyMemo" parameterType="HyMemo" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_memo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="memoNo != null">memo_no,</if>
+            <if test="memoDate != null">memo_date,</if>
+            <if test="memoContent != null">memo_content,</if>
+            <if test="archivesId != null">archives_id,</if>
+            <if test="equipmentId != null">equipment_id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="deptId != null">dept_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="memoNo != null">#{memoNo},</if>
+            <if test="memoDate != null">#{memoDate},</if>
+            <if test="memoContent != null">#{memoContent},</if>
+            <if test="archivesId != null">#{archivesId},</if>
+            <if test="equipmentId != null">#{equipmentId},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="deptId != null">#{deptId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyMemo" parameterType="HyMemo">
+        update hy_memo
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="memoNo != null">memo_no = #{memoNo},</if>
+            <if test="memoDate != null">memo_date = #{memoDate},</if>
+            <if test="memoContent != null">memo_content = #{memoContent},</if>
+            <if test="archivesId != null">archives_id = #{archivesId},</if>
+            <if test="equipmentId != null">equipment_id = #{equipmentId},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyMemoById" parameterType="Long">
+        delete from hy_memo where id = #{id}
+    </delete>
+
+    <delete id="deleteHyMemoByIds" parameterType="String">
+        delete from hy_memo where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

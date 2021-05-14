@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('保养设备列表')" />
+    <th:block th:include="include :: header('设备检测登记列表')" />
     <th:block th:include="include :: layout-latest-css" />
 	<th:block th:include="include :: ztree-css" />
 </head>
@@ -27,35 +27,60 @@
 	<div class="ui-layout-center">
      <div class="container-div">
         <div class="row">
-<!--             <div class="col-sm-12 search-collapse">
+            <div class="col-sm-12 search-collapse">
                 <form id="formId">
                     <div class="select-list">
                         <ul>
-                            <li>
-                                <label>保养设备型号：</label>
-                                <select name="maintenanceequipmentType">
-                                    <option value="">所有</option>
-                                    <option value="-1">代码生成请选择字典属性</option>
-                                </select>
+                            <!-- <li>
+                                <label>单据号：</label>
+                                <input type="text" name="documentNumber"/>
                             </li>
                             <li>
-                                <label>保养设备规格：</label>
-                                <input type="text" name="maintenanceequipmentSpecification"/>
+                                <label>检测人：</label>
+                                <input type="text" name="inspector"/>
                             </li>
                             <li>
-                                <label>保养设备单位：</label>
-                                <input type="text" name="maintenanceequipmentUnit"/>
+                                <label>检测日期：</label>
+                                <input type="text" class="time-input" placeholder="请选择检测日期" name="inspectionDate"/>
                             </li>
                             <li>
-                                <label>存放位置：</label>
-                                <input type="text" name="maintenanceequipmentPlace"/>
+                                <label>检测周期：</label>
+                                <input type="text" name="inspectionPeriod"/>
                             </li>
                             <li>
-                                <input type="hidden" id="equipmentId" name="equipmentId"/>
+                                <label>检测单位：</label>
+                                <input type="text" name="inspectionUnit"/>
+                            </li>
+                            <li>
+                                <label>检测结果：</label>
+                                <input type="text" name="inspectionResult"/>
+                            </li>
+                            <li>
+                                <label>检测费用：</label>
+                                <input type="text" name="inspectionCost"/>
+                            </li>
+                            <li>
+                                <label>检测备注：</label>
+                                <input type="text" name="inspectionRemark"/>
+                            </li>
+                            <li>
+                                <label>是否审核：</label>
+                                <input type="text" name="isAudit"/>
+                            </li>
+                            <li>
+                                <label>员工id：</label>
+                                <input type="text" name="userId"/>
+                            </li>
+                            <li>
+                                <label>部门id：</label>
+                                <input type="text" name="deptId"/>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                                 <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li> -->
+                            <li>
+                                <input type="hidden" id="equipmentId" name="equipmentId"/>
                             </li>
                         </ul>
                     </div>
@@ -63,19 +88,19 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:maintenanceequipment:add">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:detectionregister:add">
                     <i class="fa fa-plus"></i> 添加
                 </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:maintenanceequipment:edit">
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:detectionregister:edit">
                     <i class="fa fa-edit"></i> 修改
                 </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:maintenanceequipment:remove">
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:detectionregister:remove">
                     <i class="fa fa-remove"></i> 删除
                 </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:maintenanceequipment:export">
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:detectionregister:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
-            </div> -->
+            </div>
             <div class="col-sm-12 select-table table-striped">
                 <table id="bootstrap-table"></table>
             </div>
@@ -86,9 +111,10 @@
     <th:block th:include="include :: layout-latest-js" />
 	<th:block th:include="include :: ztree-js" />
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('system:maintenanceequipment:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('system:maintenanceequipment:remove')}]];
-        var prefix = ctx + "system/maintenanceequipment";
+        var editFlag = [[${@permission.hasPermi('system:detectionregister:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:detectionregister:remove')}]];
+        var prefix = ctx + "system/detectionregister";
+        
         $(function() {
         	var panehHidden = false;
 		    if ($(this).width() < 769) {
@@ -103,91 +129,74 @@
 	    		};
 	    		$('#scroll-up').toTop(opt);
 	    	}
-	    	queryMaintenanceequipmentList();
+	    	queryDetectionregisterList();
 		    queryDeptTree();
 		});
-        function queryMaintenanceequipmentList() {
+
+        function queryDetectionregisterList() {
             var options = {
                 url: prefix + "/list",
                 createUrl: prefix + "/add",
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "保养设备",
+                modalName: "设备检测登记",
                 columns: [{
                     checkbox: true
                 },
                 {
                     field: 'id',
-                    title: '保养设备id',
+                    title: '设备检测登记id',
                     visible: false
                 },
                 {
-                    field: 'hyMaintenanceregistration.recordNumber',
-                    title: '保养记录号'
+                    field: 'documentNumber',
+                    title: '单据号'
                 },
                 {
-                    field: 'hyMaintenanceregistration.startDate',
-                    title: '开始日期'
+                    field: 'hyEquipment.equipmentName',
+                    title: '设备类别'
                 },
                 {
-                    field: 'hyMaintenanceregistration.endDate',
-                    title: '结束日期'
+                    field: 'inspectionDate',
+                    title: '检测日期'
                 },
                 {
-                    field: 'hyMaintenanceregistration.currentContent',
-                    title: '当前保养内容'
+                    field: 'inspectionContent',
+                    title: '检测内容'
                 },
                 {
-                    field: 'hyMaintenanceregistration.maintenanceCompletion',
-                    title: '保养完成情况'
+                    field: 'inspectionResult',
+                    title: '检测结果'
                 },
                 {
-                    field: 'hyMaintenanceregistration.inspectionAcceptance',
-                    title: '检查验收情况'
+                    field: 'inspectionUnit',
+                    title: '检测单位'
                 },
                 {
-                    field: 'hyMaintenanceregistration.problemRectification',
-                    title: '问题整改情况'
+                    field: 'inspectionPeriod',
+                    title: '检测周期'
                 },
                 {
-                    field: 'hyMaintenanceplan.planCode',
-                    title: '保养计划编号'
+                    field: 'sysUser.userName',
+                    title: '责任人'
                 },
                 {
-                    field: 'hyMaintenanceplan.planName',
-                    title: '保养计划名称'
+                    field: 'sysDept.deptName',
+                    title: '专业部门'
                 },
                 {
-                    field: 'hyMaintenanceplan.maintainType',
-                    title: '设备保养类别',
+                    field: 'isAudit',
+                    title: '是否审核',
                     formatter: function(value, item, index) {
                     	switch(value){
-	                    	case '' : value =  "请选择";break;
-	                    	case '1' : value =  "自维";break;
-	                    	case '2' : value =  "外维";break;
-	                	}
-		            	return value;
-		            }
+                    	case "" : value =  "请选择";break;
+                    	case '1' : value =  "是";break;
+                    	case '0' : value =  "否";break;
+                	}
+	            	return value;
+	            }
                 },
-                {
-                    field: 'hyMaintenanceplan.maintainLevel',
-                    title: '设备保养等级',
-                    formatter: function(value, item, index) {
-                    	switch(value){
-	                    	case '' : value =  "请选择";break;
-	                    	case '0' : value =  "日常保养";break;
-	                    	case '1' : value =  "一级保养";break;
-	                    	case '2' : value =  "二级保养";break;
-	                    	case '3' : value =  "三级保养";break;
-	                	}
-		            	return value;
-		            }
-                },
-                {
-                    field: 'hyMaintenanceplan.maintainPeriod',
-                    title: '设备保养周期'
-                }/* ,
                 {
                     title: '操作',
                     align: 'center',
@@ -197,7 +206,7 @@
                         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
                         return actions.join('');
                     }
-                } */]
+                }]
             };
             $.table.init(options);
         };
