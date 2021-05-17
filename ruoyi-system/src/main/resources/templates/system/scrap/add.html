@@ -10,12 +10,12 @@
             <div class="form-group">    
                 <label class="col-sm-2 control-label">单据号：</label>
                 <div class="col-sm-2">
-                    <input name="documentNumber" class="form-control" type="text">
+                    <input id="documentNumber" name="documentNumber" class="form-control" type="text">
                 </div>
                 <label class="col-sm-2 control-label">报废日期：</label>
                 <div class="col-sm-2">
                     <div class="input-group date">
-                        <input name="scrapDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <input id="scrapDate" name="scrapDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                     </div>
                 </div>
@@ -77,11 +77,11 @@
                 </div>
                 <label class="col-sm-2 control-label">原值：</label>
                 <div class="col-sm-2">
-                    <input name="originalValue" class="form-control" type="text">
+                    <input id="originalValue" name="originalValue" class="form-control" type="text">
                 </div>
                 <label class="col-sm-2 control-label">现值：</label>
                 <div class="col-sm-2">
-                    <input name="presentValue" class="form-control" type="text">
+                    <input id="presentValue" name="presentValue" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
@@ -196,6 +196,19 @@
             format: "yyyy-mm-dd",
             minView: "month",
             autoclose: true
+        });
+        
+        $(function() {
+        	var date = new Date();
+        	var time = date.getTime();
+        	var year = date.getFullYear();
+        	var Month = "0"+(date.getMonth()+1);
+        	var da = date.getDate();
+        	var dateStr = year+"-"+Month+"-"+da;
+        	$("#scrapDate").val(dateStr);
+        	$("#documentNumber").val(time);
+        	$("#originalValue").val(0.00);
+        	$("#presentValue").val(0.00);
         });
     </script>
 </body>

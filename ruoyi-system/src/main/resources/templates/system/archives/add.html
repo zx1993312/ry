@@ -10,7 +10,7 @@
             <div class="form-group">    
                 <label class="col-sm-2 control-label">设备编号：</label>
                 <div class="col-sm-2">
-                    <input name="archivesNumber" class="form-control" type="text">
+                    <input id="archivesNumber" name="archivesNumber" class="form-control" type="text">
                 </div>
                 <label class="col-sm-2 control-label">设备名称：</label>
                 <div class="col-sm-2">
@@ -82,7 +82,7 @@
                 </div>
                 <label class="col-sm-2 control-label">使用年限：</label>
                 <div class="col-sm-2">
-                    <input name="userYear" class="form-control" type="text">
+                    <input id="userYear" name="userYear" class="form-control" type="text">
                 </div>
                  <label class="col-sm-2 control-label">报废时间：</label>
                 <div class="col-sm-2">
@@ -102,7 +102,7 @@
                 </div>
                 <label class="col-sm-2 control-label">质保年限：</label>
                 <div class="col-sm-2">
-                    <input name="warrantyPeriod" class="form-control" type="text">
+                    <input id="warrantyPeriod" name="warrantyPeriod" class="form-control" type="text">
                 </div>
                 <label class="col-sm-2 control-label">质保结束日期：</label>
                 <div class="col-sm-2">
@@ -115,25 +115,25 @@
             <div class="form-group">    
                 <label class="col-sm-2 control-label">原值：</label>
                 <div class="col-sm-2">
-                    <input name="originalValue" class="form-control" type="text">
+                    <input id="originalValue" name="originalValue" class="form-control" type="text">
                 </div>
                 <label class="col-sm-2 control-label">折旧率：</label>
                 <div class="col-sm-2">
-                    <input name="depreciationRate" class="form-control" type="text">
+                    <input id="depreciationRate"  name="depreciationRate" class="form-control" type="text">
                 </div>
                 <label class="col-sm-2 control-label">现估价：</label>
                 <div class="col-sm-2">
-                    <input name="nowPrice" class="form-control" type="text">
+                    <input id="nowPrice" name="nowPrice" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-2 control-label">已提折旧：</label>
                 <div class="col-sm-2">
-                    <input name="mentionDepreciation" class="form-control" type="text">
+                    <input id="mentionDepreciation" name="mentionDepreciation" class="form-control" type="text">
                 </div>
                  <label class="col-sm-2 control-label">净值：</label>
                 <div class="col-sm-2">
-                    <input name="netValue" class="form-control" type="text">
+                    <input id="netValue" name="netValue" class="form-control" type="text">
                 </div>
                 <label class="col-sm-2 control-label">设备图号：</label>
                 <div class="col-sm-2">
@@ -151,7 +151,7 @@
                 </div>
                 <label class="col-sm-2 control-label">数量：</label>
                 <div class="col-sm-2">
-                    <input name="number" class="form-control" type="text">
+                    <input id="number" name="number" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
@@ -164,7 +164,7 @@
                 </div>
                 <label class="col-sm-2 control-label">占地面积：</label>
                 <div class="col-sm-2">
-                    <input name="floorSpace" class="form-control" type="text">
+                    <input id="floorSpace" name="floorSpace" class="form-control" type="text">
                 </div>
                 <label class="col-sm-2 control-label">组织机构：</label>
                 <div class="col-sm-2">
@@ -218,11 +218,11 @@
             <div class="form-group">    
                 <label class="col-sm-2 control-label">正常期（年）：</label>
                 <div class="col-sm-2">
-                    <input name="normalEpoch" class="form-control" type="text">
+                    <input id="normalEpoch" name="normalEpoch" class="form-control" type="text">
                 </div>
                 <label class="col-sm-2 control-label">运维期（年）：</label>
                 <div class="col-sm-2">
-                    <input name="operationalPeriod" class="form-control" type="text">
+                    <input id="operationalPeriod" name="operationalPeriod" class="form-control" type="text">
                 </div>
                 <label class="col-sm-2 control-label">最近检测日期：</label>
                 <div class="col-sm-2">
@@ -267,11 +267,11 @@
                </div>
                 <label class="col-sm-2 control-label">强制检测周期：</label>
                 <div class="col-sm-2">
-                    <input name="inspectionPeriod" class="form-control" type="text">
+                    <input id="inspectionPeriod" name="inspectionPeriod" class="form-control" type="text">
                 </div>
                 <label class="col-sm-2 control-label">检测周期：</label>
                 <div class="col-sm-2">
-                    <input name="detectionPeriod" class="form-control" type="text">
+                    <input id="detectionPeriod" name="detectionPeriod" class="form-control" type="text">
                 </div>
             </div>
         </form>
@@ -548,6 +548,22 @@
       
         var prefix1 = ctx + "system/accessories"
         $(function() {
+        	var date = new Date();
+        	var time = date.getTime();
+        	$("#archivesNumber").val(time);
+        	$("#userYear").val(0.00);
+        	$("#warrantyPeriod").val(0.00);
+        	$("#originalValue").val(0.00);
+        	$("#depreciationRate").val(0.00);
+        	$("#nowPrice").val(0.00);
+        	$("#mentionDepreciation").val(0.00);
+        	$("#netValue").val(0.00);
+        	$("#number").val(0.00);
+        	$("#floorSpace").val(0.00);
+        	$("#normalEpoch").val(0.00);
+        	$("#operationalPeriod").val(0.00);
+        	$("#inspectionPeriod").val(0.00);
+        	$("#detectionPeriod").val(0.00);
             var options = {
             		tableId : "table1",
             		showSearch: false,

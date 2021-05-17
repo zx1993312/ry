@@ -112,7 +112,7 @@
             <div class="form-group">    
                 <label class="col-sm-2 control-label">维修费用：</label>
                 <div class="col-sm-4">
-                    <input name="serviceCosts" class="form-control" type="text">
+                    <input id="serviceCosts" name="serviceCosts" class="form-control" type="text">
                 </div>
                 <label class="col-sm-2 control-label">专业部门：</label>
                 <div class="col-sm-4">
@@ -310,6 +310,7 @@
         	$("#failureTime").val(dateStr);
         	$("#startTime").val(dateStr);
         	$("#repairOrder").val(time);
+        	$("#serviceCosts").val(0.00);
             var options = {
             		tableId : "table1",
             		showSearch: false,

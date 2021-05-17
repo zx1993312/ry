@@ -142,7 +142,7 @@
                 </form>
             </div>
 
-            <div class="btn-group-sm" id="toolbar" role="group">
+            <!-- <div class="btn-group-sm" id="toolbar" role="group">
                 <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:serviceregistration:add">
                     <i class="fa fa-plus"></i> 添加
                 </a>
@@ -155,7 +155,7 @@
                 <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:serviceregistration:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
-            </div>
+            </div> -->
             <div class="col-sm-12 select-table table-striped">
                 <table id="bootstrap-table"></table>
             </div>
@@ -288,7 +288,7 @@
                 {
                     field: 'sysDept.deptName',
                     title: '组织机构'
-                },
+                }
                 /* {
                     field: 'specializedDepartment',
                     title: '专业部门'
@@ -325,7 +325,6 @@
                     field: 'serviceRemark',
                     title: '备注'
                 },
-                */
                 {
                     title: '操作',
                     align: 'center',
@@ -335,7 +334,7 @@
                         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
                         return actions.join('');
                     }
-                }]
+                } */]
             };
             $.table.init(options);
         };

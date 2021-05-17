@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyAllotequipmentMapper">
+    
+    <resultMap type="HyAllotequipment" id="HyAllotequipmentResult">
+        <result property="id"    column="id"    />
+        <result property="allotType"    column="allot_type"    />
+        <result property="assetNumber"    column="asset_number"    />
+        <result property="manufactureFactory"    column="manufacture_factory"    />
+        <result property="allotCount"    column="allot_count"    />
+        <result property="commissioningDate"    column="commissioning_date"    />
+        <result property="assetValue"    column="asset_value"    />
+        <result property="netValue"    column="net_value"    />
+        <result property="allotRemark"    column="allot_remark"    />
+        <result property="archivesId"    column="archives_id"    />
+        <result property="deptId"    column="dept_id"    />
+        <association property="sysDept" column="id"
+			javaType="SysDept" resultMap="SysDeptResult" />
+        <association property="hyEquipmentArchives" column="id"
+			javaType="HyEquipmentArchives" resultMap="HyEquipmentArchivesResult" />
+    </resultMap>
+    
+    <resultMap type="HyEquipmentArchives" id="HyEquipmentArchivesResult">
+        <result property="id"    column="id"    />
+        <result property="archivesNumber"    column="archives_number"    />
+        <result property="archivesName"    column="archives_name"    />
+        <result property="archivesSort"    column="archives_sort"    />
+        <result property="archivesManufacturers"    column="archives_manufacturers"    />
+        <result property="archivesType"    column="archives_type"    />
+        <result property="archivesSpecification"    column="archives_specification"    />
+        <result property="acquisitionDate"    column="acquisition_date"    />
+        <result property="releaseDate"    column="release_date"    />
+        <result property="releaseNumber"    column="release_number"    />
+        <result property="installationDate"    column="installation_date"    />
+        <result property="installationUnit"    column="installation_unit"    />
+        <result property="storeAddress"    column="store_address"    />
+        <result property="useDate"    column="use_date"    />
+        <result property="userYear"    column="user_year"    />
+        <result property="discardTime"    column="discard_time"    />
+        <result property="commencementDate"    column="commencement_date"    />
+        <result property="warrantyPeriod"    column="warranty_period"    />
+        <result property="endDate"    column="end_date"    />
+        <result property="originalValue"    column="original_value"    />
+        <result property="depreciationRate"    column="depreciation_rate"    />
+        <result property="nowPrice"    column="now_price"    />
+        <result property="mentionDepreciation"    column="mention_depreciation"    />
+        <result property="netValue"    column="net_value"    />
+        <result property="equipmentDraw"    column="equipment_draw"    />
+        <result property="useRange"    column="use_range"    />
+        <result property="unit"    column="unit"    />
+        <result property="number"    column="number"    />
+        <result property="floorSpace"    column="floor_space"    />
+        <result property="propertyOwnership"    column="property_ownership"    />
+        <result property="operationInstruction"    column="operation_instruction"    />
+        <result property="technicalData"    column="technical_data"    />
+        <result property="remark"    column="remark"    />
+        <result property="useState"    column="use_state"    />
+        <result property="scanCode"    column="scan_code"    />
+        <result property="archivesPicture"    column="archives_picture"    />
+        <result property="normalEpoch"    column="normal_epoch"    />
+        <result property="operationalPeriod"    column="operational_period"    />
+        <result property="testDate"    column="test_date"    />
+        <result property="equipmentLevel"    column="equipment_level"    />
+        <result property="handoverDate"    column="handover_date"    />
+        <result property="compulsoryTest"    column="compulsory_test"    />
+        <result property="inspectionPeriod"    column="inspection_period"    />
+        <result property="detectionPeriod"    column="detection_period"    />
+        <result property="equipmentId"    column="equipment_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="deptId"    column="dept_id"    />
+    </resultMap>
+
+	<resultMap type="SysDept" id="SysDeptResult">
+		<id     property="deptId"     column="dept_id"     />
+		<result property="parentId"   column="parent_id"   />
+		<result property="ancestors"  column="ancestors"   />
+		<result property="deptName"   column="dept_name"   />
+		<result property="orderNum"   column="order_num"   />
+		<result property="leader"     column="leader"      />
+		<result property="phone"      column="phone"       />
+		<result property="email"      column="email"       />
+		<result property="status"     column="status"      />
+		<result property="delFlag"    column="del_flag"    />
+		<result property="parentName" column="parent_name" />
+		<result property="createBy"   column="create_by"   />
+		<result property="createTime" column="create_time" />
+		<result property="updateBy"   column="update_by"   />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+	
+    <sql id="selectHyAllotequipmentVo">
+        select 
+        a.id, 
+        a.allot_type, 
+        a.asset_number, 
+        a.manufacture_factory, 
+        a.allot_count, 
+        a.commissioning_date, 
+        a.asset_value, 
+        a.net_value, 
+        a.allot_remark, 
+        a.archives_id, 
+        a.dept_id,
+        e.archives_name,
+        d.dept_name 
+        from 
+        hy_allotequipment a
+        LEFT JOIN hy_equipment_archives e ON a.archives_id=e.id
+        LEFT JOIN sys_dept d ON a.dept_id=d.dept_id
+    </sql>
+
+    <select id="selectHyAllotequipmentList" parameterType="HyAllotequipment" resultMap="HyAllotequipmentResult">
+        <include refid="selectHyAllotequipmentVo"/>
+        <where>  
+            <if test="allotType != null  and allotType != ''"> and a.allot_type = #{allotType}</if>
+            <if test="assetNumber != null  and assetNumber != ''"> and a.asset_number = #{assetNumber}</if>
+            <if test="manufactureFactory != null  and manufactureFactory != ''"> and a.manufacture_factory = #{manufactureFactory}</if>
+            <if test="allotCount != null  and allotCount != ''"> and a.allot_count = #{allotCount}</if>
+            <if test="commissioningDate != null "> and a.commissioning_date = #{commissioningDate}</if>
+            <if test="assetValue != null  and assetValue != ''"> and a.asset_value = #{assetValue}</if>
+            <if test="netValue != null  and netValue != ''"> and a.net_value = #{netValue}</if>
+            <if test="allotRemark != null  and allotRemark != ''"> and a.allot_remark = #{allotRemark}</if>
+            <if test="archivesId != null "> and a.archives_id = #{archivesId}</if>
+            <if test="deptId != null "> and a.dept_id = #{deptId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyAllotequipmentById" parameterType="Long" resultMap="HyAllotequipmentResult">
+        <include refid="selectHyAllotequipmentVo"/>
+        where a.id = #{id}
+    </select>
+        
+    <insert id="insertHyAllotequipment" parameterType="HyAllotequipment" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_allotequipment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="allotType != null">allot_type,</if>
+            <if test="assetNumber != null">asset_number,</if>
+            <if test="manufactureFactory != null">manufacture_factory,</if>
+            <if test="allotCount != null">allot_count,</if>
+            <if test="commissioningDate != null">commissioning_date,</if>
+            <if test="assetValue != null">asset_value,</if>
+            <if test="netValue != null">net_value,</if>
+            <if test="allotRemark != null">allot_remark,</if>
+            <if test="archivesId != null">archives_id,</if>
+            <if test="deptId != null">dept_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="allotType != null">#{allotType},</if>
+            <if test="assetNumber != null">#{assetNumber},</if>
+            <if test="manufactureFactory != null">#{manufactureFactory},</if>
+            <if test="allotCount != null">#{allotCount},</if>
+            <if test="commissioningDate != null">#{commissioningDate},</if>
+            <if test="assetValue != null">#{assetValue},</if>
+            <if test="netValue != null">#{netValue},</if>
+            <if test="allotRemark != null">#{allotRemark},</if>
+            <if test="archivesId != null">#{archivesId},</if>
+            <if test="deptId != null">#{deptId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyAllotequipment" parameterType="HyAllotequipment">
+        update hy_allotequipment
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="allotType != null">allot_type = #{allotType},</if>
+            <if test="assetNumber != null">asset_number = #{assetNumber},</if>
+            <if test="manufactureFactory != null">manufacture_factory = #{manufactureFactory},</if>
+            <if test="allotCount != null">allot_count = #{allotCount},</if>
+            <if test="commissioningDate != null">commissioning_date = #{commissioningDate},</if>
+            <if test="assetValue != null">asset_value = #{assetValue},</if>
+            <if test="netValue != null">net_value = #{netValue},</if>
+            <if test="allotRemark != null">allot_remark = #{allotRemark},</if>
+            <if test="archivesId != null">archives_id = #{archivesId},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyAllotequipmentById" parameterType="Long">
+        delete from hy_allotequipment where id = #{id}
+    </delete>
+
+    <delete id="deleteHyAllotequipmentByIds" parameterType="String">
+        delete from hy_allotequipment where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -11,7 +11,7 @@
             <div class="form-group">    
                 <label class="col-sm-2 control-label">单据号：</label>
                 <div class="col-sm-4">
-                    <input name="documentNumber" class="form-control" type="text">
+                    <input id="documentNumber" name="documentNumber" class="form-control" type="text">
                 </div>
                 <label class="col-sm-2 control-label">设备类别：</label>
                 <div class="col-sm-4">
@@ -25,7 +25,7 @@
                 <label class="col-sm-2 control-label">检测日期：</label>
                 <div class="col-sm-4">
                     <div class="input-group date">
-                        <input name="inspectionDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <input id="inspectionDate" name="inspectionDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                     </div>
                 </div>
@@ -63,7 +63,7 @@
             <div class="form-group">    
                 <label class="col-sm-2 control-label">检测费用：</label>
                 <div class="col-sm-4">
-                    <input name="inspectionCost" class="form-control" type="text">
+                    <input id="inspectionCost" name="inspectionCost" class="form-control" type="text">
                 </div>
                 <label class="col-sm-2 control-label">检测人：</label>
                 <div class="col-sm-4">
@@ -210,8 +210,17 @@
             minView: "month",
             autoclose: true
         });
-
+        
         $(function() {
+        	var date = new Date();
+        	var time = date.getTime();
+        	var year = date.getFullYear();
+        	var Month = "0"+(date.getMonth()+1);
+        	var da = date.getDate();
+        	var dateStr = year+"-"+Month+"-"+da;
+        	$("#inspectionDate").val(dateStr);
+        	$("#documentNumber").val(time);
+        	$("#inspectionCost").val(0.00);
             $('.summernote').summernote({
                 lang: 'zh-CN',
                 callbacks: {

@@ -40,7 +40,10 @@
             <div class="form-group">    
                 <label class="col-sm-2 control-label">申请人：</label>
                 <div class="col-sm-4">
-                    <input name="proposer" th:field="*{proposer}" class="form-control" type="text">
+                    <select id="proposer" name="proposer" th:field="*{proposer}" class="form-control" th:with="type=${@user.getUser()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.userName}" th:value="${data.userName}"></option>
+			 	    </select>
                 </div>
                 <label class="col-sm-2 control-label">调拨后机构：</label>
                 <div class="col-sm-4">
@@ -53,7 +56,10 @@
             <div class="form-group">    
                 <label class="col-sm-2 control-label">审核人：</label>
                 <div class="col-sm-4">
-                    <input name="auditor" th:field="*{auditor}" class="form-control" type="text">
+                    <select id="auditor" name="auditor" th:field="*{auditor}" class="form-control" th:with="type=${@user.getUser()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.userName}" th:value="${data.userName}"></option>
+			 	    </select>
                 </div>
                 <label class="col-sm-2 control-label">审核时间：</label>
                 <div class="col-sm-4">
@@ -66,7 +72,10 @@
             <div class="form-group">    
                 <label class="col-sm-2 control-label">制单人：</label>
                 <div class="col-sm-4">
-                    <input name="preparedBy" th:field="*{preparedBy}" class="form-control" type="text">
+                    <select id="preparedBy" name="preparedBy" th:field="*{preparedBy}" class="form-control" th:with="type=${@user.getUser()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.userName}" th:value="${data.userName}"></option>
+			 	    </select>
                 </div>
                 <label class="col-sm-2 control-label">制单时间：</label>
                 <div class="col-sm-4">
@@ -79,7 +88,10 @@
             <div class="form-group">    
                 <label class="col-sm-2 control-label">修订人：</label>
                 <div class="col-sm-4">
-                    <input name="reviser" th:field="*{reviser}" class="form-control" type="text">
+                    <select id="reviser" name="reviser" th:field="*{reviser}" class="form-control" th:with="type=${@user.getUser()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.userName}" th:value="${data.userName}"></option>
+			 	    </select>
                 </div>
                 <label class="col-sm-2 control-label">修订时间：</label>
                 <div class="col-sm-4">
@@ -153,7 +165,7 @@
 			},
             focusCleanup: true
         });
-
+        
         function submitHandler() {
             if ($.validate.form()) {
                 $.operate.save(prefix + "/edit", $('#form-transfers-edit').serialize());

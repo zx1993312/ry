@@ -56,8 +56,6 @@ public class HyMaintenanceprojectServiceImpl implements IHyMaintenanceprojectSer
     @Override
     public int insertHyMaintenanceproject(HyMaintenanceproject hyMaintenanceproject)
     {
-    	Long maintenanceItem = new Date().getTime();
-    	hyMaintenanceproject.setMaintenanceItem(maintenanceItem);
         return hyMaintenanceprojectMapper.insertHyMaintenanceproject(hyMaintenanceproject);
     }
 

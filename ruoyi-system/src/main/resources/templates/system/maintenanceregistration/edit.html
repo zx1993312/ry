@@ -10,6 +10,10 @@
         <form class="form-horizontal m" id="form-maintenanceregistration-edit" th:object="${hyMaintenanceregistration}">
             <input name="id" th:field="*{id}" type="hidden">
             <div class="form-group">    
+            	<label class="col-sm-2 control-label">保养记录号：</label>
+                <div class="col-sm-2">
+                    <input name="recordNumber" th:field="*{recordNumber}" class="form-control" type="text">
+                </div>
                 <label class="col-sm-2 control-label">保养类别：</label>
                 <div class="col-sm-2">
                      <select name="categories" th:field="*{categories}" class="form-control m-b">
@@ -22,12 +26,12 @@
                 <div class="col-sm-2">
                     <input name="planNumber" th:field="*{planNumber}" class="form-control" type="text">
                 </div>
-                <label class="col-sm-2 control-label">专业部门：</label>
+            </div>
+            <div class="form-group">
+            	<label class="col-sm-2 control-label">专业部门：</label>
                 <div class="col-sm-2">
                     <input name="specializedDepartment" th:field="*{specializedDepartment}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">  
+                </div>  
             	<label class="col-sm-2 control-label">选择执行计划：</label>
                 <div class="col-sm-2">
                     <select class="form-control m-b" name="userId" th:field="*{userId}" data-first-title="选择员工" th:with="type=${@employee.getEmployee()}">
@@ -42,7 +46,23 @@
 	                  <option th:each="dict : ${type}" th:text="${dict.equipmentName}" th:value="${dict.id}"></option>
 	                </select>
                 </div>  
-                <label class="col-sm-2 control-label">保养开始日期：</label>
+            </div>
+            <div class="form-group">
+            	<label class="col-sm-2 control-label">计划开始时间：</label>
+                <div class="col-sm-2">
+                    <div class="input-group date">
+                        <input name="startTime" th:value="${#dates.format(hyMaintenanceregistration.startTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            	<label class="col-sm-2 control-label">计划结束时间：</label>
+                <div class="col-sm-2">
+                    <div class="input-group date">
+                        <input name="endTime" th:value="${#dates.format(hyMaintenanceregistration.endTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            	<label class="col-sm-2 control-label">保养开始日期：</label>
                 <div class="col-sm-2">
                     <div class="input-group date">
                         <input name="startDate" th:value="${#dates.format(hyMaintenanceregistration.startDate, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">

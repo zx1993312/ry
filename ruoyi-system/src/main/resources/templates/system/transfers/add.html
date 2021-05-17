@@ -10,12 +10,12 @@
             <div class="form-group">    
                 <label class="col-sm-2 control-label">单据号：</label>
                 <div class="col-sm-4">
-                    <input name="documentNumber" class="form-control" type="text">
+                    <input id="documentNumber" name="documentNumber" class="form-control" type="text">
                 </div>
                 <label class="col-sm-2 control-label">申请日期：</label>
                 <div class="col-sm-4">
                     <div class="input-group date">
-                        <input name="applicationDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <input id="applicationDate" name="applicationDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                     </div>
                 </div>
@@ -24,7 +24,7 @@
                 <label class="col-sm-2 control-label">调拨日期：</label>
                 <div class="col-sm-4">
                     <div class="input-group date">
-                        <input name="allocationDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <input id="allocationDate" name="allocationDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                     </div>
                 </div>
@@ -39,7 +39,10 @@
             <div class="form-group">    
                 <label class="col-sm-2 control-label">申请人：</label>
                 <div class="col-sm-4">
-                    <input name="proposer" class="form-control" type="text">
+                    <select id="proposer" name="proposer" class="form-control" th:with="type=${@user.getUser()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.userName}" th:value="${data.userName}"></option>
+			 	    </select>
                 </div>
                  <label class="col-sm-2 control-label">调拨后机构：</label>
                 <div class="col-sm-4">
@@ -52,7 +55,10 @@
             <div class="form-group">    
                 <label class="col-sm-2 control-label">审核人：</label>
                 <div class="col-sm-4">
-                    <input name="auditor" class="form-control" type="text">
+                    <select id="auditor" name="auditor" class="form-control" th:with="type=${@user.getUser()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.userName}" th:value="${data.userName}"></option>
+			 	    </select>
                 </div>
                 <label class="col-sm-2 control-label">审核时间：</label>
                 <div class="col-sm-4">
@@ -65,7 +71,10 @@
             <div class="form-group">    
                 <label class="col-sm-2 control-label">制单人：</label>
                 <div class="col-sm-4">
-                    <input name="preparedBy" class="form-control" type="text">
+                    <select id="preparedBy" name="preparedBy" class="form-control" th:with="type=${@user.getUser()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.userName}" th:value="${data.userName}"></option>
+			 	    </select>
                 </div>
                 <label class="col-sm-2 control-label">制单时间：</label>
                 <div class="col-sm-4">
@@ -78,7 +87,10 @@
             <div class="form-group">    
                 <label class="col-sm-2 control-label">修订人：</label>
                 <div class="col-sm-4">
-                    <input name="reviser" class="form-control" type="text">
+                    <select id="reviser" name="reviser" class="form-control" th:with="type=${@user.getUser()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.userName}" th:value="${data.userName}"></option>
+			 	    </select>
                 </div>
                 <label class="col-sm-2 control-label">修订时间：</label>
                 <div class="col-sm-4">
@@ -95,6 +107,24 @@
                 </div>
             </div>
         </form>
+        <div class="col-sm-6">
+			<div class="tabs-container">
+				<ul class="nav nav-tabs">
+					<li id="tab1li" class="active">
+						<a data-toggle="tab" href="#tab-1" aria-expanded="true" onclick="tab(1)">调拨设备</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="tab-content ">
+			<div id="tab-1" class="tab-pane active">
+				<div class="row">
+					<div class="col-sm-12 select-table table-striped">
+						<table id="table1"></table>
+					</div>
+				</div>
+			</div>
+		</div>
     </div>
     <th:block th:include="include :: footer" />
     <th:block th:include="include :: datetimepicker-js" />
@@ -152,7 +182,7 @@
 			},
             focusCleanup: true
         });
-
+	
         function submitHandler() {
             if ($.validate.form()) {
                 $.operate.save(prefix + "/add", $('#form-transfers-add').serialize());
@@ -188,6 +218,162 @@
             minView: "month",
             autoclose: true
         });
+        var prefix1 = ctx + "system/allotequipment";
+        $(function() {
+        	var date = new Date();
+        	var time = date.getTime();
+        	var year = date.getFullYear();
+        	var Month = "0"+(date.getMonth()+1);
+        	var da = date.getDate();
+        	var dateStr = year+"-"+Month+"-"+da;
+        	$("#applicationDate").val(dateStr);
+        	$("#allocationDate").val(dateStr);
+        	$("#documentNumber").val(time);
+            var options = {
+            		tableId : "table1",
+            		showSearch: false,
+    		        showRefresh: false,
+    		        showToggle: false,
+    		        showColumns: false,
+                    url: prefix1 + "/list",
+                    createUrl: prefix1 + "/add",
+                    updateUrl: prefix1 + "/edit/{id}",
+                    removeUrl: prefix1 + "/remove",
+                    exportUrl: prefix1 + "/export",
+                    modalName: "调拨设备",
+                    columns: [{
+                        checkbox: true
+                    },
+                    {
+                        field: 'id',
+                        title: '调拨设备id',
+                        visible: false
+                    },
+                    {
+                        field: 'hyEquipmentArchives.archivesName',
+                        title: '设备档案'
+                    },
+                    {
+                        field: 'allotType',
+                        title: '调拨型号'
+                    },
+                    {
+                        field: 'sysDept.deptName',
+                        title: '所属组织机构'
+                    },
+                    {
+                        field: 'assetNumber',
+                        title: '资产编号'
+                    },
+                    {
+                        field: 'manufactureFactory',
+                        title: '生产厂家'
+                    },
+                    {
+                        field: 'allotCount',
+                        title: '数量'
+                    },
+                    {
+                        field: 'commissioningDate',
+                        title: '启用日期'
+                    },
+                    {
+                        field: 'assetValue',
+                        title: '资产原值'
+                    },
+                    {
+                        field: 'netValue',
+                        title: '资产净值'
+                    },
+                    {
+                        field: 'allotRemark',
+                        title: '备注'
+                    }]
+                };
+            $.table.initOtherTable(options);
+		});
+        
+        function tab(value){
+    		console.log(value);
+    		if(value == 1){
+    	        $.ajax({
+                    url: prefix1 + "/list",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    type: 'POST',
+                    success: function (result) {
+                        if (result.code == web_status.SUCCESS) {
+                            var options = {
+                            		tableId : "table1",
+                            		showSearch: false,
+                    		        showRefresh: false,
+                    		        showToggle: false,
+                    		        showColumns: false,
+                                url: prefix1 + "/list",
+                                createUrl: prefix1 + "/add",
+                                updateUrl: prefix1 + "/edit/{id}",
+                                removeUrl: prefix1 + "/remove",
+                                exportUrl: prefix1 + "/export",
+                                modalName: "调拨设备",
+                                columns: [{
+                                    checkbox: true
+                                },
+                                {
+                                    field: 'id',
+                                    title: '调拨设备id',
+                                    visible: false
+                                },
+                                {
+                                    field: 'hyEquipmentArchives.archivesName',
+                                    title: '设备档案'
+                                },
+                                {
+                                    field: 'allotType',
+                                    title: '调拨型号'
+                                },
+                                {
+                                    field: 'sysDept.deptName',
+                                    title: '所属组织机构'
+                                },
+                                {
+                                    field: 'assetNumber',
+                                    title: '资产编号'
+                                },
+                                {
+                                    field: 'manufactureFactory',
+                                    title: '生产厂家'
+                                },
+                                {
+                                    field: 'allotCount',
+                                    title: '数量'
+                                },
+                                {
+                                    field: 'commissioningDate',
+                                    title: '启用日期'
+                                },
+                                {
+                                    field: 'assetValue',
+                                    title: '资产原值'
+                                },
+                                {
+                                    field: 'netValue',
+                                    title: '资产净值'
+                                },
+                                {
+                                    field: 'allotRemark',
+                                    title: '备注'
+                                }]
+                            };
+                	            $.table.initOtherTable(options);
+                        }  else {
+                            $.modal.enable();
+                            $.modal.alertError(result.msg);
+                        }
+                    }
+                });
+    		}
+    	} 
     </script>
 </body>
 </html>

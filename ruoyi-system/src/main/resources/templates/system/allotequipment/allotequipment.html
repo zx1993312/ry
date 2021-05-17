@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('调拨设备列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>调拨型号：</label>
+                                <input type="text" name="allotType"/>
+                            </li>
+                            <li>
+                                <label>资产编号：</label>
+                                <input type="text" name="assetNumber"/>
+                            </li>
+                            <li>
+                                <label>生产厂家：</label>
+                                <input type="text" name="manufactureFactory"/>
+                            </li>
+                            <li>
+                                <label>数量：</label>
+                                <input type="text" name="allotCount"/>
+                            </li>
+                            <li>
+                                <label>启用日期：</label>
+                                <input type="text" class="time-input" placeholder="请选择启用日期" name="commissioningDate"/>
+                            </li>
+                            <li>
+                                <label>资产原值：</label>
+                                <input type="text" name="assetValue"/>
+                            </li>
+                            <li>
+                                <label>资产净值：</label>
+                                <input type="text" name="netValue"/>
+                            </li>
+                            <li>
+                                <label>备注：</label>
+                                <input type="text" name="allotRemark"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:allotequipment:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:allotequipment:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:allotequipment:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:allotequipment:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:allotequipment:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:allotequipment:remove')}]];
+        var prefix = ctx + "system/allotequipment";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "调拨设备",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '调拨设备id',
+                    visible: false
+                },
+                {
+                    field: 'hyEquipmentArchives.archivesName',
+                    title: '设备档案'
+                },
+                {
+                    field: 'allotType',
+                    title: '调拨型号'
+                },
+                {
+                    field: 'sysDept.deptName',
+                    title: '所属组织机构'
+                },
+                {
+                    field: 'assetNumber',
+                    title: '资产编号'
+                },
+                {
+                    field: 'manufactureFactory',
+                    title: '生产厂家'
+                },
+                {
+                    field: 'allotCount',
+                    title: '数量'
+                },
+                {
+                    field: 'commissioningDate',
+                    title: '启用日期'
+                },
+                {
+                    field: 'assetValue',
+                    title: '资产原值'
+                },
+                {
+                    field: 'netValue',
+                    title: '资产净值'
+                },
+                {
+                    field: 'allotRemark',
+                    title: '备注'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

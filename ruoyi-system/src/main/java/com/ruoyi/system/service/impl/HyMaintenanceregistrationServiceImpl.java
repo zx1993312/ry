@@ -56,9 +56,6 @@ public class HyMaintenanceregistrationServiceImpl implements IHyMaintenanceregis
     @Override
     public int insertHyMaintenanceregistration(HyMaintenanceregistration hyMaintenanceregistration)
     {
-    	hyMaintenanceregistration.setRecordNumber(new Date().getTime());
-    	hyMaintenanceregistration.setStartTime(new Date());
-    	hyMaintenanceregistration.setEndTime(new Date());
         return hyMaintenanceregistrationMapper.insertHyMaintenanceregistration(hyMaintenanceregistration);
     }
 

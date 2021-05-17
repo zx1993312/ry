@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改调拨设备')" />
+    <th:block th:include="include :: datetimepicker-css" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-allotequipment-edit" th:object="${hyAllotequipment}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">调拨型号：</label>
+                <div class="col-sm-8">
+                    <input type="text" name="allotType" th:field="*{allotType}" class="form-control m-b"/>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">资产编号：</label>
+                <div class="col-sm-8">
+                    <input name="assetNumber" th:field="*{assetNumber}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">生产厂家：</label>
+                <div class="col-sm-8">
+                    <input name="manufactureFactory" th:field="*{manufactureFactory}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">数量：</label>
+                <div class="col-sm-8">
+                    <input name="allotCount" th:field="*{allotCount}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">启用日期：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input name="commissioningDate" th:value="${#dates.format(hyAllotequipment.commissioningDate, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">资产原值：</label>
+                <div class="col-sm-8">
+                    <input name="assetValue" th:field="*{assetValue}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">资产净值：</label>
+                <div class="col-sm-8">
+                    <input name="netValue" th:field="*{netValue}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">备注：</label>
+                <div class="col-sm-8">
+                    <input name="allotRemark" th:field="*{allotRemark}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">设备档案：</label>
+                <div class="col-sm-8">
+                    <select id="archivesId" name="archivesId" th:field="*{archivesId}" class="form-control" th:with="type=${@archives.getArchives()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.archivesName}" th:value="${data.id}"></option>
+			 	    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">组织机构：</label>
+                <div class="col-sm-8">
+                    <select class="form-control m-b" name="deptId" th:field="*{deptId}" data-first-title="选择部门" th:with="type=${@dept.getDepts()}">
+	                  		<option value="">请选择</option>
+	                  		<option th:each="dict : ${type}" th:text="${dict.deptName}" th:value="${dict.deptId}"></option>
+	                </select>
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: datetimepicker-js" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/allotequipment";
+        $("#form-allotequipment-edit").validate({
+        	rules : {
+        		allotType : {
+					required : true,
+					maxlength:20,
+				},
+				assetNumber : {
+					required : true,
+					maxlength:255,
+				},
+				manufactureFactory : {
+					required : true,
+					maxlength:20,
+				},
+				allotCount : {
+					required : true,
+					maxlength:20,
+				},
+				commissioningDate : {
+					required : true,
+				},
+				assetValue : {
+					required : true,
+					maxlength:10,
+				},
+				netValue : {
+					required : true,
+					maxlength:10,
+				},
+				allotRemark : {
+					required : true,
+					maxlength:255,
+				},
+				archivesId : {
+					required : true,
+					maxlength:11,
+				},
+				deptId : {
+					required : true,
+					maxlength:11,
+				},
+			},
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-allotequipment-edit').serialize());
+            }
+        }
+
+        $("input[name='commissioningDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+    </script>
+</body>
+</html>

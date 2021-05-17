@@ -22,7 +22,7 @@
                 </div>
                 <label class="col-sm-2 control-label">申请人：</label>
                 <div class="col-sm-2">
-                    <select class="form-control m-b" name="userId" data-first-title="选择员工" th:with="type=${@employee.getEmployee()}">
+                    <select class="form-control m-b" name="userId" th:field="*{userId}" data-first-title="选择员工" th:with="type=${@employee.getEmployee()}">
 	                  <option value="">请选择</option>
 	                  <option th:each="dict : ${type}" th:text="${dict.userName}" th:value="${dict.userId}"></option>
 	                </select>

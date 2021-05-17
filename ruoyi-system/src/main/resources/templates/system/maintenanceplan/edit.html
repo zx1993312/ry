@@ -9,12 +9,18 @@
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
         <form class="form-horizontal m" id="form-maintenanceplan-edit" th:object="${hyMaintenanceplan}">
             <input name="id" th:field="*{id}" type="hidden">
-            <div class="form-group">    
+            <div class="form-group">   
+            	<label class="col-sm-2 control-label">计划编号：</label>
+                <div class="col-sm-4">
+                    <input name="PlanCode" th:field="*{PlanCode}" class="form-control" type="text">
+                </div> 
                 <label class="col-sm-2 control-label">计划名称：</label>
                 <div class="col-sm-4">
                     <input name="planName" th:field="*{planName}" class="form-control" type="text">
                 </div>
-                <label class="col-sm-2 control-label">设备保养类别：</label>
+            </div>
+            <div class="form-group">  
+            	 <label class="col-sm-2 control-label">设备保养类别：</label>
                 <div class="col-sm-4">
                     <select name="maintainType" th:field="*{maintainType}" class="form-control m-b">
                         <option value=''>请选择</option>
@@ -22,13 +28,13 @@
                         <option value='0'>外维</option>
                     </select>
                 </div>
-            </div>
-            <div class="form-group">  
             	<label class="col-sm-2 control-label">设备保养周期：</label>
                 <div class="col-sm-4">
                     <input name="maintainPeriod" th:field="*{maintainPeriod}" class="form-control" type="text"  onclick="selectPeriod()">
                 </div>  
-                <label class="col-sm-2 control-label">设备保养等级：</label>
+            </div>
+            <div class="form-group">    
+            	<label class="col-sm-2 control-label">设备保养等级：</label>
                 <div class="col-sm-4">
                      <select name="maintainLevel" th:field="*{maintainLevel}" class="form-control m-b">
 	                    <option value=''>请选择</option>
@@ -38,8 +44,6 @@
 	                    <option value='3'>三级保养</option>
                     </select>
                 </div>
-            </div>
-            <div class="form-group">    
            		<label class="col-sm-2 control-label">计划负责人：</label>
                 <div class="col-sm-4">
                     <select id="userId" name="userId" th:field="*{userId}" class="form-control" th:with="type=${@user.getUser()}">
@@ -47,28 +51,21 @@
 						<option th:if="data!=null" th:each="data:${type}" th:text="${data.userName}" th:value="${data.userId}"></option>
 			 	    </select>
                 </div>
-                <label class="col-sm-2 control-label">设备类别：</label>
+            </div>
+            <div class="form-group">    
+            	<label class="col-sm-2 control-label">设备类别：</label>
                 <div class="col-sm-4">
                     <select id="equipmentId" name="equipmentId" th:field="*{equipmentId}" class="form-control" th:with="type=${@equipment.getEquipment()}">
 						<option value="">请选择</option>
 						<option th:if="data!=null" th:each="data:${type}" th:text="${data.equipmentName}" th:value="${data.id}"></option>
 			 	    </select>
                 </div>
-            </div>
-            <div class="form-group">    
             	<label class="col-sm-2 control-label">计划日期：</label>
                 <div class="col-sm-4">
                     <div class="input-group date">
                         <input name="planDate" th:value="${#dates.format(hyMaintenanceplan.planDate, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                     </div>
-                </div>
-                <label class="col-sm-2 control-label">组织机构：</label>
-                <div class="col-sm-4">
-                    <select id="deptId" name="deptId" th:field="*{deptId}" class="form-control" th:with="type=${@dept.getDepts()}">
-						<option value="">请选择</option>
-						<option th:if="data!=null" th:each="data:${type}" th:text="${data.deptName}" th:value="${data.deptId}"></option>
-			 	    </select>
                 </div>
             </div>
             <div class="form-group">    
@@ -79,8 +76,15 @@
                 </div>
             </div>
             <div class="form-group">  
-            	<label class="col-sm-3 control-label">备注：</label>
-                <div class="col-sm-8">
+            	<label class="col-sm-2 control-label">组织机构：</label>
+                <div class="col-sm-4">
+                    <select id="deptId" name="deptId" th:field="*{deptId}" class="form-control" th:with="type=${@dept.getDepts()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.deptName}" th:value="${data.deptId}"></option>
+			 	    </select>
+                </div>
+            	<label class="col-sm-2 control-label">备注：</label>
+                <div class="col-sm-4">
                     <input name="planRemark" th:field="*{planRemark}" class="form-control" type="text">
                 </div>  
             </div>

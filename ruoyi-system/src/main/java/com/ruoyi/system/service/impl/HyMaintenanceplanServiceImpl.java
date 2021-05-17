@@ -56,7 +56,6 @@ public class HyMaintenanceplanServiceImpl implements IHyMaintenanceplanService
     @Override
     public int insertHyMaintenanceplan(HyMaintenanceplan hyMaintenanceplan)
     {
-    	hyMaintenanceplan.setPlanCode(new Date().getTime());
         return hyMaintenanceplanMapper.insertHyMaintenanceplan(hyMaintenanceplan);
     }
 

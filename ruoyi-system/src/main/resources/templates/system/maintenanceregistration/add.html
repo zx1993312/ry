@@ -9,6 +9,10 @@
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
         <form class="form-horizontal m" id="form-maintenanceregistration-add">
             <div class="form-group">    
+            	<label class="col-sm-2 control-label">保养记录号：</label>
+                <div class="col-sm-2">
+                    <input id="recordNumber" name="recordNumber" class="form-control" type="text">
+                </div>
                 <label class="col-sm-2 control-label">保养类别：</label>
                 <div class="col-sm-2">
                      <select name="categories" class="form-control m-b">
@@ -21,12 +25,12 @@
                 <div class="col-sm-2">
                     <input name="planNumber" class="form-control" type="text">
                 </div>
-                <label class="col-sm-2 control-label">专业部门：</label>
+            </div>
+            <div class="form-group">  
+            	<label class="col-sm-2 control-label">专业部门：</label>
                 <div class="col-sm-2">
                     <input name="specializedDepartment" class="form-control" type="text">
                 </div>
-            </div>
-            <div class="form-group">  
             	<label class="col-sm-2 control-label">选择执行计划：</label>
                 <div class="col-sm-2">
                     <select class="form-control m-b" name="userId" data-first-title="选择员工" th:with="type=${@employee.getEmployee()}">
@@ -41,10 +45,26 @@
 	                  <option th:each="dict : ${type}" th:text="${dict.equipmentName}" th:value="${dict.id}"></option>
 	                </select>
                 </div>  
-                <label class="col-sm-2 control-label">保养开始日期：</label>
+            </div>
+            <div class="form-group">  
+            	<label class="col-sm-2 control-label">计划开始时间：</label>
                 <div class="col-sm-2">
                     <div class="input-group date">
-                        <input name="startDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <input id="startTime" name="startTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            	<label class="col-sm-2 control-label">计划结束时间：</label>
+                <div class="col-sm-2">
+                    <div class="input-group date">
+                        <input id="endTime" name="endTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            	<label class="col-sm-2 control-label">保养开始日期：</label>
+                <div class="col-sm-2">
+                    <div class="input-group date">
+                        <input id="startDate" name="startDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                     </div>
                 </div>
@@ -71,7 +91,7 @@
                 </div>
                 <label class="col-sm-2 control-label">工时：</label>
                 <div class="col-sm-2">
-                    <input name="manHour" class="form-control" type="text">
+                    <input id="manHour" name="manHour" class="form-control" type="text">
                 </div>
                 <label class="col-sm-2 control-label">负责人：</label>
                 <div class="col-sm-2">
@@ -81,7 +101,7 @@
             <div class="form-group">    
                 <label class="col-sm-2 control-label">保养费用：</label>
                 <div class="col-sm-2">
-                    <input name="upkeepCost" class="form-control" type="text">
+                    <input id="upkeepCost" name="upkeepCost" class="form-control" type="text">
                 </div>
                  <label class="col-sm-2 control-label">保养单位：</label>
                 <div class="col-sm-2">
@@ -311,6 +331,18 @@
         });
         var prefix2 = ctx + "system/maintenanceplan";
         $(function() {
+        	var date = new Date();
+        	var time = date.getTime();
+        	var year = date.getFullYear();
+        	var Month = "0"+(date.getMonth()+1);
+        	var da = date.getDate();
+        	var dateStr = year+"-"+Month+"-"+da;
+        	$("#startTime").val(dateStr);
+        	$("#endTime").val(dateStr);
+        	$("#startDate").val(dateStr);
+        	$("#recordNumber").val(time);
+        	$("#manHour").val(0.00);
+        	$("#upkeepCost").val(0.00);
             var options = {
             		tableId : "table1",
             		showSearch: false,
