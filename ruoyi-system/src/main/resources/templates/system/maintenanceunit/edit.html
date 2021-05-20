@@ -49,21 +49,21 @@
             <div class="form-group">    
                 <label class="col-sm-2 control-label">电话：</label>
                 <div class="col-sm-4">
-                    <input name="unitPhone" th:field="*{unitPhone}" class="form-control" type="text">
+                    <input name="unitPhone" th:field="*{unitPhone}" class="form-control" type="text" onkeyup="this.value=this.value.replace(/\D/g,'')">
                 </div>
                 <label class="col-sm-2 control-label">手机：</label>
                 <div class="col-sm-4">
-                    <input name="unitCellphone" th:field="*{unitCellphone}" class="form-control" type="text">
+                    <input name="unitCellphone" th:field="*{unitCellphone}" class="form-control" type="text" onkeyup="this.value=this.value.replace(/\D/g,'')">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-2 control-label">传真：</label>
                 <div class="col-sm-4">
-                    <input name="unitFax" th:field="*{unitFax}" class="form-control" type="text">
+                    <input name="unitFax" th:field="*{unitFax}" class="form-control" type="text" onkeyup="this.value=this.value.replace(/\D/g,'')">
                 </div>
                 <label class="col-sm-2 control-label">邮编：</label>
                 <div class="col-sm-4">
-                    <input name="unitPostcode" th:field="*{unitPostcode}" class="form-control" type="text">
+                    <input name="unitPostcode" th:field="*{unitPostcode}" class="form-control" type="text" onkeyup="this.value=this.value.replace(/\D/g,'')">
                 </div>
             </div>
             <div class="form-group">    

@@ -33,7 +33,7 @@
                         <ul>
                             <li>
                                 <label>计划编号：</label>
-                                <input type="text" name="planCode"/>
+                                <input type="text" name="planCode" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
                             </li>
                             <li>
                                 <label>计划名称：</label>
@@ -127,7 +127,7 @@
                             </li>
                              -->
                             <li>
-                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.searchs()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                                 <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
                             </li>
                         </ul>

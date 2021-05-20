@@ -12,7 +12,7 @@
             <div class="form-group">    
                 <label class="col-sm-2 control-label">备忘录号：</label>
                 <div class="col-sm-4">
-                    <input name="memoNo" th:field="*{memoNo}" class="form-control" type="text">
+                    <input name="memoNo" th:field="*{memoNo}" class="form-control" type="text" onkeyup="this.value=this.value.replace(/\D/g,'')">
                 </div>
                 <label class="col-sm-2 control-label">设备名称：</label>
                 <div class="col-sm-4">

@@ -33,7 +33,7 @@
                         <ul>
                             <li>
                                 <label>单据号：</label>
-                                <input type="text" name="documentNumber"/>
+                                <input type="text" name="documentNumber" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
                             </li>
                             <li>
                                 <label>报废日期：</label>
@@ -52,20 +52,12 @@
                                 <input type="text" class="time-input" placeholder="请选择启用日期" name="commissioningDate"/>
                             </li>
                             <li>
-                                <label>原值：</label>
-                                <input type="text" name="originalValue"/>
-                            </li>
-                            <li>
-                                <label>现值：</label>
-                                <input type="text" name="presentValue"/>
-                            </li>
-                            <li>
                                 <label>服役过程：</label>
                                 <input type="text" name="serviceProcess"/>
                             </li>
                             <li>
                                 <label>履历卡编号：</label>
-                                <input type="text" name="cardNumber"/>
+                                <input type="text" name="cardNumber" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
                             </li>
                             <li>
                                 <label>报废原因：</label>
@@ -76,7 +68,7 @@
                                 <input type="text" name="expertConclusion"/>
                             </li>
                             <li>
-                                <input type="text" id="deptId" name="deptId"/>
+                                <input type="hidden" id="deptId" name="deptId"/>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>

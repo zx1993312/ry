@@ -16,7 +16,7 @@
                             </li>
                             <li>
                                 <label>资产编号：</label>
-                                <input type="text" name="assetNumber"/>
+                                <input type="text" name="assetNumber" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
                             </li>
                             <li>
                                 <label>生产厂家：</label>
@@ -24,7 +24,7 @@
                             </li>
                             <li>
                                 <label>数量：</label>
-                                <input type="text" name="allotCount"/>
+                                <input type="text" name="allotCount" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
                             </li>
                             <li>
                                 <label>启用日期：</label>

@@ -11,7 +11,7 @@
             <div class="form-group">    
                 <label class="col-sm-2 control-label">单据号：</label>
                 <div class="col-sm-2">
-                    <input name="documentNumber" th:field="*{documentNumber}" class="form-control" type="text">
+                    <input name="documentNumber" th:field="*{documentNumber}" class="form-control" type="text" onkeyup="this.value=this.value.replace(/\D/g,'')">
                 </div>
                 <label class="col-sm-2 control-label">报废日期：</label>
                 <div class="col-sm-2">
@@ -92,7 +92,7 @@
                 </div>
                 <label class="col-sm-2 control-label">履历卡编号：</label>
                 <div class="col-sm-2">
-                    <input name="cardNumber" th:field="*{cardNumber}" class="form-control" type="text">
+                    <input name="cardNumber" th:field="*{cardNumber}" class="form-control" type="text" onkeyup="this.value=this.value.replace(/\D/g,'')">
                 </div>
             </div>
             <div class="form-group">    

@@ -33,7 +33,7 @@
                         <ul>
                             <li>
                                 <label>保养记录号：</label>
-                                <input type="text" name="recordNumber"/>
+                                <input type="text" name="recordNumber" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
                             </li>
                             <li>
                                 <label>保养类别：</label>
@@ -45,7 +45,7 @@
                             </li>
                             <li>
                                 <label>保养计划号：</label>
-                                <input type="text" name="planNumber"/>
+                                <input type="text" name="planNumber" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
                             </li>
                             <li>
                                 <label>专业部门：</label>
@@ -68,16 +68,8 @@
                                 <input type="text" class="time-input" placeholder="请选择保养结束日期" name="endDate"/>
                             </li>
                             <li>
-                                <label>工时：</label>
-                                <input type="text" name="manHour"/>
-                            </li>
-                            <li>
                                 <label>负责人：</label>
                                 <input type="text" name="principal"/>
-                            </li>
-                            <li>
-                                <label>保养费用：</label>
-                                <input type="text" name="upkeepCost"/>
                             </li>
                             <li>
                                 <label>保养单位：</label>

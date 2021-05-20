@@ -12,7 +12,7 @@
                         <ul>
                             <li>
                                 <label>保养项目编号：</label>
-                                <input type="text" name="maintenanceItem"/>
+                                <input type="text" name="maintenanceItem" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
                             </li>
                             <li>
                                 <label>保养标准：</label>
