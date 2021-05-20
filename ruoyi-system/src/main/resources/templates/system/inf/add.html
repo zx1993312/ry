@@ -66,8 +66,8 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">计费面积：</label>
                 <div class="col-sm-8">
-                    <select name="bilingArea" class="form-control m-b" th:with="type=${@dict.getType('hy_subject_type')}">
-                        <option value="">所有</option>
+                    <select id="bilingArea" name="bilingArea" class="form-control m-b" th:with="type=${@dict.getType('hy_subject_type')}" onchange="total()">
+                        <option value=0>请选择</option>
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                     </select>
                 </div>
@@ -75,37 +75,43 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">套内面积：</label>
                 <div class="col-sm-8">
-                    <input name="insideArea" class="form-control" type="text">
+                    <input id="insideArea" name="insideArea" class="form-control" type="text" onblur="total()">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">公摊面积：</label>
                 <div class="col-sm-8">
-                    <input name="sharedArea" class="form-control" type="text">
+                    <input id="sharedArea" name="sharedArea" class="form-control" type="text" onblur="total()">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">花园面积：</label>
                 <div class="col-sm-8">
-                    <input name="gardenArea" class="form-control" type="text">
+                    <input id="gardenArea" name="gardenArea" class="form-control" type="text" onblur="total()">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">地下室面积：</label>
                 <div class="col-sm-8">
-                    <input name="basementArea" class="form-control" type="text">
+                    <input id="basementArea" name="basementArea" class="form-control" type="text" onblur="total()">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">大堂分摊面积：</label>
                 <div class="col-sm-8">
-                    <input name="sharedLobbyArea" class="form-control" type="text">
+                    <input id="sharedLobbyArea" name="sharedLobbyArea" class="form-control" type="text" onblur="total()">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">层间分摊面积：</label>
                 <div class="col-sm-8">
-                    <input name="sharedLayersArea" class="form-control" type="text">
+                    <input id="sharedLayersArea" name="sharedLayersArea" class="form-control" type="text" onblur="total()">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">总价格：</label>
+                <div class="col-sm-8">
+                    <a id="total"></a>
                 </div>
             </div>
             <div class="form-group">    
@@ -322,6 +328,20 @@
                 $.operate.save(prefix + "/add", $('#form-inf-add').serialize());
             }
         }
+        $(function(){
+        	total();
+        });
+        function total(){
+        	var insideArea = parseFloat($("#insideArea").val());
+        	var sharedArea = parseFloat($("#sharedArea").val());
+        	var gardenArea = parseFloat($("#gardenArea").val());
+        	var basementArea = parseFloat($("#basementArea").val());
+        	var sharedLobbyArea = parseFloat($("#sharedLobbyArea").val());
+        	var sharedLayersArea = parseFloat($("#sharedLayersArea").val());
+        	var bilingArea = parseFloat($("#bilingArea").val());
+        	var total = (insideArea+sharedArea+gardenArea+basementArea+sharedLobbyArea+sharedLayersArea)*bilingArea
+        	$("#total").html(total);
+        };
     </script>
 </body>
 </html>
