@@ -73,7 +73,9 @@
         
         $(function() {
         	var parentId = $('#parentId').val();
-        	//$('#parentId').attr("disabled",true); 
+        	if(parentId==0){
+        		$('#parentId').attr("disabled",true); 
+        	}
         });
     </script>
 </body>
