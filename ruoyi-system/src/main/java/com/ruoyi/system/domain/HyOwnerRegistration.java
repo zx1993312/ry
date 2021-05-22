@@ -27,10 +27,6 @@ public class HyOwnerRegistration extends BaseEntity
     @Excel(name = "业主名称")
     private String ownerName;
 
-    /** 房屋编号 */
-    @Excel(name = "房屋编号")
-    private String houseNum;
-
     /** 固定电话 */
     @Excel(name = "固定电话")
     private Long fixedTelephone;
@@ -197,15 +193,6 @@ public class HyOwnerRegistration extends BaseEntity
     public String getOwnerName() 
     {
         return ownerName;
-    }
-    public void setHouseNum(String houseNum) 
-    {
-        this.houseNum = houseNum;
-    }
-
-    public String getHouseNum() 
-    {
-        return houseNum;
     }
     public void setFixedTelephone(Long fixedTelephone) 
     {
@@ -550,7 +537,6 @@ public class HyOwnerRegistration extends BaseEntity
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
             .append("ownerName", getOwnerName())
-            .append("houseNum", getHouseNum())
             .append("fixedTelephone", getFixedTelephone())
             .append("mobilePhone", getMobilePhone())
             .append("idCardNum", getIdCardNum())

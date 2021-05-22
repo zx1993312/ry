@@ -148,6 +148,13 @@
                                 <input type="text" name="marketingNum"/>
                             </li>
                             <li>
+                                <label>所属业主：</label>
+                                <select name="ownerId" class="form-control m-b" th:with="type=${@ownerRegistration.getOwnerRegistration()}">
+                                    <option value="">请选择</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.ownerName}" th:value="${dict.id}"></option>
+                                </select>
+                            </li>
+                            <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                                 <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
                             </li>

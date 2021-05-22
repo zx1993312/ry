@@ -8,7 +8,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		id="HyOwnerRegistrationResult">
 		<result property="id" column="id" />
 		<result property="ownerName" column="owner_name" />
-		<result property="houseNum" column="house_num" />
 		<result property="fixedTelephone" column="fixed_telephone" />
 		<result property="mobilePhone" column="mobile_phone" />
 		<result property="idCardNum" column="id_card_num" />
@@ -61,7 +60,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select
 		o.id,
 		o.owner_name,
-		o.house_num,
 		o.fixed_telephone,
 		o.mobile_phone,
 		o.id_card_num,
@@ -108,7 +106,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<include refid="selectHyOwnerRegistrationVo" />
 		<where>
 		<if test="ownerName != null  and ownerName != ''"> and o.owner_name like concat('%', #{ownerName}, '%')</if>
-		<if test="houseNum != null  and houseNum != ''"> and o.house_num = #{houseNum}</if>
 		<if test="fixedTelephone != null "> and o.fixed_telephone = #{fixedTelephone}</if>
 		<if test="mobilePhone != null "> and o.mobile_phone = #{mobilePhone}</if>
 		<if test="idCardNum != null  and idCardNum != ''"> and o.id_card_num = #{idCardNum}</if>
@@ -162,7 +159,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">id,</if>
 			<if test="ownerName != null">owner_name,</if>
-			<if test="houseNum != null">house_num,</if>
 			<if test="fixedTelephone != null">fixed_telephone,</if>
 			<if test="mobilePhone != null">mobile_phone,</if>
 			<if test="idCardNum != null">id_card_num,</if>
@@ -201,7 +197,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null">#{id},</if>
 			<if test="ownerName != null">#{ownerName},</if>
-			<if test="houseNum != null">#{houseNum},</if>
 			<if test="fixedTelephone != null">#{fixedTelephone},</if>
 			<if test="mobilePhone != null">#{mobilePhone},</if>
 			<if test="idCardNum != null">#{idCardNum},</if>
@@ -244,7 +239,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update hy_owner_registration
 		<trim prefix="SET" suffixOverrides=",">
 			<if test="ownerName != null">owner_name = #{ownerName},</if>
-			<if test="houseNum != null">house_num = #{houseNum},</if>
 			<if test="fixedTelephone != null">fixed_telephone = #{fixedTelephone},</if>
 			<if test="mobilePhone != null">mobile_phone = #{mobilePhone},</if>
 			<if test="idCardNum != null">id_card_num = #{idCardNum},</if>

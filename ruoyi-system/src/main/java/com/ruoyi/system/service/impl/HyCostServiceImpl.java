@@ -103,16 +103,6 @@ public class HyCostServiceImpl implements IHyCostService {
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public int insertHyCost(HyCost hyCost) {
-		if (null != hyCost.getHyOwnerRegistration()) {
-			hyCost.getHyOwnerRegistration().setHouseNum(hyCost.getHouseNum());
-			HyOwnerRegistrationMapper.insertHyOwnerRegistration(hyCost.getHyOwnerRegistration());
-		}
-		if (null != hyCost.getHyHouseInf()) {
-
-			HyHouseInfMapper.insertHyHouseInf(hyCost.getHyHouseInf());
-		}
-		System.out.println(Constants.TIME_ALL.format(hyCost.getBilingStartDate()));
-//		hyCost.setBilingStartDate();
 		return hyCostMapper.insertHyCost(hyCost);
 	}
 

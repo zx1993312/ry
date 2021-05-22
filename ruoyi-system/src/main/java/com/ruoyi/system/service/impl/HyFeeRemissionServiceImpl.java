@@ -92,7 +92,6 @@ public class HyFeeRemissionServiceImpl implements IHyFeeRemissionService {
 		int result = hyFeeRemissionMapper.updateHyFeeRemission(hyFeeRemission);
 
 		HyOwnerRegistration hyOwnerRegistration = new HyOwnerRegistration();
-		hyOwnerRegistration.setHouseNum(hyFeeRemission.getHouseNumber());
 		List<?> ownerList = hyOwnerRegistrationMapper.selectHyOwnerRegistrationList(hyOwnerRegistration);// 根据houseNum查询数据是否存在
 		hyOwnerRegistration.setOwnerName(hyFeeRemission.getHyOwnerRegistration().getOwnerName());
 		if (StringUtils.isNull(ownerList) || ownerList.size() == 0) {// 数据存在，插入新数据

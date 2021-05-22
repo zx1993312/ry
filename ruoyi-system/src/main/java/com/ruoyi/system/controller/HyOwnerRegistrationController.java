@@ -17,9 +17,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.ShiroUtils;
+import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.constants.Constants;
-import com.ruoyi.system.domain.HyHouseInf;
 import com.ruoyi.system.domain.HyOwnerRegistration;
 import com.ruoyi.system.service.IHyOwnerRegistrationService;
 
@@ -27,15 +31,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-
-import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.domain.AjaxResult;
-
-import com.ruoyi.common.core.domain.entity.SysUser;
-
-import com.ruoyi.common.utils.ShiroUtils;
-import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
  * 业主资料登记Controller
@@ -76,9 +71,8 @@ public class HyOwnerRegistrationController extends BaseController {
 			map = Constants.REFLECT_UTIL.convertMap(hor);
 			reList.add(map);
 		}
-		return getDataTable(list,  reList);
+		return getDataTable(list, reList);
 	}
-
 
 	/**
 	 * 导出业主资料登记列表
@@ -184,30 +178,32 @@ public class HyOwnerRegistrationController extends BaseController {
 	public AjaxResult remove(String ids) {
 		return toAjax(hyOwnerRegistrationService.deleteHyOwnerRegistrationByIds(ids));
 	}
+
 	/**
 	 * 导入房屋数据
+	 * 
 	 * @param file
 	 * @param updateSupport
 	 * @return
 	 * @throws Exception
 	 */
 	@Log(title = "用户管理", businessType = BusinessType.IMPORT)
-    @RequiresPermissions("system:registration:import")
-    @PostMapping("/importData")
-    @ResponseBody
-    public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception
-    {
-        ExcelUtil<HyOwnerRegistration> util = new ExcelUtil<HyOwnerRegistration>(HyOwnerRegistration.class);
-        List<HyOwnerRegistration> userList = util.importExcel(file.getInputStream());
-        String operName = ShiroUtils.getSysUser().getLoginName();
-        String message = hyOwnerRegistrationService.importOwnerRegistration(userList, updateSupport, operName);
-        return AjaxResult.success(message);
-    }
+	@RequiresPermissions("system:registration:import")
+	@PostMapping("/importData")
+	@ResponseBody
+	public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception {
+		ExcelUtil<HyOwnerRegistration> util = new ExcelUtil<HyOwnerRegistration>(HyOwnerRegistration.class);
+		List<HyOwnerRegistration> userList = util.importExcel(file.getInputStream());
+		String operName = ShiroUtils.getSysUser().getLoginName();
+		String message = hyOwnerRegistrationService.importOwnerRegistration(userList, updateSupport, operName);
+		return AjaxResult.success(message);
+	}
+
 	@RequiresPermissions("system:set:view")
-	 @GetMapping("/importTemplate")
-	 @ResponseBody
-	 public AjaxResult importTemplate() {
-	  ExcelUtil<HyOwnerRegistration> util = new ExcelUtil<HyOwnerRegistration>(HyOwnerRegistration.class);
-	  return util.importTemplateExcel("业主资料登记");
-	 }
+	@GetMapping("/importTemplate")
+	@ResponseBody
+	public AjaxResult importTemplate() {
+		ExcelUtil<HyOwnerRegistration> util = new ExcelUtil<HyOwnerRegistration>(HyOwnerRegistration.class);
+		return util.importTemplateExcel("业主资料登记");
+	}
 }
