@@ -12,18 +12,6 @@
 					<input name="groupAreaName" class="form-control" type="text">
 				</div>
 			</div>
-			<div class="form-group">
-				<label class="col-sm-3 control-label">是否锁定：</label>
-				<div class="col-sm-8">
-
-					<select name="locked" class="form-control m-b"
-						th:with="type=${@dict.getType('sys_yes_no')}">
-						<option value="">请选择</option>
-						<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
-							th:value="${dict.dictValue}"></option>
-					</select>
-				</div>
-			</div>
 		</form>
 	</div>
 	<th:block th:include="include :: footer" />

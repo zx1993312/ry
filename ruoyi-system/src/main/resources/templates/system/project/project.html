@@ -15,8 +15,11 @@
                                 <input type="text" name="projectName"/>
                             </li>
                             <li>
-                                <label>小区id：</label>
-                                <input type="text" name="villageId"/>
+                                <label>组团区域：</label>
+                                <select class="form-control m-b" name="villageId" th:with="type=${@groupRegistration.getGroupRegistration()}">
+				                  		<option value="">请选择</option>
+				                  		<option th:each="dict : ${type}" th:text="${dict.groupAreaName}" th:value="${dict.id}"></option>
+				                </select>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -59,7 +62,7 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "项目列",
+                modalName: "项目列表",
                 columns: [{
                     checkbox: true
                 },
@@ -73,8 +76,8 @@
                     title: '项目名称'
                 },
                 {
-                    field: 'villageId',
-                    title: '小区id'
+                    field: 'hyGroupRegistration.groupAreaName',
+                    title: '组团区域'
                 },
                 {
                     title: '操作',

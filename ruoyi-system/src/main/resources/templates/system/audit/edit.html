@@ -18,7 +18,11 @@
 			<div class="form-group">
 				<label class="col-sm-3 control-label">纳税人规模：</label>
 				<div class="col-sm-8">
-					<input name="taxScale" th:field="*{taxScale}" class="form-control" type="text">
+					<select id="taxScale"
+								name="taxScale" class="form-control" th:field="*{taxScale}" th:with="type=${@dict.getType('hy_taxpayper_type')}">
+               		<option value="0">一般纳税人</option>
+               		<option value="1">小规模纳税人</option>
+               		</select>
 				</div>
 			</div>
 			<div class="form-group">

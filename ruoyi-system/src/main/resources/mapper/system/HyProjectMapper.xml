@@ -10,26 +10,42 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="villageId" column="village_id" />
 		<result property="parentId" column="parent_id" />
 		<result property="ancestors" column="ancestors" />
+		<association property="hyGroupRegistration" column="id"
+			javaType="HyGroupRegistration" resultMap="HyGroupRegistrationResult" />
 	</resultMap>
-
+	
+	<resultMap type="HyGroupRegistration" id="HyGroupRegistrationResult">
+        <result property="id"    column="id"    />
+        <result property="groupAreaName"    column="group_area_name"    />
+    </resultMap>
+	
 	<sql id="selectHyProjectVo">
-		select id, project_name, village_id, parent_id,ancestors from hy_project
+		select 
+		p.id, 
+		p.project_name, 
+		p.village_id, 
+		p.parent_id,
+		p.ancestors,
+		g.group_area_name 
+		from 
+		hy_project p
+		LEFT JOIN hy_group_registration g ON p.village_id=g.id
 	</sql>
 
 	<select id="selectHyProjectList" parameterType="HyProject"
 		resultMap="HyProjectResult">
 		<include refid="selectHyProjectVo" />
 		<where>
-			<if test="projectName != null  and projectName != ''"> and project_name like concat('%', #{projectName}, '%')
+			<if test="projectName != null  and projectName != ''"> and p.project_name like concat('%', #{projectName}, '%')
 			</if>
-			<if test="villageId != null "> and village_id = #{villageId}</if>
+			<if test="villageId != null "> and p.village_id = #{villageId}</if>
 		</where>
 	</select>
 
 	<select id="selectHyProjectById" parameterType="Long"
 		resultMap="HyProjectResult">
 		<include refid="selectHyProjectVo" />
-		where id = #{id}
+		where p.id = #{id}
 	</select>
 
 	<insert id="insertHyProject" parameterType="HyProject">
@@ -38,11 +54,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="id != null">id,</if>
 			<if test="projectName != null">project_name,</if>
 			<if test="villageId != null">village_id,</if>
+			<if test="parentId != null">parent_id,</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null">#{id},</if>
 			<if test="projectName != null">#{projectName},</if>
 			<if test="villageId != null">#{villageId},</if>
+			<if test="parentId != null">#{parentId},</if>
 		</trim>
 	</insert>
 
@@ -51,6 +69,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<trim prefix="SET" suffixOverrides=",">
 			<if test="projectName != null">project_name = #{projectName},</if>
 			<if test="villageId != null">village_id = #{villageId},</if>
+			<if test="parentId != null">parent_id = #{parentId},</if>
 		</trim>
 		where id = #{id}
 	</update>

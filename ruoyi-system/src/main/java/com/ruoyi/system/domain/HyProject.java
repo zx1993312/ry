@@ -21,9 +21,13 @@ public class HyProject extends BaseEntity {
 	@Excel(name = "项目名称")
 	private String projectName;
 
-	/** 小区id */
-	@Excel(name = "小区id")
+	/** 组团区域id */
+	@Excel(name = "组团区域id")
 	private Long villageId;
+	
+	/** 组团区域表 */
+	@Excel(name = "组团区域表")
+	private HyGroupRegistration hyGroupRegistration;
 
 	@Excel(name = "父id")
 	private Integer parentId;
@@ -70,10 +74,17 @@ public class HyProject extends BaseEntity {
 	public void setAncestors(String ancestors) {
 		this.ancestors = ancestors;
 	}
+	public HyGroupRegistration getHyGroupRegistration() {
+		return hyGroupRegistration;
+	}
+
+	public void setHyGroupRegistration(HyGroupRegistration hyGroupRegistration) {
+		this.hyGroupRegistration = hyGroupRegistration;
+	}
 
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("id", getId())
-				.append("projectName", getProjectName()).append("villageId", getVillageId()).toString();
+				.append("projectName", getProjectName()).append("villageId", getVillageId()).append("hyGroupRegistration", getHyGroupRegistration()).toString();
 	}
 }

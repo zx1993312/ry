@@ -13,13 +13,6 @@
 						<ul>
 							<li><label>组团区域名称：</label> <input type="text"
 								name="groupAreaName" /></li>
-							<li><label>是否锁定：</label> <select name="locked"
-								class="form-control m-b"
-								th:with="type=${@dict.getType('sys_yes_no')}">
-									<option value="">请选择</option>
-									<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
-										th:value="${dict.dictValue}"></option>
-							</select></li>
 							<li><a class="btn btn-primary btn-rounded btn-sm"
 								onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
 								<a class="btn btn-warning btn-rounded btn-sm"
@@ -77,18 +70,6 @@
                 {
                     field: 'groupAreaName',
                     title: '组团区域名称'
-                },
-                {
-                    field: 'locked',
-                    title: '是否锁定',
-                    formatter: function(value, item, index) {
-                    	switch(value){
-                        	case 0 : value =  "是";break;
-                        	case 1 : value =  "否";break;
-                      
-                    	}
-                    	return value;
-                    }
                 },
                 {
                     title: '操作',

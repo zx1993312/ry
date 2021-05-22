@@ -35,7 +35,7 @@
 	                        <ul>
 	                            <li>
 	                                <label>费用名称：</label>
-	                                <input type="text" name="feeName"/>
+	                                <input type="text" id="feeName" name="feeName" onclick="selectCost()"/>
 	                            </li>
 	                            <li>
 	                                <label>标准编号：</label>
@@ -43,7 +43,7 @@
 	                            </li>
 	                            <li>
 	                                <label>标准名称：</label>
-	                                <input type="text" name="standardName"/>
+	                                <input type="text" id="standardName" name="standardName" onclick="selectCost()"/>
 	                            </li>
 	                            <li>
 	                                <label>计算方式：</label>
@@ -148,12 +148,12 @@
 	                    title: '计算方式',
 	                    formatter: function(value, item, index) {
 	                    	switch(value){
-		                    	case '0' : value =  "按计费面积*单价每月计算";break;
-		                    	case '1' : value =  "按计费面积*单价每季计算";break;
-		                    	case '2' : value =  "按计费面积*单价每年计算";break;
-		                    	case '3' : value =  "按定额每月计算";break;
-		                    	case '4' : value =  "按定额每季计算";break;
-		                    	case '5' : value =  "按定额每年计算";break;
+		                    	case '30' : value =  "按计费面积*单价每月计算";break;
+		                    	case '120' : value =  "按计费面积*单价每季计算";break;
+		                    	case '365' : value =  "按计费面积*单价每年计算";break;
+		                    	case '31' : value =  "按定额每月计算";break;
+		                    	case '122' : value =  "按定额每季计算";break;
+		                    	case '366' : value =  "按定额每年计算";break;
 		                	}
 			            	return value;
 			            }
@@ -212,33 +212,14 @@
 			queryDeptTree();
 		});
 
-		/* 用户管理-部门 */
+		/* 费用项目管理 */
 		function costProject() {
 			var url = ctx + "system/cost";
 			$.modal.openTab("费用项目管理", url);
 		}
 		
-		/* 用户状态显示 */
-		function statusTools(row) {
-		    if (row.status == 1) {
-    			return '<i class=\"fa fa-toggle-off text-info fa-2x\" onclick="enable(\'' + row.userId + '\')"></i> ';
-    		} else {
-    			return '<i class=\"fa fa-toggle-on text-info fa-2x\" onclick="disable(\'' + row.userId + '\')"></i> ';
-    		}
-		}
-		
-		/* 用户管理-停用 */
-		function disable(userId) {
-			$.modal.confirm("确认要停用用户吗？", function() {
-				$.operate.post(prefix + "/changeStatus", { "userId": userId, "status": 1 });
-		    })
-		}
-
-		/* 用户管理启用 */
-		function enable(userId) {
-			$.modal.confirm("确认要启用用户吗？", function() {
-				$.operate.post(prefix + "/changeStatus", { "userId": userId, "status": 0 });
-		    })
+		function selectCost() {
+			$.modal.open("费用项目列表","/system/selectCost");
 		}
     </script>
 </body>

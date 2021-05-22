@@ -13,9 +13,21 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-3 control-label">小区id：</label>
+				<label class="col-sm-3 control-label">父项目：</label>
 				<div class="col-sm-8">
-					<input name="villageId" class="form-control" type="text">
+					<select class="form-control m-b" name="parentId" th:with="type=${@project.getProject()}">
+	                  		<option value="">请选择</option>
+	                  		<option th:each="dict : ${type}" th:text="${dict.projectName}" th:value="${dict.id}"></option>
+	                </select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">组团区域：</label>
+				<div class="col-sm-8">
+					<select class="form-control m-b" name="villageId" th:with="type=${@groupRegistration.getGroupRegistration()}">
+	                  		<option value="">请选择</option>
+	                  		<option th:each="dict : ${type}" th:text="${dict.groupAreaName}" th:value="${dict.id}"></option>
+	                </select>
 				</div>
 			</div>
 		</form>
@@ -43,7 +55,7 @@
 					remote : "项目名称长度为100个字符"
 				},
 				"villageId" : {
-					remote : "小区id只能为数字，并且长度在11个字符内"
+					remote : "组团区域只能为数字，并且长度在11个字符内"
 				}
 			},
 			focusCleanup : true

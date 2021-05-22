@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('收费科目设置列表')" />
+</head>
+<body class="gray-bg">
+	     <div class="container-div">
+	        <div class="row">
+	            <div class="col-sm-12 select-table table-striped">
+	                <table id="bootstrap-table"></table>
+	            </div>
+	        </div>
+	    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:subject:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:subject:remove')}]];
+        var prefix = ctx + "system/subject";
+
+        $(function() {
+			var options = {
+	                url: prefix + "/list",
+	                createUrl: prefix + "/add",
+	                updateUrl: prefix + "/edit/{id}",
+	                removeUrl: prefix + "/remove",
+	                exportUrl: prefix + "/export",
+	                modalName: "收费科目设置",
+	                columns: [{
+	                    checkbox: true
+	                },
+	                {
+	                    field: 'id',
+	                    title: '主键',
+	                    visible: false
+	                },
+	                {
+	                    field: 'feeName',
+	                    title: '费用名称'
+	                },
+	                {
+	                    field: 'standardNum',
+	                    title: '标准编号'
+	                },
+	                {
+	                    field: 'standardName',
+	                    title: '标准名称'
+	                },
+	                {
+	                    field: 'calculationMethod',
+	                    title: '计算方式',
+	                    formatter: function(value, item, index) {
+	                    	switch(value){
+		                    	case '30' : value =  "按计费面积*单价每月计算";break;
+		                    	case '120' : value =  "按计费面积*单价每季计算";break;
+		                    	case '365' : value =  "按计费面积*单价每年计算";break;
+		                    	case '31' : value =  "按定额每月计算";break;
+		                    	case '122' : value =  "按定额每季计算";break;
+		                    	case '366' : value =  "按定额每年计算";break;
+		                	}
+			            	return value;
+			            }
+	                },
+	                {
+	                    field: 'chargingStanard',
+	                    title: '通用收费标准'
+	                },
+	                {
+	                    field: 'descriptionStandard',
+	                    title: '标准说明'
+	                }]
+	            };
+	            $.table.init(options);
+		});
+        function submitHandler() {
+        	var feeName = $.table.selectColumns('feeName');
+        	if(feeName == ''){
+        		$.modal.alertWarning("请至少选择一条记录");
+        	}else{
+        		$("#chargeSubject",window.parent.document).val(feeName);
+        	}
+        	$.modal.close();
+        }
+    </script>
+</body>
+</html>

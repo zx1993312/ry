@@ -7,11 +7,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="HyGroupRegistration" id="HyGroupRegistrationResult">
         <result property="id"    column="id"    />
         <result property="groupAreaName"    column="group_area_name"    />
-        <result property="locked"    column="locked"    />
     </resultMap>
 
     <sql id="selectHyGroupRegistrationVo">
-        select id, group_area_name, locked from hy_group_registration
+        select id, group_area_name from hy_group_registration
     </sql>
 
    
@@ -20,7 +19,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectHyGroupRegistrationVo"/>
         <where>  
             <if test="groupAreaName != null  and groupAreaName != ''"> and group_area_name like concat('%', #{groupAreaName}, '%')</if>
-            <if test="locked != null "> and locked = #{locked}</if>
         </where>
     </select>
     
@@ -35,11 +33,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         insert into hy_group_registration
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="groupAreaName != null">group_area_name,</if>
-            <if test="locked != null">locked,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="groupAreaName != null">#{groupAreaName},</if>
-            <if test="locked != null">#{locked},</if>
          </trim>
     </insert>
 
@@ -47,7 +43,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update hy_group_registration
         <trim prefix="SET" suffixOverrides=",">
             <if test="groupAreaName != null">group_area_name = #{groupAreaName},</if>
-            <if test="locked != null">locked = #{locked},</if>
         </trim>
         where id = #{id}
     </update>

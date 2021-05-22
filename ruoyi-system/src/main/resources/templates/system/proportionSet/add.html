@@ -49,7 +49,7 @@
 			<div class="form-group">
 				<label class="col-sm-3 control-label">缴纳收费科目：</label>
 				<div class="col-sm-8">
-					<input name="chargeSubject" class="form-control" type="text">
+					<input type="text" id="chargeSubject" name="chargeSubject" class="form-control" onclick="selectSubject()"/>
 				</div>
 			</div>
 		</form>
@@ -93,6 +93,10 @@
 				$.operate.save(prefix + "/add", $('#form-set-add').serialize());
 			}
 		}
+		
+		function selectSubject(){
+        	$.modal.open("收费科目列表","/system/selectSubject");
+        }
 	</script>
 </body>
 </html>
