@@ -12,13 +12,8 @@ import com.ruoyi.common.core.domain.Ztree;
 import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.common.exception.BusinessException;
 import com.ruoyi.common.utils.StringUtils;
-import com.ruoyi.system.constants.Constants;
-import com.ruoyi.system.domain.HyControlSet;
 import com.ruoyi.system.domain.HyCost;
-import com.ruoyi.system.domain.HyMeter;
 import com.ruoyi.system.mapper.HyCostMapper;
-import com.ruoyi.system.mapper.HyHouseInfMapper;
-import com.ruoyi.system.mapper.HyOwnerRegistrationMapper;
 import com.ruoyi.system.service.IHyCostService;
 
 /**
@@ -31,10 +26,6 @@ import com.ruoyi.system.service.IHyCostService;
 public class HyCostServiceImpl implements IHyCostService {
 	@Autowired
 	private HyCostMapper hyCostMapper;
-	@Autowired
-	private HyOwnerRegistrationMapper HyOwnerRegistrationMapper;
-	@Autowired
-	private HyHouseInfMapper HyHouseInfMapper;
 
 	/**
 	 * 查询费用项目
@@ -121,7 +112,6 @@ public class HyCostServiceImpl implements IHyCostService {
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public int updateHyCostOther(String currentState) {
-		System.out.println("long``````");
 		return hyCostMapper.updateHyCostOther(currentState);
 	}
 
@@ -229,6 +219,5 @@ public class HyCostServiceImpl implements IHyCostService {
 
 		return successMsg.toString();
 	}
-
 
 }

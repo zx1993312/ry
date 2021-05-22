@@ -43,10 +43,10 @@ public class HyCustomerStandardSettingsController extends BaseController {
 	@Autowired
 	private IHyCostService hyCostService;
 
-	@RequiresPermissions("system:cost:view")
+	@RequiresPermissions("system:setting:view")
 	@GetMapping()
 	public String cost() {
-		return prefix + "/cost";
+		return prefix + "/setting";
 	}
 
 	/**
@@ -54,7 +54,7 @@ public class HyCustomerStandardSettingsController extends BaseController {
 	 */
 	@ApiOperation("费用项目")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "hyCost", value = "项目实体类hyCost", required = true), })
-	@RequiresPermissions("system:cost:list")
+	@RequiresPermissions("system:setting:list")
 	@PostMapping("/list")
 	@ResponseBody
 	public TableDataInfo list(HyCost hyCost) {
@@ -68,7 +68,7 @@ public class HyCustomerStandardSettingsController extends BaseController {
 	 */
 	@ApiOperation("费用项目")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "hyCost", value = "项目实体类hyCost", required = true), })
-	@RequiresPermissions("system:cost:costList")
+	@RequiresPermissions("system:setting:costList")
 	@GetMapping("/costList")
 	@ResponseBody
 	public List<Ztree> treeData() {
@@ -81,7 +81,7 @@ public class HyCustomerStandardSettingsController extends BaseController {
 	 */
 	@ApiOperation("费用项目")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "hyCost", value = "项目实体类hyCost", required = true), })
-	@RequiresPermissions("system:cost:export")
+	@RequiresPermissions("system:setting:export")
 	@Log(title = "费用项目", businessType = BusinessType.EXPORT)
 	@PostMapping("/export")
 	@ResponseBody
@@ -104,7 +104,7 @@ public class HyCustomerStandardSettingsController extends BaseController {
 	 */
 	@ApiOperation("费用项目")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "hyCost", value = "项目实体类hyCost", required = true), })
-	@RequiresPermissions("system:cost:add")
+	@RequiresPermissions("system:setting:add")
 	@Log(title = "费用项目", businessType = BusinessType.INSERT)
 	@PostMapping("/add")
 	@ResponseBody
@@ -129,12 +129,29 @@ public class HyCustomerStandardSettingsController extends BaseController {
 	 */
 	@ApiOperation("费用项目")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "hyCost", value = "项目实体类hyCost", required = true), })
-	@RequiresPermissions("system:cost:edit")
+	@RequiresPermissions("system:setting:edit")
 	@Log(title = "费用项目", businessType = BusinessType.UPDATE)
 	@PostMapping("/edit")
 	@ResponseBody
-	public AjaxResult editSave(@RequestParam("currentState") String currentState) {
-		System.out.println(currentState);
+	public AjaxResult editSave(@RequestParam(value = "costItems", required = false) String costItems,
+			@RequestParam(value = "standardName", required = false) String standardName,
+			@RequestParam(value = "billingCycle", required = false) String billingCycle,
+			@RequestParam(value = "currentState", required = false) String currentState,
+			@RequestParam(value = "building", required = false) String building,
+			@RequestParam(value = "transferTenants", required = false) String transferTenants,
+			@RequestParam(value = "sel[]", required = false)String[] sel) {
+
+		
+		System.out.println("costItems:" + costItems );
+		System.out.println("standardName:" + standardName );
+		System.out.println("billingCycle:" + billingCycle );
+		System.out.println("currentState:" + currentState );
+		System.out.println("building:" + building );
+		System.out.println("transferTenants:" + transferTenants );
+		for (Object s : sel) {
+			System.out.println(s);
+		}
+		
 		return toAjax(hyCostService.updateHyCostOther(currentState));
 	}
 
@@ -143,7 +160,7 @@ public class HyCustomerStandardSettingsController extends BaseController {
 	 */
 	@ApiOperation("费用项目")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "ids", value = "ids", required = true), })
-	@RequiresPermissions("system:cost:remove")
+	@RequiresPermissions("system:setting:remove")
 	@Log(title = "费用项目", businessType = BusinessType.DELETE)
 	@PostMapping("/remove")
 	@ResponseBody

@@ -139,9 +139,8 @@
 			var currentState = $("#currentState").val();
 			var building = $("#building").val();
 			var transferTenants = $("#transferTenants").val();
-			var currentState = $("#currentState").val();
-			
-			console.log(costItems + " " + standardName + " " + billingCycle + " " + currentState + " " + building + " " + transferTenants + " " + currentState);
+			var sel = selectorx.val();
+			console.log(sel);
         	 $.ajax({
 	       		 url: "/system/customerStandardSetting/edit",
 	       	        type: "post",
@@ -153,7 +152,7 @@
                         "currentState": currentState,
                         "building": building,
                         "transferTenants" : transferTenants,
-                        "currentState" : currentState
+                        "sel" : sel
                     },
 	       	        beforeSend: function () {
 	       	            $.modal.loading("正在处理中，请稍后...");
