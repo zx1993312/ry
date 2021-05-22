@@ -27,12 +27,6 @@ public interface IHyOwnerRegistrationService
      */
     public List<HyOwnerRegistration> selectHyOwnerRegistrationList(HyOwnerRegistration hyOwnerRegistration);
     
-    public List<HyOwnerRegistration> selectHyOwnerRegistrationListOr(HyOwnerRegistration hyOwnerRegistration);
-    
-    public List<HyOwnerRegistration> selectHyOwnerRegistrationListOrr(HyOwnerRegistration hyOwnerRegistration);
-
-    public List<HyOwnerRegistration> selectHyOwnerRegistrationListOor(HyOwnerRegistration hyOwnerRegistration);	
-
     
     /**
      * 新增业主资料登记

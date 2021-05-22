@@ -70,7 +70,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<resultMap type="HyHouseInf" id="HyHouseInfResult">
 		<result property="id" column="id" />
-		<result property="building" column="building" />
 		<result property="houseNumber" column="house_number" />
 		<result property="houseName" column="house_name" />
 		<result property="builtUpArea" column="built_up_area" />
@@ -275,7 +274,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		h.group_area,
 		h.unit,
 		h.floor,
-		h.building,
 		h.delivery_status,
 		h.house_name,
 		h.built_up_area,

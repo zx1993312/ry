@@ -94,18 +94,6 @@ public class HyOwnerRegistrationServiceImpl implements IHyOwnerRegistrationServi
 		return hyOwnerRegistrationMapper.deleteHyOwnerRegistrationById(id);
 	}
 
-	@Override
-	public List<HyOwnerRegistration> selectHyOwnerRegistrationListOr(HyOwnerRegistration hyOwnerRegistration) {
-		
-		return hyOwnerRegistrationMapper.selectHyOwnerRegistrationListOr(hyOwnerRegistration);
-	}
-
-	@Override
-	public List<HyOwnerRegistration> selectHyOwnerRegistrationListOrr(HyOwnerRegistration hyOwnerRegistration) {
-		return hyOwnerRegistrationMapper.selectHyOwnerRegistrationListOrr(hyOwnerRegistration);
-	}
-
-	
 	/**
 	 * 
 	 */
@@ -119,7 +107,7 @@ public class HyOwnerRegistrationServiceImpl implements IHyOwnerRegistrationServi
 		StringBuilder successMsg = new StringBuilder();
 		StringBuilder failureMsg = new StringBuilder();
 		for (HyOwnerRegistration hyOwnerRegistration : hyOwnerRegistrationList) {
-			List<HyOwnerRegistration> dataList = this.selectHyOwnerRegistrationListOor(hyOwnerRegistration);
+			List<HyOwnerRegistration> dataList = this.selectHyOwnerRegistrationList(hyOwnerRegistration);
 			
 			//判断这些是否为空
 			if (StringUtils.isNull(hyOwnerRegistration.getOwnerName()) || StringUtils.isNull(hyOwnerRegistration.getHouseNum())
@@ -155,8 +143,4 @@ public class HyOwnerRegistrationServiceImpl implements IHyOwnerRegistrationServi
 		return successMsg.toString();
 	}
 
-	@Override
-	public List<HyOwnerRegistration> selectHyOwnerRegistrationListOor(HyOwnerRegistration hyOwnerRegistration) {
-		return hyOwnerRegistrationMapper.selectHyOwnerRegistrationListOor(hyOwnerRegistration);
-	}
 }

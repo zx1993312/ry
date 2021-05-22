@@ -166,6 +166,14 @@ public class HyOwnerRegistration extends BaseEntity
     @Excel(name = "银行户名")
     private String bankAccountName;
     
+    /** 项目管理id */
+    @Excel(name = "项目管理id")
+    private Long projectId;
+    
+    /** 项目管理表 */
+    @Excel(name = "项目管理表")
+    private HyProject hyProject;
+    
     private HyHouseInf hyHouseInf;
     
     private HyEntry hyEntry;
@@ -521,6 +529,22 @@ public class HyOwnerRegistration extends BaseEntity
 		this.hyAuditManagement = hyAuditManagement;
 	}
 
+	public Long getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(Long projectId) {
+		this.projectId = projectId;
+	}
+
+	public HyProject getHyProject() {
+		return hyProject;
+	}
+
+	public void setHyProject(HyProject hyProject) {
+		this.hyProject = hyProject;
+	}
+
 	@Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -560,6 +584,8 @@ public class HyOwnerRegistration extends BaseEntity
             .append("bankType", getBankType())
             .append("bankNum", getBankNum())
             .append("bankAccountName", getBankAccountName())
+            .append("projectId", getProjectId())
+            .append("hyProject", getHyProject())
             .toString();
     }
 }

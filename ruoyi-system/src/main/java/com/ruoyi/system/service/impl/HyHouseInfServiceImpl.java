@@ -110,7 +110,7 @@ public class HyHouseInfServiceImpl implements IHyHouseInfService {
 			List<HyHouseInf> dataList = this.selectHyHouseInfList(hyHouseInf);
 			
 			//判断这些是否为空
-			if (StringUtils.isNull(hyHouseInf.getBuilding()) || StringUtils.isNull(hyHouseInf.getHouseNumber())
+			if (StringUtils.isNull(hyHouseInf.getHyBuilding().getBuildingName()) || StringUtils.isNull(hyHouseInf.getHouseNumber())
 					|| StringUtils.isNull(hyHouseInf.getHouseName()) || StringUtils.isNull(hyHouseInf.getUnit())) {
 				failureMsg.insert(0, "很抱歉，导入失败！共 " + failureNum + " 条数据格式不正确，错误如下：");
 				throw new BusinessException(failureMsg.toString());
@@ -120,15 +120,15 @@ public class HyHouseInfServiceImpl implements IHyHouseInfService {
 			if (dataList == null || dataList.size() == 0) {
 				this.insertHyHouseInf(hyHouseInf);
 				successNum++;
-				successMsg.append("<br/>" + successNum + "、房屋登记" + hyHouseInf.getBuilding() + " 导入成功");
+				successMsg.append("<br/>" + successNum + "、房屋登记" + hyHouseInf.getHyBuilding().getBuildingName() + " 导入成功");
 			} else if (updateSupport) {
 				hyHouseInf.setId(dataList.get(0).getId());
 				this.updateHyHouseInf(hyHouseInf);
 				successNum++;
-				successMsg.append("<br/>" + successNum + "、房屋登记 " + hyHouseInf.getBuilding() + " 更新成功");
+				successMsg.append("<br/>" + successNum + "、房屋登记 " + hyHouseInf.getHyBuilding().getBuildingName() + " 更新成功");
 			} else {
 				failureNum++;
-				failureMsg.append("<br/>" + failureNum + "、房屋登记 " + hyHouseInf.getBuilding() + " 已存在");
+				failureMsg.append("<br/>" + failureNum + "、房屋登记 " + hyHouseInf.getHyBuilding().getBuildingName() + " 已存在");
 			}
 		}
 		if (failureNum > 0) {

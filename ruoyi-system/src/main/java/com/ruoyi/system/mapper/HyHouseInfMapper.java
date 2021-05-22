@@ -43,28 +43,12 @@ public interface HyHouseInfMapper {
 	public int updateHyHouseInf(HyHouseInf hyHouseInf);
 
 	/**
-	 * 修改房屋登记
-	 * 
-	 * @param hyHouseInf 房屋登记
-	 * @return 结果
-	 */
-	public int updateHyHouseInfByHouseNumber(HyHouseInf hyHouseInf);
-
-	/**
 	 * 删除房屋登记
 	 * 
 	 * @param id 房屋登记ID
 	 * @return 结果
 	 */
 	public int deleteHyHouseInfById(Long id);
-
-	/**
-	 * 删除房屋登记
-	 * 
-	 * @param id 房屋登记ID
-	 * @return 结果
-	 */
-	public int deleteHyHouseInfByHoserNumber(Long id);
 
 	/**
 	 * 批量删除房屋登记

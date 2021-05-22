@@ -13,7 +13,7 @@
 						<ul>
 							<li>
 								<label>项目名称：</label> 
-								<input type="text" name="entryName" />
+								<input id="entryName" type="text" name="entryName" onclick="selectProject()"/>
 							</li>
 							<li>
 								<label>纳税人规模：</label> 
@@ -190,6 +190,10 @@
             };
             $.table.init(options);
         });
+        function selectProject(){
+        	$.modal.open("项目管理页面","/system/selectProject");	
+        };
+        
     </script>
 </body>
 <!-- 导入区域 -->

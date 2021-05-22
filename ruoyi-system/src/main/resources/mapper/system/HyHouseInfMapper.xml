@@ -6,7 +6,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<resultMap type="HyHouseInf" id="HyHouseInfResult">
 		<result property="id" column="id" />
-		<result property="building" column="building" />
 		<result property="houseNumber" column="house_number" />
 		<result property="houseName" column="house_name" />
 		<result property="builtUpArea" column="built_up_area" />
@@ -41,68 +40,165 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="changeDate" column="change_date" />
 		<result property="changePerson" column="change_person" />
 		<result property="remark" column="remark" />
+		<result property="buildingId" column="building_id" />
+		<result property="ownerId" column="owner_id" />
+		<association property="hyBuilding" column="id"
+			javaType="HyBuilding" resultMap="HyBuildingResult" />
+		<association property="hyOwnerRegistration" column="id"
+			javaType="HyOwnerRegistration" resultMap="HyOwnerRegistrationResult" />
 	</resultMap>
 
+	<resultMap type="HyBuilding" id="HyBuildingResult">
+        <result property="id"    column="id"    />
+        <result property="buildingName"    column="building_name"    />
+        <result property="buildingHigh"    column="building_high"    />
+        <result property="buildingUnit"    column="building_unit"    />
+        <result property="buildingHouseholds"    column="building_households"    />
+        <result property="buildingAddress"    column="building_address"    />
+        <result property="buildingYear"    column="building_year"    />
+        <result property="buildingRemark"    column="building_remark"    />
+        <result property="quartersId"    column="quarters_id"    />
+        <result property="projectId"    column="project_id"    />
+    </resultMap>
 
-
+	<resultMap type="HyOwnerRegistration"
+		id="HyOwnerRegistrationResult">
+		<result property="id" column="id" />
+		<result property="ownerName" column="owner_name" />
+		<result property="houseNum" column="house_num" />
+		<result property="fixedTelephone" column="fixed_telephone" />
+		<result property="mobilePhone" column="mobile_phone" />
+		<result property="idCardNum" column="id_card_num" />
+		<result property="suplierCategory" column="suplier_category" />
+		<result property="lockedNot" column="locked_not" />
+		<result property="accessNum" column="access_num" />
+		<result property="certificateName" column="certificate_name" />
+		<result property="customerCategoy" column="customer_categoy" />
+		<result property="faxPhone" column="fax_phone" />
+		<result property="contactAddress" column="contact_address" />
+		<result property="postalCode" column="postal_code" />
+		<result property="postalPreson" column="postal_preson" />
+		<result property="eMail" column="e_mail" />
+		<result property="phoneAccount" column="phone_account" />
+		<result property="bindingPhoneNum" column="binding_phone_num" />
+		<result property="coOwner" column="co_owner" />
+		<result property="ownerIdentification"
+			column="owner_identification" />
+		<result property="firName" column="fir_name" />
+		<result property="secName" column="sec_name" />
+		<result property="gender" column="gender" />
+		<result property="nationality" column="nationality" />
+		<result property="birthDate" column="birth_date" />
+		<result property="workUnit" column="work_unit" />
+		<result property="ownerJob" column="owner_job" />
+		<result property="ownerHobby" column="owner_hobby" />
+		<result property="ownerId" column="owner_id" />
+		<result property="taxpayerNum" column="taxpayer_num" />
+		<result property="ownerAddPhone" column="owner_add_phone" />
+		<result property="bankAccount" column="bank_account" />
+		<result property="collectionCategory"
+			column="collection_category" />
+		<result property="bankType" column="bank_type" />
+		<result property="bankNum" column="bank_num" />
+		<result property="bankAccountName" column="bank_account_name" />
+	</resultMap>
+	
 	<sql id="selectHyHouseInfVo">
-		select id, building, house_number, house_name, built_up_area, group_area,
-		unit, floor, same_unit_number, area_type, biling_area, inside_area,
-		shared_area, garden_area, basement_area, shared_lobby_area,
-		shared_layers_area, share_ratio, building_structure, parameters_per,change_person,
-		house_layout, floor_height, nature_property, nature_use, usage_status,change_date,
-		occupancy_status,remark, delivery_status, house_type,delivery_status_before, sales_status,
-		purchase_contract, marketing_num from hy_house_inf where 1=1
+		select 
+		h.id, 
+		h.house_number, 
+		h.house_name, 
+		h.built_up_area, 
+		h.group_area,
+		h.unit, 
+		h.floor, 
+		h.same_unit_number, 
+		h.area_type, 
+		h.biling_area, 
+		h.inside_area,
+		h.shared_area, 
+		h.garden_area, 
+		h.basement_area, 
+		h.shared_lobby_area,
+		h.shared_layers_area, 
+		h.share_ratio, 
+		h.building_structure, 
+		h.parameters_per,
+		h.house_layout, 
+		h.floor_height, 
+		h.nature_property, 
+		h.nature_use, 
+		h.usage_status,
+		h.occupancy_status,
+		h.delivery_status_before, 
+		h.delivery_status, 
+		h.change_date,
+		h.change_person,
+		h.remark, 
+		h.house_type,
+		h.sales_status,
+		h.purchase_contract, 
+		h.marketing_num, 
+		h.building_id, 
+		h.owner_id, 
+		b.building_name, 
+		o.owner_name 
+		from 
+		hy_house_inf h
+		LEFT JOIN hy_building b ON h.building_id =b.id
+		LEFT JOIN hy_owner_registration o ON h.owner_id =o.id
 	</sql>
 
 	<select id="selectHyHouseInfList" parameterType="HyHouseInf"
 		resultMap="HyHouseInfResult">
 		<include refid="selectHyHouseInfVo" />
-		
-			<if test="building != null  and building != ''"> and building = #{building}</if>
-			<if test="houseNumber != null  and houseNumber != ''"> and house_number = #{houseNumber}</if>
-			<if test="houseName != null  and houseName != ''"> and house_name like concat('%', #{houseName}, '%')</if>
-			<if test="builtUpArea != null  and builtUpArea != ''"> and built_up_area = #{builtUpArea}</if>
-			<if test="groupArea != null  and groupArea != ''"> and group_area = #{groupArea}</if>
-			<if test="unit != null  and unit != ''"> and unit = #{unit}</if>
-			<if test="floor != null  and floor != ''"> and floor = #{floor}</if>
-			<if test="sameUnitNumber != null "> and same_unit_number = #{sameUnitNumber}</if>
-			<if test="areaType != null "> and area_type = #{areaType}</if>
-			<if test="bilingArea != null  and bilingArea != ''"> and biling_area = #{bilingArea}</if>
-			<if test="insideArea != null  and insideArea != ''"> and inside_area = #{insideArea}</if>
-			<if test="sharedArea != null  and sharedArea != ''"> and shared_area = #{sharedArea}</if>
-			<if test="gardenArea != null  and gardenArea != ''"> and garden_area = #{gardenArea}</if>
-			<if test="basementArea != null  and basementArea != ''"> and basement_area = #{basementArea}</if>
-			<if test="sharedLobbyArea != null  and sharedLobbyArea != ''"> and shared_lobby_area = #{sharedLobbyArea}</if>
-			<if test="sharedLayersArea != null  and sharedLayersArea != ''"> and shared_layers_area = #{sharedLayersArea}</if>
-			<if test="shareRatio != null  and shareRatio != ''"> and share_ratio = #{shareRatio}</if>
-			<if test="buildingStructure != null  and buildingStructure != ''"> and building_structure = #{buildingStructure}</if>
-			<if test="parametersPer != null  and parametersPer != ''"> and parameters_per = #{parametersPer}</if>
-			<if test="houseLayout != null  and houseLayout != ''"> and house_layout = #{houseLayout}</if>
-			<if test="floorHeight != null  and floorHeight != ''"> and floor_height = #{floorHeight}</if>
-			<if test="natureProperty != null  and natureProperty != ''"> and nature_property = #{natureProperty}</if>
-			<if test="natureUse != null  and natureUse != ''"> and nature_use = #{natureUse}</if>
-			<if test="usageStatus != null  and usageStatus != ''"> and usage_status = #{usageStatus}</if>
-			<if test="occupancyStatus != null  and occupancyStatus != ''"> and occupancy_status = #{occupancyStatus}</if>
-			<if test="deliveryStatus != null  and deliveryStatus != ''"> and delivery_status = #{deliveryStatus}</if>
-			<if test="houseType != null  and houseType != ''"> and house_type = #{houseType}</if>
-			<if test="salesStatus != null  and salesStatus != ''"> and sales_status = #{salesStatus}</if>
-			<if test="purchaseContract != null  and purchaseContract != ''"> and purchase_contract = #{purchaseContract}</if>
-			<if test="marketingNum != null  and marketingNum != ''"> and marketing_num = #{marketingNum}</if>
-	
+		<where>
+			<if test="houseNumber != null  and houseNumber != ''"> and h.house_number = #{houseNumber}</if>
+			<if test="houseName != null  and houseName != ''"> and h.house_name like concat('%', #{houseName}, '%')</if>
+			<if test="builtUpArea != null  and builtUpArea != ''"> and h.built_up_area = #{builtUpArea}</if>
+			<if test="groupArea != null  and groupArea != ''"> and h.group_area = #{groupArea}</if>
+			<if test="unit != null  and unit != ''"> and h.unit = #{unit}</if>
+			<if test="floor != null  and floor != ''"> and h.floor = #{floor}</if>
+			<if test="sameUnitNumber != null "> and h.same_unit_number = #{sameUnitNumber}</if>
+			<if test="areaType != null "> and h.area_type = #{areaType}</if>
+			<if test="bilingArea != null  and bilingArea != ''"> and h.biling_area = #{bilingArea}</if>
+			<if test="insideArea != null  and insideArea != ''"> and h.inside_area = #{insideArea}</if>
+			<if test="sharedArea != null  and sharedArea != ''"> and h.shared_area = #{sharedArea}</if>
+			<if test="gardenArea != null  and gardenArea != ''"> and h.garden_area = #{gardenArea}</if>
+			<if test="basementArea != null  and basementArea != ''"> and h.basement_area = #{basementArea}</if>
+			<if test="sharedLobbyArea != null  and sharedLobbyArea != ''"> and h.shared_lobby_area = #{sharedLobbyArea}</if>
+			<if test="sharedLayersArea != null  and sharedLayersArea != ''"> and h.shared_layers_area = #{sharedLayersArea}</if>
+			<if test="shareRatio != null  and shareRatio != ''"> and h.share_ratio = #{shareRatio}</if>
+			<if test="buildingStructure != null  and buildingStructure != ''"> and h.building_structure = #{buildingStructure}</if>
+			<if test="parametersPer != null  and parametersPer != ''"> and h.parameters_per = #{parametersPer}</if>
+			<if test="houseLayout != null  and houseLayout != ''"> and h.house_layout = #{houseLayout}</if>
+			<if test="floorHeight != null  and floorHeight != ''"> and h.floor_height = #{floorHeight}</if>
+			<if test="natureProperty != null  and natureProperty != ''"> and h.nature_property = #{natureProperty}</if>
+			<if test="natureUse != null  and natureUse != ''"> and h.nature_use = #{natureUse}</if>
+			<if test="usageStatus != null  and usageStatus != ''"> and h.usage_status = #{usageStatus}</if>
+			<if test="occupancyStatus != null  and occupancyStatus != ''"> and h.occupancy_status = #{occupancyStatus}</if>
+			<if test="deliveryStatus != null  and deliveryStatus != ''"> and h.delivery_status = #{deliveryStatus}</if>
+			<if test="houseType != null  and houseType != ''"> and h.house_type = #{houseType}</if>
+			<if test="salesStatus != null  and salesStatus != ''"> and h.sales_status = #{salesStatus}</if>
+			<if test="purchaseContract != null  and purchaseContract != ''"> and h.purchase_contract = #{purchaseContract}</if>
+			<if test="marketingNum != null  and marketingNum != ''"> and h.marketing_num = #{marketingNum}</if>
+			<if test="buildingId != null"> and h.building_id = #{buildingId}</if>
+			<if test="ownerId != null"> and h.owner_id = #{ownerId}</if>
+		</where>
 	</select>
 
 	<select id="selectHyHouseInfById" parameterType="Long"
 		resultMap="HyHouseInfResult">
 		<include refid="selectHyHouseInfVo" />
-		and id = #{id}
+		<where>
+		and h.id = #{id}
+		</where>
 	</select>
 
 	<insert id="insertHyHouseInf" parameterType="HyHouseInf"
 		useGeneratedKeys="true" keyProperty="id">
 		insert into hy_house_inf
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="building != null">building,</if>
 			<if test="houseNumber != null">house_number,</if>
 			<if test="houseName != null">house_name,</if>
 			<if test="builtUpArea != null">built_up_area,</if>
@@ -132,9 +228,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="salesStatus != null">sales_status,</if>
 			<if test="purchaseContract != null">purchase_contract,</if>
 			<if test="marketingNum != null">marketing_num,</if>
+			<if test="buildingId != null">building_id,</if>
+			<if test="ownerId != null">owner_id,</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="building != null">#{building},</if>
 			<if test="houseNumber != null">#{houseNumber},</if>
 			<if test="houseName != null">#{houseName},</if>
 			<if test="builtUpArea != null">#{builtUpArea},</if>
@@ -164,13 +261,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="salesStatus != null">#{salesStatus},</if>
 			<if test="purchaseContract != null">#{purchaseContract},</if>
 			<if test="marketingNum != null">#{marketingNum},</if>
+			<if test="buildingId != null">#{buildingId},</if>
+			<if test="ownerId != null">#{ownerId},</if>
 		</trim>
 	</insert>
 
 	<update id="updateHyHouseInf" parameterType="HyHouseInf">
 		update hy_house_inf
 		<trim prefix="SET" suffixOverrides=",">
-			<if test="building != null">building = #{building},</if>
 			<if test="houseNumber != null">house_number = #{houseNumber},</if>
 			<if test="houseName != null">house_name = #{houseName},</if>
 			<if test="builtUpArea != null">built_up_area = #{builtUpArea},</if>
@@ -200,54 +298,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="salesStatus != null">sales_status = #{salesStatus},</if>
 			<if test="purchaseContract != null">purchase_contract = #{purchaseContract},</if>
 			<if test="marketingNum != null">marketing_num = #{marketingNum},</if>
+			<if test="buildingId != null">building_id = #{buildingId},</if>
+			<if test="ownerId != null">owner_id = #{ownerId},</if>
 		</trim>
 		where id = #{id}
-	</update>
-
-	<update id="updateHyHouseInfByHouseNumber" parameterType="HyHouseInf">
-		update hy_house_inf
-		<trim prefix="SET" suffixOverrides=",">
-			<if test="building != null">building = #{building},</if>
-			<if test="houseName != null">house_name = #{houseName},</if>
-			<if test="builtUpArea != null">built_up_area = #{builtUpArea},</if>
-			<if test="groupArea != null">group_area = #{groupArea},</if>
-			<if test="unit != null">unit = #{unit},</if>
-			<if test="floor != null">floor = #{floor},</if>
-			<if test="sameUnitNumber != null">same_unit_number = #{sameUnitNumber},</if>
-			<if test="areaType != null">area_type = #{areaType},</if>
-			<if test="bilingArea != null">biling_area = #{bilingArea},</if>
-			<if test="insideArea != null">inside_area = #{insideArea},</if>
-			<if test="sharedArea != null">shared_area = #{sharedArea},</if>
-			<if test="gardenArea != null">garden_area = #{gardenArea},</if>
-			<if test="basementArea != null">basement_area = #{basementArea},</if>
-			<if test="sharedLobbyArea != null">shared_lobby_area = #{sharedLobbyArea},</if>
-			<if test="sharedLayersArea != null">shared_layers_area = #{sharedLayersArea},</if>
-			<if test="shareRatio != null">share_ratio = #{shareRatio},</if>
-			<if test="buildingStructure != null">building_structure = #{buildingStructure},</if>
-			<if test="parametersPer != null">parameters_per = #{parametersPer},</if>
-			<if test="houseLayout != null">house_layout = #{houseLayout},</if>
-			<if test="floorHeight != null">floor_height = #{floorHeight},</if>
-			<if test="natureProperty != null">nature_property = #{natureProperty},</if>
-			<if test="natureUse != null">nature_use = #{natureUse},</if>
-			<if test="usageStatus != null">usage_status = #{usageStatus},</if>
-			<if test="occupancyStatus != null">occupancy_status = #{occupancyStatus},</if>
-			<if test="deliveryStatus != null">delivery_status = #{deliveryStatus},</if>
-			<if test="houseType != null">house_type = #{houseType},</if>
-			<if test="salesStatus != null">sales_status = #{salesStatus},</if>
-			<if test="purchaseContract != null">purchase_contract = #{purchaseContract},</if>
-			<if test="marketingNum != null">marketing_num = #{marketingNum},</if>
-		</trim>
-		where house_number = #{houseNumber}
 	</update>
 
 	<delete id="deleteHyHouseInfById" parameterType="Long">
 		delete from hy_house_inf where id = #{id}
 	</delete>
 	
-	<delete id="deleteHyHouseInfByHoserNumber" parameterType="Long">
-		delete from hy_house_inf where house_number = #{houseNumber}
-	</delete>
-
 	<delete id="deleteHyHouseInfByIds" parameterType="String">
 		delete from hy_house_inf where id in
 		<foreach item="id" collection="array" open="(" separator=","

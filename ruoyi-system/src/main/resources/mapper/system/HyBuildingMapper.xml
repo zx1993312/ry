@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyBuildingMapper">
+    
+    <resultMap type="HyBuilding" id="HyBuildingResult">
+        <result property="id"    column="id"    />
+        <result property="buildingName"    column="building_name"    />
+        <result property="buildingHigh"    column="building_high"    />
+        <result property="buildingUnit"    column="building_unit"    />
+        <result property="buildingHouseholds"    column="building_households"    />
+        <result property="buildingAddress"    column="building_address"    />
+        <result property="buildingYear"    column="building_year"    />
+        <result property="buildingRemark"    column="building_remark"    />
+        <result property="quartersId"    column="quarters_id"    />
+        <result property="projectId"    column="project_id"    />
+        <association property="hyResidentialQuarters"
+			column="id" javaType="HyResidentialQuarters"
+			resultMap="HyResidentialQuartersResult" />
+			<association property="hyProject" column="id"
+			javaType="HyProject" resultMap="HyProjectResult" />
+    </resultMap>
+    
+    <resultMap type="HyProject" id="HyProjectResult">
+		<result property="id" column="id" />
+		<result property="projectName" column="project_name" />
+		<result property="villageId" column="village_id" />
+		<result property="parentId" column="parent_id" />
+		<result property="ancestors" column="ancestors" />
+	</resultMap>
+    
+    <resultMap type="HyResidentialQuarters" id="HyResidentialQuartersResult">
+        <result property="id"    column="id"    />
+        <result property="communityAddress"    column="community_address"    />
+        <result property="communityName"    column="community_name"    />
+        <result property="contacts"    column="contacts"    />
+        <result property="contactNumber"    column="contact_number"    />
+        <result property="contactQq"    column="Contact_QQ"    />
+        <result property="city"    column="city"    />
+        <result property="area"    column="area"    />
+        <result property="county"    column="county"    />
+        <result property="address"    column="address"    />
+        <result property="longitude"    column="longitude"    />
+        <result property="latitude"    column="latitude"    />
+        <result property="customerLink"    column="customer_link"    />
+        <result property="externalLinks"    column="external_links"    />
+        <result property="propertyId"    column="property_id"    />
+    </resultMap>
+
+    <sql id="selectHyBuildingVo">
+        select 
+        b.id, 
+        b.building_name, 
+        b.building_high, 
+        b.building_unit, 
+        b.building_households, 
+        b.building_address, 
+        b.building_year, 
+        b.building_remark, 
+        b.quarters_id, 
+        b.project_id,
+        q.community_name,
+        p.project_name
+        from 
+        hy_building b
+        LEFT JOIN hy_residential_quarters q ON  b.quarters_id=q.id
+        LEFT JOIN hy_project p ON  b.project_id=p.id
+    </sql>
+
+    <select id="selectHyBuildingList" parameterType="HyBuilding" resultMap="HyBuildingResult">
+        <include refid="selectHyBuildingVo"/>
+        <where>  
+            <if test="buildingName != null  and buildingName != ''"> and b.building_name like concat('%', #{buildingName}, '%')</if>
+            <if test="buildingHigh != null  and buildingHigh != ''"> and b.building_high = #{buildingHigh}</if>
+            <if test="buildingUnit != null  and buildingUnit != ''"> and b.building_unit = #{buildingUnit}</if>
+            <if test="buildingHouseholds != null  and buildingHouseholds != ''"> and b.building_households = #{buildingHouseholds}</if>
+            <if test="buildingAddress != null  and buildingAddress != ''"> and b.building_address = #{buildingAddress}</if>
+            <if test="buildingYear != null "> and b.building_year = #{buildingYear}</if>
+            <if test="buildingRemark != null  and buildingRemark != ''"> and b.building_remark = #{buildingRemark}</if>
+            <if test="quartersId != null "> and b.quarters_id = #{quartersId}</if>
+            <if test="projectId != null "> and b.project_id = #{projectId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyBuildingById" parameterType="Long" resultMap="HyBuildingResult">
+        <include refid="selectHyBuildingVo"/>
+        where b.id = #{id}
+    </select>
+        
+    <insert id="insertHyBuilding" parameterType="HyBuilding" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_building
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="buildingName != null">building_name,</if>
+            <if test="buildingHigh != null">building_high,</if>
+            <if test="buildingUnit != null">building_unit,</if>
+            <if test="buildingHouseholds != null">building_households,</if>
+            <if test="buildingAddress != null">building_address,</if>
+            <if test="buildingYear != null">building_year,</if>
+            <if test="buildingRemark != null">building_remark,</if>
+            <if test="quartersId != null">quarters_id,</if>
+            <if test="projectId != null">project_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="buildingName != null">#{buildingName},</if>
+            <if test="buildingHigh != null">#{buildingHigh},</if>
+            <if test="buildingUnit != null">#{buildingUnit},</if>
+            <if test="buildingHouseholds != null">#{buildingHouseholds},</if>
+            <if test="buildingAddress != null">#{buildingAddress},</if>
+            <if test="buildingYear != null">#{buildingYear},</if>
+            <if test="buildingRemark != null">#{buildingRemark},</if>
+            <if test="quartersId != null">#{quartersId},</if>
+            <if test="projectId != null">#{projectId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyBuilding" parameterType="HyBuilding">
+        update hy_building
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="buildingName != null">building_name = #{buildingName},</if>
+            <if test="buildingHigh != null">building_high = #{buildingHigh},</if>
+            <if test="buildingUnit != null">building_unit = #{buildingUnit},</if>
+            <if test="buildingHouseholds != null">building_households = #{buildingHouseholds},</if>
+            <if test="buildingAddress != null">building_address = #{buildingAddress},</if>
+            <if test="buildingYear != null">building_year = #{buildingYear},</if>
+            <if test="buildingRemark != null">building_remark = #{buildingRemark},</if>
+            <if test="quartersId != null">quarters_id = #{quartersId},</if>
+            <if test="projectId != null">project_id = #{projectId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyBuildingById" parameterType="Long">
+        delete from hy_building where id = #{id}
+    </delete>
+
+    <delete id="deleteHyBuildingByIds" parameterType="String">
+        delete from hy_building where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

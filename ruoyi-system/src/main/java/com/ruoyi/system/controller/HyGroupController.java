@@ -59,7 +59,7 @@ public class HyGroupController extends BaseController {
 				set = new HashSet<>();
 				map = new HashMap<>();
 				HyHouseInf hyHouseInf = (HyHouseInf) list.get(i);
-				set.add(hyHouseInf.getBuilding());
+				set.add(hyHouseInf.getHyBuilding().getBuildingName());
 				map.put("data", set);
 				reList.add(map);
 			}

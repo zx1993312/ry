@@ -11,10 +11,6 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                <label>楼宇：</label>
-                                <input type="text" name="building"/>
-                            </li>
-                            <li>
                                 <label>房屋编号：</label>
                                 <input type="text" name="houseNumber"/>
                             </li>
@@ -207,8 +203,12 @@
                     visible: false
                 },
                 {
-                    field: 'building',
-                    title: '楼宇'
+                    field: 'hyBuilding.buildingName',
+                    title: '楼宇名称'
+                },
+                {
+                    field: 'hyOwnerRegistration.ownerName',
+                    title: '业主名称'
                 },
                 {
                     field: 'houseNumber',
@@ -260,12 +260,12 @@
                     title: '计费面积',
                     formatter: function(value, item, index) {
                     	switch(value){
-	                    	case '0' : value =  "按计费面积*单价每月计算";break;
-	                    	case '1' : value =  "按计费面积*单价每季计算";break;
-	                    	case '2' : value =  "按计费面积*单价每年计算";break;
-	                    	case '3' : value =  "按定额每月计算";break;
-	                    	case '4' : value =  "按定额每季计算";break;
-	                    	case '5' : value =  "按定额每年计算";break;
+	                    	case '30' : value =  "按计费面积*单价每月计算";break;
+	                    	case '120' : value =  "按计费面积*单价每季计算";break;
+	                    	case '365' : value =  "按计费面积*单价每年计算";break;
+	                    	case '31' : value =  "按定额每月计算";break;
+	                    	case '122' : value =  "按定额每季计算";break;
+	                    	case '366' : value =  "按定额每年计算";break;
 	                	}
 		            	return value;
 		            }

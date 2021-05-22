@@ -20,10 +20,6 @@ public class HyHouseInf extends BaseEntity
     /** 主键 */
     private Long id;
 
-    /** 楼宇 */
-    @Excel(name = "楼宇")
-    private String building;
-
     /** 房屋编号 */
     @Excel(name = "房屋编号")
     private String houseNumber;
@@ -161,6 +157,18 @@ public class HyHouseInf extends BaseEntity
     @Excel(name = "营销编号")
     private String marketingNum;
     
+    /** 楼宇id */
+    private Long buildingId;
+    
+    /** 楼宇表 */
+    @Excel(name = "楼宇表")
+    private HyBuilding hyBuilding;
+    
+    /** 业主id */
+    private Long ownerId;
+    
+    /** 业主表 */
+    @Excel(name = "业主表")
     private HyOwnerRegistration hyOwnerRegistration;
 
     public void setId(Long id) 
@@ -171,15 +179,6 @@ public class HyHouseInf extends BaseEntity
     public Long getId() 
     {
         return id;
-    }
-    public void setBuilding(String building) 
-    {
-        this.building = building;
-    }
-
-    public String getBuilding() 
-    {
-        return building;
     }
     public void setHouseNumber(String houseNumber) 
     {
@@ -483,11 +482,34 @@ public class HyHouseInf extends BaseEntity
 		this.hyOwnerRegistration = hyOwnerRegistration;
 	}
 
+	public Long getBuildingId() {
+		return buildingId;
+	}
+
+	public void setBuildingId(Long buildingId) {
+		this.buildingId = buildingId;
+	}
+
+	public HyBuilding getHyBuilding() {
+		return hyBuilding;
+	}
+
+	public void setHyBuilding(HyBuilding hyBuilding) {
+		this.hyBuilding = hyBuilding;
+	}
+
+	public Long getOwnerId() {
+		return ownerId;
+	}
+
+	public void setOwnerId(Long ownerId) {
+		this.ownerId = ownerId;
+	}
+
 	@Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
-            .append("building", getBuilding())
             .append("houseNumber", getHouseNumber())
             .append("houseName", getHouseName())
             .append("builtUpArea", getBuiltUpArea())
@@ -517,6 +539,10 @@ public class HyHouseInf extends BaseEntity
             .append("salesStatus", getSalesStatus())
             .append("purchaseContract", getPurchaseContract())
             .append("marketingNum", getMarketingNum())
+            .append("buildingId", getBuildingId())
+            .append("ownerId", getOwnerId())
+            .append("hyBuilding", getHyBuilding())
+            .append("hyOwnerRegistration", getHyOwnerRegistration())
             .toString();
     }
 }

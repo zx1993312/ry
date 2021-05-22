@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('项目列列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:project:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:project:remove')}]];
+        var prefix = ctx + "system/project";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "项目列表",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '主键',
+                    visible: false
+                },
+                {
+                    field: 'projectName',
+                    title: '项目名称'
+                },
+                {
+                    field: 'hyGroupRegistration.groupAreaName',
+                    title: '组团区域'
+                }]
+            };
+            $.table.init(options);
+        });
+        function submitHandler() {
+        	var projectName = $.table.selectColumns('projectName');
+        	if(projectName == ''){
+        		$.modal.alertWarning("请至少选择一条记录");
+        	}else{
+        		$("#entryName",window.parent.document).val(projectName);
+        	}
+        	$.modal.close();
+        }
+    </script>
+</body>
+</html>

@@ -20,7 +20,7 @@ public class OwnerRegistrationService {
 	 * @return  参数键值
 	 */
 	public List<HyOwnerRegistration> getOwnerRegistration(){
-		return hyOwnerRegistrationMapper.selectHyOwnerRegistrationListOrr(new HyOwnerRegistration());
+		return hyOwnerRegistrationMapper.selectHyOwnerRegistrationList(new HyOwnerRegistration());
 		
 	}
 }
