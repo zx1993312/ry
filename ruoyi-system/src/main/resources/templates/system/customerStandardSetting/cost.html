@@ -14,29 +14,29 @@
 						<ul>
 							<li>
 								<label>费用项目：</label> 
-								<input type="text" name="costItems" onclick="selectProject()" />
+								<input type="text" id="costItems" name="costItems" onclick="selectProject()" />
 							</li>
 							<li>
 								<label>收费标准：</label> 
-								<input type="text" name="standardName" onclick="selectFee()" />
+								<input type="text" id="standardName" name="standardName" onclick="selectFee()" />
 							</li>
 							<li>
 								<label>计费周期：</label> 
-								<select name="billingCycle" class="form-control m-b" th:with="type=${@dict.getType('hy_billing_cycle')}">
+								<select id="billingCycle" name="billingCycle" class="form-control m-b" th:with="type=${@dict.getType('hy_billing_cycle')}">
 									<option value="">请选择</option>
 									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 								</select>
 							</li>
 							<li>
 								<label>计算方式：</label> 
-								<select name="building" class="form-control m-b" th:with="type=${@dict.getType('hy_subject_type')}">
+								<select id="building" name="building" class="form-control m-b" th:with="type=${@dict.getType('hy_subject_type')}">
 									<option value="">请选择</option>
 									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 								</select>
 							</li>
 							<li>
 								<label>出租时自动转移租户：</label> 
-								<select name="transferTenants" class="form-control m-b" th:with="type=${@dict.getType('sys_yes_no')}">
+								<select id="transferTenants" name="transferTenants" class="form-control m-b" th:with="type=${@dict.getType('sys_yes_no')}">
 									<option value="">请选择</option>
 									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 								</select>
@@ -129,37 +129,31 @@
 		}
         
         function selectProject(){
-        	var costItems = $("#costItems").val();
-        	if(costItems == ''){
-        		$.modal.alertWarning("费用项目未选择");
-        	}else{
-        		$.modal.open("收费项目选择","/system/costSelect?costItems=" + costItems);
-        	}
-        	
+        	$.modal.open("收费项目选择","/system/costSelect");
         }
         
         function bt(){
-
+			var costItems = $("#costItems").val();
+			var standardName = $("#standardName").val();
+			var billingCycle = $("#billingCycle").val();
+			var currentState = $("#currentState").val();
+			var building = $("#building").val();
+			var transferTenants = $("#transferTenants").val();
+			var currentState = $("#currentState").val();
+			
+			console.log(costItems + " " + standardName + " " + billingCycle + " " + currentState + " " + building + " " + transferTenants + " " + currentState);
         	 $.ajax({
 	       		 url: "/system/customerStandardSetting/edit",
 	       	        type: "post",
 	       	        dataType: "json",
        	        	data: {
-                       	"currentState": function() {
-                            return $("#currentState").val();
-                        },
-                        "costItems": function() {
-	                		return $("#costItems").val();
-	                    },
-               			"standardName": function() {
-                            return $.common.trim($("#standardName").val());
-                        },
-                        "billingCycle": function() {
-                            return $.common.trim($("#billingCycle").val());
-                        },
-                        "standardName": function() {
-                            return $.common.trim($("#standardName").val());
-                        },
+                       	"costItems": costItems,
+                        "standardName": standardName,
+               			"billingCycle": billingCycle,
+                        "currentState": currentState,
+                        "building": building,
+                        "transferTenants" : transferTenants,
+                        "currentState" : currentState
                     },
 	       	        beforeSend: function () {
 	       	            $.modal.loading("正在处理中，请稍后...");
@@ -172,7 +166,6 @@
 	       	            $.operate.successCallback(result);
 	       	        }
 			}); 
-        	s
         	
         }
         
