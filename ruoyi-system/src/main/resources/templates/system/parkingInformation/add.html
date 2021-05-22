@@ -84,38 +84,21 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-3 control-label">客户名称：</label>
+				<label class="col-sm-3 control-label">所属业主：</label>
 				<div class="col-sm-8">
-					<input id="ownerName" name="ownerName" class="form-control"
-						type="text">
+					<select name="ownerId" class="form-control m-b" th:with="type=${@ownerRegistration.getOwnerRegistration()}">
+                          <option value="">请选择</option>
+                          <option th:each="dict : ${type}" th:text="${dict.ownerName}" th:value="${dict.id}"></option>
+                      </select>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-3 control-label">房屋编号：</label>
+				<label class="col-sm-3 control-label">所属房屋：</label>
 				<div class="col-sm-8">
-					<input id="houseNumber" name="houseNumber" class="form-control"
-						type="text">
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-3 control-label">房屋名称：</label>
-				<div class="col-sm-8">
-					<input id="houseName" name="houseName" class="form-control"
-						type="text">
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-3 control-label">房屋产权性质：</label>
-				<div class="col-sm-8">
-					<input id="houseProperty" name="houseProperty" class="form-control"
-						type="text">
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-3 control-label">房屋使用性质：</label>
-				<div class="col-sm-8">
-					<input id="houseNature" name="houseNature" class="form-control"
-						type="text">
+					<select name="houseId" class="form-control m-b" th:with="type=${@houseInf.getHouseInf()}">
+                          <option value="">请选择</option>
+                          <option th:each="dict : ${type}" th:text="${dict.houseName}" th:value="${dict.id}"></option>
+                      </select>
 				</div>
 			</div>
 			<div class="form-group">
@@ -244,26 +227,6 @@
 				currentState : {
 					required : true,
 					maxlength : 50,
-				},
-				ownerName : {
-					required : true,
-					maxlength : 50,
-				},
-				houseNumber : {
-					required : true,
-					maxlength : 20,
-				},
-				houseName : {
-					required : true,
-					maxlength : 50,
-				},
-				houseProperty : {
-					required : true,
-					maxlength : 3,
-				},
-				houseNature : {
-					required : true,
-					maxlength : 3,
 				},
 				parkingCard : {
 					required : true,

@@ -37,16 +37,6 @@
 									<option value="0">使用</option>
 									<option value="1">未使用</option>
 							</select></li>
-							<li><label>客户名称：</label> <input type="text" name="ownerName" />
-							</li>
-							<li><label>房屋编号：</label> <input type="text"
-								name="houseNumber" /></li>
-							<li><label>房屋名称：</label> <input type="text" name="houseName" />
-							</li>
-							<li><label>房屋产权性质：</label> <input type="text"
-								name="houseProperty" onkeyup="this.value=this.value.replace(/\D/g,'')"/></li>
-							<li><label>房屋使用性质：</label> <input type="text"
-								name="houseNature" onkeyup="this.value=this.value.replace(/\D/g,'')"/></li>
 							<li><label>停车卡号：</label> <input type="text"
 								name="parkingCard" /></li>
 							<li><label>车牌号码：</label> <input type="text"
@@ -157,24 +147,16 @@
                     title: '当前状态'
                 },
                 {
-                    field: 'ownerName',
+                    field: 'hyOwnerRegistration.ownerName',
                     title: '客户名称'
                 },
                 {
-                    field: 'houseNumber',
+                    field: 'hyHouseInf.houseNumber',
                     title: '房屋编号'
                 },
                 {
-                    field: 'houseName',
+                    field: 'hyHouseInf.houseName',
                     title: '房屋名称'
-                },
-                {
-                    field: 'houseProperty',
-                    title: '房屋产权性质'
-                },
-                {
-                    field: 'houseNature',
-                    title: '房屋使用性质'
                 },
                 {
                     field: 'parkingCard',

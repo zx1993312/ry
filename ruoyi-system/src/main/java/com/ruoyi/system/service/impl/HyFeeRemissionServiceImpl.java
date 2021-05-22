@@ -97,7 +97,7 @@ public class HyFeeRemissionServiceImpl implements IHyFeeRemissionService {
 		if (StringUtils.isNull(ownerList) || ownerList.size() == 0) {// 数据存在，插入新数据
 			result = hyOwnerRegistrationMapper.insertHyOwnerRegistration(hyOwnerRegistration);
 		} else {
-			result = hyOwnerRegistrationMapper.updateHyOwnerRegistrationByHouseNumber(hyOwnerRegistration);
+			result = hyOwnerRegistrationMapper.updateHyOwnerRegistration(hyOwnerRegistration);
 		}
 
 		HyHouseInf hyHouseInf = new HyHouseInf();
@@ -113,11 +113,11 @@ public class HyFeeRemissionServiceImpl implements IHyFeeRemissionService {
 		HyParkingInf hyParkingInf = new HyParkingInf();
 		hyParkingInf.setParkingNumber(String.valueOf(hyFeeRemission.getParkingNumber()));
 		List<?> parkingList = hyParkingInfMapper.selectHyParkingInfList(hyParkingInf);
-		hyParkingInf.setHouseNumber(hyFeeRemission.getHyParkingInf().getHouseNumber());
+		hyParkingInf.setHouseId(hyFeeRemission.getHyParkingInf().getHouseId());
 		if (StringUtils.isNull(parkingList) || parkingList.size() == 0) {
 			result = hyParkingInfMapper.insertHyParkingInf(hyParkingInf);
 		} else {
-			result = hyParkingInfMapper.updateHyParkingInfByHouseNumber(hyParkingInf);
+			result = hyParkingInfMapper.updateHyParkingInf(hyParkingInf);
 		}
 
 		HyMeter hyMeter = new HyMeter();
@@ -146,13 +146,13 @@ public class HyFeeRemissionServiceImpl implements IHyFeeRemissionService {
 		for (String id : idss) {
 			HyFeeRemission hyFeeRemission = hyFeeRemissionMapper.selectHyFeeRemissionById(Long.valueOf(id));
 			hyOwnerRegistrationMapper
-					.deleteHyOwnerRegistrationByHoserNumber(Long.valueOf(hyFeeRemission.getHouseNumber()));
+					.deleteHyOwnerRegistrationById(Long.valueOf(hyFeeRemission.getHouseNumber()));
 			HyHouseInf hyHouseInf = new HyHouseInf();
 			hyHouseInf.setHouseNumber(hyFeeRemission.getHouseNumber());
 			List<HyHouseInf> list = hyHouseInfMapper.selectHyHouseInfList(hyHouseInf);
 			hyHouseInf = list.get(0);
 			hyHouseInfMapper.deleteHyHouseInfById(hyHouseInf.getId());
-			hyParkingInfMapper.deleteHyParkingInfByHoserNumber(Long.valueOf(hyFeeRemission.getHouseNumber()));
+			hyParkingInfMapper.deleteHyParkingInfById(Long.valueOf(hyFeeRemission.getHouseNumber()));
 			hyMeterMapper.deleteHyMeterByHoserNumber(Long.valueOf(hyFeeRemission.getHouseNumber()));
 		}
 		return hyFeeRemissionMapper.deleteHyFeeRemissionByIds(Convert.toStrArray(ids));
@@ -170,13 +170,13 @@ public class HyFeeRemissionServiceImpl implements IHyFeeRemissionService {
 		int result = hyFeeRemissionMapper.deleteHyFeeRemissionById(id);
 		HyFeeRemission hyFeeRemission = hyFeeRemissionMapper.selectHyFeeRemissionById(Long.valueOf(id));
 		result = hyOwnerRegistrationMapper
-				.deleteHyOwnerRegistrationByHoserNumber(Long.valueOf(hyFeeRemission.getHouseNumber()));
+				.deleteHyOwnerRegistrationById(Long.valueOf(hyFeeRemission.getHouseNumber()));
 		HyHouseInf hyHouseInf = new HyHouseInf();
 		hyHouseInf.setHouseNumber(hyFeeRemission.getHouseNumber());
 		List<HyHouseInf> list = hyHouseInfMapper.selectHyHouseInfList(hyHouseInf);
 		hyHouseInf = list.get(0);
 		result = hyHouseInfMapper.deleteHyHouseInfById(hyHouseInf.getId());
-		result = hyParkingInfMapper.deleteHyParkingInfByHoserNumber(Long.valueOf(hyFeeRemission.getHouseNumber()));
+		result = hyParkingInfMapper.deleteHyParkingInfById(Long.valueOf(hyFeeRemission.getHouseNumber()));
 		result = hyMeterMapper.deleteHyMeterByHoserNumber(Long.valueOf(hyFeeRemission.getHouseNumber()));
 		return result;
 	}

@@ -50,16 +50,6 @@ public interface HyParkingInfMapper {
 	public int updateHyParkingInf(HyParkingInf hyParkingInf);
 
 	/**
-	 * 修改车位资料
-	 * 
-	 * 
-	 * @param hyParkingInf 车位资料
-	 * 
-	 * @return 结果
-	 */
-	public int updateHyParkingInfByHouseNumber(HyParkingInf hyParkingInf);
-
-	/**
 	 * 删除车位资料
 	 * 
 	 * 
@@ -68,14 +58,6 @@ public interface HyParkingInfMapper {
 	 */
 	public int deleteHyParkingInfById(Long id);
 
-	/**
-	 * 删除车位资料
-	 * 
-	 * 
-	 * @param id 车位资料 ID
-	 * @return 结果
-	 */
-	public int deleteHyParkingInfByHoserNumber(Long id);
 
 	/**
 	 * 批量删除车位资料

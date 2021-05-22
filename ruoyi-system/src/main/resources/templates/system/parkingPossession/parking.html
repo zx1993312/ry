@@ -22,17 +22,6 @@
 
 							<li><label>收费标准：</label> <input type="text"
 								name="chargingStandard" /></li>
-
-
-
-							<li><label>房屋编号：</label> <input type="text"
-								name="houseNumber" /></li>
-							<li><label>房屋名称：</label> <input type="text" name="houseName" />
-							</li>
-							<li><label>房屋产权性质：</label> <input type="text"
-								name="houseProperty" onkeyup="this.value=this.value.replace(/\D/g,'')"/></li>
-							<li><label>房屋使用性质：</label> <input type="text"
-								name="houseNature" onkeyup="this.value=this.value.replace(/\D/g,'')"/></li>
 							<li><label>合同交付日期：</label> <input type="text"
 								class="time-input" placeholder="请选择合同交付日期"
 								name="contractDeliveryDate" /></li>
@@ -119,30 +108,18 @@
                     field: 'actualDeliveryDate',
                     title: '实际交付日期'
                 },
-        
                 {
                     field: 'chargingStandard',
                     title: '收费标准'
                 },
-     
-     
                 {
-                    field: 'houseNumber',
+                    field: 'hyHouseInf.houseNumber',
                     title: '房屋编号'
                 },
                 {
-                    field: 'houseName',
+                    field: 'hyHouseInf.houseName',
                     title: '房屋名称'
                 },
-                {
-                    field: 'houseProperty',
-                    title: '房屋产权性质'
-                },
-                {
-                    field: 'houseNature',
-                    title: '房屋使用性质'
-                },
-        
                 {
                     field: 'usageStatus',
                     title: '使用状态'

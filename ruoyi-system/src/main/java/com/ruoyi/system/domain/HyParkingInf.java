@@ -64,26 +64,6 @@ public class HyParkingInf extends BaseEntity
     @EnumAnn(enumClass=ParkingEnum.class,enumType="String")
     private String currentState;
 
-    /** 客户名称 */
-    @Excel(name = "客户名称")
-    private String ownerName;
-
-    /** 房屋编号 */
-    @Excel(name = "房屋编号")
-    private String houseNumber;
-
-    /** 房屋名称 */
-    @Excel(name = "房屋名称")
-    private String houseName;
-
-    /** 房屋产权性质 */
-    @Excel(name = "房屋产权性质")
-    private Integer houseProperty;
-
-    /** 房屋使用性质 */
-    @Excel(name = "房屋使用性质")
-    private Integer houseNature;
-
     /** 停车卡号 */
     @Excel(name = "停车卡号")
     private String parkingCard;
@@ -151,8 +131,25 @@ public class HyParkingInf extends BaseEntity
     @Excel(name = "计费周期")
     private String bilingCycle;
     
+    /** 车位名称 */
     @Excel(name="车位名称")
     private String parkingName;
+    
+    /** 业主id */
+    @Excel(name="业主id")
+    private String ownerId;
+    
+    /** 业主表 */
+    @Excel(name="业主表")
+    private HyOwnerRegistration hyOwnerRegistration;
+    
+    /** 房屋id */
+    @Excel(name="房屋id")
+    private String houseId;
+    
+    /** 房屋表 */
+    @Excel(name="房屋表")
+    private HyHouseInf hyHouseInf;
 
 	public Long getId() {
 		return id;
@@ -232,46 +229,6 @@ public class HyParkingInf extends BaseEntity
 
 	public void setCurrentState(String currentState) {
 		this.currentState = currentState;
-	}
-
-	public String getOwnerName() {
-		return ownerName;
-	}
-
-	public void setOwnerName(String ownerName) {
-		this.ownerName = ownerName;
-	}
-
-	public String getHouseNumber() {
-		return houseNumber;
-	}
-
-	public void setHouseNumber(String houseNumber) {
-		this.houseNumber = houseNumber;
-	}
-
-	public String getHouseName() {
-		return houseName;
-	}
-
-	public void setHouseName(String houseName) {
-		this.houseName = houseName;
-	}
-
-	public Integer getHouseProperty() {
-		return houseProperty;
-	}
-
-	public void setHouseProperty(Integer houseProperty) {
-		this.houseProperty = houseProperty;
-	}
-
-	public Integer getHouseNature() {
-		return houseNature;
-	}
-
-	public void setHouseNature(Integer houseNature) {
-		this.houseNature = houseNature;
 	}
 
 	public String getParkingCard() {
@@ -402,40 +359,54 @@ public class HyParkingInf extends BaseEntity
 		this.parkingName = parkingName;
 	}
 
+	public String getOwnerId() {
+		return ownerId;
+	}
+
+	public void setOwnerId(String ownerId) {
+		this.ownerId = ownerId;
+	}
+
+	public HyOwnerRegistration getHyOwnerRegistration() {
+		return hyOwnerRegistration;
+	}
+
+	public void setHyOwnerRegistration(HyOwnerRegistration hyOwnerRegistration) {
+		this.hyOwnerRegistration = hyOwnerRegistration;
+	}
+
+	public String getHouseId() {
+		return houseId;
+	}
+
+	public void setHouseId(String houseId) {
+		this.houseId = houseId;
+	}
+
+	public HyHouseInf getHyHouseInf() {
+		return hyHouseInf;
+	}
+
+	public void setHyHouseInf(HyHouseInf hyHouseInf) {
+		this.hyHouseInf = hyHouseInf;
+	}
+
 	@Override
 	public String toString() {
 		return "HyParkingInf [id=" + id + ", parkingArea=" + parkingArea + ", parkingType=" + parkingType
 				+ ", parkingClass=" + parkingClass + ", parkingNumber=" + parkingNumber + ", contractDeliveryDate="
 				+ contractDeliveryDate + ", actualDeliveryDate=" + actualDeliveryDate + ", takeoverTime=" + takeoverTime
-				+ ", chargingStandard=" + chargingStandard + ", currentState=" + currentState + ", ownerName="
-				+ ownerName + ", houseNumber=" + houseNumber + ", houseName=" + houseName + ", houseProperty="
-				+ houseProperty + ", houseNature=" + houseNature + ", parkingCard=" + parkingCard + ", licensePlate="
-				+ licensePlate + ", vehicleType=" + vehicleType + ", vehicleBrand=" + vehicleBrand + ", displacement="
-				+ displacement + ", vehicleColor=" + vehicleColor + ", otherExpenses=" + otherExpenses
-				+ ", licensePlateNot=" + licensePlateNot + ", licensePlateTime=" + licensePlateTime + ", usageStatus="
-				+ usageStatus + ", parkingProperty=" + parkingProperty + ", timeProcessing=" + timeProcessing
-				+ ", timeStr=" + timeStr + ", timeEnd=" + timeEnd + ", bilingCycle=" + bilingCycle + ", parkingName="
-				+ parkingName + ", getId()=" + getId() + ", getParkingArea()=" + getParkingArea()
-				+ ", getParkingType()=" + getParkingType() + ", getParkingClass()=" + getParkingClass()
-				+ ", getParkingNumber()=" + getParkingNumber() + ", getContractDeliveryDate()="
-				+ getContractDeliveryDate() + ", getActualDeliveryDate()=" + getActualDeliveryDate()
-				+ ", getTakeoverTime()=" + getTakeoverTime() + ", getChargingStandard()=" + getChargingStandard()
-				+ ", getCurrentState()=" + getCurrentState() + ", getOwnerName()=" + getOwnerName()
-				+ ", getHouseNumber()=" + getHouseNumber() + ", getHouseName()=" + getHouseName()
-				+ ", getHouseProperty()=" + getHouseProperty() + ", getHouseNature()=" + getHouseNature()
-				+ ", getParkingCard()=" + getParkingCard() + ", getLicensePlate()=" + getLicensePlate()
-				+ ", getVehicleType()=" + getVehicleType() + ", getVehicleBrand()=" + getVehicleBrand()
-				+ ", getDisplacement()=" + getDisplacement() + ", getVehicleColor()=" + getVehicleColor()
-				+ ", getOtherExpenses()=" + getOtherExpenses() + ", getLicensePlateNot()=" + getLicensePlateNot()
-				+ ", getLicensePlateTime()=" + getLicensePlateTime() + ", getUsageStatus()=" + getUsageStatus()
-				+ ", getParkingProperty()=" + getParkingProperty() + ", getTimeProcessing()=" + getTimeProcessing()
-				+ ", getTimeStr()=" + getTimeStr() + ", getTimeEnd()=" + getTimeEnd() + ", getBilingCycle()="
-				+ getBilingCycle() + ", getParkingName()=" + getParkingName() + ", getSearchValue()=" + getSearchValue()
-				+ ", getCreateBy()=" + getCreateBy() + ", getCreateTime()=" + getCreateTime() + ", getUpdateBy()="
-				+ getUpdateBy() + ", getUpdateTime()=" + getUpdateTime() + ", getRemark()=" + getRemark()
-				+ ", getParams()=" + getParams() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
-				+ ", toString()=" + super.toString() + "]";
+				+ ", chargingStandard=" + chargingStandard + ", currentState=" + currentState + ", parkingCard="
+				+ parkingCard + ", licensePlate=" + licensePlate + ", vehicleType=" + vehicleType + ", vehicleBrand="
+				+ vehicleBrand + ", displacement=" + displacement + ", vehicleColor=" + vehicleColor
+				+ ", otherExpenses=" + otherExpenses + ", licensePlateNot=" + licensePlateNot + ", licensePlateTime="
+				+ licensePlateTime + ", usageStatus=" + usageStatus + ", parkingProperty=" + parkingProperty
+				+ ", timeProcessing=" + timeProcessing + ", timeStr=" + timeStr + ", timeEnd=" + timeEnd
+				+ ", bilingCycle=" + bilingCycle + ", parkingName=" + parkingName + ", ownerId=" + ownerId
+				+ ", hyOwnerRegistration=" + hyOwnerRegistration + ", houseId=" + houseId + ", hyHouseInf=" + hyHouseInf
+				+ "]";
 	}
+
 
  
 }

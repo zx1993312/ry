@@ -43,28 +43,12 @@ public interface HyOwnerRegistrationMapper {
 	public int updateHyOwnerRegistration(HyOwnerRegistration hyOwnerRegistration);
 
 	/**
-	 * 修改业主资料登记
-	 * 
-	 * @param hyOwnerRegistration 业主资料登记
-	 * @return 结果
-	 */
-	public int updateHyOwnerRegistrationByHouseNumber(HyOwnerRegistration hyOwnerRegistration);
-
-	/**
 	 * 删除业主资料登记
 	 * 
 	 * @param id 业主资料登记ID
 	 * @return 结果
 	 */
 	public int deleteHyOwnerRegistrationById(Long id);
-
-	/**
-	 * 删除业主资料登记
-	 * 
-	 * @param id 业主资料登记ID
-	 * @return 结果
-	 */
-	public int deleteHyOwnerRegistrationByHoserNumber(Long id);
 
 	/**
 	 * 批量删除业主资料登记

@@ -17,11 +17,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="takeoverTime" column="takeover_time" />
 		<result property="chargingStandard" column="charging_standard" />
 		<result property="currentState" column="current_state" />
-		<result property="ownerName" column="owner_name" />
-		<result property="houseNumber" column="house_number" />
-		<result property="houseName" column="house_name" />
-		<result property="houseProperty" column="house_property" />
-		<result property="houseNature" column="house_nature" />
 		<result property="parkingCard" column="parking_card" />
 		<result property="licensePlate" column="license_plate" />
 		<result property="vehicleType" column="vehicle_type" />
@@ -38,62 +33,174 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="timeEnd" column="time_end" />
 		<result property="bilingCycle" column="biling_cycle" />
 		<result property="parkingName" column="parking_name" />
-
+		<result property="ownerId" column="owner_id" />
+		<result property="houseId" column="house_id" />
+		<association property="hyOwnerRegistration" column="id" 
+			javaType="HyOwnerRegistration" resultMap="HyOwnerRegistrationResult" />
+		<association property="hyHouseInf" column="id"
+			javaType="HyHouseInf" resultMap="HyHouseInfResult" />
 	</resultMap>
-
+	
+	<resultMap type="HyHouseInf" id="HyHouseInfResult">
+		<result property="id" column="id" />
+		<result property="houseNumber" column="house_number" />
+		<result property="houseName" column="house_name" />
+		<result property="builtUpArea" column="built_up_area" />
+		<result property="groupArea" column="group_area" />
+		<result property="unit" column="unit" />
+		<result property="floor" column="floor" />
+		<result property="sameUnitNumber" column="same_unit_number" />
+		<result property="areaType" column="area_type" />
+		<result property="bilingArea" column="biling_area" />
+		<result property="insideArea" column="inside_area" />
+		<result property="sharedArea" column="shared_area" />
+		<result property="gardenArea" column="garden_area" />
+		<result property="basementArea" column="basement_area" />
+		<result property="sharedLobbyArea" column="shared_lobby_area" />
+		<result property="sharedLayersArea" column="shared_layers_area" />
+		<result property="shareRatio" column="share_ratio" />
+		<result property="buildingStructure"
+			column="building_structure" />
+		<result property="parametersPer" column="parameters_per" />
+		<result property="houseLayout" column="house_layout" />
+		<result property="floorHeight" column="floor_height" />
+		<result property="natureProperty" column="nature_property" />
+		<result property="natureUse" column="nature_use" />
+		<result property="usageStatus" column="usage_status" />
+		<result property="occupancyStatus" column="occupancy_status" />
+		<result property="deliveryStatus" column="delivery_status" />
+		<result property="houseType" column="house_type" />
+		<result property="salesStatus" column="sales_status" />
+		<result property="purchaseContract" column="purchase_contract" />
+		<result property="marketingNum" column="marketing_num" />
+		<result property="deliveryStatusBefore" column="delivery_status_before" />
+		<result property="changeDate" column="change_date" />
+		<result property="changePerson" column="change_person" />
+		<result property="remark" column="remark" />
+		<result property="buildingId" column="building_id" />
+		<result property="ownerId" column="owner_id" />
+	</resultMap>
+	
+	<resultMap type="HyOwnerRegistration"
+		id="HyOwnerRegistrationResult">
+		<result property="id" column="id" />
+		<result property="ownerName" column="owner_name" />
+		<result property="fixedTelephone" column="fixed_telephone" />
+		<result property="mobilePhone" column="mobile_phone" />
+		<result property="idCardNum" column="id_card_num" />
+		<result property="suplierCategory" column="suplier_category" />
+		<result property="lockedNot" column="locked_not" />
+		<result property="accessNum" column="access_num" />
+		<result property="certificateName" column="certificate_name" />
+		<result property="customerCategoy" column="customer_categoy" />
+		<result property="faxPhone" column="fax_phone" />
+		<result property="contactAddress" column="contact_address" />
+		<result property="postalCode" column="postal_code" />
+		<result property="postalPreson" column="postal_preson" />
+		<result property="eMail" column="e_mail" />
+		<result property="phoneAccount" column="phone_account" />
+		<result property="bindingPhoneNum" column="binding_phone_num" />
+		<result property="coOwner" column="co_owner" />
+		<result property="ownerIdentification"
+			column="owner_identification" />
+		<result property="firName" column="fir_name" />
+		<result property="secName" column="sec_name" />
+		<result property="gender" column="gender" />
+		<result property="nationality" column="nationality" />
+		<result property="birthDate" column="birth_date" />
+		<result property="workUnit" column="work_unit" />
+		<result property="ownerJob" column="owner_job" />
+		<result property="ownerHobby" column="owner_hobby" />
+		<result property="ownerId" column="owner_id" />
+		<result property="taxpayerNum" column="taxpayer_num" />
+		<result property="ownerAddPhone" column="owner_add_phone" />
+		<result property="bankAccount" column="bank_account" />
+		<result property="collectionCategory"
+			column="collection_category" />
+		<result property="bankType" column="bank_type" />
+		<result property="bankNum" column="bank_num" />
+		<result property="bankAccountName" column="bank_account_name" />
+		<result property="projectId" column="project_id" />
+	</resultMap>
+	
 	<sql id="selectHyParkingInfVo">
-		select id, parking_area, parking_type, parking_class, parking_number,
-		contract_delivery_date, actual_delivery_date, takeover_time,
-		charging_standard, current_state, owner_name, house_number,
-		house_name, house_property, house_nature, parking_card, license_plate,
-		vehicle_type, vehicle_brand, displacement, vehicle_color,
-		other_expenses, license_plate_not, license_plate_time, usage_status,
-		parking_property, time_processing, time_str, time_end,
-		biling_cycle,parking_name from hy_parking_inf
+		select 
+		p.id, 
+		p.parking_area, 
+		p.parking_type, 
+		p.parking_class, 
+		p.parking_number,
+		p.contract_delivery_date, 
+		p.actual_delivery_date, 
+		p.takeover_time,
+		p.charging_standard, 
+		p.current_state, 
+		p.parking_card, 
+		p.license_plate,
+		p.vehicle_type, 
+		p.vehicle_brand, 
+		p.displacement, 
+		p.vehicle_color,
+		p.other_expenses, 
+		p.license_plate_not, 
+		p.license_plate_time, 
+		p.usage_status,
+		p.parking_property, 
+		p.time_processing, 
+		p.time_str, 
+		p.time_end,
+		p.biling_cycle,
+		p.parking_name,
+		p.owner_id, 
+		p.house_id, 
+		o.owner_name, 
+		h.house_number, 
+		h.house_name 
+		from 
+		hy_parking_inf p
+		LEFT JOIN hy_owner_registration o ON p.owner_id =o.id
+		LEFT JOIN hy_house_inf h ON p.house_id =h.id
 	</sql>
 
 	<select id="selectHyParkingInfList" parameterType="HyParkingInf"
 		resultMap="HyParkingInfResult">
 		<include refid="selectHyParkingInfVo" />
 		<where>
-			<if test="parkingArea != null  and parkingArea != ''"> and parking_area = #{parkingArea}</if>
-			<if test="parkingType != null  and parkingType != ''"> and parking_type = #{parkingType}</if>
-			<if test="parkingClass != null  and parkingClass != ''"> and parking_class = #{parkingClass}</if>
-			<if test="parkingNumber != null  and parkingNumber != ''"> and parking_number = #{parkingNumber}</if>
-			<if test="contractDeliveryDate != null "> and contract_delivery_date = #{contractDeliveryDate}
+			<if test="parkingArea != null  and parkingArea != ''"> and p.parking_area = #{parkingArea}</if>
+			<if test="parkingType != null  and parkingType != ''"> and p.parking_type = #{parkingType}</if>
+			<if test="parkingClass != null  and parkingClass != ''"> and p.parking_class = #{parkingClass}</if>
+			<if test="parkingNumber != null  and parkingNumber != ''"> and p.parking_number = #{parkingNumber}</if>
+			<if test="contractDeliveryDate != null "> and p.contract_delivery_date = #{contractDeliveryDate}
 			</if>
-			<if test="actualDeliveryDate != null "> and actual_delivery_date = #{actualDeliveryDate}</if>
-			<if test="takeoverTime != null "> and takeover_time = #{takeoverTime}</if>
-			<if test="chargingStandard != null  and chargingStandard != ''"> and charging_standard = #{chargingStandard}</if>
-			<if test="currentState != null  and currentState != ''"> and current_state = #{currentState}</if>
-			<if test="ownerName != null  and ownerName != ''"> and owner_name like concat('%', #{ownerName}, '%')</if>
-			<if test="houseNumber != null  and houseNumber != ''"> and house_number = #{houseNumber}</if>
-			<if test="houseName != null  and houseName != ''"> and house_name like concat('%', #{houseName}, '%')</if>
-			<if test="houseProperty != null "> and house_property = #{houseProperty}</if>
-			<if test="houseNature != null "> and house_nature = #{houseNature}</if>
-			<if test="parkingCard != null  and parkingCard != ''"> and parking_card = #{parkingCard}</if>
-			<if test="licensePlate != null  and licensePlate != ''"> and license_plate = #{licensePlate}</if>
-			<if test="vehicleType != null  and vehicleType != ''"> and vehicle_type = #{vehicleType}</if>
-			<if test="vehicleBrand != null  and vehicleBrand != ''"> and vehicle_brand = #{vehicleBrand}</if>
-			<if test="displacement != null "> and displacement = #{displacement}</if>
-			<if test="vehicleColor != null  and vehicleColor != ''"> and vehicle_color = #{vehicleColor}</if>
-			<if test="otherExpenses != null "> and other_expenses = #{otherExpenses}</if>
-			<if test="licensePlateNot != null "> and license_plate_not = #{licensePlateNot}</if>
-			<if test="licensePlateTime != null "> and license_plate_time = #{licensePlateTime}</if>
-			<if test="usageStatus != null "> and usage_status = #{usageStatus}</if>
-			<if test="parkingProperty != null  and parkingProperty != ''"> and parking_property = #{parkingProperty}</if>
-			<if test="timeProcessing != null "> and time_processing = #{timeProcessing}</if>
-			<if test="timeStr != null "> and time_str = #{timeStr}</if>
-			<if test="timeEnd != null "> and time_end = #{timeEnd}</if>
-			<if test="parkingName!= null  and parkingName != '' "> and parking_name = #{parkingName}</if>
-			<if test="bilingCycle != null  and bilingCycle != ''"> and biling_cycle = #{bilingCycle}</if>
+			<if test="actualDeliveryDate != null "> and p.actual_delivery_date = #{actualDeliveryDate}</if>
+			<if test="takeoverTime != null "> and p.takeover_time = #{takeoverTime}</if>
+			<if test="chargingStandard != null  and chargingStandard != ''"> and p.charging_standard = #{chargingStandard}</if>
+			<if test="currentState != null  and currentState != ''"> and p.current_state = #{currentState}</if>
+			<if test="parkingCard != null  and parkingCard != ''"> and p.parking_card = #{parkingCard}</if>
+			<if test="licensePlate != null  and licensePlate != ''"> and p.license_plate = #{licensePlate}</if>
+			<if test="vehicleType != null  and vehicleType != ''"> and p.vehicle_type = #{vehicleType}</if>
+			<if test="vehicleBrand != null  and vehicleBrand != ''"> and p.vehicle_brand = #{vehicleBrand}</if>
+			<if test="displacement != null "> and p.displacement = #{displacement}</if>
+			<if test="vehicleColor != null  and vehicleColor != ''"> and p.vehicle_color = #{vehicleColor}</if>
+			<if test="otherExpenses != null "> and p.other_expenses = #{otherExpenses}</if>
+			<if test="licensePlateNot != null "> and p.license_plate_not = #{licensePlateNot}</if>
+			<if test="licensePlateTime != null "> and p.license_plate_time = #{licensePlateTime}</if>
+			<if test="usageStatus != null "> and p.usage_status = #{usageStatus}</if>
+			<if test="parkingProperty != null  and parkingProperty != ''"> and p.parking_property = #{parkingProperty}</if>
+			<if test="timeProcessing != null "> and p.time_processing = #{timeProcessing}</if>
+			<if test="timeStr != null "> and p.time_str = #{timeStr}</if>
+			<if test="timeEnd != null "> and p.time_end = #{timeEnd}</if>
+			<if test="parkingName!= null  and parkingName != '' "> and p.parking_name = #{parkingName}</if>
+			<if test="bilingCycle != null  and bilingCycle != ''"> and p.biling_cycle = #{bilingCycle}</if>
+			<if test="ownerId != null"> and p.owner_id = #{ownerId}</if>
+			<if test="houseId != null"> and p.house_id = #{houseId}</if>
 		</where>
 	</select>
 
 	<select id="selectHyParkingInfById" parameterType="Long"
 		resultMap="HyParkingInfResult">
 		<include refid="selectHyParkingInfVo" />
-		where id = #{id}
+		where p.id = #{id}
 	</select>
 
 	<insert id="insertHyParkingInf" parameterType="HyParkingInf"
@@ -109,11 +216,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="takeoverTime != null">takeover_time,</if>
 			<if test="chargingStandard != null">charging_standard,</if>
 			<if test="currentState != null">current_state,</if>
-			<if test="ownerName != null">owner_name,</if>
-			<if test="houseNumber != null">house_number,</if>
-			<if test="houseName != null">house_name,</if>
-			<if test="houseProperty != null">house_property,</if>
-			<if test="houseNature != null">house_nature,</if>
 			<if test="parkingCard != null">parking_card,</if>
 			<if test="licensePlate != null">license_plate,</if>
 			<if test="vehicleType != null">vehicle_type,</if>
@@ -130,6 +232,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="timeEnd != null">time_end,</if>
 			<if test="bilingCycle != null">biling_cycle,</if>
 			<if test="parkingName != null">parking_name,</if>
+			<if test="ownerId != null">owner_id,</if>
+			<if test="houseId != null">house_id,</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="parkingArea != null">#{parkingArea},</if>
@@ -141,11 +245,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="takeoverTime != null">#{takeoverTime},</if>
 			<if test="chargingStandard != null">#{chargingStandard},</if>
 			<if test="currentState != null">#{currentState},</if>
-			<if test="ownerName != null">#{ownerName},</if>
-			<if test="houseNumber != null">#{houseNumber},</if>
-			<if test="houseName != null">#{houseName},</if>
-			<if test="houseProperty != null">#{houseProperty},</if>
-			<if test="houseNature != null">#{houseNature},</if>
 			<if test="parkingCard != null">#{parkingCard},</if>
 			<if test="licensePlate != null">#{licensePlate},</if>
 			<if test="vehicleType != null">#{vehicleType},</if>
@@ -162,6 +261,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="timeEnd != null">#{timeEnd},</if>
 			<if test="bilingCycle != null">#{bilingCycle},</if>
 			<if test="parkingName != null">#{parkingName},</if>
+			<if test="ownerId != null">#{ownerId},</if>
+			<if test="houseId != null">#{houseId},</if>
 		</trim>
 	</insert>
 
@@ -177,11 +278,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="takeoverTime != null">takeover_time = #{takeoverTime},</if>
 			<if test="chargingStandard != null">charging_standard = #{chargingStandard},</if>
 			<if test="currentState != null">current_state = #{currentState},</if>
-			<if test="ownerName != null">owner_name = #{ownerName},</if>
-			<if test="houseNumber != null">house_number = #{houseNumber},</if>
-			<if test="houseName != null">house_name = #{houseName},</if>
-			<if test="houseProperty != null">house_property = #{houseProperty},</if>
-			<if test="houseNature != null">house_nature = #{houseNature},</if>
 			<if test="parkingCard != null">parking_card = #{parkingCard},</if>
 			<if test="licensePlate != null">license_plate = #{licensePlate},</if>
 			<if test="vehicleType != null">vehicle_type = #{vehicleType},</if>
@@ -198,54 +294,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="timeEnd != null">time_end = #{timeEnd},</if>
 			<if test="bilingCycle != null">biling_cycle = #{bilingCycle},</if>
 			<if test="parkingName != null">parking_name = #{parkingName},</if>
+			<if test="ownerId != null">owner_id = #{ownerId},</if>
+			<if test="houseId != null">house_id = #{houseId},</if>
 		</trim>
 		where id = #{id}
-	</update>
-
-	<update id="updateHyParkingInfByHouseNumber" parameterType="HyParkingInf">
-		update hy_parking_inf
-		<trim prefix="SET" suffixOverrides=",">
-			<if test="parkingArea != null">parking_area = #{parkingArea},</if>
-			<if test="parkingType != null">parking_type = #{parkingType},</if>
-			<if test="parkingClass != null">parking_class = #{parkingClass},</if>
-			<if test="parkingNumber != null">parking_number = #{parkingNumber},</if>
-			<if test="contractDeliveryDate != null">contract_delivery_date = #{contractDeliveryDate},</if>
-			<if test="actualDeliveryDate != null">actual_delivery_date = #{actualDeliveryDate},</if>
-			<if test="takeoverTime != null">takeover_time = #{takeoverTime},</if>
-			<if test="chargingStandard != null">charging_standard = #{chargingStandard},</if>
-			<if test="currentState != null">current_state = #{currentState},</if>
-			<if test="ownerName != null">owner_name = #{ownerName},</if>
-			<if test="houseName != null">house_name = #{houseName},</if>
-			<if test="houseProperty != null">house_property = #{houseProperty},</if>
-			<if test="houseNature != null">house_nature = #{houseNature},</if>
-			<if test="parkingCard != null">parking_card = #{parkingCard},</if>
-			<if test="licensePlate != null">license_plate = #{licensePlate},</if>
-			<if test="vehicleType != null">vehicle_type = #{vehicleType},</if>
-			<if test="vehicleBrand != null">vehicle_brand = #{vehicleBrand},</if>
-			<if test="displacement != null">displacement = #{displacement},</if>
-			<if test="vehicleColor != null">vehicle_color = #{vehicleColor},</if>
-			<if test="otherExpenses != null">other_expenses = #{otherExpenses},</if>
-			<if test="licensePlateNot != null">license_plate_not = #{licensePlateNot},</if>
-			<if test="licensePlateTime != null">license_plate_time = #{licensePlateTime},</if>
-			<if test="usageStatus != null">usage_status = #{usageStatus},</if>
-			<if test="parkingProperty != null">parking_property = #{parkingProperty},</if>
-			<if test="timeProcessing != null">time_processing = #{timeProcessing},</if>
-			<if test="timeStr != null">time_str = #{timeStr},</if>
-			<if test="timeEnd != null">time_end = #{timeEnd},</if>
-			<if test="bilingCycle != null">biling_cycle = #{bilingCycle},</if>
-			<if test="parkingName != null">parking_name = #{parkingName},</if>
-		</trim>
-		where house_number = #{houseNumber}
 	</update>
 
 	<delete id="deleteHyParkingInfById" parameterType="Long">
 		delete from hy_parking_inf where id = #{id}
 	</delete>
 	
-	<delete id="deleteHyParkingInfByHoserNumber" parameterType="Long">
-		delete from hy_parking_inf where house_number = #{houseNumber}
-	</delete>
-
 	<delete id="deleteHyParkingInfByIds" parameterType="String">
 		delete from hy_parking_inf where id in
 		<foreach item="id" collection="array" open="(" separator=","
