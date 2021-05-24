@@ -120,16 +120,34 @@ public class HyBillSet extends BaseEntity {
 	private HyHouseInf hyHouseInf;
 	
 	/**
+	 * 费用项目id
+	 */
+	@Excel(name = "费用项目id")
+	private Long costId;
+	
+	/**
 	 * 费用项目表
 	 */
 	@Excel(name = "费用项目表")
 	private HyCost hyCost;
 	
 	/**
+	 * 撤销对象id
+	 */
+	@Excel(name = "撤销对象id")
+	private Long revokeId;
+	
+	/**
 	 * 撤销对象表
 	 */
 	@Excel(name = "撤销对象表")
 	private HyRevoke hyRevoke;
+	
+	/**
+	 * 预交冲抵id
+	 */
+	@Excel(name = "交冲抵id")
+	private Long offsetId;
 	
 	/**
 	 * 预交冲抵表
@@ -422,6 +440,30 @@ public class HyBillSet extends BaseEntity {
 		this.ownerId = ownerId;
 	}
 
+	public Long getCostId() {
+		return costId;
+	}
+
+	public void setCostId(Long costId) {
+		this.costId = costId;
+	}
+
+	public Long getRevokeId() {
+		return revokeId;
+	}
+
+	public void setRevokeId(Long revokeId) {
+		this.revokeId = revokeId;
+	}
+
+	public Long getOffsetId() {
+		return offsetId;
+	}
+
+	public void setOffsetId(Long offsetId) {
+		this.offsetId = offsetId;
+	}
+
 	@Override
 	public String toString() {
 		return "HyBillSet [id=" + id + ", billTypes=" + billTypes + ", billNumber=" + billNumber + ", invoiceNumber="
@@ -430,12 +472,13 @@ public class HyBillSet extends BaseEntity {
 				+ paymentMethodNew + ", paymentMethod=" + paymentMethod + ", paymentPerson=" + paymentPerson
 				+ ", paymentDate=" + paymentDate + ", modifyPerson=" + modifyPerson + ", modifyTime=" + modifyTime
 				+ ", billSample=" + billSample + ", billPanel=" + billPanel + ", panel=" + panel + ", hyHouseInf="
-				+ hyHouseInf + ", hyCost=" + hyCost + ", hyRevoke=" + hyRevoke + ", hyPaymentOffset=" + hyPaymentOffset
-				+ ", businessType=" + businessType + ", paymentAmount=" + paymentAmount + ", cancelNot=" + cancelNot
-				+ ", writeNot=" + writeNot + ", remark=" + remark + ", draftCheckNumber=" + draftCheckNumber
-				+ ", billAmount=" + billAmount + ", ownerId=" + ownerId + ", hyOwnerRegistration=" + hyOwnerRegistration
-				+ "]";
+				+ hyHouseInf + ", costId=" + costId + ", hyCost=" + hyCost + ", revokeId=" + revokeId + ", hyRevoke="
+				+ hyRevoke + ", offsetId=" + offsetId + ", hyPaymentOffset=" + hyPaymentOffset + ", businessType="
+				+ businessType + ", paymentAmount=" + paymentAmount + ", cancelNot=" + cancelNot + ", writeNot="
+				+ writeNot + ", remark=" + remark + ", draftCheckNumber=" + draftCheckNumber + ", billAmount="
+				+ billAmount + ", ownerId=" + ownerId + ", hyOwnerRegistration=" + hyOwnerRegistration + "]";
 	}
+
 
 
 }

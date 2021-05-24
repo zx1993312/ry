@@ -1,5 +1,6 @@
 package com.ruoyi.system.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -30,6 +31,14 @@ public class HyPaymentOffset extends BaseEntity {
 	/** 冲抵人 */
 	@Excel(name = "冲抵人")
 	private String offsetPreson;
+	
+	/** 冲抵费用项目 */
+	@Excel(name = "冲抵费用项目")
+	private String offsetExpense;
+	
+	/** 预交金额 */
+	@Excel(name = "预交金额")
+	private BigDecimal advanceAmount;
 
 	/** 冲抵操作时间 */
 	@JsonFormat(pattern = "yyyy-MM-dd")
@@ -67,6 +76,7 @@ public class HyPaymentOffset extends BaseEntity {
 	 */
 	@Excel(name = "费用项目表")
 	private HyCost hyCost;
+	
 
 	public void setId(Long id) {
 		this.id = id;
@@ -166,23 +176,32 @@ public class HyPaymentOffset extends BaseEntity {
 		this.hyCost = hyCost;
 	}
 
+	public String getOffsetExpense() {
+		return offsetExpense;
+	}
+
+	public void setOffsetExpense(String offsetExpense) {
+		this.offsetExpense = offsetExpense;
+	}
+
+	public BigDecimal getAdvanceAmount() {
+		return advanceAmount;
+	}
+
+	public void setAdvanceAmount(BigDecimal advanceAmount) {
+		this.advanceAmount = advanceAmount;
+	}
+
 	@Override
 	public String toString() {
 		return "HyPaymentOffset [id=" + id + ", houseNum=" + houseNum + ", offsetCategory=" + offsetCategory
-				+ ", offsetPreson=" + offsetPreson + ", offsetOperationDate=" + offsetOperationDate + ", offsetRange="
-				+ offsetRange + ", offsetDate=" + offsetDate + ", importPerson=" + importPerson + ", importTime="
-				+ importTime + ", advanceTime=" + advanceTime + ", hyAuditManagement=" + hyAuditManagement + ", hyCost="
-				+ hyCost + ", getId()=" + getId() + ", getHouseNum()=" + getHouseNum() + ", getOffsetCategory()="
-				+ getOffsetCategory() + ", getOffsetPreson()=" + getOffsetPreson() + ", getOffsetOperationDate()="
-				+ getOffsetOperationDate() + ", getOffsetRange()=" + getOffsetRange() + ", getOffsetDate()="
-				+ getOffsetDate() + ", getImportPerson()=" + getImportPerson() + ", getImportTime()=" + getImportTime()
-				+ ", getAdvanceTime()=" + getAdvanceTime() + ", getHyAuditManagement()=" + getHyAuditManagement()
-				+ ", getHyCost()=" + getHyCost() + ", getSearchValue()=" + getSearchValue() + ", getCreateBy()="
-				+ getCreateBy() + ", getCreateTime()=" + getCreateTime() + ", getUpdateBy()=" + getUpdateBy()
-				+ ", getUpdateTime()=" + getUpdateTime() + ", getRemark()=" + getRemark() + ", getParams()="
-				+ getParams() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
-				+ super.toString() + "]";
+				+ ", offsetPreson=" + offsetPreson + ", offsetExpense=" + offsetExpense + ", advanceAmount="
+				+ advanceAmount + ", offsetOperationDate=" + offsetOperationDate + ", offsetRange=" + offsetRange
+				+ ", offsetDate=" + offsetDate + ", importPerson=" + importPerson + ", importTime=" + importTime
+				+ ", advanceTime=" + advanceTime + ", hyAuditManagement=" + hyAuditManagement + ", hyCost=" + hyCost
+				+ "]";
 	}
+
 
 
 }

@@ -26,11 +26,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="billPanel" column="bill_panel" />
 		<result property="panel" column="panel" />
 		<result property="billAmount" column="bill_amount" />
+		<result property="paymentAmount" column="payment_amount" />
 		<result property="cancelNot" column="cancel_not" />
 		<result property="writeNot" column="write_not" />
 		<result property="remark" column="remark" />
 		<result property="draftCheckNumber" column="draft_check_number" />
 		<result property="ownerId" column="owner_id" />
+		<result property="costId" column="cost_id" />
+		<result property="revokeId" column="revoke_id" />
+		<result property="offsetId" column="offset_id" />
 		<association property="hyHouseInf" column="id"
 			javaType="HyHouseInf" resultMap="HyHouseInfResult" />
 		<association property="hyOwnerRegistration" column="id"
@@ -133,6 +137,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="standardDescription"
 			column="standard_description" />
 		<result property="standardState" column="standard_state" />
+		<result property="penaltyContract" column="penalty_contract" />
 		<result property="proportionDamags" column="proportion_damags" />
 		<result property="projectModification"
 			column="project_modification" />
@@ -189,13 +194,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="importPerson" column="import_person" />
 		<result property="importTime" column="import_time" />
 		<result property="advanceTime" column="advance_time" />
+		<result property="offsetExpense" column="offset_expense" />
+		<result property="advanceAmount" column="advance_amount" />
 
 	</resultMap>
 
-	<!-- <sql id="selectHyBillSetVo">
+	 <sql id="selectHyBillSetVo">
 		select
 		b.id,
-		b.house_num,
 		b.business_type,
 		b.bill_types,
 		b.bill_number,
@@ -214,14 +220,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		b.bill_sample,
 		b.bill_panel,
 		b.panel,
+		b.payment_amount,
 		b.bill_amount,
 		b.cancel_not,
 		b.write_not,
 		b.remark,
 		b.draft_check_number,
 		b.draft_check_number,
+		b.owner_id,
+		b.cost_id,
+		b.revoke_id,
+		b.offset_id,
 		o.owner_name,
 		h.house_name,
+		h.house_number,
 		c.fee_date,
 		c.biling_start_date,
 		c.biling_end_date,
@@ -244,16 +256,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		o.id=h.owner_id
 		left join
 		hy_cost c on
-		b.house_num=c.house_num
+		b.cost_id=c.id
 		left join 
-		hy_revoke r on b.house_num=r.house_num
+		hy_revoke r on b.revoke_id=r.id
 		left join
 		hy_payment_offset p on
-		b.house_num=p.house_num
+		b.offset_id=p.id
 		where 1=1
-	</sql> -->
+	</sql> 
 	
-	<sql id="selectHyBillSetVo">
+<!-- 	<sql id="selectHyBillSetVo">
 		select
 		b.id,
 		b.business_type,
@@ -293,7 +305,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		hy_house_inf h on
 		o.id=h.owner_id
 		where 1=1
-	</sql>
+	</sql> -->
 
 	<select id="selectHyBillSetList" parameterType="HyBillSet"
 		resultMap="HyBillSetResult">
@@ -309,11 +321,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="panel!=null and panel!=''"> and b.panel=#{panel}</if>
 		<if test="billDate!=null "> and b.bill_date=#{billDate}</if>
 		<if test="billNumber!=null and billNumber!= ''"> and b.bill_number = #{billNumber}</if>
-		<if test="hyOwnerRegistration!=null and hyOwnerRegistration!= ''">
-		<if test="hyOwnerRegistration.ownerName!=null and hyOwnerRegistration.ownerName!= ''"> and o.owner_name = #{hyOwnerRegistration.ownerName}</if>
-		</if>
 		<if test="modifyPerson !=null and modifyPerson !=''"> and b.modify_person = #{modifyPerson}</if>
 		<if test="paymentPerson !=null and paymentPerson !=''"> and b.payment_person = #{paymentPerson}</if>
+		<if test="ownerId !=null"> and b.owner_id = #{ownerId}</if>
+		<if test="costId !=null"> and b.cost_id = #{costId}</if>
+		<if test="revokeId !=null"> and b.revoke_id = #{revokeId}</if>
+		<if test="offsetId !=null"> and b.offset_id = #{offsetId}</if>
 	</select>
 
 	<select id="selectHyBillSetListByDate" parameterType="HyBillSet"
@@ -331,6 +344,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="billDate!=null "> and b.bill_date between #{startTime} and #{endTime}</if>
 		<if test="billDateNew!=null "> and b.bill_date_new between #{startTimeNew} and
 			#{endTimeNew}</if>
+		<if test="ownerId !=null"> and b.owner_id = #{ownerId}</if>
+		<if test="costId !=null"> and b.cost_id = #{costId}</if>
+		<if test="revokeId !=null"> and b.revoke_id = #{revokeId}</if>
+		<if test="offsetId !=null"> and b.offset_id = #{offsetId}</if>
 	</select>
 
 	<select id="selectHyBillSetListOr" parameterType="HyBillSet"
@@ -349,6 +366,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="billNumber!=null and billNumber!= ''"> and b.bill_number = #{billNumber}</if>
 		<if test="modifyPerson !=null and modifyPerson !=''"> and b.modify_person = #{modifyPerson}</if>
 		<if test="paymentPerson !=null and paymentPerson !=''"> and b.payment_person = #{paymentPerson}</if>
+		<if test="ownerId !=null"> and b.owner_id = #{ownerId}</if>
+		<if test="costId !=null"> and b.cost_id = #{costId}</if>
+		<if test="revokeId !=null"> and b.revoke_id = #{revokeId}</if>
+		<if test="offsetId !=null"> and b.offset_id = #{offsetId}</if>
 	</select>
 
 
@@ -370,7 +391,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="digit != null">digit,</if>
 			<if test="billSample != null">bill_sample,</if>
 			<if test="billPanel != null">bill_panel,</if>
-			<if test="panel!=null ">panel</if>
+			<if test="panel!=null ">panel,</if>
+			<if test="ownerId !=null">owner_id,</if>
+			<if test="costId !=null">cost_id,</if>
+			<if test="revokeId !=null">revoke_id,</if>
+			<if test="offsetId !=null">offset_id,</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null">#{id},</if>
@@ -382,7 +407,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="digit != null">#{digit},</if>
 			<if test="billSample != null">#{billSample},</if>
 			<if test="billPanel != null">#{billPanel},</if>
-			<if test="panel!=null ">panel</if>
+			<if test="panel!=null ">#{panel},</if>
+			<if test="ownerId !=null">#{ownerId},</if>
+			<if test="costId !=null">#{costId},</if>
+			<if test="revokeId !=null">#{revokeId},</if>
+			<if test="offsetId !=null">#{offsetId},</if>
 		</trim>
 	</insert>
 
@@ -398,6 +427,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="billSample != null">bill_sample = #{billSample},</if>
 			<if test="billPanel != null">bill_panel = #{billPanel},</if>
 			<if test="panel !=null">panel=#{panel}</if>
+			<if test="ownerId !=null">owner_id = #{ownerId},</if>
+			<if test="costId !=null">cost_id = #{costId},</if>
+			<if test="revokeId !=null">revoke_id = #{revokeId},</if>
+			<if test="offsetId !=null">offset_id = #{offsetId},</if>
 		</trim>
 		where id = #{id}
 	</update>
