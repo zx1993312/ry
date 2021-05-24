@@ -170,15 +170,6 @@ public class HyOwnerRegistration extends BaseEntity
     @Excel(name = "项目管理表")
     private HyProject hyProject;
     
-    /** 抄表设置id */
-    @Excel(name = "抄表设置id")
-    private Long meterId;
-    
-    /** 抄表设置表 */
-    @Excel(name = "抄表设置表")
-    private HyMeter hyMeter;
-    
-
     public void setId(Long id) 
     {
         this.id = id;
@@ -511,21 +502,6 @@ public class HyOwnerRegistration extends BaseEntity
 		this.hyProject = hyProject;
 	}
 
-	public Long getMeterId() {
-		return meterId;
-	}
-
-	public void setMeterId(Long meterId) {
-		this.meterId = meterId;
-	}
-
-	public HyMeter getHyMeter() {
-		return hyMeter;
-	}
-
-	public void setHyMeter(HyMeter hyMeter) {
-		this.hyMeter = hyMeter;
-	}
 
 	@Override
     public String toString() {
@@ -567,8 +543,6 @@ public class HyOwnerRegistration extends BaseEntity
             .append("bankAccountName", getBankAccountName())
             .append("projectId", getProjectId())
             .append("hyProject", getHyProject())
-            .append("meterId", getMeterId())
-            .append("hyMeter", getHyMeter())
             .toString();
     }
 }

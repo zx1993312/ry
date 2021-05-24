@@ -280,7 +280,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LEFT JOIN owner_and_cost a ON c.id = a.cost_id
 		LEFT JOIN hy_owner_registration o ON a.owner_id = o.id
 		LEFT JOIN hy_house_inf h ON h.owner_id = o.id
-		LEFT JOIN hy_meter m ON o.meter_id = m.id
+		LEFT JOIN hy_meter m ON m.house_id = h.id
 		LEFT JOIN hy_parking_inf p ON p.owner_id = o.id
 		WHERE
 		1 = 1
