@@ -18,10 +18,6 @@ public class HyCost extends BaseEntity {
 	/** 主键 */
 	private Long id;
 
-	/** 房屋编号 **/
-	@Excel(name = "房屋编号")
-	private String houseNum;
-
 	/** 费用项目 */
 	@Excel(name = "费用项目")
 	private String costItems;
@@ -233,14 +229,37 @@ public class HyCost extends BaseEntity {
 	 */
 	@Excel(name="计算标准")
 	private BigDecimal calculationStandard;
-
-	private HyParkingInf hyParkingInf;
-
-	private HyHouseInf hyHouseInf;
-
+	
+	/**
+	 * 业主表
+	 */
+	@Excel(name="业主表")
 	private HyOwnerRegistration hyOwnerRegistration;
 	
+	/**
+	 * 抄表表
+	 */
+	@Excel(name="抄表表")
 	private HyMeter hyMeter;
+	
+	/**
+	 * 车位表
+	 */
+	@Excel(name="车位表")
+	private HyParkingInf hyParkingInf;
+
+	/**
+	 * 房屋表
+	 */
+	@Excel(name="房屋表")
+	private HyHouseInf hyHouseInf;
+	
+	/**
+	 * 业主费用项目关联表
+	 */
+	@Excel(name="业主费用项目关联表")
+	private OwnerAndCost ownerAndCost;
+
 
 	public void setId(Long id) {
 		this.id = id;
@@ -534,14 +553,6 @@ public class HyCost extends BaseEntity {
 		this.hyOwnerRegistration = hyOwnerRegistration;
 	}
 
-	public String getHouseNum() {
-		return houseNum;
-	}
-
-	public void setHouseNum(String houseNum) {
-		this.houseNum = houseNum;
-	}
-
 	public String getFeeNum() {
 		return feeNum;
 	}
@@ -638,5 +649,39 @@ public class HyCost extends BaseEntity {
 		this.advancePaymentOffset = advancePaymentOffset;
 	}
 
+	public OwnerAndCost getOwnerAndCost() {
+		return ownerAndCost;
+	}
+
+	public void setOwnerAndCost(OwnerAndCost ownerAndCost) {
+		this.ownerAndCost = ownerAndCost;
+	}
+
+	@Override
+	public String toString() {
+		return "HyCost [id=" + id + ", costItems=" + costItems + ", expenseType=" + expenseType + ", parentId="
+				+ parentId + ", ancestors=" + ancestors + ", standardName=" + standardName + ", feeNum=" + feeNum
+				+ ", chargingStandard=" + chargingStandard + ", calculationMehod=" + calculationMehod
+				+ ", standardDescription=" + standardDescription + ", standardState=" + standardState
+				+ ", proportionDamags=" + proportionDamags + ", projectModification=" + projectModification
+				+ ", billingCycle=" + billingCycle + ", bilingStartDate=" + bilingStartDate + ", bilingEndDate="
+				+ bilingEndDate + ", auditResultsReason=" + auditResultsReason + ", feeDateOld=" + feeDateOld
+				+ ", feeDate=" + feeDate + ", dueDateOld=" + dueDateOld + ", dueDate=" + dueDate
+				+ ", amountReceivableOld=" + amountReceivableOld + ", amountReceivable=" + amountReceivable
+				+ ", amountActually=" + amountActually + ", remarks=" + remarks + ", operationDate=" + operationDate
+				+ ", operationUser=" + operationUser + ", operationType=" + operationType + ", deleteReason="
+				+ deleteReason + ", advancePaymentOffset=" + advancePaymentOffset + ", writeOff=" + writeOff
+				+ ", refundAmount=" + refundAmount + ", amountArrears=" + amountArrears + ", collectionStatus="
+				+ collectionStatus + ", frozenPerson=" + frozenPerson + ", frozenState=" + frozenState + ", frozenDate="
+				+ frozenDate + ", frozenReason=" + frozenReason + ", advanceStatus=" + advanceStatus
+				+ ", deliveryStatus=" + deliveryStatus + ", transferTenants=" + transferTenants + ", changeDate="
+				+ changeDate + ", billingMethod=" + billingMethod + ", calculationStandard=" + calculationStandard
+				+ ", hyOwnerRegistration=" + hyOwnerRegistration + ", hyMeter=" + hyMeter + ", hyParkingInf="
+				+ hyParkingInf + ", hyHouseInf=" + hyHouseInf + ", ownerAndCost=" + ownerAndCost + "]";
+	}
+
+
+
+	
 
 }

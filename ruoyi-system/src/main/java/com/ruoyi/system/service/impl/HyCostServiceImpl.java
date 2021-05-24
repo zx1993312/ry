@@ -13,7 +13,9 @@ import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.common.exception.BusinessException;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.domain.HyCost;
+import com.ruoyi.system.domain.OwnerAndCost;
 import com.ruoyi.system.mapper.HyCostMapper;
+import com.ruoyi.system.mapper.OwnerAndCostMapper;
 import com.ruoyi.system.service.IHyCostService;
 
 /**
@@ -26,6 +28,9 @@ import com.ruoyi.system.service.IHyCostService;
 public class HyCostServiceImpl implements IHyCostService {
 	@Autowired
 	private HyCostMapper hyCostMapper;
+	
+	@Autowired
+	private OwnerAndCostMapper ownerAndCostMapper;
 
 	/**
 	 * 查询费用项目
@@ -94,6 +99,13 @@ public class HyCostServiceImpl implements IHyCostService {
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public int insertHyCost(HyCost hyCost) {
+		OwnerAndCost ownerAndCost = new OwnerAndCost();
+		Long ownerId = hyCost.getOwnerAndCost().getOwnerId();
+		String a = hyCostMapper.selectNextValue("hy_database", "hy_cost");
+		Long costId = Long.valueOf(a);
+		ownerAndCost.setCostId(costId);
+		ownerAndCost.setOwnerId(ownerId);
+		ownerAndCostMapper.insertOwnerAndCost(ownerAndCost);
 		return hyCostMapper.insertHyCost(hyCost);
 	}
 
@@ -106,6 +118,12 @@ public class HyCostServiceImpl implements IHyCostService {
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public int updateHyCost(HyCost hyCost) {
+		Long ownerId = hyCost.getOwnerAndCost().getOwnerId();
+		Long costId = hyCost.getId();
+		OwnerAndCost ownerAndCost = new OwnerAndCost();
+		ownerAndCost.setOwnerId(ownerId);
+		ownerAndCost.setCostId(costId);
+		ownerAndCostMapper.updateOwnerAndCost(ownerAndCost);
 		return hyCostMapper.updateHyCost(hyCost);
 	}
 

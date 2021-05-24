@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.OwnerAndCostMapper">
+
+	<resultMap type="OwnerAndCost"
+		id="OwnerAndCostResult" >
+		<result property="ownerId" column="owner_id" />
+		<result property="costId" column="cost_id" />
+	</resultMap>
+	
+	
+	<sql id="selectOwnerAndCostVo">
+		select
+		owner_id,
+		cost_id
+		from
+		owner_and_cost
+	</sql>
+
+	<select id="selectOwnerAndCostList"
+		parameterType="OwnerAndCost"
+		resultMap="OwnerAndCostResult">
+		<include refid="selectOwnerAndCostVo" />
+	</select>
+
+
+	<insert id="insertOwnerAndCost"
+		parameterType="OwnerAndCost">
+		insert into owner_and_cost
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="ownerId != null">owner_id,</if>
+			<if test="costId != null">cost_id,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="ownerId != null">#{ownerId},</if>
+			<if test="costId != null">#{costId},</if>
+		</trim>
+	</insert>
+
+	<update id="updateOwnerAndCost"
+		parameterType="OwnerAndCost">
+		update owner_and_cost
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="ownerId != null">owner_id = #{ownerId},</if>
+			<if test="costId != null">cost_id = #{costId},</if>
+		</trim>
+		where cost_id = #{costId}
+	</update>
+
+</mapper>

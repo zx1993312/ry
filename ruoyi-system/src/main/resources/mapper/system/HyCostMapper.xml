@@ -6,7 +6,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<resultMap type="HyCost" id="HyCostResult">
 		<result property="id" column="id" />
-		<result property="houseNum" column="house_num" />
 		<result property="costItems" column="cost_items" />
 		<result property="expenseType" column="expense_type" />
 		<result property="parentId" column="parent_id" />
@@ -50,14 +49,179 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="frozenDate" column="frozen_date" />
 		<result property="frozenReason" column="frozen_reason" />
 		<result property="advanceStatus" column="advance_status" />
-		<result property="deliveryStatus" column="delivery_status" />
 		<result property="transferTenants" column="transfer_tenants" />
 		<result property="changeDate" column="change_date" />
 		<result property="billingMethod" column="billing_method" />
 		<result property="calculationStandard"
 			column="calculation_standard" />
+		<association property="hyOwnerRegistration" column="id" 
+			javaType="HyOwnerRegistration" resultMap="HyOwnerRegistrationResult" />
+		<association property="hyMeter" column="id" 
+			javaType="HyMeter" resultMap="HyMeterResult" />
+		<association property="hyHouseInf" column="id"
+			javaType="HyHouseInf" resultMap="HyHouseInfResult" />
+		<association property="hyParkingInf" column="id"
+			javaType="HyParkingInf" resultMap="HyParkingInfResult" />
+		<association property="ownerAndCost" column="id"
+			javaType="OwnerAndCost" resultMap="OwnerAndCostResult" />
 	</resultMap>
-
+	
+	<resultMap type="HyParkingInf" id="HyParkingInfResult">
+		<result property="id" column="id" />
+		<result property="parkingArea" column="parking_area" />
+		<result property="parkingType" column="parking_type" />
+		<result property="parkingClass" column="parking_class" />
+		<result property="parkingNumber" column="parking_number" />
+		<result property="contractDeliveryDate"
+			column="contract_delivery_date" />
+		<result property="actualDeliveryDate"
+			column="actual_delivery_date" />
+		<result property="takeoverTime" column="takeover_time" />
+		<result property="chargingStandard" column="charging_standard" />
+		<result property="currentState" column="current_state" />
+		<result property="parkingCard" column="parking_card" />
+		<result property="licensePlate" column="license_plate" />
+		<result property="vehicleType" column="vehicle_type" />
+		<result property="vehicleBrand" column="vehicle_brand" />
+		<result property="displacement" column="displacement" />
+		<result property="vehicleColor" column="vehicle_color" />
+		<result property="otherExpenses" column="other_expenses" />
+		<result property="licensePlateNot" column="license_plate_not" />
+		<result property="licensePlateTime" column="license_plate_time" />
+		<result property="usageStatus" column="usage_status" />
+		<result property="parkingProperty" column="parking_property" />
+		<result property="timeProcessing" column="time_processing" />
+		<result property="timeStr" column="time_str" />
+		<result property="timeEnd" column="time_end" />
+		<result property="bilingCycle" column="biling_cycle" />
+		<result property="parkingName" column="parking_name" />
+		<result property="ownerId" column="owner_id" />
+		<result property="houseId" column="house_id" />
+	</resultMap>
+	
+	<resultMap type="HyHouseInf" id="HyHouseInfResult">
+		<result property="id" column="id" />
+		<result property="houseNumber" column="house_number" />
+		<result property="houseName" column="house_name" />
+		<result property="builtUpArea" column="built_up_area" />
+		<result property="groupArea" column="group_area" />
+		<result property="unit" column="unit" />
+		<result property="floor" column="floor" />
+		<result property="sameUnitNumber" column="same_unit_number" />
+		<result property="areaType" column="area_type" />
+		<result property="bilingArea" column="biling_area" />
+		<result property="insideArea" column="inside_area" />
+		<result property="sharedArea" column="shared_area" />
+		<result property="gardenArea" column="garden_area" />
+		<result property="basementArea" column="basement_area" />
+		<result property="sharedLobbyArea" column="shared_lobby_area" />
+		<result property="sharedLayersArea" column="shared_layers_area" />
+		<result property="shareRatio" column="share_ratio" />
+		<result property="buildingStructure"
+			column="building_structure" />
+		<result property="parametersPer" column="parameters_per" />
+		<result property="houseLayout" column="house_layout" />
+		<result property="floorHeight" column="floor_height" />
+		<result property="natureProperty" column="nature_property" />
+		<result property="natureUse" column="nature_use" />
+		<result property="usageStatus" column="usage_status" />
+		<result property="occupancyStatus" column="occupancy_status" />
+		<result property="deliveryStatus" column="delivery_status" />
+		<result property="houseType" column="house_type" />
+		<result property="salesStatus" column="sales_status" />
+		<result property="purchaseContract" column="purchase_contract" />
+		<result property="marketingNum" column="marketing_num" />
+		<result property="deliveryStatusBefore" column="delivery_status_before" />
+		<result property="changeDate" column="change_date" />
+		<result property="changePerson" column="change_person" />
+		<result property="remark" column="remark" />
+		<result property="buildingId" column="building_id" />
+		<result property="ownerId" column="owner_id" />
+	</resultMap>
+	
+	<resultMap type="HyMeter" id="HyMeterResult">
+		<id property="id" column="id" />
+		<result property="houseNum" column="house_num" />
+		<result property="meterType" column="meter_type" />
+		<result property="meterSerialNum" column="meter_serial_num" />
+		<result property="meterName" column="meter_name" />
+		<result property="initialRead" column="initial_read" />
+		<result property="meterStrNum" column="meter_str_num" />
+		<result property="meterEndNum" column="meter_end_num" />
+		<result property="meterReadDate" column="meter_read_date" />
+		<result property="ometerEndNum" column="ometer_end_num" />
+		<result property="ometerStrNum" column="ometer_str_num" />
+		<result property="transfRatio" column="transf_ratio" />
+		<result property="otransfRatio" column="otransf_ratio" />
+		<result property="reverseNot" column="reverse_not" />
+		<result property="strappingType" column="strapping_type" />
+		<result property="meterReadDate" column="meter_read_date" />
+		<result property="magnification" column="magnification" />
+		<result property="newMeterConsumption"
+			column="new_meter_consumption" />
+		<result property="oldMeterConsumption"
+			column="old_meter_consumption" />
+		<result property="attritionRate" column="attrition_rate" />
+		<result property="oattritionRate" column="oattrition_rate" />
+		<result property="unitPrice" column="unit_price" />
+		<result property="ounitPrice" column="ounit_price" />
+		<result property="amountPrice" column="amount_price" />
+		<result property="oamountPrice" column="oamount_price" />
+		<result property="abnormalPrompt" column="abnormal_prompt" />
+		<result property="customerName" column="customer_name" />
+		<result property="freezeNot" column="freeze_not" />
+		<result property="sourceMeter" column="source_meter" />
+		<result property="meterReader" column="meter_reader" />
+		<result property="inputTime" column="input_time" />
+	</resultMap>
+	
+	<resultMap type="HyOwnerRegistration"
+		id="HyOwnerRegistrationResult">
+		<result property="id" column="id" />
+		<result property="ownerName" column="owner_name" />
+		<result property="fixedTelephone" column="fixed_telephone" />
+		<result property="mobilePhone" column="mobile_phone" />
+		<result property="idCardNum" column="id_card_num" />
+		<result property="suplierCategory" column="suplier_category" />
+		<result property="lockedNot" column="locked_not" />
+		<result property="accessNum" column="access_num" />
+		<result property="certificateName" column="certificate_name" />
+		<result property="customerCategoy" column="customer_categoy" />
+		<result property="faxPhone" column="fax_phone" />
+		<result property="contactAddress" column="contact_address" />
+		<result property="postalCode" column="postal_code" />
+		<result property="postalPreson" column="postal_preson" />
+		<result property="eMail" column="e_mail" />
+		<result property="phoneAccount" column="phone_account" />
+		<result property="bindingPhoneNum" column="binding_phone_num" />
+		<result property="coOwner" column="co_owner" />
+		<result property="ownerIdentification"
+			column="owner_identification" />
+		<result property="firName" column="fir_name" />
+		<result property="secName" column="sec_name" />
+		<result property="gender" column="gender" />
+		<result property="nationality" column="nationality" />
+		<result property="birthDate" column="birth_date" />
+		<result property="workUnit" column="work_unit" />
+		<result property="ownerJob" column="owner_job" />
+		<result property="ownerHobby" column="owner_hobby" />
+		<result property="ownerId" column="owner_id" />
+		<result property="taxpayerNum" column="taxpayer_num" />
+		<result property="ownerAddPhone" column="owner_add_phone" />
+		<result property="bankAccount" column="bank_account" />
+		<result property="collectionCategory"
+			column="collection_category" />
+		<result property="bankType" column="bank_type" />
+		<result property="bankNum" column="bank_num" />
+		<result property="bankAccountName" column="bank_account_name" />
+		<result property="projectId" column="project_id" />
+	</resultMap>
+	
+	<resultMap type="OwnerAndCost"
+		id="OwnerAndCostResult">
+		<result property="ownerId" column="owner_id" />
+		<result property="costId" column="cost_id" />
+	</resultMap>
 
 	<sql id="selectHyCostVo">
 		SELECT
@@ -77,7 +241,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		c.biling_start_date,
 		c.biling_end_date,
 		c.audit_results_reason,
-		c.house_num,
 		c.fee_date_old,
 		c.fee_date,
 		c.due_date_old,
@@ -100,14 +263,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		c.frozen_date,
 		c.frozen_reason,
 		c.advance_status,
-		c.delivery_status,
 		c.billing_cycle,
 		c.transfer_tenants,
 		c.change_date,
 		c.billing_method,
-		c.calculation_standard
+		c.calculation_standard,
+		o.owner_name,
+		h.house_name,
+		h.house_number,
+		h.delivery_status,
+		p.parking_number,
+		m.meter_name,
+		a.owner_id
 		FROM
 		hy_cost c
+		LEFT JOIN owner_and_cost a ON c.id = a.cost_id
+		LEFT JOIN hy_owner_registration o ON a.owner_id = o.id
+		LEFT JOIN hy_house_inf h ON h.owner_id = o.id
+		LEFT JOIN hy_meter m ON o.meter_id = m.id
+		LEFT JOIN hy_parking_inf p ON p.owner_id = o.id
 		WHERE
 		1 = 1
 	</sql>
@@ -128,7 +302,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="expenseType != null  and expenseType != ''"> and c.expense_type = #{expenseType}</if>
 		<if test="operationDate != null">and c.operation_date = #{operationDate}</if>
 		<if test="operationUser != null and operationUser!=''">and c.operation_user = #{operationUser}</if>
-		<if test="houseNum != null and houseNum !=''">and c.house_num = #{houseNum}</if>
 		<if test="standardName != null and standardName !=''">and c.standard_name = #{standardName}</if>
 		<if test="chargingStandard != null and chargingStandard !=''">and c.charging_standard = #{chargingStandard}</if>
 		<if test="billingCycle != null and billingCycle !=''">and c.billing_cycle = #{billingCycle}</if>
@@ -146,8 +319,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectHyCostListDistinct" parameterType="HyCost"
 		resultMap="HyCostResult">
 		<include refid="selectHyCostDistinctVo" />
-		<if test="costItems != null  and costItems != ''"> and cost_items = #{costItems}</if>
-		<if test="expenseType != null  and expenseType != ''"> and expense_type = #{expenseType}</if>
+		<if test="costItems != null  and costItems != ''"> and c.cost_items = #{costItems}</if>
+		<if test="expenseType != null  and expenseType != ''"> and c.expense_type = #{expenseType}</if>
 	</select>
 
 	<select id="selectHyCostById" parameterType="Long"
@@ -161,51 +334,47 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into hy_cost
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="costItems != null and costItems!='' ">cost_items,</if>
-			<if test="houseNum != null  ">house_num,</if>
 			<if test="expenseType != null and expenseType!='' ">expense_type,</if>
 			<if test="billingCycle != null  ">billing_cycle,</if>
 			<if test="billingMethod != null  ">billing_method,</if>
 			<if test="standardName != null  ">standard_name,</if>
+			<if test="standardState != null  ">standard_state,</if>
+			<if test="calculationMehod != null  ">calculation_mehod,</if>
 			<if test="bilingStartDate != null ">biling_start_date,</if>
-			<if test="transferTenants != null and transferTenants !='' ">transfer_tenants,</if>
+			<if test="transferTenants != null">transfer_tenants,</if>
 			<if test="writeOff != null and writeOff !='' ">write_off,</if>
-
 			<if test="feeDateOld != null  ">fee_date_old,</if>
 			<if test="bilingEndDate != null ">biling_end_date,</if>
 			<if test="amountReceivable != null and amountReceivable !='' ">amount_receivable,</if>
 			<if test="amountActually != null and amountActually !='' ">amount_actually,</if>
-			<if
-				test="advancePaymentOffset != null and advancePaymentOffset !='' ">advance_payment_offset,</if>
+			<if test="advancePaymentOffset != null and advancePaymentOffset !='' ">advance_payment_offset,</if>
 			<if test="refundAmount != null and refundAmount !='' ">refund_amount,</if>
 			<if test="amountArrears != null and amountArrears !='' ">amount_arrears,</if>
 			<if test="collectionStatus != null and collectionStatus !='' ">collection_status,</if>
 			<if test="frozenState != null and frozenState !='' ">frozen_state,</if>
 			<if test="advanceStatus != null and advanceStatus !='' ">advance_status,</if>
-			<if test="deliveryStatus != null and deliveryStatus !='' ">delivery_status,</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="costItems != null and costItems!='' ">#{costItems},</if>
-			<if test="houseNum != null  ">#{houseNum},</if>
 			<if test="expenseType != null and expenseType!='' ">#{expenseType},</if>
 			<if test="billingCycle != null ">#{billingCycle},</if>
 			<if test="billingMethod != null ">#{billingMethod},</if>
 			<if test="standardName != null ">#{standardName},</if>
+			<if test="standardState != null  ">#{standardState},</if>
+			<if test="calculationMehod != null  ">#{calculationMehod},</if>
 			<if test="bilingStartDate != null ">#{bilingStartDate},</if>
-			<if test="transferTenants != null and transferTenants !='' ">#{transferTenants},</if>
+			<if test="transferTenants != null">#{transferTenants},</if>
 			<if test="writeOff != null and writeOff !='' ">#{writeOff},</if>
-
 			<if test="feeDateOld != null  ">#{feeDateOld},</if>
 			<if test="bilingEndDate != null ">#{bilingEndDate},</if>
 			<if test="amountReceivable != null and amountReceivable !='' ">#{amountReceivable},</if>
 			<if test="amountActually != null and amountActually !='' ">#{amountActually},</if>
-			<if
-				test="advancePaymentOffset != null and advancePaymentOffset !='' ">#{advancePaymentOffset},</if>
+			<if test="advancePaymentOffset != null and advancePaymentOffset !='' ">#{advancePaymentOffset},</if>
 			<if test="refundAmount != null and refundAmount !='' ">#{refundAmount},</if>
 			<if test="amountArrears != null and amountArrears !='' ">#{amountArrears},</if>
 			<if test="collectionStatus != null and collectionStatus !='' ">#{collectionStatus},</if>
 			<if test="frozenState != null and frozenState !='' ">#{frozenState},</if>
 			<if test="advanceStatus != null and advanceStatus !='' ">#{advanceStatus},</if>
-			<if test="deliveryStatus != null and deliveryStatus !='' ">#{deliveryStatus},</if>
 		</trim>
 	</insert>
 
@@ -214,12 +383,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<trim prefix="SET" suffixOverrides=",">
 			<if test="costItems != null">cost_items = #{costItems},</if>
 			<if test="expenseType != null">expense_type = #{expenseType},</if>
-			<if test="houseNum != null  ">house_num = #{houseNum},</if>
 			<if test="billingCycle != null ">billing_cycle=#{billingCycle},</if>
 			<if test="billingMethod != null ">billing_method=#{billingMethod},</if>
 			<if test="standardName != null ">standard_name=#{standardName},</if>
+			<if test="standardState != null  ">standard_state=#{standardState},</if>
+			<if test="calculationMehod != null  ">calculation_mehod=#{calculationMehod},</if>
 			<if test="bilingStartDate != null ">biling_start_date=#{bilingStartDate},</if>
-			<if test="transferTenants != null and transferTenants !='' ">transfer_tenants=#{transferTenants},</if>
+			<if test="transferTenants != null">transfer_tenants=#{transferTenants},</if>
 		</trim>
 		where id = #{id}
 	</update>

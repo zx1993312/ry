@@ -44,8 +44,47 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="bankNum" column="bank_num" />
 		<result property="bankAccountName" column="bank_account_name" />
 		<result property="projectId" column="project_id" />
+		<result property="meterId" column="meter_id" />
 		<association property="hyProject" column="id" 
-		javaType="HyProject" resultMap="HyProjectResult" />
+			javaType="HyProject" resultMap="HyProjectResult" />
+		<association property="hyMeter" column="id" 
+			javaType="HyMeter" resultMap="HyMeterResult" />
+	</resultMap>
+	
+	<resultMap type="HyMeter" id="HyMeterResult">
+		<id property="id" column="id" />
+		<result property="houseNum" column="house_num" />
+		<result property="meterType" column="meter_type" />
+		<result property="meterSerialNum" column="meter_serial_num" />
+		<result property="meterName" column="meter_name" />
+		<result property="initialRead" column="initial_read" />
+		<result property="meterStrNum" column="meter_str_num" />
+		<result property="meterEndNum" column="meter_end_num" />
+		<result property="meterReadDate" column="meter_read_date" />
+		<result property="ometerEndNum" column="ometer_end_num" />
+		<result property="ometerStrNum" column="ometer_str_num" />
+		<result property="transfRatio" column="transf_ratio" />
+		<result property="otransfRatio" column="otransf_ratio" />
+		<result property="reverseNot" column="reverse_not" />
+		<result property="strappingType" column="strapping_type" />
+		<result property="meterReadDate" column="meter_read_date" />
+		<result property="magnification" column="magnification" />
+		<result property="newMeterConsumption"
+			column="new_meter_consumption" />
+		<result property="oldMeterConsumption"
+			column="old_meter_consumption" />
+		<result property="attritionRate" column="attrition_rate" />
+		<result property="oattritionRate" column="oattrition_rate" />
+		<result property="unitPrice" column="unit_price" />
+		<result property="ounitPrice" column="ounit_price" />
+		<result property="amountPrice" column="amount_price" />
+		<result property="oamountPrice" column="oamount_price" />
+		<result property="abnormalPrompt" column="abnormal_prompt" />
+		<result property="customerName" column="customer_name" />
+		<result property="freezeNot" column="freeze_not" />
+		<result property="sourceMeter" column="source_meter" />
+		<result property="meterReader" column="meter_reader" />
+		<result property="inputTime" column="input_time" />
 	</resultMap>
 	
 	<resultMap type="HyProject" id="HyProjectResult">
@@ -94,10 +133,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		o.bank_num,
 		o.bank_account_name,
 		o.project_id,
-		p.project_name 	
+		o.meter_id,
+		p.project_name,
+		m.meter_name
 		from
 		hy_owner_registration o
 		LEFT JOIN hy_project p ON o.project_id =p.id
+		LEFT JOIN hy_meter m ON o.meter_id =m.id
 	</sql>
 
 	<select id="selectHyOwnerRegistrationList"
@@ -142,6 +184,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="bankAccountName != null  and bankAccountName != ''"> and o.bank_account_name like concat('%',
 			#{bankAccountName}, '%')</if>
 		<if test="projectId != null "> and o.project_id = #{projectId}</if>
+		<if test="meterId != null "> and o.meter_id = #{meterId}</if>
 		</where>	
 	</select>
 
@@ -193,6 +236,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="bankNum != null">bank_num,</if>
 			<if test="bankAccountName != null">bank_account_name,</if>
 			<if test="projectId != null">project_id,</if>
+			<if test="meterId != null">meter_id,</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null">#{id},</if>
@@ -231,6 +275,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="bankNum != null">#{bankNum},</if>
 			<if test="bankAccountName != null">#{bankAccountName},</if>
 			<if test="projectId != null">#{projectId},</if>
+			<if test="meterId != null">#{meterId},</if>
 		</trim>
 	</insert>
 
@@ -273,6 +318,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="bankNum != null">bank_num = #{bankNum},</if>
 			<if test="bankAccountName != null">bank_account_name = #{bankAccountName},</if>
 			<if test="projectId != null">project_id = #{projectId},</if>
+			<if test="meterId != null">meter_id = #{meterId},</if>
 		</trim>
 		where id = #{id}
 	</update>

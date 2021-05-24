@@ -9,19 +9,10 @@
 			<div class="form-group">
 				<label class="col-sm-3 control-label">客户名称：</label>
 				<div class="col-sm-8">
-					<input name="hyOwnerRegistration.ownerName" id="ownerName" class="form-control" type="text" onclick="selectOwner()">
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-3 control-label">可选房号：</label>
-				<div class="col-sm-8">
-					<input name="hyHouseInf.houseNumber" id="houseNumber" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-3 control-label">房屋编号：</label>
-				<div class="col-sm-8">
-					<input name="houseNum" id="houseNum" class="form-control" type="text" onclick="selectHouse()">
+					<select name="ownerAndCost.ownerId" class="form-control" th:with="type=${@ownerRegistration.getOwnerRegistration()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.ownerName}" th:value="${data.id}"></option>
+			 	    </select>
 				</div>
 			</div>
 			<div class="form-group">
@@ -39,7 +30,12 @@
 			<div class="form-group">
 				<label class="col-sm-3 control-label">计算方式：</label>
 				<div class="col-sm-8">
-					<input name="calculationMehod" id="calculationMehod" class="form-control" type="text">
+					<select name="calculationMehod" class="form-control m-b"
+					th:with="type=${@dict.getType('hy_subject_type')}">
+						<option value="">请选择</option>
+							<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+							th:value="${dict.dictValue}"></option>
+					</select>
 				</div>
 			</div>
 			<div class="form-group">

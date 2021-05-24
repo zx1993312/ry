@@ -13,9 +13,6 @@
 						<ul>
 							<li><label>业主名称：</label> <input type="text" name="ownerName" />
 							</li>
-							<li><label>房屋编号：</label> <input type="text" name="houseNum" 
-							onkeyup="this.value=this.value.replace(/\D/g,'')"/>
-							</li>
 							<li><label>固定电话：</label> <input type="text"
 								name="fixedTelephone" onkeyup="this.value=this.value.replace(/\D/g,'')"/></li>
 							<li><label>移动电话：</label> <input type="text"
@@ -175,6 +172,10 @@
                     field: 'id',
                     title: '主键',
                     visible: false
+                },
+                {
+                    field: 'hyMeter.meterName',
+                    title: '计表名称'
                 },
                 {
                     field: 'hyProject.projectName',

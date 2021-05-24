@@ -96,7 +96,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 
-	<sql id="selectHyMeterVo">
+	<!-- <sql id="selectHyMeterVo">
 		select m.id, m.house_num, m.meter_type, m.meter_serial_num,
 		m.meter_name, m.initial_read, m.meter_str_num,m.meter_end_num,
 		m.transf_ratio,m.reverse_not,m.strapping_type, m.meter_read_date,
@@ -123,6 +123,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 		where 1=1
+	</sql> -->
+	
+	<sql id="selectHyMeterVo">
+		SELECT
+			m.id,
+			m.house_num,
+			m.meter_type,
+			m.meter_serial_num,
+			m.meter_name,
+			m.initial_read,
+			m.meter_str_num,
+			m.meter_end_num,
+			m.transf_ratio,
+			m.reverse_not,
+			m.strapping_type,
+			m.meter_read_date,
+			m.magnification,
+			m.new_meter_consumption,
+			m.old_meter_consumption,
+			m.attrition_rate,
+			m.unit_price,
+			m.amount_price,
+			m.abnormal_prompt,
+			m.customer_name,
+			m.freeze_not,
+			m.source_meter,
+			m.meter_reader,
+			m.input_time,
+			m.meter_read_date
+			
+		FROM
+			hy_meter m
 	</sql>
 
 	<select id="selectHyMeterList" parameterType="HyMeter"
@@ -153,8 +185,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="sourceMeter != null  and sourceMeter != ''"> and m.source_meter = #{sourceMeter}</if>
 		<if test="meterReader != null  and meterReader != ''"> and m.meter_reader = #{meterReader}</if>
 		<if test="inputTime != null "> and m.input_time = #{inputTime}</if>
+		<if test="hyMeterCase != null">
 		<if test="hyMeterCase.meterCaseName != null and hyMeterCase.meterCaseName!=''"> and c.meter_case_name = #{hyMeterCase.meterCaseName}</if>
 		<if test="hyMeterCase.meterCasePosition != null and hyMeterCase.meterCasePosition!=''"> and c.meter_case_position = #{hyMeterCase.meterCasePosition}</if>
+		</if>
 	</select>
 	
 	<select id="selectHyMeter" parameterType="HyMeter"

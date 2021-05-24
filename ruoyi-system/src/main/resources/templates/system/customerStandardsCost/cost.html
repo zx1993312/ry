@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('费用项目列表')" />
+    <th:block th:include="include :: header('费用标准列表')" />
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -10,24 +10,6 @@
                 <form id="formId">
                     <div class="select-list">
                         <ul>
-                            <li>
-                                <label>楼宇：</label>
-                                <select name="building"> 
-                                <option value="">请选择</option>
-                                </select>
-                            </li>
-                            <li>
-                                <label>客户名称：</label>
-                                <input type="text" name="ownerName"/>
-                            </li>
-                            <li>
-                                <label>可选房号：</label>
-                                <input type="text" name="houseNumber"/>
-                            </li>
-                            <li>
-                                <label>房屋编号：</label>
-                                <input type="text" name="houseNumber"/>
-                            </li>
                             <li>
                                 <label>费用项目：</label>
                                 <input type="text" name="costItems"/>
@@ -74,7 +56,7 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "费用项目",
+                modalName: "费用标准",
                 columns: [{
                     checkbox: true
                 },
@@ -84,15 +66,11 @@
                     visible: false
                 },
                 {
-                    field: 'hyHouseInf.building',
-                    title: '楼宇'
-                },
-                {
                     field: 'hyOwnerRegistration.ownerName',
                     title: '客户名称'
                 },
                 {
-                    field: 'houseNum',
+                    field: 'hyHouseInf.houseNumber',
                     title: '房屋编号'
                 },
                 {
@@ -101,7 +79,19 @@
                 },
                 {
                     field: 'hyHouseInf.deliveryStatus',
-                    title: '交房状态'
+                    title: '交房状态',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case '0' : value =  "已售未接房";break;
+	                    	case '1' : value =  "未售";break;
+	                    	case '2' : value =  "已接房";break;
+	                    	case '3' : value =  "装修";break;
+	                    	case '4' : value =  "入住";break;
+	                    	case '5' : value =  "已售空置";break;
+	                    	case '6' : value =  "未售空置";break;
+	                	}
+		            	return value;
+		            }
                 },
                 {
                     field: 'hyParkingInf.parkingNumber',
@@ -116,26 +106,28 @@
                     title: '费用名称'
                 },
                 {
+                    field: 'standardState',
+                    title: '计费标准'
+                },
+/*                 {
                     field: 'chargingStandard',
                     title: '通用收费标准'
                 },
                 {
                     field: 'proportionDamags',
                     title: '违约金比例'
-                   
-        
-                },
+                }, */
                 {
                     field: 'calculationMehod',
                     title: '计算方式',
                     formatter: function(value, item, index) {
                     	switch(value){
-                        	case '0' : value =  "按计费面积*单价每月计算";break;
-                        	case '1' : value =  "按计费面积*单价每季计算";break;
-                        	case '2' : value =  "按计费面积*单价每年计算";break;
-                        	case '3' : value =  "按定额每月计算";break;
-                        	case '4' : value =  "按定额每季计算";break;
-                        	case '5' : value =  "按定额每年计算";break;
+                        	case '30' : value =  "按计费面积*单价每月计算";break;
+                        	case '120' : value =  "按计费面积*单价每季计算";break;
+                        	case '365' : value =  "按计费面积*单价每年计算";break;
+                        	case '31' : value =  "按定额每月计算";break;
+                        	case '122' : value =  "按定额每季计算";break;
+                        	case '366' : value =  "按定额每年计算";break;
                     	}
                     	return value;
                     }
@@ -178,10 +170,20 @@
                     title: '计费开始日期'
                 },
                 {
+                    field: 'transferTenants',
+                    title: '出租时自动转给租户',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+                        	case 0 : value =  "是";break;
+                        	case 1 : value =  "否";break;
+                    	}
+                    	return value;
+                    }
+                },
+                /* {
                     field: 'standardState',
                     title: '标准状态'
-                },
-           
+                }, */
                 {
                     title: '操作',
                     align: 'center',

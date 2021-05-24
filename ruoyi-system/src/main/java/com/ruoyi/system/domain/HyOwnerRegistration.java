@@ -170,11 +170,14 @@ public class HyOwnerRegistration extends BaseEntity
     @Excel(name = "项目管理表")
     private HyProject hyProject;
     
-    private HyHouseInf hyHouseInf;
+    /** 抄表设置id */
+    @Excel(name = "抄表设置id")
+    private Long meterId;
     
-    private HyEntry hyEntry;
+    /** 抄表设置表 */
+    @Excel(name = "抄表设置表")
+    private HyMeter hyMeter;
     
-    private HyAuditManagement hyAuditManagement;
 
     public void setId(Long id) 
     {
@@ -492,30 +495,6 @@ public class HyOwnerRegistration extends BaseEntity
         return bankAccountName;
     }
 
-    public HyHouseInf getHyHouseInf() {
-		return hyHouseInf;
-	}
-
-	public void setHyHouseInf(HyHouseInf hyHouseInf) {
-		this.hyHouseInf = hyHouseInf;
-	}
-
-	public HyEntry getHyEntry() {
-		return hyEntry;
-	}
-
-	public void setHyEntry(HyEntry hyEntry) {
-		this.hyEntry = hyEntry;
-	}
-
-	public HyAuditManagement getHyAuditManagement() {
-		return hyAuditManagement;
-	}
-
-	public void setHyAuditManagement(HyAuditManagement hyAuditManagement) {
-		this.hyAuditManagement = hyAuditManagement;
-	}
-
 	public Long getProjectId() {
 		return projectId;
 	}
@@ -530,6 +509,22 @@ public class HyOwnerRegistration extends BaseEntity
 
 	public void setHyProject(HyProject hyProject) {
 		this.hyProject = hyProject;
+	}
+
+	public Long getMeterId() {
+		return meterId;
+	}
+
+	public void setMeterId(Long meterId) {
+		this.meterId = meterId;
+	}
+
+	public HyMeter getHyMeter() {
+		return hyMeter;
+	}
+
+	public void setHyMeter(HyMeter hyMeter) {
+		this.hyMeter = hyMeter;
 	}
 
 	@Override
@@ -572,6 +567,8 @@ public class HyOwnerRegistration extends BaseEntity
             .append("bankAccountName", getBankAccountName())
             .append("projectId", getProjectId())
             .append("hyProject", getHyProject())
+            .append("meterId", getMeterId())
+            .append("hyMeter", getHyMeter())
             .toString();
     }
 }
