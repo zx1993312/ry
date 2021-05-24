@@ -6,11 +6,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<resultMap type="HyBillSet" id="HyBillSetResult">
 		<result property="id" column="id" />
-		<result property="houseNum" column="house_num" />
+		<result property="businessType" column="business_type" />
 		<result property="billTypes" column="bill_types" />
 		<result property="billNumber" column="bill_number" />
 		<result property="invoiceNumber" column="invoice_number" />
-
 		<result property="billCategory" column="bill_category" />
 		<result property="billDate" column="bill_date" />
 		<result property="billDateNew" column="bill_date_new" />
@@ -26,20 +25,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="billSample" column="bill_sample" />
 		<result property="billPanel" column="bill_panel" />
 		<result property="panel" column="panel" />
-
 		<result property="billAmount" column="bill_amount" />
 		<result property="cancelNot" column="cancel_not" />
 		<result property="writeNot" column="write_not" />
 		<result property="remark" column="remark" />
 		<result property="draftCheckNumber" column="draft_check_number" />
-
-
-
+		<result property="ownerId" column="owner_id" />
 		<association property="hyHouseInf" column="id"
 			javaType="HyHouseInf" resultMap="HyHouseInfResult" />
 		<association property="hyOwnerRegistration" column="id"
 			javaType="HyOwnerRegistration" resultMap="HyOwnerRegistrationResult" />
-
 		<association property="hyCost" column="id"
 			javaType="HyCost" resultMap="HyCostResult" />
 		<association property="hyRevoke" column="id"
@@ -47,12 +42,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<association property="hyPaymentOffset" column="id"
 			javaType="HyPaymentOffset" resultMap="HyPaymentOffsetResult" />
 	</resultMap>
-
+	
 	<resultMap type="HyOwnerRegistration"
 		id="HyOwnerRegistrationResult">
 		<result property="id" column="id" />
 		<result property="ownerName" column="owner_name" />
-		<result property="houseNum" column="house_num" />
 		<result property="fixedTelephone" column="fixed_telephone" />
 		<result property="mobilePhone" column="mobile_phone" />
 		<result property="idCardNum" column="id_card_num" />
@@ -128,7 +122,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<resultMap type="HyCost" id="HyCostResult">
 		<result property="id" column="id" />
-		<result property="houseNum" column="house_num" />
 		<result property="costItems" column="cost_items" />
 		<result property="expenseType" column="expense_type" />
 		<result property="parentId" column="parent_id" />
@@ -199,10 +192,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	</resultMap>
 
-	<sql id="selectHyBillSetVo">
+	<!-- <sql id="selectHyBillSetVo">
 		select
 		b.id,
 		b.house_num,
+		b.business_type,
 		b.bill_types,
 		b.bill_number,
 		b.invoice_number,
@@ -220,14 +214,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		b.bill_sample,
 		b.bill_panel,
 		b.panel,
-
 		b.bill_amount,
 		b.cancel_not,
 		b.write_not,
 		b.remark,
 		b.draft_check_number,
 		b.draft_check_number,
-
 		o.owner_name,
 		h.house_name,
 		c.fee_date,
@@ -246,10 +238,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		left
 		join
 		hy_owner_registration o on
-		b.house_num=o.house_num
+		b.owner_id=o.id
 		left join
 		hy_house_inf h on
-		b.house_num=h.house_number
+		o.id=h.owner_id
 		left join
 		hy_cost c on
 		b.house_num=c.house_num
@@ -259,11 +251,54 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		hy_payment_offset p on
 		b.house_num=p.house_num
 		where 1=1
+	</sql> -->
+	
+	<sql id="selectHyBillSetVo">
+		select
+		b.id,
+		b.business_type,
+		b.bill_types,
+		b.bill_number,
+		b.invoice_number,
+		b.bill_category,
+		b.bill_date,
+		b.bill_date_new,
+		b.prefix,
+		b.suffix,
+		b.digit,
+		b.payment_method_new,
+		b.payment_method,
+		b.payment_person,
+		b.payment_date,b.modify_person,
+		b.modify_time,
+		b.bill_sample,
+		b.bill_panel,
+		b.panel,
+		b.bill_amount,
+		b.cancel_not,
+		b.write_not,
+		b.remark,
+		b.draft_check_number,
+		b.draft_check_number,
+		o.owner_name,
+		h.house_name,
+		h.house_number
+		from
+		hy_bill_set b
+		left
+		join
+		hy_owner_registration o on
+		b.owner_id=o.id
+		left join
+		hy_house_inf h on
+		o.id=h.owner_id
+		where 1=1
 	</sql>
 
 	<select id="selectHyBillSetList" parameterType="HyBillSet"
 		resultMap="HyBillSetResult">
 		<include refid="selectHyBillSetVo" />
+		<if test="businessType != null  and businessType != ''"> and b.business_type = #{businessType}</if>
 		<if test="billTypes != null  and billTypes != ''"> and b.bill_types = #{billTypes}</if>
 		<if test="billCategory != null  and billCategory != ''"> and b.bill_category = #{billCategory}</if>
 		<if test="prefix != null  and prefix != ''"> and b.prefix = #{prefix}</if>
@@ -274,7 +309,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="panel!=null and panel!=''"> and b.panel=#{panel}</if>
 		<if test="billDate!=null "> and b.bill_date=#{billDate}</if>
 		<if test="billNumber!=null and billNumber!= ''"> and b.bill_number = #{billNumber}</if>
-		<if test="houseNum!=null and houseNum!= ''"> and b.house_num = #{houseNum}</if>
 		<if test="hyOwnerRegistration!=null and hyOwnerRegistration!= ''">
 		<if test="hyOwnerRegistration.ownerName!=null and hyOwnerRegistration.ownerName!= ''"> and o.owner_name = #{hyOwnerRegistration.ownerName}</if>
 		</if>
@@ -285,6 +319,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectHyBillSetListByDate" parameterType="HyBillSet"
 		resultMap="HyBillSetResult">
 		<include refid="selectHyBillSetVo" />
+		<if test="businessType != null  and businessType != ''"> and b.business_type = #{businessType}</if>
 		<if test="billTypes != null  and billTypes != ''"> and b.bill_types = #{billTypes}</if>
 		<if test="billCategory != null  and billCategory != ''"> and b.bill_category = #{billCategory}</if>
 		<if test="prefix != null  and prefix != ''"> and b.prefix = #{prefix}</if>
@@ -301,6 +336,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectHyBillSetListOr" parameterType="HyBillSet"
 		resultMap="HyBillSetResult">
 		<include refid="selectHyBillSetVo" />
+		<if test="businessType != null  and businessType != ''"> and b.business_type = #{businessType}</if>
 		<if test="billTypes != null  and billTypes != ''"> and b.bill_types = #{billTypes}</if>
 		<if test="billCategory != null  and billCategory != ''"> and b.bill_category = #{billCategory}</if>
 		<if test="prefix != null  and prefix != ''"> and b.prefix = #{prefix}</if>
@@ -311,7 +347,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="panel!=null and panel!=''"> and b.panel=#{panel}</if>
 		<if test="billDate!=null "> and b.bill_date=#{billDate}</if>
 		<if test="billNumber!=null and billNumber!= ''"> and b.bill_number = #{billNumber}</if>
-		<if test="houseNum!=null and houseNum!= ''"> and b.house_num = #{houseNum}</if>
 		<if test="modifyPerson !=null and modifyPerson !=''"> and b.modify_person = #{modifyPerson}</if>
 		<if test="paymentPerson !=null and paymentPerson !=''"> and b.payment_person = #{paymentPerson}</if>
 	</select>
@@ -327,6 +362,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into hy_bill_set
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">id,</if>
+			<if test="businessType != null">business_type,</if>
 			<if test="billTypes != null">bill_types,</if>
 			<if test="billCategory != null">bill_category,</if>
 			<if test="prefix != null">prefix,</if>
@@ -338,6 +374,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null">#{id},</if>
+			<if test="businessType != null">#{businessType},</if>
 			<if test="billTypes != null">#{billTypes},</if>
 			<if test="billCategory != null">#{billCategory},</if>
 			<if test="prefix != null">#{prefix},</if>
@@ -352,6 +389,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateHyBillSet" parameterType="HyBillSet">
 		update hy_bill_set
 		<trim prefix="SET" suffixOverrides=",">
+			<if test="businessType != null">business_type = #{businessType},</if>
 			<if test="billTypes != null">bill_types = #{billTypes},</if>
 			<if test="billCategory != null">bill_category = #{billCategory},</if>
 			<if test="prefix != null">prefix = #{prefix},</if>

@@ -19,20 +19,19 @@ public class HyBillSet extends BaseEntity {
 
 	/** 主键 */
 	private Long id;
-	/**
-	 * 房屋编号
-	 */
-	@Excel(name = "房屋编号")
-	private String houseNum;
+	
+	
 	/** 票据种类 */
 	@Excel(name = "票据种类")
 	@EnumAnn(enumClass = PanelEnum.class, enumType = "String")
 	private String billTypes;
+	
 	/**
 	 * 票据号码
 	 */
 	@Excel(name = "票据号码")
 	private String billNumber;
+	
 	/**
 	 * 发票号码
 	 */
@@ -42,11 +41,13 @@ public class HyBillSet extends BaseEntity {
 	/** 票据类别 */
 	@Excel(name = "票据类别")
 	private String billCategory;
+	
 	/**
 	 * 票据日期
 	 */
 	@Excel(name = " 票据日期")
 	private Date billDate;
+	
 	/**
 	 * 新票据日期
 	 */
@@ -64,31 +65,37 @@ public class HyBillSet extends BaseEntity {
 	/** 位数 */
 	@Excel(name = "位数")
 	private String digit;
+	
 	/**
 	 * 新收款方式
 	 */
 	@Excel(name = "新收款方式")
 	private String paymentMethodNew;
+	
 	/**
 	 * 收款方式
 	 */
 	@Excel(name = "收款方式")
 	private String paymentMethod;
+	
 	/**
 	 * 收款人
 	 */
 	@Excel(name = "收款人")
 	private String paymentPerson;
+	
 	/**
 	 * 收款时间
 	 */
 	@Excel(name = "收款时间")
 	private Date paymentDate;
+	
 	/**
 	 * 修改人
 	 */
 	@Excel(name = "修改人")
 	private String modifyPerson;
+	
 	/**
 	 * 修改时间
 	 */
@@ -105,32 +112,32 @@ public class HyBillSet extends BaseEntity {
 
 	@Excel(name = "定额票据")
 	private String panel;
+	
 	/**
 	 * 房屋表
 	 */
 	@Excel(name = "房屋表")
 	private HyHouseInf hyHouseInf;
-	/**
-	 * 业主表
-	 */
-	@Excel(name = "业主表")
-	private HyOwnerRegistration hyOwnerRegistration;
+	
 	/**
 	 * 费用项目表
 	 */
 	@Excel(name = "费用项目表")
 	private HyCost hyCost;
+	
 	/**
 	 * 撤销对象表
 	 */
 	@Excel(name = "撤销对象表")
 	private HyRevoke hyRevoke;
+	
 	/**
 	 * 预交冲抵表
 	 */
 	@Excel(name = "预交冲抵表")
 	private HyPaymentOffset hyPaymentOffset;
-
+	/** 业务类型 */
+	@Excel(name = "业务类型")
 	private Integer businessType;
 
 	private BigDecimal paymentAmount;
@@ -144,6 +151,16 @@ public class HyBillSet extends BaseEntity {
 	private String draftCheckNumber;
 
 	private BigDecimal billAmount;
+	
+	/** 业主id */
+	@Excel(name = "业主id")
+	private Long ownerId;
+	
+	/**
+	 * 业主表
+	 */
+	@Excel(name = "业主表")
+	private HyOwnerRegistration hyOwnerRegistration;
 
 	public Long getId() {
 		return id;
@@ -219,14 +236,6 @@ public class HyBillSet extends BaseEntity {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	}
-
-	public String getHouseNum() {
-		return houseNum;
-	}
-
-	public void setHouseNum(String houseNum) {
-		this.houseNum = houseNum;
 	}
 
 	public String getBillNumber() {
@@ -405,27 +414,28 @@ public class HyBillSet extends BaseEntity {
 		this.hyPaymentOffset = hyPaymentOffset;
 	}
 
+	public Long getOwnerId() {
+		return ownerId;
+	}
+
+	public void setOwnerId(Long ownerId) {
+		this.ownerId = ownerId;
+	}
+
 	@Override
 	public String toString() {
-		return "HyBillSet [id=" + id + ", houseNum=" + houseNum + ", billTypes=" + billTypes + ", billNumber="
-				+ billNumber + ", invoiceNumber=" + invoiceNumber + ", billCategory=" + billCategory + ", billDate="
-				+ billDate + ", billDateNew=" + billDateNew + ", prefix=" + prefix + ", suffix=" + suffix + ", digit="
-				+ digit + ", paymentMethodNew=" + paymentMethodNew + ", paymentMethod=" + paymentMethod
-				+ ", paymentPerson=" + paymentPerson + ", paymentDate=" + paymentDate + ", modifyPerson=" + modifyPerson
-				+ ", modifyTime=" + modifyTime + ", billSample=" + billSample + ", billPanel=" + billPanel + ", panel="
-				+ panel + ", getId()=" + getId() + ", getBillTypes()=" + getBillTypes() + ", getBillCategory()="
-				+ getBillCategory() + ", getPrefix()=" + getPrefix() + ", getSuffix()=" + getSuffix() + ", getDigit()="
-				+ getDigit() + ", getBillSample()=" + getBillSample() + ", getBillPanel()=" + getBillPanel()
-				+ ", getPanel()=" + getPanel() + ", getHouseNum()=" + getHouseNum() + ", getBillNumber()="
-				+ getBillNumber() + ", getInvoiceNumber()=" + getInvoiceNumber() + ", getBillDate()=" + getBillDate()
-				+ ", getBillDateNew()=" + getBillDateNew() + ", getPaymentMethodNew()=" + getPaymentMethodNew()
-				+ ", getPaymentMethod()=" + getPaymentMethod() + ", getPaymentPerson()=" + getPaymentPerson()
-				+ ", getPaymentDate()=" + getPaymentDate() + ", getModifyPerson()=" + getModifyPerson()
-				+ ", getModifyTime()=" + getModifyTime() + ", getSearchValue()=" + getSearchValue() + ", getCreateBy()="
-				+ getCreateBy() + ", getCreateTime()=" + getCreateTime() + ", getUpdateBy()=" + getUpdateBy()
-				+ ", getUpdateTime()=" + getUpdateTime() + ", getRemark()=" + getRemark() + ", getParams()="
-				+ getParams() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
-				+ super.toString() + "]";
+		return "HyBillSet [id=" + id + ", billTypes=" + billTypes + ", billNumber=" + billNumber + ", invoiceNumber="
+				+ invoiceNumber + ", billCategory=" + billCategory + ", billDate=" + billDate + ", billDateNew="
+				+ billDateNew + ", prefix=" + prefix + ", suffix=" + suffix + ", digit=" + digit + ", paymentMethodNew="
+				+ paymentMethodNew + ", paymentMethod=" + paymentMethod + ", paymentPerson=" + paymentPerson
+				+ ", paymentDate=" + paymentDate + ", modifyPerson=" + modifyPerson + ", modifyTime=" + modifyTime
+				+ ", billSample=" + billSample + ", billPanel=" + billPanel + ", panel=" + panel + ", hyHouseInf="
+				+ hyHouseInf + ", hyCost=" + hyCost + ", hyRevoke=" + hyRevoke + ", hyPaymentOffset=" + hyPaymentOffset
+				+ ", businessType=" + businessType + ", paymentAmount=" + paymentAmount + ", cancelNot=" + cancelNot
+				+ ", writeNot=" + writeNot + ", remark=" + remark + ", draftCheckNumber=" + draftCheckNumber
+				+ ", billAmount=" + billAmount + ", ownerId=" + ownerId + ", hyOwnerRegistration=" + hyOwnerRegistration
+				+ "]";
 	}
+
 
 }
