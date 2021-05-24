@@ -7,7 +7,7 @@
 <body class="gray-bg">
 	<div class="container-div">
 		<div class="row">
-			<div class="col-sm-12 search-collapse">
+			<!-- <div class="col-sm-12 search-collapse">
 				<form id="formId">
 					<div class="select-list">
 						<ul>
@@ -30,7 +30,7 @@
 						</ul>
 					</div>
 				</form>
-			</div>
+			</div> -->
 
 			<div class="btn-group-sm" id="toolbar" role="group">
 		 <a class="btn btn-warning" onclick="$.table.exportExcel()"
@@ -95,7 +95,18 @@
                 },
                 {
                     field: 'paymentMethod',
-                    title: '收款方式'
+                    title: '收款方式',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case "" : value =  "请选择";break;
+	                    	case "1" : value =  "微信支付";break;
+	                    	case "2" : value =  "支付宝支付";break;
+	                    	case "3" : value =  "现金支付";break;
+	                    	case "4" : value =  "银行卡支付";break;
+	                    	case "5" : value =  "信用卡支付";break;
+	                	}
+		            	return value;
+		            }
                 },
                 {
                     field: 'paymentPerson',

@@ -6,63 +6,221 @@
 <body class="white-bg">
 	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
 		<form class="form-horizontal m" id="form-set-add">
-			<div class="form-group">
-				<label class="col-sm-3 control-label">票据种类：</label>
-				<div class="col-sm-8">
-					<select id="billTypes" name="billTypes" class="form-control" onchange="changSelect()"
-						th:with="type=${@dict.getType('hy_bill_set')}" > 
+			<div class="form-group">    
+                <label class="col-sm-3 control-label">业务类型：</label>
+                <div class="col-sm-8">
+                    <select name="businessType" class="form-control m-b">
+                        <option value="">请选择</option>
+                        <option value=1>普通业务</option>
+                        <option value=2>vip业务</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">票据种类：</label>
+                <div class="col-sm-8">
+                    <select id="billTypes" name="billTypes" class="form-control "
+						th:with="type=${@dict.getType('hy_bill_set')}">
 						<option value="">请选择</option>
 						<option value="0">收据</option>
 						<option value="1">发票</option>
 						<option value="2">凭据</option>
 					</select>
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-3 control-label">票据类别：</label>
-				<div class="col-sm-8">
-					<input id="billCategory" name="billCategory" class="form-control"
-						type="text">
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-3 control-label">前缀：</label>
-				<div class="col-sm-8">
-					<input id="prefix" name="prefix" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-3 control-label">后缀：</label>
-				<div class="col-sm-8">
-					<input id="suffix" name="suffix" class="form-control" type="text" >
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-3 control-label">位数：</label>
-				<div class="col-sm-8">
-					<input id="digit" name="digit" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-3 control-label">票据样例：</label>
-				<div class="col-sm-8">
-					<input id="billSample" name="billSample" class="form-control"
-						type="text">
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-3 control-label">是否定额票据：</label>
-				<div class="col-sm-8">
-					<label><input type="checkbox" name="panel" value="0" >定额票据</label>
-				</div>
-			</div>
-			<div class="form-group" hidden="true" id="pj">
-				<label class="col-sm-3 control-label">定额票据面板：</label>
-				<div class="col-sm-8" >
-					<input id="billPanel" name="billPanel" class="form-control"
-						type="text">
-				</div>
-			</div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">票据类别：</label>
+                <div class="col-sm-8">
+                    <select name="billCategory" class="form-control m-b">
+                        <option value="">请选择</option>
+                        <option value="1">普通类别</option>
+                        <option value="2">vip类别</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">票据号码：</label>
+                <div class="col-sm-8">
+                    <input name="billNumber" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">前缀：</label>
+                <div class="col-sm-8">
+                    <input name="prefix" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">后缀：</label>
+                <div class="col-sm-8">
+                    <input name="suffix" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">发票号码：</label>
+                <div class="col-sm-8">
+                    <input name="invoiceNumber" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">位数：</label>
+                <div class="col-sm-8">
+                    <input name="digit" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">票据样例：</label>
+                <div class="col-sm-8">
+                    <input name="billSample" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">票据日期：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input name="billDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">定额票据面板：</label>
+                <div class="col-sm-8">
+                    <input name="billPanel" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">新票据日期：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input name="billDateNew" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">新收款方式：</label>
+                <div class="col-sm-8">
+                     <select name="paymentMethodNew" class="form-control m-b">
+                        <option value="">请选择</option>
+                        <option value="1">微信支付</option>
+                        <option value="2">支付宝支付</option>
+                        <option value="3">现金支付</option>
+                        <option value="4">银行卡支付</option>
+                        <option value="5">信用卡支付</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">收款方式：</label>
+                <div class="col-sm-8">
+                     <select name="paymentMethod" class="form-control m-b">
+                        <option value="">请选择</option>
+                        <option value="">请选择</option>
+                        <option value="1">微信支付</option>
+                        <option value="2">支付宝支付</option>
+                        <option value="3">现金支付</option>
+                        <option value="4">银行卡支付</option>
+                        <option value="5">信用卡支付</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">收款人：</label>
+                <div class="col-sm-8">
+                    <input name="paymentPerson" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">收款金额：</label>
+                <div class="col-sm-8">
+                    <input name="paymentAmount" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">收款日期：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input name="paymentDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">修改人：</label>
+                <div class="col-sm-8">
+                    <input name="modifyPerson" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">修改时间：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input name="modifyTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">定额票据：</label>
+                <div class="col-sm-8">
+                    <input name="panel" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">收/退款金额：</label>
+                <div class="col-sm-8">
+                    <input name="billAmount" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">是否撤销：</label>
+                <div class="col-sm-8">
+                    <input name="cancelNot" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">是否冲销：</label>
+                <div class="col-sm-8">
+                    <input name="writeNot" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">备注：</label>
+                <div class="col-sm-8">
+                    <input name="remark" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">支/汇票号：</label>
+                <div class="col-sm-8">
+                    <input name="draftCheckNumber" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">业主id：</label>
+                <div class="col-sm-8">
+                    <input name="ownerId" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">费用项目id：</label>
+                <div class="col-sm-8">
+                    <input name="costId" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">撤销id：</label>
+                <div class="col-sm-8">
+                    <input name="revokeId" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">预交id：</label>
+                <div class="col-sm-8">
+                    <input name="offsetId" class="form-control" type="text">
+                </div>
+            </div>
 		</form>
 	</div>
 	<th:block th:include="include :: footer" />

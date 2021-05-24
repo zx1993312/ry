@@ -5,36 +5,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.ruoyi.system.mapper.HyBillSetMapper">
 
 	<resultMap type="HyBillSet" id="HyBillSetResult">
-		<result property="id" column="id" />
-		<result property="businessType" column="business_type" />
-		<result property="billTypes" column="bill_types" />
-		<result property="billNumber" column="bill_number" />
-		<result property="invoiceNumber" column="invoice_number" />
-		<result property="billCategory" column="bill_category" />
-		<result property="billDate" column="bill_date" />
-		<result property="billDateNew" column="bill_date_new" />
-		<result property="prefix" column="prefix" />
-		<result property="suffix" column="suffix" />
-		<result property="digit" column="digit" />
-		<result property="paymentMethodNew" column="payment_method_new" />
-		<result property="paymentMethod" column="payment_method" />
-		<result property="paymentPerson" column="payment_person" />
-		<result property="paymentDate" column="payment_date" />
-		<result property="modifyPerson" column="modify_person" />
-		<result property="modifyTime" column="modify_time" />
-		<result property="billSample" column="bill_sample" />
-		<result property="billPanel" column="bill_panel" />
-		<result property="panel" column="panel" />
-		<result property="billAmount" column="bill_amount" />
-		<result property="paymentAmount" column="payment_amount" />
-		<result property="cancelNot" column="cancel_not" />
-		<result property="writeNot" column="write_not" />
-		<result property="remark" column="remark" />
-		<result property="draftCheckNumber" column="draft_check_number" />
-		<result property="ownerId" column="owner_id" />
-		<result property="costId" column="cost_id" />
-		<result property="revokeId" column="revoke_id" />
-		<result property="offsetId" column="offset_id" />
+		 <result property="id"    column="id"    />
+        <result property="businessType"    column="business_type"    />
+        <result property="billTypes"    column="bill_types"    />
+        <result property="billCategory"    column="bill_category"    />
+        <result property="billNumber"    column="bill_number"    />
+        <result property="prefix"    column="prefix"    />
+        <result property="suffix"    column="suffix"    />
+        <result property="invoiceNumber"    column="invoice_number"    />
+        <result property="digit"    column="digit"    />
+        <result property="billDate"    column="bill_date"    />
+        <result property="billSample"    column="bill_sample"    />
+        <result property="billDateNew"    column="bill_date_new"    />
+        <result property="billPanel"    column="bill_panel"    />
+        <result property="paymentMethodNew"    column="payment_method_new"    />
+        <result property="paymentMethod"    column="payment_method"    />
+        <result property="paymentPerson"    column="payment_person"    />
+        <result property="paymentAmount"    column="payment_amount"    />
+        <result property="paymentDate"    column="payment_date"    />
+        <result property="modifyPerson"    column="modify_person"    />
+        <result property="modifyTime"    column="modify_time"    />
+        <result property="panel"    column="panel"    />
+        <result property="billAmount"    column="bill_amount"    />
+        <result property="cancelNot"    column="cancel_not"    />
+        <result property="writeNot"    column="write_not"    />
+        <result property="remark"    column="remark"    />
+        <result property="draftCheckNumber"    column="draft_check_number"    />
+        <result property="ownerId"    column="owner_id"    />
+        <result property="costId"    column="cost_id"    />
+        <result property="revokeId"    column="revoke_id"    />
+        <result property="offsetId"    column="offset_id"    />
 		<association property="hyHouseInf" column="id"
 			javaType="HyHouseInf" resultMap="HyHouseInfResult" />
 		<association property="hyOwnerRegistration" column="id"
@@ -201,39 +201,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	 <sql id="selectHyBillSetVo">
 		select
-		b.id,
-		b.business_type,
-		b.bill_types,
-		b.bill_number,
-		b.invoice_number,
-		b.bill_category,
-		b.bill_date,
-		b.bill_date_new,
-		b.prefix,
-		b.suffix,
-		b.digit,
-		b.payment_method_new,
-		b.payment_method,
-		b.payment_person,
-		b.payment_date,b.modify_person,
-		b.modify_time,
-		b.bill_sample,
-		b.bill_panel,
-		b.panel,
-		b.payment_amount,
-		b.bill_amount,
-		b.cancel_not,
-		b.write_not,
-		b.remark,
-		b.draft_check_number,
-		b.draft_check_number,
-		b.owner_id,
-		b.cost_id,
-		b.revoke_id,
+		b.id, 
+		b.business_type, 
+		b.bill_types, 
+		b.bill_category, 
+		b.bill_number, 
+		b.prefix, 
+		b.suffix, 
+		b.invoice_number, 
+		b.digit, 
+		b.bill_date, 
+		b.bill_sample, 
+		b.bill_date_new, 
+		b.bill_panel, 
+		b.payment_method_new, 
+		b.payment_method, 
+		b.payment_person, 
+		b.payment_amount, 
+		b.payment_date, 
+		b.modify_person, 
+		b.modify_time, 
+		b.panel, 
+		b.bill_amount, 
+		b.cancel_not, 
+		b.write_not, 
+		b.remark, 
+		b.draft_check_number, 
+		b.owner_id, 
+		b.cost_id, 
+		b.revoke_id, 
 		b.offset_id,
 		o.owner_name,
 		h.house_name,
 		h.house_number,
+		c.cost_items,
 		c.fee_date,
 		c.biling_start_date,
 		c.biling_end_date,
@@ -265,69 +266,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where 1=1
 	</sql> 
 	
-<!-- 	<sql id="selectHyBillSetVo">
-		select
-		b.id,
-		b.business_type,
-		b.bill_types,
-		b.bill_number,
-		b.invoice_number,
-		b.bill_category,
-		b.bill_date,
-		b.bill_date_new,
-		b.prefix,
-		b.suffix,
-		b.digit,
-		b.payment_method_new,
-		b.payment_method,
-		b.payment_person,
-		b.payment_date,b.modify_person,
-		b.modify_time,
-		b.bill_sample,
-		b.bill_panel,
-		b.panel,
-		b.bill_amount,
-		b.cancel_not,
-		b.write_not,
-		b.remark,
-		b.draft_check_number,
-		b.draft_check_number,
-		o.owner_name,
-		h.house_name,
-		h.house_number
-		from
-		hy_bill_set b
-		left
-		join
-		hy_owner_registration o on
-		b.owner_id=o.id
-		left join
-		hy_house_inf h on
-		o.id=h.owner_id
-		where 1=1
-	</sql> -->
-
-	<select id="selectHyBillSetList" parameterType="HyBillSet"
-		resultMap="HyBillSetResult">
-		<include refid="selectHyBillSetVo" />
-		<if test="businessType != null  and businessType != ''"> and b.business_type = #{businessType}</if>
-		<if test="billTypes != null  and billTypes != ''"> and b.bill_types = #{billTypes}</if>
-		<if test="billCategory != null  and billCategory != ''"> and b.bill_category = #{billCategory}</if>
-		<if test="prefix != null  and prefix != ''"> and b.prefix = #{prefix}</if>
-		<if test="suffix != null  and suffix != ''"> and b.suffix = #{suffix}</if>
-		<if test="digit != null  and digit != ''"> and b.digit = #{digit}</if>
-		<if test="billSample != null  and billSample != ''"> and b.bill_sample = #{billSample}</if>
-		<if test="billPanel != null  and billPanel != ''"> and b.bill_panel = #{billPanel}</if>
-		<if test="panel!=null and panel!=''"> and b.panel=#{panel}</if>
-		<if test="billDate!=null "> and b.bill_date=#{billDate}</if>
-		<if test="billNumber!=null and billNumber!= ''"> and b.bill_number = #{billNumber}</if>
-		<if test="modifyPerson !=null and modifyPerson !=''"> and b.modify_person = #{modifyPerson}</if>
-		<if test="paymentPerson !=null and paymentPerson !=''"> and b.payment_person = #{paymentPerson}</if>
-		<if test="ownerId !=null"> and b.owner_id = #{ownerId}</if>
-		<if test="costId !=null"> and b.cost_id = #{costId}</if>
-		<if test="revokeId !=null"> and b.revoke_id = #{revokeId}</if>
-		<if test="offsetId !=null"> and b.offset_id = #{offsetId}</if>
-	</select>
+	<select id="selectHyBillSetList" parameterType="HyBillSet" resultMap="HyBillSetResult">
+        <include refid="selectHyBillSetVo"/>
+        <where>  
+            <if test="businessType != null "> and b.business_type = #{businessType}</if>
+            <if test="billTypes != null  and billTypes != ''"> and b.bill_types = #{billTypes}</if>
+            <if test="billCategory != null  and billCategory != ''"> and b.bill_category = #{billCategory}</if>
+            <if test="billNumber != null  and billNumber != ''"> and b.bill_number = #{billNumber}</if>
+            <if test="prefix != null  and prefix != ''"> and b.prefix = #{prefix}</if>
+            <if test="suffix != null  and suffix != ''"> and b.suffix = #{suffix}</if>
+            <if test="invoiceNumber != null  and invoiceNumber != ''"> and b.invoice_number = #{invoiceNumber}</if>
+            <if test="digit != null  and digit != ''"> and b.digit = #{digit}</if>
+            <if test="billDate != null "> and b.bill_date = #{billDate}</if>
+            <if test="billSample != null  and billSample != ''"> and b.bill_sample = #{billSample}</if>
+            <if test="billDateNew != null "> and b.bill_date_new = #{billDateNew}</if>
+            <if test="billPanel != null  and billPanel != ''"> and b.bill_panel = #{billPanel}</if>
+            <if test="paymentMethodNew != null  and paymentMethodNew != ''"> and b.payment_method_new = #{paymentMethodNew}</if>
+            <if test="paymentMethod != null  and paymentMethod != ''"> and b.payment_method = #{paymentMethod}</if>
+            <if test="paymentPerson != null  and paymentPerson != ''"> and b.payment_person = #{paymentPerson}</if>
+            <if test="paymentAmount != null "> and b.payment_amount = #{paymentAmount}</if>
+            <if test="paymentDate != null "> and b.payment_date = #{paymentDate}</if>
+            <if test="modifyPerson != null  and modifyPerson != ''"> and b.modify_person = #{modifyPerson}</if>
+            <if test="modifyTime != null "> and b.modify_time = #{modifyTime}</if>
+            <if test="panel != null  and panel != ''"> and b.panel = #{panel}</if>
+            <if test="billAmount != null "> and b.bill_amount = #{billAmount}</if>
+            <if test="cancelNot != null "> and b.cancel_not = #{cancelNot}</if>
+            <if test="writeNot != null "> and b.write_not = #{writeNot}</if>
+            <if test="draftCheckNumber != null  and draftCheckNumber != ''"> and b.draft_check_number = #{draftCheckNumber}</if>
+            <if test="ownerId != null "> and b.owner_id = #{ownerId}</if>
+            <if test="costId != null "> and b.cost_id = #{costId}</if>
+            <if test="revokeId != null "> and b.revoke_id = #{revokeId}</if>
+            <if test="offsetId != null "> and b.offset_id = #{offsetId}</if>
+        </where>
+    </select>
 
 	<select id="selectHyBillSetListByDate" parameterType="HyBillSet"
 		resultMap="HyBillSetResult">
@@ -380,60 +351,108 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<insert id="insertHyBillSet" parameterType="HyBillSet">
-		insert into hy_bill_set
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="id != null">id,</if>
-			<if test="businessType != null">business_type,</if>
-			<if test="billTypes != null">bill_types,</if>
-			<if test="billCategory != null">bill_category,</if>
-			<if test="prefix != null">prefix,</if>
-			<if test="suffix != null">suffix,</if>
-			<if test="digit != null">digit,</if>
-			<if test="billSample != null">bill_sample,</if>
-			<if test="billPanel != null">bill_panel,</if>
-			<if test="panel!=null ">panel,</if>
-			<if test="ownerId !=null">owner_id,</if>
-			<if test="costId !=null">cost_id,</if>
-			<if test="revokeId !=null">revoke_id,</if>
-			<if test="offsetId !=null">offset_id,</if>
-		</trim>
-		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="id != null">#{id},</if>
-			<if test="businessType != null">#{businessType},</if>
-			<if test="billTypes != null">#{billTypes},</if>
-			<if test="billCategory != null">#{billCategory},</if>
-			<if test="prefix != null">#{prefix},</if>
-			<if test="suffix != null">#{suffix},</if>
-			<if test="digit != null">#{digit},</if>
-			<if test="billSample != null">#{billSample},</if>
-			<if test="billPanel != null">#{billPanel},</if>
-			<if test="panel!=null ">#{panel},</if>
-			<if test="ownerId !=null">#{ownerId},</if>
-			<if test="costId !=null">#{costId},</if>
-			<if test="revokeId !=null">#{revokeId},</if>
-			<if test="offsetId !=null">#{offsetId},</if>
-		</trim>
-	</insert>
+        insert into hy_bill_set
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="businessType != null">business_type,</if>
+            <if test="billTypes != null">bill_types,</if>
+            <if test="billCategory != null">bill_category,</if>
+            <if test="billNumber != null">bill_number,</if>
+            <if test="prefix != null">prefix,</if>
+            <if test="suffix != null">suffix,</if>
+            <if test="invoiceNumber != null">invoice_number,</if>
+            <if test="digit != null">digit,</if>
+            <if test="billDate != null">bill_date,</if>
+            <if test="billSample != null">bill_sample,</if>
+            <if test="billDateNew != null">bill_date_new,</if>
+            <if test="billPanel != null">bill_panel,</if>
+            <if test="paymentMethodNew != null">payment_method_new,</if>
+            <if test="paymentMethod != null">payment_method,</if>
+            <if test="paymentPerson != null">payment_person,</if>
+            <if test="paymentAmount != null">payment_amount,</if>
+            <if test="paymentDate != null">payment_date,</if>
+            <if test="modifyPerson != null">modify_person,</if>
+            <if test="modifyTime != null">modify_time,</if>
+            <if test="panel != null">panel,</if>
+            <if test="billAmount != null">bill_amount,</if>
+            <if test="cancelNot != null">cancel_not,</if>
+            <if test="writeNot != null">write_not,</if>
+            <if test="remark != null">remark,</if>
+            <if test="draftCheckNumber != null">draft_check_number,</if>
+            <if test="ownerId != null">owner_id,</if>
+            <if test="costId != null">cost_id,</if>
+            <if test="revokeId != null">revoke_id,</if>
+            <if test="offsetId != null">offset_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="businessType != null">#{businessType},</if>
+            <if test="billTypes != null">#{billTypes},</if>
+            <if test="billCategory != null">#{billCategory},</if>
+            <if test="billNumber != null">#{billNumber},</if>
+            <if test="prefix != null">#{prefix},</if>
+            <if test="suffix != null">#{suffix},</if>
+            <if test="invoiceNumber != null">#{invoiceNumber},</if>
+            <if test="digit != null">#{digit},</if>
+            <if test="billDate != null">#{billDate},</if>
+            <if test="billSample != null">#{billSample},</if>
+            <if test="billDateNew != null">#{billDateNew},</if>
+            <if test="billPanel != null">#{billPanel},</if>
+            <if test="paymentMethodNew != null">#{paymentMethodNew},</if>
+            <if test="paymentMethod != null">#{paymentMethod},</if>
+            <if test="paymentPerson != null">#{paymentPerson},</if>
+            <if test="paymentAmount != null">#{paymentAmount},</if>
+            <if test="paymentDate != null">#{paymentDate},</if>
+            <if test="modifyPerson != null">#{modifyPerson},</if>
+            <if test="modifyTime != null">#{modifyTime},</if>
+            <if test="panel != null">#{panel},</if>
+            <if test="billAmount != null">#{billAmount},</if>
+            <if test="cancelNot != null">#{cancelNot},</if>
+            <if test="writeNot != null">#{writeNot},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="draftCheckNumber != null">#{draftCheckNumber},</if>
+            <if test="ownerId != null">#{ownerId},</if>
+            <if test="costId != null">#{costId},</if>
+            <if test="revokeId != null">#{revokeId},</if>
+            <if test="offsetId != null">#{offsetId},</if>
+         </trim>
+    </insert>
 
-	<update id="updateHyBillSet" parameterType="HyBillSet">
-		update hy_bill_set
-		<trim prefix="SET" suffixOverrides=",">
-			<if test="businessType != null">business_type = #{businessType},</if>
-			<if test="billTypes != null">bill_types = #{billTypes},</if>
-			<if test="billCategory != null">bill_category = #{billCategory},</if>
-			<if test="prefix != null">prefix = #{prefix},</if>
-			<if test="suffix != null">suffix = #{suffix},</if>
-			<if test="digit != null">digit = #{digit},</if>
-			<if test="billSample != null">bill_sample = #{billSample},</if>
-			<if test="billPanel != null">bill_panel = #{billPanel},</if>
-			<if test="panel !=null">panel=#{panel}</if>
-			<if test="ownerId !=null">owner_id = #{ownerId},</if>
-			<if test="costId !=null">cost_id = #{costId},</if>
-			<if test="revokeId !=null">revoke_id = #{revokeId},</if>
-			<if test="offsetId !=null">offset_id = #{offsetId},</if>
-		</trim>
-		where id = #{id}
-	</update>
+    <update id="updateHyBillSet" parameterType="HyBillSet">
+        update hy_bill_set
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="businessType != null">business_type = #{businessType},</if>
+            <if test="billTypes != null">bill_types = #{billTypes},</if>
+            <if test="billCategory != null">bill_category = #{billCategory},</if>
+            <if test="billNumber != null">bill_number = #{billNumber},</if>
+            <if test="prefix != null">prefix = #{prefix},</if>
+            <if test="suffix != null">suffix = #{suffix},</if>
+            <if test="invoiceNumber != null">invoice_number = #{invoiceNumber},</if>
+            <if test="digit != null">digit = #{digit},</if>
+            <if test="billDate != null">bill_date = #{billDate},</if>
+            <if test="billSample != null">bill_sample = #{billSample},</if>
+            <if test="billDateNew != null">bill_date_new = #{billDateNew},</if>
+            <if test="billPanel != null">bill_panel = #{billPanel},</if>
+            <if test="paymentMethodNew != null">payment_method_new = #{paymentMethodNew},</if>
+            <if test="paymentMethod != null">payment_method = #{paymentMethod},</if>
+            <if test="paymentPerson != null">payment_person = #{paymentPerson},</if>
+            <if test="paymentAmount != null">payment_amount = #{paymentAmount},</if>
+            <if test="paymentDate != null">payment_date = #{paymentDate},</if>
+            <if test="modifyPerson != null">modify_person = #{modifyPerson},</if>
+            <if test="modifyTime != null">modify_time = #{modifyTime},</if>
+            <if test="panel != null">panel = #{panel},</if>
+            <if test="billAmount != null">bill_amount = #{billAmount},</if>
+            <if test="cancelNot != null">cancel_not = #{cancelNot},</if>
+            <if test="writeNot != null">write_not = #{writeNot},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="draftCheckNumber != null">draft_check_number = #{draftCheckNumber},</if>
+            <if test="ownerId != null">owner_id = #{ownerId},</if>
+            <if test="costId != null">cost_id = #{costId},</if>
+            <if test="revokeId != null">revoke_id = #{revokeId},</if>
+            <if test="offsetId != null">offset_id = #{offsetId},</if>
+        </trim>
+        where id = #{id}
+    </update>
 
 	<delete id="deleteHyBillSetById" parameterType="Long">
 		delete from

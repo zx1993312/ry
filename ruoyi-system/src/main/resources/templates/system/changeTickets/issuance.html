@@ -46,9 +46,9 @@
 			</div>
 
 			<div class="btn-group-sm" id="toolbar" role="group">
-				<a class="btn btn-success" onclick="$.operate.add()"
+				<!-- <a class="btn btn-success" onclick="$.operate.add()"
 					shiro:hasPermission="system:issuance:add"> <i
-					class="fa fa-plus"></i> 使用登记
+					class="fa fa-plus"></i> 使用登记 -->
 				</a>  <a class="btn btn-danger multiple disabled"
 					onclick="$.operate.removeAll()"
 					shiro:hasPermission="system:issuance:remove"> <i
@@ -57,16 +57,6 @@
 			</div>
 			<div class="col-sm-12 select-table table-striped">
 				<table id="bootstrap-table"></table>
-			      <div class="btn-group" style="float:right" >
-                                <button type="button" class="btn btn-white"><i class="fa fa-chevron-left"></i>
-                                </button>
-                                <button class="btn btn-white">1</button>
-                                <button class="btn btn-white">2</button>
-                                <button class="btn btn-white">3</button>
-                                <button class="btn btn-white">4</button>
-                                <button type="button" class="btn btn-white"><i class="fa fa-chevron-right"></i>
-                                </button>
-                  </div>
 			</div>
 		</div>
 	</div>
@@ -80,7 +70,7 @@
             var options = {
                 url: prefix + "/list",
                 createUrl: prefix + "/add",
-                /* updateUrl: prefix + "/edit/{id}", */
+                updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
                 modalName: "票据发放",
