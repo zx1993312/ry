@@ -8,7 +8,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap type="HySelectMeter" id="HySelMeterResult">
 		<id property="id" column="id" />
 		<result property="buildingName" column="building_name" />
-		<result property="houseNum" column="house_num" />
 		<result property="meterType" column="meter_type" />
 		<result property="meterSerialNum" column="meter_serial_num" />
 		<result property="meterName" column="meter_name" />
@@ -110,7 +109,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<sql id="selectHySelMeterVo">
 		select m.id,
 		m.building_name,
-		m.house_num,
 		m.meter_type,
 		m.meter_serial_num,
 		m.meter_name,
@@ -131,16 +129,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		i.house_name,
 		o.owner_name
 		from hy_meter m 
-		left join hy_house_inf i on m.house_num = i.house_number 
+		left join hy_house_inf i on m.house_id = i.id 
 		LEFT JOIN
-		hy_owner_registration o on o.house_num=m.house_num
+		hy_owner_registration o on o.owner_id=i.id
 		where 1=1
 	</sql>
 
 	<select id="selectHySelMeter" parameterType="Long" resultMap="HySelMeterResult">
 		<include refid="selectHySelMeterVo"></include>
 		<if test="buildingName != null  and buildingName != ''"> and m.building_name = #{buildingName}</if>
-		<if test="houseNum != null  and houseNum != ''"> and m.house_num = #{houseNum}</if>
 		<if test="meterType != null  and meterType != ''"> and m.meter_type = #{meterType}</if>
 		<if test="meterSerialNum != null  and meterSerialNum != ''"> and m.meter_serial_num = #{meterSerialNum}</if>
 		<if test="meterName != null  and meterName != ''"> and m.meter_name = #{meterName}</if>
@@ -162,7 +159,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectHySelMeterList" parameterType="HySelectMeter" resultMap="HySelMeterResult">
 		<include refid="selectHySelMeterVo"></include>
 		<if test="buildingName != null  and buildingName != ''"> and m.building_name = #{buildingName}</if>
-		<if test="houseNum != null  and houseNum != ''"> and m.house_num = #{houseNum}</if>
 		<if test="meterType != null  and meterType != ''"> and m.meter_type = #{meterType}</if>
 		<if test="meterSerialNum != null  and meterSerialNum != ''"> and m.meter_serial_num = #{meterSerialNum}</if>
 		<if test="meterName != null  and meterName != ''"> and m.meter_name = #{meterName}</if>
@@ -186,7 +182,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<select id="selectHySelMeterOr" parameterType="HySelectMeter" resultMap="HySelMeterResult">
 		<include refid="selectHySelMeterVo"></include>
 		<if test="buildingName != null  and buildingName != ''"> and m.building_name = #{buildingName}</if>
-		<if test="houseNum != null  and houseNum != ''"> and m.house_num = #{houseNum}</if>
 		<if test="meterType != null  and meterType != ''"> and m.meter_type = #{meterType}</if>
 		<if test="meterSerialNum != null  and meterSerialNum != ''"> and m.meter_serial_num = #{meterSerialNum}</if>
 		<if test="meterName != null  and meterName != ''"> and m.meter_name = #{meterName}</if>
@@ -213,7 +208,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into hy_meter
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="buildingName != null  and buildingName != ''"> building_name,</if>
-			<if test="houseNum != null  and houseNum != ''"> house_num,</if>
 			<if test="meterType != null  and meterType != ''"> meter_type,</if>
 			<if test="meterSerialNum != null  and meterSerialNum != ''"> meter_serial_num,</if>
 			<if test="meterName != null  and meterName != ''"> meter_name,</if>
@@ -233,7 +227,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="buildingName != null  and buildingName != ''">#{buildingName},</if>
-			<if test="houseNum != null  and houseNum != ''">#{houseNum},</if>
 			<if test="meterType != null  and meterType != ''">#{meterType},</if>
 			<if test="meterSerialNum != null  and meterSerialNum != ''">#{meterSerialNum},</if>
 			<if test="meterName != null  and meterName != ''">#{meterName},</if>
@@ -257,7 +250,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update hy_meter
 		<trim prefix="SET" suffixOverrides=",">
 			<if test="buildingName != null  and buildingName != ''"> and m.building_name = #{buildingName}</if>
-			<if test="houseNum != null  and houseNum != ''"> and m.house_num = #{houseNum}</if>
 			<if test="meterType != null  and meterType != ''"> and m.meter_type = #{meterType}</if>
 			<if test="meterSerialNum != null  and meterSerialNum != ''"> and m.meter_serial_num = #{meterSerialNum}</if>
 			<if test="meterName != null  and meterName != ''"> and m.meter_name = #{meterName}</if>

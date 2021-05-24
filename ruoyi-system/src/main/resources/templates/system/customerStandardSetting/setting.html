@@ -178,7 +178,7 @@
 
     var editFlag = [[${@permission.hasPermi('system:inf:edit')}]];
     var removeFlag = [[${@permission.hasPermi('system:inf:remove')}]];
-    var prefix = ctx + "system/inf";
+    var prefix = ctx + "system/customer";
 
     $(function() {
         var options = {
@@ -199,11 +199,11 @@
                 visible: false
             },
             {
-                field: 'hyBuilding.buildingName',
+                field: 'buildingName',
                 title: '楼宇名称'
             },
             {
-                field: 'hyOwnerRegistration.ownerName',
+                field: 'ownerName',
                 title: '业主名称'
             },
             {
@@ -230,31 +230,28 @@
 	            	return value;
 	            }
             },
+            
+            
+            
             {
-                field: 'houseType',
-                title: '房屋类型',
-                formatter: function(value, item, index) {
-                	switch(value){
-                    	case '0' : value =  "销售房屋";break;
-                    	case '1' : value =  "自持房屋";break;
-                    	case '2' : value =  "物业用房";break;
-                    	case '3' : value =  "公共区域";break;
-                	}
-	            	return value;
-	            }
+                field: 'parkingNumber',
+                title: '车位编号'
             },
             {
-                field: 'salesStatus',
-                title: '销售状态'
+                field: 'meterName',
+                title: '表计名称'
             },
             {
-                field: 'purchaseContract',
-                title: '购房合同号'
+                field: 'costItems',
+                title: '费用名称'
             },
             {
-                field: 'marketingNum',
-                title: '营销编号'
+                field: 'expenseType',
+                title: '标准名称'
             },
+            
+            
+            
             {
                 title: '操作',
                 align: 'center',

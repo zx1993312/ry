@@ -6,7 +6,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<resultMap type="HyMeter" id="HyMeterResult">
 		<id property="id" column="id" />
-		<result property="houseNum" column="house_num" />
 		<result property="meterType" column="meter_type" />
 		<result property="meterSerialNum" column="meter_serial_num" />
 		<result property="meterName" column="meter_name" />
@@ -128,7 +127,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<sql id="selectHyMeterVo">
 		SELECT
 			m.id,
-			m.house_num,
 			m.meter_type,
 			m.meter_serial_num,
 			m.meter_name,
@@ -160,7 +158,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectHyMeterList" parameterType="HyMeter"
 		resultMap="HyMeterResult">
 		<include refid="selectHyMeterVo"></include>
-		<if test="houseNum != null  and houseNum != ''"> and m.house_num = #{houseNum}</if>
 		<if test="meterType != null "> and m.meter_type = #{meterType}</if>
 		<if test="meterSerialNum != null "> and m.meter_serial_num = #{meterSerialNum}</if>
 		<if test="meterName != null  and meterName != ''"> and m.meter_name like concat('%', #{meterName}, '%')</if>
@@ -194,7 +191,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectHyMeter" parameterType="HyMeter"
 		resultMap="HyMeterResult">
 		<include refid="selectHyMeterVo"></include>
-		<if test="houseNum != null  and houseNum != ''"> and m.house_num = #{houseNum}</if>
 		<if test="meterType != null "> and m.meter_type = #{meterType}</if>
 		<if test="meterSerialNum != null "> and m.meter_serial_num = #{meterSerialNum}</if>
 		<if test="meterName != null  and meterName != ''"> and m.meter_name like concat('%', #{meterName}, '%')</if>
@@ -224,7 +220,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectHyMeterListOr" parameterType="HyMeter"
 		resultMap="HyMeterResult">
 		<include refid="selectHyMeterVo"></include>
-		<if test="houseNum != null  and houseNum != ''"> and m.house_num = #{houseNum}</if>
 		<if test="meterType != null "> and m.meter_type = #{meterType}</if>
 		<if test="meterSerialNum != null "> and m.meter_serial_num = #{meterSerialNum}</if>
 		<if test="meterName != null  and meterName != ''"> and m.meter_name like concat('%', #{meterName}, '%')</if>
@@ -255,7 +250,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectHyMeterCase" parameterType="HyMeter"
 		resultMap="HyMeterResult">
 		<include refid="selectHyMeterVo"></include>
-		<if test="houseNum != null  and houseNum != ''"> and m.house_num = #{houseNum}</if>
 		<if test="meterType != null "> and m.meter_type = #{meterType}</if>
 		<if test="meterSerialNum != null "> and m.meter_serial_num = #{meterSerialNum}</if>
 		<if test="meterName != null  and meterName != ''"> and m.meter_name like concat('%', #{meterName}, '%')</if>
@@ -292,7 +286,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		useGeneratedKeys="true" keyProperty="id">
 		insert into hy_meter
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="houseNum != null">house_num,</if>
 			<if test="meterType != null">meter_type,</if>
 			<if test="meterSerialNum != null">meter_serial_num,</if>
 			<if test="meterName != null">meter_name,</if>
@@ -317,7 +310,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="inputTime != null">input_time,</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="houseNum != null">#{houseNum},</if>
 			<if test="meterType != null">#{meterType},</if>
 			<if test="meterSerialNum != null">#{meterSerialNum},</if>
 			<if test="meterName != null">#{meterName},</if>
@@ -346,7 +338,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateHyMeter" parameterType="HyMeter">
 		update hy_meter
 		<trim prefix="SET" suffixOverrides=",">
-			<if test="houseNum != null">house_num = #{houseNum},</if>
 			<if test="meterType != null">meter_type = #{meterType},</if>
 			<if test="meterSerialNum != null">meter_serial_num = #{meterSerialNum},</if>
 			<if test="meterName != null">meter_name = #{meterName},</if>
@@ -399,7 +390,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="meterReader != null">meter_reader = #{meterReader},</if>
 			<if test="inputTime != null">input_time = #{inputTime},</if>
 		</trim>
-		where house_num = #{houseNum}
+		where house_id = #{houseId}
 	</update>
 
 	<delete id="deleteHyMeterById" parameterType="Long">
@@ -410,7 +401,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteHyMeterByHoserNumber" parameterType="Long">
 		delete
 		from
-		hy_meter where house_num = #{houseNum}
+		hy_meter where house_id = #{houseId}
 	</delete>
 
 	<delete id="deleteHyMeterByIds" parameterType="String">
