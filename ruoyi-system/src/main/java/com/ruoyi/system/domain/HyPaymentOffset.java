@@ -77,6 +77,9 @@ public class HyPaymentOffset extends BaseEntity {
 	@Excel(name = "费用项目表")
 	private HyCost hyCost;
 	
+	/** 票据id */
+	private Long setId;
+	
 
 	public void setId(Long id) {
 		this.id = id;
@@ -192,6 +195,14 @@ public class HyPaymentOffset extends BaseEntity {
 		this.advanceAmount = advanceAmount;
 	}
 
+	public Long getSetId() {
+		return setId;
+	}
+
+	public void setSetId(Long setId) {
+		this.setId = setId;
+	}
+
 	@Override
 	public String toString() {
 		return "HyPaymentOffset [id=" + id + ", houseNum=" + houseNum + ", offsetCategory=" + offsetCategory
@@ -199,8 +210,9 @@ public class HyPaymentOffset extends BaseEntity {
 				+ advanceAmount + ", offsetOperationDate=" + offsetOperationDate + ", offsetRange=" + offsetRange
 				+ ", offsetDate=" + offsetDate + ", importPerson=" + importPerson + ", importTime=" + importTime
 				+ ", advanceTime=" + advanceTime + ", hyAuditManagement=" + hyAuditManagement + ", hyCost=" + hyCost
-				+ "]";
+				+ ", setId=" + setId + "]";
 	}
+
 
 
 

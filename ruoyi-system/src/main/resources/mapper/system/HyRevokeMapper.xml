@@ -9,11 +9,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="houseNum"    column="house_num"    />
         <result property="revokeDate"    column="revoke_date"    />
         <result property="revokeReason"    column="revoke_reason"    />
-        <result property="remark"    column="remark"    />
+        <result property="revokeRemark"    column="revoke_remark"    />
+        <result property="setId"    column="set_id"    />
     </resultMap>
 
     <sql id="selectHyRevokeVo">
-        select id, house_num, revoke_date, revoke_reason, remark from hy_revoke
+        select id, house_num, revoke_date, revoke_reason, revoke_remark ,set_id from hy_revoke
     </sql>
 
     <select id="selectHyRevokeList" parameterType="HyRevoke" resultMap="HyRevokeResult">
@@ -22,6 +23,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="houseNum != null  and houseNum != ''"> and house_num = #{houseNum}</if>
             <if test="revokeDate != null "> and revoke_date = #{revokeDate}</if>
             <if test="revokeReason != null  and revokeReason != ''"> and revoke_reason = #{revokeReason}</if>
+            <if test="revokeRemark != null  and revokeRemark != ''"> and revoke_remark = #{revokeRemark}</if>
+            <if test="setId != null"> and set_id = #{setId}</if>
         </where>
     </select>
     
@@ -36,13 +39,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="houseNum != null">house_num,</if>
             <if test="revokeDate != null">revoke_date,</if>
             <if test="revokeReason != null">revoke_reason,</if>
-            <if test="remark != null">remark,</if>
+            <if test="revokeRemark != null">revoke_remark,</if>
+            <if test="setId != null">set_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="houseNum != null">#{houseNum},</if>
             <if test="revokeDate != null">#{revokeDate},</if>
             <if test="revokeReason != null">#{revokeReason},</if>
-            <if test="remark != null">#{remark},</if>
+            <if test="revokeRemark != null">#{revokeRemark},</if>
+            <if test="setId != null">#{setId},</if>
          </trim>
     </insert>
 
@@ -52,7 +57,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="houseNum != null">house_num = #{houseNum},</if>
             <if test="revokeDate != null">revoke_date = #{revokeDate},</if>
             <if test="revokeReason != null">revoke_reason = #{revokeReason},</if>
-            <if test="remark != null">remark = #{remark},</if>
+            <if test="revokeRemark != null">revoke_remark = #{revokeRemark},</if>
+            <if test="setId != null">set_id = #{setId},</if>
         </trim>
         where id = #{id}
     </update>

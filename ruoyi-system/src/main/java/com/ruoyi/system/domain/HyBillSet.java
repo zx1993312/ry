@@ -140,22 +140,15 @@ public class HyBillSet extends BaseEntity
     /** 费用项目表 */
     @Excel(name = "费用项目表")
     private HyCost hyCost;
-
-    /** 撤销id */
-    @Excel(name = "撤销id")
-    private Long revokeId;
     
     /** 撤销表 */
     @Excel(name = "撤销表")
     private HyRevoke hyRevoke;
-
-    /** 预交id */
-    @Excel(name = "预交id")
-    private Long offsetId;
     
     /** 预交表 */
     @Excel(name = "预交表")
     private HyPaymentOffset hyPaymentOffset;
+
 
     public void setId(Long id) 
     {
@@ -400,24 +393,6 @@ public class HyBillSet extends BaseEntity
     {
         return costId;
     }
-    public void setRevokeId(Long revokeId) 
-    {
-        this.revokeId = revokeId;
-    }
-
-    public Long getRevokeId() 
-    {
-        return revokeId;
-    }
-    public void setOffsetId(Long offsetId) 
-    {
-        this.offsetId = offsetId;
-    }
-
-    public Long getOffsetId() 
-    {
-        return offsetId;
-    }
 
     public HyHouseInf getHyHouseInf() {
 		return hyHouseInf;
@@ -490,8 +465,6 @@ public class HyBillSet extends BaseEntity
             .append("draftCheckNumber", getDraftCheckNumber())
             .append("ownerId", getOwnerId())
             .append("costId", getCostId())
-            .append("revokeId", getRevokeId())
-            .append("offsetId", getOffsetId())
             .append("hyHouseInf", getHyHouseInf())
             .append("hyOwnerRegistration", getHyOwnerRegistration())
             .append("hyCost", getHyCost())

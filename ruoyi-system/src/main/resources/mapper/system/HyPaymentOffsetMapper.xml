@@ -16,6 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="importPerson" column="import_person" />
 		<result property="importTime" column="import_time" />
 		<result property="advanceTime" column="advance_time" />
+		<result property="setId" column="set_id" />
 		<association property="hyAuditManagement" column="id"
 			javaType="HyAuditManagement" resultMap="HyAuditManagementResult" />
 		<association property="hyCost" column="id"
@@ -93,6 +94,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		o.import_person,
 		o.import_time,
 		o.advance_time,
+		o.set_id,
 		c.cost_items,
 		c.fee_date,
 		a.audit_process,
@@ -109,14 +111,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		hy_audit_management a
 		ON
 		o.house_num=a.house_num
-
-		where 1=1
 	</sql>
 
 	<select id="selectHyPaymentOffsetList"
 		parameterType="HyPaymentOffset" resultMap="HyPaymentOffsetResult">
 		<include refid="selectHyPaymentOffsetVo" />
-
+		<where>
 		<if test="houseNum != null  and houseNum != ''"> and o.house_num = #{houseNum}</if>
 		<if test="offsetCategory != null "> and o.offset_category = #{offsetCategory}</if>
 		<if test="offsetPreson != null  and offsetPreson != ''"> and o.offset_preson = #{offsetPreson}</if>
@@ -126,13 +126,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="importPerson != null  and importPerson != ''"> and o.import_person = #{importPerson}</if>
 		<if test="importTime != null "> and o.import_time = #{importTime}</if>
 		<if test="advanceTime != null "> and o.advance_time = #{advanceTime}</if>
+		<if test="setId != null "> and o.set_id = #{setId}</if>
 		<!-- <if test="feeDate != null "> and c.fee_date = #{feeDate}</if> -->
+		</where>
 	</select>
 
 	<select id="selectHyPaymentOffsetListTy"  resultMap="HyPaymentOffsetResult">
 		<include refid="selectHyPaymentOffsetVo"/>
+		<where>
 		<if test="startFeeDate != null and endFeeDate != null"> and c.fee_date between #{startFeeDate} and #{endFeeDate} </if>
 		<if test="auditStatus != null and auditStatus != ''"> and a.audit_status =#{auditStatus}</if>
+		</where>
 	</select>
 
 	<select id="selectHyPaymentOffsetById" parameterType="Long"
@@ -155,6 +159,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="importPerson != null">import_person,</if>
 			<if test="importTime != null">import_time,</if>
 			<if test="advaneTime != null">advane_time,</if>
+			<if test="setId != null">set_id,</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null">#{id},</if>
@@ -167,6 +172,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="importPerson != null">#{importPerson},</if>
 			<if test="importTime != null">#{importTime},</if>
 			<if test="advaneTime != null">#{advaneTime},</if>
+			<if test="setId != null">#{setId},</if>
 		</trim>
 	</insert>
 
@@ -183,6 +189,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="importPerson != null">import_person = #{importPerson},</if>
 			<if test="importTime != null">import_time = #{importTime},</if>
 			<if test="advaneTime != null">advane_time = #{advaneTime},</if>
+			<if test="setId != null">set_id = #{setId},</if>
 		</trim>
 		where id = #{id}
 	</update>

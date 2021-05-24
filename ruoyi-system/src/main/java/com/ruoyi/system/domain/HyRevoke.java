@@ -32,6 +32,14 @@ public class HyRevoke extends BaseEntity
     /** 撤销原因 */
     @Excel(name = "撤销原因")
     private String revokeReason;
+    
+    /** 备注 */
+    @Excel(name = "备注")
+    private String revokeRemark;
+    
+    /** 票据id */
+    @Excel(name = "票据id")
+    private Long setId;
 
     public void setId(Long id) 
     {
@@ -70,14 +78,31 @@ public class HyRevoke extends BaseEntity
         return revokeReason;
     }
 
-    @Override
+    public String getRevokeRemark() {
+		return revokeRemark;
+	}
+
+	public void setRevokeRemark(String revokeRemark) {
+		this.revokeRemark = revokeRemark;
+	}
+
+	public Long getSetId() {
+		return setId;
+	}
+
+	public void setSetId(Long setId) {
+		this.setId = setId;
+	}
+
+	@Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
             .append("houseNum", getHouseNum())
             .append("revokeDate", getRevokeDate())
             .append("revokeReason", getRevokeReason())
-            .append("remark", getRemark())
+            .append("revokeRemark", getRevokeRemark())
+            .append("setId", getSetId())
             .toString();
     }
 }

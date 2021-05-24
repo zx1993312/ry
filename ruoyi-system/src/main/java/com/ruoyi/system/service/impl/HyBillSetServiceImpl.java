@@ -54,7 +54,7 @@ public class HyBillSetServiceImpl implements IHyBillSetService {
 	 * @param hyBillSet 票据设置
 	 * @return 票据设置集合
 	 */
-	public List<HyBillSet> selectHyBillSetListByDate(HyBillSet hyBillSet) {
+	/*public List<HyBillSet> selectHyBillSetListByDate(HyBillSet hyBillSet) {
 		Map<String, Date> billDateMap = HyDateUtil.getDate(hyBillSet.getBillDate());// 获取转换后billDate时间
 		Map<String, Date> billDateMapNew = HyDateUtil.getDate(hyBillSet.getBillDateNew());// 获取转换后billDateNew时间
 
@@ -86,7 +86,7 @@ public class HyBillSetServiceImpl implements IHyBillSetService {
 				hyBillSet.getPrefix(), hyBillSet.getSuffix(), hyBillSet.getDigit(), hyBillSet.getBillSample(),
 				hyBillSet.getBillPanel(), hyBillSet.getPanel(), billDate, startTiem, endTime, billDateNew, startTimeNew,
 				endTimeNew);
-	}
+	}*/
 
 	/**
 	 * 新增票据设置
@@ -136,8 +136,4 @@ public class HyBillSetServiceImpl implements IHyBillSetService {
 		return hyBillSetMapper.deleteHyBillSetById(id);
 	}
 
-	@Override
-	public List<HyBillSet> selectHyBillSetListOr(HyBillSet hyBillSet) {
-		return hyBillSetMapper.selectHyBillSetListOr(hyBillSet);
-	}
 }
