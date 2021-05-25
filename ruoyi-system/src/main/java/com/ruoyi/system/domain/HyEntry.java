@@ -54,9 +54,13 @@ public class HyEntry extends BaseEntity
     @Excel(name = "入账总金额")
     private String entryAmount;
 
-    /** 房屋编号 */
-    @Excel(name = "房屋编号")
-    private String houseNum;
+    /** 费用项目id */
+    @Excel(name = "费用项目id")
+    private Long costId;
+    
+    /** 审核管理id */
+    @Excel(name = "审核管理id")
+    private Long auditId;
     /**
      * 审核表
      */
@@ -138,17 +142,23 @@ public class HyEntry extends BaseEntity
     {
         return entryAmount;
     }
-    public void setHouseNum(String houseNum) 
-    {
-        this.houseNum = houseNum;
-    }
-
-    public String getHouseNum() 
-    {
-        return houseNum;
-    }
-
    
+	public Long getCostId() {
+		return costId;
+	}
+
+	public void setCostId(Long costId) {
+		this.costId = costId;
+	}
+
+	public Long getAuditId() {
+		return auditId;
+	}
+
+	public void setAuditId(Long auditId) {
+		this.auditId = auditId;
+	}
+
 	public HyCost getHyCost() {
 		return hyCost;
 	}
@@ -176,7 +186,8 @@ public class HyEntry extends BaseEntity
             .append("entryDateStr", getEntryDateStr())
             .append("entryDateEnd", getEntryDateEnd())
             .append("entryAmount", getEntryAmount())
-            .append("houseNum", getHouseNum())
+            .append("auditId", getAuditId())
+            .append("costId", getCostId())
             .toString();
     }
 }

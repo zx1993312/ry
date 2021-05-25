@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('票据收费历史列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <!-- <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>业务类型：</label>
+                                <select name="businessType">
+			                        <option value="">请选择</option>
+			                        <option value=1>普通业务</option>
+			                        <option value=2>vip业务</option>
+			                    </select>
+                            </li>
+                            <li>
+                                <label>票据种类：</label>
+                                <select id="billTypes" name="billTypes"
+									th:with="type=${@dict.getType('hy_bill_set')}">
+									<option value="">请选择</option>
+									<option value="0">收据</option>
+									<option value="1">发票</option>
+									<option value="2">凭据</option>
+								</select>
+                            </li>
+                            <li>
+                                <label>票据类别：</label>
+                                <select name="billCategory">
+			                        <option value="">请选择</option>
+			                        <option value="1">普通类别</option>
+			                        <option value="2">vip类别</option>
+			                    </select>
+                            </li>
+                            <li>
+                                <label>票据号码：</label>
+                                <input type="text" name="billNumber"/>
+                            </li>
+                            <li>
+                                <label>前缀：</label>
+                                <input type="text" name="prefix"/>
+                            </li>
+                            <li>
+                                <label>后缀：</label>
+                                <input type="text" name="suffix"/>
+                            </li>
+                            <li>
+                                <label>发票号码：</label>
+                                <input type="text" name="invoiceNumber"/>
+                            </li>
+                            <li>
+                                <label>位数：</label>
+                                <input type="text" name="digit"/>
+                            </li>
+                            <li>
+                                <label>票据日期：</label>
+                                <input type="text" class="time-input" placeholder="请选择票据日期" name="billDate"/>
+                            </li>
+                            <li>
+                                <label>票据样例：</label>
+                                <input type="text" name="billSample"/>
+                            </li>
+                            <li>
+                                <label>新票据日期：</label>
+                                <input type="text" class="time-input" placeholder="请选择新票据日期" name="billDateNew"/>
+                            </li>
+                            <li>
+                                <label>定额票据面板：</label>
+                                <input type="text" name="billPanel"/>
+                            </li>
+                            <li>
+                                <label>新收款方式：</label>
+                                <select name="paymentMethodNew">
+			                        <option value="">请选择</option>
+			                        <option value="1">微信支付</option>
+			                        <option value="2">支付宝支付</option>
+			                        <option value="3">现金支付</option>
+			                        <option value="4">银行卡支付</option>
+			                        <option value="5">信用卡支付</option>
+			                    </select>
+                            </li>
+                            <li>
+                                <label>收款方式：</label>
+                                <select name="paymentMethod" class="form-control m-b">
+			                        <option value="">请选择</option>
+			                        <option value="1">微信支付</option>
+			                        <option value="2">支付宝支付</option>
+			                        <option value="3">现金支付</option>
+			                        <option value="4">银行卡支付</option>
+			                        <option value="5">信用卡支付</option>
+			                    </select>
+                            </li>
+                            <li>
+                                <label>收款人：</label>
+                                <input type="text" name="paymentPerson"/>
+                            </li>
+                            <li>
+                                <label>收款金额：</label>
+                                <input type="text" name="paymentAmount"/>
+                            </li>
+                            <li>
+                                <label>收款日期：</label>
+                                <input type="text" class="time-input" placeholder="请选择收款日期" name="paymentDate"/>
+                            </li>
+                            <li>
+                                <label>修改人：</label>
+                                <input type="text" name="modifyPerson"/>
+                            </li>
+                            <li>
+                                <label>修改时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择修改时间" name="modifyTime"/>
+                            </li>
+                            <li>
+                                <label>定额票据：</label>
+                                <input type="text" name="panel"/>
+                            </li>
+                            <li>
+                                <label>收/退款金额：</label>
+                                <input type="text" name="billAmount"/>
+                            </li>
+                            <li>
+                                <label>是否撤销：</label>
+                                <select name="cancelNot">
+			                        <option value="">请选择</option>
+			                        <option value=0>是</option>
+			                        <option value=1>否</option>
+			                    </select>
+                            </li>
+                            <li>
+                                <label>是否冲销：</label>
+                                <select name="writeNot">
+			                        <option value="">请选择</option>
+			                        <option value=0>是</option>
+			                        <option value=1>否</option>
+			                    </select>
+                            </li>
+                            <li>
+                                <label>支/汇票号：</label>
+                                <input type="text" name="draftCheckNumber"/>
+                            </li>
+                            <li>
+                                <label>业主id：</label>
+                                <input type="text" name="ownerId"/>
+                            </li>
+                            <li>
+                                <label>费用项目id：</label>
+                                <input type="text" name="costId"/>
+                            </li>
+                            <li>
+                                <label>撤销id：</label>
+                                <input type="text" name="revokeId"/>
+                            </li>
+                            <li>
+                                <label>预交id：</label>
+                                <input type="text" name="offsetId"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>-->
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <!-- <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:set:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:set:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:set:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:set:export">
+                    <i class="fa fa-download"></i> 导出
+                </a> -->
+                <a class="btn btn-danger" shiro:hasPermission="system:meter:print" onclick="printPage()">
+	                <i class="fa fa-print"></i> 预览
+				</a>
+            </div> 
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:set:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:set:remove')}]];
+        var prefix = ctx + "system/set";
+
+        $(function() {
+            var options = {
+            		showSearch: false,
+    		        showRefresh: false,
+    		        showToggle: false,
+    		        showColumns: false,
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "票据收费历史",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '主键',
+                    visible: false
+                },
+                {
+                    field: 'hyOwnerRegistration.ownerName',
+                    title: '客户名称'
+                },
+                {
+                    field: 'hyHouseInf.houseNumber',
+                    title: '房屋编号'
+                },
+                {
+                    field: 'billCategory',
+                    title: '票据类别',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case "" : value =  "请选择";break;
+	                    	case "1" : value =  "普通类别";break;
+	                    	case "2" : value =  "vip类别";break;
+	                	}
+		            	return value;
+		            }
+                },
+                {
+                    field: 'billNumber',
+                    title: '票据号码'
+                },
+                {
+                    field: 'draftCheckNumber',
+                    title: '支/汇票号'
+                },
+                {
+                    field: 'paymentMethod',
+                    title: '收款/退款方式',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case "" : value =  "请选择";break;
+	                    	case "1" : value =  "微信支付";break;
+	                    	case "2" : value =  "支付宝支付";break;
+	                    	case "3" : value =  "现金支付";break;
+	                    	case "4" : value =  "银行卡支付";break;
+	                    	case "5" : value =  "信用卡支付";break;
+	                	}
+		            	return value;
+		            }
+                },
+                {
+                    field: 'paymentDate',
+                    title: '收费日期'
+                }]
+            };
+            $.table.init(options);
+        });
+        function printPage() {
+            window.print();
+        }
+    </script>
+</body>
+</html>

@@ -13,7 +13,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="entryDateStr"    column="entry_date_str"    />
         <result property="entryDateEnd"    column="entry_date_end"    />
         <result property="entryAmount"    column="entry_amount"    />
-        <result property="houseNum"    column="house_num"    />
+        <result property="costId"    column="cost_id"    />
+        <result property="auditId"    column="audit_id"    />
         <association property="hyCost" column="id" javaType="HyCost" resultMap="HyCostResult" />
 		<association property="hyAuditManagement" column="id" javaType="HyAuditManagement" resultMap="HyAuditManagementResult" />
         
@@ -21,7 +22,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <resultMap type="HyCost" id="HyCostResult">
 		<result property="id" column="id" />
-		<result property="houseNum" column="house_num" />
 		<result property="costItems" column="cost_items" />
 		<result property="expenseType" column="expense_type" />
 		<result property="parentId" column="parent_id" />
@@ -74,7 +74,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		
     <resultMap type="HyAuditManagement" id="HyAuditManagementResult">
         <result property="id"    column="id"    />
-        <result property="houseNum"    column="house_num"    />
         <result property="auditProcess"    column="audit_process"    />
         <result property="auditStatus"    column="audit_status"    />
     </resultMap>
@@ -89,14 +88,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         e.entry_date_str, 
         e.entry_date_end, 
         e.entry_amount, 
-        e.house_num,
+        e.cost_id,
+        e.audit_id,
         c.amount_receivable,
         c.cost_items,
         a.audit_process,
         a.audit_status
         from hy_entry e 
-        left join hy_audit_management a on e.house_num=a.house_num
-        left join hy_cost c on e.house_num=c.house_num
+        left join hy_audit_management a on e.audit_id=a.id
+        left join hy_cost c on e.cost_id=c.id
         where 1=1
     </sql>
 
@@ -110,13 +110,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="entryDateStr != null "> and e.entry_date_str = #{entryDateStr}</if>
             <if test="entryDateEnd != null "> and e.entry_date_end = #{entryDateEnd}</if>
             <if test="entryAmount != null  and entryAmount != ''"> and e.entry_amount = #{entryAmount}</if>
-            <if test="houseNum != null  and houseNum != ''"> and e.house_num = #{houseNum}</if>
+            <if test="costId != null  and costId != ''"> and e.cost_id = #{costId}</if>
+            <if test="auditId != null  and auditId != ''"> and e.audit_id = #{auditId}</if>
         
     </select>
     
     <select id="selectHyEntryById" parameterType="Long" resultMap="HyEntryResult">
         <include refid="selectHyEntryVo"/>
-        where id = #{id}
+        where e.id = #{id}
     </select>
         
     <insert id="insertHyEntry" parameterType="HyEntry" useGeneratedKeys="true" keyProperty="id">
@@ -129,7 +130,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="entryDateStr != null">entry_date_str,</if>
             <if test="entryDateEnd != null">entry_date_end,</if>
             <if test="entryAmount != null">entry_amount,</if>
-            <if test="houseNum != null">house_num,</if>
+            <if test="costId != null">cost_id,</if>
+            <if test="auditId != null">audit_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="entryType != null">#{entryType},</if>
@@ -139,7 +141,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="entryDateStr != null">#{entryDateStr},</if>
             <if test="entryDateEnd != null">#{entryDateEnd},</if>
             <if test="entryAmount != null">#{entryAmount},</if>
-            <if test="houseNum != null">#{houseNum},</if>
+            <if test="costId != null">#{costId},</if>
+            <if test="auditId != null">#{auditId},</if>
          </trim>
     </insert>
 
@@ -153,7 +156,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="entryDateStr != null">entry_date_str = #{entryDateStr},</if>
             <if test="entryDateEnd != null">entry_date_end = #{entryDateEnd},</if>
             <if test="entryAmount != null">entry_amount = #{entryAmount},</if>
-            <if test="houseNum != null">house_num = #{houseNum},</if>
+            <if test="costId != null">cost_id = #{costId},</if>
+            <if test="auditId != null">audit_id = #{auditId},</if>
         </trim>
         where id = #{id}
     </update>

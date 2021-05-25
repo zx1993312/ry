@@ -19,10 +19,6 @@ public class HyAuditManagement extends BaseEntity
     /** 主键 */
     private Long id;
 
-    /** 房屋编号 */
-    @Excel(name = "房屋编号")
-    private String houseNum;
-
     /** 审核流程 */
     @Excel(name = "审核流程")
     private String auditProcess;
@@ -39,15 +35,6 @@ public class HyAuditManagement extends BaseEntity
     public Long getId() 
     {
         return id;
-    }
-    public void setHouseNum(String houseNum) 
-    {
-        this.houseNum = houseNum;
-    }
-
-    public String getHouseNum() 
-    {
-        return houseNum;
     }
     public void setAuditProcess(String auditProcess) 
     {
@@ -72,7 +59,6 @@ public class HyAuditManagement extends BaseEntity
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
-            .append("houseNum", getHouseNum())
             .append("auditProcess", getAuditProcess())
             .append("auditStatus", getAuditStatus())
             .toString();

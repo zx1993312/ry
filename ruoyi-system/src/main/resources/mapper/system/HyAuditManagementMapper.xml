@@ -6,19 +6,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <resultMap type="HyAuditManagement" id="HyAuditManagementResult">
         <result property="id"    column="id"    />
-        <result property="houseNum"    column="house_num"    />
         <result property="auditProcess"    column="audit_process"    />
         <result property="auditStatus"    column="audit_status"    />
     </resultMap>
 
     <sql id="selectHyAuditManagementVo">
-        select id, house_num, audit_process, audit_status from hy_audit_management
+        select id, audit_process, audit_status from hy_audit_management
     </sql>
 
     <select id="selectHyAuditManagementList" parameterType="HyAuditManagement" resultMap="HyAuditManagementResult">
         <include refid="selectHyAuditManagementVo"/>
         <where>  
-            <if test="houseNum != null  and houseNum != ''"> and house_num = #{houseNum}</if>
             <if test="auditProcess != null  and auditProcess != ''"> and audit_process = #{auditProcess}</if>
             <if test="auditStatus != null "> and audit_status = #{auditStatus}</if>
         </where>
@@ -32,12 +30,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="insertHyAuditManagement" parameterType="HyAuditManagement" useGeneratedKeys="true" keyProperty="id">
         insert into hy_audit_management
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="houseNum != null">house_num,</if>
             <if test="auditProcess != null">audit_process,</if>
             <if test="auditStatus != null">audit_status,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="houseNum != null">#{houseNum},</if>
             <if test="auditProcess != null">#{auditProcess},</if>
             <if test="auditStatus != null">#{auditStatus},</if>
          </trim>
@@ -46,7 +42,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateHyAuditManagement" parameterType="HyAuditManagement">
         update hy_audit_management
         <trim prefix="SET" suffixOverrides=",">
-            <if test="houseNum != null">house_num = #{houseNum},</if>
             <if test="auditProcess != null">audit_process = #{auditProcess},</if>
             <if test="auditStatus != null">audit_status = #{auditStatus},</if>
         </trim>
