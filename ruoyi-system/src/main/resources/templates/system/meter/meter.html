@@ -170,6 +170,16 @@
             };
             $.table.init(options);
         });
+        
+        function submitHandler() {
+        	var meterName = $.table.selectColumns('meterName');
+        	if(meterName == ''){
+        		$.modal.alertWarning("请至少选择一条记录");
+        	}else{
+        		$("#meterName",window.parent.document).val(meterName);
+        	}
+        	$.modal.close();
+        }
     </script>
 </body>
 <!-- 导入区域 -->

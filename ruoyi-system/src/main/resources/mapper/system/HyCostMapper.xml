@@ -54,9 +54,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="billingMethod" column="billing_method" />
 		<result property="calculationStandard"
 			column="calculation_standard" />
-		<association property="hyOwnerRegistration" column="id" 
+		<association property="hyOwnerRegistration" column="id"
 			javaType="HyOwnerRegistration" resultMap="HyOwnerRegistrationResult" />
-		<association property="hyMeter" column="id" 
+		<association property="hyMeter" column="id"
 			javaType="HyMeter" resultMap="HyMeterResult" />
 		<association property="hyHouseInf" column="id"
 			javaType="HyHouseInf" resultMap="HyHouseInfResult" />
@@ -65,7 +65,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<association property="ownerAndCost" column="id"
 			javaType="OwnerAndCost" resultMap="OwnerAndCostResult" />
 	</resultMap>
-	
+
 	<resultMap type="HyParkingInf" id="HyParkingInfResult">
 		<result property="id" column="id" />
 		<result property="parkingArea" column="parking_area" />
@@ -98,7 +98,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="ownerId" column="owner_id" />
 		<result property="houseId" column="house_id" />
 	</resultMap>
-	
+
 	<resultMap type="HyHouseInf" id="HyHouseInfResult">
 		<result property="id" column="id" />
 		<result property="houseNumber" column="house_number" />
@@ -131,14 +131,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="salesStatus" column="sales_status" />
 		<result property="purchaseContract" column="purchase_contract" />
 		<result property="marketingNum" column="marketing_num" />
-		<result property="deliveryStatusBefore" column="delivery_status_before" />
+		<result property="deliveryStatusBefore"
+			column="delivery_status_before" />
 		<result property="changeDate" column="change_date" />
 		<result property="changePerson" column="change_person" />
 		<result property="remark" column="remark" />
 		<result property="buildingId" column="building_id" />
 		<result property="ownerId" column="owner_id" />
 	</resultMap>
-	
+
 	<resultMap type="HyMeter" id="HyMeterResult">
 		<id property="id" column="id" />
 		<result property="houseNum" column="house_num" />
@@ -174,7 +175,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="meterReader" column="meter_reader" />
 		<result property="inputTime" column="input_time" />
 	</resultMap>
-	
+
 	<resultMap type="HyOwnerRegistration"
 		id="HyOwnerRegistrationResult">
 		<result property="id" column="id" />
@@ -216,9 +217,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="bankAccountName" column="bank_account_name" />
 		<result property="projectId" column="project_id" />
 	</resultMap>
-	
-	<resultMap type="OwnerAndCost"
-		id="OwnerAndCostResult">
+
+	<resultMap type="OwnerAndCost" id="OwnerAndCostResult">
 		<result property="ownerId" column="owner_id" />
 		<result property="costId" column="cost_id" />
 	</resultMap>
@@ -276,21 +276,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		m.meter_name,
 		a.owner_id
 		FROM
-		hy_cost c
+		hy_cost
+		c
 		LEFT JOIN owner_and_cost a ON c.id = a.cost_id
-		LEFT JOIN hy_owner_registration o ON a.owner_id = o.id
-		LEFT JOIN hy_house_inf h ON h.owner_id = o.id
+		LEFT JOIN
+		hy_owner_registration o ON a.owner_id = o.id
+		LEFT JOIN hy_house_inf h
+		ON h.owner_id = o.id
 		LEFT JOIN hy_meter m ON m.house_id = h.id
-		LEFT JOIN hy_parking_inf p ON p.owner_id = o.id
+		LEFT JOIN
+		hy_parking_inf p ON p.owner_id = o.id
 		WHERE
 		1 = 1
 	</sql>
 
 	<sql id="selectHyCostDistinctVo">
 		SELECT
-		DISTINCT c.cost_items,c.id
+		DISTINCT c.cost_items,c.id,c.expense_type
 		FROM
-		hy_cost c
+		hy_cost
+		c
 		WHERE
 		1=1
 	</sql>
@@ -315,7 +320,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="bilingStartDate != null ">and c.biling_start_date = #{bilingStartDate}</if>
 		<if test="bilingEndDate != null ">and c.biling_end_date = #{bilingEndDate}</if>
 	</select>
-	
+
 	<select id="selectHyCostListDistinct" parameterType="HyCost"
 		resultMap="HyCostResult">
 		<include refid="selectHyCostDistinctVo" />
@@ -347,7 +352,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="bilingEndDate != null ">biling_end_date,</if>
 			<if test="amountReceivable != null and amountReceivable !='' ">amount_receivable,</if>
 			<if test="amountActually != null and amountActually !='' ">amount_actually,</if>
-			<if test="advancePaymentOffset != null and advancePaymentOffset !='' ">advance_payment_offset,</if>
+			<if
+				test="advancePaymentOffset != null and advancePaymentOffset !='' ">advance_payment_offset,</if>
 			<if test="refundAmount != null and refundAmount !='' ">refund_amount,</if>
 			<if test="amountArrears != null and amountArrears !='' ">amount_arrears,</if>
 			<if test="collectionStatus != null and collectionStatus !='' ">collection_status,</if>
@@ -369,7 +375,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="bilingEndDate != null ">#{bilingEndDate},</if>
 			<if test="amountReceivable != null and amountReceivable !='' ">#{amountReceivable},</if>
 			<if test="amountActually != null and amountActually !='' ">#{amountActually},</if>
-			<if test="advancePaymentOffset != null and advancePaymentOffset !='' ">#{advancePaymentOffset},</if>
+			<if
+				test="advancePaymentOffset != null and advancePaymentOffset !='' ">#{advancePaymentOffset},</if>
 			<if test="refundAmount != null and refundAmount !='' ">#{refundAmount},</if>
 			<if test="amountArrears != null and amountArrears !='' ">#{amountArrears},</if>
 			<if test="collectionStatus != null and collectionStatus !='' ">#{collectionStatus},</if>
@@ -401,8 +408,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<delete id="deleteHyCostByIds" parameterType="String">
 		delete from hy_cost where id in
-		<foreach item="id" collection="array" open="(" separator=","
-			close=")">
+		<foreach item="id" collection="array" open="(" separator="," close=")">
 			#{id}
 		</foreach>
 	</delete>

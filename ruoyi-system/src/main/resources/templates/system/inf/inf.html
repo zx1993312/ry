@@ -418,6 +418,18 @@
             };
             $.table.init(options);
         });
+        
+        function submitHandler() {
+        	var houseNumber = $.table.selectColumns('houseNumber');
+        	var houseName = $.table.selectColumns('houseName');
+        	if(houseNumber == ''){
+        		$.modal.alertWarning("请至少选择一条记录");
+        	}else{
+        		$("#houseNumber",window.parent.document).val(houseNumber);
+        		$("#houseName",window.parent.document).val(houseName);
+        	}
+        	$.modal.close();
+        }
     </script>
 </body>
 <!-- 导入区域 -->

@@ -174,6 +174,18 @@ public class ReHyCustomer extends BaseEntity {
 	/** 费用类型 */
 	private String expenseType;
 
+	/** 收费标准 */
+	private String standardName;
+
+	/** 计费周期 */
+	private String billingCycle;
+
+	/** 计算方式 */
+	private String calculationMehod;
+
+	/** 出租时自动转移给租户 */
+	private Integer transferTenants;
+
 	/** 表计名称 */
 	@Excel(name = "表计名称")
 	private String meterName;
@@ -504,6 +516,38 @@ public class ReHyCustomer extends BaseEntity {
 
 	public void setExpenseType(String expenseType) {
 		this.expenseType = expenseType;
+	}
+
+	public String getStandardName() {
+		return standardName;
+	}
+
+	public void setStandardName(String standardName) {
+		this.standardName = standardName;
+	}
+
+	public String getBillingCycle() {
+		return billingCycle;
+	}
+
+	public void setBillingCycle(String billingCycle) {
+		this.billingCycle = billingCycle;
+	}
+
+	public String getCalculationMehod() {
+		return calculationMehod;
+	}
+
+	public void setCalculationMehod(String calculationMehod) {
+		this.calculationMehod = calculationMehod;
+	}
+
+	public Integer getTransferTenants() {
+		return transferTenants;
+	}
+
+	public void setTransferTenants(Integer transferTenants) {
+		this.transferTenants = transferTenants;
 	}
 
 	public String getMeterName() {

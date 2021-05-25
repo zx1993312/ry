@@ -345,6 +345,16 @@
             };
             $.table.init(options);
         });
+        
+        function submitHandler() {
+        	var ownerName = $.table.selectColumns('ownerName');
+        	if(ownerName == ''){
+        		$.modal.alertWarning("请至少选择一条记录");
+        	}else{
+        		$("#ownerName",window.parent.document).val(ownerName);
+        	}
+        	$.modal.close();
+        }
     </script>
 </body>
 <!-- 导入区域 -->

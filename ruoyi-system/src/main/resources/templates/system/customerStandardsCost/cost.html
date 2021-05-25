@@ -197,6 +197,25 @@
             };
             $.table.init(options);
         });
+        
+        function submitHandler() {
+        	var standardName = $.table.selectColumns('standardName');
+        	
+        	var standardState = $.table.selectColumns('standardState');
+        	var billingCycle = $.table.selectColumns('billingCycle');
+        	var calculationMehod = $.table.selectColumns('calculationMehod');
+        	var transferTenants = $.table.selectColumns('transferTenants');
+        	if(standardName == ''){
+        		$.modal.alertWarning("请至少选择一条记录");
+        	}else{
+        		$("#standardName1",window.parent.document).val(standardName);
+        		$("#standardState",window.parent.document).val(standardName);
+        		$("#billingCycle",window.parent.document).val(billingCycle);
+        		$("#calculationMehod",window.parent.document).val(calculationMehod);
+        		$("#transferTenants",window.parent.document).val(transferTenants);
+        	}
+        	$.modal.close();
+        }
     </script>
 </body>
 </html>

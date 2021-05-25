@@ -88,7 +88,7 @@
 										</li>
 										<li>
 											<label>收费标准：</label> 
-											<input type="text" id="standardName" name="standardName" onclick="selectFee()" />
+											<input type="text" id="standardName1" name="standardName" onclick="selectFee()" />
 										</li>
 										<li>
 											<label>计费周期：</label> 
@@ -99,7 +99,7 @@
 										</li>
 										<li>
 											<label>计算方式：</label> 
-											<select id="building" name="building" class="form-control m-b" th:with="type=${@dict.getType('hy_subject_type')}">
+											<select id="calculationMehod" name="calculationMehod" class="form-control m-b" th:with="type=${@dict.getType('hy_subject_type')}">
 												<option value="">请选择</option>
 												<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 											</select>
@@ -189,7 +189,7 @@
             exportUrl: prefix + "/export",
             importUrl: prefix + "/importData",
             importTemplateUrl: prefix + "/importTemplate",
-            modalName: "房屋登记",
+            modalName: "客户标准单项设置",
             columns: [{
                 checkbox: true
             },
@@ -249,6 +249,57 @@
                 field: 'expenseType',
                 title: '标准名称'
             },
+            {
+                field: 'standardName',
+                title: '收费标准'
+            },
+            {
+                field: 'billingCycle',
+                title: '计费周期',
+                formatter: function(value, item, index) {
+                	switch(value){
+                    	case '0' : value =  "按每1月计费";break;
+                    	case '1' : value =  "按每2月计费";break;
+                    	case '2' : value =  "按每3月计费";break;
+                    	case '3' : value =  "按每4月计费";break;
+                    	case '4' : value =  "按每5月计费";break;
+                    	case '5' : value =  "按每6月计费";break;
+                    	case '6' : value =  "按每7月计费";break;
+                    	case '7' : value =  "按每8月计费";break;
+                    	case '8' : value =  "按每9月计费";break;
+                    	case '9' : value =  "按每10月计费";break;
+                    	case '10' : value =  "按每11月计费";break;
+                    	case '11' : value =  "按每12月计费";break;
+                	}
+                	return value;
+                }
+            },
+            {
+                field: 'calculationMehod',
+                title: '计算方式',
+                formatter: function(value, item, index) {
+                	switch(value){
+                    	case '30' : value =  "按计费面积*单价每月计算";break;
+                    	case '120' : value =  "按计费面积*单价每季计算";break;
+                    	case '365' : value =  "按计费面积*单价每年计算";break;
+                    	case '31' : value =  "按定额每月计算";break;
+                    	case '122' : value =  "按定额每季计算";break;
+                    	case '366' : value =  "按定额每年计算";break;
+                	}
+                	return value;
+                }
+            },
+            {
+                field: 'transferTenants',
+                title: '出租时自动转移给租户',
+                formatter: function(value, item, index) {
+                	switch(value){
+                    	case 0 : value =  "是";break;
+                    	case 1 : value =  "否";break;
+                	}
+                	return value;
+                }
+            },
             
             
             
@@ -282,12 +333,12 @@
     });
     
     function selectFee() {
-		$.modal.open("收费标准选择","/system/selectCost");
+		$.modal.open("收费标准选择","/system/customerStandardsCost");
 		
 	}
     
     function selectProject(){
-    	$.modal.open("收费项目选择","/system/costSelect");
+    	$.modal.open("收费项目选择","/system/selectCost");
     }
     
     function bt(){

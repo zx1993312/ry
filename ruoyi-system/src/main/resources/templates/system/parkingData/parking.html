@@ -162,6 +162,16 @@
             };
             $.table.init(options);
         });
+        
+        function submitHandler() {
+        	var parkingNumber = $.table.selectColumns('parkingNumber');
+        	if(parkingNumber == ''){
+        		$.modal.alertWarning("请至少选择一条记录");
+        	}else{
+        		$("#parkingNumber",window.parent.document).val(parkingNumber);
+        	}
+        	$.modal.close();
+        }
     </script>
 </body>
 </html>

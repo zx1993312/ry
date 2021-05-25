@@ -282,7 +282,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</sql>
 
 	<sql id="selectHyCostVo">
-		select cost.cost_items,cost.expense_type
+		select 
+		cost.cost_items,
+		cost.expense_type,
+		cost.standard_name,
+		cost.billing_cycle,
+		cost.transfer_tenants,
+		cost.calculation_mehod
 		from
 		hy_house_inf
 		inf,
