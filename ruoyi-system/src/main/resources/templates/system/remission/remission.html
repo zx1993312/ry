@@ -47,6 +47,9 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:remission:add">
+                    <i class="fa fa-plus"></i> 减免申请
+                </a>
                 <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:remission:edit">
                     <i class="fa fa-edit"></i> 减免登记
                 </a>
@@ -106,7 +109,14 @@
                 },
                 {
                     field: 'businessExemptedType',
-                    title: '减免业务类型'
+                    title: '减免业务类型',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case 1 : value =  "政策性减免";break;
+	                    	case 2 : value =  "非政策性减免";break;
+	                	}
+		            	return value;
+		            }
                 },
                 {
                     field: 'feeName',
@@ -185,8 +195,8 @@
                     title: '是否冲抵修改记录',
                     formatter: function(value, item, index) {
                     	switch(value){
-	                    	case 0 : value =  "是";break;
-	                    	case 1 : value =  "否";break;
+	                    	case "0" : value =  "是";break;
+	                    	case "1" : value =  "否";break;
 	                	}
 		            	return value;
 		            }
@@ -196,8 +206,8 @@
                     title: '审核状态',
                     formatter: function(value, item, index) {
                     	switch(value){
-	                    	case "0" : value =  "已审核";break;
-	                    	case "1" : value =  "未审核";break;
+	                    	case 0 : value =  "已审核";break;
+	                    	case 1 : value =  "未审核";break;
 	                	}
 		            	return value;
 		            }

@@ -88,7 +88,14 @@
                
                 {
                     field: 'businessExemptedType',
-                    title: '减免业务类型'
+                    title: '减免业务类型',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case 1 : value =  "政策性减免";break;
+	                    	case 2 : value =  "非政策性减免";break;
+	                	}
+		            	return value;
+		            }
                 },
                 {
                     field: 'feeName',

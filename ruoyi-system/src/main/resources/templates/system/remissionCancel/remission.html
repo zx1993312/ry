@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('费用减免列表')" />
+    <th:block th:include="include :: header('费用减免撤销列表')" />
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -11,7 +11,7 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                <label>客户名称：</label>
+                                <label>业主名称：</label>
                                 <input type="text" name="ownerName"/>
                             </li>
                             <li>
@@ -47,11 +47,14 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
+<!--                 <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:remission:add">
+                    <i class="fa fa-plus"></i> 减免申请
+                </a>
                 <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:remission:edit">
                     <i class="fa fa-edit"></i> 减免登记
-                </a>
+                </a> -->
                 <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:remission:remove">
-                    <i class="fa fa-remove"></i> 删除
+                    <i class="fa fa-remove"></i> 减免撤销
                 </a>
                 <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:remission:export">
                     <i class="fa fa-download"></i> 导出
@@ -66,7 +69,7 @@
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('system:remission:edit')}]];
         var removeFlag = [[${@permission.hasPermi('system:remission:remove')}]];
-        var prefix = ctx + "system/damageRreduction";
+        var prefix = ctx + "system/remission";
 
         $(function() {
             var options = {
@@ -75,7 +78,7 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "费用减免",
+                modalName: "费用减免撤销",
                 columns: [{
                     checkbox: true
                 },
@@ -96,7 +99,25 @@
                     field: 'hyHouseInf.houseName',
                     title: '房屋名称'
                 },
-            
+                {
+                    field: 'hyParkingInf.parkingNumber',
+                    title: '车位编号'
+                },
+                {
+                    field: 'hyMeter.meterName',
+                    title: '表计名称'
+                },
+                {
+                    field: 'businessExemptedType',
+                    title: '减免业务类型',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case 1 : value =  "政策性减免";break;
+	                    	case 2 : value =  "非政策性减免";break;
+	                	}
+		            	return value;
+		            }
+                },
                 {
                     field: 'feeName',
                     title: '费用名称',
@@ -126,53 +147,162 @@
 		            }
                 },
                 {
-                    field: 'hyCost.dueDate',
-                    title: '应收日期'
+                    field: 'reliefTypes',
+                    title: '减免类型'
                 },
                 {
-                    field: 'hyCost.amountArrears',
-                    title: '欠收金额'
+                    field: 'totalAmountDeduction',
+                    title: '减免总金额'
                 },
                 {
-                    field: 'hyDamages.paymentDeadlinStrTime',
-                    title: '应缴日期'
+                    field: 'reducedAmount',
+                    title: '已减免金额'
                 },
                 {
-                    field: 'hyDamages.contractDamagesDelay',
-                    title: '合同违约金延期'
+                    field: 'cancellationCreditAmount',
+                    title: '取消减免金额'
                 },
                 {
-                    field: 'hyDamages.contractDamagesProportion',
-                    title: '合同违约金比例'
-                },
-                {
-                    field: 'reductionExemption',
-                    title: '减免方式',
-                    formatter: function(value, item, index) {
-                    	switch(value){
-	                    	case 1 : value =  "按每月减免";break;
-	                    	case 2 : value =  "按总额减免";break;
-	                    	case 3 : value =  "按比例减免";break;
-	                    	case 4 : value =  "按均摊减免";break;
-	                	}
-		            	return value;
-		            }
-                },
-                {
-                    field: 'deductionBase',
-                    title: '减免基数'
-                },
-                {
-                    field: 'closingDate',
-                    title: '计算截至日期'
+                    field: 'monthlyDeductionAmount',
+                    title: '每月减免金额'
                 },
                 {
                     field: 'reductionRatio',
                     title: '减免比例'
                 },
                 {
-                    field: 'exemptionRegistration',
-                    title: '减免登记时间'
+                    field: 'sharingTotalDeduction',
+                    title: '均摊减免总金额'
+                },
+                {
+                    field: 'timeStr',
+                    title: '开始时间'
+                },
+                {
+                    field: 'timeEnd',
+                    title: '结束时间'
+                },
+                {
+                    field: 'exemptionReason',
+                    title: '减免原因'
+                },
+                {
+                    field: 'remarks',
+                    title: '备注'
+                },
+                {
+                    field: 'offsetModificationRecord',
+                    title: '是否冲抵修改记录',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case "0" : value =  "是";break;
+	                    	case "1" : value =  "否";break;
+	                	}
+		            	return value;
+		            }
+                },
+                {
+                    field: 'auditStatus',
+                    title: '审核状态',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case 0 : value =  "已审核";break;
+	                    	case 1 : value =  "未审核";break;
+	                	}
+		            	return value;
+		            }
+                },
+                {
+                    field: 'taxRate',
+                    title: '税率'
+                },
+                {
+                    field: 'feeDate',
+                    title: '费用日期'
+                },
+                {
+                    field: 'dueDate',
+                    title: '应收日期'
+                },
+                {
+                    field: 'remissionYear',
+                    title: '减免年份'
+                },
+                {
+                    field: 'remissionMonth',
+                    title: '减免月份'
+                },
+                {
+                    field: 'exemptionRegistrant',
+                    title: '减免登记人'
+                },
+                {
+                    field: 'registrationTime',
+                    title: '登记时间'
+                },
+                {
+                    field: 'reduceNot',
+                    title: '是否减免',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case 0 : value =  "是";break;
+	                    	case 1 : value =  "否";break;
+	                	}
+		            	return value;
+		            }
+                },
+                {
+                    field: 'amountNotRemitted',
+                    title: '未减免金额'
+                },
+                {
+                    field: 'amountTaxInc',
+                    title: '含税金额'
+                },
+                {
+                    field: 'taxation',
+                    title: '税费'
+                },
+                {
+                    field: 'amountExcludingTax',
+                    title: '不含税金额'
+                },
+                {
+                    field: 'offsetTime',
+                    title: '冲抵时间'
+                },
+                {
+                    field: 'cancellationTime',
+                    title: '撤销时间'
+                },
+                {
+                    field: 'revocation',
+                    title: '撤销人'
+                },
+                {
+                    field: 'writeoffOnt',
+                    title: '是否冲销',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case 0 : value =  "是";break;
+	                    	case 1 : value =  "否";break;
+	                	}
+		            	return value;
+		            }
+                },
+                {
+                    field: 'writeoffTime',
+                    title: '冲销时间'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        //actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>减免撤销</a>');
+                        return actions.join('');
+                    }
                 }]
             };
             $.table.init(options);
