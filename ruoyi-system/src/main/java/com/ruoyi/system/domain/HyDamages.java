@@ -32,10 +32,10 @@ public class HyDamages extends BaseEntity
     @Excel(name = "应缴日期", width = 30, dateFormat = "yyyy-MM-dd")
     private Date paymentDeadlinStrTime;
     /**
-     * 房屋编号
+     * 房屋id
      */
-    @Excel(name = "房屋编号")
-    private Integer houseNum;
+    @Excel(name = "房屋id")
+    private Long houseId;
 
     public void setId(Long id) 
     {
@@ -74,26 +74,22 @@ public class HyDamages extends BaseEntity
         return paymentDeadlinStrTime;
     }
 
-    public Integer getHouseNum() {
-		return houseNum;
+
+	public Long getHouseId() {
+		return houseId;
 	}
 
-	public void setHouseNum(Integer houseNum) {
-		this.houseNum = houseNum;
+	public void setHouseId(Long houseId) {
+		this.houseId = houseId;
 	}
 
 	@Override
 	public String toString() {
 		return "HyDamages [id=" + id + ", contractDamagesDelay=" + contractDamagesDelay + ", contractDamagesProportion="
-				+ contractDamagesProportion + ", paymentDeadlinStrTime=" + paymentDeadlinStrTime + ", houseNum="
-				+ houseNum + ", getId()=" + getId() + ", getContractDamagesDelay()=" + getContractDamagesDelay()
-				+ ", getContractDamagesProportion()=" + getContractDamagesProportion() + ", getPaymentDeadlinStrTime()="
-				+ getPaymentDeadlinStrTime() + ", getHouseNum()=" + getHouseNum() + ", getSearchValue()="
-				+ getSearchValue() + ", getCreateBy()=" + getCreateBy() + ", getCreateTime()=" + getCreateTime()
-				+ ", getUpdateBy()=" + getUpdateBy() + ", getUpdateTime()=" + getUpdateTime() + ", getRemark()="
-				+ getRemark() + ", getParams()=" + getParams() + ", getClass()=" + getClass() + ", hashCode()="
-				+ hashCode() + ", toString()=" + super.toString() + "]";
+				+ contractDamagesProportion + ", paymentDeadlinStrTime=" + paymentDeadlinStrTime + ", houseId="
+				+ houseId + "]";
 	}
+
 
 
 }

@@ -47,7 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="revocation" column="revocation" />
 		<result property="writeoffOnt" column="writeoff_ont" />
 		<result property="writeoffTime" column="writeoff_time" />
-		<result property="houseNumber" column="house_number" />
+		<result property="houseId" column="house_id" />
 		<result property="reductionExemption" column="reduction_exemption" />
 		<result property="deductionBase" column="deduction_base" />
 		<result property="closingDate" column="closing_date" />
@@ -69,7 +69,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap type="HyOwnerRegistration"
 		id="HyOwnerRegistrationResult">
 		<result property="ownerName" column="owner_name" />
-		<result property="houseNum" column="house_num" />
 	</resultMap>
 
 	<resultMap type="HyHouseInf" id="HyHouseInfResult">
@@ -79,17 +78,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<resultMap type="HyParkingInf" id="HyParkingInfResult">
 		<result property="parkingNumber" column="parking_number" />
-		<result property="houseNumber" column="house_number" />
 	</resultMap>
 
 	<resultMap type="HyMeter" id="HyMeterResult">
-		<result property="houseNum" column="house_num" />
 		<result property="meterName" column="meter_name" />
 	</resultMap>
 
 <resultMap type="HyCost" id="HyCostResult">
 		<result property="id" column="id" />
-		<result property="houseNum" column="house_num" />
 		<result property="costItems" column="cost_items" />
 		<result property="expenseType" column="expense_type" />
 		<result property="parentId" column="parent_id" />
@@ -143,7 +139,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="contractDamagesDelay"    column="contract_damages_delay"    />
         <result property="contractDamagesProportion"    column="contract_damages_proportion"    />
         <result property="paymentDeadlinStrTime"    column="payment_deadlin_str_time"    />
-        <result property="houseNum"    column="house_num"    />
+        <result property="houseId"    column="house_id"    />
     </resultMap>
 
 	<sql id="selectHyFeeRemissionVo">
@@ -165,7 +161,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			f.offset_modification_record,
 			f.audit_status,
 			f.tax_rate,
-			f.house_number,
+			f.house_id,
 			f.fee_date,
 			f.due_date,
 			f.remission_year,
@@ -188,6 +184,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			f.exemption_registration,
 			o.owner_name,
 			h.house_name,
+			h.house_number,
 			p.parking_number,
 			c.operation_date,
 			c.biling_start_date,
@@ -199,12 +196,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			m.meter_name 
 		FROM
 			hy_fee_remission f
-			LEFT JOIN hy_owner_registration o ON f.house_number = o.house_num
-			LEFT JOIN hy_house_inf h ON h.house_number = o.house_num
-			LEFT JOIN hy_parking_inf p ON p.house_number = h.house_number
-			LEFT JOIN hy_meter m ON m.house_num = p.house_number 
-			left join hy_cost c on f.house_number = c.house_num
-			left join hy_damages d on f.house_number=d.house_num
+			LEFT JOIN hy_house_inf h ON f.house_id = h.id
+			LEFT JOIN hy_owner_registration o ON h.owner_id = o.id
+			LEFT JOIN hy_parking_inf p ON p.house_id = f.house_id
+			LEFT JOIN hy_meter m ON m.house_id = f.house_id
+			LEFT JOIN house_and_cost a ON a.house_id = f.house_id
+			LEFT JOIN hy_cost c ON a.cost_id = c.id
+			LEFT JOIN hy_damages d ON f.house_id = d.house_id
 		WHERE
 			1 = 1
 	</sql>
@@ -219,7 +217,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="totalAmountDeduction != null "> and f.total_amount_deduction = #{totalAmountDeduction}
 		</if>
 		<if test="reducedAmount != null "> and f.reduced_amount = #{reducedAmount}</if>
-		<if test="houseNumber != null and houseNumber != ''"> and f.house_number = #{houseNumber}</if>
 		<if test="cancellationCreditAmount != null "> and f.cancellation_credit_amount =
 			#{cancellationCreditAmount}
 		</if>
@@ -253,7 +250,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="writeoffOnt != null "> and f.writeoff_ont = #{writeoffOnt}</if>
 		
 		<if test="writeoffOnt != null "> and f.writeoff_ont = #{writeoffOnt}</if>
-		<if test="ownerName != null and ownerName != ''"> and o.owner_name = #{ownerName}</if>
+		<if test="houseId != null"> and o.house_id = #{houseId}</if>
 	</select>
 
 	<select id="selectHyFeeRemissionById" parameterType="Long"
@@ -284,7 +281,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="taxRate != null and taxRate !=''">tax_rate,</if>
 			<if test="feeDate != null and feeDate != ''">fee_date,</if>
 			<if test="dueDate != null and dueDate !=''">due_date,</if>
-			<if test="houseNumber != null and houseNumber != ''">house_number,</if>
 			<if test="remissionYear != null and remissionYear !=''">remission_year,</if>
 			<if test="remissionMonth != null and remissionMonth !=''">remission_month,</if>
 			<if test="exemptionRegistrant != null and exemptionRegistrant != ''">exemption_registrant,</if>
@@ -299,9 +295,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="revocation != null and revocation != revocation !=  '' ">revocation,</if>
 			<if test="writeoffOnt != null and writeoffOnt != ''">writeoff_ont,</if>
 			<if test="writeoffTime != null and writeoffTime !=  '' ">writeoff_time,</if>
-			<!-- <if test="ownerName != null "> owner_name, </if> <if test="houseName 
-				!= null "> house_name,</if> <if test="parkingNumber != null "> parking_number,</if> 
-				<if test="meterName != null "> meter_name ,</if> -->
+			<if test="houseId != null">house_id,</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="businessExemptedType != null and businessExemptedType !=''">#{businessExemptedType},</if>
@@ -322,7 +316,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="taxRate != null and taxRate !=''">#{taxRate},</if>
 			<if test="feeDate != null and feeDate != ''">#{feeDate},</if>
 			<if test="dueDate != null and dueDate !=''">#{dueDate},</if>
-			<if test="houseNumber != null and houseNumber != ''">#{houseNumber},</if>
 			<if test="remissionYear != null and remissionYear !=''">#{remissionYear},</if>
 			<if test="remissionMonth != null and remissionMonth !=''">#{remissionMonth},</if>
 			<if test="exemptionRegistrant != null and exemptionRegistrant != ''">#{exemptionRegistrant},</if>
@@ -337,9 +330,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="revocation != null and revocation != revocation !=  '' ">#{revocation},</if>
 			<if test="writeoffOnt != null and writeoffOnt != ''">#{writeoffOnt},</if>
 			<if test="writeoffTime != null and writeoffTime !=  '' ">#{writeoffTime},</if>
-			<!-- <if test="ownerName != null "> #{ownerName}, </if> <if test="houseName 
-				!= null "> #{houseName},</if> <if test="parkingNumber != null "> #{parkingNumber},</if> 
-				<if test="meterName != null "> #{meterName} ,</if> -->
+			<if test="houseId != null">#{houseId},</if>
 		</trim>
 	</insert>
 
@@ -357,7 +348,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="sharingTotalDeduction != null">sharing_total_deduction = #{sharingTotalDeduction},</if>
 			<if test="timeStr != null">time_str = #{timeStr},</if>
 			<if test="timeEnd != null">time_end = #{timeEnd},</if>
-			<if test="houseNumber != null and houseNumber!=''">house_number = #{houseNumber},</if>
 			<if test="exemptionReason != null">exemption_reason = #{exemptionReason},</if>
 			<if test="remarks != null">remarks = #{remarks},</if>
 			<if test="offsetModificationRecord != null">offset_modification_record = #{offsetModificationRecord},</if>
@@ -379,6 +369,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="revocation != null">revocation = #{revocation},</if>
 			<if test="writeoffOnt != null">writeoff_ont = #{writeoffOnt},</if>
 			<if test="writeoffTime != null">writeoff_time = #{writeoffTime},</if>
+			<if test="houseId != null">house_id = #{houseId},</if>
 		</trim>
 		where id = #{id}
 	</update>

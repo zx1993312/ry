@@ -91,8 +91,7 @@ public class HyFeeRemissionServiceImpl implements IHyFeeRemissionService {
 		hyFeeRemission.setRegistrationMark(1);// 将减免登记标识设置为1
 		int result = hyFeeRemissionMapper.updateHyFeeRemission(hyFeeRemission);
 
-		HyOwnerRegistration hyOwnerRegistration = new HyOwnerRegistration();
-		List<?> ownerList = hyOwnerRegistrationMapper.selectHyOwnerRegistrationList(hyOwnerRegistration);// 根据houseNum查询数据是否存在
+		/*List<?> ownerList = hyOwnerRegistrationMapper.selectHyOwnerRegistrationList(hyOwnerRegistration);// 根据houseNum查询数据是否存在
 		hyOwnerRegistration.setOwnerName(hyFeeRemission.getHyOwnerRegistration().getOwnerName());
 		if (StringUtils.isNull(ownerList) || ownerList.size() == 0) {// 数据存在，插入新数据
 			result = hyOwnerRegistrationMapper.insertHyOwnerRegistration(hyOwnerRegistration);
@@ -101,7 +100,7 @@ public class HyFeeRemissionServiceImpl implements IHyFeeRemissionService {
 		}
 
 		HyHouseInf hyHouseInf = new HyHouseInf();
-		hyHouseInf.setHouseNumber(hyFeeRemission.getHouseNumber());
+		hyHouseInf.setId(hyFeeRemission.getHouseId());
 		List<?> houseList = hyHouseInfMapper.selectHyHouseInfList(hyHouseInf);
 		hyHouseInf.setHouseName(hyFeeRemission.getHyHouseInf().getHouseName());
 		if (StringUtils.isNull(houseList) || houseList.size() == 0) {
@@ -121,14 +120,13 @@ public class HyFeeRemissionServiceImpl implements IHyFeeRemissionService {
 		}
 
 		HyMeter hyMeter = new HyMeter();
-		hyMeter.setHouseNum(hyFeeRemission.getHouseNumber());
 		List<?> meterList = hyMeterMapper.selectHyMeter(hyMeter);
 		hyMeter.setMeterName(hyFeeRemission.getHyMeter().getMeterName());
 		if (StringUtils.isNull(meterList) || meterList.size() == 0) {
 			result = hyMeterMapper.insertHyMeter(hyMeter);
 		} else {
 			result = hyMeterMapper.updateHyMeterByHouseNumber(hyMeter);
-		}
+		}*/
 
 		return result;
 	}
@@ -143,7 +141,7 @@ public class HyFeeRemissionServiceImpl implements IHyFeeRemissionService {
 	@Transactional(rollbackFor = Exception.class)
 	public int deleteHyFeeRemissionByIds(String ids) {
 		String[] idss = Convert.toStrArray(ids);
-		for (String id : idss) {
+		/*for (String id : idss) {
 			HyFeeRemission hyFeeRemission = hyFeeRemissionMapper.selectHyFeeRemissionById(Long.valueOf(id));
 			hyOwnerRegistrationMapper
 					.deleteHyOwnerRegistrationById(Long.valueOf(hyFeeRemission.getHouseNumber()));
@@ -154,7 +152,7 @@ public class HyFeeRemissionServiceImpl implements IHyFeeRemissionService {
 			hyHouseInfMapper.deleteHyHouseInfById(hyHouseInf.getId());
 			hyParkingInfMapper.deleteHyParkingInfById(Long.valueOf(hyFeeRemission.getHouseNumber()));
 			hyMeterMapper.deleteHyMeterByHoserNumber(Long.valueOf(hyFeeRemission.getHouseNumber()));
-		}
+		}*/
 		return hyFeeRemissionMapper.deleteHyFeeRemissionByIds(Convert.toStrArray(ids));
 	}
 
@@ -168,7 +166,7 @@ public class HyFeeRemissionServiceImpl implements IHyFeeRemissionService {
 	@Transactional(rollbackFor = Exception.class)
 	public int deleteHyFeeRemissionById(Long id) {
 		int result = hyFeeRemissionMapper.deleteHyFeeRemissionById(id);
-		HyFeeRemission hyFeeRemission = hyFeeRemissionMapper.selectHyFeeRemissionById(Long.valueOf(id));
+		/*HyFeeRemission hyFeeRemission = hyFeeRemissionMapper.selectHyFeeRemissionById(Long.valueOf(id));
 		result = hyOwnerRegistrationMapper
 				.deleteHyOwnerRegistrationById(Long.valueOf(hyFeeRemission.getHouseNumber()));
 		HyHouseInf hyHouseInf = new HyHouseInf();
@@ -177,7 +175,7 @@ public class HyFeeRemissionServiceImpl implements IHyFeeRemissionService {
 		hyHouseInf = list.get(0);
 		result = hyHouseInfMapper.deleteHyHouseInfById(hyHouseInf.getId());
 		result = hyParkingInfMapper.deleteHyParkingInfById(Long.valueOf(hyFeeRemission.getHouseNumber()));
-		result = hyMeterMapper.deleteHyMeterByHoserNumber(Long.valueOf(hyFeeRemission.getHouseNumber()));
+		result = hyMeterMapper.deleteHyMeterByHoserNumber(Long.valueOf(hyFeeRemission.getHouseNumber()));*/
 		return result;
 	}
 }

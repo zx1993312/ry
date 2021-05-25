@@ -166,15 +166,7 @@ public class HyFeeRemission extends BaseEntity {
 	
 	private Date exemptionRegistration;
 
-	private String houseNumber;
-
-	private String houseName;
-
-	private Integer parkingNumber;
-
-	private String ownerName;
-
-	private String meterName;
+	private Long houseId;
 
 	private int registrationMark;
 
@@ -478,38 +470,6 @@ public class HyFeeRemission extends BaseEntity {
 		return writeoffTime;
 	}
 
-	public String getHouseName() {
-		return houseName;
-	}
-
-	public void setHouseName(String houseName) {
-		this.houseName = houseName;
-	}
-
-	public Integer getParkingNumber() {
-		return parkingNumber;
-	}
-
-	public void setParkingNumber(Integer parkingNumber) {
-		this.parkingNumber = parkingNumber;
-	}
-
-	public String getOwnerName() {
-		return ownerName;
-	}
-
-	public void setOwnerName(String ownerName) {
-		this.ownerName = ownerName;
-	}
-
-	public String getMeterName() {
-		return meterName;
-	}
-
-	public void setMeterName(String meterName) {
-		this.meterName = meterName;
-	}
-
 	public int getRegistrationMark() {
 		return registrationMark;
 	}
@@ -526,12 +486,13 @@ public class HyFeeRemission extends BaseEntity {
 		this.hyOwnerRegistration = hyOwnerRegistration;
 	}
 
-	public String getHouseNumber() {
-		return houseNumber;
+
+	public Long getHouseId() {
+		return houseId;
 	}
 
-	public void setHouseNumber(String houseNumber) {
-		this.houseNumber = houseNumber;
+	public void setHouseId(Long houseId) {
+		this.houseId = houseId;
 	}
 
 	public HyCost getHyCost() {
@@ -596,31 +557,14 @@ public class HyFeeRemission extends BaseEntity {
 				+ ", reduceNot=" + reduceNot + ", amountNotRemitted=" + amountNotRemitted + ", amountTaxInc="
 				+ amountTaxInc + ", taxation=" + taxation + ", amountExcludingTax=" + amountExcludingTax
 				+ ", offsetTime=" + offsetTime + ", cancellationTime=" + cancellationTime + ", revocation=" + revocation
-				+ ", writeoffOnt=" + writeoffOnt + ", writeoffTime=" + writeoffTime + ", houseNumber=" + houseNumber
-				+ ", houseName=" + houseName + ", parkingNumber=" + parkingNumber + ", ownerName=" + ownerName
-				+ ", meterName=" + meterName + ", hyOwnerRegistration=" + hyOwnerRegistration + ", hyHouseInf="
-				+ hyHouseInf + ", hyParkingInf=" + hyParkingInf + ", hyMeter=" + hyMeter + ", getHyHouseInf()="
-				+ getHyHouseInf() + ", getHyParkingInf()=" + getHyParkingInf() + ", getHyMeter()=" + getHyMeter()
-				+ ", getId()=" + getId() + ", getBusinessExemptedType()=" + getBusinessExemptedType()
-				+ ", getFeeName()=" + getFeeName() + ", getReliefTypes()=" + getReliefTypes()
-				+ ", getTotalAmountDeduction()=" + getTotalAmountDeduction() + ", getReducedAmount()="
-				+ getReducedAmount() + ", getCancellationCreditAmount()=" + getCancellationCreditAmount()
-				+ ", getMonthlyDeductionAmount()=" + getMonthlyDeductionAmount() + ", getReductionRatio()="
-				+ getReductionRatio() + ", getSharingTotalDeduction()=" + getSharingTotalDeduction() + ", getTimeStr()="
-				+ getTimeStr() + ", getTimeEnd()=" + getTimeEnd() + ", getExemptionReason()=" + getExemptionReason()
-				+ ", getRemarks()=" + getRemarks() + ", getOffsetModificationRecord()=" + getOffsetModificationRecord()
-				+ ", getAuditStatus()=" + getAuditStatus() + ", getTaxRate()=" + getTaxRate() + ", getFeeDate()="
-				+ getFeeDate() + ", getDueDate()=" + getDueDate() + ", getRemissionYear()=" + getRemissionYear()
-				+ ", getRemissionMonth()=" + getRemissionMonth() + ", getExemptionRegistrant()="
-				+ getExemptionRegistrant() + ", getRegistrationTime()=" + getRegistrationTime() + ", getReduceNot()="
-				+ getReduceNot() + ", getAmountNotRemitted()=" + getAmountNotRemitted() + ", getAmountTaxInc()="
-				+ getAmountTaxInc() + ", getTaxation()=" + getTaxation() + ", getAmountExcludingTax()="
-				+ getAmountExcludingTax() + ", getOffsetTime()=" + getOffsetTime() + ", getCancellationTime()="
-				+ getCancellationTime() + ", getRevocation()=" + getRevocation() + ", getWriteoffOnt()="
-				+ getWriteoffOnt() + ", getWriteoffTime()=" + getWriteoffTime() + ", getHouseName()=" + getHouseName()
-				+ ", getParkingNumber()=" + getParkingNumber() + ", getOwnerName()=" + getOwnerName()
-				+ ", getMeterName()=" + getMeterName() + ", getHyOwnerRegistration()=" + getHyOwnerRegistration()
-				+ ", getHouseNumber()=" + getHouseNumber() + "]";
+				+ ", writeoffOnt=" + writeoffOnt + ", writeoffTime=" + writeoffTime + ", reductionExemption="
+				+ reductionExemption + ", deductionBase=" + deductionBase + ", closingDate=" + closingDate
+				+ ", exemptionRegistration=" + exemptionRegistration + ", houseId=" + houseId + ", registrationMark="
+				+ registrationMark + ", hyOwnerRegistration=" + hyOwnerRegistration + ", hyHouseInf=" + hyHouseInf
+				+ ", hyParkingInf=" + hyParkingInf + ", hyMeter=" + hyMeter + ", hyCost=" + hyCost + ", hyDamages="
+				+ hyDamages + "]";
 	}
+
+
 
 }
