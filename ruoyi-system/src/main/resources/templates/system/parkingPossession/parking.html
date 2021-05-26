@@ -2,7 +2,7 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org"
 	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-<th:block th:include="include :: header('车位资料列表')" />
+<th:block th:include="include :: header('车位转让列表')" />
 </head>
 <body class="gray-bg">
 	<div class="container-div">
@@ -19,24 +19,6 @@
 								name="parkingClass" /></li>
 							<li><label>车位编号：</label> <input type="text"
 								name="parkingNumber" /></li>
-
-							<li><label>收费标准：</label> <input type="text"
-								name="chargingStandard" /></li>
-							<li><label>合同交付日期：</label> <input type="text"
-								class="time-input" placeholder="请选择合同交付日期"
-								name="contractDeliveryDate" /></li>
-							<li><label>实际交付日期：</label> <input type="text"
-								class="time-input" placeholder="请选择实际交付日期"
-								name="actualDeliveryDate" /></li>
-							<li><label>使用状态：</label> <select name="usageStatus"
-								class="form-control m-b"
-								th:with="type=${@dict.getType('hy_use_state')}">
-									<option value="">请选择</option>
-									<option value="0">使用</option>
-									<option value="1">未使用</option>
-							</select></li>
-
-
 							<li><a class="btn btn-primary btn-rounded btn-sm"
 								onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
 								<a class="btn btn-warning btn-rounded btn-sm"
@@ -51,7 +33,7 @@
 				<a class="btn btn-primary single disabled"
 					onclick="$.operate.edit()"
 					shiro:hasPermission="system:parking:edit"> <i
-					class="fa fa-edit"></i> 修改
+					class="fa fa-edit"></i> 车位转让
 				</a>  <a class="btn btn-warning" onclick="$.table.exportExcel()"
 					shiro:hasPermission="system:parking:export"> <i
 					class="fa fa-download"></i> 导出
@@ -75,7 +57,7 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "车位资料",
+                modalName: "车位转让",
                 columns: [{
                     checkbox: true
                 },
@@ -83,6 +65,10 @@
                     field: 'id',
                     title: '主键',
                     visible: false
+                },
+                {
+                    field: 'parkingName',
+                    title: '车位名称'
                 },
                 {
                     field: 'parkingArea',
@@ -101,28 +87,8 @@
                     title: '车位编号'
                 },
                 {
-                    field: 'contractDeliveryDate',
-                    title: '合同交付日期'
-                },
-                {
-                    field: 'actualDeliveryDate',
-                    title: '实际交付日期'
-                },
-                {
-                    field: 'chargingStandard',
-                    title: '收费标准'
-                },
-                {
-                    field: 'hyHouseInf.houseNumber',
-                    title: '房屋编号'
-                },
-                {
-                    field: 'hyHouseInf.houseName',
-                    title: '房屋名称'
-                },
-                {
-                    field: 'usageStatus',
-                    title: '使用状态'
+                    field: 'hyOwnerRegistration.ownerName',
+                    title: '客户名称'
                 }]
             };
             $.table.init(options);

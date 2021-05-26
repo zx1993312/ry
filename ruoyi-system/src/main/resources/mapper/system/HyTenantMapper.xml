@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyTenantMapper">
+    
+    <resultMap type="HyTenant" id="HyTenantResult">
+        <result property="id"    column="id"    />
+        <result property="tenantName"    column="tenant_name"    />
+        <result property="tenantTelephone"    column="tenant_telephone"    />
+        <result property="tenantPhone"    column="tenant_phone"    />
+        <result property="idCardNum"    column="id_card_num"    />
+        <result property="tenantAddress"    column="tenant_address"    />
+        <result property="tenantSex"    column="tenant_sex"    />
+    </resultMap>
+
+    <sql id="selectHyTenantVo">
+        select id, tenant_name, tenant_telephone, tenant_phone, id_card_num, tenant_address, tenant_sex from hy_tenant
+    </sql>
+
+    <select id="selectHyTenantList" parameterType="HyTenant" resultMap="HyTenantResult">
+        <include refid="selectHyTenantVo"/>
+        <where>  
+            <if test="tenantName != null  and tenantName != ''"> and tenant_name like concat('%', #{tenantName}, '%')</if>
+            <if test="tenantTelephone != null  and tenantTelephone != ''"> and tenant_telephone = #{tenantTelephone}</if>
+            <if test="tenantPhone != null  and tenantPhone != ''"> and tenant_phone = #{tenantPhone}</if>
+            <if test="idCardNum != null  and idCardNum != ''"> and id_card_num = #{idCardNum}</if>
+            <if test="tenantAddress != null  and tenantAddress != ''"> and tenant_address = #{tenantAddress}</if>
+            <if test="tenantSex != null "> and tenant_sex = #{tenantSex}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyTenantById" parameterType="Long" resultMap="HyTenantResult">
+        <include refid="selectHyTenantVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyTenant" parameterType="HyTenant">
+        insert into hy_tenant
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="tenantName != null">tenant_name,</if>
+            <if test="tenantTelephone != null">tenant_telephone,</if>
+            <if test="tenantPhone != null">tenant_phone,</if>
+            <if test="idCardNum != null">id_card_num,</if>
+            <if test="tenantAddress != null">tenant_address,</if>
+            <if test="tenantSex != null">tenant_sex,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="tenantName != null">#{tenantName},</if>
+            <if test="tenantTelephone != null">#{tenantTelephone},</if>
+            <if test="tenantPhone != null">#{tenantPhone},</if>
+            <if test="idCardNum != null">#{idCardNum},</if>
+            <if test="tenantAddress != null">#{tenantAddress},</if>
+            <if test="tenantSex != null">#{tenantSex},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyTenant" parameterType="HyTenant">
+        update hy_tenant
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="tenantName != null">tenant_name = #{tenantName},</if>
+            <if test="tenantTelephone != null">tenant_telephone = #{tenantTelephone},</if>
+            <if test="tenantPhone != null">tenant_phone = #{tenantPhone},</if>
+            <if test="idCardNum != null">id_card_num = #{idCardNum},</if>
+            <if test="tenantAddress != null">tenant_address = #{tenantAddress},</if>
+            <if test="tenantSex != null">tenant_sex = #{tenantSex},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyTenantById" parameterType="Long">
+        delete from hy_tenant where id = #{id}
+    </delete>
+
+    <delete id="deleteHyTenantByIds" parameterType="String">
+        delete from hy_tenant where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

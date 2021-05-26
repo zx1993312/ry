@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('房屋转让列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>房屋编号：</label>
+                                <input type="text" name="houseNumber"/>
+                            </li>
+                            <li>
+                                <label>房屋名称：</label>
+                                <input type="text" name="houseName"/>
+                            </li>
+                            <li>
+                                <label>使用状态：</label>
+                                <select name="dictLabel" class="form-control m-b" th:with="type=${@dict.getType('hy_use_state')}">
+                                	<option value="">请选择</option>
+					                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+					            </select>
+                            </li>
+                            <li>
+                                <label>入住状态：</label>
+                                <select name="occupancyStatus" class="form-control m-b" th:with="type=${@dict.getType('hy_check_in')}">
+                                	<option value="">请选择</option>
+					                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+					            </select>
+                            </li>
+                            <li>
+                                <label>交房状态：</label>
+                                <select name="deliveryStatus" class="form-control m-b" th:with="type=${@dict.getType('hy_delivery_status')}">
+                                    <option value="">请选择</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>房屋类型：</label>
+                                <select name="houseType" class="form-control m-b" th:with="type=${@dict.getType('hy_house_type')}">
+                                    <option value="">请选择</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>所属业主：</label>
+                                <select name="ownerId" class="form-control m-b" th:with="type=${@ownerRegistration.getOwnerRegistration()}">
+                                    <option value="">请选择</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.ownerName}" th:value="${dict.id}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+            	<a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:inf:edit">
+                    <i class="fa fa-edit"></i> 房屋转让
+                </a>
+                <!-- <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:inf:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:inf:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                 <a class="btn btn-info" onclick="$.table.importExcel()" shiro:hasPermission="system:user:import">
+			            <i class="fa fa-upload"></i> 导入
+			        </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:inf:export">
+                    <i class="fa fa-download"></i> 导出
+                </a> -->
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:inf:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:inf:remove')}]];
+        var prefix = ctx + "system/transferinf";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                importUrl: prefix + "/importData",
+                importTemplateUrl: prefix + "/importTemplate",
+                modalName: "房屋转让",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '主键',
+                    visible: false
+                },
+                {
+                    field: 'hyBuilding.buildingName',
+                    title: '楼宇名称'
+                },
+                {
+                    field: 'hyOwnerRegistration.ownerName',
+                    title: '业主名称'
+                },
+                {
+                    field: 'houseNumber',
+                    title: '房屋编号'
+                },
+                {
+                    field: 'houseName',
+                    title: '房屋名称'
+                },
+                {
+                    field: 'usageStatus',
+                    title: '使用状态',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case '0' : value =  "已使用";break;
+	                    	case '1' : value =  "未使用";break;
+	                	}
+		            	return value;
+		            }
+                },
+                {
+                    field: 'occupancyStatus',
+                    title: '入住状态',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case '0' : value =  "常住";break;
+	                    	case '1' : value =  "未入住";break;
+	                    	case '2' : value =  "非常住";break;
+	                    	case '3' : value =  "一般常住";break;
+	                	}
+		            	return value;
+		            }
+                },
+                {
+                    field: 'deliveryStatus',
+                    title: '交房状态',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case '0' : value =  "已售未接房";break;
+	                    	case '1' : value =  "未售";break;
+	                    	case '2' : value =  "已接房";break;
+	                    	case '3' : value =  "装修";break;
+	                    	case '4' : value =  "入住";break;
+	                    	case '5' : value =  "已售空置";break;
+	                    	case '6' : value =  "未售空置";break;
+	                	}
+		            	return value;
+		            }
+                },
+                {
+                    field: 'houseType',
+                    title: '房屋类型',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case '0' : value =  "销售房屋";break;
+	                    	case '1' : value =  "自持房屋";break;
+	                    	case '2' : value =  "物业用房";break;
+	                    	case '3' : value =  "公共区域";break;
+	                	}
+		            	return value;
+		            }
+                }
+                ]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+<!-- 导入区域 -->
+<script id="importTpl" type="text/template">
+<form enctype="multipart/form-data" class="mt20 mb10">
+	<div class="col-xs-offset-1">
+		<input type="file" id="file" name="file"/>
+		<div class="mt10 pt5">
+			<input type="checkbox" id="updateSupport" name="updateSupport" title="如果登录账户已经存在，更新这条数据。"> 是否更新已经存在的用户数据
+			 &nbsp;	<a onclick="$.table.importTemplate()" class="btn btn-default btn-xs"><i class="fa fa-file-excel-o"></i> 下载模板</a>
+		</div>
+		<font color="red" class="pull-left mt10">
+			提示：仅允许导入“xls”或“xlsx”格式文件！
+		</font>
+	</div>
+</form>
+</script>
+</html>
