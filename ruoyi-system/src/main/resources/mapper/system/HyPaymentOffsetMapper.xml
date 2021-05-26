@@ -3,37 +3,116 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.system.mapper.HyPaymentOffsetMapper">
-
-	<resultMap type="HyPaymentOffset" id="HyPaymentOffsetResult">
-		<result property="id" column="id" />
-		<result property="houseNum" column="house_num" />
-		<result property="offsetCategory" column="offset_category" />
-		<result property="offsetPreson" column="offset_preson" />
-		<result property="offsetOperationDate"
-			column="offset_operation_date" />
-		<result property="offsetRange" column="offset_range" />
-		<result property="offsetDate" column="offset_date" />
-		<result property="importPerson" column="import_person" />
-		<result property="importTime" column="import_time" />
-		<result property="advanceTime" column="advance_time" />
-		<result property="setId" column="set_id" />
-		<association property="hyAuditManagement" column="id"
-			javaType="HyAuditManagement" resultMap="HyAuditManagementResult" />
+    
+    <resultMap type="HyPaymentOffset" id="HyPaymentOffsetResult">
+        <result property="id"    column="id"    />
+        <result property="offsetCategory"    column="offset_category"    />
+        <result property="offsetPreson"    column="offset_preson"    />
+        <result property="offsetOperationDate"    column="offset_operation_date"    />
+        <result property="offsetRange"    column="offset_range"    />
+        <result property="offsetYear"    column="offset_year"    />
+        <result property="offsetMonth"    column="offset_month"    />
+        <result property="offsetMoney"    column="offset_money"    />
+        <result property="amountActually"    column="amount_actually"    />
+        <result property="offsetType"    column="offset_type"    />
+        <result property="auditProcess"    column="audit_process"    />
+        <result property="auditStatus"    column="audit_status"    />
+        <result property="houseId"    column="house_id"    />
+        <result property="setId"    column="set_id"    />
+        <association property="hyHouseInf" column="id"
+			javaType="HyHouseInf" resultMap="HyHouseInfResult" />
+		<association property="hyOwnerRegistration" column="id"
+			javaType="HyOwnerRegistration" resultMap="HyOwnerRegistrationResult" />
 		<association property="hyCost" column="id"
 			javaType="HyCost" resultMap="HyCostResult" />
-	</resultMap>
-
-	<resultMap type="HyAuditManagement"
-		id="HyAuditManagementResult">
+		<association property="hyParkingInf" column="id"
+			javaType="HyParkingInf" resultMap="HyParkingInfResult" />
+    </resultMap>
+    
+    <resultMap type="HyHouseInf" id="HyHouseInfResult">
 		<result property="id" column="id" />
-		<result property="houseNum" column="house_num" />
-		<result property="auditProcess" column="audit_process" />
-		<result property="auditStatus" column="audit_status" />
+		<result property="houseNumber" column="house_number" />
+		<result property="houseName" column="house_name" />
+		<result property="builtUpArea" column="built_up_area" />
+		<result property="groupArea" column="group_area" />
+		<result property="unit" column="unit" />
+		<result property="floor" column="floor" />
+		<result property="sameUnitNumber" column="same_unit_number" />
+		<result property="areaType" column="area_type" />
+		<result property="bilingArea" column="biling_area" />
+		<result property="insideArea" column="inside_area" />
+		<result property="sharedArea" column="shared_area" />
+		<result property="gardenArea" column="garden_area" />
+		<result property="basementArea" column="basement_area" />
+		<result property="sharedLobbyArea" column="shared_lobby_area" />
+		<result property="sharedLayersArea" column="shared_layers_area" />
+		<result property="shareRatio" column="share_ratio" />
+		<result property="buildingStructure"
+			column="building_structure" />
+		<result property="parametersPer" column="parameters_per" />
+		<result property="houseLayout" column="house_layout" />
+		<result property="floorHeight" column="floor_height" />
+		<result property="natureProperty" column="nature_property" />
+		<result property="natureUse" column="nature_use" />
+		<result property="usageStatus" column="usage_status" />
+		<result property="occupancyStatus" column="occupancy_status" />
+		<result property="deliveryStatus" column="delivery_status" />
+		<result property="houseType" column="house_type" />
+		<result property="salesStatus" column="sales_status" />
+		<result property="purchaseContract" column="purchase_contract" />
+		<result property="marketingNum" column="marketing_num" />
+		<result property="deliveryStatusBefore" column="delivery_status_before" />
+		<result property="changeDate" column="change_date" />
+		<result property="changePerson" column="change_person" />
+		<result property="remark" column="remark" />
+		<result property="buildingId" column="building_id" />
+		<result property="ownerId" column="owner_id" />
 	</resultMap>
-
+	
+	<resultMap type="HyOwnerRegistration"
+		id="HyOwnerRegistrationResult">
+		<result property="id" column="id" />
+		<result property="ownerName" column="owner_name" />
+		<result property="fixedTelephone" column="fixed_telephone" />
+		<result property="mobilePhone" column="mobile_phone" />
+		<result property="idCardNum" column="id_card_num" />
+		<result property="suplierCategory" column="suplier_category" />
+		<result property="lockedNot" column="locked_not" />
+		<result property="accessNum" column="access_num" />
+		<result property="certificateName" column="certificate_name" />
+		<result property="customerCategoy" column="customer_categoy" />
+		<result property="faxPhone" column="fax_phone" />
+		<result property="contactAddress" column="contact_address" />
+		<result property="postalCode" column="postal_code" />
+		<result property="postalPreson" column="postal_preson" />
+		<result property="eMail" column="e_mail" />
+		<result property="phoneAccount" column="phone_account" />
+		<result property="bindingPhoneNum" column="binding_phone_num" />
+		<result property="coOwner" column="co_owner" />
+		<result property="ownerIdentification"
+			column="owner_identification" />
+		<result property="firName" column="fir_name" />
+		<result property="secName" column="sec_name" />
+		<result property="gender" column="gender" />
+		<result property="nationality" column="nationality" />
+		<result property="birthDate" column="birth_date" />
+		<result property="workUnit" column="work_unit" />
+		<result property="ownerJob" column="owner_job" />
+		<result property="ownerHobby" column="owner_hobby" />
+		<result property="ownerId" column="owner_id" />
+		<result property="taxpayerNum" column="taxpayer_num" />
+		<result property="ownerAddPhone" column="owner_add_phone" />
+		<result property="bankAccount" column="bank_account" />
+		<result property="collectionCategory"
+			column="collection_category" />
+		<result property="bankType" column="bank_type" />
+		<result property="bankNum" column="bank_num" />
+		<result property="bankAccountName" column="bank_account_name" />
+		<result property="projectId" column="project_id" />
+	</resultMap>
+	
 	<resultMap type="HyCost" id="HyCostResult">
 		<result property="id" column="id" />
-		<result property="houseNum" column="house_num" />
 		<result property="costItems" column="cost_items" />
 		<result property="expenseType" column="expense_type" />
 		<result property="parentId" column="parent_id" />
@@ -66,8 +145,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="operationUser" column="operation_user" />
 		<result property="operationType" column="operation_type" />
 		<result property="deleteReason" column="delete_reason" />
-		<result property="advancePaymetnOffset"
-			column="advance_paymetn_offset" />
+		<result property="advancePaymentOffset"
+			column="advance_payment_offset" />
 		<result property="writeOff" column="write_off" />
 		<result property="refundAmount" column="refund_amount" />
 		<result property="amountArrears" column="amount_arrears" />
@@ -77,133 +156,185 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="frozenDate" column="frozen_date" />
 		<result property="frozenReason" column="frozen_reason" />
 		<result property="advanceStatus" column="advance_status" />
-		<result property="deliveryStatus" column="delivery_status" />
 		<result property="transferTenants" column="transfer_tenants" />
 		<result property="changeDate" column="change_date" />
+		<result property="billingMethod" column="billing_method" />
+		<result property="calculationStandard"
+			column="calculation_standard" />
 	</resultMap>
+	
+	<resultMap type="HyParkingInf" id="HyParkingInfResult">
+		<result property="id" column="id" />
+		<result property="parkingArea" column="parking_area" />
+		<result property="parkingType" column="parking_type" />
+		<result property="parkingClass" column="parking_class" />
+		<result property="parkingNumber" column="parking_number" />
+		<result property="contractDeliveryDate"
+			column="contract_delivery_date" />
+		<result property="actualDeliveryDate"
+			column="actual_delivery_date" />
+		<result property="takeoverTime" column="takeover_time" />
+		<result property="chargingStandard" column="charging_standard" />
+		<result property="currentState" column="current_state" />
+		<result property="parkingCard" column="parking_card" />
+		<result property="licensePlate" column="license_plate" />
+		<result property="vehicleType" column="vehicle_type" />
+		<result property="vehicleBrand" column="vehicle_brand" />
+		<result property="displacement" column="displacement" />
+		<result property="vehicleColor" column="vehicle_color" />
+		<result property="otherExpenses" column="other_expenses" />
+		<result property="licensePlateNot" column="license_plate_not" />
+		<result property="licensePlateTime" column="license_plate_time" />
+		<result property="usageStatus" column="usage_status" />
+		<result property="parkingProperty" column="parking_property" />
+		<result property="timeProcessing" column="time_processing" />
+		<result property="timeStr" column="time_str" />
+		<result property="timeEnd" column="time_end" />
+		<result property="bilingCycle" column="biling_cycle" />
+		<result property="parkingName" column="parking_name" />
+		<result property="ownerId" column="owner_id" />
+		<result property="houseId" column="house_id" />
+	</resultMap>
+    
+    <sql id="selectHyPaymentOffsetVo">
+        select 
+        p.id, 
+        p.offset_category, 
+        p.offset_preson, 
+        p.offset_operation_date, 
+        p.offset_range, 
+        p.offset_year, 
+        p.offset_month, 
+        p.offset_money, 
+        p.amount_actually, 
+        p.offset_type, 
+        p.audit_process, 
+        p.audit_status, 
+        p.house_id, 
+        p.set_id, 
+        h.house_name, 
+        h.house_number, 
+        o.owner_name, 
+        c.cost_items, 
+        c.due_date,
+        c.amount_receivable,
+        i.parking_number 
+        from 
+        hy_payment_offset p
+        LEFT JOIN hy_house_inf h ON p.house_id=h.id
+        LEFT JOIN hy_owner_registration o ON h.owner_id = o.id
+        LEFT JOIN house_and_cost a ON a.house_id=h.id
+        LEFT JOIN hy_cost c ON a.cost_id=c.id
+        LEFT JOIN hy_parking_inf i ON i.house_id=h.id
+    </sql>
 
-	<sql id="selectHyPaymentOffsetVo">
-		select
-		o.id,
-		o.house_num,
-		o.offset_category,
-		o.offset_preson,
-		o.offset_operation_date,
-		o.offset_range,
-		o.offset_date,
-		o.import_person,
-		o.import_time,
-		o.advance_time,
-		o.set_id,
-		c.cost_items,
-		c.fee_date,
-		a.audit_process,
-		a.audit_status
-		from
-		hy_payment_offset o
+    <select id="selectHyPaymentOffsetList" parameterType="HyPaymentOffset" resultMap="HyPaymentOffsetResult">
+        <include refid="selectHyPaymentOffsetVo"/>
+        <where>  
+            <if test="offsetCategory != null "> and p.offset_category = #{offsetCategory}</if>
+            <if test="offsetPreson != null  and offsetPreson != ''"> and p.offset_preson = #{offsetPreson}</if>
+            <if test="offsetOperationDate != null "> and p.offset_operation_date = #{offsetOperationDate}</if>
+            <if test="offsetRange != null  and offsetRange != ''"> and p.offset_range = #{offsetRange}</if>
+            <if test="offsetYear != null  and offsetYear != ''"> and p.offset_year = #{offsetYear}</if>
+            <if test="offsetMonth != null  and offsetMonth != ''"> and p.offset_month = #{offsetMonth}</if>
+            <if test="offsetMoney != null "> and p.offset_money = #{offsetMoney}</if>
+            <if test="amountActually != null "> and p.amount_actually = #{amountActually}</if>
+            <if test="offsetType != null  and offsetType != ''"> and p.offset_type = #{offsetType}</if>
+            <if test="auditProcess != null  and auditProcess != ''"> and p.audit_process = #{auditProcess}</if>
+            and p.audit_status = "1"
+            <if test="houseId != null "> and p.house_id = #{houseId}</if>
+            <if test="setId != null "> and p.set_id = #{setId}</if>
+        </where>
+    </select>
+    <select id="selectHyPaymentOffsetListAAA" parameterType="HyPaymentOffset" resultMap="HyPaymentOffsetResult">
+        <include refid="selectHyPaymentOffsetVo"/>
+        <where>  
+            <if test="offsetCategory != null "> and p.offset_category = #{offsetCategory}</if>
+            <if test="offsetPreson != null  and offsetPreson != ''"> and p.offset_preson = #{offsetPreson}</if>
+            <if test="offsetOperationDate != null "> and p.offset_operation_date = #{offsetOperationDate}</if>
+            <if test="offsetRange != null  and offsetRange != ''"> and p.offset_range = #{offsetRange}</if>
+            <if test="offsetYear != null  and offsetYear != ''"> and p.offset_year = #{offsetYear}</if>
+            <if test="offsetMonth != null  and offsetMonth != ''"> and p.offset_month = #{offsetMonth}</if>
+            <if test="offsetMoney != null "> and p.offset_money = #{offsetMoney}</if>
+            <if test="amountActually != null "> and p.amount_actually = #{amountActually}</if>
+            <if test="offsetType != null  and offsetType != ''"> and p.offset_type = #{offsetType}</if>
+            <if test="auditProcess != null  and auditProcess != ''"> and p.audit_process = #{auditProcess}</if>
+            and p.audit_status = "0"
+            <if test="houseId != null "> and p.house_id = #{houseId}</if>
+            <if test="setId != null "> and p.set_id = #{setId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyPaymentOffsetById" parameterType="Long" resultMap="HyPaymentOffsetResult">
+        <include refid="selectHyPaymentOffsetVo"/>
+        where p.id = #{id}
+    </select>
+        
+    <insert id="insertHyPaymentOffset" parameterType="HyPaymentOffset">
+        insert into hy_payment_offset
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="offsetCategory != null">offset_category,</if>
+            <if test="offsetPreson != null">offset_preson,</if>
+            <if test="offsetOperationDate != null">offset_operation_date,</if>
+            <if test="offsetRange != null">offset_range,</if>
+            <if test="offsetYear != null">offset_year,</if>
+            <if test="offsetMonth != null">offset_month,</if>
+            <if test="offsetMoney != null">offset_money,</if>
+            <if test="amountActually != null">amount_actually,</if>
+            <if test="offsetType != null">offset_type,</if>
+            <if test="auditProcess != null">audit_process,</if>
+            <if test="auditStatus != null">audit_status,</if>
+            <if test="houseId != null">house_id,</if>
+            <if test="setId != null">set_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="offsetCategory != null">#{offsetCategory},</if>
+            <if test="offsetPreson != null">#{offsetPreson},</if>
+            <if test="offsetOperationDate != null">#{offsetOperationDate},</if>
+            <if test="offsetRange != null">#{offsetRange},</if>
+            <if test="offsetYear != null">#{offsetYear},</if>
+            <if test="offsetMonth != null">#{offsetMonth},</if>
+            <if test="offsetMoney != null">#{offsetMoney},</if>
+            <if test="amountActually != null">#{amountActually},</if>
+            <if test="offsetType != null">#{offsetType},</if>
+            <if test="auditProcess != null">#{auditProcess},</if>
+            <if test="auditStatus != null">#{auditStatus},</if>
+            <if test="houseId != null">#{houseId},</if>
+            <if test="setId != null">#{setId},</if>
+         </trim>
+    </insert>
 
-		LEFT JOIN
-		hy_cost c
-		ON
-		o.house_num=c.house_num
+    <update id="updateHyPaymentOffset" parameterType="HyPaymentOffset">
+        update hy_payment_offset
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="offsetCategory != null">offset_category = #{offsetCategory},</if>
+            <if test="offsetPreson != null">offset_preson = #{offsetPreson},</if>
+            <if test="offsetOperationDate != null">offset_operation_date = #{offsetOperationDate},</if>
+            <if test="offsetRange != null">offset_range = #{offsetRange},</if>
+            <if test="offsetYear != null">offset_year = #{offsetYear},</if>
+            <if test="offsetMonth != null">offset_month = #{offsetMonth},</if>
+            <if test="offsetMoney != null">offset_money = #{offsetMoney},</if>
+            <if test="amountActually != null">amount_actually = #{amountActually},</if>
+            <if test="offsetType != null">offset_type = #{offsetType},</if>
+            <if test="auditProcess != null">audit_process = #{auditProcess},</if>
+            <if test="auditStatus != null">audit_status = #{auditStatus},</if>
+            <if test="houseId != null">house_id = #{houseId},</if>
+            <if test="setId != null">set_id = #{setId},</if>
+        </trim>
+        where id = #{id}
+    </update>
 
-		LEFT JOIN
-		hy_audit_management a
-		ON
-		o.house_num=a.house_num
-	</sql>
+    <delete id="deleteHyPaymentOffsetById" parameterType="Long">
+        delete from hy_payment_offset where id = #{id}
+    </delete>
 
-	<select id="selectHyPaymentOffsetList"
-		parameterType="HyPaymentOffset" resultMap="HyPaymentOffsetResult">
-		<include refid="selectHyPaymentOffsetVo" />
-		<where>
-		<if test="houseNum != null  and houseNum != ''"> and o.house_num = #{houseNum}</if>
-		<if test="offsetCategory != null "> and o.offset_category = #{offsetCategory}</if>
-		<if test="offsetPreson != null  and offsetPreson != ''"> and o.offset_preson = #{offsetPreson}</if>
-		<if test="offsetOperationDate != null "> and o.offset_operation_date = #{offsetOperationDate}</if>
-		<if test="offsetRange != null  and offsetRange != ''"> and oo.ffset_range = #{offsetRange}</if>
-		<if test="offsetDate != null  and offsetDate != ''"> and o.offset_date = #{offsetDate}</if>
-		<if test="importPerson != null  and importPerson != ''"> and o.import_person = #{importPerson}</if>
-		<if test="importTime != null "> and o.import_time = #{importTime}</if>
-		<if test="advanceTime != null "> and o.advance_time = #{advanceTime}</if>
-		<if test="setId != null "> and o.set_id = #{setId}</if>
-		<!-- <if test="feeDate != null "> and c.fee_date = #{feeDate}</if> -->
-		</where>
-	</select>
-
-	<select id="selectHyPaymentOffsetListTy"  resultMap="HyPaymentOffsetResult">
-		<include refid="selectHyPaymentOffsetVo"/>
-		<where>
-		<if test="startFeeDate != null and endFeeDate != null"> and c.fee_date between #{startFeeDate} and #{endFeeDate} </if>
-		<if test="auditStatus != null and auditStatus != ''"> and a.audit_status =#{auditStatus}</if>
-		</where>
-	</select>
-
-	<select id="selectHyPaymentOffsetById" parameterType="Long"
-		resultMap="HyPaymentOffsetResult">
-		<include refid="selectHyPaymentOffsetVo" />
-		where id = #{id}
-	</select>
-
-	<insert id="insertHyPaymentOffset"
-		parameterType="HyPaymentOffset">
-		insert into hy_payment_offset
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="id != null">id,</if>
-			<if test="houseNum != null">house_num,</if>
-			<if test="offsetCategory != null">offset_category,</if>
-			<if test="offsetPreson != null">offset_preson,</if>
-			<if test="offsetOperationDate != null">offset_operation_date,</if>
-			<if test="offsetRange != null">offset_range,</if>
-			<if test="offsetDate != null">offset_date,</if>
-			<if test="importPerson != null">import_person,</if>
-			<if test="importTime != null">import_time,</if>
-			<if test="advaneTime != null">advane_time,</if>
-			<if test="setId != null">set_id,</if>
-		</trim>
-		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="id != null">#{id},</if>
-			<if test="houseNum != null">#{houseNum},</if>
-			<if test="offsetCategory != null">#{offsetCategory},</if>
-			<if test="offsetPreson != null">#{offsetPreson},</if>
-			<if test="offsetOperationDate != null">#{offsetOperationDate},</if>
-			<if test="offsetRange != null">#{offsetRange},</if>
-			<if test="offsetDate != null">#{offsetDate},</if>
-			<if test="importPerson != null">#{importPerson},</if>
-			<if test="importTime != null">#{importTime},</if>
-			<if test="advaneTime != null">#{advaneTime},</if>
-			<if test="setId != null">#{setId},</if>
-		</trim>
-	</insert>
-
-	<update id="updateHyPaymentOffset"
-		parameterType="HyPaymentOffset">
-		update hy_payment_offset
-		<trim prefix="SET" suffixOverrides=",">
-			<if test="houseNum != null">house_num = #{houseNum},</if>
-			<if test="offsetCategory != null">offset_category = #{offsetCategory},</if>
-			<if test="offsetPreson != null">offset_preson = #{offsetPreson},</if>
-			<if test="offsetOperationDate != null">offset_operation_date = #{offsetOperationDate},</if>
-			<if test="offsetRange != null">offset_range = #{offsetRange},</if>
-			<if test="offsetDate != null">offset_date = #{offsetDate},</if>
-			<if test="importPerson != null">import_person = #{importPerson},</if>
-			<if test="importTime != null">import_time = #{importTime},</if>
-			<if test="advaneTime != null">advane_time = #{advaneTime},</if>
-			<if test="setId != null">set_id = #{setId},</if>
-		</trim>
-		where id = #{id}
-	</update>
-
-	<delete id="deleteHyPaymentOffsetById" parameterType="Long">
-		delete from hy_payment_offset where id = #{id}
-	</delete>
-
-	<delete id="deleteHyPaymentOffsetByIds" parameterType="String">
-		delete from hy_payment_offset where id in
-		<foreach item="id" collection="array" open="(" separator=","
-			close=")">
-			#{id}
-		</foreach>
-	</delete>
+    <delete id="deleteHyPaymentOffsetByIds" parameterType="String">
+        delete from hy_payment_offset where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
 
 </mapper>

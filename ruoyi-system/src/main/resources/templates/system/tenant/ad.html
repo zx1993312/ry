@@ -46,6 +46,7 @@
                 $.operate.save(prefix + "/ad", $('#form-tenant-ad').serialize());
                 var parent = window.parent;
                 parent.$.table.refresh("bootstrap-table");
+                $("#noticeTable").bootstrapTable('refresh');
                 parent.$.modal.close();
             }
         }

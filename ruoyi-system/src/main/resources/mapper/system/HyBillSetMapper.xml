@@ -183,21 +183,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
 	<resultMap type="HyPaymentOffset" id="HyPaymentOffsetResult">
-		<result property="id" column="id" />
-		<result property="houseNum" column="house_num" />
-		<result property="offsetCategory" column="offset_category" />
-		<result property="offsetPreson" column="offset_preson" />
-		<result property="offsetOperationDate"
-			column="offset_operation_date" />
-		<result property="offsetRange" column="offset_range" />
-		<result property="offsetDate" column="offset_date" />
-		<result property="importPerson" column="import_person" />
-		<result property="importTime" column="import_time" />
-		<result property="advanceTime" column="advance_time" />
-		<result property="offsetExpense" column="offset_expense" />
-		<result property="advanceAmount" column="advance_amount" />
-		<result property="setId" column="set_id" />
-	</resultMap>
+        <result property="id"    column="id"    />
+        <result property="offsetCategory"    column="offset_category"    />
+        <result property="offsetPreson"    column="offset_preson"    />
+        <result property="offsetOperationDate"    column="offset_operation_date"    />
+        <result property="offsetRange"    column="offset_range"    />
+        <result property="offsetYear"    column="offset_year"    />
+        <result property="offsetMonth"    column="offset_month"    />
+        <result property="offsetMoney"    column="offset_money"    />
+        <result property="amountActually"    column="amount_actually"    />
+        <result property="offsetType"    column="offset_type"    />
+        <result property="auditProcess"    column="audit_process"    />
+        <result property="auditStatus"    column="audit_status"    />
+        <result property="houseId"    column="house_id"    />
+        <result property="setId"    column="set_id"    />
+    </resultMap>
 
 	 <sql id="selectHyBillSetVo">
 		select
@@ -241,9 +241,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		r.revoke_date,
 		r.revoke_reason,
 		r.revoke_remark,
-		p.advance_time,
-		p.offset_expense,
-		p.advance_amount
+		p.offset_operation_date,
+		p.offset_money
 		from
 		hy_bill_set b
 		left

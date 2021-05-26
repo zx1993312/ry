@@ -29,14 +29,14 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 /**
- * 预交冲抵Controller
+ * 预交冲抵审核Controller
  * 
  * @author Administrator
  * @date 2021-01-25
  */
 @Controller
 @RequestMapping("/system/paymentOffset")
-@Api(tags = "预交冲抵Controller")
+@Api(tags = "预交冲抵审核Controller")
 public class HyPaymentController extends BaseController {
 	private String prefix = "system/paymentOffset";
 
@@ -50,22 +50,21 @@ public class HyPaymentController extends BaseController {
 	}
 
 	/**
-	 * 查询预交冲抵列表
-	 */
-	@ApiOperation("预交冲抵")
-	@ApiImplicitParams({
-			@ApiImplicitParam(name = "hyPaymentOffset", value = "项目实体类hyPaymentOffset", required = true), })
-	@RequiresPermissions("system:offset:list")
-	@PostMapping("/list")
-	@ResponseBody
-	public TableDataInfo list(@RequestParam("startFeeDate") Date startFeeDate,
-			@RequestParam("endFeeDate") Date endFeeDate, @RequestParam("auditStatus") String auditStatus) {
-		
-		startPage();
-		List<?> list = hyPaymentOffsetService.selectHyPaymentOffsetListTy(startFeeDate, endFeeDate,
-				auditStatus);
-		return getDataTable(list);
-	}
+     * 查询预交冲抵列表
+     */
+    @ApiOperation("预交冲抵")
+    @ApiImplicitParams({ 
+		@ApiImplicitParam(name = "hyPaymentOffset", value = "项目实体类hyPaymentOffset", required = true),
+	})
+    @RequiresPermissions("system:offset:list")
+    @PostMapping("/list")
+    @ResponseBody
+    public TableDataInfo list(HyPaymentOffset hyPaymentOffset)
+    {
+        startPage();
+        List<HyPaymentOffset> list = hyPaymentOffsetService.selectHyPaymentOffsetListAAA(hyPaymentOffset);
+        return getDataTable(list);
+    }
 
 	/**
 	 * 导出预交冲抵列表

@@ -1,17 +1,13 @@
 package com.ruoyi.system.mapper;
 
-import java.util.Date;
 import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
-
 import com.ruoyi.system.domain.HyPaymentOffset;
 
 /**
  * 预交冲抵Mapper接口
  * 
  * @author Administrator
- * @date 2021-01-25
+ * @date 2021-05-26
  */
 public interface HyPaymentOffsetMapper 
 {
@@ -30,10 +26,16 @@ public interface HyPaymentOffsetMapper
      * @return 预交冲抵集合
      */
     public List<HyPaymentOffset> selectHyPaymentOffsetList(HyPaymentOffset hyPaymentOffset);
-
     
-   public List<HyPaymentOffset> selectHyPaymentOffsetListTy(@Param("startFeeDate")Date startFeeDate,@Param("endFeeDate") Date endFeeDate,@Param("auditStatus") String auditStatus);
-   /**
+    /**
+     * 查询预交冲抵列表
+     * 
+     * @param hyPaymentOffset 预交冲抵
+     * @return 预交冲抵集合
+     */
+    public List<HyPaymentOffset> selectHyPaymentOffsetListAAA(HyPaymentOffset hyPaymentOffset);
+
+    /**
      * 新增预交冲抵
      * 
      * @param hyPaymentOffset 预交冲抵

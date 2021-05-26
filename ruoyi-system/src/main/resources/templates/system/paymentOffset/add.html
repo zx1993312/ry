@@ -8,12 +8,6 @@
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
         <form class="form-horizontal m" id="form-offset-add">
             <div class="form-group">    
-                <label class="col-sm-3 control-label">房屋编号：</label>
-                <div class="col-sm-8">
-                    <input name="houseNum" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
                 <label class="col-sm-3 control-label">冲抵类别：</label>
                 <div class="col-sm-8">
                     <input name="offsetCategory" class="form-control" type="text">
@@ -41,33 +35,58 @@
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">冲抵抵用时间：</label>
+                <label class="col-sm-3 control-label">冲抵年度：</label>
                 <div class="col-sm-8">
-                    <input name="offsetDate" class="form-control" type="text">
+                    <input name="offsetYear" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">导入人：</label>
+                <label class="col-sm-3 control-label">冲抵月份：</label>
                 <div class="col-sm-8">
-                    <input name="importPerson" class="form-control" type="text">
+                    <input name="offsetMonth" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">导入时间：</label>
+                <label class="col-sm-3 control-label">冲抵金额：</label>
                 <div class="col-sm-8">
-                    <div class="input-group date">
-                        <input name="importTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input name="offsetMoney" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">处理方式：</label>
+                <div class="col-sm-8">
+                    <select name="offsetType" class="form-control m-b">
+                        <option value="">所有</option>
+                    </select>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">审核流程：</label>
+                <div class="col-sm-8">
+                    <input name="auditProcess" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">审核状态：</label>
+                <div class="col-sm-8">
+                    <div class="radio-box">
+                        <input type="radio" name="auditStatus" value="">
+                        <label th:for="auditStatus" th:text="未知"></label>
                     </div>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">预交时间：</label>
+                <label class="col-sm-3 control-label">房屋id：</label>
                 <div class="col-sm-8">
-                    <div class="input-group date">
-                        <input name="advaneTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    </div>
+                    <input name="houseId" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">票据id：</label>
+                <div class="col-sm-8">
+                    <input name="setId" class="form-control" type="text">
                 </div>
             </div>
         </form>
@@ -87,18 +106,6 @@
         }
 
         $("input[name='offsetOperationDate']").datetimepicker({
-            format: "yyyy-mm-dd",
-            minView: "month",
-            autoclose: true
-        });
-
-        $("input[name='importTime']").datetimepicker({
-            format: "yyyy-mm-dd",
-            minView: "month",
-            autoclose: true
-        });
-
-        $("input[name='advaneTime']").datetimepicker({
             format: "yyyy-mm-dd",
             minView: "month",
             autoclose: true

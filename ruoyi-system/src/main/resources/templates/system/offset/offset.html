@@ -10,20 +10,37 @@
                 <form id="formId">
                     <div class="select-list">
                         <ul>
-                           
-                           
-                           <li><label>费用日期：</label> <input type="text"
-								class="time-input" placeholder="请选择费用日期" name="startFeeDate" />&nbsp;到&nbsp;
-								<input type="text" class="time-input" placeholder="请选择费用日期" name="endFeeDate"/></li>
                             <li>
-                                <label>审核状态：</label>
-                               
-                                 <select name="auditStatus" th:with="type=${@dict.getType('hy_examine_type')}">
-                                    <option value="">请选择</option>
-                      <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                                </select>
+                                <label>冲抵类别：</label>
+                                <select name="offsetCategory" class="form-control " >
+			                      <option value="">请选择</option>
+			                      <option value=1>批量冲抵</option>
+			                     </select>
                             </li>
-                          
+                            <li>
+                                <label>冲抵人：</label>
+                                <input type="text" name="offsetPreson"/>
+                            </li>
+                            <li>
+                                <label>冲抵操作时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择冲抵操作时间" name="offsetOperationDate"/>
+                            </li>
+                            <li>
+                                <label>冲抵范围：</label>
+                                <input type="text" name="offsetRange"/>
+                            </li>
+                            <li>
+                                <label>冲抵年度：</label>
+                                <input type="text" name="offsetYear"/>
+                            </li>
+                            <li>
+                                <label>冲抵月份：</label>
+                                <input type="text" name="offsetMonth"/>
+                            </li>
+                            <li>
+                                <label>审核流程：</label>
+                                <input type="text" name="auditProcess"/>
+                            </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                                 <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
@@ -34,7 +51,15 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-              
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:offset:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:offset:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:offset:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
                 <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:offset:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
@@ -66,64 +91,93 @@
                     title: '主键',
                     visible: false
                 },
-          
                 {
-                    field: 'importPerson',
-                    title: '导入人'
+                    field: 'hyOwnerRegistration.ownerName',
+                    title: '客户名称'
                 },
                 {
-                    field: 'importTime',
-                    title: '导入时间'
+                    field: 'hyHouseInf.houseName',
+                    title: '房屋名称'
                 },
                 {
-                    field: 'advaneTime',
-                    title: '预交时间'
+                    field: 'hyHouseInf.houseNumber',
+                    title: '房屋编号'
+                },
+                {
+                    field: 'hyParkingInf.parkingNumber',
+                    title: '车位编号'
                 },
                 {
                     field: 'hyCost.costItems',
-                    title: '费用名称',
-                    formatter: function(value, item, index) {
-                    	switch(value){
-                        	case 0 : value =  "高层物业服务费";break;
-                        	case 1 : value =  "商铺物业服务费";break;
-                        	case 2 : value =  "车位物业管理服务费";break;
-                        	case 3 : value =  "公寓物业服务费";break;
-                        	case 4 : value =  "居民用电";break;
-                        	case 5 : value =  "现场类资源";break;
-                        	case 6 : value =  "居民用水";break;
-                        	case 7 : value =  "代办类";break;
-                        	case 8 : value =  "建渣清运费";break;
-                        	case 9 : value =  "有偿服务费";break;
-                        	case 10 : value =  "门禁卡";break;
-                        	case 11 : value =  "其他卡证工本费";break;
-                        	case 12 : value =  "其他";break;
-                        	case 13 : value =  "其他保证金及押金";break;
-                        	case 14 : value =  "车位取暖费";break;
-                        	case 15 : value =  "居民用电";break;
-                        	case 16 : value =  "代办";break;
-                        	case 17 : value =  "到家服务";break;
-                        	case 18 : value =  "广告类资源";break;
-                    	}
-    	            	return value;
-    	            }
+                    title: '费用名称'
                 },
                 {
-                    field: 'hyAuditManagement.auditProcess',
+                    field: 'hyCost.amountReceivable',
+                    title: '原预交余额'
+                },
+                {
+                    field: 'offsetMoney',
+                    title: '冲抵金额'
+                },
+                {
+                    field: 'amountActually',
+                    title: '实收金额'
+                },
+                {
+                    field: 'offsetType',
+                    title: '处理方式'
+                },
+                {
+                    field: 'offsetCategory',
+                    title: '冲抵类别',
+                 	 formatter: function(value, item, index) {
+                        	switch(value){
+      	                    	case 1 : value =  "批量冲抵";break;
+      	                
+      	                	}
+      		            	return value;
+      		            }
+                },
+                {
+                    field: 'offsetPreson',
+                    title: '冲抵人'
+                },
+                {
+                    field: 'offsetOperationDate',
+                    title: '冲抵操作时间'
+                },
+                {
+                    field: 'offsetRange',
+                    title: '冲抵范围'
+                },
+                {
+                    field: 'offsetYear',
+                    title: '冲抵年度'
+                },
+                {
+                    field: 'offsetMonth',
+                    title: '冲抵月份'
+                },
+                {
+                    field: 'hyCost.dueDate',
+                    title: '应收日期'
+                },
+                {
+                    field: 'auditProcess',
                     title: '审核流程'
                 },
                 {
-                    field: 'hyAuditManagement.auditStatus',
+                    field: 'auditStatus',
                     title: '审核状态',
-                    formatter: function(value, item, index) {
-                    	switch(value){
-                        	case 0 : value =  "已审核";break;
-                        	case 1 : value =  "未审核";break;
-               
-                    	}
-    	            	return value;
-    	            }
-                }
-              ]
+               	 formatter: function(value, item, index) {
+                  	switch(value){
+	                    	case "0" : value =  "未审核";break;
+	                    	case "1" : value =  "已审核";break;
+	                
+	                	}
+		            	return value;
+		            }
+                }]
             };
             $.table.init(options);
         });
