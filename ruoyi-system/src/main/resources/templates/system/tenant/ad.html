@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增租户Id和房屋Id关联')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-tenant-ad" th:object="${hyTenant}">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">租户名称：</label>
+                <div class="col-sm-8">
+                    <select class="form-control m-b" name="tenantId" th:field="*{id}" th:with="type=${@tenant.getTenant()}">
+	                  		<option value="">请选择</option>
+	                  		<option th:each="dict : ${type}" th:text="${dict.tenantName}" th:value="${dict.id}"></option>
+	                </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">房屋名称：</label>
+                <div class="col-sm-8">
+                    <select class="form-control m-b" name="houseId" th:with="type=${@houseInf.getHouseInf()}">
+	                  		<option value="">请选择</option>
+	                  		<option th:each="dict : ${type}" th:text="${dict.houseName}" th:value="${dict.id}"></option>
+	                </select>
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/tenant"
+        $("#form-tenant-ad").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/ad", $('#form-tenant-ad').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

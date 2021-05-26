@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.TenantAndHouseMapper">
+    
+    <resultMap type="TenantAndHouse" id="TenantAndHouseResult">
+        <result property="tenantId"    column="tenant_id"    />
+        <result property="houseId"    column="house_id"    />
+    </resultMap>
+    
+    <sql id="selectTenantAndHouseVo">
+        select 
+        tenant_id,
+        house_id
+        from 
+        tenant_and_house 
+    </sql>
+
+    <select id="selectTenantAndHouseList" parameterType="TenantAndHouse" resultMap="TenantAndHouseResult">
+        <include refid="selectTenantAndHouseVo"/>
+            <if test="tenantId != null"> and tenant_id = #{tenantId}</if>
+            <if test="houseId != null"> and house_id = #{houseId}</if>
+    </select>
+    
+    <select id="selectTenantAndHouseById" parameterType="Long" resultMap="TenantAndHouseResult">
+        <include refid="selectTenantAndHouseVo"/>
+        and tenant_id = #{tenantId}
+    </select>
+        
+    <insert id="insertTenantAndHouse" parameterType="TenantAndHouse" useGeneratedKeys="true" keyProperty="id">
+        insert into tenant_and_house
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="tenantId != null">tenant_id,</if>
+            <if test="houseId != null">house_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="tenantId != null">#{tenantId},</if>
+            <if test="houseId != null">#{houseId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTenantAndHouse" parameterType="TenantAndHouse">
+        update tenant_and_house
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="tenantId != null">tenant_id = #{tenantId},</if>
+            <if test="houseId != null">house_id = #{houseId},</if>
+        </trim>
+        where tenant_id = #{tenantId}
+    </update>
+
+    <delete id="deleteTenantAndHouseById" parameterType="Long">
+        delete from tenant_and_house where tenant_id = #{tenantId}
+    </delete>
+
+
+</mapper>

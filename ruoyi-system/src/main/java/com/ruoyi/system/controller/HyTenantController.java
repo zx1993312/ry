@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.system.domain.HyTenant;
+import com.ruoyi.system.domain.TenantAndHouse;
+import com.ruoyi.system.mapper.TenantAndHouseMapper;
 import com.ruoyi.system.service.IHyTenantService;
 
 import io.swagger.annotations.Api;
@@ -40,6 +42,9 @@ public class HyTenantController extends BaseController
 
     @Autowired
     private IHyTenantService hyTenantService;
+    
+    @Autowired
+    private TenantAndHouseMapper tenantAndHouseMapper;
 
     @RequiresPermissions("system:tenant:view")
     @GetMapping()
@@ -99,13 +104,30 @@ public class HyTenantController extends BaseController
     @ApiImplicitParams({ 
 		@ApiImplicitParam(name = "hyTenant", value = "项目实体类hyTenant", required = true),
 	})
-    @RequiresPermissions("system:tenant:add")
-    @Log(title = "租户资料登记", businessType = BusinessType.INSERT)
     @PostMapping("/add")
-    @ResponseBody
-    public AjaxResult addSave(HyTenant hyTenant)
+    public String addSave(HyTenant hyTenant, ModelMap mmap)
     {
-        return toAjax(hyTenantService.insertHyTenant(hyTenant));
+    	int result = hyTenantService.insertHyTenant(hyTenant);
+    	List<HyTenant> list = hyTenantService.selectHyTenantList(hyTenant);
+    	hyTenant = list.get(0);
+        mmap.put("hyTenant", hyTenant);
+        return prefix + "/ad";
+    }
+    
+    /**
+     * 新增保存租户房屋关联Id
+     */
+    @ApiOperation("租户资料登记")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "tenantAndHouse", value = "项目实体类tenantAndHouse", required = true),
+    })
+    @RequiresPermissions("system:tenant:add")
+    @Log(title = "新增保存租户房屋关联Id", businessType = BusinessType.INSERT)
+    @PostMapping("/ad")
+    @ResponseBody
+    public AjaxResult adSave(TenantAndHouse tenantAndHouse)
+    {
+    	return toAjax(tenantAndHouseMapper.insertTenantAndHouse(tenantAndHouse));
     }
 
     /**

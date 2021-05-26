@@ -9,40 +9,42 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">租户名称：</label>
                 <div class="col-sm-8">
-                    <input name="tenantName" class="form-control" type="text">
+                    <input id="tenantName" name="tenantName" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">固定电话：</label>
                 <div class="col-sm-8">
-                    <input name="tenantTelephone" class="form-control" type="text">
+                    <input id="tenantTelephone" name="tenantTelephone" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">移动电话：</label>
                 <div class="col-sm-8">
-                    <input name="tenantPhone" class="form-control" type="text">
+                    <input id="tenantPhone" name="tenantPhone" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">证件号码：</label>
                 <div class="col-sm-8">
-                    <input name="idCardNum" class="form-control" type="text">
+                    <input id="idCardNum" name="idCardNum" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">联系地址：</label>
                 <div class="col-sm-8">
-                    <input name="tenantAddress" class="form-control" type="text">
+                    <input id="tenantAddress" name="tenantAddress" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">性别：</label>
                 <div class="col-sm-8">
-                    <select name="tenantSex" class="form-control m-b">
-                        <option value="">所有</option>
-                    </select>
-                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                    <select id="tenantSex" name="tenantSex" class="form-control "
+						th:with="type=${@dict.getType('sys_user_sex')}">
+						<option value="">请选择</option>
+						<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+							th:value="${dict.dictValue}"></option>
+					</select>
                 </div>
             </div>
         </form>
@@ -53,11 +55,29 @@
         $("#form-tenant-add").validate({
             focusCleanup: true
         });
-
+	
         function submitHandler() {
-            if ($.validate.form()) {
-                $.operate.save(prefix + "/add", $('#form-tenant-add').serialize());
-            }
+        	var tenantName = $("#tenantName").val();
+        	var tenantTelephone = $("#tenantTelephone").val();
+        	var tenantPhone = $("#tenantPhone").val();
+        	var idCardNum = $("#idCardNum").val();
+        	var tenantAddress = $("#tenantAddress").val();
+        	var tenantSex = $("#tenantSex").val();
+        	$.ajax({
+    	        url: prefix + "/add",
+    	        type: "post",
+    	        dataType: "html",
+    	        data: {"tenantName": tenantName,"tenantTelephone":tenantTelephone,"tenantPhone":tenantPhone,
+    	        	"idCardNum":idCardNum,"tenantAddress":tenantAddress,"tenantSex":tenantSex},
+    	        beforeSend: function () {
+    	            $.modal.loading("正在处理中，请稍后...");
+    	            $.modal.disable();
+    	        },
+    	        success: function(result) {
+    	        	$.modal.closeLoading();
+    	        	$.modal.open("修改" + table.options.modalName, prefix + "/ad");
+    	        }
+            });
         }
     </script>
 </body>
