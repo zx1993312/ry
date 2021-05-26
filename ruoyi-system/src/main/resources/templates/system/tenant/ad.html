@@ -36,6 +36,8 @@
         function submitHandler() {
             if ($.validate.form()) {
                 $.operate.save(prefix + "/ad", $('#form-tenant-ad').serialize());
+                var parent = window.parent;
+                parent.$.modal.close();
             }
         }
     </script>
