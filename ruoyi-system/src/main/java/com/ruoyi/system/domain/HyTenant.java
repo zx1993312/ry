@@ -41,6 +41,10 @@ public class HyTenant extends BaseEntity
     /** 性别 */
     @Excel(name = "性别")
     private Integer tenantSex;
+    
+    /** 房屋表 */
+    @Excel(name = "房屋表")
+    private HyHouseInf hyHouseInf;
 
     public void setId(Long id) 
     {
@@ -106,7 +110,15 @@ public class HyTenant extends BaseEntity
         return tenantSex;
     }
 
-    @Override
+    public HyHouseInf getHyHouseInf() {
+		return hyHouseInf;
+	}
+
+	public void setHyHouseInf(HyHouseInf hyHouseInf) {
+		this.hyHouseInf = hyHouseInf;
+	}
+
+	@Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
@@ -116,6 +128,7 @@ public class HyTenant extends BaseEntity
             .append("idCardNum", getIdCardNum())
             .append("tenantAddress", getTenantAddress())
             .append("tenantSex", getTenantSex())
+            .append("hyHouseInf", getHyHouseInf())
             .toString();
     }
 }

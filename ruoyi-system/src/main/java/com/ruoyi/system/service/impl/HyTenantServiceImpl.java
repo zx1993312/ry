@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.ruoyi.system.mapper.HyTenantMapper;
+import com.ruoyi.system.mapper.TenantAndHouseMapper;
 import com.ruoyi.system.domain.HyTenant;
 import com.ruoyi.system.service.IHyTenantService;
 import com.ruoyi.common.core.text.Convert;
@@ -20,6 +21,9 @@ public class HyTenantServiceImpl implements IHyTenantService
 {
     @Autowired
     private HyTenantMapper hyTenantMapper;
+    
+    @Autowired
+    private TenantAndHouseMapper tenantAndHouseMapper;
 
     /**
      * 查询租户资料登记
@@ -81,7 +85,11 @@ public class HyTenantServiceImpl implements IHyTenantService
     @Override
     public int deleteHyTenantByIds(String ids)
     {
-        return hyTenantMapper.deleteHyTenantByIds(Convert.toStrArray(ids));
+    	int result = tenantAndHouseMapper.deleteTenantAndHouseByIds(Convert.toStrArray(ids));
+    	if(result>0) 
+    	return hyTenantMapper.deleteHyTenantByIds(Convert.toStrArray(ids));
+
+    	return result;
     }
 
     /**
@@ -93,7 +101,22 @@ public class HyTenantServiceImpl implements IHyTenantService
     @Transactional(rollbackFor = Exception.class)
     @Override
     public int deleteHyTenantById(Long id)
-    {
-        return hyTenantMapper.deleteHyTenantById(id);
+    {	
+    	int result = tenantAndHouseMapper.deleteTenantAndHouseById(id);
+    	if(result>0) 
+    	return hyTenantMapper.deleteHyTenantById(id);
+    	
+        return result;
     }
+    
+    /**
+     * 查询租户资料登记
+     * 
+     * @param idCardNum 租户资料登记idCardNum
+     * @return 租户资料登记
+     */
+	@Override
+	public List<HyTenant> selectHyTenantListByIdCardNum(String idCardNum) {
+		return hyTenantMapper.selectHyTenantListByIdCardNum(idCardNum);
+	}
 }

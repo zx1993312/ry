@@ -58,4 +58,12 @@ public interface IHyTenantService
      * @return 结果
      */
     public int deleteHyTenantById(Long id);
+    
+    /**
+     * 查询租户资料登记
+     * 
+     * @param idCardNum 租户资料登记idCardNum
+     * @return 租户资料登记
+     */
+	public List<HyTenant> selectHyTenantListByIdCardNum(String idCardNum);
 }

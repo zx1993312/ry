@@ -29,19 +29,17 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 /**
- * 租户资料登记Controller
+ * 出租转让Controller
  * 
  * @author Administrator
  * @date 2021-05-25
  */
 @Controller
-@RequestMapping("/system/tenant")
-@Api(tags = "租户资料登记Controller")
-public class HyTenantController extends BaseController {
-	private String prefix = "system/tenant";
+@RequestMapping("/system/transfertenant")
+@Api(tags = "出租转让Controller")
+public class HyTransfertenantController extends BaseController {
+	private String prefix = "system/transfertenant";
 	
-	private HyTenant hyTenant;
-
 	@Autowired
 	private IHyTenantService hyTenantService;
 
@@ -84,66 +82,14 @@ public class HyTenantController extends BaseController {
 	}
 
 	/**
-	 * 新增租户资料登记
-	 */
-	@GetMapping("/add")
-	public String add() {
-		return prefix + "/add";
-	}
-
-	/**
-	 * 新增保存租户资料登记
-	 */
-	@ApiOperation("租户资料登记")
-	@ApiImplicitParams({ @ApiImplicitParam(name = "hyTenant", value = "项目实体类hyTenant", required = true), })
-	@PostMapping("/add")
-	@ResponseBody
-	public AjaxResult addSave(HyTenant hyTenant, ModelMap mmap) {
-		String idCardNum = hyTenant.getIdCardNum();
-		List<HyTenant> list1 = hyTenantService.selectHyTenantListByIdCardNum(idCardNum);
-		if(list1.size()>0) {
-			return AjaxResult.error("新增租户失败，身份证重复！！！");
-		}
-		int result = hyTenantService.insertHyTenant(hyTenant);
-		if (result > 0) {
-			List<HyTenant> list = hyTenantService.selectHyTenantList(hyTenant);
-			hyTenant = list.get(0);
-			this.hyTenant = hyTenant;
-		}
-		return toAjax(result);
-	}
-
-	/**
-	 * 新增租户资料登记
-	 */
-	@GetMapping("/ad")
-	public String ad(ModelMap mmap) {
-		mmap.put("hyTenant", hyTenant);
-		return prefix + "/ad";
-	}
-
-	/**
-	 * 新增保存租户房屋关联Id
-	 */
-	@ApiOperation("租户资料登记")
-	@ApiImplicitParams({ @ApiImplicitParam(name = "tenantAndHouse", value = "项目实体类tenantAndHouse", required = true), })
-	@RequiresPermissions("system:tenant:add")
-	@Log(title = "新增保存租户房屋关联Id", businessType = BusinessType.INSERT)
-	@PostMapping("/ad")
-	@ResponseBody
-	public AjaxResult adSave(TenantAndHouse tenantAndHouse) {
-		return toAjax(tenantAndHouseMapper.insertTenantAndHouse(tenantAndHouse));
-	}
-
-	/**
 	 * 修改租户资料登记
 	 */
 	@ApiOperation("租户资料登记")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "id", value = "主键id", required = true), })
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") Long id, ModelMap mmap) {
-		HyTenant hyTenant = hyTenantService.selectHyTenantById(id);
-		mmap.put("hyTenant", hyTenant);
+		TenantAndHouse tenantAndHouse = tenantAndHouseMapper.selectTenantAndHouseById(id);
+		mmap.put("tenantAndHouse", tenantAndHouse);
 		return prefix + "/edit";
 	}
 
@@ -156,21 +102,9 @@ public class HyTenantController extends BaseController {
 	@Log(title = "租户资料登记", businessType = BusinessType.UPDATE)
 	@PostMapping("/edit")
 	@ResponseBody
-	public AjaxResult editSave(HyTenant hyTenant) {
+	public AjaxResult editSave(TenantAndHouse tenantAndHouse) {
 		
-		return toAjax(hyTenantService.updateHyTenant(hyTenant));
+		return toAjax(tenantAndHouseMapper.updateTenantAndHouse(tenantAndHouse));
 	}
 
-	/**
-	 * 删除租户资料登记
-	 */
-	@ApiOperation("租户资料登记")
-	@ApiImplicitParams({ @ApiImplicitParam(name = "ids", value = "ids", required = true), })
-	@RequiresPermissions("system:tenant:remove")
-	@Log(title = "租户资料登记", businessType = BusinessType.DELETE)
-	@PostMapping("/remove")
-	@ResponseBody
-	public AjaxResult remove(String ids) {
-		return toAjax(hyTenantService.deleteHyTenantByIds(ids));
-	}
 }

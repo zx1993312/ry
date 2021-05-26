@@ -25,7 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <select id="selectTenantAndHouseById" parameterType="Long" resultMap="TenantAndHouseResult">
         <include refid="selectTenantAndHouseVo"/>
-        and tenant_id = #{tenantId}
+        where tenant_id = #{tenantId}
     </select>
         
     <insert id="insertTenantAndHouse" parameterType="TenantAndHouse" useGeneratedKeys="true" keyProperty="id">
@@ -50,8 +50,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteTenantAndHouseById" parameterType="Long">
-        delete from tenant_and_house where tenant_id = #{tenantId}
+        delete from tenant_and_house where tenant_id = #{id}
     </delete>
-
+	
+	<delete id="deleteTenantAndHouseByIds"
+		parameterType="String">
+		delete from tenant_and_house where tenant_id in
+		<foreach item="id" collection="array" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
 
 </mapper>

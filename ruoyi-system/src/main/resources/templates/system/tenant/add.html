@@ -71,11 +71,17 @@
     	        	"idCardNum":idCardNum,"tenantAddress":tenantAddress,"tenantSex":tenantSex},
     	        beforeSend: function () {
     	            $.modal.loading("正在处理中，请稍后...");
-    	            $.modal.disable();
     	        },
     	        success: function(result) {
-    	        	$.modal.closeLoading();
-    	        	$.modal.open("修改" + table.options.modalName, prefix + "/ad");
+    	        	console.log(result.msg);
+    	        	if(result.msg=="操作成功"){
+    	        		
+    	        		$.modal.closeLoading();
+        	        	$.modal.open("选择租房窗口", prefix + "/ad");
+    	        	}else{
+    	        		$.modal.closeLoading();
+    	        		$.modal.alertError(result.msg);
+    	        	}
     	        }
             });
         }

@@ -52,5 +52,13 @@ public interface TenantAndHouseMapper
      * @return 结果
      */
     public int deleteTenantAndHouseById(Long id);
+    
+    /**
+	 * 批量删除租户资料登记
+	 * 
+	 * @param ids 需要删除的数据ID
+	 * @return 结果
+	 */
+	public int deleteTenantAndHouseByIds(String[] ids);
 
 }

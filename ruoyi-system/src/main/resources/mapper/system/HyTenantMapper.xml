@@ -12,27 +12,88 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="idCardNum"    column="id_card_num"    />
         <result property="tenantAddress"    column="tenant_address"    />
         <result property="tenantSex"    column="tenant_sex"    />
+        <association property="hyHouseInf" column="id"
+			javaType="HyHouseInf" resultMap="HyHouseInfResult" />
     </resultMap>
+    
+    <resultMap type="HyHouseInf" id="HyHouseInfResult">
+		<result property="id" column="id" />
+		<result property="houseNumber" column="house_number" />
+		<result property="houseName" column="house_name" />
+		<result property="builtUpArea" column="built_up_area" />
+		<result property="groupArea" column="group_area" />
+		<result property="unit" column="unit" />
+		<result property="floor" column="floor" />
+		<result property="sameUnitNumber" column="same_unit_number" />
+		<result property="areaType" column="area_type" />
+		<result property="bilingArea" column="biling_area" />
+		<result property="insideArea" column="inside_area" />
+		<result property="sharedArea" column="shared_area" />
+		<result property="gardenArea" column="garden_area" />
+		<result property="basementArea" column="basement_area" />
+		<result property="sharedLobbyArea" column="shared_lobby_area" />
+		<result property="sharedLayersArea" column="shared_layers_area" />
+		<result property="shareRatio" column="share_ratio" />
+		<result property="buildingStructure"
+			column="building_structure" />
+		<result property="parametersPer" column="parameters_per" />
+		<result property="houseLayout" column="house_layout" />
+		<result property="floorHeight" column="floor_height" />
+		<result property="natureProperty" column="nature_property" />
+		<result property="natureUse" column="nature_use" />
+		<result property="usageStatus" column="usage_status" />
+		<result property="occupancyStatus" column="occupancy_status" />
+		<result property="deliveryStatus" column="delivery_status" />
+		<result property="houseType" column="house_type" />
+		<result property="salesStatus" column="sales_status" />
+		<result property="purchaseContract" column="purchase_contract" />
+		<result property="marketingNum" column="marketing_num" />
+		<result property="deliveryStatusBefore" column="delivery_status_before" />
+		<result property="changeDate" column="change_date" />
+		<result property="changePerson" column="change_person" />
+		<result property="remark" column="remark" />
+		<result property="buildingId" column="building_id" />
+		<result property="ownerId" column="owner_id" />
+	</resultMap>
+    
 
     <sql id="selectHyTenantVo">
-        select id, tenant_name, tenant_telephone, tenant_phone, id_card_num, tenant_address, tenant_sex from hy_tenant
+        select 
+        t.id, 
+        t.tenant_name, 
+        t.tenant_telephone, 
+        t.tenant_phone, 
+        t.id_card_num, 
+        t.tenant_address, 
+        t.tenant_sex, 
+        h.house_name, 
+        h.house_number
+        from 
+        hy_tenant t
+        LEFT JOIN tenant_and_house a ON a.tenant_id = t.id
+        LEFT JOIN hy_house_inf h ON a.house_id = h.id
     </sql>
 
     <select id="selectHyTenantList" parameterType="HyTenant" resultMap="HyTenantResult">
         <include refid="selectHyTenantVo"/>
         <where>  
-            <if test="tenantName != null  and tenantName != ''"> and tenant_name like concat('%', #{tenantName}, '%')</if>
-            <if test="tenantTelephone != null  and tenantTelephone != ''"> and tenant_telephone = #{tenantTelephone}</if>
-            <if test="tenantPhone != null  and tenantPhone != ''"> and tenant_phone = #{tenantPhone}</if>
-            <if test="idCardNum != null  and idCardNum != ''"> and id_card_num = #{idCardNum}</if>
-            <if test="tenantAddress != null  and tenantAddress != ''"> and tenant_address = #{tenantAddress}</if>
-            <if test="tenantSex != null "> and tenant_sex = #{tenantSex}</if>
+            <if test="tenantName != null  and tenantName != ''"> and t.tenant_name like concat('%', #{tenantName}, '%')</if>
+            <if test="tenantTelephone != null  and tenantTelephone != ''"> and t.tenant_telephone = #{tenantTelephone}</if>
+            <if test="tenantPhone != null  and tenantPhone != ''"> and t.tenant_phone = #{tenantPhone}</if>
+            <if test="idCardNum != null  and idCardNum != ''"> and t.id_card_num = #{idCardNum}</if>
+            <if test="tenantAddress != null  and tenantAddress != ''"> and t.tenant_address = #{tenantAddress}</if>
+            <if test="tenantSex != null "> and t.tenant_sex = #{tenantSex}</if>
         </where>
     </select>
     
     <select id="selectHyTenantById" parameterType="Long" resultMap="HyTenantResult">
         <include refid="selectHyTenantVo"/>
-        where id = #{id}
+        where t.id = #{id}
+    </select>
+    
+    <select id="selectHyTenantListByIdCardNum" parameterType="String" resultMap="HyTenantResult">
+        <include refid="selectHyTenantVo"/>
+        where id_card_num = #{idCardNum}
     </select>
         
     <insert id="insertHyTenant" parameterType="HyTenant">

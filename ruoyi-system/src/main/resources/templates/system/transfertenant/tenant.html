@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('租户资料登记列表')" />
+    <th:block th:include="include :: header('出租转让列表')" />
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -49,14 +49,8 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:tenant:add">
-                    <i class="fa fa-plus"></i> 租户登记
-                </a>
                 <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:tenant:edit">
-                    <i class="fa fa-edit"></i> 修改租户
-                </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:tenant:remove">
-                    <i class="fa fa-remove"></i> 删除租户
+                    <i class="fa fa-edit"></i> 出租转让
                 </a>
                 <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:tenant:export">
                     <i class="fa fa-download"></i> 导出
@@ -71,7 +65,7 @@
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('system:tenant:edit')}]];
         var removeFlag = [[${@permission.hasPermi('system:tenant:remove')}]];
-        var prefix = ctx + "system/tenant";
+        var prefix = ctx + "system/transfertenant";
 
         $(function() {
             var options = {
@@ -80,7 +74,7 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "租户资料登记",
+                modalName: "出租转让",
                 columns: [{
                     checkbox: true
                 },
@@ -127,16 +121,6 @@
                 {
                     field: 'hyHouseInf.houseNumber',
                     title: '租房编号'
-                },
-                {
-                    title: '操作',
-                    align: 'center',
-                    formatter: function(value, row, index) {
-                        var actions = [];
-                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑租户</a> ');
-                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除租户</a>');
-                        return actions.join('');
-                    }
                 }]
             };
             $.table.init(options);

@@ -1,25 +1,24 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
-    <th:block th:include="include :: header('新增租户Id和房屋Id关联')" />
+    <th:block th:include="include :: header('修改出租转让')" />
 </head>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-tenant-ad" th:object="${hyTenant}">
+        <form class="form-horizontal m" id="form-tenant-edit" th:object="${tenantAndHouse}">
             <div class="form-group">    
                 <label class="col-sm-3 control-label">租户名称：</label>
                 <div class="col-sm-8">
-                    <select class="form-control m-b" id="id" name="id" th:field="*{id}" th:with="type=${@tenant.getTenant()}" onchange="changeTenantId()">
+                    <select class="form-control m-b" name="tenantId" th:field="*{tenantId}" th:with="type=${@tenant.getTenant()}">
 	                  		<option value="">请选择</option>
 	                  		<option th:each="dict : ${type}" th:text="${dict.tenantName}" th:value="${dict.id}"></option>
 	                </select>
-	                <input id="tenantId" name="tenantId" type="hidden">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">房屋名称：</label>
                 <div class="col-sm-8">
-                    <select class="form-control m-b" name="houseId" th:with="type=${@houseInf.getHouseInf()}">
+                    <select class="form-control m-b" name="houseId" th:field="*{houseId}" th:with="type=${@houseInf.getHouseInf()}" disabled="disabled">
 	                  		<option value="">请选择</option>
 	                  		<option th:each="dict : ${type}" th:text="${dict.houseName}" th:value="${dict.id}"></option>
 	                </select>
@@ -29,24 +28,14 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var prefix = ctx + "system/tenant"
-        $("#form-tenant-ad").validate({
+        var prefix = ctx + "system/transfertenant";
+        $("#form-tenant-edit").validate({
             focusCleanup: true
         });
-        $(function() {
-        	var tenantId = $("#id").val();
-        	$("#tenantId").val(tenantId);
-        });
-		function changeTenantId(){
-			var tenantId = $("#id").val();
-			$("#tenantId").val(tenantId);
-		}
+
         function submitHandler() {
             if ($.validate.form()) {
-                $.operate.save(prefix + "/ad", $('#form-tenant-ad').serialize());
-                var parent = window.parent;
-                parent.$.table.refresh("bootstrap-table");
-                parent.$.modal.close();
+                $.operate.save(prefix + "/edit", $('#form-tenant-edit').serialize());
             }
         }
     </script>
