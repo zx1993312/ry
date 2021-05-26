@@ -193,7 +193,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="calculationStandard"
 			column="calculation_standard" />
 	</resultMap>
-	
+
 	<resultMap type="HyMeter" id="HyMeterResult">
 		<id property="id" column="id" />
 		<result property="houseNum" column="house_num" />
@@ -229,7 +229,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="meterReader" column="meter_reader" />
 		<result property="inputTime" column="input_time" />
 	</resultMap>
-	
+
 	<sql id="selectHyCustomerVo">
 		select
 		h.id,
@@ -275,14 +275,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		m.meter_name
 		from
 		hy_house_inf h
-		LEFT JOIN hy_building b ON h.building_id =b.id
+		LEFT JOIN hy_building b ON h.building_id
+		=b.id
 		LEFT JOIN hy_owner_registration o ON h.owner_id =o.id
-		LEFT JOIN hy_parking_inf p ON p.owner_id = o.id
-		LEFT JOIN hy_meter m on m.house_id = h.id
+		LEFT JOIN
+		hy_parking_inf p ON p.owner_id = o.id
+		LEFT JOIN hy_meter m on
+		m.house_id = h.id
 	</sql>
 
 	<sql id="selectHyCostVo">
-		select 
+		select
 		cost.cost_items,
 		cost.expense_type,
 		cost.standard_name,
@@ -293,18 +296,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		hy_house_inf
 		inf,
 		house_and_cost hac,
-		hy_cost cost
+		hy_cost
+		cost
 		where 1=1
 	</sql>
-	
+
 	<sql id="selectCostVo">
 		select cost.cost_items,
 		cost.expense_type,
 		cost.standard_name,
 		cost.billing_cycle,
 		cost.transfer_tenants,
-		cost.calculation_mehod 
+		cost.calculation_mehod
 		from hy_cost cost
+	</sql>
+
+	<sql id="selectCostIdVo">
+		select cost_id from house_and_cost where 1=1
 	</sql>
 
 	<select id="selectHyCustomerList" resultMap="HyCustomerResult">
@@ -318,16 +326,42 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		and hac.cost_id = cost.id
 		and inf.id =#{id}
 	</select>
-	
-	<select id="selectCostList" resultMap="HyCostResult" parameterType="Long">
+
+	<select id="selectCostList" resultMap="HyCostResult"
+		parameterType="Long">
 		<include refid="selectCostVo" />
-		where id = 
-		(select c.cost_id from 
+		where id =
+		(select c.cost_id from
 		hy_owner_registration r,
-		owner_and_cost c 
-		where 
-		r.id = c.owner_id 
+		owner_and_cost c
+		where
+		r.id = c.owner_id
 		and c.owner_id=#{id} )
 	</select>
+
+	<select id="selectCostId" resultType="java.lang.Long"
+		parameterType="String">
+		<include refid="selectCostIdVo" />
+		<if test="houseId != null  and houseId != ''"> and house_id = #{houseId}</if>
+		<if test="costId != null  and costId != ''"> and cost_id = #{costId}</if>
+	</select>
+
+
+	<insert id="insertHouseAndCost" parameterType="String">
+		insert into house_and_cost
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="houseId != null and houseId!='' ">house_id,</if>
+			<if test="costId != null and costId!='' ">cost_id,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="houseId != null and houseId!='' ">#{houseId},</if>
+			<if test="costId != null and costId!='' ">#{costId},</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteHouseAndCost" parameterType="Long">
+		delete from
+		house_and_cost where cost_id = #{costId}
+	</delete>
 
 </mapper>

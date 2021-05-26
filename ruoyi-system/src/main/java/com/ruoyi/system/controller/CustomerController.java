@@ -6,9 +6,7 @@ import java.util.List;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -149,64 +147,11 @@ public class CustomerController extends BaseController {
 			@RequestParam(value = "standardName1", required = false) String standardName,
 			@RequestParam(value = "billingCycle", required = false) String billingCycle,
 			@RequestParam(value = "calculationMehod", required = false) String calculationMehod,
-			@RequestParam(value = "transferTenants", required = false) Integer transferTenants,
-			@RequestParam(value = "id", required = false) Integer id,
-			@RequestParam(value = "ownerId", required = false) String ownerId,
-			@RequestParam(value = "parkingId", required = false) Integer parkingId,
-			@RequestParam(value = "meterId", required = false) Integer meterId) {
+			@RequestParam(value = "transferTenants", required = false) Integer transferTenants) {
 
-		/*
-		 * 1.修改房屋表buliding_id 2.修改房屋表owner_id 3.修改房屋表delivery_status 4.修改车位表house_id
-		 * 5.修改车位表owner_id 6.修改抄表表house_id 7.修改中间表house_and_cost表中house_id与cost_id
-		 */
-		// customerService.updateHouseInf();
-		System.out.println("buildingName是hy_building表里的数据,存的是名称");
-
-		System.out.println("ownerName是hy_owner_registration表里的数据,存的是名称");
-
-		System.out.println("houseNumber是hy_house_inf表里的数据,存的是名称");
-		System.out.println("houseName是hy_house_inf表里的数据,存的是名称");
-		System.out.println("deliveryStatus是hy_house_inf表里的数据,存的是数字");
-		System.out.println("parkingNumber是hy_parking_inf表里的数据,存的是名称");
-
-		System.out.println("meterName是hy_meter表里的数据,存的是名称");
-
-		System.out.println("costItems是hy_cost表里的数据,存的是名称");
-		System.out.println("expenseType是hy_cost表里的数据,存的是名称");
-		System.out.println("standardName是hy_cost表里的数据,存的是名称");
-		System.out.println("billingCycle是hy_cost表里的数据,存的是数字");
-		System.out.println("calculationMehod是hy_cost表里的数据,存的是数字");
-		System.out.println("transferTenants是hy_cost表里的数据,存的是数字");
-		return null/* toAjax(hyAnnualplanService.insertHyAnnualplan(hyAnnualplan)) */;
-	}
-
-	/**
-	 * 修改客户标准单项设置
-	 */
-	@ApiOperation("客户标准单项设置")
-	@ApiImplicitParams({ @ApiImplicitParam(name = "id", value = "主键id", required = true), })
-	@GetMapping("/edit/{id}")
-	public String edit(@PathVariable("id") Long id, ModelMap mmap) {
-		System.out.println("修改客户标准单项设置");
-		/*
-		 * HyAnnualplan hyAnnualplan = hyAnnualplanService.selectHyAnnualplanById(id);
-		 * mmap.put("hyAnnualplan", hyAnnualplan);
-		 */
-		return prefix + "/edit";
-	}
-
-	/**
-	 * 修改保存客户标准单项设置
-	 */
-	@ApiOperation("客户标准单项设置")
-	@ApiImplicitParams({ @ApiImplicitParam(name = "hyAnnualplan", value = "项目实体类hyAnnualplan", required = true), })
-	@RequiresPermissions("system:customer:edit")
-	@Log(title = "客户标准单项设置", businessType = BusinessType.UPDATE)
-	@PostMapping("/edit")
-	@ResponseBody
-	public AjaxResult editSave() {
-		System.out.println("保存修改客户标准单项设置");
-		return null;/* toAjax(hyAnnualplanService.updateHyAnnualplan(hyAnnualplan)); */
+		int result = customerService.updateHyCost(houseNumber, costItems, expenseType, standardName, billingCycle,
+				calculationMehod, transferTenants);
+		return toAjax(result);
 	}
 
 	/**
@@ -218,7 +163,8 @@ public class CustomerController extends BaseController {
 	@Log(title = "客户标准单项设置", businessType = BusinessType.DELETE)
 	@PostMapping("/remove")
 	@ResponseBody
-	public AjaxResult remove(String ids) {
-		return null;/* toAjax(hyAnnualplanService.deleteHyAnnualplanByIds(ids)); */
+	public AjaxResult remove(String costItems) {
+		return toAjax(customerService.deleteHyCustomer(costItems));
 	}
+
 }

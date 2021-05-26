@@ -77,7 +77,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <delete id="deleteHyControlSetByIds" parameterType="String">
         delete from hy_control_set where id in 
         <foreach item="id" collection="array" open="(" separator="," close=")">
-            #{id}
+            #{ids}
         </foreach>
     </delete>
 
