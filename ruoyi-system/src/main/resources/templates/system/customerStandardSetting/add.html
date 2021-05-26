@@ -66,20 +66,29 @@
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">费用名称：</label>
-                <div class="col-sm-8">
-                    <select name="costItems" class="form-control m-b" th:with="type=${@cost.getCost()}">
+                <div class="col-sm-8" th:with="type=${@cost.getCost()}">
+                   <!--  <select name="costItems" class="form-control m-b" th:with="type=${@cost.getCost()}">
                         <option value="">请选择</option>
-                        <option th:each="dict : ${type}" th:text="${dict.costItems}" th:value="${dict.id}"></option>
-                    </select>
+                        <option th:each="" th:text="${dict.costItems}" th:value="${dict.id}"></option>
+                    </select> -->
+                    <!-- th:checked="${#arrays.contains(#strings.arraySplit(conference.conferenceAttendee,','),#strings.toString(meet.meetingId))}" -->
+                     <label th:each="dict : ${type}" class="check-box">
+                        <input name="costItems" type="checkbox" 
+                               th:value="${dict.id}" th:text="${dict.costItems}">
+                    </label>
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">标准名称：</label>
-                <div class="col-sm-8">
-                    <select name="expenseType" class="form-control m-b" th:with="type=${@cost.getCost()}">
+                <div class="col-sm-8" th:with="type=${@cost.getCost()}">
+                    <!-- <select name="expenseType" class="form-control m-b" th:with="type=${@cost.getCost()}">
                         <option value="">请选择</option>
                         <option th:each="dict : ${type}" th:text="${dict.expenseType}" th:value="${dict.expenseType}"></option>
-                    </select>
+                    </select> -->
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="expenseType" type="checkbox" 
+                               th:value="${dict.expenseType}" th:text="${dict.expenseType}">
+                    </label>
                 </div>
             </div>
             
