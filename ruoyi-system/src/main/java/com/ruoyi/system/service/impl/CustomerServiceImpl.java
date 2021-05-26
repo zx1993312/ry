@@ -26,4 +26,11 @@ public class CustomerServiceImpl implements CustomerService {
 		return hyCustomerMapper.selectCost(id);
 	}
 
+	@Override
+	public List<HyCost> selectCostList(Long id) {
+		return hyCustomerMapper.selectCostList(id);
+	}
+	
+	
+
 }

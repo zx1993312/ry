@@ -166,6 +166,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		resultMap="HyParkingInfResult">
 		<include refid="selectHyParkingInfVo" />
 		<where>
+			<if test="id != null  and id != ''"> and p.id = #{id}</if>
 			<if test="parkingArea != null  and parkingArea != ''"> and p.parking_area = #{parkingArea}</if>
 			<if test="parkingType != null  and parkingType != ''"> and p.parking_type = #{parkingType}</if>
 			<if test="parkingClass != null  and parkingClass != ''"> and p.parking_class = #{parkingClass}</if>

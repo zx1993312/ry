@@ -105,6 +105,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		resultMap="HyOwnerRegistrationResult">
 		<include refid="selectHyOwnerRegistrationVo" />
 		<where>
+		<if test="id != null  and id != ''"> and o.id = #{id}</if>
 		<if test="ownerName != null  and ownerName != ''"> and o.owner_name like concat('%', #{ownerName}, '%')</if>
 		<if test="fixedTelephone != null "> and o.fixed_telephone = #{fixedTelephone}</if>
 		<if test="mobilePhone != null "> and o.mobile_phone = #{mobilePhone}</if>

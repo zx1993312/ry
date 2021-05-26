@@ -9,49 +9,59 @@
         	<div class="form-group">    
                 <label class="col-sm-3 control-label">楼宇名称：</label>
                 <div class="col-sm-8">
-                    <select name="buildingName" class="form-control m-b" th:with="type=${@building.getBuilding()}">
+                    <select id="buildingName" name="buildingName" class="form-control m-b" th:with="type=${@building.getBuilding()}" onchange="changeHouseNumber()">
                         <option value="">请选择</option>
                         <option th:each="dict : ${type}" th:text="${dict.buildingName}" th:value="${dict.id}"></option>
                     </select>
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">业主名称：</label>
-                <div class="col-sm-8">
-                    <input id="ownerName" name="ownerName" class="form-control" type="text" onclick="selectOwner()">
-                </div>
-            </div>
-            <div class="form-group">    
                 <label class="col-sm-3 control-label">房屋编号：</label>
                 <div class="col-sm-8">
-                    <input id="houseNumber" name="houseNumber" class="form-control" type="text" onclick="selectHouseNumber()">
+                    <select id="houseNumber" name="houseNumber" class="form-control m-b"  disabled="disabled" onchange="changeHouseName()">
+	                	<option value="">请选择</option>
+	                </select>
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">房屋名称：</label>
                 <div class="col-sm-8">
-                    <input id="houseName" name="houseName" class="form-control" type="text" readonly="readonly">
+                    <select id="houseName" name="houseName" class="form-control m-b"  disabled="disabled">
+	                	<option value="">请选择</option>
+	                </select>
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">交房状态：</label>
                 <div class="col-sm-8">
-                    <select name="deliveryStatus" class="form-control m-b" th:with="type=${@dict.getType('hy_delivery_status')}">
+                    <select id="deliveryStatus" name="deliveryStatus" class="form-control m-b" disabled="disabled">
                         <option value="">请选择</option>
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                     </select>
                 </div>
             </div>
             <div class="form-group">    
+                <label class="col-sm-3 control-label">业主名称：</label>
+                <div class="col-sm-8">
+                    <select id="ownerName" name="ownerName" class="form-control m-b"  disabled="disabled">
+	                	<option value="">请选择</option>
+	                </select>
+                </div>
+            </div>
+            <div class="form-group">    
                 <label class="col-sm-3 control-label">车位编号：</label>
                 <div class="col-sm-8">
-                    <input id="parkingNumber" name="parkingNumber" class="form-control" type="text" onclick="selectParkingNumber()">
+                    <select id="parkingNumber" name="parkingNumber" class="form-control m-b"  disabled="disabled">
+	                	<option value="">请选择</option>
+	                </select>
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">表计名称：</label>
                 <div class="col-sm-8">
-                    <input id="meterName" name="meterName" class="form-control" type="text" onclick="selectMeterName()">
+                    <select id="meterName" name="meterName" class="form-control m-b"  disabled="disabled">
+	                	<option value="">请选择</option>
+	                </select>
                 </div>
             </div>
             <div class="form-group">    
@@ -68,7 +78,7 @@
                 <div class="col-sm-8">
                     <select name="expenseType" class="form-control m-b" th:with="type=${@cost.getCost()}">
                         <option value="">请选择</option>
-                        <option th:each="dict : ${type}" th:text="${dict.expenseType}" th:value="${dict.id}"></option>
+                        <option th:each="dict : ${type}" th:text="${dict.expenseType}" th:value="${dict.expenseType}"></option>
                     </select>
                 </div>
             </div>
@@ -77,13 +87,16 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">收费标准：</label>
                 <div class="col-sm-8">
-                    <input id="standardState" name="standardState" class="form-control" type="text" onclick="selectFee()" >
+                    <select id="standardName1" name="standardName1" class="form-control m-b"  disabled="disabled">
+	                	<option value="">请选择</option>
+	                </select>
                 </div>
             </div>
+            
             <div class="form-group">    
                 <label class="col-sm-3 control-label">计费周期：</label>
                 <div class="col-sm-8">
-                    <select id="billingCycle" name="billingCycle" class="form-control m-b" th:with="type=${@dict.getType('hy_billing_cycle')}">
+					<select id="billingCycle" name="billingCycle" class="form-control m-b" th:with="type=${@dict.getType('hy_billing_cycle')}">
 						<option value="">请选择</option>
 						<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 					</select>
@@ -92,7 +105,7 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">计算方式：</label>
                 <div class="col-sm-8">
-                    <select id="calculationMehod" name="calculationMehod" class="form-control m-b" th:with="type=${@dict.getType('hy_subject_type')}">
+					<select id="calculationMehod" name="calculationMehod" class="form-control m-b" th:with="type=${@dict.getType('hy_subject_type')}">
 						<option value="">请选择</option>
 						<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 					</select>
@@ -101,7 +114,7 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">出租时自动转移租户：</label>
                 <div class="col-sm-8">
-                    <select id="transferTenants" name="transferTenants" class="form-control m-b" th:with="type=${@dict.getType('sys_yes_no')}">
+					<select id="transferTenants" name="transferTenants" class="form-control m-b" th:with="type=${@dict.getType('sys_yes_no')}">
 						<option value="">请选择</option>
 						<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 					</select>
@@ -148,30 +161,136 @@
             }
         }
         
+        function changeHouseNumber(){
+   			$("#houseNumber").removeAttr("disabled");
+   			$.ajax({
+                url: "/system/inf/lists",
+                data: {buildingId : $("#buildingName").val()},
+                dataType : 'json',
+                type: 'POST',
+                success: function (result) {
+                	$("#houseNumber").empty();
+					$("#houseNumber").append("<option value=\"\">请选择</option>");
+                    for (var i = 0; i < result.length; i++) {
+                    	$("#houseNumber").append("<option value=" + result[i].id + ">" + result[i].houseNumber + "</option>");
+                    }
+                    // 缺一不可  
+                    $("#houseNumber").selectpicker('refresh');
+                    $("#houseNumber").selectpicker('render');
+                }
+            });
+   		}
         
+        function changeHouseName(){
+   			$.ajax({
+                url: "/system/inf/lists",
+                data: {id : $("#houseNumber").val()},
+                dataType : 'json',
+                type: 'POST',
+                success: function (result) {
+                	$("#houseName").empty();
+					$("#deliveryStatus").empty();
+                    for (var i = 0; i < result.length; i++) {
+                    	$("#houseName").append("<option value=" + result[i].ownerId + ">" + result[i].houseName + "</option>");
+						$("#deliveryStatus").append("<option value=" + result[i].id + ">" + result[i].deliveryStatus + "</option>");
+                    }
+
+					changeOwnerName();
+                    // 缺一不可  
+                    $("#houseName").selectpicker('refresh');
+                    $("#houseName").selectpicker('render');
+
+					//缺一不可  
+                    $("#deliveryStatus").selectpicker('refresh');
+                    $("#deliveryStatus").selectpicker('render');
+
+					
+                }
+            });
+        }
         
+        function changeOwnerName(){
+        	$.ajax({
+                url: "/system/registration/lists",
+                data: {id : $("#houseName").val()},
+                dataType : 'json',
+                type: 'POST',
+                success: function (result) {
+                	$("#ownerName").empty();
+                    for (var i = 0; i < result.length; i++) {
+                    	$("#ownerName").append("<option value=" + result[i].id + ">" + result[i].ownerName + "</option>");
+                    }
+					changeParkingNumber();
+                    // 缺一不可  
+                    $("#ownerName").selectpicker('refresh');
+                    $("#ownerName").selectpicker('render');
+                }
+            });
+        }
         
-        function selectOwner() {
-			$.modal.open("业主资料登记列表","/system/registration");
-		}
+        function changeParkingNumber(){
+        	$.ajax({
+                url: "/system/parkingSetUp/lists",
+                data: {ownerId : $("#houseName").val()},
+                dataType : 'json',
+                type: 'POST',
+                success: function (result) {
+                	$("#parkingNumber").empty();
+                    for (var i = 0; i < result.length; i++) {
+                    	$("#parkingNumber").append("<option value=" + result[i].id + ">" + result[i].parkingNumber + "</option>");
+                    }
+					changeMeterName();
+                    // 缺一不可  
+                    $("#parkingNumber").selectpicker('refresh');
+                    $("#parkingNumber").selectpicker('render');
+                }
+            });
+        }
         
-        function selectHouseNumber() {
-			$.modal.open("房屋登记列表","/system/inf");
-			$("#feeName").attr("disabled","disabled");
-			$("#standardName").attr("disabled","disabled");
-		}
+        function changeMeterName(){
+        	$.ajax({
+                url: "/system/meter/lists",
+                data: {houseId : $("#houseNumber").val()},
+                dataType : 'json',
+                type: 'POST',
+                success: function (result) {
+                	$("#meterName").empty();
+                    for (var i = 0; i < result.length; i++) {
+                    	$("#meterName").append("<option value=" + result[i].id + ">" + result[i].meterName + "</option>");
+                    }
+					changeStandardName1();
+                    // 缺一不可  
+                    $("#meterName").selectpicker('refresh');
+                    $("#meterName").selectpicker('render');
+                }
+            });
+        }
         
-        function selectParkingNumber() {
-			$.modal.open("车位资料列表","/system/parkingData");
-		}
+        function changeStandardName1(){
+        	$.ajax({
+                url: "/system/customer/lists",
+                data: {id : $("#houseName").val()},
+                dataType : 'json',
+                type: 'POST',
+                success: function (result) {
+                	
+                	$("#standardName1").empty();
+                    for (var i = 0; i < result.length; i++) {
+						console.log(result[i].billingCycle);
+						console.log(result[i].calculationMehod);
+						console.log(result[i].transferTenants);
+                    	$("#standardName1").append("<option value=" + result[i].id + ">" + result[i].standardName + "</option>");
+						$("#billingCycle").val(result[i].billingCycle);
+						$("#calculationMehod").val(result[i].calculationMehod);
+						$("#transferTenants").val(result[i].transferTenants);
+                    }
+                    // 缺一不可  
+                    $("#standardName1").selectpicker('refresh');
+                    $("#standardName1").selectpicker('render');
+                }
+            });
+        }
         
-        function selectMeterName() {
-			$.modal.open("抄表设置列表","/system/meter");
-		}
-        
-        function selectFee() {
-    		$.modal.open("收费标准选择","/system/customerStandardsCost");
-    	}
     </script>
 </body>
 </html>

@@ -43,6 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="sourceMeter" column="source_meter" />
 		<result property="meterReader" column="meter_reader" />
 		<result property="inputTime" column="input_time" />
+		<result property="houseId" column="house_id" />
 		<association property="hyMeterCase" column="id"
 			javaType="HyMeterCase" resultMap="HyMeterCaseResult" />
 		<association property="hyHouseInf" column="id"
@@ -153,6 +154,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			
 		FROM
 			hy_meter m
+			where 1=1
 	</sql>
 
 	<select id="selectHyMeterList" parameterType="HyMeter"
@@ -186,6 +188,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="hyMeterCase.meterCaseName != null and hyMeterCase.meterCaseName!=''"> and c.meter_case_name = #{hyMeterCase.meterCaseName}</if>
 		<if test="hyMeterCase.meterCasePosition != null and hyMeterCase.meterCasePosition!=''"> and c.meter_case_position = #{hyMeterCase.meterCasePosition}</if>
 		</if>
+		<if test="meterType != null "> and m.meter_type = #{meterType}</if>
+		<if test="houseId != null "> and m.house_id = #{houseId}</if>
 	</select>
 	
 	<select id="selectHyMeter" parameterType="HyMeter"

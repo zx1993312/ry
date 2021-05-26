@@ -348,10 +348,12 @@
         
         function submitHandler() {
         	var ownerName = $.table.selectColumns('ownerName');
+        	var id = $.table.selectColumns('id');
         	if(ownerName == ''){
         		$.modal.alertWarning("请至少选择一条记录");
         	}else{
         		$("#ownerName",window.parent.document).val(ownerName);
+        		$("#ownerId",window.parent.document).val(id);
         	}
         	$.modal.close();
         }

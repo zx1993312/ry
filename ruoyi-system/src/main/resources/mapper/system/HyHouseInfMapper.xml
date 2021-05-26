@@ -153,6 +153,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		resultMap="HyHouseInfResult">
 		<include refid="selectHyHouseInfVo" />
 		<where>
+			<if test="id != null  and id != ''"> and h.id = #{id}</if>
 			<if test="houseNumber != null  and houseNumber != ''"> and h.house_number = #{houseNumber}</if>
 			<if test="houseName != null  and houseName != ''"> and h.house_name like concat('%', #{houseName}, '%')</if>
 			<if test="builtUpArea != null  and builtUpArea != ''"> and h.built_up_area = #{builtUpArea}</if>

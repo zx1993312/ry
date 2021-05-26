@@ -63,6 +63,13 @@ public class HyHouseInfController extends BaseController {
 		return getDataTable(list);
 	}
 
+	@RequiresPermissions("system:inf:lists")
+	@PostMapping("/lists")
+	@ResponseBody
+	public List<HyHouseInf> lists(HyHouseInf hyHouseInf) {
+		return hyHouseInfService.selectHyHouseInfList(hyHouseInf);
+	}
+
 	/**
 	 * 导出房屋登记列表
 	 */

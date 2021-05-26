@@ -74,6 +74,13 @@ public class HyOwnerRegistrationController extends BaseController {
 		return getDataTable(list, reList);
 	}
 
+	@RequiresPermissions("system:registration:list")
+	@PostMapping("/lists")
+	@ResponseBody
+	public List<HyOwnerRegistration> lists(HyOwnerRegistration hyOwnerRegistration) {
+		return hyOwnerRegistrationService.selectHyOwnerRegistrationList(hyOwnerRegistration);
+	}
+
 	/**
 	 * 导出业主资料登记列表
 	 */

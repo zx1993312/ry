@@ -296,6 +296,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		hy_cost cost
 		where 1=1
 	</sql>
+	
+	<sql id="selectCostVo">
+		select cost.cost_items,
+		cost.expense_type,
+		cost.standard_name,
+		cost.billing_cycle,
+		cost.transfer_tenants,
+		cost.calculation_mehod 
+		from hy_cost cost
+	</sql>
 
 	<select id="selectHyCustomerList" resultMap="HyCustomerResult">
 		<include refid="selectHyCustomerVo" />
@@ -307,6 +317,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		and inf.id=hac.house_id
 		and hac.cost_id = cost.id
 		and inf.id =#{id}
+	</select>
+	
+	<select id="selectCostList" resultMap="HyCostResult" parameterType="Long">
+		<include refid="selectCostVo" />
+		where id = 
+		(select c.cost_id from 
+		hy_owner_registration r,
+		owner_and_cost c 
+		where 
+		r.id = c.owner_id 
+		and c.owner_id=#{id} )
 	</select>
 
 </mapper>

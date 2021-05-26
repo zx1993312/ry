@@ -173,10 +173,12 @@
         
         function submitHandler() {
         	var meterName = $.table.selectColumns('meterName');
+        	var id = $.table.selectColumns('id');
         	if(meterName == ''){
         		$.modal.alertWarning("请至少选择一条记录");
         	}else{
         		$("#meterName",window.parent.document).val(meterName);
+        		$("#meterId",window.parent.document).val(id);
         	}
         	$.modal.close();
         }

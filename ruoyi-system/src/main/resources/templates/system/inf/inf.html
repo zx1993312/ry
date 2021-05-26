@@ -422,11 +422,13 @@
         function submitHandler() {
         	var houseNumber = $.table.selectColumns('houseNumber');
         	var houseName = $.table.selectColumns('houseName');
+        	var id = $.table.selectColumns('id');
         	if(houseNumber == ''){
         		$.modal.alertWarning("请至少选择一条记录");
         	}else{
         		$("#houseNumber",window.parent.document).val(houseNumber);
         		$("#houseName",window.parent.document).val(houseName);
+        		$("#id",window.parent.document).val(id);
         	}
         	$.modal.close();
         }

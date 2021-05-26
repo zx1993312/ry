@@ -77,6 +77,13 @@ public class CustomerController extends BaseController {
 		return getDataTable(relist);
 	}
 
+	@RequiresPermissions("system:registration:list")
+	@PostMapping("/lists")
+	@ResponseBody
+	public List<HyCost> lists(@RequestParam("id") Long id) {
+		return customerService.selectCostList(id);
+	}
+
 	/**
 	 * 导出年度保养计划列表
 	 */
@@ -130,15 +137,46 @@ public class CustomerController extends BaseController {
 	@Log(title = "年度保养计划", businessType = BusinessType.INSERT)
 	@PostMapping("/add")
 	@ResponseBody
-	public AjaxResult addSave(@RequestParam("buildingName") String buildingName,
-			@RequestParam("ownerName") String ownerName, @RequestParam("houseNumber") String houseNumber,
-			@RequestParam("houseName") String houseName, @RequestParam("deliveryStatus") String deliveryStatus,
-			@RequestParam("parkingNumber") String parkingNumber, @RequestParam("meterName") String meterName,
-			@RequestParam("costItems") String costItems, @RequestParam("expenseType") String expenseType,
-			@RequestParam("standardName") String standardName, @RequestParam("billingCycle") String billingCycle,
-			@RequestParam("calculationMehod") String calculationMehod,
-			@RequestParam("transferTenants") String transferTenants) {
-		System.out.println("新增客户标准单项设置");
+	public AjaxResult addSave(@RequestParam(value = "buildingName", required = false) String buildingName,
+			@RequestParam(value = "ownerName", required = false) String ownerName,
+			@RequestParam(value = "houseNumber", required = false) String houseNumber,
+			@RequestParam(value = "houseName", required = false) String houseName,
+			@RequestParam(value = "deliveryStatus", required = false) String deliveryStatus,
+			@RequestParam(value = "parkingNumber", required = false) String parkingNumber,
+			@RequestParam(value = "meterName", required = false) String meterName,
+			@RequestParam(value = "costItems", required = false) String costItems,
+			@RequestParam(value = "expenseType", required = false) String expenseType,
+			@RequestParam(value = "standardName1", required = false) String standardName,
+			@RequestParam(value = "billingCycle", required = false) String billingCycle,
+			@RequestParam(value = "calculationMehod", required = false) String calculationMehod,
+			@RequestParam(value = "transferTenants", required = false) Integer transferTenants,
+			@RequestParam(value = "id", required = false) Integer id,
+			@RequestParam(value = "ownerId", required = false) String ownerId,
+			@RequestParam(value = "parkingId", required = false) Integer parkingId,
+			@RequestParam(value = "meterId", required = false) Integer meterId) {
+
+		/*
+		 * 1.修改房屋表buliding_id 2.修改房屋表owner_id 3.修改房屋表delivery_status 4.修改车位表house_id
+		 * 5.修改车位表owner_id 6.修改抄表表house_id 7.修改中间表house_and_cost表中house_id与cost_id
+		 */
+		// customerService.updateHouseInf();
+		System.out.println("buildingName是hy_building表里的数据,存的是名称");
+
+		System.out.println("ownerName是hy_owner_registration表里的数据,存的是名称");
+
+		System.out.println("houseNumber是hy_house_inf表里的数据,存的是名称");
+		System.out.println("houseName是hy_house_inf表里的数据,存的是名称");
+		System.out.println("deliveryStatus是hy_house_inf表里的数据,存的是数字");
+		System.out.println("parkingNumber是hy_parking_inf表里的数据,存的是名称");
+
+		System.out.println("meterName是hy_meter表里的数据,存的是名称");
+
+		System.out.println("costItems是hy_cost表里的数据,存的是名称");
+		System.out.println("expenseType是hy_cost表里的数据,存的是名称");
+		System.out.println("standardName是hy_cost表里的数据,存的是名称");
+		System.out.println("billingCycle是hy_cost表里的数据,存的是数字");
+		System.out.println("calculationMehod是hy_cost表里的数据,存的是数字");
+		System.out.println("transferTenants是hy_cost表里的数据,存的是数字");
 		return null/* toAjax(hyAnnualplanService.insertHyAnnualplan(hyAnnualplan)) */;
 	}
 

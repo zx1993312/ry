@@ -10,4 +10,6 @@ public interface CustomerService {
 	public List<HyCustomer> selectHyCustomerList();
 
 	public List<HyCost> selectHyCost(Long id);
+	
+	public List<HyCost> selectCostList(Long id);
 }

@@ -10,5 +10,7 @@ public interface HyCustomerMapper {
 	public List<HyCustomer> selectHyCustomerList();
 
 	public List<HyCost> selectCost(Long id);
+	
+	public List<HyCost> selectCostList(Long id);
 
 }

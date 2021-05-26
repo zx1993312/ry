@@ -2,9 +2,8 @@ package com.ruoyi.system.domain;
 
 import java.math.BigDecimal;
 import java.util.Date;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
@@ -163,6 +162,8 @@ public class HyMeter extends BaseEntity {
 	@Excel(name="房屋表")
 	private HyHouseInf hyHouseInf;
 
+	private Integer houseId;
+	
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -441,6 +442,14 @@ public class HyMeter extends BaseEntity {
 
 	public void setHyOwnerRegistration(HyOwnerRegistration hyOwnerRegistration) {
 		this.hyOwnerRegistration = hyOwnerRegistration;
+	}
+	
+	public Integer getHouseId() {
+		return houseId;
+	}
+
+	public void setHouseId(Integer houseId) {
+		this.houseId = houseId;
 	}
 
 	@Override

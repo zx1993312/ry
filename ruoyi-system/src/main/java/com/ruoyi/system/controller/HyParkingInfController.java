@@ -14,8 +14,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.constants.Constants;
 import com.ruoyi.system.domain.HyParkingInf;
 import com.ruoyi.system.service.IHyParkingInfService;
@@ -24,11 +29,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-
-import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
  * 车位资料 Controller
@@ -71,6 +71,13 @@ public class HyParkingInfController extends BaseController {
 		return getDataTable(list,  reList);
 	}
 
+	@RequiresPermissions("system:parking:lists")
+	@PostMapping("/lists")
+	@ResponseBody
+	public List<HyParkingInf> lists(HyParkingInf hyParkingInf) {
+		return hyParkingInfService.selectHyParkingInfList(hyParkingInf);
+	}
+	
 	/**
 	 * 导出车位资料 列表
 	 */

@@ -165,10 +165,12 @@
         
         function submitHandler() {
         	var parkingNumber = $.table.selectColumns('parkingNumber');
+        	var id = $.table.selectColumns('id');
         	if(parkingNumber == ''){
         		$.modal.alertWarning("请至少选择一条记录");
         	}else{
         		$("#parkingNumber",window.parent.document).val(parkingNumber);
+        		$("#parkingId",window.parent.document).val(id);
         	}
         	$.modal.close();
         }
