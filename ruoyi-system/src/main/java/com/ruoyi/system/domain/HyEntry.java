@@ -1,9 +1,8 @@
 package com.ruoyi.system.domain;
 
 import java.util.Date;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 import com.ruoyi.system.annotation.EnumAnn;
@@ -15,134 +14,121 @@ import com.ruoyi.system.enums.EntryEnum;
  * @author Administrator
  * @date 2021-01-23
  */
-public class HyEntry extends BaseEntity
-{
-    private static final long serialVersionUID = 1L;
+public class HyEntry extends BaseEntity {
+	private static final long serialVersionUID = 1L;
 
-    /** 主键 */
-    private Long id;
+	/** 主键 */
+	private Long id;
 
-    /** 入账类别 */
-    @Excel(name = "入账类别")
-    @EnumAnn(enumClass=EntryEnum.class)
-    private Integer entryType;
+	/** 入账类别 */
+	@Excel(name = "入账类别")
+	@EnumAnn(enumClass = EntryEnum.class)
+	private Integer entryType;
 
-    /** 入账时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "入账时间", width = 30, dateFormat = "yyyy-MM-dd")
-    private Date entryDate;
+	/** 入账时间 */
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	@Excel(name = "入账时间", width = 30, dateFormat = "yyyy-MM-dd")
+	private Date entryDate;
 
-    /** 入账人 */
-    @Excel(name = "入账人")
-    private String entryPerson;
+	/** 入账人 */
+	@Excel(name = "入账人")
+	private String entryPerson;
 
-    /** 入账范围 */
-    @Excel(name = "入账范围")
-    private String entryRange;
+	/** 入账范围 */
+	@Excel(name = "入账范围")
+	private String entryRange;
 
-    /** 入账开始年月 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "入账开始年月", width = 30, dateFormat = "yyyy-MM-dd")
-    private Date entryDateStr;
+	/** 入账开始年月 */
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	@Excel(name = "入账开始年月", width = 30, dateFormat = "yyyy-MM-dd")
+	private Date entryDateStr;
 
-    /** 入账结束年月 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "入账结束年月", width = 30, dateFormat = "yyyy-MM-dd")
-    private Date entryDateEnd;
+	/** 入账结束年月 */
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	@Excel(name = "入账结束年月", width = 30, dateFormat = "yyyy-MM-dd")
+	private Date entryDateEnd;
 
-    /** 入账总金额 */
-    @Excel(name = "入账总金额")
-    private String entryAmount;
+	/** 入账总金额 */
+	@Excel(name = "入账总金额")
+	private String entryAmount;
 
-    /** 费用项目id */
-    @Excel(name = "费用项目id")
-    private Long costId;
-    
-    /** 审核管理id */
-    @Excel(name = "审核管理id")
-    private Long auditId;
-    /**
-     * 审核表
-     */
-  private HyAuditManagement hyAuditManagement;
-    /**
-     * 费用项目表
-     */
-    private HyCost hyCost;
+	/** 费用项目id */
+	@Excel(name = "费用项目id")
+	private Long costId;
 
-    public void setId(Long id) 
-    {
-        this.id = id;
-    }
+	/** 审核流程 */
+	private String auditProcess;
 
-    public Long getId() 
-    {
-        return id;
-    }
-    public void setEntryType(Integer entryType) 
-    {
-        this.entryType = entryType;
-    }
+	/** 审核状态 */
+	private String auditStatus;
 
-    public Integer getEntryType() 
-    {
-        return entryType;
-    }
-    public void setEntryDate(Date entryDate) 
-    {
-        this.entryDate = entryDate;
-    }
+	/** 费用项目表 */
+	private HyCost hyCost;
 
-    public Date getEntryDate() 
-    {
-        return entryDate;
-    }
-    public void setEntryPerson(String entryPerson) 
-    {
-        this.entryPerson = entryPerson;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public String getEntryPerson() 
-    {
-        return entryPerson;
-    }
-    public void setEntryRange(String entryRange) 
-    {
-        this.entryRange = entryRange;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getEntryRange() 
-    {
-        return entryRange;
-    }
-    public void setEntryDateStr(Date entryDateStr) 
-    {
-        this.entryDateStr = entryDateStr;
-    }
+	public Integer getEntryType() {
+		return entryType;
+	}
 
-    public Date getEntryDateStr() 
-    {
-        return entryDateStr;
-    }
-    public void setEntryDateEnd(Date entryDateEnd) 
-    {
-        this.entryDateEnd = entryDateEnd;
-    }
+	public void setEntryType(Integer entryType) {
+		this.entryType = entryType;
+	}
 
-    public Date getEntryDateEnd() 
-    {
-        return entryDateEnd;
-    }
-    public void setEntryAmount(String entryAmount) 
-    {
-        this.entryAmount = entryAmount;
-    }
+	public Date getEntryDate() {
+		return entryDate;
+	}
 
-    public String getEntryAmount() 
-    {
-        return entryAmount;
-    }
-   
+	public void setEntryDate(Date entryDate) {
+		this.entryDate = entryDate;
+	}
+
+	public String getEntryPerson() {
+		return entryPerson;
+	}
+
+	public void setEntryPerson(String entryPerson) {
+		this.entryPerson = entryPerson;
+	}
+
+	public String getEntryRange() {
+		return entryRange;
+	}
+
+	public void setEntryRange(String entryRange) {
+		this.entryRange = entryRange;
+	}
+
+	public Date getEntryDateStr() {
+		return entryDateStr;
+	}
+
+	public void setEntryDateStr(Date entryDateStr) {
+		this.entryDateStr = entryDateStr;
+	}
+
+	public Date getEntryDateEnd() {
+		return entryDateEnd;
+	}
+
+	public void setEntryDateEnd(Date entryDateEnd) {
+		this.entryDateEnd = entryDateEnd;
+	}
+
+	public String getEntryAmount() {
+		return entryAmount;
+	}
+
+	public void setEntryAmount(String entryAmount) {
+		this.entryAmount = entryAmount;
+	}
+
 	public Long getCostId() {
 		return costId;
 	}
@@ -151,12 +137,20 @@ public class HyEntry extends BaseEntity
 		this.costId = costId;
 	}
 
-	public Long getAuditId() {
-		return auditId;
+	public String getAuditProcess() {
+		return auditProcess;
 	}
 
-	public void setAuditId(Long auditId) {
-		this.auditId = auditId;
+	public void setAuditProcess(String auditProcess) {
+		this.auditProcess = auditProcess;
+	}
+
+	public String getAuditStatus() {
+		return auditStatus;
+	}
+
+	public void setAuditStatus(String auditStatus) {
+		this.auditStatus = auditStatus;
 	}
 
 	public HyCost getHyCost() {
@@ -167,27 +161,12 @@ public class HyEntry extends BaseEntity
 		this.hyCost = hyCost;
 	}
 
-	public HyAuditManagement getHyAuditManagement() {
-		return hyAuditManagement;
-	}
-
-	public void setHyAuditManagement(HyAuditManagement hyAuditManagement) {
-		this.hyAuditManagement = hyAuditManagement;
-	}
-
 	@Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("entryType", getEntryType())
-            .append("entryDate", getEntryDate())
-            .append("entryPerson", getEntryPerson())
-            .append("entryRange", getEntryRange())
-            .append("entryDateStr", getEntryDateStr())
-            .append("entryDateEnd", getEntryDateEnd())
-            .append("entryAmount", getEntryAmount())
-            .append("auditId", getAuditId())
-            .append("costId", getCostId())
-            .toString();
-    }
+	public String toString() {
+		return "HyEntry [id=" + id + ", entryType=" + entryType + ", entryDate=" + entryDate + ", entryPerson="
+				+ entryPerson + ", entryRange=" + entryRange + ", entryDateStr=" + entryDateStr + ", entryDateEnd="
+				+ entryDateEnd + ", entryAmount=" + entryAmount + ", costId=" + costId + ", auditProcess="
+				+ auditProcess + ", auditStatus=" + auditStatus + ", hyCost=" + hyCost + "]";
+	}
+
 }
