@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('缴费通知列表')" />
+    <th:block th:include="include :: bootstrap-duallistbox-css" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <!-- <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>房屋编号：</label>
+                                <input type="text" name="houseNumber"/>
+                            </li>
+                            <li>
+                                <label>房屋名称：</label>
+                                <input type="text" name="houseName"/>
+                            </li>
+                            <li>
+                                <label>建筑面积：</label>
+                                <input type="text" name="builtUpArea"/>
+                            </li>
+                            <li>
+                                <label>组团区域：</label>
+                                <input type="text" name="groupArea"/>
+                            </li>
+                            <li>
+                                <label>单元：</label>
+                                <input type="text" name="unit"/>
+                            </li>
+                            <li>
+                                <label>楼层：</label>
+                                <input type="text" name="floor"/>
+                            </li>
+                            <li>
+                                <label>同单元同楼层流水号：</label>
+                                <input type="text" name="sameUnitNumber" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
+                            </li>
+                            <li>
+                                <label>面积类型：</label>
+                                <select name="areaType" class="form-control m-b" th:with="type=${@dict.getType('hy_area_type')}">
+                                    <option value="">请选择</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>计费面积：</label>
+                                <select name="bilingArea" class="form-control m-b" th:with="type=${@dict.getType('hy_subject_type')}">
+                                    <option value="">请选择</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>套内面积：</label>
+                                <input type="text" name="insideArea"/>
+                            </li>
+                            <li>
+                                <label>公摊面积：</label>
+                                <input type="text" name="sharedArea"/>
+                            </li>
+                            <li>
+                                <label>花园面积：</label>
+                                <input type="text" name="gardenArea"/>
+                            </li>
+                            <li>
+                                <label>地下室面积：</label>
+                                <input type="text" name="basementArea"/>
+                            </li>
+                            <li>
+                                <label>大堂分摊面积：</label>
+                                <input type="text" name="sharedLobbyArea"/>
+                            </li>
+                            <li>
+                                <label>层间分摊面积：</label>
+                                <input type="text" name="sharedLayersArea"/>
+                            </li>
+                            <li>
+                                <label>公摊比例：</label>
+                                <input type="text" name="shareRatio"/>
+                            </li>
+                            <li>
+                                <label>建筑结构：</label>
+                                <input type="text" name="buildingStructure"/>
+                            </li>
+                            <li>
+                                <label>单位面积承重参数：</label>
+                                <input type="text" name="parametersPer"/>
+                            </li>
+                            <li>
+                                <label>房屋户型：</label>
+                                <input type="text" name="houseLayout"/>
+                            </li>
+                            <li>
+                                <label>层高：</label>
+                                <input type="text" name="floorHeight"/>
+                            </li>
+                            <li>
+                                <label>产权性质：</label>
+                                <select name="natureProperty" class="form-control m-b" th:with="type=${@dict.getType('hy_property_nature')}">
+                                	<option value="">请选择</option>
+					                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+					            </select>
+                            </li>
+                            <li>
+                                <label>使用性质：</label>
+                                <input type="text" name="natureUse"/>
+                            </li>
+                            <li>
+                                <label>使用状态：</label>
+                                <select name="dictLabel" class="form-control m-b" th:with="type=${@dict.getType('hy_use_state')}">
+                                	<option value="">请选择</option>
+					                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+					            </select>
+                            </li>
+                            <li>
+                                <label>入住状态：</label>
+                                <select name="occupancyStatus" class="form-control m-b" th:with="type=${@dict.getType('hy_check_in')}">
+                                	<option value="">请选择</option>
+					                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+					            </select>
+                            </li>
+                            <li>
+                                <label>交房状态：</label>
+                                <select name="deliveryStatus" class="form-control m-b" th:with="type=${@dict.getType('hy_delivery_status')}">
+                                    <option value="">请选择</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>房屋类型：</label>
+                                <select name="houseType" class="form-control m-b" th:with="type=${@dict.getType('hy_house_type')}">
+                                    <option value="">请选择</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>销售状态：</label>
+                                <input type="text" name="salesStatus"/>
+                            </li>
+                            <li>
+                                <label>购房合同号：</label>
+                                <input type="text" name="purchaseContract"/>
+                            </li>
+                            <li>
+                                <label>营销编号：</label>
+                                <input type="text" name="marketingNum"/>
+                            </li>
+                            <li>
+                                <label>所属业主：</label>
+                                <select name="ownerId" class="form-control m-b" th:with="type=${@ownerRegistration.getOwnerRegistration()}">
+                                    <option value="">请选择</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.ownerName}" th:value="${dict.id}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div> -->
+            
+         	<div class="col-sm-12 select-table table-striped">
+				<div class="ibox-content">
+					<p style="text-align: center">房号选择</p>
+						<div class="col-sm-8">
+							<div class="select-list" style="margin-left: 52%;">
+								<ul>
+									<li>
+										<select id="currentState" name="currentState" class="form-control m-b" onchange="changeStanderName()">
+											<option value="0">按组团</option>
+											<option value="1">按楼宇</option>
+										</select>
+									</li>
+								</ul>
+							</div>
+						</div>
+					<form id="formId" action="#" class="wizard-big">
+						<select class="form-control dual_select" id="sel" name="sel" multiple>
+						</select>
+						<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+					</form>
+				</div>
+			</div>
+            <div class="btn-group-sm" id="toolbar" role="group">
+<!--               <a class="btn btn-success" onclick="$.operate.addFull()" shiro:hasPermission="system:advicecharge:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+             	<a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:inf:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:inf:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                 <a class="btn btn-info" onclick="$.table.importExcel()" shiro:hasPermission="system:user:import">
+			            <i class="fa fa-upload"></i> 导入
+			     </a> -->
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:advicecharge:export">
+                    <i class="fa fa-download"></i> 导出报表
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: bootstrap-duallistbox-js" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:advicecharge:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:advicecharge:remove')}]];
+        var prefix = ctx + "system/advicecharge";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                importUrl: prefix + "/importData",
+                importTemplateUrl: prefix + "/importTemplate",
+                modalName: "缴费通知",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '主键',
+                    visible: false
+                },
+                {
+                    field: 'hyOwnerRegistration.ownerName',
+                    title: '业主名称'
+                },
+                {
+                    field: 'houseNumber',
+                    title: '房屋编号'
+                },
+                {
+                    field: 'houseName',
+                    title: '房屋名称'
+                },
+                {
+                    field: 'hyCost.bilingStartDate',
+                    title: '开始日期'
+                },
+                {
+                    field: 'hyCost.bilingEndDdate',
+                    title: '结束日期'
+                }]
+            };
+            $.table.init(options);
+        });
+        
+        var selectorx = $('.dual_select').bootstrapDualListbox({
+        	nonSelectedListLabel: '房屋范围',
+            selectedListLabel: '&nbsp',
+            preserveSelectionOnMove: 'moved',
+            moveOnSelect: false,           // 出现一个剪头，表示可以一次选择一个
+            filterTextClear: '请选择',
+            moveSelectedLabel: "添加",
+            moveAllLabel: '添加所有',
+            removeSelectedLabel: "移除",
+            removeAllLabel: '移除所有',
+            infoText: false,
+            showFilterInputs: false,       // 是否带搜索
+            selectorMinimalHeight: 160
+        });
+        
+        $(window).load(function(){
+        	$("#sel").empty();
+    		$.ajax({
+    	        type:"GET",
+    	        url:"/system/group/getGroupData?currentState="+$("#currentState").val(),
+    	        dataType:"json", 
+    	        success:function(data){
+    	        	for (var i = 0; i < data.length; i++) {
+    	        		if(data[i].data == null || data[i].data == ''){
+    	        			continue;
+    	        		}
+    		        　　　　	selectorx.append("<option>"+data[i].data+"</option>");
+    		        }
+    	        　　　　	selectorx.bootstrapDualListbox('refresh');
+    	        },
+    	        error:function(jqXHR){
+    	           aler("发生错误："+ jqXHR.status);
+    	        }
+    		});
+        });
+        
+        function changeStanderName(){
+        	$("#sel").empty();
+    		$.ajax({
+    	        type:"GET",
+    	        url:"/system/group/getGroupData?currentState="+$("#currentState").val(),
+    	        dataType:"json", 
+    	        success:function(data){
+    	        	for (var i = 0; i < data.length; i++) {
+    	        		if(data[i].data == null || data[i].data == ''){
+    	        			continue;
+    	        		}
+    		        　　　　	selectorx.append("<option>"+data[i].data+"</option>");
+    		        }
+    	        　　　　	selectorx.bootstrapDualListbox('refresh');
+    	        },
+    	        error:function(jqXHR){
+    	           aler("发生错误："+ jqXHR.status);
+    	        }
+    		});
+        }
+        
+    </script>
+</body>
+<!-- 导入区域 -->
+<script id="importTpl" type="text/template">
+<form enctype="multipart/form-data" class="mt20 mb10">
+	<div class="col-xs-offset-1">
+		<input type="file" id="file" name="file"/>
+		<div class="mt10 pt5">
+			<input type="checkbox" id="updateSupport" name="updateSupport" title="如果登录账户已经存在，更新这条数据。"> 是否更新已经存在的用户数据
+			 &nbsp;	<a onclick="$.table.importTemplate()" class="btn btn-default btn-xs"><i class="fa fa-file-excel-o"></i> 下载模板</a>
+		</div>
+		<font color="red" class="pull-left mt10">
+			提示：仅允许导入“xls”或“xlsx”格式文件！
+		</font>
+	</div>
+</form>
+</script>
+</html>

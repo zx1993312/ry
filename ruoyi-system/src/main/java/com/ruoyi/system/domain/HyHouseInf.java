@@ -170,6 +170,10 @@ public class HyHouseInf extends BaseEntity
     /** 业主表 */
     @Excel(name = "业主表")
     private HyOwnerRegistration hyOwnerRegistration;
+    
+    /** 费用表 */
+    @Excel(name = "费用表")
+    private HyCost hyCost;
 
     public void setId(Long id) 
     {
@@ -506,6 +510,14 @@ public class HyHouseInf extends BaseEntity
 		this.ownerId = ownerId;
 	}
 
+	public HyCost getHyCost() {
+		return hyCost;
+	}
+
+	public void setHyCost(HyCost hyCost) {
+		this.hyCost = hyCost;
+	}
+
 	@Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -543,6 +555,7 @@ public class HyHouseInf extends BaseEntity
             .append("ownerId", getOwnerId())
             .append("hyBuilding", getHyBuilding())
             .append("hyOwnerRegistration", getHyOwnerRegistration())
+            .append("hyCost", getHyCost())
             .toString();
     }
 }
