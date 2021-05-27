@@ -152,8 +152,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="entryDateEnd != null">entry_date_end = #{entryDateEnd},</if>
 			<if test="entryAmount != null">entry_amount = #{entryAmount},</if>
 			<if test="costId != null">cost_id = #{costId},</if>
-			<if test="auditProcess != null"> and e.audit_process = #{auditProcess},</if>
-			<if test="auditStatus != null"> and e.audit_status = #{auditStatus},</if>
+			<if test="auditProcess != null"> and audit_process = #{auditProcess},</if>
+			<if test="auditStatus != null"> and audit_status = #{auditStatus},</if>
 		</trim>
 		where id = #{id}
 	</update>
