@@ -57,6 +57,8 @@ public interface HyCostMapper
      */
     public int updateHyCost(HyCost hyCost);
     
+    public int updateHyCostByIdCostItems(HyCost hyCost);
+    
     
     public int updateHyCostOther(String currentState);
     

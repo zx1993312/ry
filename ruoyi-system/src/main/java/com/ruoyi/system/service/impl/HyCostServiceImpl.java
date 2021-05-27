@@ -12,9 +12,14 @@ import com.ruoyi.common.core.domain.Ztree;
 import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.common.exception.BusinessException;
 import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.system.domain.BatchHouseInf;
+import com.ruoyi.system.domain.HyBuilding;
 import com.ruoyi.system.domain.HyCost;
 import com.ruoyi.system.domain.OwnerAndCost;
+import com.ruoyi.system.mapper.BatchMapper;
+import com.ruoyi.system.mapper.HyBuildingMapper;
 import com.ruoyi.system.mapper.HyCostMapper;
+import com.ruoyi.system.mapper.HyCustomerMapper;
 import com.ruoyi.system.mapper.OwnerAndCostMapper;
 import com.ruoyi.system.service.IHyCostService;
 
@@ -28,9 +33,18 @@ import com.ruoyi.system.service.IHyCostService;
 public class HyCostServiceImpl implements IHyCostService {
 	@Autowired
 	private HyCostMapper hyCostMapper;
-	
+
 	@Autowired
 	private OwnerAndCostMapper ownerAndCostMapper;
+
+	@Autowired
+	private BatchMapper batchMapper;
+
+	@Autowired
+	private HyCustomerMapper hyCustomerMapper;
+
+	@Autowired
+	private HyBuildingMapper hyBuildingMapper;
 
 	/**
 	 * 查询费用项目
@@ -236,6 +250,41 @@ public class HyCostServiceImpl implements IHyCostService {
 		}
 
 		return successMsg.toString();
+	}
+
+	@Override
+	public int batchUpdateCost(String costItems, String standardName, String billingCycle, String currentState,
+			String building, String transferTenants, String[] sel) {
+		try {
+			for (String s : sel) {// 遍历选中的sel值
+				List<BatchHouseInf> list = new ArrayList<>();// 用于存放查询后的房屋数据
+				if (currentState.equals("0")) {
+					list = batchMapper.selectHouseInf(s, null);
+				} else {
+					HyBuilding hyBuilding = new HyBuilding();
+					hyBuilding.setBuildingName(s);
+					List<HyBuilding> bulidingList = hyBuildingMapper.selectHyBuildingList(hyBuilding);
+					list = batchMapper.selectHouseInf(null, String.valueOf(bulidingList.get(0).getId()));
+				}
+
+				for (BatchHouseInf inf : list) {
+					List<Long> costList = hyCustomerMapper.selectCostId(String.valueOf(inf.getId()), null);
+					for (Long hyCostId : costList) {
+						HyCost hyCost = new HyCost();// 给hyCost赋值
+						hyCost.setId(hyCostId);
+						hyCost.setCostItems(costItems);
+						hyCost.setStandardName(standardName);
+						hyCost.setBillingCycle(billingCycle);
+						hyCost.setTransferTenants(Integer.valueOf(transferTenants));
+						hyCostMapper.updateHyCostByIdCostItems(hyCost);
+					}
+				}
+			}
+			return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
 	}
 
 }

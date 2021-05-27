@@ -82,4 +82,7 @@ public interface IHyCostService {
 
 	public String importCost(List<HyCost> hyCostList, boolean updateSupport, String operName);
 
+	public int batchUpdateCost(String costItems, String standardName, String billingCycle, String currentState,
+			String building, String transferTenants, String[] sel);
+
 }

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.ruoyi.system.mapper.BatchMapper">
+
+	<resultMap type="BatchHouseInf" id="BatchHouseInfResult">
+		<result property="id" column="id" />
+		<result property="houseNumber" column="house_number" />
+		<result property="houseName" column="house_name" />
+		<result property="builtUpArea" column="built_up_area" />
+		<result property="groupArea" column="group_area" />
+		<result property="unit" column="unit" />
+		<result property="floor" column="floor" />
+		<result property="sameUnitNumber" column="same_unit_number" />
+		<result property="areaType" column="area_type" />
+		<result property="bilingArea" column="biling_area" />
+		<result property="insideArea" column="inside_area" />
+		<result property="sharedArea" column="shared_area" />
+		<result property="gardenArea" column="garden_area" />
+		<result property="basementArea" column="basement_area" />
+		<result property="sharedLobbyArea" column="shared_lobby_area" />
+		<result property="sharedLayersArea" column="shared_layers_area" />
+		<result property="shareRatio" column="share_ratio" />
+		<result property="buildingStructure"
+			column="building_structure" />
+		<result property="parametersPer" column="parameters_per" />
+		<result property="houseLayout" column="house_layout" />
+		<result property="floorHeight" column="floor_height" />
+		<result property="natureProperty" column="nature_property" />
+		<result property="natureUse" column="nature_use" />
+		<result property="usageStatus" column="usage_status" />
+		<result property="occupancyStatus" column="occupancy_status" />
+		<result property="deliveryStatus" column="delivery_status" />
+		<result property="houseType" column="house_type" />
+		<result property="salesStatus" column="sales_status" />
+		<result property="purchaseContract" column="purchase_contract" />
+		<result property="marketingNum" column="marketing_num" />
+		<result property="deliveryStatusBefore"
+			column="delivery_status_before" />
+		<result property="changeDate" column="change_date" />
+		<result property="changePerson" column="change_person" />
+		<result property="remark" column="remark" />
+		<result property="buildingId" column="building_id" />
+		<result property="ownerId" column="owner_id" />
+		<association property="hyBuilding" column="id" javaType="HyBuilding" resultMap="HyBuildingResult" />
+		<association property="hyProject" column="id" javaType="HyProject" resultMap="HyProjectResult" />
+		<association property="hyGroupRegistration" column="id"
+			javaType="HyGroupRegistration" resultMap="HyGroupRegistrationResult" />
+	</resultMap>
+
+	<resultMap type="HyBuilding" id="HyBuildingResult">
+        <result property="id"    column="id"    />
+        <result property="buildingName"    column="building_name"    />
+        <result property="buildingHigh"    column="building_high"    />
+        <result property="buildingUnit"    column="building_unit"    />
+        <result property="buildingHouseholds"    column="building_households"    />
+        <result property="buildingAddress"    column="building_address"    />
+        <result property="buildingYear"    column="building_year"    />
+        <result property="buildingRemark"    column="building_remark"    />
+        <result property="quartersId"    column="quarters_id"    />
+        <result property="projectId"    column="project_id"    />
+    </resultMap>
+    
+    <resultMap type="HyProject" id="HyProjectResult">
+		<result property="id" column="id" />
+		<result property="projectName" column="project_name" />
+		<result property="villageId" column="village_id" />
+		<result property="parentId" column="parent_id" />
+		<result property="ancestors" column="ancestors" />
+	</resultMap>
+	
+	<resultMap type="HyGroupRegistration" id="HyGroupRegistrationResult">
+        <result property="id"    column="id"    />
+        <result property="groupAreaName"    column="group_area_name"    />
+    </resultMap>
+    
+	<sql id="selectHyHouseInfVo">
+		select
+		h.id,
+		h.house_number,
+		h.house_name,
+		h.built_up_area,
+		h.group_area,
+		h.unit,
+		h.floor,
+		h.same_unit_number,
+		h.area_type,
+		h.biling_area,
+		h.inside_area,
+		h.shared_area,
+		h.garden_area,
+		h.basement_area,
+		h.shared_lobby_area,
+		h.shared_layers_area,
+		h.share_ratio,
+		h.building_structure,
+		h.parameters_per,
+		h.house_layout,
+		h.floor_height,
+		h.nature_property,
+		h.nature_use,
+		h.usage_status,
+		h.occupancy_status,
+		h.delivery_status_before,
+		h.delivery_status,
+		h.change_date,
+		h.change_person,
+		h.remark,
+		h.house_type,
+		h.sales_status,
+		h.purchase_contract,
+		h.marketing_num,
+		h.building_id,
+		h.owner_id
+		from
+		hy_house_inf h
+		left join hy_building b on h.building_id = b.id
+		left join hy_project pro on b.project_id = pro.id
+		left join hy_group_registration gro on pro.village_id = gro.id
+	</sql>
+	
+	<select id="selectHouseInf" parameterType="String" resultMap="BatchHouseInfResult">
+		<include refid="selectHyHouseInfVo" />
+		<where>
+			<if test="groupName != null  and groupName != ''"> and gro.group_area_name = #{groupName}</if>
+			<if test="buildingId != null  and buildingId != ''"> and h.building_id = #{buildingId}</if>
+		</where>
+	</select>
+	
+</mapper>

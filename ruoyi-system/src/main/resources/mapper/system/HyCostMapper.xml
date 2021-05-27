@@ -400,6 +400,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</trim>
 		where id = #{id}
 	</update>
+	
+	<update id="updateHyCostByIdCostItems" parameterType="HyCost">
+		update hy_cost
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="expenseType != null">expense_type = #{expenseType},</if>
+			<if test="billingCycle != null ">billing_cycle=#{billingCycle},</if>
+			<if test="billingMethod != null ">billing_method=#{billingMethod},</if>
+			<if test="standardName != null ">standard_name=#{standardName},</if>
+			<if test="standardState != null  ">standard_state=#{standardState},</if>
+			<if test="calculationMehod != null  ">calculation_mehod=#{calculationMehod},</if>
+			<if test="bilingStartDate != null ">biling_start_date=#{bilingStartDate},</if>
+			<if test="transferTenants != null">transfer_tenants=#{transferTenants},</if>
+		</trim>
+		where id = #{id} and cost_items = #{costItems}
+	</update>
 
 	<delete id="deleteHyCostById" parameterType="Long">
 		delete from hy_cost

@@ -134,25 +134,17 @@ public class HyCustomerStandardSettingsController extends BaseController {
 	@PostMapping("/edit")
 	@ResponseBody
 	public AjaxResult editSave(@RequestParam(value = "costItems", required = false) String costItems,
-			@RequestParam(value = "standardName", required = false) String standardName,
+			@RequestParam(value = "standardName1", required = false) String standardName,
 			@RequestParam(value = "billingCycle", required = false) String billingCycle,
 			@RequestParam(value = "currentState", required = false) String currentState,
 			@RequestParam(value = "building", required = false) String building,
 			@RequestParam(value = "transferTenants", required = false) String transferTenants,
-			@RequestParam(value = "sel[]", required = false)String[] sel) {
+			@RequestParam(value = "sel[]", required = false) String[] sel) {
 
-		
-		System.out.println("costItems:" + costItems );
-		System.out.println("standardName:" + standardName );
-		System.out.println("billingCycle:" + billingCycle );
-		System.out.println("currentState:" + currentState );
-		System.out.println("building:" + building );
-		System.out.println("transferTenants:" + transferTenants );
-		for (Object s : sel) {
-			System.out.println(s);
-		}
-		
-		return toAjax(hyCostService.updateHyCostOther(currentState));
+		int result = hyCostService.batchUpdateCost(costItems, standardName, billingCycle, currentState, building,transferTenants,
+				sel);
+
+		return toAjax(result);
 	}
 
 	/**
