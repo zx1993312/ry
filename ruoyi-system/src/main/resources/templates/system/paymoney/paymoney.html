@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('交款管理列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <!-- <li>
+                                <label>管理项目：</label>
+                                <input type="text" name="manageProjects"/>
+                            </li>
+                            <li>
+                                <label>申请时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择申请时间" name="applyTime"/>
+                            </li>
+                            <li>
+                                <label>收款人：</label>
+                                <input type="text" name="payee"/>
+                            </li> -->
+                            <li>
+                                <label>开始时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择开始时间" id="startTime" name="startTime"/>
+                            </li>
+                            <li>
+                                <label>结束时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择结束时间" id="endTime" name="endTime"/>
+                            </li>
+                            <!-- <li>
+                                <label>总金额：</label>
+                                <input type="text" name="amount" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+                            </li>
+                            <li>
+                                <label>是否收款：</label>
+                             	<select name="paymoney" class="form-control " th:with="type=${@dict.getType('sys_yes_no')}">
+	                                <option value="">请选择</option>
+									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>收款时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择收款时间" name="paymoneyTime"/>
+                            </li>
+                            <li>
+                                <label>交款人：</label>
+                                <input type="text" name="paymoneyPerson"/>
+                            </li>
+                            <li>
+                                <label>是否记账：</label>
+                           		<select name="bookkeeping" class="form-control " th:with="type=${@dict.getType('sys_yes_no')}">
+	                                <option value="">请选择</option>
+									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>记账时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择记账时间" name="bookTime"/>
+                            </li>
+                            <li>
+                                <label>财务记账人：</label>
+                                <input type="text" name="bookPerson"/>
+                            </li>
+                            <li>
+                                <label>备注：</label>
+                                <input type="text" name="brake"/>
+                            </li>-->
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="search1()"><i class="fa fa-search"></i>&nbsp;查询生成</a>
+                            </li> 
+                        </ul>
+                    </div>
+                </form>
+            </div>
+            <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+            <form class="form-horizontal m" id="form-paymoney-add" th:object="${hyCollection}">
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">开始时间：</label>
+                <div class="col-sm-4">
+                    <div class="input-group date">
+                        <input id="start" name="startTime" class="form-control" type="text" style="border: none;">
+                    </div>
+                </div>
+                <label class="col-sm-2 control-label">结束时间：</label>
+                <div class="col-sm-4">
+                    <div class="input-group date">
+                        <input id="end" name="endTime" class="form-control" type="text" style="border: none;">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">总金额：</label>
+                <div class="col-sm-4">
+                    <input id="amount" name="amount" th:field="*{hyCollection.amount}" class="form-control" type="text">
+                </div>
+                <label class="col-sm-2 control-label">申请时间：</label>
+                <div class="col-sm-4">
+                    <div class="input-group date">
+                        <input id="applyTime" name="applyTime" class="form-control" type="text" style="border: none;">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">交款方式：</label>
+                <div class="col-sm-8">
+                	<input id="collection" name="collection" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">备注：</label>
+                <div class="col-sm-8">
+                    <input name="brake" class="form-control" type="text">
+                </div>
+            </div>
+            <a class="btn btn-success btn-rounded btn-sm" onclick="submit()" style="margin-left: 50%;">提交申请</a>
+        </form>
+        </div>
+
+           <!--  <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:paymoney:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:paymoney:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:paymoney:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:paymoney:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div> -->
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:paymoney:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:paymoney:remove')}]];
+        var prefix = ctx + "system/paymoney";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "交款管理",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '收款审核ID',
+                    visible: false
+                },
+                {
+                    field: 'manageProjects',
+                    title: '管理项目'
+                },
+                {
+                    field: 'applyTime',
+                    title: '申请时间'
+                },
+                {
+                    field: 'payee',
+                    title: '收款人'
+                },
+                {
+                    field: 'startTime',
+                    title: '开始时间'
+                },
+                {
+                    field: 'endTime',
+                    title: '结束时间'
+                },
+                {
+                    field: 'amount',
+                    title: '总金额'
+                },
+                {
+                    field: 'collection',
+                    title: '是否收款',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case "0" : value =  "是";break;
+	                    	case "1" : value =  "否";break;
+	                  
+	                	}
+		            	return value;
+		            }
+                },
+                {
+                    field: 'collectionTime',
+                    title: '收款时间'
+                },
+                {
+                    field: 'collectionPerson',
+                    title: '交款人'
+                },
+                {
+                    field: 'bookkeeping',
+                    title: '是否记账',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case "0" : value =  "是";break;
+	                    	case "1" : value =  "否";break;
+	                  
+	                	}
+		            	return value;
+		            }
+                },
+                {
+                    field: 'bookTime',
+                    title: '记账时间'
+                },
+                {
+                    field: 'bookPerson',
+                    title: '财务记账人'
+                },
+                {
+                    field: 'brake',
+                    title: '备注'
+                }]
+            };
+            $.table.init(options);
+        });
+        
+        function submit() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-paymoney-add').serialize());
+            }
+        };
+        
+        // 搜索-默认第一个form
+        function search1() {
+        	var params = $("#bootstrap-table").bootstrapTable('getOptions');
+            $("#bootstrap-table").bootstrapTable('refresh', params);
+            var startTime = $("#startTime").val();
+            $("#start").val(startTime);
+            var endTime = $("#endTime").val();
+            $("#end").val(endTime);
+            var date = new Date();
+        	var time = date.getTime();
+        	var year = date.getFullYear();
+        	var Month = "0"+(date.getMonth()+1);
+        	var da = date.getDate();
+        	var dateStr = year+"-"+Month+"-"+da;
+            $("#applyTime").val(dateStr);
+        };
+    </script>
+</body>
+</html>

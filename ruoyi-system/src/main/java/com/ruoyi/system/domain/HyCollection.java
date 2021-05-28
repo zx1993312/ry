@@ -1,5 +1,6 @@
 package com.ruoyi.system.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -48,7 +49,7 @@ public class HyCollection extends BaseEntity {
 
 	/** 总金额 */
 	@Excel(name = "总金额")
-	private Long amount;
+	private BigDecimal amount;
 
 	/** 是否收款 */
 	@Excel(name = "是否收款")
@@ -130,11 +131,11 @@ public class HyCollection extends BaseEntity {
 		return endTime;
 	}
 
-	public void setAmount(Long amount) {
+	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
 	}
 
-	public Long getAmount() {
+	public BigDecimal getAmount() {
 		return amount;
 	}
 
