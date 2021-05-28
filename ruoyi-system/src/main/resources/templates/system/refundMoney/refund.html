@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<th:block th:include="include :: header('表单向导')" />
+<th:block th:include="include :: jquery-smartwizard-css" />
+<style type="text/css">
+/* 如果要让工具栏固定在页面底部,使用下面的样式,不需要的可以注释 */
+.sw>.toolbar-bottom {
+	z-index: 100;
+	bottom: 0px;
+	left: 0;
+	width: 100%;
+	position: fixed;
+	text-align: right;
+	background: #fff;
+	box-shadow: 0 -2px 6px 1px hsla(223, 8%, 83%, .5);
+	border-top: 1px solid #e3e4e8;
+}
+/* 如果设置了是否自动调节高度为false,需要加滚动条 */
+.sw>.tab-content {
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+</style>
+</head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content animated fadeInRight" style="height: 100%;">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox">
+					<div class="ibox-title">
+						<h5>
+							退款申请 <small>(需审核)</small>
+						</h5>
+					</div>
+					<div class="ibox-content">
+						<div class="row select-list" style="padding-left: 15px; margin-bottom: 10px;">
+							<ul>
+								<li>选择样式： 
+									<select id="theme-selector">
+										<option value="default">Default</option>
+										<option value="arrows" selected>Arrows</option>
+										<option value="dots">Dots</option>
+										<option value="progress">Progress</option>
+									</select>
+								</li>
+								<!-- 快速操作栏按钮 -->
+								<li>
+									<div class="btn-group-sm" role="group">
+										<a class="btn btn-info" id="prev-btn"> 上一步 </a> 
+										<a class="btn btn-success" id="next-btn"> 下一步 </a> 
+										<a class="btn btn-danger" id="reset-btn"> 重置 </a>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<div id="smartwizard">
+							<ul class="nav">
+								<li class="nav-item">
+									<a class="nav-link" href="#step-1"> 第一步:退款申请 </a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#step-2"> 第二步:退款办理</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#step-3"> 第三步:退款确认 </a>
+								</li>
+							</ul>
+							<div class="tab-content">
+								<div id="step-1" class="tab-pane" style="height: 800px;" role="tabpanel" aria-labelledby="step-1">
+									<div>
+										<div class="container-div">
+											<div class="row">
+												<div class="col-sm-12 search-collapse">
+													<form id="formId">
+														<div class="select-list">
+															<ul>
+																<li>
+																	<label>房屋编号：</label> 
+																	<input type="text" name="houseNumber" />
+																</li>
+																<li>
+																	<label>房屋名称：</label> 
+																	<input type="text" name="houseName" />
+																</li>
+																<li>
+																<label>交房状态：</label> 
+																	<select name="deliveryStatus" class="form-control m-b" th:with="type=${@dict.getType('hy_delivery_status')}">
+																		<option value="">请选择</option>
+																		<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+																	</select>
+																</li>
+																<li>
+																	<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()">
+																		<i class="fa fa-search"></i>&nbsp;搜索
+																	</a>
+																	<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()">
+																		<i class="fa fa-refresh"></i>&nbsp;重置
+																	</a>
+																</li>
+															</ul>
+														</div>
+													</form>
+												</div>
+
+												<div class="btn-group-sm" id="toolbar" role="group">
+													<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:inf:add"> 
+														<i class="fa fa-plus"></i> 添加
+													</a> 
+													<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:inf:export"> 
+														<i class="fa fa-download"></i> 导出
+													</a>
+												</div>
+												<div class="col-sm-12 select-table table-striped">
+													<table id="table1"></table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div id="step-2" class="tab-pane" role="tabpanel" aria-labelledby="step-2">
+									<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+										<form class="form-horizontal m" id="form-set-add">
+											<div style="width: 49%;float: left;">
+												<div class="form-group">
+													<label class="col-sm-3 control-label">客户名称：</label>
+													<div class="col-sm-8">
+														<input id="" name="" class="form-control" type="text">
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="col-sm-3 control-label">房屋编号：</label>
+													<div class="col-sm-8">
+														<input id="" name="" class="form-control" type="text">
+													</div>
+												</div>
+											</div>
+
+											<div style="width: 49%; float: right;">
+												<div class="form-group">
+													<label class="col-sm-3 control-label">可选房号：</label>
+													<div class="col-sm-8">
+														<input id="" name="" class="form-control" type="text">
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="col-sm-3 control-label">当前欠费：</label>
+													<div class="col-sm-8">
+														<input id="" name="" class="form-control" type="text" style="border: none;">
+													</div>
+												</div>
+											</div>
+											
+											<div style="width: 100%; margin-left: 40%; clear: both;">
+												<button type="button" class="btn btn-w-m btn-success">查询</button>
+												<button type="button" class="btn btn-w-m btn-success">清空</button>
+											</div>
+											
+											<div class="col-sm-12 select-table table-striped">
+												<div>
+													<span style="font-size: 17px; font-family: sans-serif; margin-left: 45%;">已审核实收/冲抵费用</span>
+												</div>
+												<table id="table2"></table>
+											</div>
+											<div class="col-sm-12 select-table table-striped">
+												<div>
+													<span style="font-size: 17px; font-family: sans-serif; margin-left: 45%;">已审核预存/预收费用</span>
+												</div>
+												<table id="table3"></table>
+											</div>
+										</form>
+									</div>
+								</div>
+								<div id="step-3" class="tab-pane" role="tabpanel" aria-labelledby="step-3">
+									<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+										<form class="form-horizontal m" id="form-set-add">
+											<div style="width: 49%;float: left;">
+												<div class="form-group">
+													<label class="col-sm-3 control-label">退款金额：</label>
+													<div class="col-sm-8">
+														<input id="" name="" class="form-control" type="text">
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="col-sm-3 control-label">退款凭据类别：</label>
+													<div class="col-sm-8">
+														<select id="" name="" class="form-control">
+															<option value=""></option>
+														</select>
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="col-sm-3 control-label">领款人：</label>
+													<div class="col-sm-8">
+														<input id="" name="" class="form-control" type="text">
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="col-sm-3 control-label">退款人：</label>
+													<div class="col-sm-8">
+														<input id="" name="" class="form-control" type="text">
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="col-sm-3 control-label">备注：</label>
+													<div class="col-sm-8">
+														<input id="" name="" class="form-control" type="text">
+													</div>
+												</div>
+											</div>
+
+											<div style="width: 49%; float: right;">
+												<div class="form-group">
+													<label class="col-sm-3 control-label">退款方式：</label>
+													<div class="col-sm-8">
+														<select id="" name="" class="form-control">
+															<option value="0">现金</option>
+															<option value="1">通联支付</option>
+															<option value="2">POS刷卡</option>
+															<option value="3">银行代扣</option>
+															<option value="4">银行托收</option>
+															<option value="5">微信支付</option>
+															<option value="6">汇款</option>
+															<option value="7">支付宝支付</option>
+															<option value="8">扫码支付</option>
+														</select>
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="col-sm-3 control-label">退款凭据票号：</label>
+													<div class="col-sm-8">
+														<input id="" name="" class="form-control" type="text">
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="col-sm-3 control-label">身份证号：</label>
+													<div class="col-sm-8">
+														<input id="" name="" class="form-control" type="text">
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="col-sm-3 control-label">验收人：</label>
+													<div class="col-sm-8">
+														<input id="" name="" class="form-control" type="text">
+													</div>
+												</div>
+											</div>
+											<div style="width: 100%; margin-left: 50%; clear: both;">
+												<button type="button" class="btn btn-w-m btn-success">退款确认</button>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<th:block th:include="include :: footer" />
+	<th:block th:include="include :: jquery-smartwizard-js" />
+	<script>
+		$(document).ready(function() {
+            // 初始化表单向导组件
+            $('#smartwizard').smartWizard({
+                theme: 'arrows', // default, arrows, dots, progress
+                autoAdjustHeight : false, // 自动调整高度, 默认true
+                enableURLhash:false, //开启URL hash,开启后点击浏览器前进后退按钮会执行下一步和上一步操作
+                transition: {
+                    animation: 'slide-horizontal', // Effect on navigation, none/fade/slide-horizontal/slide-vertical/slide-swing
+                },
+                toolbarSettings: {
+                	showNextButton: false,// 因为上面自定义了下一步按钮, 所以隐藏掉插件自带的按钮, 如果不使用自定义按钮, 需要改为true或者去掉该属性
+    				showPreviousButton: false// 因为上面自定义了上一步按钮, 所以隐藏掉插件自带的按钮, 如果不使用自定义按钮, 需要改为true或者去掉该属性
+                }
+            });
+		});
+		
+		function submit(){
+			var data = {};
+			$('.form').each(function (index, form){
+				// 这里可以使用$.common.formToJSON(formId);  需要在form上加id
+                $.each($(form).serializeArray(), function(i, field) {
+                 	 if(data[field.name]) {
+                 		data[field.name] += ("," + field.value);
+					 } else {
+						data[field.name] = field.value;
+                     }
+                });
+			});
+			alert(JSON.stringify(data))
+		}
+		// 显示步骤时将触发事件
+        $("#smartwizard").on("showStep", function(e, anchorObject, stepNumber, stepDirection, stepPosition) {
+        	// 下面按钮是快速操作栏的
+        	$("#prev-btn").removeClass('disabled');
+            $("#next-btn").removeClass('disabled');
+        	// 下面按钮是工具栏的
+        	$("#btn-prev").removeClass('disabled');
+            $("#btn-next").removeClass('disabled');
+            $("#btn-finish").removeClass('disabled');
+            if(stepPosition === 'first') {
+            	$("#prev-btn").addClass('disabled');// 快速操作栏（演示用）
+            	$("#btn-prev").addClass('disabled');
+				$("#btn-finish").addClass('disabled');
+            } else if(stepPosition === 'last') {
+            	$("#next-btn").addClass('disabled');// 快速操作栏（演示用）
+                $("#btn-next").addClass('disabled');
+            } else {
+            	$("#prev-btn").removeClass('disabled');// 快速操作栏（演示用）
+                $("#next-btn").removeClass('disabled');// 快速操作栏（演示用）
+                $("#btn-prev").removeClass('disabled');
+                $("#btn-next").removeClass('disabled');
+                $("#btn-finish").addClass('disabled');
+            }
+        });
+		
+		// 该事件在离开某个步骤之前触发
+		$("#smartwizard").on("leaveStep", function(e, anchorObject, currentStepNumber, nextStepNumber, stepDirection) {
+			if(stepDirection == 'forward'){
+				var form = $("#step-" + (currentStepNumber + 1)).find('.form');
+				if(form.length > 0){
+					return form.validate().form();
+				}
+				return true;
+			}
+			return true;
+		});
+		
+		$("#theme-selector").on("change", function() {
+			// Change theme
+			var options = {
+				theme : $(this).val()
+			};
+			$('#smartwizard').smartWizard("setOptions", options);
+			return true;
+		});
+
+		$("#reset-btn").on("click", function() {
+            // Reset wizard
+            $('#smartwizard').smartWizard("reset");
+            return true;
+        });
+
+        $("#prev-btn").on("click", function() {
+            // Navigate previous
+            $('#smartwizard').smartWizard("prev");
+            return true;
+        });
+
+        $("#next-btn").on("click", function() {
+            // Navigate next
+            $('#smartwizard').smartWizard("next");
+            return true;
+        });
+	</script>
+
+	<script th:inline="javascript">
+
+    var editFlag = [[${@permission.hasPermi('system:inf:edit')}]];
+    var removeFlag = [[${@permission.hasPermi('system:inf:remove')}]];
+    var prefix = ctx + "system/customer";
+
+    $(function() {
+        var options1 = {
+        	tableId : "table1",
+            url: prefix + "/list",
+            createUrl: prefix + "/add",
+            updateUrl: prefix + "/edit/{id}",
+            removeUrl: prefix + "/remove",
+            exportUrl: prefix + "/export",
+            importUrl: prefix + "/importData",
+            importTemplateUrl: prefix + "/importTemplate",
+            modalName: "客户标准单项设置",
+            columns: [{
+                checkbox: true
+            },
+            {
+                field: 'id',
+                title: '主键',
+                visible: false
+            },
+            {
+                field: 'buildingName',
+                title: '楼宇名称'
+            },
+            {
+                field: 'ownerName',
+                title: '业主名称'
+            },
+            {
+                field: 'houseNumber',
+                title: '房屋编号'
+            },
+            {
+                field: 'houseName',
+                title: '房屋名称'
+            },
+            {
+                field: 'deliveryStatus',
+                title: '交房状态',
+                formatter: function(value, item, index) {
+                	switch(value){
+                    	case '0' : value =  "已售未接房";break;
+                    	case '1' : value =  "未售";break;
+                    	case '2' : value =  "已接房";break;
+                    	case '3' : value =  "装修";break;
+                    	case '4' : value =  "入住";break;
+                    	case '5' : value =  "已售空置";break;
+                    	case '6' : value =  "未售空置";break;
+                	}
+	            	return value;
+	            }
+            },
+            {
+                field: 'parkingNumber',
+                title: '车位编号'
+            },
+            {
+                field: 'meterName',
+                title: '表计名称'
+            },
+            {
+                field: 'costItems',
+                title: '费用名称'
+            },
+            {
+                field: 'expenseType',
+                title: '标准名称'
+            },
+            {
+                field: 'standardName',
+                title: '收费标准'
+            },
+            {
+                field: 'billingCycle',
+                title: '计费周期',
+                formatter: function(value, item, index) {
+                	switch(value){
+                    	case '0' : value =  "按每1月计费";break;
+                    	case '1' : value =  "按每2月计费";break;
+                    	case '2' : value =  "按每3月计费";break;
+                    	case '3' : value =  "按每4月计费";break;
+                    	case '4' : value =  "按每5月计费";break;
+                    	case '5' : value =  "按每6月计费";break;
+                    	case '6' : value =  "按每7月计费";break;
+                    	case '7' : value =  "按每8月计费";break;
+                    	case '8' : value =  "按每9月计费";break;
+                    	case '9' : value =  "按每10月计费";break;
+                    	case '10' : value =  "按每11月计费";break;
+                    	case '11' : value =  "按每12月计费";break;
+                	}
+                	return value;
+                }
+            },
+            {
+                field: 'calculationMehod',
+                title: '计算方式',
+                formatter: function(value, item, index) {
+                	switch(value){
+                    	case '30' : value =  "按计费面积*单价每月计算";break;
+                    	case '120' : value =  "按计费面积*单价每季计算";break;
+                    	case '365' : value =  "按计费面积*单价每年计算";break;
+                    	case '31' : value =  "按定额每月计算";break;
+                    	case '122' : value =  "按定额每季计算";break;
+                    	case '366' : value =  "按定额每年计算";break;
+                	}
+                	return value;
+                }
+            },
+            {
+                field: 'transferTenants',
+                title: '出租时自动转移给租户',
+                formatter: function(value, item, index) {
+                	switch(value){
+                    	case 0 : value =  "是";break;
+                    	case 1 : value =  "否";break;
+                	}
+                	return value;
+                }
+            },
+            {
+                title: '操作',
+                align: 'center',
+                formatter: function(value, row, index) {
+                    var actions = [];
+                    actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.costItems + '\')"><i class="fa fa-remove"></i>删除</a>');
+                    return actions.join('');
+                }
+            }]
+        };
+        $.table.initOtherTable(options1);
+    });
+    
+    
+    $(function() {
+        var options2 = {
+        	tableId : "table2",
+            columns: [{
+                checkbox: true
+            },
+            {
+                field: 'id',
+                title: '主键',
+                visible: false
+            },
+            {
+                field: 'buildingName',
+                title: '楼宇名称'
+            },
+            {
+                field: 'ownerName',
+                title: '业主名称'
+            },
+            {
+                field: 'houseNumber',
+                title: '房屋编号'
+            },
+            {
+                field: 'houseName',
+                title: '房屋名称'
+            },
+            {
+                field: 'deliveryStatus',
+                title: '交房状态',
+                formatter: function(value, item, index) {
+                	switch(value){
+                    	case '0' : value =  "已售未接房";break;
+                    	case '1' : value =  "未售";break;
+                    	case '2' : value =  "已接房";break;
+                    	case '3' : value =  "装修";break;
+                    	case '4' : value =  "入住";break;
+                    	case '5' : value =  "已售空置";break;
+                    	case '6' : value =  "未售空置";break;
+                	}
+	            	return value;
+	            }
+            },
+            {
+                field: 'parkingNumber',
+                title: '车位编号'
+            },
+            {
+                field: 'meterName',
+                title: '表计名称'
+            },
+            {
+                field: 'costItems',
+                title: '费用名称'
+            },
+            {
+                field: 'expenseType',
+                title: '标准名称'
+            },
+            {
+                field: 'standardName',
+                title: '收费标准'
+            },
+            {
+                field: 'billingCycle',
+                title: '计费周期',
+                formatter: function(value, item, index) {
+                	switch(value){
+                    	case '0' : value =  "按每1月计费";break;
+                    	case '1' : value =  "按每2月计费";break;
+                    	case '2' : value =  "按每3月计费";break;
+                    	case '3' : value =  "按每4月计费";break;
+                    	case '4' : value =  "按每5月计费";break;
+                    	case '5' : value =  "按每6月计费";break;
+                    	case '6' : value =  "按每7月计费";break;
+                    	case '7' : value =  "按每8月计费";break;
+                    	case '8' : value =  "按每9月计费";break;
+                    	case '9' : value =  "按每10月计费";break;
+                    	case '10' : value =  "按每11月计费";break;
+                    	case '11' : value =  "按每12月计费";break;
+                	}
+                	return value;
+                }
+            },
+            {
+                field: 'calculationMehod',
+                title: '计算方式',
+                formatter: function(value, item, index) {
+                	switch(value){
+                    	case '30' : value =  "按计费面积*单价每月计算";break;
+                    	case '120' : value =  "按计费面积*单价每季计算";break;
+                    	case '365' : value =  "按计费面积*单价每年计算";break;
+                    	case '31' : value =  "按定额每月计算";break;
+                    	case '122' : value =  "按定额每季计算";break;
+                    	case '366' : value =  "按定额每年计算";break;
+                	}
+                	return value;
+                }
+            },
+            {
+                field: 'transferTenants',
+                title: '出租时自动转移给租户',
+                formatter: function(value, item, index) {
+                	switch(value){
+                    	case 0 : value =  "是";break;
+                    	case 1 : value =  "否";break;
+                	}
+                	return value;
+                }
+            },
+            {
+                title: '操作',
+                align: 'center',
+                formatter: function(value, row, index) {
+                    var actions = [];
+                    actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.costItems + '\')"><i class="fa fa-remove"></i>删除</a>');
+                    return actions.join('');
+                }
+            }]
+        };
+        $.table.initNoRightTable(options2);
+    });
+    
+    $(function() {
+        var options3 = {
+        	tableId : "table3",
+            columns: [{
+                checkbox: true
+            },
+            {
+                field: 'id',
+                title: '主键',
+                visible: false
+            },
+            {
+                field: 'buildingName',
+                title: '楼宇名称'
+            },
+            {
+                field: 'ownerName',
+                title: '业主名称'
+            },
+            {
+                field: 'houseNumber',
+                title: '房屋编号'
+            },
+            {
+                field: 'houseName',
+                title: '房屋名称'
+            },
+            {
+                field: 'deliveryStatus',
+                title: '交房状态',
+                formatter: function(value, item, index) {
+                	switch(value){
+                    	case '0' : value =  "已售未接房";break;
+                    	case '1' : value =  "未售";break;
+                    	case '2' : value =  "已接房";break;
+                    	case '3' : value =  "装修";break;
+                    	case '4' : value =  "入住";break;
+                    	case '5' : value =  "已售空置";break;
+                    	case '6' : value =  "未售空置";break;
+                	}
+	            	return value;
+	            }
+            },
+            {
+                field: 'parkingNumber',
+                title: '车位编号'
+            },
+            {
+                field: 'meterName',
+                title: '表计名称'
+            },
+            {
+                field: 'costItems',
+                title: '费用名称'
+            },
+            {
+                field: 'expenseType',
+                title: '标准名称'
+            },
+            {
+                field: 'standardName',
+                title: '收费标准'
+            },
+            {
+                field: 'billingCycle',
+                title: '计费周期',
+                formatter: function(value, item, index) {
+                	switch(value){
+                    	case '0' : value =  "按每1月计费";break;
+                    	case '1' : value =  "按每2月计费";break;
+                    	case '2' : value =  "按每3月计费";break;
+                    	case '3' : value =  "按每4月计费";break;
+                    	case '4' : value =  "按每5月计费";break;
+                    	case '5' : value =  "按每6月计费";break;
+                    	case '6' : value =  "按每7月计费";break;
+                    	case '7' : value =  "按每8月计费";break;
+                    	case '8' : value =  "按每9月计费";break;
+                    	case '9' : value =  "按每10月计费";break;
+                    	case '10' : value =  "按每11月计费";break;
+                    	case '11' : value =  "按每12月计费";break;
+                	}
+                	return value;
+                }
+            },
+            {
+                field: 'calculationMehod',
+                title: '计算方式',
+                formatter: function(value, item, index) {
+                	switch(value){
+                    	case '30' : value =  "按计费面积*单价每月计算";break;
+                    	case '120' : value =  "按计费面积*单价每季计算";break;
+                    	case '365' : value =  "按计费面积*单价每年计算";break;
+                    	case '31' : value =  "按定额每月计算";break;
+                    	case '122' : value =  "按定额每季计算";break;
+                    	case '366' : value =  "按定额每年计算";break;
+                	}
+                	return value;
+                }
+            },
+            {
+                field: 'transferTenants',
+                title: '出租时自动转移给租户',
+                formatter: function(value, item, index) {
+                	switch(value){
+                    	case 0 : value =  "是";break;
+                    	case 1 : value =  "否";break;
+                	}
+                	return value;
+                }
+            },
+            {
+                title: '操作',
+                align: 'center',
+                formatter: function(value, row, index) {
+                    var actions = [];
+                    actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.costItems + '\')"><i class="fa fa-remove"></i>删除</a>');
+                    return actions.join('');
+                }
+            }]
+        };
+        $.table.initNoRightTable(options3);
+    });
+    </script>
+</body>
+</html>
