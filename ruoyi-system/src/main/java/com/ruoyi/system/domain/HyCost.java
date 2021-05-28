@@ -115,6 +115,11 @@ public class HyCost extends BaseEntity {
 	@Excel(name = "应收日期")
 	private Date dueDate;
 	/**
+	 * 缴费截止日期
+	 */
+	@Excel(name = "缴费截止日期")
+	private Date paymentDeadlinTime;
+	/**
 	 * 原应收金额
 	 */
 	@Excel(name = "原应收金额")
@@ -420,6 +425,14 @@ public class HyCost extends BaseEntity {
 		this.dueDate = dueDate;
 	}
 
+	public Date getPaymentDeadlinTime() {
+		return paymentDeadlinTime;
+	}
+
+	public void setPaymentDeadlinTime(Date paymentDeadlinTime) {
+		this.paymentDeadlinTime = paymentDeadlinTime;
+	}
+
 	public BigDecimal getAmountReceivableOld() {
 		return amountReceivableOld;
 	}
@@ -680,19 +693,20 @@ public class HyCost extends BaseEntity {
 				+ ", billingCycle=" + billingCycle + ", bilingStartDate=" + bilingStartDate + ", bilingEndDate="
 				+ bilingEndDate + ", auditResultsReason=" + auditResultsReason + ", feeDateOld=" + feeDateOld
 				+ ", feeDate=" + feeDate + ", dueDateOld=" + dueDateOld + ", dueDate=" + dueDate
-				+ ", amountReceivableOld=" + amountReceivableOld + ", amountReceivable=" + amountReceivable
-				+ ", amountActually=" + amountActually + ", penaltyContract=" + penaltyContract + ", remarks=" + remarks
-				+ ", operationDate=" + operationDate + ", operationUser=" + operationUser + ", operationType="
-				+ operationType + ", deleteReason=" + deleteReason + ", advancePaymentOffset=" + advancePaymentOffset
-				+ ", writeOff=" + writeOff + ", refundAmount=" + refundAmount + ", amountArrears=" + amountArrears
-				+ ", collectionStatus=" + collectionStatus + ", frozenPerson=" + frozenPerson + ", frozenState="
-				+ frozenState + ", frozenDate=" + frozenDate + ", frozenReason=" + frozenReason + ", advanceStatus="
-				+ advanceStatus + ", deliveryStatus=" + deliveryStatus + ", transferTenants=" + transferTenants
-				+ ", changeDate=" + changeDate + ", billingMethod=" + billingMethod + ", calculationStandard="
-				+ calculationStandard + ", hyOwnerRegistration=" + hyOwnerRegistration + ", hyMeter=" + hyMeter
-				+ ", hyParkingInf=" + hyParkingInf + ", hyHouseInf=" + hyHouseInf + ", ownerAndCost=" + ownerAndCost
-				+ "]";
+				+ ", paymentDeadlinTime=" + paymentDeadlinTime + ", amountReceivableOld=" + amountReceivableOld
+				+ ", amountReceivable=" + amountReceivable + ", amountActually=" + amountActually + ", penaltyContract="
+				+ penaltyContract + ", remarks=" + remarks + ", operationDate=" + operationDate + ", operationUser="
+				+ operationUser + ", operationType=" + operationType + ", deleteReason=" + deleteReason
+				+ ", advancePaymentOffset=" + advancePaymentOffset + ", writeOff=" + writeOff + ", refundAmount="
+				+ refundAmount + ", amountArrears=" + amountArrears + ", collectionStatus=" + collectionStatus
+				+ ", frozenPerson=" + frozenPerson + ", frozenState=" + frozenState + ", frozenDate=" + frozenDate
+				+ ", frozenReason=" + frozenReason + ", advanceStatus=" + advanceStatus + ", deliveryStatus="
+				+ deliveryStatus + ", transferTenants=" + transferTenants + ", changeDate=" + changeDate
+				+ ", billingMethod=" + billingMethod + ", calculationStandard=" + calculationStandard
+				+ ", hyOwnerRegistration=" + hyOwnerRegistration + ", hyMeter=" + hyMeter + ", hyParkingInf="
+				+ hyParkingInf + ", hyHouseInf=" + hyHouseInf + ", ownerAndCost=" + ownerAndCost + "]";
 	}
+
 
 
 
