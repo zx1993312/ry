@@ -184,7 +184,7 @@ public class HyOrderServiceImpl implements IHyOrderService
 	}
 	private Connection getCon() throws Exception{
 	    Class.forName("com.mysql.cj.jdbc.Driver");
-	    Connection connection = DriverManager.getConnection("jdbc:mysql://39.105.185.22:3306/hy_database?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8","root","hykjroot");
+	    Connection connection = DriverManager.getConnection("jdbc:mysql://39.105.185.22:3306/hy_database?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8","root","hangyu123.root");
 	    return connection;
 	}
 
