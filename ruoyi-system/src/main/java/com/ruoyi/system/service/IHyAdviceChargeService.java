@@ -1,6 +1,9 @@
 package com.ruoyi.system.service;
 
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+
 import com.ruoyi.system.domain.HyHouseInf;
 
 /**
@@ -19,5 +22,12 @@ public interface IHyAdviceChargeService
      * @return 缴费通知集合
      */
     public List<HyHouseInf> selectHyAdviceChargeList(HyHouseInf hyHouseInf);
+    
+    /**
+	 * 导出PDF
+	 * @param response
+	 * @throws Exception 
+	 */
+	public int downloadPDF(String warm,HttpServletResponse response) throws Exception;
 
 }

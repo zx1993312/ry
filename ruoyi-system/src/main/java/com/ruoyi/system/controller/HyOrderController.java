@@ -215,11 +215,6 @@ public class HyOrderController extends BaseController
 	/**
 	 * 导出PDF
 	 */
-	 @ApiOperation("订单")
-	 @ApiImplicitParams({ 
-	 @ApiImplicitParam(name = "hyOrder", value = "项目实体类hyOrder", required = true),
-	 })
-	 @Log(title = "订单", businessType = BusinessType.EXPORT)
 	 @PostMapping("/exportPDF")
 	 @ResponseBody
 	public AjaxResult downloadPDF(HttpServletResponse response) throws Exception

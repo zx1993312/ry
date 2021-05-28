@@ -2,6 +2,8 @@ package com.ruoyi.system.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -62,6 +64,24 @@ public class HyAdviceChargeController extends BaseController {
 		startPage();
 		List<HyHouseInf> list = hyAdviceChargeService.selectHyAdviceChargeList(hyHouseInf);
 		return getDataTable(list);
+	}
+	
+	/**
+	 * 导出缴费通知单
+	 */
+	@GetMapping("/add")
+	public String add() {
+		return prefix + "/add";
+	}
+	
+	/**
+	 * 导出PDF
+	 */
+	 @PostMapping("/exportPDF")
+	 @ResponseBody
+	public AjaxResult downloadPDF(String warm,HttpServletResponse response) throws Exception
+	{
+		 return toAjax(hyAdviceChargeService.downloadPDF(warm,response));
 	}
 	
 }
