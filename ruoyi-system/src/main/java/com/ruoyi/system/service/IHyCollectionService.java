@@ -1,6 +1,9 @@
 package com.ruoyi.system.service;
 
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+
 import com.ruoyi.system.domain.HyCollection;
 
 /**
@@ -58,4 +61,10 @@ public interface IHyCollectionService
      * @return 结果
      */
     public int deleteHyCollectionById(Long id);
+    /**
+   	 * 导出PDF
+   	 * @param response
+   	 * @throws Exception 
+   	 */
+	public int downloadPDF(HyCollection hyCollection, HttpServletResponse response)throws Exception;
 }

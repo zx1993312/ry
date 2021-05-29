@@ -61,8 +61,8 @@ public class HyCollection extends BaseEntity {
 	@Excel(name = "收款时间", width = 30, dateFormat = "yyyy-MM-dd")
 	private Date collectionTime;
 
-	/** 财务收款人 */
-	@Excel(name = "财务收款人")
+	/** 交款人 */
+	@Excel(name = "交款人")
 	private String collectionPerson;
 
 	/** 是否记账 */
@@ -82,6 +82,14 @@ public class HyCollection extends BaseEntity {
 	/** 备注 */
 	@Excel(name = "备注")
 	private String brake;
+	
+	/** 是否交款 */
+	@Excel(name = "是否交款")
+	private String paymentStatue;
+	
+	/** 交款方式 */
+	@Excel(name = "交款方式")
+	private String payment;
 
 	public void setId(Long id) {
 		this.id = id;
@@ -195,6 +203,22 @@ public class HyCollection extends BaseEntity {
 		return brake;
 	}
 
+	public String getPaymentStatue() {
+		return paymentStatue;
+	}
+
+	public void setPaymentStatue(String paymentStatue) {
+		this.paymentStatue = paymentStatue;
+	}
+
+	public String getPayment() {
+		return payment;
+	}
+
+	public void setPayment(String payment) {
+		this.payment = payment;
+	}
+
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("id", getId())
@@ -203,6 +227,7 @@ public class HyCollection extends BaseEntity {
 				.append("amount", getAmount()).append("collection", getCollection())
 				.append("collectionTime", getCollectionTime()).append("collectionPerson", getCollectionPerson())
 				.append("bookkeeping", getBookkeeping()).append("bookTime", getBookTime())
-				.append("bookPerson", getBookPerson()).append("brake", getBrake()).toString();
+				.append("bookPerson", getBookPerson()).append("brake", getBrake()).append("paymentStatue", getPaymentStatue())
+				.append("payment", getPayment()).toString();
 	}
 }

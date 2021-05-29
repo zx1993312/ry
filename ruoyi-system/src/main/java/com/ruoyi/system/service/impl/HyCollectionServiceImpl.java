@@ -1,13 +1,32 @@
 package com.ruoyi.system.service.impl;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ResourceUtils;
 
 import com.ruoyi.system.mapper.HyCollectionMapper;
 import com.ruoyi.system.domain.HyCollection;
 import com.ruoyi.system.service.IHyCollectionService;
+
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+
 import com.ruoyi.common.core.text.Convert;
 
 /**
@@ -97,4 +116,34 @@ public class HyCollectionServiceImpl implements IHyCollectionService
     {
         return hyCollectionMapper.deleteHyCollectionById(id);
     }
+
+	@Override
+	public int downloadPDF(HyCollection hyCollection, HttpServletResponse response) throws Exception{
+		//1、获取模版文件
+	    File rootFile = new File(ResourceUtils.getURL("classpath:").getPath());
+	    File templateFile = new File(rootFile,"/pdf_template/paymoney_db.jasper");
+	    //2、准备数据库连接
+	    Map params = new HashMap();
+	    Date startTime = hyCollection.getStartTime();
+	    Date endTime = hyCollection.getEndTime();
+	    String amount = hyCollection.getAmount()+"";
+	    Date applyTime = hyCollection.getApplyTime();
+	    String payment = hyCollection.getPayment();
+	    String brake = hyCollection.getBrake();
+	    params.put("startTime", startTime);
+	    params.put("endTime", endTime);
+	    params.put("amount", amount);
+	    params.put("applyTime", applyTime);
+	    params.put("payment", payment);
+	    params.put("brake", brake);
+	    JasperPrint jasperPrint =JasperFillManager.fillReport(new FileInputStream(templateFile),params,new JREmptyDataSource());
+	    /*ServletOutputStream outputStream = response.getOutputStream();
+	    String filename="缴费通知单.pdf";
+	    //response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+	    response.setContentType("application/pdf");
+	    response.setHeader("content-disposition", "attachment;filename="+new String(filename.getBytes(),"ISO8859-1"));
+	    JasperExportManager.exportReportToPdfStream(jasperPrint,outputStream);*/
+	    JasperExportManager.exportReportToPdfStream(jasperPrint,new FileOutputStream("d:\\交款报表.pdf"));
+	    return 1;
+	}
 }
