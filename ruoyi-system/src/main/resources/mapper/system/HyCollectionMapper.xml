@@ -6,101 +6,279 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <resultMap type="HyCollection" id="HyCollectionResult">
         <result property="id"    column="id"    />
-        <result property="manageProjects"    column="manage_projects"    />
         <result property="applyTime"    column="apply_time"    />
         <result property="payee"    column="payee"    />
         <result property="startTime"    column="start_time"    />
         <result property="endTime"    column="end_time"    />
         <result property="amount"    column="amount"    />
-        <result property="collection"    column="collection"    />
+        <result property="isCollection"    column="is_collection"    />
+        <result property="paymentPerson"    column="payment_person"    />
         <result property="collectionTime"    column="collection_time"    />
-        <result property="collectionPerson"    column="collection_person"    />
-        <result property="bookkeeping"    column="bookkeeping"    />
+        <result property="isBook"    column="is_book"    />
         <result property="bookTime"    column="book_time"    />
+        <result property="paymentStatue"    column="payment_statue"    />
         <result property="bookPerson"    column="book_person"    />
-        <result property="brake"    column="brake"    />
+        <result property="payment"    column="payment"    />
+        <result property="collectionRemark"    column="collection_remark"    />
+        <result property="costId"    column="cost_id"    />
+        <result property="houseId"    column="house_id"    />
+        <result property="ownerId"    column="owner_id"    />
+        <association property="hyCost" column="id"
+			javaType="HyCost" resultMap="HyCostResult" />
+        <association property="hyHouseInf" column="id"
+			javaType="HyHouseInf" resultMap="HyHouseInfResult" />
+        <association property="hyOwnerRegistration" column="id"
+			javaType="HyOwnerRegistration" resultMap="HyOwnerRegistrationResult" />
     </resultMap>
+    
+    <resultMap type="HyCost" id="HyCostResult">
+		<result property="id" column="id" />
+		<result property="costItems" column="cost_items" />
+		<result property="expenseType" column="expense_type" />
+		<result property="parentId" column="parent_id" />
+		<result property="ancestors" column="ancestors" />
+		<result property="standardName" column="standard_name" />
+		<result property="feeNum" column="fee_num" />
+		<result property="chargingStandard" column="charging_standard" />
+		<result property="calculationMehod" column="calculation_mehod" />
+		<result property="standardDescription"
+			column="standard_description" />
+		<result property="standardState" column="standard_state" />
+		<result property="proportionDamags" column="proportion_damags" />
+		<result property="projectModification"
+			column="project_modification" />
+		<result property="billingCycle" column="billing_cycle" />
+		<result property="bilingStartDate" column="biling_start_date" />
+		<result property="bilingEndDate" column="biling_end_date" />
+		<result property="auditResultsReason"
+			column="audit_results_reason" />
+		<result property="feeDateOld" column="fee_date_old" />
+		<result property="feeDate" column="fee_date" />
+		<result property="dueDateOld" column="due_date_old" />
+		<result property="dueDate" column="due_date" />
+		<result property="amountReceivableOld"
+			column="amount_receivable_old" />
+		<result property="amountReceivable" column="amount_receivable" />
+		<result property="amountActually" column="amount_actually" />
+		<result property="remarks" column="remarks" />
+		<result property="operationDate" column="operation_date" />
+		<result property="operationUser" column="operation_user" />
+		<result property="operationType" column="operation_type" />
+		<result property="deleteReason" column="delete_reason" />
+		<result property="advancePaymentOffset"
+			column="advance_payment_offset" />
+		<result property="writeOff" column="write_off" />
+		<result property="refundAmount" column="refund_amount" />
+		<result property="amountArrears" column="amount_arrears" />
+		<result property="collectionStatus" column="collection_status" />
+		<result property="frozenPerson" column="frozen_person" />
+		<result property="frozenState" column="frozen_state" />
+		<result property="frozenDate" column="frozen_date" />
+		<result property="frozenReason" column="frozen_reason" />
+		<result property="advanceStatus" column="advance_status" />
+		<result property="transferTenants" column="transfer_tenants" />
+		<result property="changeDate" column="change_date" />
+		<result property="billingMethod" column="billing_method" />
+		<result property="calculationStandard"
+			column="calculation_standard" />
+	</resultMap>
+	
+	<resultMap type="HyHouseInf" id="HyHouseInfResult">
+		<result property="id" column="id" />
+		<result property="houseNumber" column="house_number" />
+		<result property="houseName" column="house_name" />
+		<result property="builtUpArea" column="built_up_area" />
+		<result property="groupArea" column="group_area" />
+		<result property="unit" column="unit" />
+		<result property="floor" column="floor" />
+		<result property="sameUnitNumber" column="same_unit_number" />
+		<result property="areaType" column="area_type" />
+		<result property="bilingArea" column="biling_area" />
+		<result property="insideArea" column="inside_area" />
+		<result property="sharedArea" column="shared_area" />
+		<result property="gardenArea" column="garden_area" />
+		<result property="basementArea" column="basement_area" />
+		<result property="sharedLobbyArea" column="shared_lobby_area" />
+		<result property="sharedLayersArea" column="shared_layers_area" />
+		<result property="shareRatio" column="share_ratio" />
+		<result property="buildingStructure"
+			column="building_structure" />
+		<result property="parametersPer" column="parameters_per" />
+		<result property="houseLayout" column="house_layout" />
+		<result property="floorHeight" column="floor_height" />
+		<result property="natureProperty" column="nature_property" />
+		<result property="natureUse" column="nature_use" />
+		<result property="usageStatus" column="usage_status" />
+		<result property="occupancyStatus" column="occupancy_status" />
+		<result property="deliveryStatus" column="delivery_status" />
+		<result property="houseType" column="house_type" />
+		<result property="salesStatus" column="sales_status" />
+		<result property="purchaseContract" column="purchase_contract" />
+		<result property="marketingNum" column="marketing_num" />
+		<result property="deliveryStatusBefore" column="delivery_status_before" />
+		<result property="changeDate" column="change_date" />
+		<result property="changePerson" column="change_person" />
+		<result property="remark" column="remark" />
+		<result property="buildingId" column="building_id" />
+		<result property="ownerId" column="owner_id" />
+	</resultMap>
+	
+	<resultMap type="HyOwnerRegistration"
+		id="HyOwnerRegistrationResult">
+		<result property="id" column="id" />
+		<result property="ownerName" column="owner_name" />
+		<result property="fixedTelephone" column="fixed_telephone" />
+		<result property="mobilePhone" column="mobile_phone" />
+		<result property="idCardNum" column="id_card_num" />
+		<result property="suplierCategory" column="suplier_category" />
+		<result property="lockedNot" column="locked_not" />
+		<result property="accessNum" column="access_num" />
+		<result property="certificateName" column="certificate_name" />
+		<result property="customerCategoy" column="customer_categoy" />
+		<result property="faxPhone" column="fax_phone" />
+		<result property="contactAddress" column="contact_address" />
+		<result property="postalCode" column="postal_code" />
+		<result property="postalPreson" column="postal_preson" />
+		<result property="eMail" column="e_mail" />
+		<result property="phoneAccount" column="phone_account" />
+		<result property="bindingPhoneNum" column="binding_phone_num" />
+		<result property="coOwner" column="co_owner" />
+		<result property="ownerIdentification"
+			column="owner_identification" />
+		<result property="firName" column="fir_name" />
+		<result property="secName" column="sec_name" />
+		<result property="gender" column="gender" />
+		<result property="nationality" column="nationality" />
+		<result property="birthDate" column="birth_date" />
+		<result property="workUnit" column="work_unit" />
+		<result property="ownerJob" column="owner_job" />
+		<result property="ownerHobby" column="owner_hobby" />
+		<result property="ownerId" column="owner_id" />
+		<result property="taxpayerNum" column="taxpayer_num" />
+		<result property="ownerAddPhone" column="owner_add_phone" />
+		<result property="bankAccount" column="bank_account" />
+		<result property="collectionCategory"
+			column="collection_category" />
+		<result property="bankType" column="bank_type" />
+		<result property="bankNum" column="bank_num" />
+		<result property="bankAccountName" column="bank_account_name" />
+		<result property="projectId" column="project_id" />
+	</resultMap>
 
     <sql id="selectHyCollectionVo">
-        select id, manage_projects, apply_time, payee, start_time, end_time, amount, collection, collection_time, collection_person, bookkeeping, book_time, book_person, brake from hy_collection
+        select 
+        c.id, 
+        c.apply_time, 
+        c.payee, 
+        c.amount, 
+        c.is_collection, 
+        c.payment_person, 
+        c.collection_time, 
+        c.is_book, 
+        c.book_time, 
+        c.payment_statue, 
+        c.book_person, 
+        c.payment, 
+        c.collection_remark, 
+        c.cost_id, 
+        c.house_id, 
+        c.owner_id,
+        s.cost_items,
+        h.house_name,
+        o.owner_name
+        from 
+        hy_collection c
+        LEFT JOIN hy_cost s ON c.cost_id = s.id
+        LEFT JOIN hy_house_inf h ON c.house_id = h.id
+        LEFT JOIN hy_owner_registration o ON c.owner_id = o.id
     </sql>
 
     <select id="selectHyCollectionList" parameterType="HyCollection" resultMap="HyCollectionResult">
         <include refid="selectHyCollectionVo"/>
         <where>  
-            <if test="manageProjects != null  and manageProjects != ''"> and manage_projects = #{manageProjects}</if>
-            <if test="applyTime != null "> and apply_time = #{applyTime}</if>
-            <if test="payee != null  and payee != ''"> and payee = #{payee}</if>
-            <if test="startTime != null "> and start_time = #{startTime}</if>
-            <if test="endTime != null "> and end_time = #{endTime}</if>
-            <if test="amount != null "> and amount = #{amount}</if>
-            <if test="collection != null "> and collection = #{collection}</if>
-            <if test="collectionTime != null "> and collection_time = #{collectionTime}</if>
-            <if test="collectionPerson != null  and collectionPerson != ''"> and collection_person = #{collectionPerson}</if>
-            <if test="bookkeeping != null "> and bookkeeping = #{bookkeeping}</if>
-            <if test="bookTime != null "> and book_time = #{bookTime}</if>
-            <if test="bookPerson != null  and bookPerson != ''"> and book_person = #{bookPerson}</if>
-            <if test="brake != null  and brake != ''"> and brake = #{brake}</if>
+            <if test="applyTime != null "> and c.apply_time = #{applyTime}</if>
+            <if test="payee != null  and payee != ''"> and c.payee = #{payee}</if>
+            <if test="amount != null "> and c.amount = #{amount}</if>
+            <if test="isCollection != null  and isCollection != ''"> and c.is_collection = #{isCollection}</if>
+            <if test="paymentPerson != null  and paymentPerson != ''"> and c.payment_person = #{paymentPerson}</if>
+            
+            <if test="startTime != null and endTime != null "> and c.collection_time between #{startTime} and #{endTime}</if>
+           
+            <if test="isBook != null  and isBook != ''"> and c.is_book = #{isBook}</if>
+            <if test="bookTime != null "> and c.book_time = #{bookTime}</if>
+            <if test="paymentStatue != null  and paymentStatue != ''"> and c.payment_statue = #{paymentStatue}</if>
+            <if test="bookPerson != null  and bookPerson != ''"> and c.book_person = #{bookPerson}</if>
+            <if test="payment != null  and payment != ''"> and c.payment = #{payment}</if>
+            <if test="collectionRemark != null  and collectionRemark != ''"> and c.collection_remark = #{collectionRemark}</if>
+            <if test="costId != null "> and c.cost_id = #{costId}</if>
+            <if test="houseId != null "> and c.house_id = #{houseId}</if>
+            <if test="ownerId != null "> and c.owner_id = #{ownerId}</if>
         </where>
     </select>
     
     <select id="selectHyCollectionById" parameterType="Long" resultMap="HyCollectionResult">
         <include refid="selectHyCollectionVo"/>
-        where id = #{id}
+        where c.id = #{id}
     </select>
         
     <insert id="insertHyCollection" parameterType="HyCollection">
         insert into hy_collection
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
-            <if test="manageProjects != null">manage_projects,</if>
             <if test="applyTime != null">apply_time,</if>
             <if test="payee != null">payee,</if>
-            <if test="startTime != null">start_time,</if>
-            <if test="endTime != null">end_time,</if>
             <if test="amount != null">amount,</if>
-            <if test="collection != null">collection,</if>
+            <if test="isCollection != null">is_collection,</if>
+            <if test="paymentPerson != null">payment_person,</if>
             <if test="collectionTime != null">collection_time,</if>
-            <if test="collectionPerson != null">collection_person,</if>
-            <if test="bookkeeping != null">bookkeeping,</if>
+            <if test="isBook != null">is_book,</if>
             <if test="bookTime != null">book_time,</if>
+            <if test="paymentStatue != null">payment_statue,</if>
             <if test="bookPerson != null">book_person,</if>
-            <if test="brake != null">brake,</if>
+            <if test="payment != null">payment,</if>
+            <if test="collectionRemark != null">collection_remark,</if>
+            <if test="costId != null">cost_id,</if>
+            <if test="houseId != null">house_id,</if>
+            <if test="ownerId != null">owner_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id},</if>
-            <if test="manageProjects != null">#{manageProjects},</if>
             <if test="applyTime != null">#{applyTime},</if>
             <if test="payee != null">#{payee},</if>
-            <if test="startTime != null">#{startTime},</if>
-            <if test="endTime != null">#{endTime},</if>
             <if test="amount != null">#{amount},</if>
-            <if test="collection != null">#{collection},</if>
+            <if test="isCollection != null">#{isCollection},</if>
+            <if test="paymentPerson != null">#{paymentPerson},</if>
             <if test="collectionTime != null">#{collectionTime},</if>
-            <if test="collectionPerson != null">#{collectionPerson},</if>
-            <if test="bookkeeping != null">#{bookkeeping},</if>
+            <if test="isBook != null">#{isBook},</if>
             <if test="bookTime != null">#{bookTime},</if>
+            <if test="paymentStatue != null">#{paymentStatue},</if>
             <if test="bookPerson != null">#{bookPerson},</if>
-            <if test="brake != null">#{brake},</if>
+            <if test="payment != null">#{payment},</if>
+            <if test="collectionRemark != null">#{collectionRemark},</if>
+            <if test="costId != null">#{costId},</if>
+            <if test="houseId != null">#{houseId},</if>
+            <if test="ownerId != null">#{ownerId},</if>
          </trim>
     </insert>
 
     <update id="updateHyCollection" parameterType="HyCollection">
         update hy_collection
         <trim prefix="SET" suffixOverrides=",">
-            <if test="manageProjects != null">manage_projects = #{manageProjects},</if>
             <if test="applyTime != null">apply_time = #{applyTime},</if>
             <if test="payee != null">payee = #{payee},</if>
-            <if test="startTime != null">start_time = #{startTime},</if>
-            <if test="endTime != null">end_time = #{endTime},</if>
             <if test="amount != null">amount = #{amount},</if>
-            <if test="collection != null">collection = #{collection},</if>
+            <if test="isCollection != null">is_collection = #{isCollection},</if>
+            <if test="paymentPerson != null">payment_person = #{paymentPerson},</if>
             <if test="collectionTime != null">collection_time = #{collectionTime},</if>
-            <if test="collectionPerson != null">collection_person = #{collectionPerson},</if>
-            <if test="bookkeeping != null">bookkeeping = #{bookkeeping},</if>
+            <if test="isBook != null">is_book = #{isBook},</if>
             <if test="bookTime != null">book_time = #{bookTime},</if>
+            <if test="paymentStatue != null">payment_statue = #{paymentStatue},</if>
             <if test="bookPerson != null">book_person = #{bookPerson},</if>
-            <if test="brake != null">brake = #{brake},</if>
+            <if test="payment != null">payment = #{payment},</if>
+            <if test="collectionRemark != null">collection_remark = #{collectionRemark},</if>
+            <if test="costId != null">cost_id = #{costId},</if>
+            <if test="houseId != null">house_id = #{houseId},</if>
+            <if test="ownerId != null">owner_id = #{ownerId},</if>
         </trim>
         where id = #{id}
     </update>

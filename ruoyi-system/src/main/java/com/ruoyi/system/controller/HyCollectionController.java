@@ -1,10 +1,6 @@
 package com.ruoyi.system.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.system.constants.Constants;
 import com.ruoyi.system.domain.HyCollection;
 import com.ruoyi.system.service.IHyCollectionService;
 
@@ -34,116 +29,129 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 收款管理 Collection managementController
  * 
  * @author ruoyi
- * @date 2021-01-04
+ * @date 2021-05-29
  */
 @Controller
 @RequestMapping("/system/collection")
-@Api(tags = "航宇物业，收款管理 controller")
-public class HyCollectionController extends BaseController {
-	private String prefix = "system/collection";
+@Api(tags = "收款管理 Collection managementController")
+public class HyCollectionController extends BaseController
+{
+    private String prefix = "system/collection";
 
-	@Autowired
-	private IHyCollectionService hyCollectionService;
+    @Autowired
+    private IHyCollectionService hyCollectionService;
 
-	@RequiresPermissions("system:collection:view")
-	@GetMapping()
-	public String collection() {
-		return prefix + "/collection";
-	}
+    @RequiresPermissions("system:collection:view")
+    @GetMapping()
+    public String collection()
+    {
+        return prefix + "/collection";
+    }
 
-	/**
-	 * 查询收款管理 Collection management列表
-	 */
-	@RequiresPermissions("system:collection:list")
-	@ApiOperation("查询收款管理")
-	@ApiImplicitParams({ @ApiImplicitParam(name = "hyCollection", value = "项目实体类", required = true), })
-	@PostMapping("/list")
-	@ResponseBody
-	public TableDataInfo list(HyCollection hyCollection) {
-		startPage();
-		List<HyCollection> list = hyCollectionService.selectHyCollectionList(hyCollection);
-		List<Map<String, Object>> reList = new ArrayList<>();
-		for (HyCollection hc : list) {
-			Map<String, Object> map = new HashMap<>();
-			map = Constants.REFLECT_UTIL.convertMap(hc);
-			reList.add(map);
-		}
-		return getDataTable(list,  reList);
-	}
+    /**
+     * 查询收款管理 Collection management列表
+     */
+    @ApiOperation("收款管理 Collection management")
+    @ApiImplicitParams({ 
+		@ApiImplicitParam(name = "hyCollection", value = "项目实体类hyCollection", required = true),
+	})
+    @RequiresPermissions("system:collection:list")
+    @PostMapping("/list")
+    @ResponseBody
+    public TableDataInfo list(HyCollection hyCollection)
+    {
+        startPage();
+        List<HyCollection> list = hyCollectionService.selectHyCollectionList(hyCollection);
+        return getDataTable(list);
+    }
 
-	/**
-	 * 导出收款管理 Collection management列表
-	 */
-	@RequiresPermissions("system:collection:export")
-	@Log(title = "收款管理", businessType = BusinessType.EXPORT)
-	@ApiOperation("导出收款管理")
-	@ApiImplicitParams({ @ApiImplicitParam(name = "hyCollection", value = "项目实体类", required = true), })
-	@PostMapping("/export")
-	@ResponseBody
-	public AjaxResult export(HyCollection hyCollection) {
-		List<HyCollection> list = hyCollectionService.selectHyCollectionList(hyCollection);
-		ExcelUtil<HyCollection> util = new ExcelUtil<HyCollection>(HyCollection.class);
-		return util.exportExcel(list, "collection");
-	}
+    /**
+     * 导出收款管理 Collection management列表
+     */
+    @ApiOperation("收款管理 Collection management")
+    @ApiImplicitParams({ 
+		@ApiImplicitParam(name = "hyCollection", value = "项目实体类hyCollection", required = true),
+	})
+    @RequiresPermissions("system:collection:export")
+    @Log(title = "收款管理 Collection management", businessType = BusinessType.EXPORT)
+    @PostMapping("/export")
+    @ResponseBody
+    public AjaxResult export(HyCollection hyCollection)
+    {
+        List<HyCollection> list = hyCollectionService.selectHyCollectionList(hyCollection);
+        ExcelUtil<HyCollection> util = new ExcelUtil<HyCollection>(HyCollection.class);
+        return util.exportExcel(list, "collection");
+    }
 
-	/**
-	 * 新增收款管理 Collection management
-	 */
-	@GetMapping("/add")
-	@ApiOperation("新增收款管理")
-	@ApiImplicitParams({ @ApiImplicitParam(name = "hyCollection", value = "项目实体类", required = true), })
-	public String add() {
-		return prefix + "/add";
-	}
+    /**
+     * 新增收款管理 Collection management
+     */
+    @GetMapping("/add")
+    public String add()
+    {
+        return prefix + "/add";
+    }
 
-	/**
-	 * 新增保存收款管理 Collection management
-	 */
-	@RequiresPermissions("system:collection:add")
-	@Log(title = "收款管理", businessType = BusinessType.INSERT)
-	@ApiOperation("新增保存收款管理")
-	@ApiImplicitParams({ @ApiImplicitParam(name = "hyCollection", value = "项目实体类", required = true), })
-	@PostMapping("/add")
-	@ResponseBody
-	public AjaxResult addSave(HyCollection hyCollection) {
-		return toAjax(hyCollectionService.insertHyCollection(hyCollection));
-	}
+    /**
+     * 新增保存收款管理 Collection management
+     */
+    @ApiOperation("收款管理 Collection management")
+    @ApiImplicitParams({ 
+		@ApiImplicitParam(name = "hyCollection", value = "项目实体类hyCollection", required = true),
+	})
+    @RequiresPermissions("system:collection:add")
+    @Log(title = "收款管理 Collection management", businessType = BusinessType.INSERT)
+    @PostMapping("/add")
+    @ResponseBody
+    public AjaxResult addSave(HyCollection hyCollection)
+    {
+        return toAjax(hyCollectionService.insertHyCollection(hyCollection));
+    }
 
-	/**
-	 * 修改收款管理 Collection management
-	 */
-	@ApiOperation("修改收款管理")
-	@ApiImplicitParams({ @ApiImplicitParam(name = "hyCollection", value = "项目实体类", required = true), })
-	@GetMapping("/edit/{id}")
-	public String edit(@PathVariable("id") Long id, ModelMap mmap) {
-		HyCollection hyCollection = hyCollectionService.selectHyCollectionById(id);
-		mmap.put("hyCollection", hyCollection);
-		return prefix + "/edit";
-	}
+    /**
+     * 修改收款管理 Collection management
+     */
+    @ApiOperation("收款管理 Collection management")
+    @ApiImplicitParams({ 
+		@ApiImplicitParam(name = "id", value = "主键id", required = true),
+	})
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable("id") Long id, ModelMap mmap)
+    {
+        HyCollection hyCollection = hyCollectionService.selectHyCollectionById(id);
+        mmap.put("hyCollection", hyCollection);
+        return prefix + "/edit";
+    }
 
-	/**
-	 * 修改保存收款管理 Collection management
-	 */
-	@RequiresPermissions("system:collection:edit")
-	@Log(title = "收款管理", businessType = BusinessType.UPDATE)
-	@ApiOperation("修改保存收款管理")
-	@ApiImplicitParams({ @ApiImplicitParam(name = "hyCollection", value = "项目实体类", required = true), })
-	@PostMapping("/edit")
-	@ResponseBody
-	public AjaxResult editSave(HyCollection hyCollection) {
-		return toAjax(hyCollectionService.updateHyCollection(hyCollection));
-	}
+    /**
+     * 修改保存收款管理 Collection management
+     */
+    @ApiOperation("收款管理 Collection management")
+    @ApiImplicitParams({ 
+		@ApiImplicitParam(name = "hyCollection", value = "项目实体类hyCollection", required = true),
+	})
+    @RequiresPermissions("system:collection:edit")
+    @Log(title = "收款管理 Collection management", businessType = BusinessType.UPDATE)
+    @PostMapping("/edit")
+    @ResponseBody
+    public AjaxResult editSave(HyCollection hyCollection)
+    {
+        return toAjax(hyCollectionService.updateHyCollection(hyCollection));
+    }
 
-	/**
-	 * 删除收款管理 Collection management
-	 */
-	@RequiresPermissions("system:collection:remove")
-	@Log(title = "收款管理", businessType = BusinessType.DELETE)
-	@ApiOperation("删除收款管理")
-	@ApiImplicitParams({ @ApiImplicitParam(name = "ids", value = "ids", required = true), })
-	@PostMapping("/remove")
-	@ResponseBody
-	public AjaxResult remove(String ids) {
-		return toAjax(hyCollectionService.deleteHyCollectionByIds(ids));
-	}
+    /**
+     * 删除收款管理 Collection management
+     */
+    @ApiOperation("收款管理 Collection management")
+    @ApiImplicitParams({ 
+		@ApiImplicitParam(name = "ids", value = "ids", required = true),
+	})
+    @RequiresPermissions("system:collection:remove")
+    @Log(title = "收款管理 Collection management", businessType = BusinessType.DELETE)
+    @PostMapping( "/remove")
+    @ResponseBody
+    public AjaxResult remove(String ids)
+    {
+        return toAjax(hyCollectionService.deleteHyCollectionByIds(ids));
+    }
 }

@@ -1,201 +1,175 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
-<th:block th:include="include :: header('修改收款管理 ')" />
-<th:block th:include="include :: datetimepicker-css" />
+    <th:block th:include="include :: header('修改收款管理 Collection management')" />
+    <th:block th:include="include :: datetimepicker-css" />
 </head>
 <body class="white-bg">
-	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
-		<form class="form-horizontal m" id="form-collection-edit"
-			th:object="${hyCollection}">
-			<input name="id" th:field="*{id}" type="hidden">
-			<div class="form-group">
-				<label class="col-sm-3 control-label">管理项目：</label>
-				<div class="col-sm-8">
-					<input id="manageProjects" name="manageProjects" th:field="*{manageProjects}"
-						class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-3 control-label">申请时间：</label>
-				<div class="col-sm-8">
-					<div class="input-group date">
-						<input name="applyTime"
-							th:value="${#dates.format(hyCollection.applyTime, 'yyyy-MM-dd')}"
-							class="form-control" placeholder="yyyy-MM-dd" type="text">
-						<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-					</div>
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-3 control-label">收款人：</label>
-				<div class="col-sm-8">
-					<input id="payee" name="payee" th:field="*{payee}" class="form-control"
-						type="text">
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-3 control-label">开始时间：</label>
-				<div class="col-sm-8">
-					<div class="input-group date">
-						<input name="startTime"
-							th:value="${#dates.format(hyCollection.startTime, 'yyyy-MM-dd')}"
-							class="form-control" placeholder="yyyy-MM-dd" type="text">
-						<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-					</div>
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-3 control-label">结束时间：</label>
-				<div class="col-sm-8">
-					<div class="input-group date">
-						<input name="endTime"
-							th:value="${#dates.format(hyCollection.endTime, 'yyyy-MM-dd')}"
-							class="form-control" placeholder="yyyy-MM-dd" type="text">
-						<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-					</div>
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-3 control-label">总金额：</label>
-				<div class="col-sm-8">
-					<input id="amount" name="amount" th:field="*{amount}" class="form-control"
-						type="text">
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-3 control-label">是否收款：</label>
-				<div class="col-sm-8">
-					<select name="collection" th:field="*{collection}" class="form-control" th:with="type=${@dict.getType('sys_yes_no')}">
-						<option value="">请选择</option>
-						<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-					</select>
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-3 control-label">收款时间：</label>
-				<div class="col-sm-8">
-					<div class="input-group date">
-						<input name="collectionTime"
-							th:value="${#dates.format(hyCollection.collectionTime, 'yyyy-MM-dd')}"
-							class="form-control" placeholder="yyyy-MM-dd" type="text">
-						<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-					</div>
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-3 control-label">财务收款人：</label>
-				<div class="col-sm-8">
-					<input id="collectionPerson" name="collectionPerson" th:field="*{collectionPerson}"
-						class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-3 control-label">是否记账：</label>
-				<div class="col-sm-8">
-					<select name="bookkeeping" th:field="*{bookkeeping}" class="form-control" th:with="type=${@dict.getType('sys_yes_no')}">
-						<option value="">请选择</option>
-						<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-					</select>
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-3 control-label">记账时间：</label>
-				<div class="col-sm-8">
-					<div class="input-group date">
-						<input name="bookTime"
-							th:value="${#dates.format(hyCollection.bookTime, 'yyyy-MM-dd')}"
-							class="form-control" placeholder="yyyy-MM-dd" type="text">
-						<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-					</div>
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-3 control-label">财务记账人：</label>
-				<div class="col-sm-8">
-					<input id="bookPerson" name="bookPerson" th:field="*{bookPerson}"
-						class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-3 control-label">备注：</label>
-				<div class="col-sm-8">
-					<input name="brake" th:field="*{brake}" class="form-control"
-						type="text">
-				</div>
-			</div>
-		</form>
-	</div>
-	<th:block th:include="include :: footer" />
-	<th:block th:include="include :: datetimepicker-js" />
-	<script th:inline="javascript">
-		var prefix = ctx + "system/collection";
-	       $("#form-collection-edit").validate({
-	        	onkeyup:false,
-	        	rules:{
-	        		manageProjects:{
-	        			required:true,
-	        			maxlength:50,
-	        		},
-	        		payee:{
-	        			required:true,
-	        			maxlength:50,
-	        		},
-	        		amount:{
-	        			required:true,
-	        			maxlength:50,
-	        		},
-	        		collectionPerson:{
-	        			required:true,
-	        			maxlength:50,
-	        		},
-	        		bookPerson:{
-	        			required:true,
-	        			maxlength:50,
-	        		},
-	        		brake:{
-	        			maxlength:255,
-	        		}
-	        	},
-	            focusCleanup: true
-	        });
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-collection-edit" th:object="${hyCollection}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">申请时间：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input name="applyTime" th:value="${#dates.format(hyCollection.applyTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">收款人：</label>
+                <div class="col-sm-8">
+                    <input name="payee" th:field="*{payee}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">开始时间：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input name="startTime" th:value="${#dates.format(hyCollection.startTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">结束时间：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input name="endTime" th:value="${#dates.format(hyCollection.endTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">总金额：</label>
+                <div class="col-sm-8">
+                    <input name="amount" th:field="*{amount}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">是否收款：</label>
+                <div class="col-sm-8">
+                    <input name="isCollection" th:field="*{isCollection}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">交款人：</label>
+                <div class="col-sm-8">
+                    <input name="paymentPerson" th:field="*{paymentPerson}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">收款时间：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input name="collectionTime" th:value="${#dates.format(hyCollection.collectionTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">是否记账：</label>
+                <div class="col-sm-8">
+                    <input name="isBook" th:field="*{isBook}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">记账时间：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input name="bookTime" th:value="${#dates.format(hyCollection.bookTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">是否交款：</label>
+                <div class="col-sm-8">
+                    <input name="paymentStatue" th:field="*{paymentStatue}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">财务记账人：</label>
+                <div class="col-sm-8">
+                    <input name="bookPerson" th:field="*{bookPerson}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">交款方式：</label>
+                <div class="col-sm-8">
+                    <input name="payment" th:field="*{payment}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">备注：</label>
+                <div class="col-sm-8">
+                    <input name="collectionRemark" th:field="*{collectionRemark}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">费用项目id：</label>
+                <div class="col-sm-8">
+                    <input name="costId" th:field="*{costId}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">房屋id：</label>
+                <div class="col-sm-8">
+                    <input name="houseId" th:field="*{houseId}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">业主id：</label>
+                <div class="col-sm-8">
+                    <input name="ownerId" th:field="*{ownerId}" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: datetimepicker-js" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/collection";
+        $("#form-collection-edit").validate({
+            focusCleanup: true
+        });
 
-		function submitHandler() {
-			if ($.validate.form()) {
-				$.operate.save(prefix + "/edit", $('#form-collection-edit')
-						.serialize());
-			}
-		}
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-collection-edit').serialize());
+            }
+        }
 
-		$("input[name='applyTime']").datetimepicker({
-			format : "yyyy-mm-dd",
-			minView : "month",
-			autoclose : true
-		});
+        $("input[name='applyTime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
 
-		$("input[name='startTime']").datetimepicker({
-			format : "yyyy-mm-dd",
-			minView : "month",
-			autoclose : true
-		});
+        $("input[name='startTime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
 
-		$("input[name='endTime']").datetimepicker({
-			format : "yyyy-mm-dd",
-			minView : "month",
-			autoclose : true
-		});
+        $("input[name='endTime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
 
-		$("input[name='collectionTime']").datetimepicker({
-			format : "yyyy-mm-dd",
-			minView : "month",
-			autoclose : true
-		});
+        $("input[name='collectionTime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
 
-		$("input[name='bookTime']").datetimepicker({
-			format : "yyyy-mm-dd",
-			minView : "month",
-			autoclose : true
-		});
-	</script>
+        $("input[name='bookTime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+    </script>
 </body>
 </html>

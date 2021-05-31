@@ -1,23 +1,50 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
-    <th:block th:include="include :: header('新增收款管理 ')" />
+    <th:block th:include="include :: header('新增收款管理 Collection management')" />
     <th:block th:include="include :: datetimepicker-css" />
 </head>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
         <form class="form-horizontal m" id="form-collection-add">
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">管理项目：</label>
+        	<div class="form-group">    
+                <label class="col-sm-3 control-label">费用项目：</label>
                 <div class="col-sm-8">
-                    <input id="manageProjects" name="manageProjects" class="form-control" type="text">
+                     <select id="costId" name="costId" class="form-control" th:with="type=${@cost.getCost()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.costItems}" th:value="${data.id}"></option>
+			 	    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">房屋名称：</label>
+                <div class="col-sm-8">
+                    <select class="form-control m-b" name="houseId" th:with="type=${@houseInf.getHouseInf()}">
+	                  		<option value="">请选择</option>
+	                  		<option th:each="dict : ${type}" th:text="${dict.houseName}" th:value="${dict.id}"></option>
+	                </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">业主名称：</label>
+                <div class="col-sm-8">
+                    <select name="ownerId" class="form-control" th:with="type=${@ownerRegistration.getOwnerRegistration()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.ownerName}" th:value="${data.id}"></option>
+			 	    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">总金额：</label>
+                <div class="col-sm-8">
+                    <input name="amount" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">申请时间：</label>
                 <div class="col-sm-8">
                     <div class="input-group date">
-                        <input name="applyTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <input id="applyTime" name="applyTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                     </div>
                 </div>
@@ -25,85 +52,35 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">收款人：</label>
                 <div class="col-sm-8">
-                    <input id="payee" name="payee" class="form-control" type="text">
+                    <input name="payee" class="form-control" type="text">
                 </div>
             </div>
+            
+            
             <div class="form-group">    
-                <label class="col-sm-3 control-label">开始时间：</label>
+                <label class="col-sm-3 control-label">收款时间：</label>
                 <div class="col-sm-8">
                     <div class="input-group date">
-                        <input name="startTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <input id="collectionTime" name="collectionTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                     </div>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">结束时间：</label>
-                <div class="col-sm-8">
-                    <div class="input-group date">
-                        <input name="endTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">总金额：</label>
-                <div class="col-sm-8">
-                    <input id="amount" name="amount" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">是否收款：</label>
                 <div class="col-sm-8">
-                    <select id="collection" name="collection" class="form-control" th:with="type=${@dict.getType('sys_yes_no')}">
-						<option value="">请选择</option>
-						<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                    <select id="isCollection" name="isCollection" class="form-control" th:with="type=${@dict.getType('sys_yes_no')}">
+							<option value="">请选择</option>
+							<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 					</select>
                 </div>
             </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">收款时间：</label>
-                <div class="col-sm-8">
-                    <div class="input-group date">
-                        <input name="collectionTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">财务收款人：</label>
-                <div class="col-sm-8">
-                    <input id="collectionPerson" name="collectionPerson" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">是否记账：</label>
-                <div class="col-sm-8">
-                    <select id="bookkeeping" name="bookkeeping" class="form-control" th:with="type=${@dict.getType('sys_yes_no')}">
-						<option value="">请选择</option>
-						<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-					</select>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">记账时间：</label>
-                <div class="col-sm-8">
-                    <div class="input-group date">
-                        <input name="bookTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">财务记账人：</label>
-                <div class="col-sm-8">
-                    <input id="bookPerson" name="bookPerson" class="form-control" type="text">
-                </div>
-            </div>
+                	<input id="isBook" name="isBook" class="form-control" type="hidden">
+                	<input id="paymentStatue" name="paymentStatue" class="form-control" type="hidden">
             <div class="form-group">    
                 <label class="col-sm-3 control-label">备注：</label>
                 <div class="col-sm-8">
-                    <input name="brake" class="form-control" type="text">
+                    <input name="collectionRemark" class="form-control" type="text">
                 </div>
             </div>
         </form>
@@ -113,35 +90,20 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/collection"
         $("#form-collection-add").validate({
-        	onkeyup:false,
-        	rules:{
-        		manageProjects:{
-        			required:true,
-        			maxlength:50,
-        		},
-        		payee:{
-        			required:true,
-        			maxlength:50,
-        		},
-        		amount:{
-        			required:true,
-        			maxlength:50,
-        			number:true,
-        		},
-        		collectionPerson:{
-        			required:true,
-        			maxlength:50,
-        		},
-        		bookPerson:{
-        			required:true,
-        			maxlength:50,
-        		},
-        		brake:{
-        			maxlength:255,
-        		}
-        		
-        	},
             focusCleanup: true
+        });
+        
+        $(function() {
+        	var date = new Date();
+        	var year = date.getFullYear();
+        	var Month = "0"+(date.getMonth()+1);
+        	var da = date.getDate();
+        	var dateStr = year+"-"+Month+"-"+da;
+        	$("#applyTime").val(dateStr);
+        	$("#collectionTime").val(dateStr);
+        	$("#isCollection").val(1);
+        	$("#isBook").val(1);
+        	$("#paymentStatue").val(1);
         });
 
         function submitHandler() {

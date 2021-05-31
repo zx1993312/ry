@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('收款管理列表')" />
+    <th:block th:include="include :: header('收款管理 Collection management列表')" />
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -10,10 +10,6 @@
                 <form id="formId">
                     <div class="select-list">
                         <ul>
-                            <li>
-                                <label>管理项目：</label>
-                                <input type="text" name="manageProjects"/>
-                            </li>
                             <li>
                                 <label>申请时间：</label>
                                 <input type="text" class="time-input" placeholder="请选择申请时间" name="applyTime"/>
@@ -32,42 +28,61 @@
                             </li>
                             <li>
                                 <label>总金额：</label>
-                                <input type="text" name="amount" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+                                <input type="text" name="amount"/>
                             </li>
                             <li>
                                 <label>是否收款：</label>
-                             	<select name="collection" class="form-control " th:with="type=${@dict.getType('sys_yes_no')}">
-	                                <option value="">请选择</option>
-									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                                </select>
+                                <select name="isCollection" th:with="type=${@dict.getType('sys_yes_no')}">
+										<option value="">请选择</option>
+										<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+								</select>
                             </li>
                             <li>
-                                <label>收款时间：</label>
-                                <input type="text" class="time-input" placeholder="请选择收款时间" name="collectionTime"/>
-                            </li>
-                            <li>
-                                <label>财务收款人：</label>
-                                <input type="text" name="collectionPerson"/>
+                                <label>交款人：</label>
+                                <input type="text" name="paymentPerson"/>
                             </li>
                             <li>
                                 <label>是否记账：</label>
-                           		<select name="bookkeeping" class="form-control " th:with="type=${@dict.getType('sys_yes_no')}">
-	                                <option value="">请选择</option>
-									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                                </select>
+                                <select name="isBook" th:with="type=${@dict.getType('sys_yes_no')}">
+										<option value="">请选择</option>
+										<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+								</select>
                             </li>
                             <li>
                                 <label>记账时间：</label>
                                 <input type="text" class="time-input" placeholder="请选择记账时间" name="bookTime"/>
                             </li>
                             <li>
+                                <label>是否交款：</label>
+                                <select name="paymentStatue" th:with="type=${@dict.getType('sys_yes_no')}">
+										<option value="">请选择</option>
+										<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+								</select>
+                            </li>
+                            <li>
                                 <label>财务记账人：</label>
                                 <input type="text" name="bookPerson"/>
                             </li>
                             <li>
-                                <label>备注：</label>
-                                <input type="text" name="brake"/>
+                                <label>交款方式：</label>
+                                <input type="text" name="payment"/>
                             </li>
+                            <li>
+                                <label>备注：</label>
+                                <input type="text" name="collectionRemark"/>
+                            </li>
+                            <!-- <li>
+                                <label>费用项目id：</label>
+                                <input type="text" name="costId"/>
+                            </li>
+                            <li>
+                                <label>房屋id：</label>
+                                <input type="text" name="houseId"/>
+                            </li>
+                            <li>
+                                <label>业主id：</label>
+                                <input type="text" name="ownerId"/>
+                            </li> -->
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                                 <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
@@ -119,71 +134,84 @@
                     visible: false
                 },
                 {
-                    field: 'manageProjects',
-                    title: '管理项目'
+                    field: 'hyCost.costItems',
+                    title: '费用项目'
+                },
+                {
+                    field: 'hyHouseInf.houseName',
+                    title: '房屋名称'
+                },
+                {
+                    field: 'hyOwnerRegistration.ownerName',
+                    title: '业主名称'
                 },
                 {
                     field: 'applyTime',
                     title: '申请时间'
                 },
                 {
-                    field: 'payee',
-                    title: '收款人'
-                },
-                {
-                    field: 'startTime',
-                    title: '开始时间'
-                },
-                {
-                    field: 'endTime',
-                    title: '结束时间'
-                },
-                {
                     field: 'amount',
                     title: '总金额'
                 },
                 {
-                    field: 'collection',
-                    title: '是否收款',
-                    formatter: function(value, item, index) {
-                    	switch(value){
-	                    	case "0" : value =  "是";break;
-	                    	case "1" : value =  "否";break;
-	                  
-	                	}
-		            	return value;
-		            }
+                    field: 'payee',
+                    title: '收款人'
                 },
                 {
                     field: 'collectionTime',
                     title: '收款时间'
                 },
                 {
-                    field: 'collectionPerson',
-                    title: '财务收款人'
-                },
-                {
-                    field: 'bookkeeping',
-                    title: '是否记账',
+                    field: 'isCollection',
+                    title: '是否收款',
                     formatter: function(value, item, index) {
                     	switch(value){
-	                    	case "0" : value =  "是";break;
-	                    	case "1" : value =  "否";break;
-	                  
-	                	}
-		            	return value;
-		            }
+                        	case '0' : value =  "是";break;
+                        	case '1' : value =  "否";break;
+                    	}
+    	            	return value;
+    	            }
+                },
+                {
+                    field: 'bookPerson',
+                    title: '记账人'
                 },
                 {
                     field: 'bookTime',
                     title: '记账时间'
                 },
                 {
-                    field: 'bookPerson',
-                    title: '财务记账人'
+                    field: 'isBook',
+                    title: '是否记账',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+                        	case '0' : value =  "是";break;
+                        	case '1' : value =  "否";break;
+                    	}
+    	            	return value;
+    	            }
                 },
                 {
-                    field: 'brake',
+                    field: 'paymentPerson',
+                    title: '交款人'
+                },
+                {
+                    field: 'payment',
+                    title: '交款方式'
+                },
+                {
+                    field: 'paymentStatue',
+                    title: '是否交款',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+                        	case '0' : value =  "是";break;
+                        	case '1' : value =  "否";break;
+                    	}
+    	            	return value;
+    	            }
+                },
+                {
+                    field: 'collectionRemark',
                     title: '备注'
                 },
                 {

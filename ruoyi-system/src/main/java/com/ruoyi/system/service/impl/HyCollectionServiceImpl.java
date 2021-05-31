@@ -129,7 +129,7 @@ public class HyCollectionServiceImpl implements IHyCollectionService
 	    String amount = hyCollection.getAmount()+"";
 	    Date applyTime = hyCollection.getApplyTime();
 	    String payment = hyCollection.getPayment();
-	    String brake = hyCollection.getBrake();
+	    String brake = hyCollection.getCollectionRemark();
 	    params.put("startTime", startTime);
 	    params.put("endTime", endTime);
 	    params.put("amount", amount);
