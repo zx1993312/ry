@@ -25,10 +25,6 @@ public class HyCollection extends BaseEntity
     @Excel(name = "申请时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date applyTime;
 
-    /** 收款人 */
-    @Excel(name = "收款人")
-    private String payee;
-
     /** 开始时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Excel(name = "开始时间", width = 30, dateFormat = "yyyy-MM-dd")
@@ -46,15 +42,15 @@ public class HyCollection extends BaseEntity
     /** 是否收款 */
     @Excel(name = "是否收款")
     private String isCollection;
-
-    /** 交款人 */
-    @Excel(name = "交款人")
-    private String paymentPerson;
-
+    
     /** 收款时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Excel(name = "收款时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date collectionTime;
+
+    /** 收款人 */
+    @Excel(name = "收款人")
+    private String payee;
 
     /** 是否记账 */
     @Excel(name = "是否记账")
@@ -64,18 +60,57 @@ public class HyCollection extends BaseEntity
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Excel(name = "记账时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date bookTime;
+    
+    /** 记账人 */
+    @Excel(name = "记账人")
+    private String bookPerson;
 
     /** 是否交款 */
     @Excel(name = "是否交款")
     private String paymentStatue;
-
-    /** 财务记账人 */
-    @Excel(name = "财务记账人")
-    private String bookPerson;
-
+    
     /** 交款方式 */
     @Excel(name = "交款方式")
     private String payment;
+    
+    /** 交款时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "交款时间", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date paymentTime;
+
+    /** 交款人 */
+    @Excel(name = "交款人")
+    private String paymentPerson;
+    
+    /** 是否延期 */
+    @Excel(name = "是否延期")
+    private String isDeferred;
+    
+    /** 延期原因 */
+    @Excel(name = "延期原因")
+    private String deferredCause;
+    
+    /** 延期时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "延期时间", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date deferredTime;
+    
+    /** 延期人 */
+    @Excel(name = "延期人")
+    private String deferredPerson;
+    
+    /** 是否退款 */
+    @Excel(name = "是否退款")
+    private String isRefund;
+    
+    /** 退款时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "退款时间", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date refundTime;
+    
+    /** 退款人 */
+    @Excel(name = "退款人")
+    private String refundPerson;
 
     /** 备注 */
     @Excel(name = "备注")
@@ -292,30 +327,82 @@ public class HyCollection extends BaseEntity
 		this.hyOwnerRegistration = hyOwnerRegistration;
 	}
 
+	public Date getPaymentTime() {
+		return paymentTime;
+	}
+
+	public void setPaymentTime(Date paymentTime) {
+		this.paymentTime = paymentTime;
+	}
+
+	public String getIsDeferred() {
+		return isDeferred;
+	}
+
+	public void setIsDeferred(String isDeferred) {
+		this.isDeferred = isDeferred;
+	}
+
+	public String getDeferredCause() {
+		return deferredCause;
+	}
+
+	public void setDeferredCause(String deferredCause) {
+		this.deferredCause = deferredCause;
+	}
+
+	public Date getDeferredTime() {
+		return deferredTime;
+	}
+
+	public void setDeferredTime(Date deferredTime) {
+		this.deferredTime = deferredTime;
+	}
+
+	public String getDeferredPerson() {
+		return deferredPerson;
+	}
+
+	public void setDeferredPerson(String deferredPerson) {
+		this.deferredPerson = deferredPerson;
+	}
+
+	public String getIsRefund() {
+		return isRefund;
+	}
+
+	public void setIsRefund(String isRefund) {
+		this.isRefund = isRefund;
+	}
+
+	public Date getRefundTime() {
+		return refundTime;
+	}
+
+	public void setRefundTime(Date refundTime) {
+		this.refundTime = refundTime;
+	}
+
+	public String getRefundPerson() {
+		return refundPerson;
+	}
+
+	public void setRefundPerson(String refundPerson) {
+		this.refundPerson = refundPerson;
+	}
+
 	@Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("applyTime", getApplyTime())
-            .append("payee", getPayee())
-            .append("startTime", getStartTime())
-            .append("endTime", getEndTime())
-            .append("amount", getAmount())
-            .append("isCollection", getIsCollection())
-            .append("paymentPerson", getPaymentPerson())
-            .append("collectionTime", getCollectionTime())
-            .append("isBook", getIsBook())
-            .append("bookTime", getBookTime())
-            .append("paymentStatue", getPaymentStatue())
-            .append("bookPerson", getBookPerson())
-            .append("payment", getPayment())
-            .append("collectionRemark", getCollectionRemark())
-            .append("costId", getCostId())
-            .append("houseId", getHouseId())
-            .append("ownerId", getOwnerId())
-            .append("hyCost", getHyCost())
-            .append("hyHouseInf", getHyHouseInf())
-            .append("hyOwnerRegistration", getHyOwnerRegistration())
-            .toString();
-    }
+	public String toString() {
+		return "HyCollection [id=" + id + ", applyTime=" + applyTime + ", startTime=" + startTime + ", endTime="
+				+ endTime + ", amount=" + amount + ", isCollection=" + isCollection + ", collectionTime="
+				+ collectionTime + ", payee=" + payee + ", isBook=" + isBook + ", bookTime=" + bookTime
+				+ ", bookPerson=" + bookPerson + ", paymentStatue=" + paymentStatue + ", payment=" + payment
+				+ ", paymentTime=" + paymentTime + ", paymentPerson=" + paymentPerson + ", isDeferred=" + isDeferred
+				+ ", deferredCause=" + deferredCause + ", deferredTime=" + deferredTime + ", deferredPerson="
+				+ deferredPerson + ", isRefund=" + isRefund + ", refundTime=" + refundTime + ", refundPerson="
+				+ refundPerson + ", collectionRemark=" + collectionRemark + ", costId=" + costId + ", hyCost=" + hyCost
+				+ ", houseId=" + houseId + ", hyHouseInf=" + hyHouseInf + ", ownerId=" + ownerId
+				+ ", hyOwnerRegistration=" + hyOwnerRegistration + "]";
+	}
+
 }

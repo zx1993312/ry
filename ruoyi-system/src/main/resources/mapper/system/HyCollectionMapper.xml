@@ -7,18 +7,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="HyCollection" id="HyCollectionResult">
         <result property="id"    column="id"    />
         <result property="applyTime"    column="apply_time"    />
-        <result property="payee"    column="payee"    />
         <result property="startTime"    column="start_time"    />
         <result property="endTime"    column="end_time"    />
         <result property="amount"    column="amount"    />
         <result property="isCollection"    column="is_collection"    />
-        <result property="paymentPerson"    column="payment_person"    />
         <result property="collectionTime"    column="collection_time"    />
+        <result property="payee"    column="payee"    />
         <result property="isBook"    column="is_book"    />
         <result property="bookTime"    column="book_time"    />
-        <result property="paymentStatue"    column="payment_statue"    />
         <result property="bookPerson"    column="book_person"    />
+        <result property="paymentStatue"    column="payment_statue"    />
         <result property="payment"    column="payment"    />
+        <result property="paymentTime"    column="payment_time"    />
+        <result property="paymentPerson"    column="payment_person"    />
+        <result property="isDeferred"    column="is_deferred"    />
+        <result property="deferredTime"    column="deferred_time"    />
+        <result property="deferredPerson"    column="deferred_person"    />
+        <result property="deferredCause"    column="deferred_cause"    />
+        <result property="isRefund"    column="is_refund"    />
+        <result property="refundTime"    column="refund_time"    />
+        <result property="refundPerson"    column="refund_person"    />
         <result property="collectionRemark"    column="collection_remark"    />
         <result property="costId"    column="cost_id"    />
         <result property="houseId"    column="house_id"    />
@@ -169,16 +177,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select 
         c.id, 
         c.apply_time, 
-        c.payee, 
         c.amount, 
         c.is_collection, 
-        c.payment_person, 
         c.collection_time, 
+        c.payee, 
         c.is_book, 
         c.book_time, 
-        c.payment_statue, 
         c.book_person, 
+        c.payment_statue, 
         c.payment, 
+        c.payment_time, 
+        c.payment_person, 
+        c.is_deferred,
+		c.deferred_time,
+		c.deferred_person,
+		c.deferred_cause,
+		c.is_refund,
+		c.refund_time,
+		c.refund_person,
         c.collection_remark, 
         c.cost_id, 
         c.house_id, 
@@ -211,6 +227,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="paymentStatue != null  and paymentStatue != ''"> and c.payment_statue = #{paymentStatue}</if>
             <if test="bookPerson != null  and bookPerson != ''"> and c.book_person = #{bookPerson}</if>
             <if test="payment != null  and payment != ''"> and c.payment = #{payment}</if>
+            <if test="paymentTime != null  and paymentTime != ''"> and c.payment_time = #{paymentTime}</if>
+            <if test="isDeferred != null  and isDeferred != ''"> and c.is_deferred = #{isDeferred}</if>
+            <if test="deferredTime != null  and deferredTime != ''"> and c.deferred_time = #{deferredTime}</if>
+            <if test="deferredPerson != null  and deferredPerson != ''"> and c.deferred_person = #{deferredPerson}</if>
+            <if test="deferredCause != null  and deferredCause != ''"> and c.deferred_cause = #{deferredCause}</if>
+            <if test="isRefund != null  and isRefund != ''"> and c.is_refund = #{isRefund}</if>
+            <if test="refundTime != null  and refundTime != ''"> and c.refund_time = #{refundTime}</if>
+            <if test="refundPerson != null  and refundPerson != ''"> and c.refund_person = #{refundPerson}</if>
             <if test="collectionRemark != null  and collectionRemark != ''"> and c.collection_remark = #{collectionRemark}</if>
             <if test="costId != null "> and c.cost_id = #{costId}</if>
             <if test="houseId != null "> and c.house_id = #{houseId}</if>
@@ -246,6 +270,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="paymentStatue != null">payment_statue,</if>
             <if test="bookPerson != null">book_person,</if>
             <if test="payment != null">payment,</if>
+            <if test="paymentTime != null">payment_time,</if>
+            <if test="isDeferred != null">is_deferred,</if>
+            <if test="deferredTime != null">deferred_time,</if>
+            <if test="deferredPerson != null">deferred_person,</if>
+            <if test="deferredCause != null">deferred_cause,</if>
+            <if test="isRefund != null">is_refund,</if>
+            <if test="refundTime != null">refund_time,</if>
+            <if test="refundPerson != null">refund_person,</if>
             <if test="collectionRemark != null">collection_remark,</if>
             <if test="costId != null">cost_id,</if>
             <if test="houseId != null">house_id,</if>
@@ -264,6 +296,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="paymentStatue != null">#{paymentStatue},</if>
             <if test="bookPerson != null">#{bookPerson},</if>
             <if test="payment != null">#{payment},</if>
+            <if test="paymentTime != null">#{paymentTime},</if>
+            <if test="isDeferred != null">#{isDeferred},</if>
+            <if test="deferredTime != null">#{deferredTime},</if>
+            <if test="deferredPerson != null">#{deferredPerson},</if>
+            <if test="deferredCause != null">#{deferredCause},</if>
+            <if test="isRefund != null">#{isRefund},</if>
+            <if test="refundTime != null">#{refundTime},</if>
+            <if test="refundPerson != null">#{refundPerson},</if>
             <if test="collectionRemark != null">#{collectionRemark},</if>
             <if test="costId != null">#{costId},</if>
             <if test="houseId != null">#{houseId},</if>
@@ -285,6 +325,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="paymentStatue != null">payment_statue = #{paymentStatue},</if>
             <if test="bookPerson != null">book_person = #{bookPerson},</if>
             <if test="payment != null">payment = #{payment},</if>
+            <if test="paymentTime != null">payment_time = #{paymentTime},</if>
+            <if test="isDeferred != null">is_deferred = #{isDeferred},</if>
+            <if test="deferredTime != null">deferred_time = #{deferredTime},</if>
+            <if test="deferredPerson != null">deferred_person = #{deferredPerson},</if>
+            <if test="deferredCause != null">deferred_cause = #{deferredCause},</if>
+            <if test="isRefund != null">is_refund = #{isRefund},</if>
+            <if test="refundTime != null">refund_time = #{refundTime},</if>
+            <if test="refundPerson != null">refundPerson = #{refundPerson},</if>
             <if test="collectionRemark != null">collection_remark = #{collectionRemark},</if>
             <if test="costId != null">cost_id = #{costId},</if>
             <if test="houseId != null">house_id = #{houseId},</if>
