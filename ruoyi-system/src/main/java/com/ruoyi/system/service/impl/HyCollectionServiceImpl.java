@@ -149,13 +149,24 @@ public class HyCollectionServiceImpl implements IHyCollectionService
 	    params.put("payment", payment);
 	    params.put("brake", brake);
 	    JasperPrint jasperPrint =JasperFillManager.fillReport(new FileInputStream(templateFile),params,new JREmptyDataSource());
-	    /*ServletOutputStream outputStream = response.getOutputStream();
-	    String filename="缴费通知单.pdf";
-	    //response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
-	    response.setContentType("application/pdf");
-	    response.setHeader("content-disposition", "attachment;filename="+new String(filename.getBytes(),"ISO8859-1"));
-	    JasperExportManager.exportReportToPdfStream(jasperPrint,outputStream);*/
 	    JasperExportManager.exportReportToPdfStream(jasperPrint,new FileOutputStream("d:\\交款报表.pdf"));
 	    return 1;
+	}
+
+	@Override
+	public int collectionPDF(HttpServletResponse response) throws Exception{
+		//1、获取模版文件
+	    File rootFile = new File(ResourceUtils.getURL("classpath:").getPath());
+	    File templateFile = new File(rootFile,"/pdf_template/collection_db.jasper");
+	    //2、准备数据库连接
+	    Map params = new HashMap();
+	    JasperPrint jasperPrint =JasperFillManager.fillReport(new FileInputStream(templateFile),params,getCon());
+	    JasperExportManager.exportReportToPdfStream(jasperPrint,new FileOutputStream("d:\\收款报表.pdf"));
+	    return 1;
+	}
+	private Connection getCon() throws Exception{
+	    Class.forName("com.mysql.cj.jdbc.Driver");
+	    Connection connection = DriverManager.getConnection("jdbc:mysql://39.105.185.22:3306/hy_database?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8","root","hangyu123.root");
+	    return connection;
 	}
 }

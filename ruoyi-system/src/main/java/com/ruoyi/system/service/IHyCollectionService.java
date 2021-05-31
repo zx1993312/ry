@@ -75,4 +75,11 @@ public interface IHyCollectionService
    	 * @throws Exception 
    	 */
 	public int downloadPDF(HyCollection hyCollection, HttpServletResponse response)throws Exception;
+	/**
+   	 * 导出PDF
+   	 * @param response
+   	 * @throws Exception 
+   	 */
+	public int collectionPDF(HttpServletResponse response)throws Exception;
+
 }
