@@ -72,6 +72,26 @@ public class HyPaymoneyController extends BaseController {
 		}
 		return getDataTable(list,  reList);
 	}
+	
+	/**
+	 * 查询交款管理 Collection management列表
+	 */
+	@RequiresPermissions("system:paymoney:list")
+	@ApiOperation("查询交款管理")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyCollection", value = "项目实体类", required = true), })
+	@PostMapping("/lists")
+	@ResponseBody
+	public TableDataInfo lists(HyCollection hyCollection) {
+		startPage();
+		List<HyCollection> list = hyCollectionService.selectHyPaymoneyList(hyCollection);
+		List<Map<String, Object>> reList = new ArrayList<>();
+		Map<String, Object> map = new HashMap<>();
+		for (HyCollection hc : list) {
+			map = Constants.REFLECT_UTIL.convertMap(hc);
+			reList.add(map);
+		}
+		return getDataTable(list,  reList);
+	}
 
 	/**
 	 * 导出交款管理 Collection management列表

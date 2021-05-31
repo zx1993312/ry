@@ -23,11 +23,11 @@
                                 <input type="text" name="payee"/>
                             </li> -->
                             <li>
-                                <label>开始时间：</label>
+                                <label>收款开始时间：</label>
                                 <input type="text" class="time-input" placeholder="请选择开始时间" id="startTime" name="startTime"/>
                             </li>
                             <li>
-                                <label>结束时间：</label>
+                                <label>收款结束时间：</label>
                                 <input type="text" class="time-input" placeholder="请选择结束时间" id="endTime" name="endTime"/>
                             </li>
                             <!-- <li>
@@ -146,7 +146,7 @@
 
         $(function() {
             var options = {
-                url: prefix + "/list",
+                url: prefix + "/lists",
                 createUrl: prefix + "/add",
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",

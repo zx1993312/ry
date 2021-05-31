@@ -26,6 +26,14 @@ public interface HyCollectionMapper
      * @return 收款管理 Collection management集合
      */
     public List<HyCollection> selectHyCollectionList(HyCollection hyCollection);
+    
+    /**
+     * 查询收款管理 Collection management列表
+     * 
+     * @param hyCollection 收款管理 Collection management
+     * @return 收款管理 Collection management集合
+     */
+    public List<HyCollection> selectHyPaymoneyList(HyCollection hyCollection);
 
     /**
      * 新增收款管理 Collection management

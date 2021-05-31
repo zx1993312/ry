@@ -64,6 +64,18 @@ public class HyCollectionServiceImpl implements IHyCollectionService
     {
         return hyCollectionMapper.selectHyCollectionList(hyCollection);
     }
+    
+    /**
+     * 查询收款管理 Collection management列表
+     * 
+     * @param hyCollection 收款管理 Collection management
+     * @return 收款管理 Collection management
+     */
+    @Override
+    public List<HyCollection> selectHyPaymoneyList(HyCollection hyCollection)
+    {
+    	return hyCollectionMapper.selectHyPaymoneyList(hyCollection);
+    }
 
     /**
      * 新增收款管理 Collection management

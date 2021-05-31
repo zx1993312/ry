@@ -11,41 +11,12 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                <label>入账类别：</label>
-                            
-                                <select id="entryType" name="entryType" >
-											<option value="">请选择</option>
-											<option value="0">已入账</option>
-											<option value="1">未入账</option>
-									</select>
+                                <label>收款开始时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择入账开始年月" name="startTime"/>
                             </li>
                             <li>
-                                <label>入账时间：</label>
-                                <input type="text" class="time-input" placeholder="请选择入账时间" name="entryDate"/>
-                            </li>
-                            <li>
-                                <label>入账人：</label>
-                                <input type="text" name="entryPerson"/>
-                            </li>
-                            <li>
-                                <label>入账范围：</label>
-                                <input type="text" name="entryRange"/>
-                            </li>
-                            <li>
-                                <label>入账开始年月：</label>
-                                <input type="text" class="time-input" placeholder="请选择入账开始年月" name="entryDateStr"/>
-                            </li>
-                            <li>
-                                <label>入账结束年月：</label>
-                                <input type="text" class="time-input" placeholder="请选择入账结束年月" name="entryDateEnd"/>
-                            </li>
-                            <li>
-                                <label>入账总金额：</label>
-                                <input type="text" name="entryAmount"/>
-                            </li>
-                            <li>
-                                <label>房屋编号：</label>
-                                <input type="text" name="houseNum"/>
+                                <label>收款结束时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择入账结束年月" name="endTime"/>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -54,16 +25,6 @@
                         </ul>
                     </div>
                 </form>
-            </div>
-
-            <div class="btn-group-sm" id="toolbar" role="group">
-             
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:entry:export">
-                    <i class="fa fa-download"></i> 导出
-                </a>
-                <a class="btn btn-danger" shiro:hasPermission="system:meter:print" onclick="printPage()">
-	                <i class="fa fa-print"></i> 打印
-				</a>
             </div>
             <div class="col-sm-12 select-table table-striped">
                 <table id="bootstrap-table"></table>
@@ -89,61 +50,98 @@
                 },
                 {
                     field: 'id',
-                    title: '主键',
+                    title: '收款审核ID',
                     visible: false
-                },
-                {
-                    field: 'entryType',
-                    title: '入账类别'
-                },
-                {
-                    field: 'entryDate',
-                    title: '入账时间'
-                },
-                {
-                    field: 'entryPerson',
-                    title: '入账人'
-                },
-                {
-                    field: 'entryRange',
-                    title: '入账范围'
-                },
-                {
-                    field: 'entryDateStr',
-                    title: '入账开始年月'
-                },
-                {
-                    field: 'entryDateEnd',
-                    title: '入账结束年月'
-                },
-                {
-                    field: 'entryAmount',
-                    title: '入账总金额'
-                },
-               
-                {
-                    field: 'hyCost.amountReceivable',
-                    title: '应收总金额'
                 },
                 {
                     field: 'hyCost.costItems',
                     title: '费用项目'
                 },
                 {
-                    field: 'hyAuditManagement.auditProcess',
-                    title: '审核流程'
+                    field: 'hyHouseInf.houseName',
+                    title: '房屋名称'
                 },
                 {
-                    field: 'hyAuditManagement.auditStatus',
-                    title: '审核状态',
-                    	 formatter: function(value, item, index) {
-                         	switch(value){
-     	                    	case 0 : value =  "未审核";break;
-     	                    	case 1 : value =  "已审核";break;
-     	                
-     	                	}
-     		            	return value;
-     		            }
+                    field: 'hyOwnerRegistration.ownerName',
+                    title: '业主名称'
+                },
+                {
+                    field: 'applyTime',
+                    title: '申请时间'
+                },
+                {
+                    field: 'amount',
+                    title: '总金额'
+                },
+                {
+                    field: 'payee',
+                    title: '收款人'
+                },
+                {
+                    field: 'collectionTime',
+                    title: '收款时间'
+                },
+                {
+                    field: 'isCollection',
+                    title: '是否收款',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+                        	case '0' : value =  "是";break;
+                        	case '1' : value =  "否";break;
+                    	}
+    	            	return value;
+    	            }
+                },
+                {
+                    field: 'bookPerson',
+                    title: '记账人'
+                },
+                {
+                    field: 'bookTime',
+                    title: '记账时间'
+                },
+                {
+                    field: 'isBook',
+                    title: '是否记账',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+                        	case '0' : value =  "是";break;
+                        	case '1' : value =  "否";break;
+                    	}
+    	            	return value;
+    	            }
+                },
+                {
+                    field: 'paymentPerson',
+                    title: '交款人'
+                },
+                {
+                    field: 'payment',
+                    title: '交款方式'
+                },
+                {
+                    field: 'paymentStatue',
+                    title: '是否交款',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+                        	case '0' : value =  "是";break;
+                        	case '1' : value =  "否";break;
+                    	}
+    	            	return value;
+    	            }
+                },
+                {
+                    field: 'collectionRemark',
+                    title: '备注'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>入账审核</a> ');
+                        return actions.join('');
+                    }
                 }]
             };
             $.table.init(options);

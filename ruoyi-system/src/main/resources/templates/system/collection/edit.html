@@ -9,10 +9,43 @@
         <form class="form-horizontal m" id="form-collection-edit" th:object="${hyCollection}">
             <input name="id" th:field="*{id}" type="hidden">
             <div class="form-group">    
+                <label class="col-sm-3 control-label">费用项目：</label>
+                <div class="col-sm-8">
+                     <select id="costId" name="costId" th:field="*{costId}" class="form-control" th:with="type=${@cost.getCost()}" onchange="changeHouse()">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.costItems}" th:value="${data.id}"></option>
+			 	    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">房屋名称：</label>
+                <div class="col-sm-8">
+                    <select class="form-control m-b" id="houseId" name="houseId" th:field="*{houseId}" th:with="type=${@houseInf.getHouseInf()}" disabled="disabled" onchange="changeOwner()">
+	                  		<option value="">请选择</option>
+	                  		<option th:each="dict : ${type}" th:text="${dict.houseName}" th:value="${dict.id}"></option>
+	                </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">业主名称：</label>
+                <div class="col-sm-8">
+                    <select id="ownerId" name="ownerId" th:field="*{ownerId}" class="form-control" th:with="type=${@ownerRegistration.getOwnerRegistration()}" disabled="disabled">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.ownerName}" th:value="${data.id}"></option>
+			 	    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">总金额：</label>
+                <div class="col-sm-8">
+                    <input name="amount" th:field="*{amount}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
                 <label class="col-sm-3 control-label">申请时间：</label>
                 <div class="col-sm-8">
                     <div class="input-group date">
-                        <input name="applyTime" th:value="${#dates.format(hyCollection.applyTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <input id="applyTime" name="applyTime" th:value="${#dates.format(hyCollection.applyTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                     </div>
                 </div>
@@ -23,106 +56,32 @@
                     <input name="payee" th:field="*{payee}" class="form-control" type="text">
                 </div>
             </div>
+            
+            
             <div class="form-group">    
-                <label class="col-sm-3 control-label">开始时间：</label>
+                <label class="col-sm-3 control-label">收款时间：</label>
                 <div class="col-sm-8">
                     <div class="input-group date">
-                        <input name="startTime" th:value="${#dates.format(hyCollection.startTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <input id="collectionTime" name="collectionTime" th:value="${#dates.format(hyCollection.collectionTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                     </div>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">结束时间：</label>
-                <div class="col-sm-8">
-                    <div class="input-group date">
-                        <input name="endTime" th:value="${#dates.format(hyCollection.endTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">总金额：</label>
-                <div class="col-sm-8">
-                    <input name="amount" th:field="*{amount}" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">是否收款：</label>
                 <div class="col-sm-8">
-                    <input name="isCollection" th:field="*{isCollection}" class="form-control" type="text">
+                    <select id="isCollection" name="isCollection" th:field="*{isCollection}" class="form-control" th:with="type=${@dict.getType('sys_yes_no')}">
+							<option value="">请选择</option>
+							<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+					</select>
                 </div>
             </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">交款人：</label>
-                <div class="col-sm-8">
-                    <input name="paymentPerson" th:field="*{paymentPerson}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">收款时间：</label>
-                <div class="col-sm-8">
-                    <div class="input-group date">
-                        <input name="collectionTime" th:value="${#dates.format(hyCollection.collectionTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">是否记账：</label>
-                <div class="col-sm-8">
-                    <input name="isBook" th:field="*{isBook}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">记账时间：</label>
-                <div class="col-sm-8">
-                    <div class="input-group date">
-                        <input name="bookTime" th:value="${#dates.format(hyCollection.bookTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">是否交款：</label>
-                <div class="col-sm-8">
-                    <input name="paymentStatue" th:field="*{paymentStatue}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">财务记账人：</label>
-                <div class="col-sm-8">
-                    <input name="bookPerson" th:field="*{bookPerson}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">交款方式：</label>
-                <div class="col-sm-8">
-                    <input name="payment" th:field="*{payment}" class="form-control" type="text">
-                </div>
-            </div>
+                	<input id="isBook" name="isBook" class="form-control" type="hidden">
+                	<input id="paymentStatue" name="paymentStatue" class="form-control" type="hidden">
             <div class="form-group">    
                 <label class="col-sm-3 control-label">备注：</label>
                 <div class="col-sm-8">
                     <input name="collectionRemark" th:field="*{collectionRemark}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">费用项目id：</label>
-                <div class="col-sm-8">
-                    <input name="costId" th:field="*{costId}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">房屋id：</label>
-                <div class="col-sm-8">
-                    <input name="houseId" th:field="*{houseId}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">业主id：</label>
-                <div class="col-sm-8">
-                    <input name="ownerId" th:field="*{ownerId}" class="form-control" type="text">
                 </div>
             </div>
         </form>
@@ -140,6 +99,10 @@
                 $.operate.save(prefix + "/edit", $('#form-collection-edit').serialize());
             }
         }
+        $(function() {
+        	$("#isBook").val(1);
+        	$("#paymentStatue").val(1);
+        });
 
         $("input[name='applyTime']").datetimepicker({
             format: "yyyy-mm-dd",
@@ -170,6 +133,55 @@
             minView: "month",
             autoclose: true
         });
+        var prefix1 = ctx + "system/customer"
+        //费用房屋业主
+        function changeHouse(){
+   			$("#houseId").removeAttr("disabled");
+   			$.ajax({
+                url: prefix1 + "/houseOrCostId",
+                data: {costId : $("#costId").val()},
+                dataType : 'json',
+                type: 'POST',
+                success: function (result) {
+                	console.log(result);
+                	var optArr = [];
+                	$("#houseId").empty();
+					$("#houseId").append("<option value=\"\">请选择</option>");
+                    for (var i = 0; i < result.length; i++) {
+                    	$("#houseId").append("<option value=" + result[i].id + ">" + result[i].houseName + "</option>");
+                    }
+                        
+                    // 缺一不可  
+                    $("#houseId").selectpicker('refresh');
+                    $("#houseId").selectpicker('render');
+
+                }
+            });
+   		}
+        var prefix2 = ctx + "system/inf"
+        function changeOwner(){
+        	$("#ownerId").removeAttr("disabled");
+   			$.ajax({
+                url: prefix2 + "/owner",
+                data: {id : $("#houseId").val()},
+                dataType : 'json',
+                type: 'POST',
+                success: function (result) {
+                	console.log(result);
+                	var optArr = [];
+                	$("#ownerId").empty();
+					$("#ownerId").append("<option value=\"\">请选择</option>");
+                    for (var i = 0; i < result.length; i++) {
+                    	$("#ownerId").append("<option value=" + result[i].id + ">" + result[i].ownerName + "</option>");
+                    }
+                        
+                    // 缺一不可  
+                    $("#ownerId").selectpicker('refresh');
+                    $("#ownerId").selectpicker('render');
+
+                }
+            });
+        }
     </script>
 </body>
 </html>

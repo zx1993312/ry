@@ -216,6 +216,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
     
+    <select id="selectHyPaymoneyList" parameterType="HyCollection" resultMap="HyCollectionResult">
+        <include refid="selectHyCollectionVo"/>
+        <where>  
+            <if test="startTime != null and endTime != null "> and c.collection_time between #{startTime} and #{endTime}</if>
+            and c.is_book = "0"
+        </where>
+    </select>
+    
     <select id="selectHyCollectionById" parameterType="Long" resultMap="HyCollectionResult">
         <include refid="selectHyCollectionVo"/>
         where c.id = #{id}

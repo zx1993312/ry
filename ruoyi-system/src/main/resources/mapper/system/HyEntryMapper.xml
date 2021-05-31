@@ -4,23 +4,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.system.mapper.HyEntryMapper">
 
-	<resultMap type="HyEntry" id="HyEntryResult">
-		<result property="id" column="id" />
-		<result property="entryType" column="entry_type" />
-		<result property="entryDate" column="entry_date" />
-		<result property="entryPerson" column="entry_person" />
-		<result property="entryRange" column="entry_range" />
-		<result property="entryDateStr" column="entry_date_str" />
-		<result property="entryDateEnd" column="entry_date_end" />
-		<result property="entryAmount" column="entry_amount" />
-		<result property="costId" column="cost_id" />
-		<result property="auditProcess" column="audit_process" />
-		<result property="auditStatus" column="audit_status" />
-		<association property="hyCost" column="id"
+	<resultMap type="HyCollection" id="HyCollectionResult">
+        <result property="id"    column="id"    />
+        <result property="applyTime"    column="apply_time"    />
+        <result property="payee"    column="payee"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="amount"    column="amount"    />
+        <result property="isCollection"    column="is_collection"    />
+        <result property="paymentPerson"    column="payment_person"    />
+        <result property="collectionTime"    column="collection_time"    />
+        <result property="isBook"    column="is_book"    />
+        <result property="bookTime"    column="book_time"    />
+        <result property="paymentStatue"    column="payment_statue"    />
+        <result property="bookPerson"    column="book_person"    />
+        <result property="payment"    column="payment"    />
+        <result property="collectionRemark"    column="collection_remark"    />
+        <result property="costId"    column="cost_id"    />
+        <result property="houseId"    column="house_id"    />
+        <result property="ownerId"    column="owner_id"    />
+        <association property="hyCost" column="id"
 			javaType="HyCost" resultMap="HyCostResult" />
-	</resultMap>
-
-	<resultMap type="HyCost" id="HyCostResult">
+        <association property="hyHouseInf" column="id"
+			javaType="HyHouseInf" resultMap="HyHouseInfResult" />
+        <association property="hyOwnerRegistration" column="id"
+			javaType="HyOwnerRegistration" resultMap="HyOwnerRegistrationResult" />
+    </resultMap>
+    
+    <resultMap type="HyCost" id="HyCostResult">
 		<result property="id" column="id" />
 		<result property="costItems" column="cost_items" />
 		<result property="expenseType" column="expense_type" />
@@ -54,8 +65,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="operationUser" column="operation_user" />
 		<result property="operationType" column="operation_type" />
 		<result property="deleteReason" column="delete_reason" />
-		<result property="advancePaymetnOffset"
-			column="advance_paymetn_offset" />
+		<result property="advancePaymentOffset"
+			column="advance_payment_offset" />
 		<result property="writeOff" column="write_off" />
 		<result property="refundAmount" column="refund_amount" />
 		<result property="amountArrears" column="amount_arrears" />
@@ -65,110 +76,145 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="frozenDate" column="frozen_date" />
 		<result property="frozenReason" column="frozen_reason" />
 		<result property="advanceStatus" column="advance_status" />
-		<result property="deliveryStatus" column="delivery_status" />
 		<result property="transferTenants" column="transfer_tenants" />
 		<result property="changeDate" column="change_date" />
-
+		<result property="billingMethod" column="billing_method" />
+		<result property="calculationStandard"
+			column="calculation_standard" />
+	</resultMap>
+	
+	<resultMap type="HyHouseInf" id="HyHouseInfResult">
+		<result property="id" column="id" />
+		<result property="houseNumber" column="house_number" />
+		<result property="houseName" column="house_name" />
+		<result property="builtUpArea" column="built_up_area" />
+		<result property="groupArea" column="group_area" />
+		<result property="unit" column="unit" />
+		<result property="floor" column="floor" />
+		<result property="sameUnitNumber" column="same_unit_number" />
+		<result property="areaType" column="area_type" />
+		<result property="bilingArea" column="biling_area" />
+		<result property="insideArea" column="inside_area" />
+		<result property="sharedArea" column="shared_area" />
+		<result property="gardenArea" column="garden_area" />
+		<result property="basementArea" column="basement_area" />
+		<result property="sharedLobbyArea" column="shared_lobby_area" />
+		<result property="sharedLayersArea" column="shared_layers_area" />
+		<result property="shareRatio" column="share_ratio" />
+		<result property="buildingStructure"
+			column="building_structure" />
+		<result property="parametersPer" column="parameters_per" />
+		<result property="houseLayout" column="house_layout" />
+		<result property="floorHeight" column="floor_height" />
+		<result property="natureProperty" column="nature_property" />
+		<result property="natureUse" column="nature_use" />
+		<result property="usageStatus" column="usage_status" />
+		<result property="occupancyStatus" column="occupancy_status" />
+		<result property="deliveryStatus" column="delivery_status" />
+		<result property="houseType" column="house_type" />
+		<result property="salesStatus" column="sales_status" />
+		<result property="purchaseContract" column="purchase_contract" />
+		<result property="marketingNum" column="marketing_num" />
+		<result property="deliveryStatusBefore" column="delivery_status_before" />
+		<result property="changeDate" column="change_date" />
+		<result property="changePerson" column="change_person" />
+		<result property="remark" column="remark" />
+		<result property="buildingId" column="building_id" />
+		<result property="ownerId" column="owner_id" />
+	</resultMap>
+	
+	<resultMap type="HyOwnerRegistration"
+		id="HyOwnerRegistrationResult">
+		<result property="id" column="id" />
+		<result property="ownerName" column="owner_name" />
+		<result property="fixedTelephone" column="fixed_telephone" />
+		<result property="mobilePhone" column="mobile_phone" />
+		<result property="idCardNum" column="id_card_num" />
+		<result property="suplierCategory" column="suplier_category" />
+		<result property="lockedNot" column="locked_not" />
+		<result property="accessNum" column="access_num" />
+		<result property="certificateName" column="certificate_name" />
+		<result property="customerCategoy" column="customer_categoy" />
+		<result property="faxPhone" column="fax_phone" />
+		<result property="contactAddress" column="contact_address" />
+		<result property="postalCode" column="postal_code" />
+		<result property="postalPreson" column="postal_preson" />
+		<result property="eMail" column="e_mail" />
+		<result property="phoneAccount" column="phone_account" />
+		<result property="bindingPhoneNum" column="binding_phone_num" />
+		<result property="coOwner" column="co_owner" />
+		<result property="ownerIdentification"
+			column="owner_identification" />
+		<result property="firName" column="fir_name" />
+		<result property="secName" column="sec_name" />
+		<result property="gender" column="gender" />
+		<result property="nationality" column="nationality" />
+		<result property="birthDate" column="birth_date" />
+		<result property="workUnit" column="work_unit" />
+		<result property="ownerJob" column="owner_job" />
+		<result property="ownerHobby" column="owner_hobby" />
+		<result property="ownerId" column="owner_id" />
+		<result property="taxpayerNum" column="taxpayer_num" />
+		<result property="ownerAddPhone" column="owner_add_phone" />
+		<result property="bankAccount" column="bank_account" />
+		<result property="collectionCategory"
+			column="collection_category" />
+		<result property="bankType" column="bank_type" />
+		<result property="bankNum" column="bank_num" />
+		<result property="bankAccountName" column="bank_account_name" />
+		<result property="projectId" column="project_id" />
 	</resultMap>
 
-	<sql id="selectHyEntryVo">
-		select
-		e.id,
-		e.entry_type,
-		e.entry_date,
-		e.entry_person,
-		e.entry_range,
-		e.entry_date_str,
-		e.entry_date_end,
-		e.entry_amount,
-		e.cost_id,
-		c.amount_receivable,
-		c.cost_items,
-		e.audit_process,
-		e.audit_status
-		from hy_entry e
-		left join hy_cost c on e.cost_id=c.id
-		where 1=1
-	</sql>
+	<sql id="selectHyCollectionVo">
+        select 
+        c.id, 
+        c.apply_time, 
+        c.payee, 
+        c.amount, 
+        c.is_collection, 
+        c.payment_person, 
+        c.collection_time, 
+        c.is_book, 
+        c.book_time, 
+        c.payment_statue, 
+        c.book_person, 
+        c.payment, 
+        c.collection_remark, 
+        c.cost_id, 
+        c.house_id, 
+        c.owner_id,
+        s.cost_items,
+        h.house_name,
+        o.owner_name
+        from 
+        hy_collection c
+        LEFT JOIN hy_cost s ON c.cost_id = s.id
+        LEFT JOIN hy_house_inf h ON c.house_id = h.id
+        LEFT JOIN hy_owner_registration o ON c.owner_id = o.id
+    </sql>
 
-	<select id="selectHyEntryList" parameterType="HyEntry"
-		resultMap="HyEntryResult">
-		<include refid="selectHyEntryVo" />
-		<if test="entryType != null "> and e.entry_type = #{entryType}</if>
-		<if test="entryDate != null "> and e.entry_date = #{entryDate}</if>
-		<if test="entryPerson != null  and entryPerson != ''"> and e.entry_person = #{entryPerson}</if>
-		<if test="entryRange != null  and entryRange != ''"> and e.entry_range = #{entryRange}</if>
-		<if test="entryDateStr != null "> and e.entry_date_str = #{entryDateStr}</if>
-		<if test="entryDateEnd != null "> and e.entry_date_end = #{entryDateEnd}</if>
-		<if test="entryAmount != null  and entryAmount != ''"> and e.entry_amount = #{entryAmount}</if>
-		<if test="costId != null  and costId != ''"> and e.cost_id = #{costId}</if>
-		<if test="auditProcess != null  and auditProcess != ''"> and e.audit_process = #{auditProcess}</if>
-		<if test="auditStatus != null  and auditStatus != ''"> and e.audit_status = #{auditStatus}</if>
-	</select>
+	<select id="selectHyCollectionList" parameterType="HyCollection" resultMap="HyCollectionResult">
+        <include refid="selectHyCollectionVo"/>
+        <where>  
+        	and c.is_book = "1"
+        	and c.is_collection = "0"
+            <if test="startTime != null and endTime != null "> and c.collection_time between #{startTime} and #{endTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyCollectionById" parameterType="Long" resultMap="HyCollectionResult">
+        <include refid="selectHyCollectionVo"/>
+        where c.id = #{id}
+    </select>
 
-	<select id="selectHyEntryById" parameterType="Long"
-		resultMap="HyEntryResult">
-		<include refid="selectHyEntryVo" />
-		where e.id = #{id}
-	</select>
-
-	<insert id="insertHyEntry" parameterType="HyEntry"
-		useGeneratedKeys="true" keyProperty="id">
-		insert into hy_entry
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="entryType != null">entry_type,</if>
-			<if test="entryDate != null">entry_date,</if>
-			<if test="entryPerson != null">entry_person,</if>
-			<if test="entryRange != null">entry_range,</if>
-			<if test="entryDateStr != null">entry_date_str,</if>
-			<if test="entryDateEnd != null">entry_date_end,</if>
-			<if test="entryAmount != null">entry_amount,</if>
-			<if test="costId != null">cost_id,</if>
-			<if test="auditProcess != null">audit_process</if>
-			<if test="auditStatus != null">audit_status</if>
-		</trim>
-		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="entryType != null">#{entryType},</if>
-			<if test="entryDate != null">#{entryDate},</if>
-			<if test="entryPerson != null">#{entryPerson},</if>
-			<if test="entryRange != null">#{entryRange},</if>
-			<if test="entryDateStr != null">#{entryDateStr},</if>
-			<if test="entryDateEnd != null">#{entryDateEnd},</if>
-			<if test="entryAmount != null">#{entryAmount},</if>
-			<if test="costId != null">#{costId},</if>
-			<if test="auditProcess != null">#{auditProcess},</if>
-			<if test="auditStatus != null">#{auditStatus},</if>
-		</trim>
-	</insert>
-
-	<update id="updateHyEntry" parameterType="HyEntry">
-		update hy_entry
-		<trim prefix="SET" suffixOverrides=",">
-			<if test="entryType != null">entry_type = #{entryType},</if>
-			<if test="entryDate != null">entry_date = #{entryDate},</if>
-			<if test="entryPerson != null">entry_person = #{entryPerson},</if>
-			<if test="entryRange != null">entry_range = #{entryRange},</if>
-			<if test="entryDateStr != null">entry_date_str = #{entryDateStr},</if>
-			<if test="entryDateEnd != null">entry_date_end = #{entryDateEnd},</if>
-			<if test="entryAmount != null">entry_amount = #{entryAmount},</if>
-			<if test="costId != null">cost_id = #{costId},</if>
-			<if test="auditProcess != null"> and audit_process = #{auditProcess},</if>
-			<if test="auditStatus != null"> and audit_status = #{auditStatus},</if>
-		</trim>
-		where id = #{id}
-	</update>
-
-	<delete id="deleteHyEntryById" parameterType="Long">
-		delete from
-		hy_entry where id = #{id}
-	</delete>
-
-	<delete id="deleteHyEntryByIds" parameterType="String">
-		delete from hy_entry where id in
-		<foreach item="id" collection="array" open="(" separator=","
-			close=")">
-			#{id}
-		</foreach>
-	</delete>
+	<update id="updateHyCollection" parameterType="HyCollection">
+        update hy_collection
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="isBook != null">is_book = #{isBook},</if>
+            <if test="bookTime != null">book_time = #{bookTime},</if>
+            <if test="bookPerson != null">book_person = #{bookPerson},</if>
+        </trim>
+        where id = #{id}
+    </update>
 
 </mapper>
