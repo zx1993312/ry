@@ -142,6 +142,18 @@ public class HyPaymoneyController extends BaseController {
 		mmap.put("hyCollection", hyCollection);
 		return prefix + "/edit";
 	}
+	
+	/**
+	 * 修改交款管理 Collection management
+	 */
+	@ApiOperation("修改交款管理")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyCollection", value = "项目实体类", required = true), })
+	@GetMapping("/edits/{id}")
+	public String edits(@PathVariable("id") Long id, ModelMap mmap) {
+		HyCollection hyCollection = hyCollectionService.selectHyCollectionById(id);
+		mmap.put("hyCollection", hyCollection);
+		return prefix + "/edits";
+	}
 
 	/**
 	 * 修改保存交款管理 Collection management

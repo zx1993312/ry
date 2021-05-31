@@ -247,6 +247,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
             <if test="startTime != null and endTime != null "> and c.collection_time between #{startTime} and #{endTime}</if>
             and c.is_book = "0"
+            and c.payment_statue = "1"
         </where>
     </select>
     

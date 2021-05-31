@@ -120,8 +120,54 @@
                     title: '交款方式'
                 },
                 {
+                    field: 'paymentTime',
+                    title: '交款时间'
+                },
+                {
                     field: 'paymentStatue',
                     title: '是否交款',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+                        	case '0' : value =  "是";break;
+                        	case '1' : value =  "否";break;
+                    	}
+    	            	return value;
+    	            }
+                },
+                {
+                    field: 'deferredPerson',
+                    title: '延期人'
+                },
+                {
+                    field: 'deferredCause',
+                    title: '延期原因'
+                },
+                {
+                    field: 'deferredTime',
+                    title: '延期时间'
+                },
+                {
+                    field: 'isDeferred',
+                    title: '是否延期',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+                        	case '0' : value =  "是";break;
+                        	case '1' : value =  "否";break;
+                    	}
+    	            	return value;
+    	            }
+                },
+                {
+                    field: 'refundPerson',
+                    title: '退款人'
+                },
+                {
+                    field: 'refundTime',
+                    title: '退款时间'
+                },
+                {
+                    field: 'isRefund',
+                    title: '是否退款',
                     formatter: function(value, item, index) {
                     	switch(value){
                         	case '0' : value =  "是";break;

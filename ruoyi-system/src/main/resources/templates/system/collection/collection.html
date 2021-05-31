@@ -11,14 +11,6 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                <label>申请时间：</label>
-                                <input type="text" class="time-input" placeholder="请选择申请时间" name="applyTime"/>
-                            </li>
-                            <li>
-                                <label>收款人：</label>
-                                <input type="text" name="payee"/>
-                            </li>
-                            <li>
                                 <label>收款开始时间：</label>
                                 <input type="text" class="time-input" placeholder="请选择开始时间" name="startTime"/>
                             </li>
@@ -31,41 +23,15 @@
                                 <input type="text" name="amount"/>
                             </li>
                             <li>
+                                <label>收款人：</label>
+                                <input type="text" name="payee"/>
+                            </li>
+                            <li>
                                 <label>是否收款：</label>
                                 <select name="isCollection" th:with="type=${@dict.getType('sys_yes_no')}">
 										<option value="">请选择</option>
 										<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 								</select>
-                            </li>
-                            <li>
-                                <label>交款人：</label>
-                                <input type="text" name="paymentPerson"/>
-                            </li>
-                            <li>
-                                <label>是否记账：</label>
-                                <select name="isBook" th:with="type=${@dict.getType('sys_yes_no')}">
-										<option value="">请选择</option>
-										<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-								</select>
-                            </li>
-                            <li>
-                                <label>记账时间：</label>
-                                <input type="text" class="time-input" placeholder="请选择记账时间" name="bookTime"/>
-                            </li>
-                            <li>
-                                <label>是否交款：</label>
-                                <select name="paymentStatue" th:with="type=${@dict.getType('sys_yes_no')}">
-										<option value="">请选择</option>
-										<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-								</select>
-                            </li>
-                            <li>
-                                <label>记账人：</label>
-                                <input type="text" name="bookPerson"/>
-                            </li>
-                            <li>
-                                <label>交款方式：</label>
-                                <input type="text" name="payment"/>
                             </li>
                             <li>
                                 <label>备注：</label>
@@ -99,9 +65,9 @@
                 <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:collection:edit">
                     <i class="fa fa-edit"></i> 修改
                 </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:collection:remove">
+                <!-- <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:collection:remove">
                     <i class="fa fa-remove"></i> 删除
-                </a>
+                </a> -->
                 <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:collection:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
@@ -200,8 +166,54 @@
                     title: '交款方式'
                 },
                 {
+                    field: 'paymentTime',
+                    title: '交款时间'
+                },
+                {
                     field: 'paymentStatue',
                     title: '是否交款',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+                        	case '0' : value =  "是";break;
+                        	case '1' : value =  "否";break;
+                    	}
+    	            	return value;
+    	            }
+                },
+                {
+                    field: 'deferredPerson',
+                    title: '延期人'
+                },
+                {
+                    field: 'deferredCause',
+                    title: '延期原因'
+                },
+                {
+                    field: 'deferredTime',
+                    title: '延期时间'
+                },
+                {
+                    field: 'isDeferred',
+                    title: '是否延期',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+                        	case '0' : value =  "是";break;
+                        	case '1' : value =  "否";break;
+                    	}
+    	            	return value;
+    	            }
+                },
+                {
+                    field: 'refundPerson',
+                    title: '退款人'
+                },
+                {
+                    field: 'refundTime',
+                    title: '退款时间'
+                },
+                {
+                    field: 'isRefund',
+                    title: '是否退款',
                     formatter: function(value, item, index) {
                     	switch(value){
                         	case '0' : value =  "是";break;

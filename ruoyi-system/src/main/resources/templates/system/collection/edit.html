@@ -78,6 +78,8 @@
             </div>
                 	<input id="isBook" name="isBook" class="form-control" type="hidden">
                 	<input id="paymentStatue" name="paymentStatue" class="form-control" type="hidden">
+                	<input id="isDeferred" name="isDeferred" class="form-control" type="hidden">
+                	<input id="isRefund" name="isRefund" class="form-control" type="hidden">
             <div class="form-group">    
                 <label class="col-sm-3 control-label">备注：</label>
                 <div class="col-sm-8">
@@ -102,6 +104,8 @@
         $(function() {
         	$("#isBook").val(1);
         	$("#paymentStatue").val(1);
+        	$("#isDeferred").val(1);
+        	$("#isRefund").val(1);
         });
 
         $("input[name='applyTime']").datetimepicker({
