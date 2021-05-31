@@ -161,64 +161,85 @@
                     visible: false
                 },
                 {
-                    field: 'applyTime',
-                    title: '申请时间'
+                    field: 'hyCost.costItems',
+                    title: '费用项目'
                 },
                 {
-                    field: 'payee',
-                    title: '收款人'
+                    field: 'hyHouseInf.houseName',
+                    title: '房屋名称'
+                },
+                {
+                    field: 'hyOwnerRegistration.ownerName',
+                    title: '业主名称'
+                },
+                {
+                    field: 'applyTime',
+                    title: '申请时间'
                 },
                 {
                     field: 'amount',
                     title: '总金额'
                 },
                 {
-                    field: 'isCollection',
-                    title: '是否收款'
-                },
-                {
-                    field: 'paymentPerson',
-                    title: '交款人'
+                    field: 'payee',
+                    title: '收款人'
                 },
                 {
                     field: 'collectionTime',
                     title: '收款时间'
                 },
                 {
-                    field: 'isBook',
-                    title: '是否记账'
+                    field: 'isCollection',
+                    title: '是否收款',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+                        	case '0' : value =  "是";break;
+                        	case '1' : value =  "否";break;
+                    	}
+    	            	return value;
+    	            }
+                },
+                {
+                    field: 'bookPerson',
+                    title: '记账人'
                 },
                 {
                     field: 'bookTime',
                     title: '记账时间'
                 },
                 {
-                    field: 'paymentStatue',
-                    title: '是否交款'
+                    field: 'isBook',
+                    title: '是否记账',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+                        	case '0' : value =  "是";break;
+                        	case '1' : value =  "否";break;
+                    	}
+    	            	return value;
+    	            }
                 },
                 {
-                    field: 'bookPerson',
-                    title: '财务记账人'
+                    field: 'paymentPerson',
+                    title: '交款人'
                 },
                 {
                     field: 'payment',
                     title: '交款方式'
                 },
                 {
+                    field: 'paymentStatue',
+                    title: '是否交款',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+                        	case '0' : value =  "是";break;
+                        	case '1' : value =  "否";break;
+                    	}
+    	            	return value;
+    	            }
+                },
+                {
                     field: 'collectionRemark',
                     title: '备注'
-                },
-                {
-                    field: 'costId',
-                    title: '费用项目id'
-                },
-                {
-                    field: 'houseId',
-                    title: '房屋id'
-                },
-                {
-                    field: 'ownerId',
-                    title: '业主id'
                 }],
                 responseHandler: function (res) {
                     var sum = 0.0;

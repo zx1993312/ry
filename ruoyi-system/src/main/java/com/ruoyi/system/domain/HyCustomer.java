@@ -171,6 +171,9 @@ public class HyCustomer extends BaseEntity {
 
 	/** 表箱表 */
 	private HyMeter hyMeter;
+	
+	/** 房屋和费用关联表 */
+	private HouseAndCost houseAndCost;
 
 	public Long getId() {
 		return id;
@@ -492,4 +495,30 @@ public class HyCustomer extends BaseEntity {
 		this.hyMeter = hyMeter;
 	}
 
+	public HouseAndCost getHouseAndCost() {
+		return houseAndCost;
+	}
+
+	public void setHouseAndCost(HouseAndCost houseAndCost) {
+		this.houseAndCost = houseAndCost;
+	}
+
+	@Override
+	public String toString() {
+		return "HyCustomer [id=" + id + ", houseNumber=" + houseNumber + ", houseName=" + houseName + ", builtUpArea="
+				+ builtUpArea + ", groupArea=" + groupArea + ", unit=" + unit + ", floor=" + floor + ", sameUnitNumber="
+				+ sameUnitNumber + ", areaType=" + areaType + ", bilingArea=" + bilingArea + ", insideArea="
+				+ insideArea + ", sharedArea=" + sharedArea + ", gardenArea=" + gardenArea + ", basementArea="
+				+ basementArea + ", sharedLobbyArea=" + sharedLobbyArea + ", sharedLayersArea=" + sharedLayersArea
+				+ ", shareRatio=" + shareRatio + ", buildingStructure=" + buildingStructure + ", parametersPer="
+				+ parametersPer + ", houseLayout=" + houseLayout + ", floorHeight=" + floorHeight + ", natureProperty="
+				+ natureProperty + ", natureUse=" + natureUse + ", usageStatus=" + usageStatus + ", occupancyStatus="
+				+ occupancyStatus + ", deliveryStatusBefore=" + deliveryStatusBefore + ", deliveryStatus="
+				+ deliveryStatus + ", changeDate=" + changeDate + ", changePerson=" + changePerson + ", remark="
+				+ remark + ", houseType=" + houseType + ", salesStatus=" + salesStatus + ", purchaseContract="
+				+ purchaseContract + ", marketingNum=" + marketingNum + ", buildingId=" + buildingId + ", ownerId="
+				+ ownerId + ", hyBuilding=" + hyBuilding + ", hyOwnerRegistration=" + hyOwnerRegistration
+				+ ", hyParkingInf=" + hyParkingInf + ", hyMeter=" + hyMeter + ", houseAndCost=" + houseAndCost + "]";
+	}
+	
 }

@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ruoyi.system.domain.HouseAndCost;
 import com.ruoyi.system.domain.HyCost;
 import com.ruoyi.system.domain.HyCustomer;
 import com.ruoyi.system.mapper.HyCostMapper;
@@ -42,7 +43,12 @@ public class CustomerServiceImpl implements CustomerService {
 	public List<HyCost> selectCostList(Long id) {
 		return hyCustomerMapper.selectCostList(id);
 	}
-
+	
+	@Override
+	public List<HouseAndCost> selectCostIds(HouseAndCost houseAndCost) {
+		
+		return hyCustomerMapper.selectCostIds(houseAndCost);
+	}
 	@Override
 	public int updateHyCost(String houseNumber, String costItems, String expenseType, String standardName,
 			String billingCycle, String calculationMehod, Integer transferTenants) {
@@ -96,5 +102,7 @@ public class CustomerServiceImpl implements CustomerService {
 		List<HyCost> relist = hyCostMapper.selectHyCostList(hyCost);
 		return hyCustomerMapper.deleteHouseAndCost(relist.get(0).getId());
 	}
+
+
 
 }

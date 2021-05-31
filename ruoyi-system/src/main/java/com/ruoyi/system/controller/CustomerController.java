@@ -19,10 +19,13 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.constants.Constants;
+import com.ruoyi.system.domain.HouseAndCost;
 import com.ruoyi.system.domain.HyCost;
 import com.ruoyi.system.domain.HyCustomer;
+import com.ruoyi.system.domain.HyHouseInf;
 import com.ruoyi.system.domain.ReHyCustomer;
 import com.ruoyi.system.service.CustomerService;
+import com.ruoyi.system.service.impl.HyHouseInfServiceImpl;
 
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -42,6 +45,9 @@ public class CustomerController extends BaseController {
 
 	@Autowired
 	private CustomerService customerService;
+	
+	@Autowired
+	private HyHouseInfServiceImpl hyhouseInfServiceImpl;
 
 	/**
 	 * 查询客户标准单项设置列表
@@ -80,6 +86,19 @@ public class CustomerController extends BaseController {
 	@ResponseBody
 	public List<HyCost> lists(@RequestParam("id") Long id) {
 		return customerService.selectCostList(id);
+	}
+	
+	@RequiresPermissions("system:registration:list")
+	@PostMapping("/houseOrCostId")
+	@ResponseBody
+	public List<HyHouseInf> selectCostIds(HouseAndCost houseAndCost) {
+		List<HyHouseInf> relist = new ArrayList<HyHouseInf>();
+		List<HouseAndCost> houseAndCostList = customerService.selectCostIds(houseAndCost);
+		for (HouseAndCost list : houseAndCostList) {
+			HyHouseInf hyHouseInf = hyhouseInfServiceImpl.selectHyHouseInfById(list.getHouseId());
+			relist.add(hyHouseInf);
+		}
+		return relist;
 	}
 
 	/**

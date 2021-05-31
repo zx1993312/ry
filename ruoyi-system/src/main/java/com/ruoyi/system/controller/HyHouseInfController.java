@@ -1,5 +1,6 @@
 package com.ruoyi.system.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -20,8 +21,11 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.ShiroUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.system.domain.HouseAndCost;
 import com.ruoyi.system.domain.HyHouseInf;
+import com.ruoyi.system.domain.HyOwnerRegistration;
 import com.ruoyi.system.service.IHyHouseInfService;
+import com.ruoyi.system.service.IHyOwnerRegistrationService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -42,6 +46,9 @@ public class HyHouseInfController extends BaseController {
 
 	@Autowired
 	private IHyHouseInfService hyHouseInfService;
+	
+	@Autowired
+	private IHyOwnerRegistrationService hyOwnerRegistrationService;
 
 	@RequiresPermissions("system:inf:view")
 	@GetMapping()
@@ -68,6 +75,19 @@ public class HyHouseInfController extends BaseController {
 	@ResponseBody
 	public List<HyHouseInf> lists(HyHouseInf hyHouseInf) {
 		return hyHouseInfService.selectHyHouseInfList(hyHouseInf);
+	}
+	
+	@RequiresPermissions("system:inf:lists")
+	@PostMapping("/owner")
+	@ResponseBody
+	public List<HyOwnerRegistration> ownerList(HyHouseInf hyHouseInf) {
+		List<HyOwnerRegistration> relist = new ArrayList<HyOwnerRegistration>();
+		List<HyHouseInf> hyHouseInfList = hyHouseInfService.selectHyHouseInfList(hyHouseInf);
+		for (HyHouseInf list : hyHouseInfList) {
+			HyOwnerRegistration hyOwnerRegistration = hyOwnerRegistrationService.selectHyOwnerRegistrationById(list.getOwnerId());
+			relist.add(hyOwnerRegistration);
+		}
+		return relist;
 	}
 
 	/**

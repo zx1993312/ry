@@ -51,6 +51,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			javaType="HyOwnerRegistration" resultMap="HyOwnerRegistrationResult" />
 		<association property="hyMeter" column="id"
 			javaType="HyMeter" resultMap="HyMeterResult" />
+		<association property="houseAndCost" column="id"
+			javaType="HouseAndCost" resultMap="HouseAndCostResult" />
 	</resultMap>
 
 	<resultMap type="HyBuilding" id="HyBuildingResult">
@@ -229,6 +231,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="meterReader" column="meter_reader" />
 		<result property="inputTime" column="input_time" />
 	</resultMap>
+	
+	<resultMap type="HouseAndCost" id="HouseAndCostResult">
+		<result property="houseId" column="house_id" />
+		<result property="costId" column="cost_id" />
+	</resultMap>
 
 	<sql id="selectHyCustomerVo">
 		select
@@ -314,6 +321,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<sql id="selectCostIdVo">
 		select cost_id from house_and_cost where 1=1
 	</sql>
+	
+	<sql id="selectCostIdsVo">
+		select house_id, cost_id from house_and_cost where 1=1
+	</sql>
 
 	<select id="selectHyCustomerList" resultMap="HyCustomerResult">
 		<include refid="selectHyCustomerVo" />
@@ -342,6 +353,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectCostId" resultType="java.lang.Long"
 		parameterType="String">
 		<include refid="selectCostIdVo" />
+		<if test="houseId != null  and houseId != ''"> and house_id = #{houseId}</if>
+		<if test="costId != null  and costId != ''"> and cost_id = #{costId}</if>
+	</select>
+	
+	<select id="selectCostIds" resultMap="HouseAndCostResult">
+		<include refid="selectCostIdsVo" />
 		<if test="houseId != null  and houseId != ''"> and house_id = #{houseId}</if>
 		<if test="costId != null  and costId != ''"> and cost_id = #{costId}</if>
 	</select>

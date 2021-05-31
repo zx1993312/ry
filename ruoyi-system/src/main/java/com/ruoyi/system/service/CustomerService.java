@@ -2,6 +2,7 @@ package com.ruoyi.system.service;
 
 import java.util.List;
 
+import com.ruoyi.system.domain.HouseAndCost;
 import com.ruoyi.system.domain.HyCost;
 import com.ruoyi.system.domain.HyCustomer;
 
@@ -35,6 +36,14 @@ public interface CustomerService {
 	 * @return
 	 */
 	public List<HyCost> selectCostList(Long id);
+	
+	/**
+	 * 根据id查询CostList
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public List<HouseAndCost> selectCostIds(HouseAndCost houseAndCost);
 
 	/**
 	 * 客户标准单项修改
