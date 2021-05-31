@@ -2,7 +2,7 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org"
 	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-<th:block th:include="include :: header('应收费用列表')" />
+<th:block th:include="include :: header('实收费用查询')" />
 </head>
 <body class="gray-bg">
 	<div class="container-div">
@@ -19,13 +19,19 @@
 								<label>房屋编号：</label> 
 								<input type="text" name="hyHouseInf.houseNumber" />
 							</li>
+							
+							<li>
+								<label>产权性质：</label> 
+								<input type="text" name="hyHouseInf.natureProperty" />
+							</li>
+							
 							<li>
 								<label>房屋名称：</label> 
 								<input type="text" name="hyHouseInf.houseName" />
 							</li>
 							<li>
 							<label>费用名称：</label> 
-								<select name="costItems" th:with="type=${@dict.getType('hy_fee_name')}">
+								<select name="hyCost.costItems" th:with="type=${@dict.getType('hy_fee_name')}">
 									<option value="">请选择</option>
 									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 								</select>
@@ -57,7 +63,7 @@
 	<script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('system:cost:edit')}]];
         var removeFlag = [[${@permission.hasPermi('system:cost:remove')}]];
-        var prefix = ctx + "system/receivableCost";
+        var prefix = ctx + "system/receiptsCost";
 
         $(function() {
             var options = {
@@ -80,29 +86,22 @@
                     title: '客户名称'
                 },
                 {
-                    field: 'hyHouseInf.houseName',
-                    title: '房屋名称'
-                },
-                {
                     field: 'hyHouseInf.houseNumber',
                     title: '房屋编号'
                 },
                 
                 {
-                    field: 'hyParkingInf.parkingNumber',
-                    title: '车位编号'
-                },
-                {
-                    field: 'hyMeter.meterName',
-                    title: '表计名称'
-                },
-                {
-                    field: 'hyMeter.meterSerialNum',
-                    title: '表计序号'
+                    field: 'hyHouseInf.natureProperty',
+                    title: '产权性质'
                 },
                 
                 {
-                    field: 'costItems',
+                    field: 'hyHouseInf.houseName',
+                    title: '房屋名称'
+                },
+               
+                {
+                    field: 'hyCost.costItems',
                     title: '费用名称',
                     formatter: function(value, item, index) {
                     	switch(value){
@@ -131,20 +130,73 @@
                 },
                
                 {
-                    field: 'feeDate',
-                    title: '费用日期'
+                    field: 'applyTime',
+                    title: '申请时间'
                 },
                 {
-                    field: 'amountReceivableOld',
-                    title: '原应收金额'
+                    field: 'amount',
+                    title: '总金额'
                 },
                 {
-                    field: 'amountReceivablem',
-                    title: '应收金额'
+                    field: 'payee',
+                    title: '收款人'
                 },
                 {
-                    field: 'dueDate',
-                    title: '应收日期'
+                    field: 'collectionTime',
+                    title: '收款时间'
+                },
+                {
+                    field: 'isCollection',
+                    title: '是否收款',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+                        	case '0' : value =  "是";break;
+                        	case '1' : value =  "否";break;
+                    	}
+    	            	return value;
+    	            }
+                },
+                {
+                    field: 'bookPerson',
+                    title: '记账人'
+                },
+                {
+                    field: 'bookTime',
+                    title: '记账时间'
+                },
+                {
+                    field: 'isBook',
+                    title: '是否记账',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+                        	case '0' : value =  "是";break;
+                        	case '1' : value =  "否";break;
+                    	}
+    	            	return value;
+    	            }
+                },
+                {
+                    field: 'paymentPerson',
+                    title: '交款人'
+                },
+                {
+                    field: 'payment',
+                    title: '交款方式'
+                },
+                {
+                    field: 'paymentStatue',
+                    title: '是否交款',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+                        	case '0' : value =  "是";break;
+                        	case '1' : value =  "否";break;
+                    	}
+    	            	return value;
+    	            }
+                },
+                {
+                    field: 'collectionRemark',
+                    title: '备注'
                 }]
             };
             $.table.init(options);

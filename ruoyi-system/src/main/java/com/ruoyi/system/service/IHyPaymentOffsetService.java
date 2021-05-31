@@ -34,6 +34,15 @@ public interface IHyPaymentOffsetService
      * @return 预交冲抵集合
      */
     public List<HyPaymentOffset> selectHyPaymentOffsetListAAA(HyPaymentOffset hyPaymentOffset);
+    
+    /**
+     * 查询预交冲抵列表
+     * 
+     * @param hyPaymentOffset 预交冲抵
+     * @return 预交冲抵集合
+     */
+    public List<HyPaymentOffset> selectHyPaymentOffsetListAll(HyPaymentOffset hyPaymentOffset);
+
 
     /**
      * 新增预交冲抵

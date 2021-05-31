@@ -2,7 +2,7 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org"
 	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-<th:block th:include="include :: header('应收费用列表')" />
+<th:block th:include="include :: header('欠收费用列表')" />
 </head>
 <body class="gray-bg">
 	<div class="container-div">
@@ -135,16 +135,12 @@
                     title: '费用日期'
                 },
                 {
-                    field: 'amountReceivableOld',
-                    title: '原应收金额'
+                    field: 'amountArrears',
+                    title: '欠收金额'
                 },
                 {
-                    field: 'amountReceivablem',
-                    title: '应收金额'
-                },
-                {
-                    field: 'dueDate',
-                    title: '应收日期'
+                    field: 'paymentDeadlinTime',
+                    title: '缴费截止日期'
                 }]
             };
             $.table.init(options);

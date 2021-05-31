@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('预交冲抵列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+								<label>客户名称：</label> 
+								<input type="text" name="hyOwnerRegistration.ownerName" />
+							</li>
+							<li>
+								<label>房屋编号：</label> 
+								<input type="text" name="hyHouseInf.houseNumber" />
+							</li>
+							<li>
+								<label>房屋名称：</label> 
+								<input type="text" name="hyHouseInf.houseName" />
+							</li>
+							<li>
+							<label>费用名称：</label> 
+								<select name="hyCost.costItems" th:with="type=${@dict.getType('hy_fee_name')}">
+									<option value="">请选择</option>
+									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+								</select>
+							</li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:offset:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:offset:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:offset:remove')}]];
+        var prefix = ctx + "system/advanceCost";
+        
+        function edit(id){
+        	var id = id;
+        	$.modal.confirm("确认审核吗？",function() {
+        	$.ajax({
+                type: "post",
+                datatype: "json",
+                url:  prefix + '/edit',
+                data: {"id": id,"auditStatus":"1"},
+                async: true,
+                success: function (result) {
+                    //console.log(result);
+					if (typeof callback == "function") {
+						 $("#noticeTable").bootstrapTable('refresh');
+       	                callback(result);
+       	            }
+       	            $.operate.successCallback(result);
+                }
+            });
+        	});
+        }
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "预交冲抵",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '主键',
+                    visible: false
+                },
+                {
+                    field: 'hyOwnerRegistration.ownerName',
+                    title: '客户名称'
+                },
+                {
+                    field: 'hyHouseInf.houseName',
+                    title: '房屋名称'
+                },
+                {
+                    field: 'hyHouseInf.houseNumber',
+                    title: '房屋编号'
+                },
+                {
+                    field: 'hyParkingInf.parkingNumber',
+                    title: '车位编号'
+                },
+                {
+                    field: 'hyCost.costItems',
+                    title: '费用名称'
+                },
+                {
+                    field: 'hyCost.amountReceivable',
+                    title: '原预交余额'
+                },
+                {
+                    field: 'offsetMoney',
+                    title: '冲抵金额'
+                },
+                {
+                    field: 'amountActually',
+                    title: '实收金额'
+                },
+                {
+                    field: 'offsetType',
+                    title: '处理方式'
+                },
+                {
+                    field: 'offsetCategory',
+                    title: '冲抵类别',
+                 	 formatter: function(value, item, index) {
+                        	switch(value){
+      	                    	case 1 : value =  "批量冲抵";break;
+      	                
+      	                	}
+      		            	return value;
+      		            }
+                },
+                {
+                    field: 'offsetPreson',
+                    title: '冲抵人'
+                },
+                {
+                    field: 'offsetOperationDate',
+                    title: '冲抵操作时间'
+                },
+                {
+                    field: 'offsetRange',
+                    title: '冲抵范围'
+                },
+                {
+                    field: 'offsetYear',
+                    title: '冲抵年度'
+                },
+                {
+                    field: 'offsetMonth',
+                    title: '冲抵月份'
+                },
+                {
+                    field: 'hyCost.dueDate',
+                    title: '应收日期'
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

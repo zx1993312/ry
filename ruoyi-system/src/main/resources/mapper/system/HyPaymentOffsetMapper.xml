@@ -265,6 +265,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
     
+    <select id="selectHyPaymentOffsetListAll" parameterType="HyPaymentOffset" resultMap="HyPaymentOffsetResult">
+        <include refid="selectHyPaymentOffsetVo"/>
+        <where>  
+            <if test="offsetCategory != null "> and p.offset_category = #{offsetCategory}</if>
+            <if test="offsetPreson != null  and offsetPreson != ''"> and p.offset_preson = #{offsetPreson}</if>
+            <if test="offsetOperationDate != null "> and p.offset_operation_date = #{offsetOperationDate}</if>
+            <if test="offsetRange != null  and offsetRange != ''"> and p.offset_range = #{offsetRange}</if>
+            <if test="offsetYear != null  and offsetYear != ''"> and p.offset_year = #{offsetYear}</if>
+            <if test="offsetMonth != null  and offsetMonth != ''"> and p.offset_month = #{offsetMonth}</if>
+            <if test="offsetMoney != null "> and p.offset_money = #{offsetMoney}</if>
+            <if test="amountActually != null "> and p.amount_actually = #{amountActually}</if>
+            <if test="offsetType != null  and offsetType != ''"> and p.offset_type = #{offsetType}</if>
+            <if test="auditProcess != null  and auditProcess != ''"> and p.audit_process = #{auditProcess}</if>
+            <if test="houseId != null "> and p.house_id = #{houseId}</if>
+            <if test="setId != null "> and p.set_id = #{setId}</if>
+            
+            <if test="hyOwnerRegistration.ownerName != null  and hyOwnerRegistration.ownerName != ''"> and o.owner_name = #{hyOwnerRegistration.ownerName}</if>
+            <if test="hyHouseInf.houseNumber != null  and hyHouseInf.houseNumber != ''"> and h.house_number = #{hyHouseInf.houseNumber}</if>
+            <if test="hyHouseInf.houseName != null  and hyHouseInf.houseName != ''"> and h.house_name = #{hyHouseInf.houseName}</if>
+            <if test="hyHouseInf.natureProperty != null  and hyHouseInf.natureProperty != ''"> and h.nature_property = #{hyHouseInf.natureProperty}</if>
+            <if test="hyCost.costItems != null  and hyCost.costItems != ''"> and c.cost_items = #{hyCost.costItems}</if>
+            
+        </where>
+    </select>
+    
     <select id="selectHyPaymentOffsetById" parameterType="Long" resultMap="HyPaymentOffsetResult">
         <include refid="selectHyPaymentOffsetVo"/>
         where p.id = #{id}
