@@ -185,6 +185,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         c.owner_id,
         s.cost_items,
         h.house_name,
+        h.houseNumber,
+        h.natureProperty,
         o.owner_name
         from 
         hy_collection c
