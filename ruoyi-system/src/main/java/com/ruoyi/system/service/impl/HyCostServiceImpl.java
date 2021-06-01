@@ -1,11 +1,21 @@
 package com.ruoyi.system.service.impl;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ResourceUtils;
 
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.Ztree;
@@ -22,6 +32,10 @@ import com.ruoyi.system.mapper.HyCostMapper;
 import com.ruoyi.system.mapper.HyCustomerMapper;
 import com.ruoyi.system.mapper.OwnerAndCostMapper;
 import com.ruoyi.system.service.IHyCostService;
+
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
 
 /**
  * 费用项目Service业务层处理
@@ -287,4 +301,20 @@ public class HyCostServiceImpl implements IHyCostService {
 		}
 	}
 
+	@Override
+	public int downloadPDF(HttpServletResponse response) throws Exception{
+		//1、获取模版文件
+	    File rootFile = new File(ResourceUtils.getURL("classpath:").getPath());
+	    File templateFile = new File(rootFile,"/pdf_template/cost_db.jasper");
+	    //2、准备数据库连接
+	    Map params = new HashMap();
+	    JasperPrint jasperPrint =JasperFillManager.fillReport(new FileInputStream(templateFile),params,getCon());
+	    JasperExportManager.exportReportToPdfStream(jasperPrint,new FileOutputStream("d:\\收费率报表.pdf"));
+	    return 1;
+	}
+	private Connection getCon() throws Exception{
+	    Class.forName("com.mysql.cj.jdbc.Driver");
+	    Connection connection = DriverManager.getConnection("jdbc:mysql://39.105.185.22:3306/hy_database?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8","root","hangyu123.root");
+	    return connection;
+	}
 }

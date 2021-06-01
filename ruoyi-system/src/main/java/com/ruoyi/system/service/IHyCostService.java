@@ -2,6 +2,8 @@ package com.ruoyi.system.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import com.ruoyi.common.core.domain.Ztree;
 import com.ruoyi.system.domain.HyCost;
 
@@ -84,5 +86,7 @@ public interface IHyCostService {
 
 	public int batchUpdateCost(String costItems, String standardName, String billingCycle, String currentState,
 			String building, String transferTenants, String[] sel);
+
+	public int downloadPDF(HttpServletResponse response)throws Exception;
 
 }

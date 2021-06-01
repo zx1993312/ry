@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('费用项目PDF列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                              <li>
+                                <label>计费开始日期：</label>
+                                <input type="text" class="time-input" placeholder="请选择计费开始日期" name="bilingStartDate"/>
+                            </li>
+                            <li>
+                                <label>计费结束日期：</label>
+                                <input type="text" class="time-input" placeholder="请选择计费结束日期" name="bilingEndDate"/>
+                            </li>
+                             <li>
+                                <label>费用日期：</label>
+                                <input type="text" class="time-input" placeholder="请选择费用日期" name="feeDate"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+               <!--  <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:cost:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:cost:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:cost:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-info" onclick="$.table.importExcel()" shiro:hasPermission="system:user:import">
+			            <i class="fa fa-upload"></i> 导入
+			    </a> -->
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:cost:export">
+                    <i class="fa fa-download"></i> 导出Excel
+                </a>
+                <a class="btn btn-warning" onclick="exportPDF()">
+                    <i class="fa fa-download"></i> 导出PDF
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:cost:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:cost:remove')}]];
+        var prefix = ctx + "system/costPDF";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                importUrl: prefix + "/importData",
+                importTemplateUrl: prefix + "/importTemplate",
+                modalName: "费用项目",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '主键',
+                    visible: false
+                },
+                {
+                    field: 'costItems',
+                    title: '费用项目'
+                },
+                {
+                    field: 'expenseType',
+                    title: '费用类型'
+                },
+                {
+                    field: 'parentId',
+                    title: '父菜单id'
+                },
+                {
+                    field: 'ancestors',
+                    title: '组级列表'
+                },
+                {
+                    field: 'standardName',
+                    title: '标准名称'
+                },
+                {
+                    field: 'feeNum',
+                    title: '费用序号'
+                },
+                {
+                    field: 'chargingStandard',
+                    title: '通用收费标准'
+                },
+                {
+                    field: 'calculationMehod',
+                    title: '计算方式'
+                },
+                {
+                    field: 'standardDescription',
+                    title: '标准说明'
+                },
+                {
+                    field: 'standardState',
+                    title: '标准状态'
+                },
+                {
+                    field: 'proportionDamags',
+                    title: '违约金比例'
+                },
+                {
+                    field: 'projectModification',
+                    title: '是否允许项目修改'
+                },
+                {
+                    field: 'bilingStartDate',
+                    title: '计费开始日期'
+                },
+                {
+                    field: 'bilingEndDate',
+                    title: '计费结束日期'
+                },
+                {
+                    field: 'auditResultsReason',
+                    title: '审核结果及原因'
+                },
+                {
+                    field: 'feeDateOld',
+                    title: '原费用日期'
+                },
+                {
+                    field: 'feeDate',
+                    title: '费用日期'
+                },
+                {
+                    field: 'dueDateOld',
+                    title: '原应收日期'
+                },
+                {
+                    field: 'dueDate',
+                    title: '应收日期'
+                },
+                {
+                    field: 'amountReceivableOld',
+                    title: '原应收金额'
+                },
+                {
+                    field: 'paymentDeadlinTime',
+                    title: '缴费截止日期'
+                },
+                {
+                    field: 'amountReceivable',
+                    title: '应收金额'
+                },
+                {
+                    field: 'amountActually',
+                    title: '实收金额'
+                },
+                {
+                    field: 'remarks',
+                    title: '备注'
+                },
+                {
+                    field: 'operationDate',
+                    title: '操作日期'
+                },
+                {
+                    field: 'operationUser',
+                    title: '操作人'
+                },
+                {
+                    field: 'operationType',
+                    title: '操作类别'
+                },
+                {
+                    field: 'deleteReason',
+                    title: '删除原因'
+                },
+                {
+                    field: 'advancePaymentOffset',
+                    title: '预交冲抵'
+                },
+                {
+                    field: 'writeOff',
+                    title: '减免冲销'
+                },
+                {
+                    field: 'refundAmount',
+                    title: '退款金额'
+                },
+                {
+                    field: 'amountArrears',
+                    title: '欠收金额'
+                },
+                {
+                    field: 'collectionStatus',
+                    title: '托收状态'
+                },
+                {
+                    field: 'frozenPerson',
+                    title: '冻结人'
+                },
+                {
+                    field: 'frozenState',
+                    title: '冻结状态'
+                },
+                {
+                    field: 'frozenDate',
+                    title: '冻结日期'
+                },
+                {
+                    field: 'frozenReason',
+                    title: '冻结原因'
+                },
+                {
+                    field: 'advanceStatus',
+                    title: '垫付状态'
+                },
+                {
+                    field: 'deliveryStatus',
+                    title: '预交状态'
+                },
+                {
+                    field: 'billingCycle',
+                    title: '计费周期'
+                },
+                {
+                    field: 'transferTenants',
+                    title: '出租时自动转移租户'
+                },
+                {
+                    field: 'changeDate',
+                    title: '变更时间'
+                },
+                {
+                    field: 'penaltyContract',
+                    title: '合同违约金'
+                },
+                {
+                    field: 'billingMethod',
+                    title: '计费方式'
+                },
+                {
+                    field: 'calculationStandard',
+                    title: '计算标准'
+                }]
+            };
+            $.table.init(options);
+        });
+        
+        function exportPDF(){
+          	$.modal.confirm("确定导出收费率报表吗？", function() {
+          		$.ajax({
+                    url: prefix + "/exportPDF",
+                    type: 'POST',
+                    success: function (result){
+                    	console.log("result"+result);
+                    	if (typeof callback == "function") {
+          	                callback(result);
+          	            }
+          	            $.operate.successCallback(result);
+                    }
+                });
+          	});
+        }
+    </script>
+</body>
+<!-- 导入区域 -->
+<script id="importTpl" type="text/template">
+<form enctype="multipart/form-data" class="mt20 mb10">
+	<div class="col-xs-offset-1">
+		<input type="file" id="file" name="file"/>
+		<div class="mt10 pt5">
+			<input type="checkbox" id="updateSupport" name="updateSupport" title="如果登录账户已经存在，更新这条数据。"> 是否更新已经存在的用户数据
+			 &nbsp;	<a onclick="$.table.importTemplate()" class="btn btn-default btn-xs"><i class="fa fa-file-excel-o"></i> 下载模板</a>
+		</div>
+		<font color="red" class="pull-left mt10">
+			提示：仅允许导入“xls”或“xlsx”格式文件！
+		</font>
+	</div>
+</form>
+</script>
+</html>
