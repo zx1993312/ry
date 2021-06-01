@@ -319,11 +319,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="dueDate != null ">and c.due_date = #{dueDate}</if>
 		<if test="bilingStartDate != null ">and c.biling_start_date = #{bilingStartDate}</if>
 		<if test="bilingEndDate != null ">and c.biling_end_date = #{bilingEndDate}</if>
-		
+		<if test="hyOwnerRegistration != null">
 		<if test="hyOwnerRegistration.ownerName != null  and hyOwnerRegistration.ownerName != ''"> and o.owner_name = #{hyOwnerRegistration.ownerName}</if>
-        <if test="hyHouseInf.houseNumber != null  and hyHouseInf.houseNumber != ''"> and h.house_number = #{hyHouseInf.houseNumber}</if>
+		</if>
+		<if test="hyHouseInf != null">
+		<if test="hyHouseInf.houseNumber != null  and hyHouseInf.houseNumber != ''"> and h.house_number = #{hyHouseInf.houseNumber}</if>
         <if test="hyHouseInf.houseName != null  and hyHouseInf.houseName != ''"> and h.house_name = #{hyHouseInf.houseName}</if>
         <if test="hyHouseInf.natureProperty != null  and hyHouseInf.natureProperty != ''"> and h.nature_property = #{hyHouseInf.natureProperty}</if>
+		</if>
 	</select>
 
 	<select id="selectHyCostListDistinct" parameterType="HyCost"

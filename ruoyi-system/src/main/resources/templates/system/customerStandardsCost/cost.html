@@ -11,7 +11,7 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                <label>费用项目：</label>
+                                <label>费用名称：</label>
                                 <input type="text" name="costItems"/>
                             </li>
                         
@@ -102,21 +102,24 @@
                     title: '表计名称'
                 },
                 {
-                    field: 'standardName',
+                    field: 'costItems',
                     title: '费用名称'
                 },
                 {
-                    field: 'standardState',
-                    title: '计费标准'
-                },
-/*                 {
-                    field: 'chargingStandard',
-                    title: '通用收费标准'
+                    field: 'standardName',
+                    title: '标准名称'
                 },
                 {
-                    field: 'proportionDamags',
-                    title: '违约金比例'
-                }, */
+                    field: 'standardState',
+                    title: '标准状态',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case '1' : value =  "标准";break;
+	                    	case '2' : value =  "一般";break;
+	                	}
+		            	return value;
+		            }
+                },
                 {
                     field: 'calculationMehod',
                     title: '计算方式',
@@ -180,10 +183,6 @@
                     	return value;
                     }
                 },
-                /* {
-                    field: 'standardState',
-                    title: '标准状态'
-                }, */
                 {
                     title: '操作',
                     align: 'center',
