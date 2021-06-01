@@ -201,44 +201,57 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectHyFeeRemissionList" parameterType="HyFeeRemission" resultMap="HyFeeRemissionResult">
         <include refid="selectHyFeeRemissionVo"/>
         <where>  
-            <if test="houseId != null "> and house_id = #{houseId}</if>
-            <if test="businessExemptedType != null "> and business_exempted_type = #{businessExemptedType}</if>
-            <if test="feeName != null  and feeName != ''"> and fee_name like concat('%', #{feeName}, '%')</if>
-            <if test="reliefTypes != null "> and relief_types = #{reliefTypes}</if>
-            <if test="totalAmountDeduction != null "> and total_amount_deduction = #{totalAmountDeduction}</if>
-            <if test="reducedAmount != null "> and reduced_amount = #{reducedAmount}</if>
-            <if test="cancellationCreditAmount != null "> and cancellation_credit_amount = #{cancellationCreditAmount}</if>
-            <if test="monthlyDeductionAmount != null "> and monthly_deduction_amount = #{monthlyDeductionAmount}</if>
-            <if test="reductionRatio != null "> and reduction_ratio = #{reductionRatio}</if>
-            <if test="sharingTotalDeduction != null "> and sharing_total_deduction = #{sharingTotalDeduction}</if>
-            <if test="timeStr != null "> and time_str = #{timeStr}</if>
-            <if test="timeEnd != null "> and time_end = #{timeEnd}</if>
-            <if test="exemptionReason != null  and exemptionReason != ''"> and exemption_reason = #{exemptionReason}</if>
-            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="houseId != null "> and f.house_id = #{houseId}</if>
+            <if test="businessExemptedType != null "> and f.business_exempted_type = #{businessExemptedType}</if>
+            <if test="feeName != null  and feeName != ''"> and f.fee_name like concat('%', #{feeName}, '%')</if>
+            <if test="reliefTypes != null "> and f.relief_types = #{reliefTypes}</if>
+            <if test="totalAmountDeduction != null "> and f.total_amount_deduction = #{totalAmountDeduction}</if>
+            <if test="reducedAmount != null "> and f.reduced_amount = #{reducedAmount}</if>
+            <if test="cancellationCreditAmount != null "> and f.cancellation_credit_amount = #{cancellationCreditAmount}</if>
+            <if test="monthlyDeductionAmount != null "> and f.monthly_deduction_amount = #{monthlyDeductionAmount}</if>
+            <if test="reductionRatio != null "> and f.reduction_ratio = #{reductionRatio}</if>
+            <if test="sharingTotalDeduction != null "> and f.sharing_total_deduction = #{sharingTotalDeduction}</if>
+            <if test="timeStr != null "> and f.time_str = #{timeStr}</if>
+            <if test="timeEnd != null "> and f.time_end = #{timeEnd}</if>
+            <if test="exemptionReason != null  and exemptionReason != ''"> and f.exemption_reason = #{exemptionReason}</if>
+            <if test="remarks != null  and remarks != ''"> and f.remarks = #{remarks}</if>
             <if test="offsetModificationRecord != null  and offsetModificationRecord != ''"> and offset_modification_record = #{offsetModificationRecord}</if>
-            <if test="auditStatus != null "> and audit_status = #{auditStatus}</if>
-            <if test="taxRate != null "> and tax_rate = #{taxRate}</if>
-            <if test="feeDate != null "> and fee_date = #{feeDate}</if>
-            <if test="dueDate != null "> and due_date = #{dueDate}</if>
-            <if test="remissionYear != null  and remissionYear != ''"> and remission_year = #{remissionYear}</if>
-            <if test="remissionMonth != null  and remissionMonth != ''"> and remission_month = #{remissionMonth}</if>
-            <if test="exemptionRegistrant != null  and exemptionRegistrant != ''"> and exemption_registrant = #{exemptionRegistrant}</if>
-            <if test="registrationTime != null "> and registration_time = #{registrationTime}</if>
-            <if test="reduceNot != null "> and reduce_not = #{reduceNot}</if>
-            <if test="amountNotRemitted != null "> and amount_not_remitted = #{amountNotRemitted}</if>
-            <if test="amountTaxInc != null "> and amount_tax_inc = #{amountTaxInc}</if>
-            <if test="taxation != null "> and taxation = #{taxation}</if>
-            <if test="amountExcludingTax != null "> and amount_excluding_tax = #{amountExcludingTax}</if>
-            <if test="offsetTime != null "> and offset_time = #{offsetTime}</if>
-            <if test="cancellationTime != null "> and cancellation_time = #{cancellationTime}</if>
-            <if test="revocation != null  and revocation != ''"> and revocation = #{revocation}</if>
-            <if test="writeoffOnt != null "> and writeoff_ont = #{writeoffOnt}</if>
-            <if test="writeoffTime != null "> and writeoff_time = #{writeoffTime}</if>
-            <if test="registrationMark != null and registrationMark != ''"> and registration_mark = #{registrationMark}</if>
-            <if test="reductionExemption != null "> and reduction_exemption = #{reductionExemption}</if>
-            <if test="deductionBase != null  and deductionBase != ''"> and deduction_base = #{deductionBase}</if>
-            <if test="closingDate != null "> and closing_date = #{closingDate}</if>
-            <if test="exemptionRegistration != null "> and exemption_registration = #{exemptionRegistration}</if>
+            <if test="auditStatus != null "> and f.audit_status = #{auditStatus}</if>
+            <if test="taxRate != null "> and f.tax_rate = #{taxRate}</if>
+            <if test="feeDate != null "> and f.fee_date = #{feeDate}</if>
+            <if test="dueDate != null "> and f.due_date = #{dueDate}</if>
+            <if test="remissionYear != null  and remissionYear != ''"> and f.remission_year = #{remissionYear}</if>
+            <if test="remissionMonth != null  and remissionMonth != ''"> and f.remission_month = #{remissionMonth}</if>
+            <if test="exemptionRegistrant != null  and exemptionRegistrant != ''"> and f.exemption_registrant = #{exemptionRegistrant}</if>
+            <if test="registrationTime != null "> and f.registration_time = #{registrationTime}</if>
+            <if test="reduceNot != null "> and f.reduce_not = #{reduceNot}</if>
+            <if test="amountNotRemitted != null "> and f.amount_not_remitted = #{amountNotRemitted}</if>
+            <if test="amountTaxInc != null "> and f.amount_tax_inc = #{amountTaxInc}</if>
+            <if test="taxation != null "> and f.taxation = #{taxation}</if>
+            <if test="amountExcludingTax != null "> and f.amount_excluding_tax = #{amountExcludingTax}</if>
+            <if test="offsetTime != null "> and f.offset_time = #{offsetTime}</if>
+            <if test="cancellationTime != null "> and f.cancellation_time = #{cancellationTime}</if>
+            <if test="revocation != null  and revocation != ''"> and f.revocation = #{revocation}</if>
+            <if test="writeoffOnt != null "> and f.writeoff_ont = #{writeoffOnt}</if>
+            <if test="writeoffTime != null "> and f.writeoff_time = #{writeoffTime}</if>
+            <if test="registrationMark != null and registrationMark != ''"> and f.registration_mark = #{registrationMark}</if>
+            <if test="reductionExemption != null "> and f.reduction_exemption = #{reductionExemption}</if>
+            <if test="deductionBase != null  and deductionBase != ''"> and f.deduction_base = #{deductionBase}</if>
+            <if test="closingDate != null "> and f.closing_date = #{closingDate}</if>
+            <if test="exemptionRegistration != null "> and f.exemption_registration = #{exemptionRegistration}</if>
+            
+            
+            <if test="hyOwnerRegistration != null">
+            <if test="hyOwnerRegistration.ownerName != null  and hyOwnerRegistration.ownerName != ''"> and o.owner_name = #{hyOwnerRegistration.ownerName}</if>
+            </if>
+            <if test="hyHouseInf != null">
+            <if test="hyHouseInf.houseNumber != null  and hyHouseInf.houseNumber != ''"> and h.house_number = #{hyHouseInf.houseNumber}</if>
+            <if test="hyHouseInf.houseName != null  and hyHouseInf.houseName != ''"> and h.house_name = #{hyHouseInf.houseName}</if>
+            <if test="hyHouseInf.natureProperty != null  and hyHouseInf.natureProperty != ''"> and h.nature_property = #{hyHouseInf.natureProperty}</if>
+            </if>
+            <if test="hyCost != null">
+            <if test="hyCost.costItems != null  and hyCost.costItems != ''"> and c.cost_items = #{hyCost.costItems}</if>
+			</if>
         </where>
     </select>
 

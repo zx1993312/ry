@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('费用减免查询列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>业主名称：</label>
+                                <input type="text" name="hyOwnerRegistration.ownerName"/>
+                            </li>
+                            <li>
+                                <label>房屋编号：</label>
+                                <input type="text" name="hyHouseInf.houseNumber"/>
+                            </li>
+                            <li>
+								<label>房屋名称：</label> 
+								<input type="text" name="hyHouseInf.houseName" />
+							</li>
+                            <li>
+                                <label>开始时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择开始时间" name="timeStr"/>
+                            </li>
+                            <li>
+                                <label>结束时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择结束时间" name="timeEnd"/>
+                            </li>
+							<li>
+								<label>费用名称：</label> 
+								<select name="hyCost.costItems" th:with="type=${@dict.getType('hy_fee_name')}">
+									<option value="">请选择</option>
+									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+								</select>
+							</li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:remission:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:remission:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:remission:remove')}]];
+        var prefix = ctx + "system/reductionCost";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                exportUrl: prefix + "/export",
+                showFooter: true,
+		        showSearch: false,
+		        showRefresh: false,
+		        showToggle: false,
+		        showColumns: false,
+		        footerStyle: footerStyle,
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '主键',
+                    visible: false
+                },
+                {
+                    field: 'hyOwnerRegistration.ownerName',
+                    title: '客户名称'
+                },
+                {
+                    field: 'hyHouseInf.houseNumber',
+                    title: '房屋编号'
+                },
+                {
+                    field: 'hyHouseInf.houseName',
+                    title: '房屋名称'
+                },
+                {
+                    field: 'hyParkingInf.parkingNumber',
+                    title: '车位编号'
+                },
+                {
+                    field: 'hyMeter.meterName',
+                    title: '表计名称'
+                },
+                {
+                    field: 'businessExemptedType',
+                    title: '减免业务类型',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case 1 : value =  "政策性减免";break;
+	                    	case 2 : value =  "非政策性减免";break;
+	                	}
+		            	return value;
+		            }
+                },
+                {
+                    field: 'feeName',
+                    title: '费用名称',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case "0" : value =  "高层物业服务费";break;
+	                    	case "1" : value =  "商铺物业服务费";break;
+	                    	case "2" : value =  "车位物业管理服务费";break;
+	                    	case "3" : value =  "公寓物业服务费";break;
+	                    	case "4" : value =  "居民用电";break;
+	                    	case "5" : value =  "现场类资源";break;
+	                    	case "6" : value =  "居民用水";break;
+	                    	case "7" : value =  "代办类";break;
+	                    	case "8" : value =  "建渣清运费";break;
+	                    	case "9" : value =  "有偿服务费";break;
+	                    	case "10" : value =  "门禁卡";break;
+	                    	case "11" : value =  "其他卡证工本费";break;
+	                    	case "12" : value =  "其他";break;
+	                    	case "13" : value =  "其他保证金及押金";break;
+	                    	case "14" : value =  "车位取暖费";break;
+	                    	case "15" : value =  "居民用电";break;
+	                    	case "16" : value =  "代办";break;
+	                    	case "17" : value =  "到家服务";break;
+	                    	case "18" : value =  "广告类资源";break;
+	                	}
+		            	return value;
+		            }
+                },
+                {
+                    field: 'reliefTypes',
+                    title: '减免类型'
+                },
+                {
+                    field: 'totalAmountDeduction',
+                    title: '减免总金额',
+                    footerFormatter:function (value) {
+				    	var sumBalance = 0;
+				        for (var i in value) {
+				        	sumBalance += parseFloat(value[i].totalAmountDeduction);
+				        }
+				        return "减免总金额：" + sumBalance;
+				    }
+                },
+                
+                {
+                    field: 'exemptionReason',
+                    title: '减免原因'
+                },
+                {
+                    field: 'offsetModificationRecord',
+                    title: '是否冲抵修改记录',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case "0" : value =  "是";break;
+	                    	case "1" : value =  "否";break;
+	                	}
+		            	return value;
+		            }
+                },
+                {
+                    field: 'auditStatus',
+                    title: '审核状态',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case 0 : value =  "已审核";break;
+	                    	case 1 : value =  "未审核";break;
+	                	}
+		            	return value;
+		            }
+                },
+                {
+                    field: 'remissionYear',
+                    title: '减免年份'
+                },
+                {
+                    field: 'remissionMonth',
+                    title: '减免月份'
+                }]
+            };
+            $.table.init(options);
+        });
+        
+        
+        function footerStyle(column) {
+        	return {
+        		totalAmountDeduction: {
+        	        css: { color: 'red', 'font-weight': 'normal' }
+        	    }
+        	}[column.field]
+        }
+    </script>
+</body>
+</html>

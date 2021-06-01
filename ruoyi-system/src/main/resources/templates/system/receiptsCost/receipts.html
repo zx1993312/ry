@@ -73,6 +73,12 @@
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
                 modalName: "费用项目",
+                showFooter: true,
+		        showSearch: false,
+		        showRefresh: false,
+		        showToggle: false,
+		        showColumns: false,
+		        footerStyle: footerStyle,
                 columns: [{
                     checkbox: true
                 },
@@ -135,7 +141,14 @@
                 },
                 {
                     field: 'amount',
-                    title: '总金额'
+                    title: '总金额',
+                    footerFormatter:function (value) {
+				    	var sumBalance = 0;
+				        for (var i in value) {
+				        	sumBalance += parseFloat(value[i].amount);
+				        }
+				        return "总金额：" + sumBalance;
+				    }
                 },
                 {
                     field: 'payee',
@@ -201,6 +214,14 @@
             };
             $.table.init(options);
         });
+        
+        function footerStyle(column) {
+        	return {
+        		amount: {
+        	        css: { color: 'red', 'font-weight': 'normal' }
+        	    }
+        	}[column.field]
+        }
     </script>
 </body>
 </html>

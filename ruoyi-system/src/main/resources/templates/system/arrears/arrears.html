@@ -67,6 +67,12 @@
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
                 modalName: "费用项目",
+                showFooter: true,
+		        showSearch: false,
+		        showRefresh: false,
+		        showToggle: false,
+		        showColumns: false,
+		        footerStyle: footerStyle,
                 columns: [{
                     checkbox: true
                 },
@@ -136,7 +142,14 @@
                 },
                 {
                     field: 'amountArrears',
-                    title: '欠收金额'
+                    title: '欠收金额',
+                    footerFormatter:function (value) {
+				    	var sumBalance = 0;
+				        for (var i in value) {
+				        	sumBalance += parseFloat(value[i].amountArrears);
+				        }
+				        return "应收总金额：" + sumBalance;
+				    }
                 },
                 {
                     field: 'paymentDeadlinTime',
@@ -145,6 +158,14 @@
             };
             $.table.init(options);
         });
+        
+        function footerStyle(column) {
+        	return {
+        		amountArrears: {
+        	        css: { color: 'red', 'font-weight': 'normal' }
+        	    }
+        	}[column.field]
+        }
     </script>
 </body>
 </html>

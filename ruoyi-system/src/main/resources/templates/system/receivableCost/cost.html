@@ -67,6 +67,12 @@
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
                 modalName: "费用项目",
+                showFooter: true,
+		        showSearch: false,
+		        showRefresh: false,
+		        showToggle: false,
+		        showColumns: false,
+		        footerStyle: footerStyle,
                 columns: [{
                     checkbox: true
                 },
@@ -139,8 +145,16 @@
                     title: '原应收金额'
                 },
                 {
-                    field: 'amountReceivablem',
-                    title: '应收金额'
+                    field: 'amountReceivable',
+                    title: '应收金额',
+                    footerFormatter:function (value) {
+				    	var sumBalance = 0;
+				        for (var i in value) {
+				        	sumBalance += parseFloat(value[i].amountReceivable);
+				        }
+				        return "应收总金额：" + sumBalance;
+				    }
+                    
                 },
                 {
                     field: 'dueDate',
@@ -149,6 +163,14 @@
             };
             $.table.init(options);
         });
+        
+        function footerStyle(column) {
+        	return {
+        		amountReceivable: {
+        	        css: { color: 'red', 'font-weight': 'normal' }
+        	    }
+        	}[column.field]
+        }
     </script>
 </body>
 </html>

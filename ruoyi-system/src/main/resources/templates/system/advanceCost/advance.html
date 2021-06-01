@@ -83,6 +83,12 @@
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
                 modalName: "预交冲抵",
+                showFooter: true,
+		        showSearch: false,
+		        showRefresh: false,
+		        showToggle: false,
+		        showColumns: false,
+		        footerStyle: footerStyle,
                 columns: [{
                     checkbox: true
                 },
@@ -113,7 +119,14 @@
                 },
                 {
                     field: 'hyCost.amountReceivable',
-                    title: '原预交余额'
+                    title: '原预交余额',
+                    footerFormatter:function (value) {
+				    	var sumBalance = 0;
+				        for (var i in value) {
+				        	sumBalance += parseFloat(value[i].hyCost.amountReceivable);
+				        }
+				        return "原预交总金额：" + sumBalance;
+				    }
                 },
                 {
                     field: 'offsetMoney',
@@ -165,6 +178,14 @@
             };
             $.table.init(options);
         });
+        
+        function footerStyle(column) {
+        	return {
+        		"hyCost.amountReceivable": {
+        	        css: { color: 'red', 'font-weight': 'normal' }
+        	    }
+        	}[column.field]
+        }
     </script>
 </body>
 </html>
