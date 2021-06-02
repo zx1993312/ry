@@ -19,7 +19,7 @@
                                 <input type="text" name="hyHouseInf.houseNumber"/>
                             </li>
                             <li>
-                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="search1()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                                 <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
                             </li>
                         </ul>
@@ -84,30 +84,30 @@
             	<div class="col-sm-2">
             		<br>
             		<br>
-            		<a>合计：</a><input >
+            		<a>合计：</a><input id="total">
             		<br>
-            		<a>实付：</a><input >
+            		<a>实付：</a><input id="paid">
             		<br>
-            		<a>找零：</a><input >
+            		<a>找零：</a><input id="change">
             	</div>
             	<div class="col-sm-10">
-            		<a>应收总计</a><input style="margin-right: 8%">
-            		<a>实收预收</a><input style="margin-right: 8%">
-            		<a>本次违约金</a><input style="margin-right: 8%">
-            		<a>本次预存</a><input style="margin-right: 8%">
+            		<a>应收总计</a><input style="margin-right: 8%" id="amountReceivable">
+            		<a>实收预收</a><input style="margin-right: 8%" id="amountActually">
+            		<a>本次违约金</a><input style="margin-right: 8%" id="damags">
+            		<a>本次预存</a><input style="margin-right: 8%" value=0>
             		<br>
-            		<a>预存冲抵</a><input style="margin-right: 8%">
-            		<a>领头结转</a><input style="margin-right: 9%">
-            		<a>结转余额</a><input style="margin-right: 8%">
-            		<a>本次合计</a><input style="margin-right: 8%">
+            		<a>预存冲抵</a><input style="margin-right: 8%" value=0>
+            		<a>领头结转</a><input style="margin-right: 9%" value=0>
+            		<a>结转余额</a><input style="margin-right: 8%" value=0>
+            		<a>本次合计</a><input style="margin-right: 8%" id="sum">
             		<br>
-            		<a>费项笔数</a><input style="width: 5%"><a>笔</a><input style="width: 5%"><a style="margin-right: 8%">行</a>
+            		<a>费项笔数</a><input style="width: 5%" value=4><a>笔</a><input style="width: 5%" value=1><a style="margin-right: 8%">行</a>
             		<a>收款方式</a>
             		<select style="margin-right: 9%;width: 12%">
 	          			<option value="">现金</option>
 	        		</select>
             		<a>多种方式</a><input style="margin-right: 9%">
-            		<a>实付金额</a><input style="margin-right: 8%">
+            		<a>实付金额</a><input style="margin-right: 8%" id="actually">
             		<br>
             		<a>收据样式</a>
             		<select style="margin-right: 8%;width: 12%">
@@ -224,9 +224,45 @@
                     title: '欠收金额'
                 },
                 {
+                    field: 'proportionDamags',
+                    title: '违约金比例',
+                    visible: false
+                },
+                {
                     field: 'remarks',
                     title: '备注'
-                }]
+                }],
+                responseHandler: function (res) {
+                    var sum = 0.0;
+                    var amountReceivable = 0.0;
+                    var advancePaymentOffset = 0.0;
+                    var writeOff = 0.0;
+                    var damags = 0.0;
+                    var proportionDamags = 0.0;
+                    var amountArrears = 0.0;
+                    var change = 0.0;
+                    for(var i = 0 ; i < res.rows.length ; i++){
+                    	amountReceivable += res.rows[i].amountReceivable;
+                    	advancePaymentOffset += res.rows[i].advancePaymentOffset;
+                    	writeOff += res.rows[i].writeOff;
+                    	proportionDamags += res.rows[i].proportionDamags;
+                    	amountArrears += res.rows[i].amountArrears;
+                    }
+                    sum = amountReceivable-(advancePaymentOffset+writeOff);
+                    $("#amountReceivable").val(sum);
+                    $("#amountActually").val(sum);
+                    $("#sum").val(sum);
+                    $("#actually").val(sum);
+                    damags = proportionDamags * amountArrears;
+                    $("#damags").val(damags);
+                    $("#sum").val(sum);
+                    $("#actually").val(sum);
+                    change = sum-sum;
+                    $("#change").val(change);
+                    $("#total").val(sum);
+                    $("#paid").val(sum);
+                       return res.messages 
+                   }
             };
             $.table.init(options);
         });
@@ -245,7 +281,23 @@
         	        css: { color: 'red', 'font-weight': 'normal' }
         	    }
         	}[column.field]
-        }
+        };
+     // 搜索-默认第一个form
+        function search1() {
+        	var params = $("#bootstrap-table").bootstrapTable('getOptions');
+            $("#bootstrap-table").bootstrapTable('refresh', params);
+            var startTime = $("#startTime").val();
+            $("#start").val(startTime);
+            var endTime = $("#endTime").val();
+            $("#end").val(endTime);
+            var date = new Date();
+        	var time = date.getTime();
+        	var year = date.getFullYear();
+        	var Month = "0"+(date.getMonth()+1);
+        	var da = date.getDate();
+        	var dateStr = year+"-"+Month+"-"+da;
+            $("#applyTime").val(dateStr);
+        };
     </script>
 </body>
 </html>
