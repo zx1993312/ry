@@ -129,6 +129,19 @@
             	</div>
             
             </div>
+            <div class="col-sm-12 select-table">
+            	<div class="col-sm-6 col-sm-offset-3">
+            		<input type="checkbox" checked="checked"><a  style="margin-right: 5%">零头取整</a>
+            		<input type="checkbox"><a  style="margin-right: 5%">预交冲抵</a>
+            		<input type="checkbox" checked="checked"><a  style="margin-right: 5%">合并打印</a>
+            		<input type="checkbox"><a  style="margin-right: 5%">批量收费</a>
+            		<a>收款日期</a><input type="text" class="time-input" placeholder="请选择收款日期" id="collectionTime" name="collectionTime" style="margin-right: 5%"/>
+            		<a class="btn btn-success btn-sm" onclick="conllection()">&nbsp;收款确认</a>
+            	</div>
+            </div>
+            <div class="col-sm-12 select-table">
+            	<a>运行状态：正常</a>
+            </div>
         </div>
     </div>
     <th:block th:include="include :: footer" />
@@ -233,6 +246,7 @@
                     title: '备注'
                 }],
                 responseHandler: function (res) {
+                	
                     var sum = 0.0;
                     var amountReceivable = 0.0;
                     var advancePaymentOffset = 0.0;
@@ -261,6 +275,15 @@
                     $("#change").val(change);
                     $("#total").val(sum);
                     $("#paid").val(sum);
+                    var date = new Date();
+                	var year = date.getFullYear();
+                	var Month = date.getMonth()+1;
+                	var da = date.getDate();
+                	var hh = date.getHours();
+                	var mm = date.getMinutes();
+                	var ss = date.getSeconds();
+                	var dateStr = year+"-"+Month+"-"+da+" "+hh+":"+mm+":"+ss;
+                	$("#collectionTime").val(dateStr);
                        return res.messages 
                    }
             };
@@ -286,18 +309,77 @@
         function search1() {
         	var params = $("#bootstrap-table").bootstrapTable('getOptions');
             $("#bootstrap-table").bootstrapTable('refresh', params);
-            var startTime = $("#startTime").val();
-            $("#start").val(startTime);
-            var endTime = $("#endTime").val();
-            $("#end").val(endTime);
             var date = new Date();
-        	var time = date.getTime();
         	var year = date.getFullYear();
-        	var Month = "0"+(date.getMonth()+1);
+        	var Month = date.getMonth()+1;
         	var da = date.getDate();
-        	var dateStr = year+"-"+Month+"-"+da;
-            $("#applyTime").val(dateStr);
+        	var hh = date.getHours();
+        	var mm = date.getMinutes();
+        	var ss = date.getSeconds();
+        	var dateStr = year+"-"+Month+"-"+da+" "+hh+":"+mm+":"+ss;
+        	$("#collectionTime").val(dateStr);
         };
+        function conllection(){
+        	$.modal.confirm("确定对该条数据收款吗？", function() {
+        	// 获取当前行
+            var row=$("#bootstrap-table").bootstrapTable('getSelections');
+        	
+        	if ($.common.isEmpty(row)) {
+    			$.modal.alertWarning("请至少选择一条记录");
+    			return;
+    		}
+        	if (row.length>1) {
+    			$.modal.alertWarning("最多只能选择一条数据");
+    			return;
+    		}
+        	console.log(row);
+        	var costId = row[0].id;
+        	var houseId = row[0].hyHouseInf.houseId;
+        	var ownerId = row[0].ownerAndCost.ownerId;
+        	if(houseId==null || houseId == ""){
+        		$.modal.alertWarning("该业主没有房屋");
+    			return;
+        	}
+        		var amount = 1000;
+            	var applyTime = $("#collectionTime").val();
+            	var collectionTime = $("#collectionTime").val();
+            	var payee = "航宇";
+            	var isCollection = "0";
+            	console.log(1111111111111);
+            	console.log(costId);
+            	console.log(houseId);
+            	console.log(ownerId);
+            	console.log(amount);
+            	console.log(applyTime);
+            	console.log(collectionTime);
+            	console.log(payee);
+            	console.log(isCollection);
+        	
+        	$.ajax({
+                type: "post",
+                datatype: "json",
+                url:  '/system/collection/add',
+                data: {"costId": costId,"houseId":houseId,"ownerId":ownerId,"amount":amount,"applyTime":applyTime,
+                	"collectionTime":collectionTime,"payee":payee,"isCollection":isCollection},
+               	beforeSend: function () {
+       	            $.modal.loading("正在处理中，请稍后...");
+       	            $.modal.disable();
+       	        },
+               	success: function(result) {
+   	            if (typeof callback == "function") {
+   	                callback(result);
+   	            }
+   	         	if(result.msg=="操作失败"){
+   	         	 $.modal.alertWarning("该条数据已被收款");
+   	         	}else{
+   	         		$.operate.successCallback(result);
+   	         	}
+	   	         $.modal.closeLoading();
+	             $.modal.enable();
+    	        }
+            }); 
+        	});
+        }
     </script>
 </body>
 </html>

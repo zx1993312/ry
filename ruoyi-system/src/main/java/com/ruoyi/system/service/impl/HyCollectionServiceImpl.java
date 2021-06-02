@@ -87,7 +87,20 @@ public class HyCollectionServiceImpl implements IHyCollectionService
     @Transactional(rollbackFor = Exception.class)
     public int insertHyCollection(HyCollection hyCollection)
     {
-        return hyCollectionMapper.insertHyCollection(hyCollection);
+    	Long costId = hyCollection.getCostId();
+    	Long houseId = hyCollection.getHouseId();
+    	Long ownerId = hyCollection.getOwnerId();
+    	HyCollection collection = new HyCollection();
+    	collection.setCostId(costId);
+    	collection.setHouseId(houseId);
+    	collection.setOwnerId(ownerId);
+    	List<HyCollection> list = hyCollectionMapper.selectHyCollectionList(collection);
+    	if(list.size()==0) {
+     		return hyCollectionMapper.insertHyCollection(hyCollection);
+    	}else {
+    		return 0;
+    	}
+        
     }
 
     /**

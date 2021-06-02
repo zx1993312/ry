@@ -1470,6 +1470,33 @@ var table = {
         	    };
         	    $.ajax(config)
             },
+            // 收款管理添加
+            save1: function(url, data, callback) {
+            	var config = {
+            			url: url,
+            			type: "post",
+            			dataType: "json",
+            			data: data,
+            			beforeSend: function () {
+            				$.modal.loading("正在处理中，请稍后...");
+            				$.modal.disable();
+            			},
+            			success: function(result) {
+            				if (typeof callback == "function") {
+            					callback(result);
+            				}
+            				debugger;
+            				if(result.msg=="操作失败"){
+            	   	         	 $.modal.alertWarning("该条数据已被收款");
+            	   	         	}else{
+            	   	         	$.operate.successCallback(result);
+            	   	         	}
+        		   	         $.modal.closeLoading();
+        		             $.modal.enable();
+            			}
+            	};
+            	$.ajax(config)
+            },
             // 保存信息 弹出提示框
             saveModal: function(url, data, callback) {
             	var config = {

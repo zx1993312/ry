@@ -101,6 +101,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<resultMap type="HyHouseInf" id="HyHouseInfResult">
 		<result property="id" column="id" />
+		<result property="houseId" column="houseId" />
 		<result property="houseNumber" column="house_number" />
 		<result property="houseName" column="house_name" />
 		<result property="builtUpArea" column="built_up_area" />
@@ -269,6 +270,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		c.billing_method,
 		c.calculation_standard,
 		o.owner_name,
+		h.id houseId,
 		h.house_name,
 		h.house_number,
 		h.delivery_status,
