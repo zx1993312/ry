@@ -11,12 +11,12 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                <label>费用项目：</label>
-                                <input type="text" name="costItems"/>
+                                <label>客户名称：</label>
+                                <input type="text" name="hyOwnerRegistration.ownerName"/>
                             </li>
                             <li>
-                                <label>费用类型：</label>
-                                <input type="text" name="expenseType"/>
+                                <label>房屋编号：</label>
+                                <input type="text" name="hyHouseInf.houseNumber"/>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -26,26 +26,108 @@
                     </div>
                 </form>
             </div>
-
-            <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:cost:add">
-                    <i class="fa fa-plus"></i> 添加
+			<div class="col-sm-12 select-table">
+                <a href="/system/registration" style="color: blue;margin-right: 10%">
+                    <i class="fa fa-user"></i> 客户资料
                 </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:cost:edit">
-                    <i class="fa fa-edit"></i> 修改
+                <a href="/system/parking" style="color: blue;margin-right: 10%">
+                    <i class="fa fa-truck"></i> 车位办理
                 </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:cost:remove">
-                    <i class="fa fa-remove"></i> 删除
-                </a>
-                <a class="btn btn-info" onclick="$.table.importExcel()" shiro:hasPermission="system:user:import">
-			            <i class="fa fa-upload"></i> 导入
+                <a href="/system/meter" style="color: blue;margin-right: 10%">
+			        <i class="fa fa-list-alt"></i> 单户抄表
 			    </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:cost:export">
-                    <i class="fa fa-download"></i> 导出
-                </a>
+                <a href="/system/customerStandardSetting" style="color: blue;margin-right: 10%">
+			        <i class="fa fa-plus-square"></i> 单户入账
+			    </a>
+                <a href="/system/receivableInput" style="color: blue;margin-right: 10%">
+			        <i class="fa fa-pencil"></i> 应收输入
+			    </a>
+			    <a href="" style="color: blue;margin-right: 10%">
+			        <i class="fa fa-list-alt"></i> 预收存款
+			    </a>
+                <a href="/system/chargehistory" style="color: blue;margin-right: 10%">
+			        <i class="fa fa-list-alt"></i> 收费历史
+			    </a>
             </div>
-            <div class="col-sm-12 select-table table-striped">
+            <div class="col-sm-12 select-table">
+            <a>房屋状态		入住（100.00%）</a><br>
+            <a>缴费信息		高层物业服务费：2020-08-31；预交余额：0.00（预存：0.00）</a><br>
+            <a>开票信息		点击编辑</a><br>
+            <a>备注信息		点击编辑</a>
+            </div>
+            <div class="col-sm-12 select-table">
+            	<a>显示应收数量：</a>
+            	<select>
+	          		<option value="">150</option>
+	        	</select>
+            	<a>月份筛选：</a>
+            	<select >
+	          		<option value="">全部</option>
+	        	</select>
+	        	<a>至：</a>
+	        	<select>
+	          		<option value="">全部</option>
+	        	</select>
+	        	<a>费用筛选：</a>
+	        	<select>
+	          		<option value="">全部</option>
+	        	</select>
+	        	<input type="checkbox" checked="checked">
+	        	<a>合并显示</a>
+	        	<input type="checkbox">
+	        	<a>按客户汇总收费</a>
+            </div>
+            <div class="col-sm-12 select-table">
                 <table id="bootstrap-table"></table>
+            </div>
+            <div class="col-sm-12 select-table">
+            	<div class="col-sm-2">
+            		<br>
+            		<br>
+            		<a>合计：</a><input >
+            		<br>
+            		<a>实付：</a><input >
+            		<br>
+            		<a>找零：</a><input >
+            	</div>
+            	<div class="col-sm-10">
+            		<a>应收总计</a><input style="margin-right: 8%">
+            		<a>实收预收</a><input style="margin-right: 8%">
+            		<a>本次违约金</a><input style="margin-right: 8%">
+            		<a>本次预存</a><input style="margin-right: 8%">
+            		<br>
+            		<a>预存冲抵</a><input style="margin-right: 8%">
+            		<a>领头结转</a><input style="margin-right: 9%">
+            		<a>结转余额</a><input style="margin-right: 8%">
+            		<a>本次合计</a><input style="margin-right: 8%">
+            		<br>
+            		<a>费项笔数</a><input style="width: 5%"><a>笔</a><input style="width: 5%"><a style="margin-right: 8%">行</a>
+            		<a>收款方式</a>
+            		<select style="margin-right: 9%;width: 12%">
+	          			<option value="">现金</option>
+	        		</select>
+            		<a>多种方式</a><input style="margin-right: 9%">
+            		<a>实付金额</a><input style="margin-right: 8%">
+            		<br>
+            		<a>收据样式</a>
+            		<select style="margin-right: 8%;width: 12%">
+	          			<option value="">航宇收款收据</option>
+	        		</select>
+            		<a>收据类别</a>
+            		<select style="margin-right: 10%;width: 12%">
+	          			<option value="">测试收据</option>
+	        		</select>
+            		<a>收据号</a><input style="margin-right: 9%">
+            		<a>开据发票</a><input type="checkbox"><a>是</a>
+            		<br>
+            		<a>入账银行</a>
+            		<input style="margin-right: 7%;">
+            		<a>入账账号</a>
+            		<input style="margin-right: 11%;">
+            		<a>备注</a><input style="margin-right: 10%;border: none;" placeholder="请输入备注内容">
+            		<a>付款码</a><input disabled="disabled">
+            	</div>
+            
             </div>
         </div>
     </div>
@@ -57,13 +139,17 @@
 
         $(function() {
             var options = {
+            		showSearch: false,
+    		        showRefresh: false,
+    		        showToggle: false,
+    		        showColumns: false,
+    		        showFooter: true,
+    		        footerStyle: footerStyle,
                 url: prefix + "/list",
                 createUrl: prefix + "/add",
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                importUrl: prefix + "/importData",
-                importTemplateUrl: prefix + "/importTemplate",
                 modalName: "费用项目",
                 columns: [{
                     checkbox: true
@@ -74,41 +160,92 @@
                     visible: false
                 },
                 {
+                    field: 'hyHouseInf.houseNumber',
+                    title: '房屋编号',
+                    footerFormatter:function (value) {
+				        return "合计";
+				    }
+                },
+                {
+                    field: 'hyParkingInf.parkingNumber',
+                    title: '车位编号'
+                },
+                {
                     field: 'costItems',
-                    title: '费用项目'
+                    title: '费用名称'
                 },
                 {
-                    field: 'expenseType',
-                    title: '费用类型'
+                    field: 'feeDate',
+                    title: '费用日期'
                 },
                 {
-                    title: '操作',
-                    align: 'center',
-                    formatter: function(value, row, index) {
-                        var actions = [];
-                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
-                        return actions.join('');
-                    }
+                    field: 'dueDate',
+                    title: '应收日期'
+                },
+                {
+                    field: 'amountReceivable',
+                    title: '应收金额',
+                    footerFormatter:function (value) {
+				    	var sum1 = 0;
+				        for (var i in value) {
+				        	sum1 += parseFloat(value[i].amountReceivable);
+				        }
+				        return sum1;
+				    }
+                },
+                {
+                    field: 'amountActually',
+                    title: '实收金额'
+                },
+                {
+                    field: 'advancePaymentOffset',
+                    title: '预交冲抵',
+                    footerFormatter:function (value) {
+				    	var sum2 = 0;
+				        for (var i in value) {
+				        	sum2 += parseFloat(value[i].advancePaymentOffset);
+				        }
+				        return sum2;
+				    }
+                },
+                {
+                    field: 'writeOff',
+                    title: '减免冲销',
+                    footerFormatter:function (value) {
+				    	var sum3 = 0;
+				        for (var i in value) {
+				        	sum3 += parseFloat(value[i].writeOff);
+				        }
+				        return sum3;
+				    }
+                },
+                {
+                    field: 'amountArrears',
+                    title: '欠收金额'
+                },
+                {
+                    field: 'remarks',
+                    title: '备注'
                 }]
             };
             $.table.init(options);
         });
+        function footerStyle(column) {
+        	return {
+        		"hyHouseInf.houseNumber": {
+        	        css: { color: 'red', 'font-weight': 'normal' }
+        	    },
+        		"amountReceivable": {
+        	        css: { color: 'red', 'font-weight': 'normal' }
+        	    },
+        	    "advancePaymentOffset": {
+        	        css: { color: 'red', 'font-weight': 'normal' }
+        	    },
+        	    "writeOff": {
+        	        css: { color: 'red', 'font-weight': 'normal' }
+        	    }
+        	}[column.field]
+        }
     </script>
 </body>
-<!-- 导入区域 -->
-<script id="importTpl" type="text/template">
-<form enctype="multipart/form-data" class="mt20 mb10">
-	<div class="col-xs-offset-1">
-		<input type="file" id="file" name="file"/>
-		<div class="mt10 pt5">
-			<input type="checkbox" id="updateSupport" name="updateSupport" title="如果登录账户已经存在，更新这条数据。"> 是否更新已经存在的用户数据
-			 &nbsp;	<a onclick="$.table.importTemplate()" class="btn btn-default btn-xs"><i class="fa fa-file-excel-o"></i> 下载模板</a>
-		</div>
-		<font color="red" class="pull-left mt10">
-			提示：仅允许导入“xls”或“xlsx”格式文件！
-		</font>
-	</div>
-</form>
-</script>
 </html>
