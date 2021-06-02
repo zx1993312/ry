@@ -134,13 +134,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		owner.owner_name,
 		inf.house_number
 		from hy_refund ref
-		left join hy_collection coll on ref.collection_id =
-		coll.id
-		left join
-		hy_owner_registration owner on owner.id =
-		coll.owner_id
-		left join
-		hy_house_inf inf on inf.id=coll.house_id
+		left join hy_collection coll on ref.collection_id = coll.id
+		left join hy_owner_registration owner on owner.id = coll.owner_id
+		left join hy_house_inf inf on inf.id=coll.house_id
 	</sql>
 
 	<select id="selectHyRefundList" parameterType="HyRefund"

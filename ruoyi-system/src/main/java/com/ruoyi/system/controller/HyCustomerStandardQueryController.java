@@ -58,7 +58,7 @@ public class HyCustomerStandardQueryController extends BaseController {
 	@ResponseBody
 	public TableDataInfo list(HyCost hyCost) {
 		startPage();
-		List<HyCost> list = hyCostService.selectHyCostListOr(hyCost);
+		List<HyCost> list = hyCostService.selectHyCostList(hyCost);
 		return getDataTable(list);
 	}
 
@@ -85,7 +85,7 @@ public class HyCustomerStandardQueryController extends BaseController {
 	@PostMapping("/export")
 	@ResponseBody
 	public AjaxResult export(HyCost hyCost) {
-		List<HyCost> list = hyCostService.selectHyCostListOr(hyCost);
+		List<HyCost> list = hyCostService.selectHyCostList(hyCost);
 		ExcelUtil<HyCost> util = new ExcelUtil<HyCost>(HyCost.class);
 		return util.exportExcel(list, "cost");
 	}

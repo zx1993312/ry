@@ -82,10 +82,6 @@ public class HyCostServiceImpl implements IHyCostService {
 		return hyCostMapper.selectHyCostList(hyCost);
 	}
 
-	public List<HyCost> selectHyCostListOr(HyCost hyCost) {
-		return hyCostMapper.selectHyCostListOr(hyCost);
-	}
-
 	/**
 	 * 查询费用项目列表
 	 * 

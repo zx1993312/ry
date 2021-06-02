@@ -31,8 +31,6 @@ public interface HyCostMapper
      */
     public List<HyCost> selectHyCostList(HyCost hyCost);
     
-    public List<HyCost> selectHyCostListOr(HyCost hyCost);
-    
     /**
      * 查询费用项目列表
      * 

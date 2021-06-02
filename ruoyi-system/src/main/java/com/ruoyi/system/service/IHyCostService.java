@@ -30,8 +30,6 @@ public interface IHyCostService {
 	 */
 	public List<HyCost> selectHyCostList(HyCost hyCost);
 
-	public List<HyCost> selectHyCostListOr(HyCost hyCost);
-
 	/**
 	 * 查询费用项目列表
 	 * 
@@ -87,6 +85,6 @@ public interface IHyCostService {
 	public int batchUpdateCost(String costItems, String standardName, String billingCycle, String currentState,
 			String building, String transferTenants, String[] sel);
 
-	public int downloadPDF(HttpServletResponse response)throws Exception;
+	public int downloadPDF(HttpServletResponse response) throws Exception;
 
 }
