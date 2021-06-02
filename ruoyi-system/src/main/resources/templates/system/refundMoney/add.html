@@ -13,30 +13,21 @@
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">费用项目：</label>
+                <label class="col-sm-3 control-label">费用选择：</label>
                 <div class="col-sm-8">
-                     <select id="costId" name="costId" class="form-control" th:with="type=${@cost.getCost()}" onchange="changeHouse()">
-						<option value="">请选择</option>
-						<option th:if="data!=null" th:each="data:${type}" th:text="${data.costItems}" th:value="${data.id}"></option>
-			 	    </select>
+			 	    <input type="text" class="form-control" id="costItems" name="costItems"  onclick="selectCollection()"/>
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">房屋名称：</label>
                 <div class="col-sm-8">
-                    <select class="form-control m-b" id="houseId" name="houseId" th:with="type=${@houseInf.getHouseInf()}" disabled="disabled" onchange="changeOwner()">
-	                  		<option value="">请选择</option>
-	                  		<option th:each="dict : ${type}" th:text="${dict.houseName}" th:value="${dict.id}"></option>
-	                </select>
+			 	    <input type="text" class="form-control" id="houseName" name="houseName" disabled="disabled"/>
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">业主名称：</label>
                 <div class="col-sm-8">
-                    <select id="ownerId" name="ownerId" class="form-control" th:with="type=${@ownerRegistration.getOwnerRegistration()}" disabled="disabled">
-						<option value="">请选择</option>
-						<option th:if="data!=null" th:each="data:${type}" th:text="${data.ownerName}" th:value="${data.id}"></option>
-			 	    </select>
+			 	    <input type="text" class="form-control" id="ownerName" name="ownerName" disabled="disabled"/>
                 </div>
             </div>
             <div class="form-group">    
@@ -69,6 +60,7 @@
                     <input name="refundReasons" class="form-control" type="text">
                 </div>
             </div>
+            <input id="collectionId" name="collectionId" type="hidden"/>
         </form>
     </div>
     <th:block th:include="include :: footer" />
@@ -84,54 +76,8 @@
             }
         }
         
-        var prefix1 = ctx + "system/customer"
-        //费用房屋业主
-        function changeHouse(){
-   			$("#houseId").removeAttr("disabled");
-   			$.ajax({
-                url: prefix1 + "/houseOrCostId",
-                data: {costId : $("#costId").val()},
-                dataType : 'json',
-                type: 'POST',
-                success: function (result) {
-                	console.log(result);
-                	var optArr = [];
-                	$("#houseId").empty();
-					$("#houseId").append("<option value=\"\">请选择</option>");
-                    for (var i = 0; i < result.length; i++) {
-                    	$("#houseId").append("<option value=" + result[i].id + ">" + result[i].houseName + "</option>");
-                    }
-                        
-                    // 缺一不可  
-                    $("#houseId").selectpicker('refresh');
-                    $("#houseId").selectpicker('render');
-
-                }
-            });
-   		}
-        var prefix2 = ctx + "system/inf"
-        function changeOwner(){
-        	$("#ownerId").removeAttr("disabled");
-   			$.ajax({
-                url: prefix2 + "/owner",
-                data: {id : $("#houseId").val()},
-                dataType : 'json',
-                type: 'POST',
-                success: function (result) {
-                	console.log(result);
-                	var optArr = [];
-                	$("#ownerId").empty();
-					$("#ownerId").append("<option value=\"\">请选择</option>");
-                    for (var i = 0; i < result.length; i++) {
-                    	$("#ownerId").append("<option value=" + result[i].id + ">" + result[i].ownerName + "</option>");
-                    }
-                        
-                    // 缺一不可  
-                    $("#ownerId").selectpicker('refresh');
-                    $("#ownerId").selectpicker('render');
-
-                }
-            });
+        function selectCollection(){
+        	$.modal.open("员工管理页面","/system/selectCollection");
         }
         
         $(function(){

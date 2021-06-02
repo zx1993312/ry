@@ -35,9 +35,7 @@ public class HyRefund extends BaseEntity {
 	@Excel(name = "违约金退款")
 	private Long refundDamages;
 
-	/**
-	 * 退款原因
-	 */
+	/** 退款原因 */
 	@Excel(name = "退款原因")
 	private String refundReasons;
 
@@ -45,6 +43,33 @@ public class HyRefund extends BaseEntity {
 	@Excel(name = "CollectionId")
 	private Long collectionId;
 
+	/** 是否审核 */
+	private Integer isExamine;
+	
+	/** 费用退款备注*/
+	private String refundRemark;
+	
+	/** 退款凭据类别*/
+	private String refundVoucher;
+	
+	/** 领款人*/
+	private String payee;
+	
+	/** 退款人*/
+	private String refunder;
+	
+	/** 退款方式*/
+	private String refundMethod;
+	
+	/** 退款凭据票号*/
+	private String refundVoucherNo;
+	
+	/** 身份证号*/
+	private String idCard;
+
+	/** 验收人*/
+	private String acceptancePerson;
+	
 	/** 收款管理表 */
 	private HyCollection hyCollection;
 
@@ -53,6 +78,12 @@ public class HyRefund extends BaseEntity {
 
 	/** 房屋登记表 */
 	private HyHouseInf hyHouseInf;
+
+	/** 中间表(房屋和费用) */
+	private HouseAndCost houseAndCost;
+
+	/** 费用表 */
+	private HyCost hyCost;
 
 	public Long getId() {
 		return id;
@@ -118,6 +149,78 @@ public class HyRefund extends BaseEntity {
 		this.collectionId = collectionId;
 	}
 
+	public Integer getIsExamine() {
+		return isExamine;
+	}
+
+	public void setIsExamine(Integer isExamine) {
+		this.isExamine = isExamine;
+	}
+
+	public String getRefundRemark() {
+		return refundRemark;
+	}
+
+	public void setRefundRemark(String refundRemark) {
+		this.refundRemark = refundRemark;
+	}
+
+	public String getRefundVoucher() {
+		return refundVoucher;
+	}
+
+	public void setRefundVoucher(String refundVoucher) {
+		this.refundVoucher = refundVoucher;
+	}
+
+	public String getPayee() {
+		return payee;
+	}
+
+	public void setPayee(String payee) {
+		this.payee = payee;
+	}
+
+	public String getRefunder() {
+		return refunder;
+	}
+
+	public void setRefunder(String refunder) {
+		this.refunder = refunder;
+	}
+
+	public String getRefundMethod() {
+		return refundMethod;
+	}
+
+	public void setRefundMethod(String refundMethod) {
+		this.refundMethod = refundMethod;
+	}
+
+	public String getRefundVoucherNo() {
+		return refundVoucherNo;
+	}
+
+	public void setRefundVoucherNo(String refundVoucherNo) {
+		this.refundVoucherNo = refundVoucherNo;
+	}
+
+	public String getIdCard() {
+		return idCard;
+	}
+
+	public void setIdCard(String idCard) {
+		this.idCard = idCard;
+	}
+
+	public String getAcceptancePerson() {
+		return acceptancePerson;
+	}
+
+	public void setAcceptancePerson(String acceptancePerson) {
+		this.acceptancePerson = acceptancePerson;
+	}
+
 	public HyCollection getHyCollection() {
 		return hyCollection;
 	}
@@ -142,12 +245,20 @@ public class HyRefund extends BaseEntity {
 		this.hyHouseInf = hyHouseInf;
 	}
 
-	@Override
-	public String toString() {
-		return "HyRefund [id=" + id + ", applyNumber=" + applyNumber + ", refundAmount=" + refundAmount + ", damages="
-				+ damages + ", refundMoney=" + refundMoney + ", refundDamages=" + refundDamages + ", refundReasons="
-				+ refundReasons + ", collectionId=" + collectionId + ", hyCollection=" + hyCollection
-				+ ", hyOwnerRegistration=" + hyOwnerRegistration + ", hyHouseInf=" + hyHouseInf + "]";
+	public HouseAndCost getHouseAndCost() {
+		return houseAndCost;
+	}
+
+	public void setHouseAndCost(HouseAndCost houseAndCost) {
+		this.houseAndCost = houseAndCost;
+	}
+
+	public HyCost getHyCost() {
+		return hyCost;
+	}
+
+	public void setHyCost(HyCost hyCost) {
+		this.hyCost = hyCost;
 	}
 
 }

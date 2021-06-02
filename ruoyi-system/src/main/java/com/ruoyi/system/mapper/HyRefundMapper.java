@@ -2,8 +2,6 @@ package com.ruoyi.system.mapper;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-
 import com.ruoyi.system.domain.HyRefund;
 
 /**
@@ -60,8 +58,5 @@ public interface HyRefundMapper {
 	 * @return 结果
 	 */
 	public int deleteHyRefundByIds(String[] ids);
-
-	public List<HyRefund> selectHyRefundListByHouse(@Param("houseName") String houseName,
-			@Param("houseNumber") String houseNumber, @Param("deliveryStatus") String deliveryStatus);
 
 }

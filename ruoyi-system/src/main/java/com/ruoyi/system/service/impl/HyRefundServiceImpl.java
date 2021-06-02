@@ -1,14 +1,17 @@
 package com.ruoyi.system.service.impl;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.ruoyi.system.mapper.HyRefundMapper;
-import com.ruoyi.system.domain.HyHouseInf;
-import com.ruoyi.system.domain.HyRefund;
-import com.ruoyi.system.service.IHyRefundService;
+
 import com.ruoyi.common.core.text.Convert;
+import com.ruoyi.system.domain.HyCollection;
+import com.ruoyi.system.domain.HyRefund;
+import com.ruoyi.system.mapper.HyCollectionMapper;
+import com.ruoyi.system.mapper.HyRefundMapper;
+import com.ruoyi.system.service.IHyRefundService;
 
 /**
  * 退款申请Service业务层处理
@@ -20,6 +23,9 @@ import com.ruoyi.common.core.text.Convert;
 public class HyRefundServiceImpl implements IHyRefundService {
 	@Autowired
 	private HyRefundMapper hyRefundMapper;
+	
+	@Autowired
+	private HyCollectionMapper hyCollectionMapper;
 
 	/**
 	 * 查询退款申请
@@ -52,6 +58,10 @@ public class HyRefundServiceImpl implements IHyRefundService {
 	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int insertHyRefund(HyRefund hyRefund) {
+		HyCollection hyCollection = new HyCollection();
+		hyCollection.setIsRefund("0");
+		hyCollection.setId(hyRefund.getCollectionId());
+		hyCollectionMapper.updateHyCollection(hyCollection);
 		return hyRefundMapper.insertHyRefund(hyRefund);
 	}
 
@@ -89,14 +99,6 @@ public class HyRefundServiceImpl implements IHyRefundService {
 	@Override
 	public int deleteHyRefundById(Long id) {
 		return hyRefundMapper.deleteHyRefundById(id);
-	}
-
-	@Override
-	public List<HyRefund> selectHyRefundListByHouse(HyHouseInf hyHouseInf) {
-		String houseName = hyHouseInf.getHouseName();
-		String houseNumber = hyHouseInf.getHouseNumber();
-		String deliveryStatus = hyHouseInf.getDeliveryStatus();
-		return hyRefundMapper.selectHyRefundListByHouse(houseName, houseNumber, deliveryStatus);
 	}
 
 }

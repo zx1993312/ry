@@ -13,12 +13,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="refundDamages" column="refund_damages" />
 		<result property="refundReasons" column="refund_reasons" />
 		<result property="collectionId" column="collection_id" />
+		<result property="isExamine" column="is_examine" />
+		<result property="refundRemark" column="refund_remark" />
+		
+		<result property="refundVoucher" column="refund_voucher" />
+		<result property="payee" column="payee" />
+		<result property="refunder" column="refunder" />
+		<result property="refundMethod" column="refund_method" />
+		<result property="refundVoucherNo" column="refund_voucher_no" />
+		<result property="idCard" column="id_card" />
+		<result property="acceptancePerson" column="acceptance_person" />
+	
+	
 		<association property="hyCollection" column="id"
 			javaType="HyCollection" resultMap="HyCollectionResult" />
 		<association property="hyOwnerRegistration" column="id"
 			javaType="HyOwnerRegistration" resultMap="HyOwnerRegistrationResult" />
 		<association property="hyHouseInf" column="id"
 			javaType="HyHouseInf" resultMap="HyHouseInfResult" />
+		<association property="houseAndCost" column="id"
+			javaType="HouseAndCost" resultMap="HouseAndCostResult" />
+		<association property="hyCost" column="id"
+			javaType="HyCost" resultMap="HyCostResult" />
 	</resultMap>
 
 	<resultMap type="HyCollection" id="HyCollectionResult">
@@ -121,6 +137,63 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="ownerId" column="owner_id" />
 	</resultMap>
 
+	<resultMap type="HouseAndCost" id="HouseAndCostResult">
+		<result property="houseId" column="house_id" />
+		<result property="costId" column="cost_id" />
+	</resultMap>
+
+	<resultMap type="HyCost" id="HyCostResult">
+		<result property="id" column="id" />
+		<result property="costItems" column="cost_items" />
+		<result property="expenseType" column="expense_type" />
+		<result property="parentId" column="parent_id" />
+		<result property="ancestors" column="ancestors" />
+		<result property="standardName" column="standard_name" />
+		<result property="feeNum" column="fee_num" />
+		<result property="chargingStandard" column="charging_standard" />
+		<result property="calculationMehod" column="calculation_mehod" />
+		<result property="standardDescription"
+			column="standard_description" />
+		<result property="standardState" column="standard_state" />
+		<result property="proportionDamags" column="proportion_damags" />
+		<result property="projectModification"
+			column="project_modification" />
+		<result property="billingCycle" column="billing_cycle" />
+		<result property="bilingStartDate" column="biling_start_date" />
+		<result property="bilingEndDate" column="biling_end_date" />
+		<result property="auditResultsReason"
+			column="audit_results_reason" />
+		<result property="feeDateOld" column="fee_date_old" />
+		<result property="feeDate" column="fee_date" />
+		<result property="dueDateOld" column="due_date_old" />
+		<result property="dueDate" column="due_date" />
+		<result property="amountReceivableOld"
+			column="amount_receivable_old" />
+		<result property="amountReceivable" column="amount_receivable" />
+		<result property="amountActually" column="amount_actually" />
+		<result property="remarks" column="remarks" />
+		<result property="operationDate" column="operation_date" />
+		<result property="operationUser" column="operation_user" />
+		<result property="operationType" column="operation_type" />
+		<result property="deleteReason" column="delete_reason" />
+		<result property="advancePaymentOffset"
+			column="advance_payment_offset" />
+		<result property="writeOff" column="write_off" />
+		<result property="refundAmount" column="refund_amount" />
+		<result property="amountArrears" column="amount_arrears" />
+		<result property="collectionStatus" column="collection_status" />
+		<result property="frozenPerson" column="frozen_person" />
+		<result property="frozenState" column="frozen_state" />
+		<result property="frozenDate" column="frozen_date" />
+		<result property="frozenReason" column="frozen_reason" />
+		<result property="advanceStatus" column="advance_status" />
+		<result property="transferTenants" column="transfer_tenants" />
+		<result property="changeDate" column="change_date" />
+		<result property="billingMethod" column="billing_method" />
+		<result property="calculationStandard"
+			column="calculation_standard" />
+	</resultMap>
+
 	<sql id="selectHyRefundVo">
 		select
 		ref.id,
@@ -131,12 +204,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ref.refund_damages,
 		ref.refund_reasons,
 		ref.collection_id,
+		ref.is_examine,
+		ref.refund_remark,
+		ref.refund_voucher,
+		ref.payee,
+		ref.refunder,
+		ref.refund_method,
+		ref.refund_voucher_no,
+		ref.id_card,
+		ref.acceptance_person,
 		owner.owner_name,
-		inf.house_number
+		inf.house_number,
+		inf.house_name,
+		coll.receipt_number,
+		coll.collection_time,
+		cos.cost_items,
+		cos.amount_arrears,
+		cos.fee_date,
+		cos.due_date,
+		cos.biling_start_date,
+		cos.biling_end_date
 		from hy_refund ref
 		left join hy_collection coll on ref.collection_id = coll.id
 		left join hy_owner_registration owner on owner.id = coll.owner_id
 		left join hy_house_inf inf on inf.id=coll.house_id
+		left join house_and_cost hac on inf.id = hac.house_id
+		left join hy_cost cos on cos.id=hac.cost_id
 	</sql>
 
 	<select id="selectHyRefundList" parameterType="HyRefund"
@@ -150,16 +243,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="refundDamages != null "> and ref.refund_damages = #{refundDamages}</if>
 			<if test="refundReasons != null  and refundReasons != ''"> and ref.refund_reasons = #{refundReasons}</if>
 			<if test="collectionId != null "> and ref.collection_id = #{collectionId}</if>
-		</where>
-	</select>
-
-	<select id="selectHyRefundListByHouse" parameterType="String"
-		resultMap="HyRefundResult">
-		<include refid="selectHyRefundVo" />
-		<where>
-			<if test="houseName != null  and houseName != ''"> and inf.house_name = #{houseName}</if>
-			<if test="houseNumber != null and houseNumber != ''"> and inf.house_number = #{houseNumber}</if>
-			<if test="deliveryStatus != null and deliveryStatus != ''"> inf ref.delivery_status = #{deliveryStatus}</if>
+			<if test="isExamine != null "> and ref.is_examine = #{isExamine}</if>
+			<if test="refundRemark != null "> and ref.refund_remark = #{refundRemark}</if>
+			<if test="refundVoucher != null "> and ref.refund_voucher = #{refundVoucher}</if>
+			<if test="payee != null "> and ref.payee = #{payee}</if>
+			<if test="refunder != null "> and ref.refunder = #{refunder}</if>
+			<if test="refundMethod != null "> and ref.refund_method = #{refundMethod}</if>
+			<if test="refundVoucherNo != null "> and ref.refund_voucher_no = #{refundVoucherNo}</if>
+			<if test="idCard != null "> and ref.id_card = #{idCard}</if>
+			<if test="acceptancePerson != null "> and ref.acceptance_person = #{acceptancePerson}</if>
+			
+			<if test="hyOwnerRegistration != null">
+            	<if test="hyOwnerRegistration.ownerName != null  and hyOwnerRegistration.ownerName != ''"> and owner.owner_name = #{hyOwnerRegistration.ownerName}</if>
+            </if>
+            <if test="hyHouseInf != null">
+	            <if test="hyHouseInf.houseNumber != null  and hyHouseInf.houseNumber != ''"> and inf.house_number = #{hyHouseInf.houseNumber}</if>
+	            <if test="hyHouseInf.houseName != null  and hyHouseInf.houseName != ''"> and inf.house_name = #{hyHouseInf.houseName}</if>
+	            <if test="hyHouseInf.deliveryStatus != null  and hyHouseInf.deliveryStatus != ''"> and inf.delivery_status = #{hyHouseInf.deliveryStatus}</if>
+            </if>
 		</where>
 	</select>
 
@@ -180,6 +281,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="refundDamages != null">refund_damages,</if>
 			<if test="refundReasons != null">refund_reasons,</if>
 			<if test="collectionId != null">collection_id,</if>
+			<if test="refundRemark != null">refund_remark,</if>
+			<if test="refundVoucher != null">refund_voucher,</if>
+			<if test="payee != null">payee,</if>
+			<if test="refunder != null">refunder,</if>
+			<if test="refundMethod != null">refund_method,</if>
+			<if test="refundVoucherNo != null">refund_voucher_no,</if>
+			<if test="idCard != null">id_card,</if>
+			<if test="acceptancePerson != null">acceptance_person,</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null">#{id},</if>
@@ -190,6 +299,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="refundDamages != null">#{refundDamages},</if>
 			<if test="refundReasons != null">#{refundReasons},</if>
 			<if test="collectionId != null">#{collectionId},</if>
+			<if test="refundRemark != null">#{refundRemark},</if>
+			<if test="refundVoucher != null">#{refundVoucher},</if>
+			<if test="payee != null">#{payee},</if>
+			<if test="refunder != null">#{refunder},</if>
+			<if test="refundMethod != null">#{refundMethod},</if>
+			<if test="refundVoucherNo != null">#{refundVoucherNo},</if>
+			<if test="idCard != null">#{idCard},</if>
+			<if test="acceptancePerson != null">#{acceptancePerson},</if>
 		</trim>
 	</insert>
 
@@ -203,6 +320,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="refundDamages != null">refund_damages = #{refundDamages},</if>
 			<if test="refundReasons != null">refund_reasons = #{refundReasons},</if>
 			<if test="collectionId != null">collection_id = #{collectionId},</if>
+			<if test="isExamine != null ">is_examine = #{isExamine},</if>
+			<if test="refundRemark != null ">refund_remark = #{refundRemark},</if>
+			<if test="refundVoucher != null ">refund_voucher = #{refundVoucher},</if>
+			<if test="payee != null ">payee = #{payee},</if>
+			<if test="refunder != null ">refunder = #{refunder},</if>
+			<if test="refundMethod != null ">refund_method = #{refundMethod},</if>
+			<if test="refundVoucherNo != null ">refund_voucher_no = #{refundVoucherNo},</if>
+			<if test="idCard != null ">id_card = #{idCard},</if>
+			<if test="acceptancePerson != null ">acceptance_person = #{acceptancePerson},</if>
 		</trim>
 		where id = #{id}
 	</update>

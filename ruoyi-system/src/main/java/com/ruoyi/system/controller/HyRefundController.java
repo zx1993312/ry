@@ -1,5 +1,6 @@
 package com.ruoyi.system.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ruoyi.common.annotation.Log;
@@ -18,8 +18,8 @@ import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.system.domain.HyHouseInf;
 import com.ruoyi.system.domain.HyRefund;
 import com.ruoyi.system.service.IHyRefundService;
 
@@ -57,10 +57,30 @@ public class HyRefundController extends BaseController {
 	@RequiresPermissions("system:refund:list")
 	@PostMapping("/list")
 	@ResponseBody
-	public TableDataInfo list(HyHouseInf hyHouseInf) {
+	public TableDataInfo list(HyRefund hyRefund) {
 		startPage();
-		List<HyRefund> list = hyRefundService.selectHyRefundListByHouse(hyHouseInf);
+		List<HyRefund> list = hyRefundService.selectHyRefundList(hyRefund);
 		return getDataTable(list);
+	}
+
+	/**
+	 * 查询退款申请列表
+	 */
+	@ApiOperation("退款申请")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyRefund", value = "项目实体类hyRefund", required = true), })
+	@RequiresPermissions("system:refund:list")
+	@PostMapping("/listByIsExamine")
+	@ResponseBody
+	public TableDataInfo listByIsExamine(HyRefund hyRefund) {
+		startPage();
+		if (!StringUtils.isEmpty(hyRefund.getHyOwnerRegistration().getOwnerName())
+				|| !StringUtils.isEmpty(hyRefund.getHyHouseInf().getHouseName())
+				|| !StringUtils.isEmpty(hyRefund.getHyHouseInf().getHouseNumber())) {
+			hyRefund.setIsExamine(1);
+			List<HyRefund> list = hyRefundService.selectHyRefundList(hyRefund);
+			return getDataTable(list);
+		}
+		return getDataTable(new ArrayList<HyRefund>());
 	}
 
 	/**
