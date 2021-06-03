@@ -2,7 +2,7 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org"
 	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-<th:block th:include="include :: header('应收费用列表')" />
+<th:block th:include="include :: header('实收费用查询')" />
 </head>
 <body class="gray-bg">
 	<div class="container-div">
@@ -19,13 +19,19 @@
 								<label>房屋编号：</label> 
 								<input type="text" name="hyHouseInf.houseNumber" />
 							</li>
+							
+							<li>
+								<label>产权性质：</label> 
+								<input type="text" name="hyHouseInf.natureProperty" />
+							</li>
+							
 							<li>
 								<label>房屋名称：</label> 
 								<input type="text" name="hyHouseInf.houseName" />
 							</li>
 							<li>
 							<label>费用名称：</label> 
-								<select name="costItems" th:with="type=${@dict.getType('hy_fee_name')}">
+								<select name="hyCost.costItems" th:with="type=${@dict.getType('hy_fee_name')}">
 									<option value="">请选择</option>
 									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 								</select>
@@ -57,7 +63,7 @@
 	<script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('system:cost:edit')}]];
         var removeFlag = [[${@permission.hasPermi('system:cost:remove')}]];
-        var prefix = ctx + "system/receivableCost";
+        var prefix = ctx + "system/refundCost";
 
         $(function() {
             var options = {
@@ -78,90 +84,66 @@
                 },
                 {
                     field: 'id',
-                    title: '主键',
+                    title: 'id',
                     visible: false
                 },
                 {
-                    field: 'hyOwnerRegistration.ownerName',
-                    title: '客户名称',
+                    field: 'applyNumber',
+                    title: '申请编号',
                     footerFormatter:function (value) {
-				        return "合计：" ;
+				        return "合计：";
 				    }
+                },
+                {
+                    field: 'hyHouseInf.houseNumber',
+                    title: '房屋编号'
                 },
                 {
                     field: 'hyHouseInf.houseName',
                     title: '房屋名称'
                 },
                 {
-                    field: 'hyHouseInf.houseNumber',
-                    title: '房屋编号'
-                },
-                
-                {
-                    field: 'hyParkingInf.parkingNumber',
-                    title: '车位编号'
+                    field: 'hyCollection.collectionTime',
+                    title: '收款/冲抵时间'
                 },
                 {
-                    field: 'hyMeter.meterName',
-                    title: '表计名称'
+                    field: 'hyCollection.receiptNumber',
+                    title: '收据号码'
                 },
                 {
-                    field: 'hyMeter.meterSerialNum',
-                    title: '表计序号'
-                },
-                
-                {
-                    field: 'costItems',
-                    title: '费用名称',
-                    formatter: function(value, item, index) {
-                    	switch(value){
-                        	case "0" : value =  "高层物业服务费";break;
-                        	case "1" : value =  "商铺物业服务费";break;
-                        	case "2" : value =  "车位物业管理服务费";break;
-                        	case "3" : value =  "公寓物业服务费";break;
-                        	case "4" : value =  "居民用电";break;
-                        	case "5" : value =  "现场类资源";break;
-                        	case "6" : value =  "居民用水";break;
-                        	case "7" : value =  "代办类";break;
-                        	case "8" : value =  "建渣清运费";break;
-                        	case "9" : value =  "有偿服务费";break;
-                        	case "10" : value =  "门禁卡";break;
-                        	case "11" : value =  "其他卡证工本费";break;
-                        	case "12" : value =  "其他";break;
-                        	case "13" : value =  "其他保证金及押金";break;
-                        	case "14" : value =  "车位取暖费";break;
-                        	case "15" : value =  "居民用电";break;
-                        	case "16" : value =  "代办";break;
-                        	case "17" : value =  "到家服务";break;
-                        	case "18" : value =  "广告类资源";break;
-                    	}
-    	            	return value;
-    	            }
-                },
-               
-                {
-                    field: 'feeDate',
+                    field: 'hyCost.feeDate',
                     title: '费用日期'
                 },
                 {
-                    field: 'amountReceivableOld',
-                    title: '原应收金额'
+                    field: 'hyCost.dueDate',
+                    title: '应收日期'
                 },
                 {
-                    field: 'amountReceivable',
-                    title: '应收金额',
+                    field: 'hyCost.bilingStartDate',
+                    title: '开始日期'
+                },
+                {
+                    field: 'hyCost.bilingEndDate',
+                    title: '结束日期'
+                },
+                {
+                    field: 'hyCost.costItems',
+                    title: '费用名称'
+                },
+                {
+                    field: 'refundMoney',
+                    title: '退款金额',
                     footerFormatter:function (value) {
 				    	var sumBalance = 0;
 				        for (var i in value) {
-				        	sumBalance += parseFloat(value[i].amountReceivable);
+				        	sumBalance += parseFloat(value[i].refundMoney);
 				        }
-				        return "应收总金额：" + sumBalance;
+				        return "退款总金额：" + sumBalance;
 				    }
-                    
                 },
                 {
-                    field: 'dueDate',
-                    title: '应收日期'
+                    field: 'collectionRemark',
+                    title: '备注'
                 }]
             };
             $.table.init(options);
@@ -169,10 +151,10 @@
         
         function footerStyle(column) {
         	return {
-        		'hyOwnerRegistration.ownerName': {
+        		applyNumber: {
         			css: { color: 'red', 'font-weight': 'normal' }
         		},
-        		amountReceivable: {
+        		refundMoney: {
         	        css: { color: 'red', 'font-weight': 'normal' }
         	    }
         	}[column.field]
