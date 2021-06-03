@@ -83,7 +83,10 @@
                 },
                 {
                     field: 'hyOwnerRegistration.ownerName',
-                    title: '客户名称'
+                    title: '客户名称',
+                    footerFormatter:function (value) {
+				        return "合计：" ;
+				    }
                 },
                 {
                     field: 'hyHouseInf.houseName',
@@ -161,6 +164,9 @@
         
         function footerStyle(column) {
         	return {
+        		'hyOwnerRegistration.ownerName': {
+        			css: { color: 'red', 'font-weight': 'normal' }
+        		},
         		amountArrears: {
         	        css: { color: 'red', 'font-weight': 'normal' }
         	    }

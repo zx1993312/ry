@@ -77,15 +77,15 @@
 															<ul>
 																<li>
 																	<label>房屋编号：</label> 
-																	<input type="text" id="step1houseNumber" name="houseNumber" />
+																	<input type="text" id="step1houseNumber" name="hyHouseInf.houseNumber" />
 																</li>
 																<li>
 																	<label>房屋名称：</label> 
-																	<input type="text" id="step1houseName" name="houseName" />
+																	<input type="text" id="step1houseName" name="hyHouseInf.houseName" />
 																</li>
 																<li>
 																<label>交房状态：</label> 
-																	<select id="step1deliveryStatus" name="deliveryStatus" class="form-control m-b" th:with="type=${@dict.getType('hy_delivery_status')}">
+																	<select id="step1deliveryStatus" name="hyHouseInf.deliveryStatus" class="form-control m-b" th:with="type=${@dict.getType('hy_delivery_status')}">
 																		<option value="">请选择</option>
 																		<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 																	</select>
@@ -125,35 +125,35 @@
 												<div class="form-group">
 													<label class="col-sm-3 control-label">客户名称：</label>
 													<div class="col-sm-8">
-														<input id="" name="" class="form-control" type="text">
+														<input id="step2ownerName" name="hyOwnerRegistration.ownerName" class="form-control" type="text">
 													</div>
 												</div>
 												<div class="form-group">
 													<label class="col-sm-3 control-label">房屋编号：</label>
 													<div class="col-sm-8">
-														<input id="" name="" class="form-control" type="text">
+														<input id="step2houseNumber" name="hyHouseInf.houseNumber" class="form-control" type="text">
 													</div>
 												</div>
 											</div>
 
 											<div style="width: 49%; float: right;">
 												<div class="form-group">
-													<label class="col-sm-3 control-label">可选房号：</label>
+													<label class="col-sm-3 control-label">房屋名称：</label>
 													<div class="col-sm-8">
-														<input id="" name="" class="form-control" type="text">
+														<input id="step2houseName" name="hyHouseInf.houseName" class="form-control" type="text">
 													</div>
 												</div>
 												<div class="form-group">
 													<label class="col-sm-3 control-label">当前欠费：</label>
 													<div class="col-sm-8">
-														<input id="" name="" class="form-control" type="text" style="border: none;">
+														<input id="step2amountArrears" name="cost.amountArrears" class="form-control" type="text" style="border: none;">
 													</div>
 												</div>
 											</div>
 											
 											<div style="width: 100%; margin-left: 40%; clear: both;">
-												<button type="button" class="btn btn-w-m btn-success">查询</button>
-												<button type="button" class="btn btn-w-m btn-success">清空</button>
+												<button type="button" class="btn btn-w-m btn-success" onclick="searchRefund()">查询</button>
+												<button type="button" class="btn btn-w-m btn-success" onclick="resetForm2()">清空</button>
 											</div>
 											
 											<div class="col-sm-12 select-table table-striped">
@@ -178,33 +178,33 @@
 												<div class="form-group">
 													<label class="col-sm-3 control-label">退款金额：</label>
 													<div class="col-sm-8">
-														<input id="" name="" class="form-control" type="text">
+														<input id="step3refundAmount" name="refundAmount" class="form-control" type="text">
 													</div>
 												</div>
 												<div class="form-group">
 													<label class="col-sm-3 control-label">退款凭据类别：</label>
 													<div class="col-sm-8">
-														<select id="" name="" class="form-control">
-															<option value=""></option>
+														<select id="step3refundVoucher" name="refundVoucher" class="form-control">
+															<option value="1">测试退款类别</option>
 														</select>
 													</div>
 												</div>
 												<div class="form-group">
 													<label class="col-sm-3 control-label">领款人：</label>
 													<div class="col-sm-8">
-														<input id="" name="" class="form-control" type="text">
+														<input id="step3payee" name="payee" class="form-control" type="text">
 													</div>
 												</div>
 												<div class="form-group">
 													<label class="col-sm-3 control-label">退款人：</label>
 													<div class="col-sm-8">
-														<input id="" name="" class="form-control" type="text">
+														<input id="step3refunder" name="refunder" class="form-control" type="text">
 													</div>
 												</div>
 												<div class="form-group">
 													<label class="col-sm-3 control-label">备注：</label>
 													<div class="col-sm-8">
-														<input id="" name="" class="form-control" type="text">
+														<input id="step3refundRemark" name="refundRemark" class="form-control" type="text">
 													</div>
 												</div>
 											</div>
@@ -213,7 +213,7 @@
 												<div class="form-group">
 													<label class="col-sm-3 control-label">退款方式：</label>
 													<div class="col-sm-8">
-														<select id="" name="" class="form-control">
+														<select id="step3refundMethod" name="refundMethod" class="form-control">
 															<option value="0">现金</option>
 															<option value="1">通联支付</option>
 															<option value="2">POS刷卡</option>
@@ -229,24 +229,25 @@
 												<div class="form-group">
 													<label class="col-sm-3 control-label">退款凭据票号：</label>
 													<div class="col-sm-8">
-														<input id="" name="" class="form-control" type="text">
+														<input id="step3refundVoucherNo" name="refundVoucherNo" class="form-control" type="text">
 													</div>
 												</div>
 												<div class="form-group">
 													<label class="col-sm-3 control-label">身份证号：</label>
 													<div class="col-sm-8">
-														<input id="" name="" class="form-control" type="text">
+														<input id="step3idCard" name="idCard" class="form-control" type="text">
 													</div>
 												</div>
 												<div class="form-group">
 													<label class="col-sm-3 control-label">验收人：</label>
 													<div class="col-sm-8">
-														<input id="" name="" class="form-control" type="text">
+														<input id="step3acceptancePerson" name="acceptancePerson" class="form-control" type="text">
 													</div>
 												</div>
+												<input type="hidden" id="step3id" name="id"/>
 											</div>
 											<div style="width: 100%; margin-left: 50%; clear: both;">
-												<button type="button" class="btn btn-w-m btn-success">退款确认</button>
+												<button type="button" class="btn btn-w-m btn-success" onclick="editRefund()">退款确认</button>
 											</div>
 										</form>
 									</div>
@@ -268,306 +269,173 @@
     var removeFlag = [[${@permission.hasPermi('system:inf:remove')}]];
     var prefix = ctx + "system/refund";
 
-    $(function() {
-        var options1 = {
-        	tableId : "table1",
-            url: prefix + "/list",
-            createUrl: prefix + "/add",
-            updateUrl: prefix + "/edit/{id}",
-            removeUrl: prefix + "/remove",
-            exportUrl: prefix + "/export",
-            importUrl: prefix + "/importData",
-            importTemplateUrl: prefix + "/importTemplate",
-            modalName: "客户标准单项设置",
-            columns: [{
-                checkbox: true
-            },
-            {
-                field: 'id',
-                title: 'id',
-                visible: false
-            },
-            {
-                field: 'applyNumber',
-                title: '申请编号'
-            },
-            {
-                field: 'hyOwnerRegistration.ownerName',
-                title: '客户名称'
-            },
-            {
-                field: 'hyHouseInf.houseNumber',
-                title: '房屋编号'
-            },
-            {
-                field: 'refundAmount',
-                title: '退款总金额'
-            },
-            {
-                field: 'refundReasons',
-                title: '退款原因'
-            },
-            {
-                title: '操作',
-                align: 'center',
-                formatter: function(value, row, index) {
-                    var actions = [];
-                    actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.costItems + '\')"><i class="fa fa-remove"></i>删除</a>');
-                    return actions.join('');
-                }
-            }]
-        };
-        $.table.initOtherTable(options1);
-    });
-    
-    
-    $(function() {
-        var options2 = {
-        	tableId : "table2",
-            columns: [{
-                checkbox: true
-            },
-            {
-                field: 'id',
-                title: '主键',
-                visible: false
-            },
-            {
-                field: 'buildingName',
-                title: '楼宇名称'
-            },
-            {
-                field: 'ownerName',
-                title: '业主名称'
-            },
-            {
-                field: 'houseNumber',
-                title: '房屋编号'
-            },
-            {
-                field: 'houseName',
-                title: '房屋名称'
-            },
-            {
-                field: 'deliveryStatus',
-                title: '交房状态',
-                formatter: function(value, item, index) {
-                	switch(value){
-                    	case '0' : value =  "已售未接房";break;
-                    	case '1' : value =  "未售";break;
-                    	case '2' : value =  "已接房";break;
-                    	case '3' : value =  "装修";break;
-                    	case '4' : value =  "入住";break;
-                    	case '5' : value =  "已售空置";break;
-                    	case '6' : value =  "未售空置";break;
-                	}
-	            	return value;
-	            }
-            },
-            {
-                field: 'parkingNumber',
-                title: '车位编号'
-            },
-            {
-                field: 'meterName',
-                title: '表计名称'
-            },
-            {
-                field: 'costItems',
-                title: '费用名称'
-            },
-            {
-                field: 'expenseType',
-                title: '标准名称'
-            },
-            {
-                field: 'standardName',
-                title: '收费标准'
-            },
-            {
-                field: 'billingCycle',
-                title: '计费周期',
-                formatter: function(value, item, index) {
-                	switch(value){
-                    	case '0' : value =  "按每1月计费";break;
-                    	case '1' : value =  "按每2月计费";break;
-                    	case '2' : value =  "按每3月计费";break;
-                    	case '3' : value =  "按每4月计费";break;
-                    	case '4' : value =  "按每5月计费";break;
-                    	case '5' : value =  "按每6月计费";break;
-                    	case '6' : value =  "按每7月计费";break;
-                    	case '7' : value =  "按每8月计费";break;
-                    	case '8' : value =  "按每9月计费";break;
-                    	case '9' : value =  "按每10月计费";break;
-                    	case '10' : value =  "按每11月计费";break;
-                    	case '11' : value =  "按每12月计费";break;
-                	}
-                	return value;
-                }
-            },
-            {
-                field: 'calculationMehod',
-                title: '计算方式',
-                formatter: function(value, item, index) {
-                	switch(value){
-                    	case '30' : value =  "按计费面积*单价每月计算";break;
-                    	case '120' : value =  "按计费面积*单价每季计算";break;
-                    	case '365' : value =  "按计费面积*单价每年计算";break;
-                    	case '31' : value =  "按定额每月计算";break;
-                    	case '122' : value =  "按定额每季计算";break;
-                    	case '366' : value =  "按定额每年计算";break;
-                	}
-                	return value;
-                }
-            },
-            {
-                field: 'transferTenants',
-                title: '出租时自动转移给租户',
-                formatter: function(value, item, index) {
-                	switch(value){
-                    	case 0 : value =  "是";break;
-                    	case 1 : value =  "否";break;
-                	}
-                	return value;
-                }
-            },
-            {
-                title: '操作',
-                align: 'center',
-                formatter: function(value, row, index) {
-                    var actions = [];
-                    actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.costItems + '\')"><i class="fa fa-remove"></i>删除</a>');
-                    return actions.join('');
-                }
-            }]
-        };
-        $.table.initNoRightTable(options2);
-    });
-    
-    $(function() {
-        var options3 = {
-        	tableId : "table3",
-            columns: [{
-                checkbox: true
-            },
-            {
-                field: 'id',
-                title: '主键',
-                visible: false
-            },
-            {
-                field: 'buildingName',
-                title: '楼宇名称'
-            },
-            {
-                field: 'ownerName',
-                title: '业主名称'
-            },
-            {
-                field: 'houseNumber',
-                title: '房屋编号'
-            },
-            {
-                field: 'houseName',
-                title: '房屋名称'
-            },
-            {
-                field: 'deliveryStatus',
-                title: '交房状态',
-                formatter: function(value, item, index) {
-                	switch(value){
-                    	case '0' : value =  "已售未接房";break;
-                    	case '1' : value =  "未售";break;
-                    	case '2' : value =  "已接房";break;
-                    	case '3' : value =  "装修";break;
-                    	case '4' : value =  "入住";break;
-                    	case '5' : value =  "已售空置";break;
-                    	case '6' : value =  "未售空置";break;
-                	}
-	            	return value;
-	            }
-            },
-            {
-                field: 'parkingNumber',
-                title: '车位编号'
-            },
-            {
-                field: 'meterName',
-                title: '表计名称'
-            },
-            {
-                field: 'costItems',
-                title: '费用名称'
-            },
-            {
-                field: 'expenseType',
-                title: '标准名称'
-            },
-            {
-                field: 'standardName',
-                title: '收费标准'
-            },
-            {
-                field: 'billingCycle',
-                title: '计费周期',
-                formatter: function(value, item, index) {
-                	switch(value){
-                    	case '0' : value =  "按每1月计费";break;
-                    	case '1' : value =  "按每2月计费";break;
-                    	case '2' : value =  "按每3月计费";break;
-                    	case '3' : value =  "按每4月计费";break;
-                    	case '4' : value =  "按每5月计费";break;
-                    	case '5' : value =  "按每6月计费";break;
-                    	case '6' : value =  "按每7月计费";break;
-                    	case '7' : value =  "按每8月计费";break;
-                    	case '8' : value =  "按每9月计费";break;
-                    	case '9' : value =  "按每10月计费";break;
-                    	case '10' : value =  "按每11月计费";break;
-                    	case '11' : value =  "按每12月计费";break;
-                	}
-                	return value;
-                }
-            },
-            {
-                field: 'calculationMehod',
-                title: '计算方式',
-                formatter: function(value, item, index) {
-                	switch(value){
-                    	case '30' : value =  "按计费面积*单价每月计算";break;
-                    	case '120' : value =  "按计费面积*单价每季计算";break;
-                    	case '365' : value =  "按计费面积*单价每年计算";break;
-                    	case '31' : value =  "按定额每月计算";break;
-                    	case '122' : value =  "按定额每季计算";break;
-                    	case '366' : value =  "按定额每年计算";break;
-                	}
-                	return value;
-                }
-            },
-            {
-                field: 'transferTenants',
-                title: '出租时自动转移给租户',
-                formatter: function(value, item, index) {
-                	switch(value){
-                    	case 0 : value =  "是";break;
-                    	case 1 : value =  "否";break;
-                	}
-                	return value;
-                }
-            },
-            {
-                title: '操作',
-                align: 'center',
-                formatter: function(value, row, index) {
-                    var actions = [];
-                    actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.costItems + '\')"><i class="fa fa-remove"></i>删除</a>');
-                    return actions.join('');
-                }
-            }]
-        };
-        $.table.initNoRightTable(options3);
-    });
-    
-    
+    var options1 = {
+       	tableId : "table1",
+           url: prefix + "/list",
+           createUrl: prefix + "/add",
+           updateUrl: prefix + "/edit/{id}",
+           removeUrl: prefix + "/remove",
+           exportUrl: prefix + "/export",
+           importUrl: prefix + "/importData",
+           importTemplateUrl: prefix + "/importTemplate",
+           modalName: "退款申请",
+           columns: [{
+               checkbox: true
+           },
+           {
+               field: 'id',
+               title: 'id',
+               visible: false
+           },
+           {
+               field: 'applyNumber',
+               title: '申请编号'
+           },
+           {
+               field: 'hyOwnerRegistration.ownerName',
+               title: '客户名称'
+           },
+           {
+               field: 'hyHouseInf.houseNumber',
+               title: '房屋编号'
+           },
+           {
+               field: 'refundAmount',
+               title: '退款总金额'
+           },
+           {
+               field: 'refundReasons',
+               title: '退款原因'
+           },
+           {
+               title: '操作',
+               align: 'center',
+               formatter: function(value, row, index) {
+                   var actions = [];
+                   actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                   return actions.join('');
+               }
+           }]
+       };
+       
+    var options2 = {
+       	tableId : "table2",
+           columns: [{
+               checkbox: true
+           },
+           {
+               field: 'id',
+               title: 'id',
+               visible: false
+           },
+           {
+               field: 'hyHouseInf.houseNumber',
+               title: '房屋编号'
+           },
+           {
+               field: 'hyHouseInf.houseName',
+               title: '房屋名称'
+           },
+           {
+               field: 'hyCollection.collectionTime',
+               title: '收款/冲抵时间'
+           },
+           {
+               field: 'hyCollection.receiptNumber',
+               title: '收据号码'
+           },
+           {
+               field: 'hyCost.feeDate',
+               title: '费用日期'
+           },
+           {
+               field: 'hyCost.dueDate',
+               title: '应收日期'
+           },
+           {
+               field: 'hyCost.bilingStartDate',
+               title: '开始日期'
+           },
+           {
+               field: 'hyCost.bilingEndDate',
+               title: '结束日期'
+           },
+           {
+               field: 'hyCost.costItems',
+               title: '费用名称'
+           },
+           {
+               field: 'refundMoney',
+               title: '审核金额'
+           },
+           {
+               field: 'refundRemark',
+               title: '备注'
+           }]
+       };
+       
+    var options3 = {
+       	tableId : "table3",
+           columns: [{
+               checkbox: true
+           },
+           {
+               field: 'id',
+               title: 'id',
+               visible: false
+           },
+           {
+               field: 'hyHouseInf.houseNumber',
+               title: '房屋编号'
+           },
+           {
+               field: 'hyHouseInf.houseName',
+               title: '房屋名称'
+           },
+           {
+               field: 'hyCollection.collectionTime',
+               title: '收款/冲抵时间'
+           },
+           {
+               field: 'hyCollection.receiptNumber',
+               title: '收据号码'
+           },
+           {
+               field: 'hyCost.feeDate',
+               title: '费用日期'
+           },
+           {
+               field: 'hyCost.dueDate',
+               title: '应收日期'
+           },
+           {
+               field: 'hyCost.bilingStartDate',
+               title: '开始日期'
+           },
+           {
+               field: 'hyCost.bilingEndDate',
+               title: '结束日期'
+           },
+           {
+               field: 'hyCost.costItems',
+               title: '费用名称'
+           },
+           {
+               field: 'refundMoney',
+               title: '审核金额'
+           },
+           {
+               field: 'refundRemark',
+               title: '备注'
+           }]
+       };
+       
+       $(function() {
+    	   $.table.initOtherTable(options1);
+    	   $.table.initNoRightTable(options2);
+    	   $.table.initNoRightTable(options3);
+       });
+       
     $(document).ready(function() {
         // 初始化表单向导组件
         $('#smartwizard').smartWizard({
@@ -625,6 +493,15 @@
 	
 	// 该事件在离开某个步骤之前触发
 	$("#smartwizard").on("leaveStep", function(e, anchorObject, currentStepNumber, nextStepNumber, stepDirection) {
+		if(nextStepNumber == 2){
+			var rows=$("#table2").bootstrapTable('getSelections');
+			if(rows.length == 0){
+				$.modal.alertWarning("至少选择一条数据！！！");
+				return false;
+			}
+			$("#step3refundAmount").val(rows[0].refundAmount);
+			$("#step3id").val(rows[0].id);
+		}
 		if(stepDirection == 'forward'){
 			var form = $("#step-" + (currentStepNumber + 1)).find('.form');
 			if(form.length > 0){
@@ -662,7 +539,7 @@
         return true;
     });
     
- 	// 搜索-默认第一个form
+ 	 // 搜索-默认第一个form
      function searchData() {
     	$.ajax({
             //几个参数需要注意一下
@@ -725,6 +602,105 @@
             },
         });
     } 
+ 	 
+     function searchRefund(){
+    	 $.ajax({
+             //几个参数需要注意一下
+             type: "POST",//方法类型
+             dataType: "json",//预期服务器返回的数据类型
+             url: "/system/refund/listByIsExamine",
+             type: 'POST',
+             data: $('#formId2').serialize(),
+             success: function (result) {
+            	$("#table2").bootstrapTable('destroy');
+            	var data = result.rows;
+            	if(data.length != 0){
+            		$("#step2amountArrears").val(result.rows[0].hyCost.amountArrears);
+            	}
+            	var options2 = {
+               	tableId : "table2",
+               	data : result.rows,
+                columns: [{
+                	checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: 'id',
+                    visible: false
+                },
+                {
+                    field: 'hyHouseInf.houseNumber',
+                    title: '房屋编号'
+                },
+                {
+                    field: 'hyHouseInf.houseName',
+                    title: '房屋名称'
+                },
+                {
+                    field: 'hyCollection.collectionTime',
+                    title: '收款/冲抵时间'
+                },
+                {
+                    field: 'hyCollection.receiptNumber',
+                    title: '收据号码'
+                },
+                {
+                    field: 'hyCost.feeDate',
+                    title: '费用日期'
+                },
+                {
+                    field: 'hyCost.dueDate',
+                    title: '应收日期'
+                },
+                {
+                    field: 'hyCost.bilingStartDate',
+                    title: '开始日期'
+                },
+                {
+                    field: 'hyCost.bilingEndDate',
+                    title: '结束日期'
+                },
+                {
+                    field: 'hyCost.costItems',
+                    title: '费用名称'
+                },
+                {
+                    field: 'refundMoney',
+                    title: '审核金额'
+                },
+                {
+                    field: 'refundRemark',
+                    title: '备注'
+                }]
+                };
+               $.table.initNoRightTable(options2);
+             },
+         });
+     }
+     
+     function editRefund(){
+    	 $.ajax({
+             //几个参数需要注意一下
+             type: "POST",//方法类型
+             dataType: "json",//预期服务器返回的数据类型
+             url: "/system/refund/edit",
+             type: 'POST',
+             data: $('#formId3').serialize(),
+             success: function (result) {
+            	 $.modal.alertSuccess("退款成功！！");
+            	 $('#formId1')[0].reset();
+            	 $('#formId2')[0].reset();
+            	 $('#formId3')[0].reset();
+            	 window.location.reload();
+             },
+         });
+     }
+     
+     function resetForm2(){
+     	$('#formId2')[0].reset();
+     	$("#table2").bootstrapTable('destroy');
+     	$.table.initNoRightTable(options2);
+     }
     </script>
 </body>
 </html>

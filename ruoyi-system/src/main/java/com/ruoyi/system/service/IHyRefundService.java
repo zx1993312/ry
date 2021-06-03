@@ -2,7 +2,6 @@ package com.ruoyi.system.service;
 
 import java.util.List;
 
-import com.ruoyi.system.domain.HyHouseInf;
 import com.ruoyi.system.domain.HyRefund;
 
 /**
@@ -59,7 +58,5 @@ public interface IHyRefundService {
 	 * @return 结果
 	 */
 	public int deleteHyRefundById(Long id);
-
-	public List<HyRefund> selectHyRefundListByHouse(HyHouseInf hyHouseInf);
 
 }
