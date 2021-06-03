@@ -343,7 +343,7 @@
         function conllection(){
         	$.modal.confirm("确定对该条数据收款吗？", function() {
          	// 获取当前行
-             var row=$("#bootstrap-table").bootstrapTable('getSelections');
+             /* var row=$("#bootstrap-table").bootstrapTable('getSelections');
         	
         	if ($.common.isEmpty(row)) {
     			$.modal.alertWarning("请至少选择一条记录");
@@ -401,9 +401,23 @@
 	   	         $.modal.closeLoading();
 	             $.modal.enable();
     	        }
-            });  
+            });   */
         	if($("#invoice").val()=="1"){
         		console.log("开始打印...");
+        		$.ajax({
+                    type: "post",
+                    datatype: "json",
+                    url:  '/system/paymoney/exportPDF',
+                    data: {},
+                   	beforeSend: function () {
+           	            $.modal.loading("正在处理中，请稍后...");
+           	            $.modal.disable();
+           	        },
+                   	success: function(result) {
+                   		$.modal.closeLoading();
+        	        }
+                }); 
+        		
         	}
         	}); 
         };
