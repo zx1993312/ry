@@ -116,12 +116,44 @@
                     title: '申请时间'
                 },
                 {
+                    field: 'receiptNumber',
+                    title: '票据号码'
+                },
+                {
                     field: 'amount',
                     title: '总金额'
                 },
                 {
                     field: 'payee',
                     title: '收款人'
+                },
+                {
+                    field: 'collectionType',
+                    title: '收款方式',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+                        	case '1' : value =  "现金";break;
+                        	case '2' : value =  "通联支付";break;
+                        	case '3' : value =  "POS刷卡";break;
+                        	case '4' : value =  "银行代扣";break;
+                        	case '5' : value =  "银行托收";break;
+                        	case '6' : value =  "微信支付";break;
+                        	case '7' : value =  "收取开发商费用";break;
+                        	case '8' : value =  "兴业银行线上支付";break;
+                        	case '9' : value =  "汇款";break;
+                        	case '10' : value =  "支付宝支付";break;
+                        	case '11' : value =  "扫码支付";break;
+                        	case '12' : value =  "押金转预存";break;
+                        	case '13' : value =  "通联_通知单扫码（微信）";break;
+                        	case '14' : value =  "银行转账";break;
+                        	case '15' : value =  "其他";break;
+                        	case '16' : value =  "通联_员工APP（微信）";break;
+                        	case '17' : value =  "通联POS";break;
+                        	case '18' : value =  "通联_员工APP（支付宝）";break;
+                        	case '19' : value =  "微信公众号支付";break;
+                    	}
+    	            	return value;
+    	            }
                 },
                 {
                     field: 'collectionTime',

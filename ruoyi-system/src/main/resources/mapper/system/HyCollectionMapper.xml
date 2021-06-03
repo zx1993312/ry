@@ -9,8 +9,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="applyTime"    column="apply_time"    />
         <result property="startTime"    column="start_time"    />
         <result property="endTime"    column="end_time"    />
+        <result property="receiptNumber"    column="receipt_number"    />
         <result property="amount"    column="amount"    />
         <result property="isCollection"    column="is_collection"    />
+        <result property="collectionType"    column="collection_type"    />
         <result property="collectionTime"    column="collection_time"    />
         <result property="payee"    column="payee"    />
         <result property="isBook"    column="is_book"    />
@@ -177,8 +179,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select 
         c.id, 
         c.apply_time, 
+        c.receipt_number, 
         c.amount, 
         c.is_collection, 
+        c.collection_type, 
         c.collection_time, 
         c.payee, 
         c.is_book, 
@@ -216,8 +220,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
             <if test="applyTime != null "> and c.apply_time = #{applyTime}</if>
             <if test="payee != null  and payee != ''"> and c.payee = #{payee}</if>
+            <if test="receiptNumber != null "> and c.receipt_number = #{receiptNumber}</if>
             <if test="amount != null "> and c.amount = #{amount}</if>
             <if test="isCollection != null  and isCollection != ''"> and c.is_collection = #{isCollection}</if>
+            <if test="collectionType != null  and collectionType != ''"> and c.collection_type = #{collectionType}</if>
             <if test="paymentPerson != null  and paymentPerson != ''"> and c.payment_person = #{paymentPerson}</if>
             
             <if test="startTime != null and endTime != null "> and c.collection_time between #{startTime} and #{endTime}</if>
@@ -273,8 +279,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="id != null">id,</if>
             <if test="applyTime != null">apply_time,</if>
             <if test="payee != null">payee,</if>
+            <if test="receiptNumber != null">receipt_number,</if>
             <if test="amount != null">amount,</if>
             <if test="isCollection != null">is_collection,</if>
+            <if test="collectionType != null">collection_type,</if>
             <if test="paymentPerson != null">payment_person,</if>
             <if test="collectionTime != null">collection_time,</if>
             <if test="isBook != null">is_book,</if>
@@ -299,8 +307,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="id != null">#{id},</if>
             <if test="applyTime != null">#{applyTime},</if>
             <if test="payee != null">#{payee},</if>
+            <if test="receiptNumber != null">#{receiptNumber},</if>
             <if test="amount != null">#{amount},</if>
             <if test="isCollection != null">#{isCollection},</if>
+            <if test="collectionType != null">#{collectionType},</if>
             <if test="paymentPerson != null">#{paymentPerson},</if>
             <if test="collectionTime != null">#{collectionTime},</if>
             <if test="isBook != null">#{isBook},</if>
@@ -328,8 +338,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="SET" suffixOverrides=",">
             <if test="applyTime != null">apply_time = #{applyTime},</if>
             <if test="payee != null">payee = #{payee},</if>
+            <if test="receiptNumber != null">receipt_number = #{receiptNumber},</if>
             <if test="amount != null">amount = #{amount},</if>
             <if test="isCollection != null">is_collection = #{isCollection},</if>
+            <if test="collectionType != null">collection_type = #{collectionType},</if>
             <if test="paymentPerson != null">payment_person = #{paymentPerson},</if>
             <if test="collectionTime != null">collection_time = #{collectionTime},</if>
             <if test="isBook != null">is_book = #{isBook},</if>

@@ -35,6 +35,10 @@ public class HyCollection extends BaseEntity
     @Excel(name = "结束时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date endTime;
 
+    /** 收据号码 */
+    @Excel(name = "收据号码")
+    private String receiptNumber;
+    
     /** 总金额 */
     @Excel(name = "总金额")
     private Long amount;
@@ -42,6 +46,10 @@ public class HyCollection extends BaseEntity
     /** 是否收款 */
     @Excel(name = "是否收款")
     private String isCollection;
+    
+    /** 收款方式 */
+    @Excel(name = "收款方式")
+    private String collectionType;
     
     /** 收款时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -391,18 +399,35 @@ public class HyCollection extends BaseEntity
 		this.refundPerson = refundPerson;
 	}
 
+	public String getReceiptNumber() {
+		return receiptNumber;
+	}
+
+	public void setReceiptNumber(String receiptNumber) {
+		this.receiptNumber = receiptNumber;
+	}
+
+	public String getCollectionType() {
+		return collectionType;
+	}
+
+	public void setCollectionType(String collectionType) {
+		this.collectionType = collectionType;
+	}
+
 	@Override
 	public String toString() {
 		return "HyCollection [id=" + id + ", applyTime=" + applyTime + ", startTime=" + startTime + ", endTime="
-				+ endTime + ", amount=" + amount + ", isCollection=" + isCollection + ", collectionTime="
-				+ collectionTime + ", payee=" + payee + ", isBook=" + isBook + ", bookTime=" + bookTime
-				+ ", bookPerson=" + bookPerson + ", paymentStatue=" + paymentStatue + ", payment=" + payment
-				+ ", paymentTime=" + paymentTime + ", paymentPerson=" + paymentPerson + ", isDeferred=" + isDeferred
-				+ ", deferredCause=" + deferredCause + ", deferredTime=" + deferredTime + ", deferredPerson="
-				+ deferredPerson + ", isRefund=" + isRefund + ", refundTime=" + refundTime + ", refundPerson="
-				+ refundPerson + ", collectionRemark=" + collectionRemark + ", costId=" + costId + ", hyCost=" + hyCost
-				+ ", houseId=" + houseId + ", hyHouseInf=" + hyHouseInf + ", ownerId=" + ownerId
-				+ ", hyOwnerRegistration=" + hyOwnerRegistration + "]";
+				+ endTime + ", receiptNumber=" + receiptNumber + ", amount=" + amount + ", isCollection=" + isCollection
+				+ ", collectionType=" + collectionType + ", collectionTime=" + collectionTime + ", payee=" + payee
+				+ ", isBook=" + isBook + ", bookTime=" + bookTime + ", bookPerson=" + bookPerson + ", paymentStatue="
+				+ paymentStatue + ", payment=" + payment + ", paymentTime=" + paymentTime + ", paymentPerson="
+				+ paymentPerson + ", isDeferred=" + isDeferred + ", deferredCause=" + deferredCause + ", deferredTime="
+				+ deferredTime + ", deferredPerson=" + deferredPerson + ", isRefund=" + isRefund + ", refundTime="
+				+ refundTime + ", refundPerson=" + refundPerson + ", collectionRemark=" + collectionRemark + ", costId="
+				+ costId + ", hyCost=" + hyCost + ", houseId=" + houseId + ", hyHouseInf=" + hyHouseInf + ", ownerId="
+				+ ownerId + ", hyOwnerRegistration=" + hyOwnerRegistration + "]";
 	}
+
 
 }

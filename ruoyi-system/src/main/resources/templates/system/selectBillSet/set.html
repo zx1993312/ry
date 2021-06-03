@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('票据设置列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:set:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:set:remove')}]];
+        var prefix = ctx + "system/selectBillSet";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "票据设置",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '主键',
+                    visible: false
+                },
+                {
+                    field: 'billTypes',
+                    title: '票据种类',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case "" : value =  "请选择";break;
+	                    	case "0" : value =  "收据";break;
+	                    	case "1" : value =  "发票";break;
+	                    	case "2" : value =  "凭据";break;
+	                	}
+		            	return value;
+		            }
+                },
+                {
+                    field: 'billNumber',
+                    title: '票据号码'
+                }]
+            };
+            $.table.init(options);
+        });
+        function submitHandler() {
+        	var billNumber = $.table.selectColumns('billNumber');
+        	if(billNumber == ''){
+        		$.modal.alertWarning("请至少选择一条记录");
+        	}else{
+        		$("#receiptNumber",window.parent.document).val(billNumber);
+        	}
+        	$.modal.close();
+        };
+    </script>
+</body>
+</html>

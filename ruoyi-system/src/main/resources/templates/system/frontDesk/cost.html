@@ -42,7 +42,7 @@
                 <a href="/system/receivableInput" style="color: blue;margin-right: 10%">
 			        <i class="fa fa-pencil"></i> 应收输入
 			    </a>
-			    <a href="" style="color: blue;margin-right: 10%">
+			    <a href="/system/offset" style="color: blue;margin-right: 10%">
 			        <i class="fa fa-list-alt"></i> 预收存款
 			    </a>
                 <a href="/system/chargehistory" style="color: blue;margin-right: 10%">
@@ -84,50 +84,71 @@
             	<div class="col-sm-2">
             		<br>
             		<br>
-            		<a>合计：</a><input id="total">
+            		<a style="color: red">合计：</a><input style="border: none;" id="total">
             		<br>
-            		<a>实付：</a><input id="paid">
+            		<a style="color: red">实付：</a><input style="border: none;" id="paid">
             		<br>
-            		<a>找零：</a><input id="change">
+            		<a style="color: red">找零：</a><input style="border: none;" id="change">
             	</div>
             	<div class="col-sm-10">
-            		<a>应收总计</a><input style="margin-right: 8%" id="amountReceivable">
-            		<a>实收预收</a><input style="margin-right: 8%" id="amountActually">
-            		<a>本次违约金</a><input style="margin-right: 8%" id="damags">
-            		<a>本次预存</a><input style="margin-right: 8%" value=0>
-            		<br>
-            		<a>预存冲抵</a><input style="margin-right: 8%" value=0>
-            		<a>领头结转</a><input style="margin-right: 9%" value=0>
-            		<a>结转余额</a><input style="margin-right: 8%" value=0>
-            		<a>本次合计</a><input style="margin-right: 8%" id="sum">
-            		<br>
-            		<a>费项笔数</a><input style="width: 5%" value=4><a>笔</a><input style="width: 5%" value=1><a style="margin-right: 8%">行</a>
-            		<a>收款方式</a>
-            		<select style="margin-right: 9%;width: 12%">
-	          			<option value="">现金</option>
-	        		</select>
-            		<a>多种方式</a><input style="margin-right: 9%">
-            		<a>实付金额</a><input style="margin-right: 8%" id="actually">
-            		<br>
-            		<a>收据样式</a>
-            		<select style="margin-right: 8%;width: 12%">
-	          			<option value="">航宇收款收据</option>
-	        		</select>
-            		<a>收据类别</a>
-            		<select style="margin-right: 10%;width: 12%">
-	          			<option value="">测试收据</option>
-	        		</select>
-            		<a>收据号</a><input style="margin-right: 9%">
-            		<a>开据发票</a><input type="checkbox"><a>是</a>
-            		<br>
-            		<a>入账银行</a>
-            		<input style="margin-right: 7%;">
-            		<a>入账账号</a>
-            		<input style="margin-right: 11%;">
-            		<a>备注</a><input style="margin-right: 10%;border: none;" placeholder="请输入备注内容">
-            		<a>付款码</a><input disabled="disabled">
+            		<div class="col-sm-3">
+	            		<a>应收总计</a><input id="amountReceivable">
+	            		<br>
+	            		<a>预存冲抵</a><input value=0>
+	            		<br>
+	            		<a>费项笔数</a><input style="width: 22%" value=4><a>笔</a><input style="width: 22%" value=1><a>行</a>
+	            		<br>
+	            		<a>收据样式</a>
+	            		<select style="width: 55%">
+		          			<option value="1">航宇收款收据</option>
+		        		</select>
+		        		<br>
+		        		<a>入账银行</a>
+	            		<input>
+            		</div>
+            		<div class="col-sm-3">
+	            		<a>实收预收</a><input id="amountActually">
+	            		<br>
+	            		<a>领头结转</a><input value=0>
+	            		<br>
+	            		<a>收款方式</a>
+	            		<select id="collectionType" th:with="type=${@dict.getType('hy_collection_type')}"style="width: 55%">
+								<option value="">请选择</option>
+								<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+						</select>
+	            		<br>
+	            		<a>收据类别</a>
+	            		<select style="width: 55%">
+		          			<option value="1">测试收据</option>
+		          			<option value="2">专用收据</option>
+		        		</select>
+		        		<br>
+		        		<a>入账账号</a>
+            			<input>
+            		</div>
+            		<div class="col-sm-3">
+	            		<a>本次违约金</a><input id="damags">
+	            		<br>
+	            		<a style="margin-right: 4%">结转余额</a><input value=0>
+	            		<br>
+	            		<a style="margin-right: 4%">多种方式</a><input>
+	            		<br>
+	            		<a style="margin-right: 9%">收据号</a><input id="receiptNumber"><i class="fa fa-check-square" onclick="selectBillSet()"></i>
+		        		<br>
+		        		<a style="margin-right: 13%">备注</a><input style="border: none;" placeholder="请输入备注内容" id="collectionRemark">
+            		</div>
+            		<div class="col-sm-3">
+	            		<a>本次预存</a><input value=0>
+	            		<br>
+	            		<a>本次合计</a><input id="sum">
+	            		<br>
+	            		<a>实付金额</a><input id="actually">
+	            		<br>
+	            		<a>开据发票</a><input type="checkbox" id="invoice" value="0" onchange="change()"><a>是</a>
+		        		<br>
+		        		<a style="margin-right: 4%">付款码</a><input disabled="disabled">
+            		</div>
             	</div>
-            
             </div>
             <div class="col-sm-12 select-table">
             	<div class="col-sm-6 col-sm-offset-3">
@@ -321,8 +342,8 @@
         };
         function conllection(){
         	$.modal.confirm("确定对该条数据收款吗？", function() {
-        	// 获取当前行
-            var row=$("#bootstrap-table").bootstrapTable('getSelections');
+         	// 获取当前行
+             var row=$("#bootstrap-table").bootstrapTable('getSelections');
         	
         	if ($.common.isEmpty(row)) {
     			$.modal.alertWarning("请至少选择一条记录");
@@ -343,6 +364,9 @@
         		var amount = 1000;
             	var applyTime = $("#collectionTime").val();
             	var collectionTime = $("#collectionTime").val();
+            	var collectionType = $("#collectionType").val();
+            	var receiptNumber = $("#receiptNumber").val();
+            	var collectionRemark = $("#collectionRemark").val();
             	var payee = "航宇";
             	var isCollection = "0";
             	console.log(1111111111111);
@@ -359,8 +383,8 @@
                 type: "post",
                 datatype: "json",
                 url:  '/system/collection/add',
-                data: {"costId": costId,"houseId":houseId,"ownerId":ownerId,"amount":amount,"applyTime":applyTime,
-                	"collectionTime":collectionTime,"payee":payee,"isCollection":isCollection},
+                data: {"costId": costId,"houseId":houseId,"ownerId":ownerId,"amount":amount,"applyTime":applyTime,"receiptNumber":receiptNumber,
+                	"collectionTime":collectionTime,"payee":payee,"isCollection":isCollection,"collectionType":collectionType,"collectionRemark":collectionRemark},
                	beforeSend: function () {
        	            $.modal.loading("正在处理中，请稍后...");
        	            $.modal.disable();
@@ -377,9 +401,25 @@
 	   	         $.modal.closeLoading();
 	             $.modal.enable();
     	        }
-            }); 
-        	});
-        }
+            });  
+        	if($("#invoice").val()=="1"){
+        		console.log("开始打印...");
+        		
+        	}
+        	}); 
+        };
+        function selectBillSet(){
+        	$.modal.open("票据页面","/system/selectBillSet");
+        };
+        function change(){
+        	var invoice =  $("#invoice").val();
+        	
+        	if(invoice=="0"){
+        		$("#invoice").val("1");
+        	}else{
+        		$("#invoice").val("0");
+        	}
+        };
     </script>
 </body>
 </html>
