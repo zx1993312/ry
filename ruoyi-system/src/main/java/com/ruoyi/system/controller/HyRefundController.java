@@ -3,6 +3,8 @@ package com.ruoyi.system.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -143,6 +145,23 @@ public class HyRefundController extends BaseController {
 	public AjaxResult editSave(HyRefund hyRefund) {
 		return toAjax(hyRefundService.updateHyRefund(hyRefund));
 	}
+	/**
+	 * 修改保存退款申请
+	 * @throws Exception 
+	 */
+	@ApiOperation("退款申请")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyRefund", value = "项目实体类hyRefund", required = true), })
+	@RequiresPermissions("system:refund:edit")
+	@Log(title = "退款申请", businessType = BusinessType.UPDATE)
+	@PostMapping("/edits")
+	@ResponseBody
+	public AjaxResult editsSave(HyRefund hyRefund,HttpServletResponse response) throws Exception {
+		int result = hyRefundService.updateHyRefund(hyRefund);
+		if (result > 0) {
+			exportPDF(hyRefund,response);
+		}
+		return toAjax(result);
+	}
 
 	/**
 	 * 删除退款申请
@@ -155,5 +174,14 @@ public class HyRefundController extends BaseController {
 	@ResponseBody
 	public AjaxResult remove(String ids) {
 		return toAjax(hyRefundService.deleteHyRefundByIds(ids));
+	}
+
+	/**
+	 * 导出PDF
+	 */
+	 @ResponseBody
+	public AjaxResult exportPDF(HyRefund hyRefund,HttpServletResponse response) throws Exception
+	{
+		 return toAjax(hyRefundService.exportPDF(hyRefund,response));
 	}
 }

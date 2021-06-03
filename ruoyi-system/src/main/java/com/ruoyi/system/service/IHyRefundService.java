@@ -2,6 +2,8 @@ package com.ruoyi.system.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import com.ruoyi.system.domain.HyRefund;
 
 /**
@@ -58,5 +60,12 @@ public interface IHyRefundService {
 	 * @return 结果
 	 */
 	public int deleteHyRefundById(Long id);
+	/**
+	 * 导出PDF
+	 * @param hyRefund
+	 * @param response
+	 * @return
+	 */
+	public int exportPDF(HyRefund hyRefund, HttpServletResponse response)throws Exception;
 
 }

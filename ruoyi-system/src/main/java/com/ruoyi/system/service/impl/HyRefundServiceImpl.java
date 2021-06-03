@@ -1,10 +1,18 @@
 package com.ruoyi.system.service.impl;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ResourceUtils;
 
 import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.system.domain.HyCollection;
@@ -12,6 +20,11 @@ import com.ruoyi.system.domain.HyRefund;
 import com.ruoyi.system.mapper.HyCollectionMapper;
 import com.ruoyi.system.mapper.HyRefundMapper;
 import com.ruoyi.system.service.IHyRefundService;
+
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
 
 /**
  * 退款申请Service业务层处理
@@ -99,6 +112,32 @@ public class HyRefundServiceImpl implements IHyRefundService {
 	@Override
 	public int deleteHyRefundById(Long id) {
 		return hyRefundMapper.deleteHyRefundById(id);
+	}
+	/**
+	 * 导出PDF
+	 */
+	@Override
+	public int exportPDF(HyRefund hyRefund, HttpServletResponse response) throws Exception{
+		// 1、获取模版文件
+				File rootFile = new File(ResourceUtils.getURL("classpath:").getPath());
+				File templateFile = new File(rootFile, "/pdf_template/refund_db.jasper");
+				// 2、准备数据库连接
+				Map<String, Object> params = new HashMap<String, Object>();
+				String refundAmount = hyRefund.getRefundAmount()+"";
+				String payee = hyRefund.getPayee();
+				String refundRemark = hyRefund.getRefundRemark();
+				String refundVoucherNo = hyRefund.getRefundVoucherNo();
+				String idCard = hyRefund.getIdCard();
+				params.put("refundAmount", refundAmount);
+				params.put("refundAmountB", refundAmount);
+				params.put("refundAmountS", refundAmount);
+				params.put("payee", payee);
+				params.put("refundRemark", refundRemark);
+				params.put("refundVoucherNo", refundVoucherNo);
+				params.put("idCard", idCard);
+				JasperPrint jasperPrint = JasperFillManager.fillReport(new FileInputStream(templateFile), params, new JREmptyDataSource());
+				JasperExportManager.exportReportToPdfStream(jasperPrint, new FileOutputStream("d:\\退款凭据.pdf"));
+				return 1;
 	}
 
 }
