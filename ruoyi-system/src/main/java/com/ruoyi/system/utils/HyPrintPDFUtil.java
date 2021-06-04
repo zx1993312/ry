@@ -31,7 +31,6 @@ public class HyPrintPDFUtil {
 
 		// 创建打印任务
 		PrinterJob job = PrinterJob.getPrinterJob();
-		
 		job.setPageable(new PDFPageable(document));
 
 		Paper paper = new Paper();
@@ -45,6 +44,7 @@ public class HyPrintPDFUtil {
 		Book book = new Book();
 		book.append(new PDFPrintable(document, Scaling.ACTUAL_SIZE), pageFormat, 1);
 		job.setPageable(book);
+//		job.printDialog();
 		job.print();
 	}
 
