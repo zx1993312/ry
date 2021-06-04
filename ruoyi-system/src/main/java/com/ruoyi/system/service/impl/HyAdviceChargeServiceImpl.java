@@ -55,7 +55,9 @@ public class HyAdviceChargeServiceImpl implements IHyAdviceChargeService {
 	    File templateFile = new File(rootFile,"/pdf_template/advicecharge_db.jasper");
 	    //2、准备数据库连接
 	    Map params = new HashMap();
+	    String pic = rootFile+"\\static\\pdfimg\\src=http___i.nibaku.com_img_0_1433531324x2230376662_26.jpg&refer=http___i.nibaku.jpg";
 	    params.put("warm", warm);
+	    params.put("pic", pic);
 	    JasperPrint jasperPrint =JasperFillManager.fillReport(new FileInputStream(templateFile),params,getCon());
 	    /*ServletOutputStream outputStream = response.getOutputStream();
 	    String filename="缴费通知单.pdf";
