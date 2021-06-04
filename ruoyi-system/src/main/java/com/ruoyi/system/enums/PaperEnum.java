@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum PaperEnum {
-	A4(598, 842);
+	A4(598, 842), RECEIPT(708, 269);
 
 	private double width;// 纸张宽
 

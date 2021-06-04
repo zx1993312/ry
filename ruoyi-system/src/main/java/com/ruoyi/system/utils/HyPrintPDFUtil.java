@@ -54,6 +54,10 @@ public class HyPrintPDFUtil {
 			width = PaperEnum.A4.getWidth();
 			height = PaperEnum.A4.getHeight();
 			break;
+		case "RECEIPT":
+			width = PaperEnum.RECEIPT.getWidth();
+			height = PaperEnum.RECEIPT.getHeight();
+			break;
 		default:
 			break;
 		}
