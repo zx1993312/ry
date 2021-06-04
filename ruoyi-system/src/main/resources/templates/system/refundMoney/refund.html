@@ -686,12 +686,22 @@
              url: "/system/refund/edits",
              type: 'POST',
              data: $('#formId3').serialize(),
+ 	        beforeSend: function () {
+ 	            $.modal.loading("正在处理中，请稍后...");
+ 	            $.modal.disable();
+ 	        },
              success: function (result) {
             	 $.modal.alertSuccess("退款成功！！");
             	 $('#formId1')[0].reset();
             	 $('#formId2')[0].reset();
             	 $('#formId3')[0].reset();
+            	 $.modal.closeLoading();
+                 $.modal.enable();
             	 window.location.reload();
+             },
+             error:function (result) {
+            	 $.modal.closeLoading();
+                 $.modal.enable();
              },
          });
      }

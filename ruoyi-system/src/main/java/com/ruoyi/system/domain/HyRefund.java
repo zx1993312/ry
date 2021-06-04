@@ -261,4 +261,15 @@ public class HyRefund extends BaseEntity {
 		this.hyCost = hyCost;
 	}
 
+	@Override
+	public String toString() {
+		return "HyRefund [id=" + id + ", applyNumber=" + applyNumber + ", refundAmount=" + refundAmount + ", damages="
+				+ damages + ", refundMoney=" + refundMoney + ", refundDamages=" + refundDamages + ", refundReasons="
+				+ refundReasons + ", collectionId=" + collectionId + ", isExamine=" + isExamine + ", refundRemark="
+				+ refundRemark + ", refundVoucher=" + refundVoucher + ", payee=" + payee + ", refunder=" + refunder
+				+ ", refundMethod=" + refundMethod + ", refundVoucherNo=" + refundVoucherNo + ", idCard=" + idCard
+				+ ", acceptancePerson=" + acceptancePerson + ", hyCollection=" + hyCollection + ", hyOwnerRegistration="
+				+ hyOwnerRegistration + ", hyHouseInf=" + hyHouseInf + ", houseAndCost=" + houseAndCost + ", hyCost="
+				+ hyCost + "]";
+	}
 }

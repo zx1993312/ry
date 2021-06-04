@@ -261,13 +261,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	            <if test="hyHouseInf.houseName != null  and hyHouseInf.houseName != ''"> and inf.house_name = #{hyHouseInf.houseName}</if>
 	            <if test="hyHouseInf.deliveryStatus != null  and hyHouseInf.deliveryStatus != ''"> and inf.delivery_status = #{hyHouseInf.deliveryStatus}</if>
             </if>
+            and coll.is_refund="1"
 		</where>
 	</select>
 
 	<select id="selectHyRefundById" parameterType="Long"
 		resultMap="HyRefundResult">
 		<include refid="selectHyRefundVo" />
-		where id = #{id}
+		where ref.id = #{id}
 	</select>
 
 	<insert id="insertHyRefund" parameterType="HyRefund">
