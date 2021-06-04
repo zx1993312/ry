@@ -31,6 +31,7 @@ public class HyPrintPDFUtil {
 
 		// 创建打印任务
 		PrinterJob job = PrinterJob.getPrinterJob();
+		
 		job.setPageable(new PDFPageable(document));
 
 		Paper paper = new Paper();
