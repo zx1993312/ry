@@ -136,6 +136,24 @@ public class ChineseCapitalUtil {
 	 */
 	private static String getChineseDecimal(int[] decimals) {
 		StringBuffer chineseDecimal = new StringBuffer("");
+		if (decimals.length == 0) {
+			chineseDecimal.append("整");
+			return chineseDecimal.toString();
+		} else {
+			if (decimals.length == 1) {
+				if (decimals[0] == 0) {
+					chineseDecimal.append("整");
+					return chineseDecimal.toString();
+				}
+			}
+			if (decimals.length == 2) {
+				if (decimals[0] == 0 && decimals[1] == 0) {
+					chineseDecimal.append("整");
+					return chineseDecimal.toString();
+				}
+			}
+		}
+
 		for (int i = 0; i < decimals.length; i++) {
 			if (i == 3) {
 				break;
@@ -164,6 +182,12 @@ public class ChineseCapitalUtil {
 		} else {
 			return false;
 		}
+	}
+
+	public static void main(String[] args) {
+		String s1 = "36000.00";
+
+		System.out.println(toChinese(s1));
 	}
 
 }
