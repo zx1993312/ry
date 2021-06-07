@@ -17,13 +17,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.system.domain.HyInspectionRoute;
 import com.ruoyi.system.domain.HyServiceregistration;
 import com.ruoyi.system.enums.FaultCategoryEnums;
+import com.ruoyi.system.enums.TypeEnums;
+import com.ruoyi.system.service.IHyInspectionRouteService;
 import com.ruoyi.system.service.IHyServiceregistrationService;
-
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
 
 /**
  * 设备看板Controller
@@ -39,6 +38,9 @@ public class HyEquipmentKanbanController extends BaseController {
 	@Autowired
 	private IHyServiceregistrationService hyServiceregistrationService;
 
+	@Autowired
+	private IHyInspectionRouteService hyInspectionRouteService;
+
 	@RequiresPermissions("system:equipmentKanban:view")
 	@GetMapping()
 	public String equipment() {
@@ -48,15 +50,25 @@ public class HyEquipmentKanbanController extends BaseController {
 	/**
 	 * 查询设备看板列表
 	 */
-	@ApiOperation("设备类别")
-	@ApiImplicitParams({ @ApiImplicitParam(name = "hyEquipment", value = "项目实体类hyEquipment", required = true), })
-	@RequiresPermissions("system:equipmentKanban:list")
-	@PostMapping("/getEcharsData")
+	@RequiresPermissions("system:equipmentKanban:getEquipmentEcharsData")
+	@PostMapping("/getEquipmentEcharsData")
 	@ResponseBody
-	public TableDataInfo list(HyServiceregistration hyServiceregistration) {
+	public TableDataInfo getEquipmentEcharsData(HyServiceregistration hyServiceregistration) {
 		startPage();
 		List<HyServiceregistration> list = hyServiceregistrationService
 				.selectHyServiceregistrationList(hyServiceregistration);
+		return getDataTable(getData(list));
+	}
+
+	/**
+	 * 查询巡检线路列表
+	 */
+	@RequiresPermissions("system:equipmentKanban:getRouteEcharsData")
+	@PostMapping("/getRouteEcharsData")
+	@ResponseBody
+	public TableDataInfo getRouteEcharsData(HyInspectionRoute hyInspectionRoute) {
+		startPage();
+		List<HyInspectionRoute> list = hyInspectionRouteService.selectHyInspectionRouteList(hyInspectionRoute);
 		return getDataTable(getData(list));
 	}
 
@@ -66,24 +78,47 @@ public class HyEquipmentKanbanController extends BaseController {
 	 * @param list
 	 * @return
 	 */
-	public List<Map<String, Object>> getData(List<HyServiceregistration> list) {
+	public List<Map<String, Object>> getData(List<?> list) {
 		Set<String> set = new HashSet<>();
-		for (HyServiceregistration h : list) {
-			set.add(h.getFaultCategory());
-		}
-
 		Map<String, Object> map = new HashMap<>();
 		List<Map<String, Object>> relist = new ArrayList<Map<String, Object>>();
-		for (String s : set) {
-			map = new HashMap<>();// 新建map避免覆盖
-			HyServiceregistration hyService = new HyServiceregistration();
-			hyService.setFaultCategory(s);
-			List<?> list1 = hyServiceregistrationService.selectHyServiceregistrationList(hyService);
-			String value = FaultCategoryEnums.getValue(s);
-			map.put("key", value);
-			map.put("value", list1.size());
-			relist.add(map);
+
+		Object ob = new Object();
+		for (Object o : list) {
+			ob = o;
+			if (o instanceof HyServiceregistration) {
+				HyServiceregistration h = (HyServiceregistration) o;
+				set.add(h.getFaultCategory());
+			} else if (o instanceof HyInspectionRoute) {
+				HyInspectionRoute h = (HyInspectionRoute) o;
+				set.add(h.getType());
+			}
+		}
+
+		if (ob instanceof HyServiceregistration) {
+			for (String s : set) {
+				map = new HashMap<>();// 新建map避免覆盖
+				HyServiceregistration hyService = new HyServiceregistration();
+				hyService.setFaultCategory(s);
+				List<?> list1 = hyServiceregistrationService.selectHyServiceregistrationList(hyService);
+				String value = FaultCategoryEnums.getValue(s);
+				map.put("key", value);
+				map.put("value", list1.size());
+				relist.add(map);
+			}
+		} else if (ob instanceof HyInspectionRoute) {
+			for (String s : set) {
+				map = new HashMap<>();// 新建map避免覆盖
+				HyInspectionRoute hyInspectionRoute = new HyInspectionRoute();
+				hyInspectionRoute.setType(s);
+				List<?> list1 = hyInspectionRouteService.selectHyInspectionRouteList(hyInspectionRoute);
+				String value = TypeEnums.getValue(s);
+				map.put("key", value);
+				map.put("value", list1.size());
+				relist.add(map);
+			}
 		}
 		return relist;
 	}
+
 }

@@ -51,21 +51,53 @@ $(function() {
 	}
 	;
 	function ceshis2() {
-		var myChart = echarts.init(document.getElementById('ceshi2'));
-		var option = {
-			xAxis : {
-				type : 'category',
-				data : [ 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun' ]
-			},
-			yAxis : {
-				type : 'value'
-			},
-			series : [ {
-				data : [ 120, 200, 150, 80, 70, 110, 130 ],
-				type : 'bar'
-			} ]
-		};
-		myChart.setOption(option);
+		$.ajax({
+			// 几个参数需要注意一下
+			type : "POST",// 方法类型
+			dataType : "json",// 预期服务器返回的数据类型
+			url : "/system/equipmentKanban/getRouteEcharsData",
+			type : 'POST',
+			success : function(result) {
+				var title = [];
+				var data = [];
+
+				for (var i = 0; i < result.rows.length; i++) {
+					title.push(result.rows[i].key);
+					data.push(result.rows[i].value);
+				}
+				var myChart = echarts.init(document.getElementById('ceshi2'));
+				var option = {
+					title : {
+						text : '设备类别统计',
+						textStyle : { // 设置主标题风格
+							color : '#FFFFFF',// 设置主标题字体颜色
+							fontStyle : '',// 主标题文字风格
+						}
+					},
+					xAxis : {
+						type : 'category',
+						data : title,
+						axisLabel : {
+							color : "#FFFFFF"
+						}
+					},
+					yAxis : {
+						type : 'value',
+						axisLabel : {
+							color : "#FFFFFF"
+						}
+					},
+					series : [ {
+						data : data,
+						type : 'bar',
+						axisLabel : {
+							color : "#FFFFFF"
+						}
+					} ]
+				};
+				myChart.setOption(option);
+			}
+		});
 	}
 	;
 	function ceshis3() {
@@ -73,7 +105,7 @@ $(function() {
 			// 几个参数需要注意一下
 			type : "POST",// 方法类型
 			dataType : "json",// 预期服务器返回的数据类型
-			url : "/system/equipmentKanban/getEcharsData",
+			url : "/system/equipmentKanban/getEquipmentEcharsData",
 			type : 'POST',
 			success : function(result) {
 				var title = [];
@@ -86,11 +118,11 @@ $(function() {
 				var myChart = echarts.init(document.getElementById('ceshi3'));
 				var option = {
 					title : {
-						text : '世界人口总量',
+						text : '设备故障统计',
 						textStyle : { // 设置主标题风格
 							color : '#FFFFFF',// 设置主标题字体颜色
 							fontStyle : '',// 主标题文字风格
-						},
+						}
 					},
 					tooltip : {
 						trigger : 'axis',
