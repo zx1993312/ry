@@ -2,6 +2,9 @@ package com.ruoyi.system.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.system.domain.HyCollection;
 import com.ruoyi.system.domain.HyCost;
 
 /**
@@ -59,5 +62,11 @@ public interface IHyFrontDeskService {
 	 * @return 结果
 	 */
 	public int deleteHyCostById(Long id);
+	/**
+   	 * 导出PDF
+   	 * @param response
+   	 * @throws Exception 
+   	 */
+	public int downloadPDF(HyCollection hyCollection, HttpServletResponse response)throws Exception;
 
 }

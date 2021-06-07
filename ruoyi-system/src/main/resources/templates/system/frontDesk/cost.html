@@ -94,7 +94,7 @@
             		<div class="col-sm-3">
 	            		<a>应收总计</a><input id="amountReceivable">
 	            		<br>
-	            		<a>预存冲抵</a><input value=0>
+	            		<a>预存冲抵</a><input id="writeOff">
 	            		<br>
 	            		<a>费项笔数</a><input style="width: 22%" value=4><a>笔</a><input style="width: 22%" value=1><a>行</a>
 	            		<br>
@@ -284,7 +284,8 @@
                     	amountArrears += res.rows[i].amountArrears;
                     }
                     sum = amountReceivable-(advancePaymentOffset+writeOff);
-                    $("#amountReceivable").val(sum);
+                    $("#amountReceivable").val(amountReceivable);
+                    $("#writeOff").val(writeOff);
                     $("#amountActually").val(sum);
                     $("#sum").val(sum);
                     $("#actually").val(sum);
@@ -343,7 +344,7 @@
         function conllection(){
         	$.modal.confirm("确定对该条数据收款吗？", function() {
          	// 获取当前行
-             /* var row=$("#bootstrap-table").bootstrapTable('getSelections');
+            var row=$("#bootstrap-table").bootstrapTable('getSelections');
         	
         	if ($.common.isEmpty(row)) {
     			$.modal.alertWarning("请至少选择一条记录");
@@ -357,11 +358,14 @@
         	var costId = row[0].id;
         	var houseId = row[0].hyHouseInf.houseId;
         	var ownerId = row[0].ownerAndCost.ownerId;
+        	var writeOff = row[0].writeOff;
+        	var advancePaymentOffset = row[0].advancePaymentOffset;
         	if(houseId==null || houseId == ""){
         		$.modal.alertWarning("该业主没有房屋");
     			return;
         	}
-        		var amount = 1000;
+        		var amount = $("#amountActually").val();
+        		var amountReceivable = $("#amountReceivable").val();
             	var applyTime = $("#collectionTime").val();
             	var collectionTime = $("#collectionTime").val();
             	var collectionType = $("#collectionType").val();
@@ -379,7 +383,7 @@
             	console.log(payee);
             	console.log(isCollection);
         	
-        	$.ajax({
+        	/*$.ajax({
                 type: "post",
                 datatype: "json",
                 url:  '/system/collection/add',
@@ -407,8 +411,21 @@
         		$.ajax({
                     type: "post",
                     datatype: "json",
-                    url:  '/system/paymoney/exportPDF',
-                    data: {},
+                    url:  '/system/frontDesk/exportPDF',
+                    data: {
+                    	"costId": costId,
+                    	"houseId":houseId,
+                    	"ownerId":ownerId,
+                    	"hyCost.amountReceivable":amountReceivable,
+                    	"amount":amount,
+                    	"writeOff":writeOff,
+                    	"receiptNumber":receiptNumber,
+                    	"collectionTime":collectionTime,
+                    	"payee":payee,
+                    	"advancePaymentOffset":advancePaymentOffset,
+                    	"collectionType":collectionType,
+                    	"collectionRemark":collectionRemark
+                    },
                    	beforeSend: function () {
            	            $.modal.loading("正在处理中，请稍后...");
            	            $.modal.disable();

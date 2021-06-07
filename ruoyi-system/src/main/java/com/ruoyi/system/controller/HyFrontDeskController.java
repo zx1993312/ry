@@ -2,6 +2,8 @@ package com.ruoyi.system.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,7 @@ import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.system.domain.HyCollection;
 import com.ruoyi.system.domain.HyCost;
 import com.ruoyi.system.service.IHyFrontDeskService;
 
@@ -134,6 +137,16 @@ public class HyFrontDeskController extends BaseController {
 	@ResponseBody
 	public AjaxResult remove(String ids) {
 		return toAjax(hyFrontDeskService.deleteHyCostByIds(ids));
+	}
+	
+	/**
+	 * 导出PDF
+	 */
+	 @PostMapping("/exportPDF")
+	 @ResponseBody
+	public AjaxResult downloadPDF(HyCollection hyCollection,HttpServletResponse response) throws Exception
+	{
+		 return toAjax(hyFrontDeskService.downloadPDF(hyCollection,response));
 	}
 
 }
