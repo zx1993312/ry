@@ -1,23 +1,28 @@
-
+body{
+	width: 100%;
+	height: 100%;
+}
 /*
 å¤´éƒ¨*/
 .header{
     width: 100%;
-    height: 1.5rem;
+    height: 20rem;
     /*background: red;*/
 
 }
 .header .header-left{
-    width: 33%;
-    height: 1.05rem;
+	margin-top: 2%;
+    width: 25%;
+    height: 16rem;
     color: white;
     /*    border: 1px solid green;*/
     text-align: center;
     line-height: 1.05rem;
 }
 .header .header-center{
+	margin-top: 2%;
     width: 50%;
-    height: 1.2rem;
+    height: 16rem;
     /*border: 1px solid red;*/
     /*    background: url("../images/head.gif") no-repeat;
         background-size: 100% 100%;*/
@@ -26,9 +31,9 @@
 .header .header-center .header-title{
     text-align: center;
     color: #ffffff;
-    font-size: .4rem;
-    text-shadow: 0 0 .3rem #00d8ff;
-    line-height: 1.05rem;
+    font-size: 10rem;
+    text-shadow: 0 0 3rem #00d8ff;
+    line-height: 1rem;
 }
 .header .header-img{
     background: url("../images/head.gif") no-repeat center center;
@@ -36,32 +41,33 @@
     height: 100%;
     width: 100%;
     position: absolute;
-    top: .4rem;
+    top: 4rem;
 }
 
 .header .header-right{
+	margin-top: 2%;
     width: 25%;
-    height: 1.05rem;
+    height: 16rem;
     /*border: 1px solid gold;*/
 }
 .header .header-bottom{
     width: calc(100% - .4rem);
-    height: .16rem;
+    height: 16rem;
     background: url("../images/header.png") no-repeat;
     background-size: calc(100% - .2rem) 100%;
     padding: 0 .2rem;
-    margin-left: .3rem;
+    margin-left: 3rem;
 
 }
 
 /*
 å†…å®¹*/
 .center{
-    padding: .1rem .2rem .1rem .2rem;
+    padding: 1rem 2rem 1rem 2rem;
 }
 .center .center-left{
     width: 33%;
-    padding: 1rem;
+    padding: 3rem;
     /*border: 1px solid red;*/
 
 }
@@ -166,24 +172,9 @@
 /*.center .center-left .left-cen .company .wodryRX0 span{
     background: red;
 }*/
-
-
-.center .center-left .left-bottom{
-    width: 100%;
-    height: 3.2rem;
-    /*background: url("../images/panel.png") no-repeat;
-    background-size: 100% 100%;*/
-    /*border: 0.01rem solid #217093;*/
-}
-.center .center-left .bottom-b{
-    width: calc(100% - 0.2rem);
-    height: 2.6rem;
-    margin-left: 0.1rem;
-    margin-top: 0.1rem;
-}
 .center .center-cen{
     width: 33%;
-    padding: 1rem;
+    padding: 3rem;
 }
 .center .center-cen .cen-top{
     width: 100%;
@@ -239,23 +230,9 @@
     /*overflow: hidden;*/
 }
 
-
-.center .center-cen .cen-bottom{
-    width: 100%;
-    height: 3.2rem;
-
-    /*border: 0.01rem solid #217093;*/
-}
-.center .center-cen .bottom-b{
-    width: calc(100% - 0.2rem);
-    height: 2.6rem;
-    margin-left: 0.1rem;
-    margin-top: 0.1rem;
-}
-
 .center .center-right{
     width: 33%;
-    padding: 1rem;
+    padding: 3rem;
 }
 
 .center .center-right .right-top{
@@ -281,23 +258,6 @@
     height: 2.6rem;
     margin-left: 0.1rem;
     margin-top: 0.1rem;
-}
-.center .center-right .right-bottom{
-    width: 100%;
-    height: 3.2rem;
-    /*border: 0.01rem solid #217093;*/
-}
-.center .center-right .right-bottom .chat{
-/*    width: calc(100% - .2rem);
-    height: calc(100% - .6rem);
-    margin-top: .1rem;
-    margin-left: .1rem;
-    padding: .1rem;*/
-    width: calc(100% - 0.2rem);
-    height: 2.6rem;
-    margin-left: 0.1rem;
-    margin-top: 0.1rem;
-    /*overflow: hidden;*/
 }
 
 
