@@ -383,7 +383,7 @@
             	console.log(payee);
             	console.log(isCollection);
         	
-        	/*$.ajax({
+        	$.ajax({
                 type: "post",
                 datatype: "json",
                 url:  '/system/collection/add',
@@ -405,7 +405,7 @@
 	   	         $.modal.closeLoading();
 	             $.modal.enable();
     	        }
-            });   */
+            });
         	if($("#invoice").val()=="1"){
         		console.log("开始打印...");
         		$.ajax({
@@ -432,6 +432,7 @@
            	        },
                    	success: function(result) {
                    		$.modal.closeLoading();
+                   		$.operate.successCallback(result);
         	        }
                 }); 
         		
