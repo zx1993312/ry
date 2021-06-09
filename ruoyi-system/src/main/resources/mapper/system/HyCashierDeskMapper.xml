@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyCashierDeskMapper">
+
+	<resultMap type="HyCost" id="HyCostResult">
+		<result property="id" column="id" />
+		<result property="costItems" column="cost_items" />
+		<result property="expenseType" column="expense_type" />
+		<result property="parentId" column="parent_id" />
+		<result property="ancestors" column="ancestors" />
+		<result property="standardName" column="standard_name" />
+		<result property="feeNum" column="fee_num" />
+		<result property="chargingStandard" column="charging_standard" />
+		<result property="calculationMehod" column="calculation_mehod" />
+		<result property="standardDescription"
+			column="standard_description" />
+		<result property="standardState" column="standard_state" />
+		<result property="proportionDamags" column="proportion_damags" />
+		<result property="projectModification"
+			column="project_modification" />
+		<result property="billingCycle" column="billing_cycle" />
+		<result property="bilingStartDate" column="biling_start_date" />
+		<result property="bilingEndDate" column="biling_end_date" />
+		<result property="auditResultsReason"
+			column="audit_results_reason" />
+		<result property="feeDateOld" column="fee_date_old" />
+		<result property="feeDate" column="fee_date" />
+		<result property="dueDateOld" column="due_date_old" />
+		<result property="dueDate" column="due_date" />
+		<result property="amountReceivableOld"
+			column="amount_receivable_old" />
+		<result property="amountReceivable" column="amount_receivable" />
+		<result property="amountActually" column="amount_actually" />
+		<result property="remarks" column="remarks" />
+		<result property="operationDate" column="operation_date" />
+		<result property="operationUser" column="operation_user" />
+		<result property="operationType" column="operation_type" />
+		<result property="deleteReason" column="delete_reason" />
+		<result property="advancePaymentOffset"
+			column="advance_payment_offset" />
+		<result property="writeOff" column="write_off" />
+		<result property="refundAmount" column="refund_amount" />
+		<result property="amountArrears" column="amount_arrears" />
+		<result property="collectionStatus" column="collection_status" />
+		<result property="frozenPerson" column="frozen_person" />
+		<result property="frozenState" column="frozen_state" />
+		<result property="frozenDate" column="frozen_date" />
+		<result property="frozenReason" column="frozen_reason" />
+		<result property="advanceStatus" column="advance_status" />
+		<result property="transferTenants" column="transfer_tenants" />
+		<result property="changeDate" column="change_date" />
+		<result property="billingMethod" column="billing_method" />
+		<result property="calculationStandard"
+			column="calculation_standard" />
+		<association property="hyOwnerRegistration" column="id"
+			javaType="HyOwnerRegistration" resultMap="HyOwnerRegistrationResult" />
+		<association property="hyHouseInf" column="id"
+			javaType="HyHouseInf" resultMap="HyHouseInfResult" />
+		<association property="houseAndCost" column="id"
+			javaType="HouseAndCost" resultMap="HouseAndCostResult" />
+		<association property="hyBuilding" column="id"
+			javaType="HyBuilding" resultMap="HyBuildingResult" />
+		<association property="hyResidentialQuarters" column="id"
+			javaType="HyResidentialQuarters" resultMap="HyResidentialQuartersResult" />
+		<association property="hyCollection" column="id"
+			javaType="HyCollection" resultMap="HyCollectionResult" />
+	</resultMap>
+	
+	<resultMap type="HyCollection" id="HyCollectionResult">
+        <result property="id"    column="id"    />
+        <result property="applyTime"    column="apply_time"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="receiptNumber"    column="receipt_number"    />
+        <result property="amount"    column="amount"    />
+        <result property="isCollection"    column="is_collection"    />
+        <result property="collectionType"    column="collection_type"    />
+        <result property="collectionTime"    column="collection_time"    />
+        <result property="payee"    column="payee"    />
+        <result property="isBook"    column="is_book"    />
+        <result property="bookTime"    column="book_time"    />
+        <result property="bookPerson"    column="book_person"    />
+        <result property="paymentStatue"    column="payment_statue"    />
+        <result property="payment"    column="payment"    />
+        <result property="paymentTime"    column="payment_time"    />
+        <result property="paymentPerson"    column="payment_person"    />
+        <result property="isDeferred"    column="is_deferred"    />
+        <result property="deferredTime"    column="deferred_time"    />
+        <result property="deferredPerson"    column="deferred_person"    />
+        <result property="deferredCause"    column="deferred_cause"    />
+        <result property="isRefund"    column="is_refund"    />
+        <result property="refundTime"    column="refund_time"    />
+        <result property="refundPerson"    column="refund_person"    />
+        <result property="collectionRemark"    column="collection_remark"    />
+        <result property="costId"    column="cost_id"    />
+        <result property="houseId"    column="house_id"    />
+        <result property="ownerId"    column="owner_id"    />
+    </resultMap>
+	
+	    <resultMap type="HyResidentialQuarters" id="HyResidentialQuartersResult">
+        <result property="id"    column="id"    />
+        <result property="communityAddress"    column="community_address"    />
+        <result property="communityName"    column="community_name"    />
+        <result property="contacts"    column="contacts"    />
+        <result property="contactNumber"    column="contact_number"    />
+        <result property="contactQq"    column="Contact_QQ"    />
+        <result property="city"    column="city"    />
+        <result property="area"    column="area"    />
+        <result property="county"    column="county"    />
+        <result property="address"    column="address"    />
+        <result property="longitude"    column="longitude"    />
+        <result property="latitude"    column="latitude"    />
+        <result property="customerLink"    column="customer_link"    />
+        <result property="externalLinks"    column="external_links"    />
+        <result property="propertyId"    column="property_id"    />
+    </resultMap>
+	
+	<resultMap type="HyBuilding" id="HyBuildingResult">
+        <result property="id"    column="id"    />
+        <result property="buildingName"    column="building_name"    />
+        <result property="buildingHigh"    column="building_high"    />
+        <result property="buildingUnit"    column="building_unit"    />
+        <result property="buildingHouseholds"    column="building_households"    />
+        <result property="buildingAddress"    column="building_address"    />
+        <result property="buildingYear"    column="building_year"    />
+        <result property="buildingRemark"    column="building_remark"    />
+        <result property="quartersId"    column="quarters_id"    />
+        <result property="projectId"    column="project_id"    />
+    </resultMap>
+
+	<resultMap type="HyHouseInf" id="HyHouseInfResult">
+		<result property="id" column="id" />
+		<result property="houseId" column="houseId" />
+		<result property="houseNumber" column="house_number" />
+		<result property="houseName" column="house_name" />
+		<result property="builtUpArea" column="built_up_area" />
+		<result property="groupArea" column="group_area" />
+		<result property="unit" column="unit" />
+		<result property="floor" column="floor" />
+		<result property="sameUnitNumber" column="same_unit_number" />
+		<result property="areaType" column="area_type" />
+		<result property="bilingArea" column="biling_area" />
+		<result property="insideArea" column="inside_area" />
+		<result property="sharedArea" column="shared_area" />
+		<result property="gardenArea" column="garden_area" />
+		<result property="basementArea" column="basement_area" />
+		<result property="sharedLobbyArea" column="shared_lobby_area" />
+		<result property="sharedLayersArea" column="shared_layers_area" />
+		<result property="shareRatio" column="share_ratio" />
+		<result property="buildingStructure"
+			column="building_structure" />
+		<result property="parametersPer" column="parameters_per" />
+		<result property="houseLayout" column="house_layout" />
+		<result property="floorHeight" column="floor_height" />
+		<result property="natureProperty" column="nature_property" />
+		<result property="natureUse" column="nature_use" />
+		<result property="usageStatus" column="usage_status" />
+		<result property="occupancyStatus" column="occupancy_status" />
+		<result property="deliveryStatus" column="delivery_status" />
+		<result property="houseType" column="house_type" />
+		<result property="salesStatus" column="sales_status" />
+		<result property="purchaseContract" column="purchase_contract" />
+		<result property="marketingNum" column="marketing_num" />
+		<result property="deliveryStatusBefore"
+			column="delivery_status_before" />
+		<result property="changeDate" column="change_date" />
+		<result property="changePerson" column="change_person" />
+		<result property="remark" column="remark" />
+		<result property="buildingId" column="building_id" />
+		<result property="ownerId" column="owner_id" />
+	</resultMap>
+
+	<resultMap type="HyOwnerRegistration"
+		id="HyOwnerRegistrationResult">
+		<result property="id" column="id" />
+		<result property="ownerName" column="owner_name" />
+		<result property="fixedTelephone" column="fixed_telephone" />
+		<result property="mobilePhone" column="mobile_phone" />
+		<result property="idCardNum" column="id_card_num" />
+		<result property="suplierCategory" column="suplier_category" />
+		<result property="lockedNot" column="locked_not" />
+		<result property="accessNum" column="access_num" />
+		<result property="certificateName" column="certificate_name" />
+		<result property="customerCategoy" column="customer_categoy" />
+		<result property="faxPhone" column="fax_phone" />
+		<result property="contactAddress" column="contact_address" />
+		<result property="postalCode" column="postal_code" />
+		<result property="postalPreson" column="postal_preson" />
+		<result property="eMail" column="e_mail" />
+		<result property="phoneAccount" column="phone_account" />
+		<result property="bindingPhoneNum" column="binding_phone_num" />
+		<result property="coOwner" column="co_owner" />
+		<result property="ownerIdentification"
+			column="owner_identification" />
+		<result property="firName" column="fir_name" />
+		<result property="secName" column="sec_name" />
+		<result property="gender" column="gender" />
+		<result property="nationality" column="nationality" />
+		<result property="birthDate" column="birth_date" />
+		<result property="workUnit" column="work_unit" />
+		<result property="ownerJob" column="owner_job" />
+		<result property="ownerHobby" column="owner_hobby" />
+		<result property="ownerId" column="owner_id" />
+		<result property="taxpayerNum" column="taxpayer_num" />
+		<result property="ownerAddPhone" column="owner_add_phone" />
+		<result property="bankAccount" column="bank_account" />
+		<result property="collectionCategory"
+			column="collection_category" />
+		<result property="bankType" column="bank_type" />
+		<result property="bankNum" column="bank_num" />
+		<result property="bankAccountName" column="bank_account_name" />
+		<result property="projectId" column="project_id" />
+	</resultMap>
+	
+	<resultMap type="HouseAndCost" id="HouseAndCostResult">
+		<result property="houseId" column="house_id" />
+		<result property="costId" column="cost_id" />
+	</resultMap>
+
+
+	<sql id="selectHyCostVo">
+		SELECT
+		c.id,
+		c.cost_items,
+		q.community_name,
+		b.building_name,
+		h.house_number,
+		o.owner_name,
+		c.fee_date,
+		c.amount_receivable
+		FROM
+		hy_cost
+		c
+		LEFT JOIN house_and_cost a ON a.cost_id = c.id
+		LEFT JOIN hy_house_inf h ON a.house_id = h.id
+		LEFT JOIN hy_owner_registration o ON h.owner_id = o.id
+		LEFT JOIN hy_building b ON h.building_id = b.id
+		LEFT JOIN hy_residential_quarters q ON b.quarters_id = q.id
+		WHERE
+		1 = 1
+	</sql>
+
+	<select id="selectHyCashierDeskList" parameterType="HyCost"
+		resultMap="HyCostResult">
+		<include refid="selectHyCostVo" />
+		<if test="costItems != null  and costItems != ''"> and c.cost_items = #{costItems}</if>
+		<if test="bilingStartDate != null and bilingEndDate != null">and c.fee_date between #{bilingStartDate} and #{bilingEndDate}</if>
+		<if test="hyOwnerRegistration != null">
+		<if test="hyOwnerRegistration.ownerName != null  and hyOwnerRegistration.ownerName != ''"> and o.owner_name = #{hyOwnerRegistration.ownerName}</if>
+		<if test="hyOwnerRegistration.mobilePhone != null  and hyOwnerRegistration.mobilePhone != ''"> and o.mobile_phone = #{hyOwnerRegistration.mobilePhone}</if>
+		</if>
+		<if test="hyResidentialQuarters != null">
+		<if test="hyResidentialQuarters.communityName != null  and hyResidentialQuarters.communityName != ''"> and q.community_name = #{hyResidentialQuarters.communityName}</if>
+		</if>
+		<if test="hyBuilding != null">
+		<if test="hyBuilding.buildingName != null  and hyBuilding.buildingName != ''"> and b.building_name = #{hyBuilding.buildingName}</if>
+		</if>
+		<if test="hyHouseInf != null">
+		<if test="hyHouseInf.unit != null  and hyHouseInf.unit != ''"> and h.unit = #{hyHouseInf.unit}</if>
+		</if>
+	</select>
+
+	<select id="selectHyCashierDeskById" parameterType="Long"
+		resultMap="HyCostResult">
+		<include refid="selectHyCostVo" />
+		and c.id = #{id}
+	</select>
+
+	<update id="updateHyCashierDesk" parameterType="HyCost">
+		update hy_cost
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="costItems != null">cost_items = #{costItems},</if>
+			<if test="expenseType != null">expense_type = #{expenseType},</if>
+			<if test="billingCycle != null ">billing_cycle=#{billingCycle},</if>
+			<if test="billingMethod != null ">billing_method=#{billingMethod},</if>
+			<if test="standardName != null ">standard_name=#{standardName},</if>
+			<if test="standardState != null  ">standard_state=#{standardState},</if>
+			<if test="calculationMehod != null  ">calculation_mehod=#{calculationMehod},</if>
+			<if test="bilingStartDate != null ">biling_start_date=#{bilingStartDate},</if>
+			<if test="transferTenants != null">transfer_tenants=#{transferTenants},</if>
+		</trim>
+		where id = #{id}
+	</update>
+	
+</mapper>

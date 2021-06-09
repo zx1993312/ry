@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.ruoyi.common.core.domain.BaseEntity;
 import com.ruoyi.system.annotation.EnumAnn;
 import com.ruoyi.system.constants.Constants;
 
@@ -125,7 +126,11 @@ public class ReflectUtil<T> {
 					if (Modifier.isFinal(field2.getModifiers())) {
 						continue;
 					}
-					if (field2.get(t2) != null) {
+					if (field2.get(t2) != null && !field2.get(t2).getClass().isPrimitive()) {
+						if (BaseEntity.class.isAssignableFrom(field2.get(t2).getClass())) {//判断字段是否为BaseEntity子类
+							continue;
+						}
+						
 						if (field1.getName().equals(field2.getName())) {// 校验字段名称是否相等
 							if (field2.get(t2).getClass() == Date.class) {
 								SetFieldUtil.setFieldValueByFieldName(field1.getName(), t1,

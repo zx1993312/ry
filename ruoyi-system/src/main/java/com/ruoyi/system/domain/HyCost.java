@@ -265,10 +265,34 @@ public class HyCost extends BaseEntity {
 	private HyHouseInf hyHouseInf;
 	
 	/**
+	 * 楼宇表
+	 */
+	@Excel(name="楼宇表")
+	private HyBuilding hyBuilding;
+	
+	/**
+	 * 小区表
+	 */
+	@Excel(name="小区表")
+	private HyResidentialQuarters hyResidentialQuarters;
+	
+	/**
+	 * 收款表
+	 */
+	@Excel(name="收款表")
+	private HyCollection hyCollection;
+	
+	/**
 	 * 业主费用项目关联表
 	 */
 	@Excel(name="业主费用项目关联表")
 	private OwnerAndCost ownerAndCost;
+	
+	/**
+	 * 房屋费用项目关联表
+	 */
+	@Excel(name="房屋费用项目关联表")
+	private HouseAndCost houseAndCost;
 
 
 	public void setId(Long id) {
@@ -683,6 +707,38 @@ public class HyCost extends BaseEntity {
 		this.penaltyContract = penaltyContract;
 	}
 
+	public HyBuilding getHyBuilding() {
+		return hyBuilding;
+	}
+
+	public void setHyBuilding(HyBuilding hyBuilding) {
+		this.hyBuilding = hyBuilding;
+	}
+
+	public HyResidentialQuarters getHyResidentialQuarters() {
+		return hyResidentialQuarters;
+	}
+
+	public void setHyResidentialQuarters(HyResidentialQuarters hyResidentialQuarters) {
+		this.hyResidentialQuarters = hyResidentialQuarters;
+	}
+
+	public HyCollection getHyCollection() {
+		return hyCollection;
+	}
+
+	public void setHyCollection(HyCollection hyCollection) {
+		this.hyCollection = hyCollection;
+	}
+
+	public HouseAndCost getHouseAndCost() {
+		return houseAndCost;
+	}
+
+	public void setHouseAndCost(HouseAndCost houseAndCost) {
+		this.houseAndCost = houseAndCost;
+	}
+
 	@Override
 	public String toString() {
 		return "HyCost [id=" + id + ", costItems=" + costItems + ", expenseType=" + expenseType + ", parentId="
@@ -704,12 +760,10 @@ public class HyCost extends BaseEntity {
 				+ deliveryStatus + ", transferTenants=" + transferTenants + ", changeDate=" + changeDate
 				+ ", billingMethod=" + billingMethod + ", calculationStandard=" + calculationStandard
 				+ ", hyOwnerRegistration=" + hyOwnerRegistration + ", hyMeter=" + hyMeter + ", hyParkingInf="
-				+ hyParkingInf + ", hyHouseInf=" + hyHouseInf + ", ownerAndCost=" + ownerAndCost + "]";
+				+ hyParkingInf + ", hyHouseInf=" + hyHouseInf + ", hyBuilding=" + hyBuilding
+				+ ", hyResidentialQuarters=" + hyResidentialQuarters + ", hyCollection=" + hyCollection
+				+ ", ownerAndCost=" + ownerAndCost + ", houseAndCost=" + houseAndCost + "]";
 	}
-
-
-
-
 
 	
 
