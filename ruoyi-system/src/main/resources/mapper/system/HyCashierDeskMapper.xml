@@ -229,7 +229,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		h.house_number,
 		o.owner_name,
 		c.fee_date,
-		c.amount_receivable
+		t.is_collection,
+		c.amount_receivable,
+		t.amount
 		FROM
 		hy_cost
 		c
@@ -238,6 +240,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LEFT JOIN hy_owner_registration o ON h.owner_id = o.id
 		LEFT JOIN hy_building b ON h.building_id = b.id
 		LEFT JOIN hy_residential_quarters q ON b.quarters_id = q.id
+		LEFT JOIN hy_collection t ON t.cost_id = c.id
 		WHERE
 		1 = 1
 	</sql>
