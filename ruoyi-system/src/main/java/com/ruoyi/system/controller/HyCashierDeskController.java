@@ -18,10 +18,22 @@ import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.system.constants.Constants;
+import com.ruoyi.system.domain.HouseAndCost;
+import com.ruoyi.system.domain.HyBuilding;
 import com.ruoyi.system.domain.HyCollection;
 import com.ruoyi.system.domain.HyCost;
+import com.ruoyi.system.domain.HyHouseInf;
+import com.ruoyi.system.domain.HyOwnerRegistration;
+import com.ruoyi.system.domain.HyResidentialQuarters;
+import com.ruoyi.system.mapper.HyBuildingMapper;
+import com.ruoyi.system.mapper.HyCollectionMapper;
+import com.ruoyi.system.mapper.HyCustomerMapper;
+import com.ruoyi.system.mapper.HyOwnerRegistrationMapper;
+import com.ruoyi.system.mapper.HyResidentialQuartersMapper;
 import com.ruoyi.system.service.IHyCashierDeskService;
-import com.ruoyi.system.service.IHyCollectionService;
+import com.ruoyi.system.service.IHyHouseInfService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -44,7 +56,22 @@ public class HyCashierDeskController extends BaseController {
 	private IHyCashierDeskService hyCashierDeskService;
 
 	@Autowired
-	private IHyCollectionService hyCollectionService;
+	private IHyHouseInfService hyHouseInfService;
+
+	@Autowired
+	private HyCustomerMapper hyCustomerMapper;
+
+	@Autowired
+	private HyBuildingMapper hyBuildingMapper;
+
+	@Autowired
+	private HyOwnerRegistrationMapper hyOwnerRegistrationMapper;
+
+	@Autowired
+	private HyResidentialQuartersMapper hyResidentialQuartersMapper;
+
+	@Autowired
+	private HyCollectionMapper hyCollectionMapper;
 
 	@RequiresPermissions("system:cashierDesk:view")
 	@GetMapping()
@@ -61,29 +88,50 @@ public class HyCashierDeskController extends BaseController {
 	@PostMapping("/list")
 	@ResponseBody
 	public TableDataInfo list(HyCost hyCost) {
+		if (!StringUtils.isEmpty(hyCost.getHyResidentialQuarters().getCommunityName())
+				|| !StringUtils.isEmpty(hyCost.getHyBuilding().getBuildingName())
+				|| !StringUtils.isEmpty(hyCost.getHyHouseInf().getUnit())
+				|| !StringUtils.isEmpty(hyCost.getHyOwnerRegistration().getOwnerName())
+				|| hyCost.getHyOwnerRegistration().getMobilePhone() != null) {
+			return getDataTable(hyCashierDeskService.selectHyCashierDeskList(hyCost));
+		}
 		List<HyCost> relist = new ArrayList<HyCost>();
 		startPage();
 		List<HyCost> list = hyCashierDeskService.selectHyCashierDeskList(hyCost);
-		/*for (HyCost cost : list) {
-
-			HyCollection hyCollection = new HyCollection();
-			hyCollection.setCostId(cost.getId());
-			List<HyCollection> collList = hyCollectionService.selectHyCollectionList(hyCollection);
-			for (int i = 0; i < collList.size(); i++) {
-				HyCost reCost = new HyCost();
-				reCost.setId(cost.getId());
-				reCost.setCostItems(cost.getCostItems());
-				reCost.setFeeDate(cost.getFeeDate());
-				reCost.setAmountActually(cost.getAmountActually());
-				reCost.setHyResidentialQuarters(cost.getHyResidentialQuarters());
-				reCost.setHyBuilding(cost.getHyBuilding());
-				reCost.setHyHouseInf(cost.getHyHouseInf());
-				reCost.setHyOwnerRegistration(cost.getHyOwnerRegistration());
+		for (HyCost cost : list) {
+			HyCost reCost = new HyCost();
+			HouseAndCost houseAndCost = new HouseAndCost();
+			houseAndCost.setCostId(cost.getId());
+			List<HouseAndCost> houseList = hyCustomerMapper.selectCostIds(houseAndCost);
+			for (int i = 0; i < houseList.size(); i++) {
+				reCost = (HyCost) Constants.REFLECT_UTIL.convertBean(new HyCost(), cost);
+				Long houseId = houseList.get(i).getHouseId();
+				HyHouseInf hyHouseInf = hyHouseInfService.selectHyHouseInfById(houseId);
+				reCost.setHyHouseInf(hyHouseInf);
+				Long buildingId = hyHouseInf.getBuildingId();
+				HyBuilding hyBuilding = hyBuildingMapper.selectHyBuildingById(buildingId);
+				reCost.setHyBuilding(hyBuilding);
+				Long ownerId = hyHouseInf.getOwnerId();
+				HyOwnerRegistration hyOwnerRegistration = hyOwnerRegistrationMapper
+						.selectHyOwnerRegistrationById(ownerId);
+				reCost.setHyOwnerRegistration(hyOwnerRegistration);
+				Long quartersId = hyBuilding.getQuartersId();
+				HyResidentialQuarters hyResidentialQuarters = hyResidentialQuartersMapper
+						.selectHyResidentialQuartersById(quartersId);
+				reCost.setHyResidentialQuarters(hyResidentialQuarters);
+				Long costId = cost.getId();
+				HyCollection hyCollection = new HyCollection();
+				hyCollection.setCostId(costId);
+				hyCollection.setHouseId(houseId);
+				hyCollection.setOwnerId(ownerId);
+				List<HyCollection> collList = hyCollectionMapper.selectHyCollectionList(hyCollection);
+				if (collList.size() != 0) {
+					reCost.setHyCollection(collList.get(0));
+				}
 				relist.add(reCost);
 			}
-
-		}*/
-		return getDataTable(list);
+		}
+		return getDataTable(relist);
 	}
 
 	/**
@@ -107,7 +155,8 @@ public class HyCashierDeskController extends BaseController {
 	@Log(title = "收银台", businessType = BusinessType.UPDATE)
 	@PostMapping("/edit")
 	@ResponseBody
-	public AjaxResult editSave(HyCost hyCost) {
+	public AjaxResult editSave(HyCost hyCost, ModelMap mmap) {
+		mmap.put("hyCost", hyCost);
 		return toAjax(hyCashierDeskService.updateHyCashierDesk(hyCost));
 	}
 

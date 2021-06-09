@@ -1046,6 +1046,49 @@ var table = {
             	    }
             	});
             },
+            // 打开发起催收
+            opens: function (title, url, width, height, callback) {
+            	// 如果是移动端，就使用自适应大小弹窗
+            	if ($.common.isMobile()) {
+            		width = 'auto';
+            		height = 'auto';
+            	}
+            	if ($.common.isEmpty(title)) {
+            		title = false;
+            	}
+            	if ($.common.isEmpty(url)) {
+            		url = "/404.html";
+            	}
+            	if ($.common.isEmpty(width)) {
+            		width = 800;
+            	}
+            	if ($.common.isEmpty(height)) {
+            		height = ($(window).height() - 50);
+            	}
+            	if ($.common.isEmpty(callback)) {
+            		callback = function(index, layero) {
+            			var iframeWin = layero.find('iframe')[0];
+            			iframeWin.contentWindow.submitHandler(index, layero);
+            		}
+            	}
+            	layer.open({
+            		type: 2,
+            		area: [width + 'px', height + 'px'],
+            		fix: false,
+            		//不固定
+            		maxmin: true,
+            		shade: 0.3,
+            		title: title,
+            		content: url,
+            		btn: ['发起收款', '关闭'],
+            		// 弹层外区域关闭
+            		shadeClose: true,
+            		yes: callback,
+            		cancel: function(index) {
+            			return true;
+            		}
+            	});
+            },
             // 弹出层指定参数选项
             openOptions: function (options) {
             	var _url = $.common.isEmpty(options.url) ? "/404.html" : options.url; 
@@ -1324,6 +1367,21 @@ var table = {
             	    $.modal.open("修改" + table.options.modalName, url);
             	} else {
             	    $.modal.open("修改" + table.options.modalName, $.operate.editUrl(id));
+            	}
+            },
+            // 单笔收款
+            edit4: function(id) {
+            	table.set();
+            	if($.common.isEmpty(id) && table.options.type == table_type.bootstrapTreeTable) {
+            		var row = $("#" + table.options.id).bootstrapTreeTable('getSelections')[0];
+            		if ($.common.isEmpty(row)) {
+            			$.modal.alertWarning("请至少选择一条记录");
+            			return;
+            		}
+            		var url = table.options.updateUrl.replace("{id}", row[table.options.uniqueId]);
+            		$.modal.opens("查看" + table.options.modalName, url);
+            	} else {
+            		$.modal.opens("查看" + table.options.modalName, $.operate.editUrl(id));
             	}
             },
             // 审核

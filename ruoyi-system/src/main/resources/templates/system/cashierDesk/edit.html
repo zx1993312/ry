@@ -6,44 +6,102 @@
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
         <form class="form-horizontal m" id="form-cost-edit" th:object="${hyCost}">
-            <input name="id" th:field="*{id}" type="hidden">
             <div class="form-group">    
-                <label class="col-sm-3 control-label">费用项目：</label>
+                <label class="col-sm-3 control-label">编号：</label>
                 <div class="col-sm-8">
-                    <input name="costItems" th:field="*{costItems}" class="form-control" type="text">
+                   <input th:field="*{id}" class="form-control" type="text" disabled="disabled">
+                   <input name="id" th:field="*{id}" class="form-control" type="hidden">
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">费用类型：</label>
+                <label class="col-sm-3 control-label">费用项目：</label>
                 <div class="col-sm-8">
-                	<input name="expenseType" th:field="*{expenseType}" class="form-control" type="text">
+                    <input th:field="*{costItems}" class="form-control" type="text" disabled="disabled">
+                    <input name="costItems" th:field="*{costItems}" class="form-control" type="hidden">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">所在小区：</label>
+                <div class="col-sm-8">
+                	<input th:field="*{hyResidentialQuarters.communityName}" class="form-control" type="text" disabled="disabled">
+                	<input name="hyResidentialQuarters.communityName" th:field="*{hyResidentialQuarters.communityName}" class="form-control" type="hidden">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">楼栋名称：</label>
+                <div class="col-sm-8">
+                	<input th:field="*{hyBuilding.buildingName}" class="form-control" type="text" disabled="disabled">
+                	<input name="hyBuilding.buildingName" th:field="*{hyBuilding.buildingName}" class="form-control" type="hidden">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">房屋编号：</label>
+                <div class="col-sm-8">
+                	<input th:field="*{hyHouseInf.houseNumber}" class="form-control" type="text" disabled="disabled">
+                	<input name="hyHouseInf.houseNumber" th:field="*{hyHouseInf.houseNumber}" class="form-control" type="hidden">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">业主名称：</label>
+                <div class="col-sm-8">
+                	<input th:field="*{hyOwnerRegistration.ownerName}" class="form-control" type="text" disabled="disabled">
+                	<input name="hyOwnerRegistration.ownerName" th:field="*{hyOwnerRegistration.ownerName}" class="form-control" type="hidden">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">费用日期：</label>
+                <div class="col-sm-8">
+                	<div class="input-group date">
+                        <input th:value="${#dates.format(hyCost.feeDate, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text" disabled="disabled">
+                        <input name="feeDate" th:value="${#dates.format(hyCost.feeDate, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="hidden">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">支付状态：</label>
+                <div class="col-sm-8">
+                	<select th:field="*{hyCollection.isCollection}" class="form-control" disabled="disabled">
+						<option value="">未支付</option>
+						<option value="0">已支付</option>
+					</select>
+                	<input id="isCollection" name="hyCollection.isCollection" th:field="*{hyCollection.isCollection}" class="form-control" type="hidden">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">应收费用：</label>
+                <div class="col-sm-8">
+                	<input th:field="*{amountReceivable}" class="form-control" type="text" disabled="disabled">
+                	<input name="amountReceivable" th:field="*{amountReceivable}" class="form-control" type="hidden">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">已收费用：</label>
+                <div class="col-sm-8">
+                	<input th:field="*{hyCollection.amount}" class="form-control" type="text" disabled="disabled">
+                	<input name="hyCollection.amount" th:field="*{hyCollection.amount}" class="form-control" type="hidden">
                 </div>
             </div>
         </form>
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var prefix = ctx + "system/cost";
+        var prefix = ctx + "system/cashierDesk";
         $("#form-cost-edit").validate({
-        	
-        	onkeyup:false,
-        	rules:{
-        		costItems: {
-            		maxlength:255,
-            		required : true,
-    			},
-    			expenseType: {
-    				maxlength:255,
-    				required : true,
-    			},
-        	},
             focusCleanup: true
         });
 
         function submitHandler() {
             if ($.validate.form()) {
-                $.operate.save(prefix + "/edit", $('#form-cost-edit').serialize());
+            	console.log($("#isCollection").val());
+            	console.log(typeof $("#isCollection").val());
+            	if($("#isCollection").val()=="0"){
+            		$.modal.alertWarning("该条数据已被收款");
+            	}else{
+            		$.operate.save(prefix + "/edit", $('#form-cost-edit').serialize());
+                }
             }
+                
         }
     </script>
 </body>

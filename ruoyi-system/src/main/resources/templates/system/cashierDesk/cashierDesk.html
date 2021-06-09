@@ -12,7 +12,7 @@
                         <ul>
                             <li>
                                 <label>选择小区：</label>
-                                <select id="communityName" name="hyResidentialQuarters.communityName" class="form-control" th:with="type=${@quarters.getQuarters()}" onchange="da()">
+                                <select id="communityName" name="hyResidentialQuarters.communityName" class="form-control" th:with="type=${@quarters.getQuarters()}">
 									<option value="">请选择</option>
 									<option th:if="data!=null" th:each="data:${type}" th:text="${data.communityName}" th:value="${data.communityName}"></option>
 						 	    </select>
@@ -33,7 +33,7 @@
                             </li>
                             <li>
                                 <label>费用项目：</label>
-                                <select id="costItems" name="costItems" class="form-control" th:with="type=${@cost.getCost()}" onchange="changeStandardName()"> 
+                                <select id="costItems" name="costItems" class="form-control" th:with="type=${@cost.getCost()}"> 
 									<option value="">请选择</option>
 									<option th:if="data != null" th:each="data : ${type}" th:text="${data.costItems}" th:value="${data.costItems}"></option>
 								</select> 
@@ -72,7 +72,7 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-primary multiple disabled" onclick="">
+                <a class="btn btn-primary multiple disabled" onclick="merger()">
                     <i class="fa fa-edit"></i> 合并收款
                 </a>
                 <a class="btn btn-primary multiple disabled" onclick="">
@@ -92,8 +92,8 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('system:cost:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('system:cost:remove')}]];
+        var editFlag = [[${@permission.hasPermi('system:cashierDesk:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:cashierDesk:remove')}]];
         var prefix = ctx + "system/cashierDesk";
 
         $(function() {
@@ -104,8 +104,7 @@
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
                 importUrl: prefix + "/importData",
-                importTemplateUrl: prefix + "/importTemplate",
-                modalName: "费用项目",
+                modalName: "收银台",
                 columns: [{
                     checkbox: true
                 },
@@ -139,7 +138,14 @@
                 },
                 {
                     field: 'hyCollection.isCollection',
-                    title: '支付状态'
+                    title: '支付状态',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+                        	case '0' : value =  "已支付";break;
+                        	default : value =  "未支付";break;
+                    	}
+    	            	return value;
+    	            }
                 },
                 {
                     field: 'amountReceivable',
@@ -154,15 +160,41 @@
                     align: 'center',
                     formatter: function(value, row, index) {
                         var actions = [];
-                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>单笔收款</a> ');
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit4(\'' + row.id + '\')"><i class="fa fa-edit"></i>单笔收款</a> ');
                         return actions.join('');
                     }
                 }]
             };
             $.table.init(options);
         });
-        function da(){
-        	console.log($("communityName").val());
+        function merger(){
+        	var rows=$("#bootstrap-table").bootstrapTable('getSelections');
+        	if(rows.length == 0){
+				$.modal.alertWarning("至少选择一条数据！！！");
+				return false;
+			}
+        	var map = new Map();
+        	for(var i=0;i<rows.length;i++){
+        		if(Object.getOwnPropertyNames(map).length != 0){
+        			if(!map.hasOwnProperty(rows[i].hyOwnerRegistration.ownerName)){
+            			$.modal.alertWarning("所选数据不是一个人的 你个sb！！！");
+            			return false;
+            		}
+        		}
+        		map[rows[i].hyOwnerRegistration.ownerName] = rows[i];
+        		//map.set("rows[i].hyOwnerRegistration.ownerName",rows[i]);
+        	}
+        	console.log(rows);
+        	var list = rows;
+        	console.log(list);
+            $.ajax({
+                url: prefix + "/edit",
+                data: list,
+                type: 'POST',
+                dataType : "json",
+                success: function (result) {
+                }
+            });
         }
     </script>
 </body>
