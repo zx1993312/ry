@@ -160,7 +160,7 @@ public class HyCashierDeskController extends BaseController {
 	@ApiImplicitParams({ @ApiImplicitParam(name = "hyCost", value = "项目实体类hyCost", required = true), })
 	@RequiresPermissions("system:cashierDesk:edit")
 	@Log(title = "收银台", businessType = BusinessType.UPDATE)
-	@PostMapping("/edit")
+	@PostMapping("/edits")
 	@ResponseBody
 	public AjaxResult editSave(String datas, ModelMap mmap) {
 		List<JSONObject> list = new ArrayList<>();
@@ -170,7 +170,22 @@ public class HyCashierDeskController extends BaseController {
 		}
 
 		mmap.put("list", list);
-		return AjaxResult.success();
+		return toAjax(1);
+	}
+	
+	/**
+	 * 修改保存收银台
+	 */
+	@ApiOperation("收银台")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyCost", value = "项目实体类hyCost", required = true), })
+	@RequiresPermissions("system:cashierDesk:edit")
+	@Log(title = "收银台", businessType = BusinessType.UPDATE)
+	@PostMapping("/edit")
+	@ResponseBody
+	public AjaxResult editSave(HyCost hyCost, ModelMap mmap) {
+		
+		mmap.put("hyCost", hyCost);
+		return toAjax(hyCashierDeskService.updateHyCashierDesk(hyCost));
 	}
 
 	/**

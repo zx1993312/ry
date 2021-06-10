@@ -40,7 +40,7 @@
                             </li>
                             <li>
                                 <label>缴费状态：</label>
-                                <select class="form-control"> 
+                                <select name="" class="form-control"> 
 									<option value="">请选择</option>
 									<option value="0">欠费</option>
 									<option value="1">已缴</option>
@@ -91,6 +91,11 @@
             </div>
             <div class="col-sm-12 select-table table-striped">
                 <table id="bootstrap-table"></table>
+            </div>
+            <div class="btn-group-sm" id="toolbar" role="group">
+             <a style="float: right" class="btn btn-primary multiple disabled" onclick="">
+               <i class="fa fa-rmb"></i> 一键催缴
+             </a>
             </div>
         </div>
     </div>
@@ -200,7 +205,7 @@
         	for(var i=0;i<rows.length;i++){
         		if(Object.getOwnPropertyNames(map).length != 0){
         			if(!map.hasOwnProperty(rows[i].hyOwnerRegistration.ownerName)){
-            			$.modal.alertWarning("所选数据不是一个人的 你个sb！！！");
+            			$.modal.alertWarning("所选数据不是一个人的");
             			return false;
             		}
         		}
@@ -216,7 +221,10 @@
         		var isCollection = rows[i].hyCollection.isCollection;
         		var amountReceivable = rows[i].amountReceivable;
         		var amount = rows[i].hyCollection.amount;
-                
+        		if(isCollection=="0"){
+        			$.modal.alertWarning("选择的数据中又已支付的数据，请重新选择！");
+    				return false;
+        		}
                 list[i] = {
 	               	'id' : id,
 	           		'costItems' : costItems,
@@ -232,13 +240,14 @@
         	}
         	
             $.ajax({
-                url: prefix + "/edit",
+                url: prefix + "/edits",
                 data: {
                 	'datas' : JSON.stringify(list)
                 },
                 type: 'POST',
                 dataType : "json",
                 success: function (result) {
+                	$.operate.successCallback(result);
                 }
             });
         }

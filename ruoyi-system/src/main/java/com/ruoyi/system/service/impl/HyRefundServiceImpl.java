@@ -100,10 +100,7 @@ public class HyRefundServiceImpl implements IHyRefundService {
 	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int insertHyRefund(HyRefund hyRefund) {
-		HyCollection hyCollection = new HyCollection();
-		hyCollection.setIsRefund("0");
-		hyCollection.setId(hyRefund.getCollectionId());
-		hyCollectionMapper.updateHyCollection(hyCollection);
+		
 		return hyRefundMapper.insertHyRefund(hyRefund);
 	}
 
@@ -116,6 +113,26 @@ public class HyRefundServiceImpl implements IHyRefundService {
 	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int updateHyRefund(HyRefund hyRefund) {
+		return hyRefundMapper.updateHyRefund(hyRefund);
+	}
+	
+	/**
+	 * 修改退款申请
+	 * 
+	 * @param hyRefund 退款申请
+	 * @return 结果
+	 */
+	@Transactional(rollbackFor = Exception.class)
+	@Override
+	public int updateHyRefunds(HyRefund hyRefund) {
+		Date date = new Date();
+		HyCollection hyCollection = new HyCollection();
+		hyCollection.setIsRefund("0");
+		hyCollection.setRefundTime(date);
+		String refundPerson = hyRefund.getRefunder();
+		hyCollection.setRefundPerson(refundPerson);
+		hyCollection.setId(hyRefund.getCollectionId());
+		hyCollectionMapper.updateHyCollection(hyCollection);
 		return hyRefundMapper.updateHyRefund(hyRefund);
 	}
 

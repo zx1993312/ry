@@ -44,7 +44,14 @@ public interface IHyRefundService {
 	 * @return 结果
 	 */
 	public int updateHyRefund(HyRefund hyRefund);
-
+	
+	/**
+	 * 修改退款申请
+	 * 
+	 * @param hyRefund 退款申请
+	 * @return 结果
+	 */
+	public int updateHyRefunds(HyRefund hyRefund);
 	/**
 	 * 批量删除退款申请
 	 * 
@@ -67,5 +74,6 @@ public interface IHyRefundService {
 	 * @return
 	 */
 	public int exportPDF(HyRefund hyRefund, HttpServletResponse response)throws Exception;
+
 
 }

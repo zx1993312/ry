@@ -156,7 +156,7 @@ public class HyRefundController extends BaseController {
 	@PostMapping("/edits")
 	@ResponseBody
 	public AjaxResult editsSave(HyRefund hyRefund,HttpServletResponse response) throws Exception {
-		int result = hyRefundService.updateHyRefund(hyRefund);
+		int result = hyRefundService.updateHyRefunds(hyRefund);
 		if (result > 0) {
 			exportPDF(hyRefund,response);
 		}

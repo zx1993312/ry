@@ -269,7 +269,7 @@
     var removeFlag = [[${@permission.hasPermi('system:inf:remove')}]];
     var prefix = ctx + "system/refund";
 
-    var options1 = {
+    var options = {
        	tableId : "table1",
            url: prefix + "/list",
            createUrl: prefix + "/add",
@@ -431,7 +431,7 @@
        };
        
        $(function() {
-    	   $.table.initOtherTable(options1);
+    	   $.table.initOtherTable(options);
     	   $.table.initNoRightTable(options2);
     	   $.table.initNoRightTable(options3);
        });

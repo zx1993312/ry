@@ -123,13 +123,13 @@ public class HyCostServiceImpl implements IHyCostService {
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public int insertHyCost(HyCost hyCost) {
-		OwnerAndCost ownerAndCost = new OwnerAndCost();
+/*		OwnerAndCost ownerAndCost = new OwnerAndCost();
 		Long ownerId = hyCost.getOwnerAndCost().getOwnerId();
 		String a = hyCostMapper.selectNextValue("hy_database", "hy_cost");
 		Long costId = Long.valueOf(a);
 		ownerAndCost.setCostId(costId);
 		ownerAndCost.setOwnerId(ownerId);
-		ownerAndCostMapper.insertOwnerAndCost(ownerAndCost);
+		ownerAndCostMapper.insertOwnerAndCost(ownerAndCost);*/
 		return hyCostMapper.insertHyCost(hyCost);
 	}
 
@@ -142,12 +142,12 @@ public class HyCostServiceImpl implements IHyCostService {
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public int updateHyCost(HyCost hyCost) {
-		Long ownerId = hyCost.getOwnerAndCost().getOwnerId();
+		/*Long ownerId = hyCost.getOwnerAndCost().getOwnerId();
 		Long costId = hyCost.getId();
 		OwnerAndCost ownerAndCost = new OwnerAndCost();
 		ownerAndCost.setOwnerId(ownerId);
 		ownerAndCost.setCostId(costId);
-		ownerAndCostMapper.updateOwnerAndCost(ownerAndCost);
+		ownerAndCostMapper.updateOwnerAndCost(ownerAndCost);*/
 		return hyCostMapper.updateHyCost(hyCost);
 	}
 
