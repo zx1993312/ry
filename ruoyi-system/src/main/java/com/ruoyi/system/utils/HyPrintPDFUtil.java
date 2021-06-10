@@ -42,7 +42,7 @@ public class HyPrintPDFUtil {
 		pageFormat.setPaper(paper);
 
 		Book book = new Book();
-		book.append(new PDFPrintable(document, Scaling.ACTUAL_SIZE), pageFormat, 1);
+		book.append(new PDFPrintable(document, Scaling.ACTUAL_SIZE), pageFormat, document.getNumberOfPages());
 		job.setPageable(book);
 //		job.printDialog();
 		job.print();

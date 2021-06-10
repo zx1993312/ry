@@ -2,6 +2,8 @@ package com.ruoyi.system.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import com.ruoyi.system.domain.HyCost;
 
 /**
@@ -34,5 +36,17 @@ public interface IHyCashierDeskService {
 	 * @return 结果
 	 */
 	public int updateHyCashierDesk(HyCost hyCost);
+	/**
+	 * 打印收据
+	 * @param response
+	 * @return
+	 */
+	public int printReceipt(HttpServletResponse response)throws Exception;
+	/**
+	 * 打印催收单
+	 * @param response
+	 * @return
+	 */
+	public int printCollection(HttpServletResponse response)throws Exception;
 
 }

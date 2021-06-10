@@ -3,6 +3,8 @@ package com.ruoyi.system.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -127,6 +129,9 @@ public class HyCashierDeskController extends BaseController {
 				List<HyCollection> collList = hyCollectionMapper.selectHyCollectionList(hyCollection);
 				if (collList.size() != 0) {
 					reCost.setHyCollection(collList.get(0));
+				}else {
+					reCost.setHyCollection(new HyCollection());
+					reCost.getHyCollection().setAmount((long)0);
 				}
 				relist.add(reCost);
 			}
@@ -159,5 +164,22 @@ public class HyCashierDeskController extends BaseController {
 		mmap.put("hyCost", hyCost);
 		return toAjax(hyCashierDeskService.updateHyCashierDesk(hyCost));
 	}
-
+	/**
+	 * 打印数据
+	 */
+	 @PostMapping("/printReceipt")
+	 @ResponseBody
+	public AjaxResult printReceipt(HttpServletResponse response) throws Exception
+	{
+		 return toAjax(hyCashierDeskService.printReceipt(response));
+	}
+	 /**
+	  * 打印催收单
+	  */
+	 @PostMapping("/printCollection")
+	 @ResponseBody
+	 public AjaxResult printCollection(HttpServletResponse response) throws Exception
+	 {
+		 return toAjax(hyCashierDeskService.printCollection(response));
+	 }
 }

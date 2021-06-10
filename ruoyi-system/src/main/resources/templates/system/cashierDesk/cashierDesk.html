@@ -70,7 +70,11 @@
                     </div>
                 </form>
             </div>
-
+			<div class="col-sm-12 select-table">
+                <a style="color: red;cursor: auto;">应收</a><input id="receivable" style="border: none;">
+                <a style="color: red;cursor: auto;">未收</a><input id="uncollected" style="border: none;">
+                <a style="color: red;cursor: auto;">已收</a><input id="received" style="border: none;">
+            </div>
             <div class="btn-group-sm" id="toolbar" role="group">
                 <a class="btn btn-primary multiple disabled" onclick="merger()">
                     <i class="fa fa-edit"></i> 合并收款
@@ -78,10 +82,10 @@
                 <a class="btn btn-primary multiple disabled" onclick="">
                     <i class="fa fa-edit"></i> 综合收款
                 </a>
-                <a class="btn btn-warning" onclick="">
+                <a class="btn btn-warning" onclick="printReceipt()">
                     <i class="fa fa-download"></i> 打印收据
                 </a>
-                <a class="btn btn-warning" onclick="">
+                <a class="btn btn-warning" onclick="printCollection()">
                     <i class="fa fa-download"></i> 打印催收单
                 </a>
             </div>
@@ -163,7 +167,21 @@
                         actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit4(\'' + row.id + '\')"><i class="fa fa-edit"></i>单笔收款</a> ');
                         return actions.join('');
                     }
-                }]
+                }],
+                responseHandler: function (res) {
+                    var receivable = 0.0;
+                    var received = 0.0;
+                    var uncollected = 0.0;
+                    for(var i = 0 ; i < res.rows.length ; i++){
+                    	receivable += res.rows[i].amountReceivable;
+                    	received += res.rows[i].hyCollection.amount;
+                    }
+                    uncollected = receivable - received;
+                    $("#receivable").val(receivable);
+                    $("#received").val(received);
+                    $("#uncollected").val(uncollected);
+                       return res.messages 
+                   }
             };
             $.table.init(options);
         });
@@ -177,7 +195,7 @@
         	for(var i=0;i<rows.length;i++){
         		if(Object.getOwnPropertyNames(map).length != 0){
         			if(!map.hasOwnProperty(rows[i].hyOwnerRegistration.ownerName)){
-            			$.modal.alertWarning("所选数据不是一个人的 你个sb！！！");
+            			$.modal.alertWarning("所选数据不是一个人的");
             			return false;
             		}
         		}
@@ -195,6 +213,36 @@
                 success: function (result) {
                 }
             });
+        }
+        function printReceipt(){
+    		$.ajax({
+                type: "post",
+                datatype: "json",
+                url:  prefix + "/printReceipt",
+               	beforeSend: function () {
+       	            $.modal.loading("正在处理中，请稍后...");
+       	            $.modal.disable();
+       	        },
+               	success: function(result) {
+               		$.modal.closeLoading();
+               		$.operate.successCallback(result);
+    	        }
+            }); 
+        }
+        function printCollection(){
+    		$.ajax({
+                type: "post",
+                datatype: "json",
+                url:  prefix + "/printCollection",
+               	beforeSend: function () {
+       	            $.modal.loading("正在处理中，请稍后...");
+       	            $.modal.disable();
+       	        },
+               	success: function(result) {
+               		$.modal.closeLoading();
+               		$.operate.successCallback(result);
+    	        }
+            }); 
         }
     </script>
 </body>

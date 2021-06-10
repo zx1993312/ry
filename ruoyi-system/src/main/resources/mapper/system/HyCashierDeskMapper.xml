@@ -240,7 +240,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LEFT JOIN hy_owner_registration o ON h.owner_id = o.id
 		LEFT JOIN hy_building b ON h.building_id = b.id
 		LEFT JOIN hy_residential_quarters q ON b.quarters_id = q.id
-		LEFT JOIN hy_collection t ON t.cost_id = c.id
+		LEFT JOIN hy_collection t ON t.cost_id = c.id and t.owner_id = o.id and t.house_id = h.id
 		WHERE
 		1 = 1
 	</sql>
