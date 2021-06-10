@@ -5,23 +5,32 @@ $(function() {
 	function ceshis1() {
 		var myChart = echarts.init(document.getElementById('ceshi1'));
 		var option = {
-			title : {
-				text : '某站点用户访问来源',
-				subtext : '纯属虚构',
-				left : 'center'
-			},
-
 			tooltip : {
 				trigger : 'item'
 			},
 			legend : {
-				orient : 'vertical',
-				left : 'left',
+				top : '5%',
+				left : 'center'
 			},
 			series : [ {
 				name : '访问来源',
 				type : 'pie',
-				radius : '50%',
+				radius : [ '40%', '70%' ],
+				avoidLabelOverlap : false,
+				label : {
+					show : false,
+					position : 'center'
+				},
+				emphasis : {
+					label : {
+						show : true,
+						fontSize : '40',
+						fontWeight : 'bold'
+					}
+				},
+				labelLine : {
+					show : false
+				},
 				data : [ {
 					value : 1048,
 					name : '搜索引擎'
@@ -37,14 +46,7 @@ $(function() {
 				}, {
 					value : 300,
 					name : '视频广告'
-				} ],
-				emphasis : {
-					itemStyle : {
-						shadowBlur : 10,
-						shadowOffsetX : 0,
-						shadowColor : 'rgba(0, 0, 0, 0.5)'
-					}
-				}
+				} ]
 			} ]
 		};
 		myChart.setOption(option);
@@ -67,31 +69,71 @@ $(function() {
 				}
 				var myChart = echarts.init(document.getElementById('ceshi2'));
 				var option = {
-					title : {
-						text : '设备类别统计',
-						textStyle : { // 设置主标题风格
-							color : '#FFFFFF',// 设置主标题字体颜色
-							fontStyle : '',// 主标题文字风格
-						}
+					tooltip : {
+						trigger : 'axis'
+					},
+					legend : {
+						data : [ '巡检类别' ]
 					},
 					xAxis : {
 						type : 'category',
-						data : title,
-						axisLabel : {
-							color : "#FFFFFF"
-						}
+						boundaryGap : false,
+						data : title
 					},
 					yAxis : {
 						type : 'value',
 						axisLabel : {
-							color : "#FFFFFF"
+							formatter : '{value}'
 						}
 					},
 					series : [ {
+						name : '最高气温',
+						type : 'line',
+						data : [ 10, 11, 13, 11, 12, 12, 9 ],
+						markPoint : {
+							data : [ {
+								type : 'max',
+								name : '最大值'
+							}, {
+								type : 'min',
+								name : '最小值'
+							} ]
+						},
+						markLine : {
+							data : [ {
+								type : 'average',
+								name : '平均值'
+							} ]
+						}
+					}, {
+						name : '巡检类别',
+						type : 'line',
 						data : data,
-						type : 'bar',
-						axisLabel : {
-							color : "#FFFFFF"
+						markPoint : {
+							data : [ {
+								name : '周最低',
+								value : -2,
+								xAxis : 1,
+								yAxis : -1.5
+							} ]
+						},
+						markLine : {
+							data : [ {
+								type : 'average',
+								name : '平均值'
+							}, [ {
+								symbol : 'none',
+								x : '90%',
+								yAxis : 'max'
+							}, {
+								symbol : 'circle',
+								label : {
+									position : 'start',
+									formatter : '最大值'
+								},
+								type : 'max',
+								name : '最高点'
+							} ] ]
 						}
 					} ]
 				};
@@ -141,25 +183,16 @@ $(function() {
 					},
 					xAxis : {
 						type : 'value',
-						boundaryGap : [ 0, 0.01 ],
-						axisLabel : {
-							color : "#FFFFFF"
-						}
+						boundaryGap : [ 0, 0.01 ]
 					},
 					yAxis : {
 						type : 'category',
-						data : title,
-						axisLabel : {
-							color : "#FFFFFF"
-						}
+						data : title
 					},
 					series : [ {
 						name : '2011年',
 						type : 'bar',
-						data : data,
-						axisLabel : {
-							color : "#FFFFFF"
-						}
+						data : data
 					} ]
 				};
 				myChart.setOption(option);

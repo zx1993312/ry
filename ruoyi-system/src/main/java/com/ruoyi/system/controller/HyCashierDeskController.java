@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -129,9 +131,9 @@ public class HyCashierDeskController extends BaseController {
 				List<HyCollection> collList = hyCollectionMapper.selectHyCollectionList(hyCollection);
 				if (collList.size() != 0) {
 					reCost.setHyCollection(collList.get(0));
-				}else {
+				} else {
 					reCost.setHyCollection(new HyCollection());
-					reCost.getHyCollection().setAmount((long)0);
+					reCost.getHyCollection().setAmount((long) 0);
 				}
 				relist.add(reCost);
 			}
@@ -160,26 +162,32 @@ public class HyCashierDeskController extends BaseController {
 	@Log(title = "收银台", businessType = BusinessType.UPDATE)
 	@PostMapping("/edit")
 	@ResponseBody
-	public AjaxResult editSave(HyCost hyCost, ModelMap mmap) {
-		mmap.put("hyCost", hyCost);
-		return toAjax(hyCashierDeskService.updateHyCashierDesk(hyCost));
+	public AjaxResult editSave(String datas, ModelMap mmap) {
+		List<JSONObject> list = new ArrayList<>();
+		JSONArray jsonArray = JSONArray.parseArray(datas);
+		for (int i = 0; i < jsonArray.size(); i++) {
+			list.add(jsonArray.getJSONObject(i));
+		}
+
+		mmap.put("list", list);
+		return AjaxResult.success();
 	}
+
 	/**
 	 * 打印数据
 	 */
-	 @PostMapping("/printReceipt")
-	 @ResponseBody
-	public AjaxResult printReceipt(HttpServletResponse response) throws Exception
-	{
-		 return toAjax(hyCashierDeskService.printReceipt(response));
+	@PostMapping("/printReceipt")
+	@ResponseBody
+	public AjaxResult printReceipt(HttpServletResponse response) throws Exception {
+		return toAjax(hyCashierDeskService.printReceipt(response));
 	}
-	 /**
-	  * 打印催收单
-	  */
-	 @PostMapping("/printCollection")
-	 @ResponseBody
-	 public AjaxResult printCollection(HttpServletResponse response) throws Exception
-	 {
-		 return toAjax(hyCashierDeskService.printCollection(response));
-	 }
+
+	/**
+	 * 打印催收单
+	 */
+	@PostMapping("/printCollection")
+	@ResponseBody
+	public AjaxResult printCollection(HttpServletResponse response) throws Exception {
+		return toAjax(hyCashierDeskService.printCollection(response));
+	}
 }

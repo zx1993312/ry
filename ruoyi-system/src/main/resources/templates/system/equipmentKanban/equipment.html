@@ -1,79 +1,226 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="renderer" content="webkit">
-<title>航宇系统首页</title>
-<!-- 避免IE使用兼容模式 -->
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<link th:href="@{favicon.ico}" rel="shortcut icon" />
-<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
-<link th:href="@{/css/jquery.contextMenu.min.css}" rel="stylesheet" />
-<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
-<link th:href="@{/css/animate.css}" rel="stylesheet" />
-<link th:href="@{/css/style.css}" rel="stylesheet" />
-<link th:href="@{/css/skins.css}" rel="stylesheet" />
-<link th:href="@{/ruoyi/css/ry-ui.css?v=4.6.0}" rel="stylesheet" />
-<title>数据展示</title>
-<style type="text/css">
-div{
-text-align:center
-}
-</style>
-<link rel="stylesheet" th:href="@{/css/wodry.css}">
-<link rel="stylesheet" th:href="@{/css/equipmentKanban.css}">
-<link rel="stylesheet" th:href="@{/css/public.css}">
-
-<script th:src="@{/js/jquery.min.js}"></script>
+    <th:block th:include="include :: header('收款管理 Collection management列表')" />
 </head>
-<body>
-	<div class="main">
-		<div class="header">
-			<div class="header-left fl"></div>
-			<div class="header-center fl">
-				<div class="header-title">设备管理看板</div>
-				<div class="header-img"></div>
-			</div>
-			<div class="header-right fl"></div>
-			<div class="header-bottom fl"></div>
-
-		</div>
-		<div style="margin-top: 5%" class="center">
-			<div class="center-left fl">
-				<div style="width: 100%;height: 390px;" class="left-top rightTop border">
-					<div class="title" >今日车流量</div>
-					<div class="bottom-b">
-						<div id="ceshi1" style="width: 80%;height: 80%;position: absolute;left: 0;right: 0;top: 0;bottom: 0;margin: auto;"></div>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                	<div class="select-list">
+                		<div id="ceshi1" style="width: 30%; height: 200px;float: left; "></div>
+                		<div id="ceshi2" style="width: 30%; height: 250px;float: left; "></div>
+						<div id="ceshi3" style="width: 30%; height: 240px;float: left; "></div>
 					</div>
-				</div>
-				<div style="width: 100%;height: 390px;" class="left-cen rightTop border">
-					
-				</div>
-			</div>
-			<div class="center-cen fl">
-				<div style="width: 100%;height: 390px;" class="cen-top rightTop border">
-					<div id="ceshi2" style="width: 90%;height: 80%;position: absolute;left: 0;right: 0;top: 0;bottom: 0;margin: auto;"></div>
-				</div>
-				<div style="width: 100%;height: 390px;" class="cen-bottom rightTop border">
-				
-				</div>
-			</div>
-			<div class="center-right fl">
-				<div style="width: 100%;height: 390px;" class="right-top rightTop border">
-					<div id="ceshi3" style="width: 60%;height: 80%;position: absolute;left: 0;right: 0;top: 0;bottom: 0;margin: auto;"></div>
-				</div>
-				<div style="width: 100%;height: 390px;" class="right-cen rightTop border">
-				</div>
-			</div>
-		</div>
-	</div>
+                </form>
+            </div>
 
-	<script th:src="@{/ajax/libs/report/echarts/echarts-all.js}"></script>
-	<script th:src="@{/js/jquery.min.js}"></script>
-	<script th:src="@{/ruoyi/js/wodry.min.js}"></script>
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:collection:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:collection:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <!-- <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:collection:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a> -->
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:collection:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:src="@{/ajax/libs/report/echarts/echarts-all.js}"></script>
 	<script th:src="@{/ruoyi/js/equipmentKanban.js}"></script>
-	<script th:src="@{/ruoyi/js/fontscroll.js}"></script>
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:collection:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:collection:remove')}]];
+        var prefix = ctx + "system/collection";
 
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "收款管理",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '收款审核ID',
+                    visible: false
+                },
+                {
+                    field: 'hyCost.costItems',
+                    title: '费用项目'
+                },
+                {
+                    field: 'hyHouseInf.houseName',
+                    title: '房屋名称'
+                },
+                {
+                    field: 'hyOwnerRegistration.ownerName',
+                    title: '业主名称'
+                },
+                {
+                    field: 'applyTime',
+                    title: '申请时间'
+                },
+                {
+                    field: 'receiptNumber',
+                    title: '票据号码'
+                },
+                {
+                    field: 'amount',
+                    title: '总金额'
+                },
+                {
+                    field: 'payee',
+                    title: '收款人'
+                },
+                {
+                    field: 'collectionType',
+                    title: '收款方式',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+                        	case '1' : value =  "现金";break;
+                        	case '2' : value =  "通联支付";break;
+                        	case '3' : value =  "POS刷卡";break;
+                        	case '4' : value =  "银行代扣";break;
+                        	case '5' : value =  "银行托收";break;
+                        	case '6' : value =  "微信支付";break;
+                        	case '7' : value =  "收取开发商费用";break;
+                        	case '8' : value =  "兴业银行线上支付";break;
+                        	case '9' : value =  "汇款";break;
+                        	case '10' : value =  "支付宝支付";break;
+                        	case '11' : value =  "扫码支付";break;
+                        	case '12' : value =  "押金转预存";break;
+                        	case '13' : value =  "通联_通知单扫码（微信）";break;
+                        	case '14' : value =  "银行转账";break;
+                        	case '15' : value =  "其他";break;
+                        	case '16' : value =  "通联_员工APP（微信）";break;
+                        	case '17' : value =  "通联POS";break;
+                        	case '18' : value =  "通联_员工APP（支付宝）";break;
+                        	case '19' : value =  "微信公众号支付";break;
+                    	}
+    	            	return value;
+    	            }
+                },
+                {
+                    field: 'collectionTime',
+                    title: '收款时间'
+                },
+                {
+                    field: 'isCollection',
+                    title: '是否收款',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+                        	case '0' : value =  "是";break;
+                        	case '1' : value =  "否";break;
+                    	}
+    	            	return value;
+    	            }
+                },
+                {
+                    field: 'bookPerson',
+                    title: '记账人'
+                },
+                {
+                    field: 'bookTime',
+                    title: '记账时间'
+                },
+                {
+                    field: 'isBook',
+                    title: '是否记账',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+                        	case '0' : value =  "是";break;
+                        	case '1' : value =  "否";break;
+                    	}
+    	            	return value;
+    	            }
+                },
+                {
+                    field: 'paymentPerson',
+                    title: '交款人'
+                },
+                {
+                    field: 'payment',
+                    title: '交款方式'
+                },
+                {
+                    field: 'paymentTime',
+                    title: '交款时间'
+                },
+                {
+                    field: 'paymentStatue',
+                    title: '是否交款',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+                        	case '0' : value =  "是";break;
+                        	case '1' : value =  "否";break;
+                    	}
+    	            	return value;
+    	            }
+                },
+                {
+                    field: 'deferredPerson',
+                    title: '延期人'
+                },
+                {
+                    field: 'deferredCause',
+                    title: '延期原因'
+                },
+                {
+                    field: 'deferredTime',
+                    title: '延期时间'
+                },
+                {
+                    field: 'isDeferred',
+                    title: '是否延期',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+                        	case '0' : value =  "是";break;
+                        	case '1' : value =  "否";break;
+                    	}
+    	            	return value;
+    	            }
+                },
+                {
+                    field: 'refundPerson',
+                    title: '退款人'
+                },
+                {
+                    field: 'refundTime',
+                    title: '退款时间'
+                },
+                {
+                    field: 'isRefund',
+                    title: '是否退款',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+                        	case '0' : value =  "是";break;
+                        	case '1' : value =  "否";break;
+                    	}
+    	            	return value;
+    	            }
+                },
+                {
+                    field: 'collectionRemark',
+                    title: '备注'
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
 </body>
 </html>

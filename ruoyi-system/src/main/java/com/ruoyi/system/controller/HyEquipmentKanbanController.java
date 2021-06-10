@@ -115,6 +115,7 @@ public class HyEquipmentKanbanController extends BaseController {
 				String value = TypeEnums.getValue(s);
 				map.put("key", value);
 				map.put("value", list1.size());
+				map.put("routeName", hyInspectionRoute.getRouteName());
 				relist.add(map);
 			}
 		}
