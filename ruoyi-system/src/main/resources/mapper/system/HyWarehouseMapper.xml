@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyWarehouseMapper">
+    
+    <resultMap type="HyWarehouse" id="HyWarehouseResult">
+        <result property="id"    column="id"    />
+        <result property="warehouseName"    column="warehouse_name"    />
+        <result property="warehouseAddress"    column="warehouse_address"    />
+        <result property="warehouseType"    column="warehouse_type"    />
+        <result property="warehouseArea"    column="warehouse_area"    />
+        <result property="warehouseNum"    column="warehouse_num"    />
+        <result property="warehousePhone"    column="warehouse_phone"    />
+        <result property="administrators"    column="administrators"    />
+    </resultMap>
+
+    <sql id="selectHyWarehouseVo">
+        select id, warehouse_name, warehouse_address, warehouse_type, warehouse_area, warehouse_num, warehouse_phone, administrators from hy_warehouse
+    </sql>
+
+    <select id="selectHyWarehouseList" parameterType="HyWarehouse" resultMap="HyWarehouseResult">
+        <include refid="selectHyWarehouseVo"/>
+        <where>  
+            <if test="warehouseName != null  and warehouseName != ''"> and warehouse_name like concat('%', #{warehouseName}, '%')</if>
+            <if test="warehouseAddress != null  and warehouseAddress != ''"> and warehouse_address = #{warehouseAddress}</if>
+            <if test="warehouseType != null  and warehouseType != ''"> and warehouse_type = #{warehouseType}</if>
+            <if test="warehouseArea != null "> and warehouse_area = #{warehouseArea}</if>
+            <if test="warehouseNum != null "> and warehouse_num = #{warehouseNum}</if>
+            <if test="warehousePhone != null "> and warehouse_phone = #{warehousePhone}</if>
+            <if test="administrators != null  and administrators != ''"> and administrators = #{administrators}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyWarehouseById" parameterType="Long" resultMap="HyWarehouseResult">
+        <include refid="selectHyWarehouseVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyWarehouse" parameterType="HyWarehouse" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_warehouse
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="warehouseName != null">warehouse_name,</if>
+            <if test="warehouseAddress != null">warehouse_address,</if>
+            <if test="warehouseType != null">warehouse_type,</if>
+            <if test="warehouseArea != null">warehouse_area,</if>
+            <if test="warehouseNum != null">warehouse_num,</if>
+            <if test="warehousePhone != null">warehouse_phone,</if>
+            <if test="administrators != null">administrators,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="warehouseName != null">#{warehouseName},</if>
+            <if test="warehouseAddress != null">#{warehouseAddress},</if>
+            <if test="warehouseType != null">#{warehouseType},</if>
+            <if test="warehouseArea != null">#{warehouseArea},</if>
+            <if test="warehouseNum != null">#{warehouseNum},</if>
+            <if test="warehousePhone != null">#{warehousePhone},</if>
+            <if test="administrators != null">#{administrators},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyWarehouse" parameterType="HyWarehouse">
+        update hy_warehouse
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="warehouseName != null">warehouse_name = #{warehouseName},</if>
+            <if test="warehouseAddress != null">warehouse_address = #{warehouseAddress},</if>
+            <if test="warehouseType != null">warehouse_type = #{warehouseType},</if>
+            <if test="warehouseArea != null">warehouse_area = #{warehouseArea},</if>
+            <if test="warehouseNum != null">warehouse_num = #{warehouseNum},</if>
+            <if test="warehousePhone != null">warehouse_phone = #{warehousePhone},</if>
+            <if test="administrators != null">administrators = #{administrators},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyWarehouseById" parameterType="Long">
+        delete from hy_warehouse where id = #{id}
+    </delete>
+
+    <delete id="deleteHyWarehouseByIds" parameterType="String">
+        delete from hy_warehouse where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
