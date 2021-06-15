@@ -201,7 +201,25 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 			//2、准备数据库连接
 			Map params = new HashMap();
 			String pic = rootFile+"\\static\\pdfimg\\src=http___i.nibaku.com_img_0_1433531324x2230376662_26.jpg&refer=http___i.nibaku.jpg";
+			String houseNumber = hyCost.getHyHouseInf().getHouseNumber();
+		    String ownerName = hyCost.getHyOwnerRegistration().getOwnerName();
+		    String id = hyCost.getId()+"";
+		    String costItems = hyCost.getCostItems();
+		    String communityName = hyCost.getHyResidentialQuarters().getCommunityName();
+		    String buildingName = hyCost.getHyBuilding().getBuildingName();
+		    Date feeDate = hyCost.getFeeDate();
+		    String amountReceivable = hyCost.getAmountReceivable().setScale(2)+"";
+		    String amount = hyCost.getHyCollection().getAmount()+"";
 			params.put("pic",pic);
+			params.put("house_number",houseNumber);
+		    params.put("owner_name",ownerName);
+		    params.put("id",id);
+		    params.put("cost_items",costItems);
+		    params.put("community_name",communityName);
+		    params.put("building_name",buildingName);
+		    params.put("fee_date",feeDate);
+		    params.put("amount_receivable",amountReceivable);
+		    params.put("amount",amount);
 			JasperPrint jasperPrint =JasperFillManager.fillReport(new FileInputStream(templateFile),params,new JREmptyDataSource());
 			JasperExportManager.exportReportToPdfStream(jasperPrint,new FileOutputStream(fileName));
 			HyPrintPDFUtil.printPDF(fileName, "A4");
