@@ -125,27 +125,21 @@ public class HyCollection extends BaseEntity
     private String collectionRemark;
 
     /** 费用项目id */
-    @Excel(name = "费用项目id")
     private Long costId;
     
     /** 费用项目表 */
-    @Excel(name = "费用项目表")
     private HyCost hyCost;
 
     /** 房屋id */
-    @Excel(name = "房屋id")
     private Long houseId;
     
     /** 房屋表 */
-    @Excel(name = "房屋表")
     private HyHouseInf hyHouseInf;
 
     /** 业主id */
-    @Excel(name = "业主id")
     private Long ownerId;
     
     /** 业主表 */
-    @Excel(name = "业主表")
     private HyOwnerRegistration hyOwnerRegistration;
 
     public void setId(Long id) 

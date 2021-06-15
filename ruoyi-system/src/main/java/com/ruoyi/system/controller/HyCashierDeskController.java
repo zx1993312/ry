@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -22,13 +23,16 @@ import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.exception.BusinessException;
 import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.constants.Constants;
 import com.ruoyi.system.domain.HouseAndCost;
 import com.ruoyi.system.domain.HyBuilding;
 import com.ruoyi.system.domain.HyCollection;
 import com.ruoyi.system.domain.HyCost;
 import com.ruoyi.system.domain.HyHouseInf;
+import com.ruoyi.system.domain.HyMeter;
 import com.ruoyi.system.domain.HyOwnerRegistration;
 import com.ruoyi.system.domain.HyResidentialQuarters;
 import com.ruoyi.system.mapper.HyBuildingMapper;
@@ -405,5 +409,63 @@ public class HyCashierDeskController extends BaseController {
 	@ResponseBody
 	public AjaxResult printCollectionOne(HyCost hyCost,HttpServletResponse response) throws Exception {
 		return toAjax(hyCashierDeskService.printCollectionOne(hyCost,response));
+	}
+	
+	/**
+     * 导入数据
+     */
+    @PostMapping("/importData")
+    @ResponseBody
+    public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception
+    {
+        ExcelUtil<HyCollection> util = new ExcelUtil<HyCollection>(HyCollection.class);
+        List<HyCollection> userList = util.importExcel(file.getInputStream());
+        String message = importUser(userList, updateSupport);
+        return AjaxResult.success(message);
+    }
+
+	private String importUser(List<HyCollection> userList, boolean updateSupport) {
+		if (StringUtils.isNull(userList) || userList.size() == 0) {
+			throw new BusinessException("导入抄表数据不能为空！");
+		}
+		int successNum = 0;
+		int failureNum = 0;
+		StringBuilder successMsg = new StringBuilder();
+		StringBuilder failureMsg = new StringBuilder();
+		for (HyCollection hyMeter : userList) {
+			/*List<HyMeter> dataList = this.selectHyMeter(hyMeter);
+			
+			//判断这些是否为空
+			if (StringUtils.isNull(hyMeter.getMeterSerialNum()) || StringUtils.isNull(hyMeter.getMeterName())
+					|| StringUtils.isNull(hyMeter.getMeterType())
+					|| StringUtils.isNull(hyMeter.getInitialRead())|| StringUtils.isNull(hyMeter.getAbnormalPrompt()))
+					 {
+				failureMsg.insert(0, "很抱歉，导入失败！共 " + failureNum + " 条数据格式不正确，错误如下：");
+				throw new BusinessException(failureMsg.toString());
+			}
+			
+			//查询数据是否存在
+			if (dataList == null || dataList.size() == 0) {
+				this.insertHyMeter(hyMeter);
+				successNum++;
+				successMsg.append("<br/>" + successNum + "、表计序号 " + hyMeter.getMeterSerialNum() + " 导入成功");
+			} else if (updateSupport) {
+				hyMeter.setId(dataList.get(0).getId());
+				this.updateHyMeter(hyMeter);
+				successNum++;
+				successMsg.append("<br/>" + successNum + "、表计序号" + hyMeter.getMeterSerialNum() + " 更新成功");
+			} else {
+				failureNum++;
+				failureMsg.append("<br/>" + failureNum + "、表计序号" + hyMeter.getMeterSerialNum() + " 已存在");
+			}*/
+		}
+		if (failureNum > 0) {
+			failureMsg.insert(0, "很抱歉，导入失败！共 " + failureNum + " 条数据格式不正确，错误如下：");
+			throw new BusinessException(failureMsg.toString());
+		} else {
+			successMsg.insert(0, "恭喜您，数据已全部导入成功！共 " + successNum + " 条，数据如下：");
+		}
+		
+		return  successMsg.toString();
 	}
 }

@@ -84,7 +84,7 @@ public class HyMaterial extends BaseEntity
     
     /** 仓库id */
     @Excel(name = "仓库id")
-    private Long warehouse_id;
+    private Long warehouseId;
     
     /** 仓库表 */
     @Excel(name = "仓库表")
@@ -238,12 +238,12 @@ public class HyMaterial extends BaseEntity
 		this.hySupplier = hySupplier;
 	}
 
-	public Long getWarehouse_id() {
-		return warehouse_id;
+	public Long getWarehouseId() {
+		return warehouseId;
 	}
 
-	public void setWarehouse_id(Long warehouse_id) {
-		this.warehouse_id = warehouse_id;
+	public void setWarehouseId(Long warehouseId) {
+		this.warehouseId = warehouseId;
 	}
 
 	public HyWarehouse getHyWarehouse() {
@@ -262,8 +262,9 @@ public class HyMaterial extends BaseEntity
 				+ materialAddress + ", materialDept=" + materialDept + ", materialCommute=" + materialCommute
 				+ ", state=" + state + ", specimen=" + specimen + ", specimendept=" + specimendept + ", checkmen="
 				+ checkmen + ", assessorId=" + assessorId + ", supplierId=" + supplierId + ", hySupplier=" + hySupplier
-				+ ", warehouse_id=" + warehouse_id + ", hyWarehouse=" + hyWarehouse + "]";
+				+ ", warehouseId=" + warehouseId + ", hyWarehouse=" + hyWarehouse + "]";
 	}
+
 
 
 

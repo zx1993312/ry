@@ -18,11 +18,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="createTime"    column="create_time"    />
         <result property="state"    column="state"    />
         <result property="supplierId"    column="supplier_id"    />
-        <result property="warehouseId"    column="warehouseId"    />
+        <result property="warehouseId"    column="warehouse_id"    />
         <association property="hySupplier"     column="id" 
         	javaType="HySupplier" resultMap="HySupplierResult" />
         <association property="hyWarehouse"     column="id" 
-        	javaType="HyWarehouse" resultMap="HyWarehouse" />
+        	javaType="HyWarehouse" resultMap="HyWarehouseResult" />
     </resultMap>
 	
 	<resultMap type="HySupplier" id="HySupplierResult">
