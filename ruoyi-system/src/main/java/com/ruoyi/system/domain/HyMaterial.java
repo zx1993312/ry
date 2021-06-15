@@ -29,9 +29,13 @@ public class HyMaterial extends BaseEntity
     /** 物料类型 */
     @Excel(name = "物料类型")
     private String materialType;
+    
+    /** 物料规格 */
+    @Excel(name = "物料规格")
+    private String materialSpecification;
 
-    /** 计量单位 */
-    @Excel(name = "计量单位")
+    /** 物料单位 */
+    @Excel(name = "物料单位")
     private String materialUnit;
 
     /** 库存数量 */
@@ -45,10 +49,6 @@ public class HyMaterial extends BaseEntity
     /** 入库部门 */
     @Excel(name = "入库部门")
     private String materialDept;
-
-    /** 供应商 */
-    @Excel(name = "供应商")
-    private String materialSupplier;
 
     /** 上交采购单据 */
     @Excel(name = "上交采购单据")
@@ -73,6 +73,14 @@ public class HyMaterial extends BaseEntity
     /** 审核管理id */
     @Excel(name = "审核管理id")
     private Long assessorId;
+    
+    /** 供应商id */
+    @Excel(name = "供应商id")
+    private Long supplierId;
+    
+    /** 供应商表 */
+    @Excel(name = "供应商表")
+    private HySupplier hySupplier;
     
     public void setId(Long id) 
     {
@@ -110,7 +118,16 @@ public class HyMaterial extends BaseEntity
     {
         return materialType;
     }
-    public void setMaterialUnit(String materialUnit) 
+    
+    public String getMaterialSpecification() {
+		return materialSpecification;
+	}
+
+	public void setMaterialSpecification(String materialSpecification) {
+		this.materialSpecification = materialSpecification;
+	}
+
+	public void setMaterialUnit(String materialUnit) 
     {
         this.materialUnit = materialUnit;
     }
@@ -145,15 +162,6 @@ public class HyMaterial extends BaseEntity
     public String getMaterialDept() 
     {
         return materialDept;
-    }
-    public void setMaterialSupplier(String materialSupplier) 
-    {
-        this.materialSupplier = materialSupplier;
-    }
-
-    public String getMaterialSupplier() 
-    {
-        return materialSupplier;
     }
     public void setMaterialCommute(String materialCommute) 
     {
@@ -206,15 +214,34 @@ public class HyMaterial extends BaseEntity
 		this.assessorId = assessorId;
 	}
 
+	public Long getSupplierId() {
+		return supplierId;
+	}
+
+	public void setSupplierId(Long supplierId) {
+		this.supplierId = supplierId;
+	}
+
+	public HySupplier getHySupplier() {
+		return hySupplier;
+	}
+
+	public void setHySupplier(HySupplier hySupplier) {
+		this.hySupplier = hySupplier;
+	}
+
 	@Override
 	public String toString() {
 		return "HyMaterial [id=" + id + ", materialCode=" + materialCode + ", materialName=" + materialName
-				+ ", materialType=" + materialType + ", materialUnit=" + materialUnit + ", materialNumber="
-				+ materialNumber + ", materialAddress=" + materialAddress + ", materialDept=" + materialDept
-				+ ", materialSupplier=" + materialSupplier + ", materialCommute=" + materialCommute + ", state=" + state
-				+ ", specimen=" + specimen + ", specimendept=" + specimendept + ", checkmen=" + checkmen
-				+ ", assessorId=" + assessorId + "]";
+				+ ", materialType=" + materialType + ", materialSpecification=" + materialSpecification
+				+ ", materialUnit=" + materialUnit + ", materialNumber=" + materialNumber + ", materialAddress="
+				+ materialAddress + ", materialDept=" + materialDept + ", materialCommute=" + materialCommute
+				+ ", state=" + state + ", specimen=" + specimen + ", specimendept=" + specimendept + ", checkmen="
+				+ checkmen + ", assessorId=" + assessorId + ", supplierId=" + supplierId + ", hySupplier=" + hySupplier
+				+ "]";
 	}
+
+
 
 	
 

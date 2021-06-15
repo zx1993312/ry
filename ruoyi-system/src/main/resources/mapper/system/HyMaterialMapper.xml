@@ -9,55 +9,88 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="materialCode"    column="material_code"    />
         <result property="materialName"    column="material_name"    />
         <result property="materialType"    column="material_type"    />
+        <result property="materialSpecification"    column="material_specification"    />
         <result property="materialUnit"    column="material_unit"    />
         <result property="materialNumber"    column="material_number"    />
         <result property="materialAddress"    column="material_address"    />
         <result property="materialDept"    column="material_dept"    />
-        <result property="materialSupplier"    column="material_supplier"    />
         <result property="materialCommute"    column="material_commute"    />
         <result property="createTime"    column="create_time"    />
         <result property="state"    column="state"    />
+        <result property="supplierId"    column="supplier_id"    />
+        <association property="hySupplier"     column="id" 
+        	javaType="HySupplier" resultMap="HySupplierResult" />
     </resultMap>
-
+	
+	<resultMap type="HySupplier" id="HySupplierResult">
+        <result property="id"    column="id"    />
+        <result property="supplierName"    column="supplier_name"    />
+        <result property="supplierBusinessLicence"    column="supplier_business_licence"    />
+        <result property="supplierCharge"    column="supplier_charge"    />
+        <result property="supplierPhone"    column="supplier_phone"    />
+        <result property="supplierEmail"    column="supplier_email"    />
+        <result property="supplierAddress"    column="supplier_address"    />
+        <result property="incorporationDate"    column="incorporation_date"    />
+    </resultMap>
+    
     <sql id="selectHyMaterialVo">
-        select id, material_code, material_name, material_type, material_unit, material_number, material_address, material_dept, material_supplier, material_commute, create_time, state from hy_material
+        select 
+        m.id, 
+        m.material_code, 
+        m.material_name, 
+        m.material_type, 
+        m.material_specification, 
+        m.material_unit, 
+        m.material_number, 
+        m.material_address, 
+        m.material_dept, 
+        m.material_commute, 
+        m.create_time, 
+        m.state, 
+        m.supplier_id, 
+        s.supplier_name 
+        from 
+        hy_material m
+        LEFT JOIN  hy_supplier s ON m.supplier_id = s.id
     </sql>
 
     <select id="selectHyMaterialList" parameterType="HyMaterial" resultMap="HyMaterialResult">
         <include refid="selectHyMaterialVo"/>
         <where>  
-            <if test="materialCode != null "> and material_code = #{materialCode}</if>
-            <if test="materialName != null  and materialName != ''"> and material_name like concat('%', #{materialName}, '%')</if>
-            <if test="materialType != null  and materialType != ''"> and material_type = #{materialType}</if>
-            <if test="materialUnit != null  and materialUnit != ''"> and material_unit = #{materialUnit}</if>
-            <if test="materialNumber != null "> and material_number = #{materialNumber}</if>
-            <if test="materialAddress != null  and materialAddress != ''"> and material_address = #{materialAddress}</if>
-            <if test="materialDept != null  and materialDept != ''"> and material_dept = #{materialDept}</if>
-            <if test="materialSupplier != null  and materialSupplier != ''"> and material_supplier = #{materialSupplier}</if>
-            <if test="materialCommute != null  and materialCommute != ''"> and material_commute = #{materialCommute}</if>
-            <if test="state != null  and state != ''"> and state = #{state}</if>
+            <if test="materialCode != null "> and m.material_code = #{materialCode}</if>
+            <if test="materialName != null  and materialName != ''"> and m.material_name like concat('%', #{materialName}, '%')</if>
+            <if test="materialType != null  and materialType != ''"> and m.material_type = #{materialType}</if>
+            <if test="materialSpecification != null  and materialSpecification != ''"> and m.material_specification = #{materialSpecification}</if>
+            <if test="materialUnit != null  and materialUnit != ''"> and m.material_unit = #{materialUnit}</if>
+            <if test="materialNumber != null "> and m.material_number = #{materialNumber}</if>
+            <if test="materialAddress != null  and materialAddress != ''"> and m.material_address = #{materialAddress}</if>
+            <if test="materialDept != null  and materialDept != ''"> and m.material_dept = #{materialDept}</if>
+            <if test="materialCommute != null  and materialCommute != ''"> and m.material_commute = #{materialCommute}</if>
+            <if test="state != null  and state != ''"> and m.state = #{state}</if>
+            <if test="supplierId != null  and supplierId != ''"> and m.supplier_id = #{supplierId}</if>
         </where>
     </select>
     
     <select id="selectHyMaterialLists" parameterType="HyMaterial" resultMap="HyMaterialResult">
         <include refid="selectHyMaterialVo"/>
         <where>  
-            <if test="materialCode != null "> and material_code = #{materialCode}</if>
-            <if test="materialName != null  and materialName != ''"> and material_name like concat('%', #{materialName}, '%')</if>
-            <if test="materialType != null  and materialType != ''"> and material_type = #{materialType}</if>
-            <if test="materialUnit != null  and materialUnit != ''"> and material_unit = #{materialUnit}</if>
-            <if test="materialNumber != null "> and material_number = #{materialNumber}</if>
-            <if test="materialAddress != null  and materialAddress != ''"> and material_address = #{materialAddress}</if>
-            <if test="materialDept != null  and materialDept != ''"> and material_dept = #{materialDept}</if>
-            <if test="materialSupplier != null  and materialSupplier != ''"> and material_supplier = #{materialSupplier}</if>
-            <if test="materialCommute != null  and materialCommute != ''"> and material_commute = #{materialCommute}</if>
+            <if test="materialCode != null "> and m.material_code = #{materialCode}</if>
+            <if test="materialName != null  and materialName != ''"> and m.material_name like concat('%', #{materialName}, '%')</if>
+            <if test="materialType != null  and materialType != ''"> and m.material_type = #{materialType}</if>
+            <if test="materialUnit != null  and materialUnit != ''"> and m.material_unit = #{materialUnit}</if>
+            <if test="materialSpecification != null  and materialSpecification != ''"> and m.material_specification = #{materialSpecification}</if>
+            <if test="materialNumber != null "> and m.material_number = #{materialNumber}</if>
+            <if test="materialAddress != null  and materialAddress != ''"> and m.material_address = #{materialAddress}</if>
+            <if test="materialDept != null  and materialDept != ''"> and m.material_dept = #{materialDept}</if>
+            <if test="materialCommute != null  and materialCommute != ''"> and m.material_commute = #{materialCommute}</if>
+            <if test="supplierId != null  and supplierId != ''"> and m.supplier_id = #{supplierId}</if>
             and state = "3"
         </where>
     </select>
     
     <select id="selectHyMaterialById" parameterType="Long" resultMap="HyMaterialResult">
         <include refid="selectHyMaterialVo"/>
-        where id = #{id}
+        where m.id = #{id}
     </select>
         
     <insert id="insertHyMaterial" parameterType="HyMaterial" useGeneratedKeys="true" keyProperty="id">
@@ -66,32 +99,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="materialCode != null">material_code,</if>
             <if test="materialName != null">material_name,</if>
             <if test="materialType != null">material_type,</if>
+            <if test="materialSpecification != null">material_specification,</if>
             <if test="materialUnit != null">material_unit,</if>
             <if test="materialNumber != null">material_number,</if>
             <if test="materialAddress != null">material_address,</if>
             <if test="materialDept != null">material_dept,</if>
-            <if test="materialSupplier != null">material_supplier,</if>
             <if test="materialCommute != null">material_commute,</if>
             <if test="createTime != null">create_time,</if>
             state,
             <if test="specimen != null">specimen,</if>
             <if test="specimendept != null">specimendept,</if>
             <if test="checkmen != null">checkmen,</if>
+            <if test="supplierId != null">supplier_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="materialCode != null">#{materialCode},</if>
             <if test="materialName != null">#{materialName},</if>
             <if test="materialType != null">#{materialType},</if>
+            <if test="materialSpecification != null">#{materialSpecification},</if>
             <if test="materialUnit != null">#{materialUnit},</if>
             <if test="materialNumber != null">#{materialNumber},</if>
             <if test="materialAddress != null">#{materialAddress},</if>
             <if test="materialDept != null">#{materialDept},</if>
-            <if test="materialSupplier != null">#{materialSupplier},</if>
             <if test="materialCommute != null">#{materialCommute},</if>
             <if test="createTime != null">#{createTime},</if>
             "1",
             <if test="specimen != null">#{specimen},</if>
             <if test="checkmen != null">#{checkmen},</if>
+            <if test="supplierId != null">#{supplierId},</if>
          </trim>
     </insert>
 
@@ -101,17 +136,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="materialCode != null">material_code = #{materialCode},</if>
             <if test="materialName != null">material_name = #{materialName},</if>
             <if test="materialType != null">material_type = #{materialType},</if>
+            <if test="materialSpecification != null">material_specification = #{materialSpecification},</if>
             <if test="materialUnit != null">material_unit = #{materialUnit},</if>
             <if test="materialNumber != null">material_number = #{materialNumber},</if>
             <if test="materialAddress != null">material_address = #{materialAddress},</if>
             <if test="materialDept != null">material_dept = #{materialDept},</if>
-            <if test="materialSupplier != null">material_supplier = #{materialSupplier},</if>
             <if test="materialCommute != null">material_commute = #{materialCommute},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
             <if test="state != null">state = #{state},</if>
             <if test="specimen != null">specimen = #{specimen},</if>
             <if test="specimendept != null">specimendept = #{specimendept},</if>
             <if test="checkmen != null">checkmen = #{checkmen},</if>
+            <if test="supplierId != null">supplier_id = #{supplierId},</if>
         </trim>
         where id = #{id}
     </update>

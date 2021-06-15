@@ -26,7 +26,7 @@
                                 <input type="text" name="materialType"/>
                             </li>
                             <li>
-                                <label>计量单位：</label>
+                                <label>物料单位：</label>
                                 <input type="text" name="materialUnit"/>
                             </li>
                             <li>
@@ -114,31 +114,42 @@
                 },
                 {
                     field: 'materialName',
-                    title: '物料名称',
+                    title: '物料名称'/* ,
                     formatter: function(value, item, index) {
                     	switch(value){
-                        	case "0" : value =  "";break;
+                        	case "" : value =  "";break;
                         	case "1" : value =  "油漆";break;
                         	case "2" : value =  "铁丝";break;
                     	}
     	            	return value;
-    	            }
+    	            } */
                 },
                 {
                     field: 'materialType',
-                    title: '物料类型',
+                    title: '物料类型'/* ,
                     formatter: function(value, item, index) {
                     	switch(value){
-                        	case "0" : value =  "";break;
+                        	case "" : value =  "";break;
                         	case "1" : value =  "染料";break;
                         	case "2" : value =  "塑料";break;
                     	}
     	            	return value;
-    	            }
+    	            } */
+                },
+                {
+                    field: 'materialSpecification',
+                    title: '物料规格'/* ,
+                    formatter: function(value, item, index) {
+                    	switch(value){
+                        	case "" : value =  "";break;
+                        	case "1" : value =  "规格1";break;
+                    	}
+    	            	return value;
+    	            } */
                 },
                 {
                     field: 'materialUnit',
-                    title: '计量单位'
+                    title: '物料单位'
                 },
                 {
                     field: 'materialNumber',
@@ -153,7 +164,7 @@
                     title: '入库部门'
                 },
                 {
-                    field: 'materialSupplier',
+                    field: 'hySupplier.supplierName',
                     title: '供应商'
                 },
                 {
