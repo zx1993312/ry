@@ -18,8 +18,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="createTime"    column="create_time"    />
         <result property="state"    column="state"    />
         <result property="supplierId"    column="supplier_id"    />
+        <result property="warehouseId"    column="warehouseId"    />
         <association property="hySupplier"     column="id" 
         	javaType="HySupplier" resultMap="HySupplierResult" />
+        <association property="hyWarehouse"     column="id" 
+        	javaType="HyWarehouse" resultMap="HyWarehouse" />
     </resultMap>
 	
 	<resultMap type="HySupplier" id="HySupplierResult">
@@ -31,6 +34,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="supplierEmail"    column="supplier_email"    />
         <result property="supplierAddress"    column="supplier_address"    />
         <result property="incorporationDate"    column="incorporation_date"    />
+    </resultMap>
+    
+    <resultMap type="HyWarehouse" id="HyWarehouseResult">
+        <result property="id"    column="id"    />
+        <result property="warehouseName"    column="warehouse_name"    />
+        <result property="warehouseAddress"    column="warehouse_address"    />
+        <result property="warehouseType"    column="warehouse_type"    />
+        <result property="warehouseArea"    column="warehouse_area"    />
+        <result property="warehouseNum"    column="warehouse_num"    />
+        <result property="warehousePhone"    column="warehouse_phone"    />
+        <result property="administrators"    column="administrators"    />
     </resultMap>
     
     <sql id="selectHyMaterialVo">
@@ -48,10 +62,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         m.create_time, 
         m.state, 
         m.supplier_id, 
-        s.supplier_name 
+        m.warehouse_id, 
+        s.supplier_name, 
+        w.warehouse_name 
         from 
         hy_material m
         LEFT JOIN  hy_supplier s ON m.supplier_id = s.id
+        LEFT JOIN  hy_warehouse w ON m.warehouse_id = w.id
     </sql>
 
     <select id="selectHyMaterialList" parameterType="HyMaterial" resultMap="HyMaterialResult">
@@ -68,6 +85,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="materialCommute != null  and materialCommute != ''"> and m.material_commute = #{materialCommute}</if>
             <if test="state != null  and state != ''"> and m.state = #{state}</if>
             <if test="supplierId != null  and supplierId != ''"> and m.supplier_id = #{supplierId}</if>
+            <if test="warehouseId != null  and warehouseId != ''"> and m.warehouse_id = #{warehouseId}</if>
         </where>
     </select>
     
@@ -84,6 +102,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="materialDept != null  and materialDept != ''"> and m.material_dept = #{materialDept}</if>
             <if test="materialCommute != null  and materialCommute != ''"> and m.material_commute = #{materialCommute}</if>
             <if test="supplierId != null  and supplierId != ''"> and m.supplier_id = #{supplierId}</if>
+            <if test="warehouseId != null  and warehouseId != ''"> and m.warehouse_id = #{warehouseId}</if>
             and state = "3"
         </where>
     </select>
@@ -111,6 +130,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="specimendept != null">specimendept,</if>
             <if test="checkmen != null">checkmen,</if>
             <if test="supplierId != null">supplier_id,</if>
+            <if test="warehouseId != null">warehouse_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="materialCode != null">#{materialCode},</if>
@@ -127,6 +147,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="specimen != null">#{specimen},</if>
             <if test="checkmen != null">#{checkmen},</if>
             <if test="supplierId != null">#{supplierId},</if>
+            <if test="warehouseId != null">#{warehouseId},</if>
          </trim>
     </insert>
 
@@ -148,6 +169,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="specimendept != null">specimendept = #{specimendept},</if>
             <if test="checkmen != null">checkmen = #{checkmen},</if>
             <if test="supplierId != null">supplier_id = #{supplierId},</if>
+            <if test="warehouseId != null">warehouse_id = #{warehouseId},</if>
         </trim>
         where id = #{id}
     </update>
