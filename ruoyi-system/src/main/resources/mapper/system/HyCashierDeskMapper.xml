@@ -244,6 +244,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE
 		1 = 1
 	</sql>
+	
+	<sql id="selectHyCostVoByIsCollection">
+		SELECT * from
+		    (SELECT
+		         c.id,
+		         c.cost_items,
+		         q.community_name,
+		         b.building_name,
+		         h.house_number,
+		         h.unit,
+		         o.owner_name,
+		         c.fee_date,
+		         t.is_collection,
+		         c.amount_receivable,
+		         t.amount
+		     FROM
+		         hy_cost c
+		             LEFT JOIN house_and_cost a ON a.cost_id = c.id
+		             LEFT JOIN hy_house_inf h ON a.house_id = h.id
+		             LEFT JOIN hy_owner_registration o ON h.owner_id = o.id
+		             LEFT JOIN hy_building b ON h.building_id = b.id
+		             LEFT JOIN hy_residential_quarters q ON b.quarters_id = q.id
+		             LEFT JOIN hy_collection t ON t.cost_id = c.id
+		             AND t.owner_id = o.id
+		             AND t.house_id = h.id ) as son
+		WHERE
+		1 = 1
+	</sql>
 
 	<select id="selectHyCashierDeskList" parameterType="HyCost"
 		resultMap="HyCostResult">
@@ -263,6 +291,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="hyHouseInf != null">
 		<if test="hyHouseInf.unit != null  and hyHouseInf.unit != ''"> and h.unit = #{hyHouseInf.unit}</if>
 		</if>
+		<if test="hyCollection != null">
+		<if test="hyCollection.isCollection != null and hyCollection.isCollection != ''">
+		and t.is_collection = "0"
+		</if>
+		</if>
+	</select>
+	<select id="selectHyCashierDeskListByIsCollection" parameterType="HyCost"
+		resultMap="HyCostResult">
+		<include refid="selectHyCostVoByIsCollection" />
+		<if test="costItems != null  and costItems != ''"> and son.cost_items = #{costItems}</if>
+		<if test="bilingStartDate != null and bilingEndDate != null">and son.fee_date between #{bilingStartDate} and #{bilingEndDate}</if>
+		<if test="hyOwnerRegistration != null">
+		<if test="hyOwnerRegistration.ownerName != null  and hyOwnerRegistration.ownerName != ''"> and son.owner_name = #{hyOwnerRegistration.ownerName}</if>
+		<if test="hyOwnerRegistration.mobilePhone != null  and hyOwnerRegistration.mobilePhone != ''"> and son.mobile_phone = #{hyOwnerRegistration.mobilePhone}</if>
+		</if>
+		<if test="hyResidentialQuarters != null">
+		<if test="hyResidentialQuarters.communityName != null  and hyResidentialQuarters.communityName != ''"> and son.community_name = #{hyResidentialQuarters.communityName}</if>
+		</if>
+		<if test="hyBuilding != null">
+		<if test="hyBuilding.buildingName != null  and hyBuilding.buildingName != ''"> and son.building_name = #{hyBuilding.buildingName}</if>
+		</if>
+		<if test="hyHouseInf != null">
+		<if test="hyHouseInf.unit != null  and hyHouseInf.unit != ''"> and son.unit = #{hyHouseInf.unit}</if>
+		</if>
+		AND son.is_collection is null
 	</select>
 
 	<select id="selectHyCashierDeskById" parameterType="Long"

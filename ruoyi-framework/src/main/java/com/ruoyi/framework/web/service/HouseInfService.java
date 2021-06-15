@@ -25,4 +25,9 @@ public class HouseInfService {
 		return hyHouseInfMapper.selectHyHouseInfList(new HyHouseInf());
 		
 	}
+	
+	public List<HyHouseInf> getUnit(){
+		return hyHouseInfMapper.selectHyHouseInfListDistinct(new HyHouseInf());
+		
+	}
 }

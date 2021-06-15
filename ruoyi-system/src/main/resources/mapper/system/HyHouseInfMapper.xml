@@ -148,6 +148,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LEFT JOIN hy_building b ON h.building_id =b.id
 		LEFT JOIN hy_owner_registration o ON h.owner_id =o.id
 	</sql>
+	
+	<sql id="selectHyHouseInfVoDistinct">
+		select 
+		DISTINCT unit
+		from 
+		hy_house_inf
+	</sql>
 
 	<select id="selectHyHouseInfList" parameterType="HyHouseInf"
 		resultMap="HyHouseInfResult">
@@ -186,6 +193,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="buildingId != null"> and h.building_id = #{buildingId}</if>
 			<if test="ownerId != null"> and h.owner_id = #{ownerId}</if>
 		</where>
+	</select>
+	<select id="selectHyHouseInfListDistinct" parameterType="HyHouseInf"
+		resultMap="HyHouseInfResult">
+		<include refid="selectHyHouseInfVoDistinct" />
 	</select>
 
 	<select id="selectHyHouseInfById" parameterType="Long"

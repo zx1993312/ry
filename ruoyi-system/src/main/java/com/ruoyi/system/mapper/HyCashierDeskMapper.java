@@ -29,11 +29,20 @@ public interface HyCashierDeskMapper
     public List<HyCost> selectHyCashierDeskList(HyCost hyCost);
     
     /**
+     * 根据已支付未支付查询收银台列表
+     * 
+     * @param hyCost 收银台
+     * @return 收银台集合
+     */
+    public List<HyCost> selectHyCashierDeskListByIsCollection(HyCost hyCost);
+    
+    /**
      * 修改收银台
      * 
      * @param hyCost 收银台
      * @return 结果
      */
     public int updateHyCashierDesk(HyCost hyCost);
+
 
 }

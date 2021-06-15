@@ -45,6 +45,17 @@ public class HyHouseInfServiceImpl implements IHyHouseInfService {
 	public List<HyHouseInf> selectHyHouseInfList(HyHouseInf hyHouseInf) {
 		return hyHouseInfMapper.selectHyHouseInfList(hyHouseInf);
 	}
+	
+	/**
+	 * 查询房屋登记列表
+	 * 
+	 * @param hyHouseInf 房屋登记
+	 * @return 房屋登记
+	 */
+	@Override
+	public List<HyHouseInf> selectHyHouseInfListDistinct(HyHouseInf hyHouseInf) {
+		return hyHouseInfMapper.selectHyHouseInfListDistinct(hyHouseInf);
+	}
 
 	/**
 	 * 新增房屋登记

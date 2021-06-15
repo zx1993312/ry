@@ -28,7 +28,13 @@ public interface IHyCashierDeskService {
 	 * @return 收银台集合
 	 */
 	public List<HyCost> selectHyCashierDeskList(HyCost hyCost);
-
+	/**
+	 * 根据已支付未支付查询收银台列表
+	 * 
+	 * @param hyCost 收银台
+	 * @return 收银台集合
+	 */
+	public List<HyCost> selectHyCashierDeskListByIsCollection(HyCost hyCost);
 	/**
 	 * 修改收银台
 	 * 
@@ -37,16 +43,29 @@ public interface IHyCashierDeskService {
 	 */
 	public int updateHyCashierDesk(HyCost hyCost);
 	/**
-	 * 打印收据
+	 * 打印所有收据
 	 * @param response
 	 * @return
 	 */
 	public int printReceipt(HttpServletResponse response)throws Exception;
 	/**
-	 * 打印催收单
+	 * 打印所有催收单
 	 * @param response
 	 * @return
 	 */
 	public int printCollection(HttpServletResponse response)throws Exception;
+	/**
+	 * 打印单条收据
+	 * @param response
+	 * @return
+	 */
+	public int printReceiptOne(HyCost hyCost, HttpServletResponse response)throws Exception;
+	/**
+	 * 打印单条催收单
+	 * @param response
+	 * @return
+	 */
+	public int printCollectionOne(HyCost hyCost, HttpServletResponse response)throws Exception;
+
 
 }

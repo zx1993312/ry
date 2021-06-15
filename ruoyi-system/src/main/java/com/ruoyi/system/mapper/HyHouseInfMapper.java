@@ -25,6 +25,14 @@ public interface HyHouseInfMapper {
 	 * @return 房屋登记集合
 	 */
 	public List<HyHouseInf> selectHyHouseInfList(HyHouseInf hyHouseInf);
+	
+	/**
+	 * 查询房屋登记列表
+	 * 
+	 * @param hyHouseInf 房屋登记
+	 * @return 房屋登记集合
+	 */
+	public List<HyHouseInf> selectHyHouseInfListDistinct(HyHouseInf hyHouseInf);
 
 	/**
 	 * 新增房屋登记
