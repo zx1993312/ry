@@ -16,7 +16,10 @@
                             </li>
                             <li>
                                 <label>物料名称：</label>
-                                <input type="text" name="materialName"/>
+                                <select name="materialName" th:with="type=${@dict.getType('hy_material_name')}">
+									<option value="">请选择</option>
+									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+								</select>
                             </li>
                             <!-- <li>
                                 <label>物料类型：</label>
@@ -111,11 +114,27 @@
                 },
                 {
                     field: 'materialName',
-                    title: '物料名称'
+                    title: '物料名称',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+                        	case "0" : value =  "";break;
+                        	case "1" : value =  "油漆";break;
+                        	case "2" : value =  "铁丝";break;
+                    	}
+    	            	return value;
+    	            }
                 },
                 {
                     field: 'materialType',
-                    title: '物料类型'
+                    title: '物料类型',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+                        	case "0" : value =  "";break;
+                        	case "1" : value =  "染料";break;
+                        	case "2" : value =  "塑料";break;
+                    	}
+    	            	return value;
+    	            }
                 },
                 {
                     field: 'materialUnit',

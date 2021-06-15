@@ -15,31 +15,11 @@
                                 <input type="text" name="warehouseName"/>
                             </li>
                             <li>
-                                <label>仓库地址：</label>
-                                <input type="text" name="warehouseAddress"/>
-                            </li>
-                            <li>
                                 <label>仓库类型：</label>
-                                <select name="warehouseType">
-                                    <option value="">所有</option>
-                                    <option value="-1">代码生成请选择字典属性</option>
-                                </select>
-                            </li>
-                            <li>
-                                <label>仓库面积：</label>
-                                <input type="text" name="warehouseArea"/>
-                            </li>
-                            <li>
-                                <label>仓库编号：</label>
-                                <input type="text" name="warehouseNum"/>
-                            </li>
-                            <li>
-                                <label>仓库电话：</label>
-                                <input type="text" name="warehousePhone"/>
-                            </li>
-                            <li>
-                                <label>管理员：</label>
-                                <input type="text" name="administrators"/>
+                                <select name="warehouseType" th:with="type=${@dict.getType('hy_warehouse_type')}">
+									<option value="">请选择</option>
+									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+								</select>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -101,7 +81,19 @@
                 },
                 {
                     field: 'warehouseType',
-                    title: '仓库类型'
+                    title: '仓库类型',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+                        	case "0" : value =  "";break;
+                        	case "1" : value =  "公共仓库";break;
+                        	case "2" : value =  "自用仓库";break;
+                        	case "3" : value =  "保税仓库";break;
+                        	case "4" : value =  "智能仓库";break;
+                        	case "5" : value =  "合并仓库";break;
+                        	case "6" : value =  "合作仓库";break;
+                    	}
+    	            	return value;
+    	            }
                 },
                 {
                     field: 'warehouseArea',
