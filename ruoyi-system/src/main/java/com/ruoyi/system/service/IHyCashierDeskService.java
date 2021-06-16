@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.ruoyi.system.domain.HyCashierDesk;
 import com.ruoyi.system.domain.HyCost;
 
 /**
@@ -66,6 +67,15 @@ public interface IHyCashierDeskService {
 	 * @return
 	 */
 	public int printCollectionOne(HyCost hyCost, HttpServletResponse response)throws Exception;
+	/**
+	 * 导入费用数据
+	 * 
+	 * @param file
+	 * @param updateSupport
+	 * @return
+	 * @throws Exception
+	 */
+	public String importCashierDesk(List<HyCashierDesk> cashierDeskList, boolean updateSupport, String operName);
 
 
 }

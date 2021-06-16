@@ -103,7 +103,7 @@ public class HyCost extends BaseEntity {
 	 * 费用日期
 	 */
 	@Excel(name = "费用日期")
-	private Date feeDate;
+	private String feeDate;
 	/**
 	 * 原应收日期
 	 */
@@ -425,11 +425,11 @@ public class HyCost extends BaseEntity {
 		this.feeDateOld = feeDateOld;
 	}
 
-	public Date getFeeDate() {
+	public String getFeeDate() {
 		return feeDate;
 	}
 
-	public void setFeeDate(Date feeDate) {
+	public void setFeeDate(String feeDate) {
 		this.feeDate = feeDate;
 	}
 

@@ -199,7 +199,7 @@ public class HyRefundServiceImpl implements IHyRefundService {
 			String ownerName = hyOwnerRegistration.getOwnerName();
 			String houseNumber = hyHouseInf.getHouseNumber();
 			String costItems = hyCost.getCostItems();
-			Date feeDate = hyCost.getFeeDate();
+			String feeDate = hyCost.getFeeDate();
 			Date collectionTime = hyCollection.getCollectionTime();
 			String amount = hyCollection.getAmount() + "";
 			String receiptNumber = hyCollection.getReceiptNumber();

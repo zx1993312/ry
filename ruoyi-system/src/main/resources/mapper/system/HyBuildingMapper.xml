@@ -6,6 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <resultMap type="HyBuilding" id="HyBuildingResult">
         <result property="id"    column="id"    />
+        <result property="buildingNumber"    column="building_number"    />
         <result property="buildingName"    column="building_name"    />
         <result property="buildingHigh"    column="building_high"    />
         <result property="buildingUnit"    column="building_unit"    />
@@ -51,6 +52,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <sql id="selectHyBuildingVo">
         select 
         b.id, 
+        b.building_number, 
         b.building_name, 
         b.building_high, 
         b.building_unit, 
@@ -71,6 +73,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectHyBuildingList" parameterType="HyBuilding" resultMap="HyBuildingResult">
         <include refid="selectHyBuildingVo"/>
         <where>  
+            <if test="buildingNumber != null  and buildingNumber != ''"> and b.building_number = #{buildingNumber}</if>
             <if test="buildingName != null  and buildingName != ''"> and b.building_name like concat('%', #{buildingName}, '%')</if>
             <if test="buildingHigh != null  and buildingHigh != ''"> and b.building_high = #{buildingHigh}</if>
             <if test="buildingUnit != null  and buildingUnit != ''"> and b.building_unit = #{buildingUnit}</if>
@@ -91,6 +94,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="insertHyBuilding" parameterType="HyBuilding" useGeneratedKeys="true" keyProperty="id">
         insert into hy_building
         <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="buildingNumber != null">building_number,</if>
             <if test="buildingName != null">building_name,</if>
             <if test="buildingHigh != null">building_high,</if>
             <if test="buildingUnit != null">building_unit,</if>
@@ -102,6 +106,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="projectId != null">project_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="buildingNumber != null">#{buildingNumber},</if>
             <if test="buildingName != null">#{buildingName},</if>
             <if test="buildingHigh != null">#{buildingHigh},</if>
             <if test="buildingUnit != null">#{buildingUnit},</if>
@@ -117,6 +122,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateHyBuilding" parameterType="HyBuilding">
         update hy_building
         <trim prefix="SET" suffixOverrides=",">
+            <if test="buildingNumber != null">building_number = #{buildingNumber},</if>
             <if test="buildingName != null">building_name = #{buildingName},</if>
             <if test="buildingHigh != null">building_high = #{buildingHigh},</if>
             <if test="buildingUnit != null">building_unit = #{buildingUnit},</if>

@@ -15,10 +15,6 @@
                                 <input type="text" name="costItems"/>
                             </li>
                             <li>
-                                <label>费用类型：</label>
-                                <input type="text" name="expenseType"/>
-                            </li>
-                            <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                                 <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
                             </li>
@@ -78,8 +74,27 @@
                     title: '费用项目'
                 },
                 {
-                    field: 'expenseType',
-                    title: '费用类型'
+                    field: 'calculationMehod',
+                    title: '计算方式',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+                        	case '30' : value =  "按计费面积*单价每月计算";break;
+                        	case '120' : value =  "按计费面积*单价每季计算";break;
+                        	case '365' : value =  "按计费面积*单价每年计算";break;
+                        	case '31' : value =  "按定额每月计算";break;
+                        	case '122' : value =  "按定额每季计算";break;
+                        	case '366' : value =  "按定额每年计算";break;
+                    	}
+                    	return value;
+                    }
+                },
+                {
+                    field: 'feeDate',
+                    title: '费用日期'
+                },
+                {
+                    field: 'amountReceivable',
+                    title: '应收金额'
                 },
                 {
                     title: '操作',

@@ -20,6 +20,10 @@ public class HyBuilding extends BaseEntity
     /** 楼宇id */
     private Long id;
 
+    /** 栋号 */
+    @Excel(name = "栋号")
+    private String buildingNumber;
+    
     /** 楼宇名称 */
     @Excel(name = "楼宇名称")
     private String buildingName;
@@ -74,7 +78,16 @@ public class HyBuilding extends BaseEntity
     {
         return id;
     }
-    public void setBuildingName(String buildingName) 
+    
+    public String getBuildingNumber() {
+		return buildingNumber;
+	}
+
+	public void setBuildingNumber(String buildingNumber) {
+		this.buildingNumber = buildingNumber;
+	}
+
+	public void setBuildingName(String buildingName) 
     {
         this.buildingName = buildingName;
     }
@@ -177,6 +190,7 @@ public class HyBuilding extends BaseEntity
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
             .append("buildingName", getBuildingName())
+            .append("buildingNumber", getBuildingNumber())
             .append("buildingHigh", getBuildingHigh())
             .append("buildingUnit", getBuildingUnit())
             .append("buildingHouseholds", getBuildingHouseholds())

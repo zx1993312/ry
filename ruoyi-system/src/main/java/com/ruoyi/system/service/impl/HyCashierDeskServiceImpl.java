@@ -20,8 +20,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
+import com.ruoyi.common.exception.BusinessException;
+import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.system.domain.HyBuilding;
+import com.ruoyi.system.domain.HyCashierDesk;
 import com.ruoyi.system.domain.HyCost;
+import com.ruoyi.system.domain.HyHouseInf;
+import com.ruoyi.system.domain.HyOwnerRegistration;
+import com.ruoyi.system.mapper.HyBuildingMapper;
 import com.ruoyi.system.mapper.HyCashierDeskMapper;
+import com.ruoyi.system.mapper.HyHouseInfMapper;
+import com.ruoyi.system.mapper.HyOwnerRegistrationMapper;
 import com.ruoyi.system.service.IHyCashierDeskService;
 import com.ruoyi.system.utils.HyPrintPDFUtil;
 
@@ -43,6 +52,15 @@ import net.sf.jasperreports.engine.JasperPrint;
 public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 	@Autowired
 	private HyCashierDeskMapper hyCashierDeskMapper;
+	
+	@Autowired
+	private HyBuildingMapper hyBuildingMapper;
+	
+	@Autowired
+	private HyOwnerRegistrationMapper hyOwnerRegistrationMapper;
+	
+	@Autowired
+	private HyHouseInfMapper hyHouseInfMapper;
 
 	/**
 	 * 查询费用项目
@@ -165,7 +183,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 	    String costItems = hyCost.getCostItems();
 	    String communityName = hyCost.getHyResidentialQuarters().getCommunityName();
 	    String buildingName = hyCost.getHyBuilding().getBuildingName();
-	    Date feeDate = hyCost.getFeeDate();
+	    String feeDate = hyCost.getFeeDate();
 	    String isCollection = hyCost.getHyCollection().getIsCollection();
 	    String amountReceivable = hyCost.getAmountReceivable().setScale(2)+"";
 	    String amount = hyCost.getHyCollection().getAmount()+"";
@@ -207,7 +225,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 		    String costItems = hyCost.getCostItems();
 		    String communityName = hyCost.getHyResidentialQuarters().getCommunityName();
 		    String buildingName = hyCost.getHyBuilding().getBuildingName();
-		    Date feeDate = hyCost.getFeeDate();
+		    String feeDate = hyCost.getFeeDate();
 		    String amountReceivable = hyCost.getAmountReceivable().setScale(2)+"";
 		    String amount = hyCost.getHyCollection().getAmount()+"";
 			params.put("pic",pic);
@@ -227,6 +245,107 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 			log.error("没有字体的异常,没关系，不要在意" + e.getMessage());
 		}
 		return 1;
+	}
+	/**
+	 * 导入费用数据
+	 */
+	@Override
+	public String importCashierDesk(List<HyCashierDesk> cashierDeskList, boolean updateSupport, String operName) {
+		if (StringUtils.isNull(cashierDeskList) || cashierDeskList.size() == 0) {
+			throw new BusinessException("导入费用数据不能为空！");
+		}
+		int successNum = 0;
+		int failureNum = 0;
+		StringBuilder successMsg = new StringBuilder();
+		StringBuilder failureMsg = new StringBuilder();
+		for (HyCashierDesk hyCashierDesk : cashierDeskList) {
+			
+			//判断这些是否为空
+			if (StringUtils.isNull(hyCashierDesk.getBuildingNumber()) || StringUtils.isNull(hyCashierDesk.getUnit())
+					|| StringUtils.isNull(hyCashierDesk.getHouseNumber()) || StringUtils.isNull(hyCashierDesk.getOwnerName())
+					|| StringUtils.isNull(hyCashierDesk.getBilingArea()) || StringUtils.isNull(hyCashierDesk.getMobilePhone())
+					|| StringUtils.isNull(hyCashierDesk.getIdCardNum()) || StringUtils.isNull(hyCashierDesk.getIdCardAddress())) {
+				failureMsg.insert(0, "很抱歉，导入失败！共 " + failureNum + " 条数据格式不正确，错误如下：");
+				throw new BusinessException(failureMsg.toString());
+			}
+			
+			//查询数据是否存在
+				//楼宇
+				HyBuilding hyBuilding = new HyBuilding();
+				hyBuilding.setBuildingNumber(hyCashierDesk.getBuildingNumber());
+				List<HyBuilding> buildingList = hyBuildingMapper.selectHyBuildingList(hyBuilding);
+				if (buildingList == null || buildingList.size() == 0) {
+					hyBuilding.setQuartersId((long)1);
+					hyBuildingMapper.insertHyBuilding(hyBuilding);
+					successNum++;
+					successMsg.append("<br/>" + successNum + "、楼栋为 " + hyBuilding.getBuildingNumber() +  "的楼宇 导入成功");
+				} else if (updateSupport) {
+					hyBuilding.setId(buildingList.get(0).getId());
+					hyBuilding.setQuartersId((long)1);
+					hyBuildingMapper.updateHyBuilding(hyBuilding);
+					successNum++;
+					successMsg.append("<br/>" + successNum + "、楼栋为 " + hyBuilding.getBuildingNumber() + "的楼宇 更新成功");
+				}
+				//业主
+				HyOwnerRegistration hyOwnerRegistration = new HyOwnerRegistration();
+				hyOwnerRegistration.setOwnerName(hyCashierDesk.getOwnerName());
+				hyOwnerRegistration.setIdCardNum(hyCashierDesk.getIdCardNum());
+				List<HyOwnerRegistration> ownerRegistrationList = hyOwnerRegistrationMapper.selectHyOwnerRegistrationList(hyOwnerRegistration);
+				if (ownerRegistrationList == null || ownerRegistrationList.size() == 0) {
+					hyOwnerRegistration.setMobilePhone(hyCashierDesk.getMobilePhone());
+					hyOwnerRegistration.setIdCardAddress(hyCashierDesk.getIdCardAddress());
+					hyOwnerRegistrationMapper.insertHyOwnerRegistration(hyOwnerRegistration);
+					successNum++;
+					successMsg.append("<br/>" + successNum + "、姓名 " + hyOwnerRegistration.getOwnerName() + "、身份证号码为 " + hyOwnerRegistration.getIdCardNum() + "的业主 导入成功");
+				} else if (updateSupport) {
+					hyOwnerRegistration.setId(ownerRegistrationList.get(0).getId());
+					hyOwnerRegistration.setMobilePhone(hyCashierDesk.getMobilePhone());
+					hyOwnerRegistration.setIdCardAddress(hyCashierDesk.getIdCardAddress());
+					hyOwnerRegistrationMapper.updateHyOwnerRegistration(hyOwnerRegistration);
+					successNum++;
+					successMsg.append("<br/>" + successNum + "、姓名 " + hyOwnerRegistration.getOwnerName() + "、身份证号码为 " + hyOwnerRegistration.getIdCardNum() + "的业主 更新成功");
+				} else {
+					failureNum++;
+					failureMsg.append("<br/>" + failureNum + "、姓名 " + hyOwnerRegistration.getOwnerName() + "、身份证号码为 " + hyOwnerRegistration.getIdCardNum() + "的业主 已存在");
+				}
+				//房屋
+				HyHouseInf hyHouseInf = new HyHouseInf();
+				hyHouseInf.setUnit(hyCashierDesk.getUnit());
+				hyHouseInf.setHouseNumber(hyCashierDesk.getHouseNumber());
+				List<HyBuilding> buildingListBy = hyBuildingMapper.selectHyBuildingList(hyBuilding);
+				List<HyOwnerRegistration> ownerRegistrationListBy = hyOwnerRegistrationMapper.selectHyOwnerRegistrationList(hyOwnerRegistration);
+				List<HyHouseInf> houseInfList = hyHouseInfMapper.selectHyHouseInfList(hyHouseInf);
+				if (houseInfList == null || houseInfList.size() == 0) {
+					hyHouseInf.setBuildingId(buildingListBy.get(0).getId());
+					hyHouseInf.setOwnerId(ownerRegistrationListBy.get(0).getId());
+					hyHouseInfMapper.insertHyHouseInf(hyHouseInf);
+					successNum++;
+					successMsg.append("<br/>" + successNum + "、单元 " + hyHouseInf.getUnit() + "、房屋编号为 " + hyHouseInf.getHouseNumber() + "的房屋 导入成功");
+				} else if (updateSupport) {
+					hyHouseInf.setId(houseInfList.get(0).getId());
+					hyHouseInf.setBuildingId(buildingListBy.get(0).getId());
+					hyHouseInf.setOwnerId(ownerRegistrationListBy.get(0).getId());
+					hyHouseInfMapper.updateHyHouseInf(hyHouseInf);
+					successNum++;
+					successMsg.append("<br/>" + successNum + "、单元 " + hyHouseInf.getUnit() + "、房屋编号为 " + hyHouseInf.getHouseNumber() + "的房屋 更新成功");
+				} else {
+					failureNum++;
+					failureMsg.append("<br/>" + failureNum + "、单元 " + hyHouseInf.getUnit() + "、房屋编号为 " + hyHouseInf.getHouseNumber() + "的房屋 已存在");
+				}
+				
+				
+			}
+			
+		
+		if (failureNum > 0) {
+			failureMsg.insert(0, "很抱歉，导入失败！共 " + failureNum + " 条数据格式不正确，错误如下：");
+			throw new BusinessException(failureMsg.toString());
+		} else {
+			successMsg.insert(0, "恭喜您，数据已全部导入成功！共 " + successNum + " 条，数据如下：");
+		}
+		
+		
+		return successMsg.toString();
 	}
 
 

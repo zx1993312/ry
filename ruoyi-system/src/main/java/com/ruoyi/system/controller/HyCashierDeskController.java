@@ -23,16 +23,16 @@ import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.common.exception.BusinessException;
+import com.ruoyi.common.utils.ShiroUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.constants.Constants;
 import com.ruoyi.system.domain.HouseAndCost;
 import com.ruoyi.system.domain.HyBuilding;
+import com.ruoyi.system.domain.HyCashierDesk;
 import com.ruoyi.system.domain.HyCollection;
 import com.ruoyi.system.domain.HyCost;
 import com.ruoyi.system.domain.HyHouseInf;
-import com.ruoyi.system.domain.HyMeter;
 import com.ruoyi.system.domain.HyOwnerRegistration;
 import com.ruoyi.system.domain.HyResidentialQuarters;
 import com.ruoyi.system.mapper.HyBuildingMapper;
@@ -100,7 +100,7 @@ public class HyCashierDeskController extends BaseController {
 				&& StringUtils.isEmpty(hyCost.getHyBuilding().getBuildingName())
 				&& StringUtils.isEmpty(hyCost.getHyHouseInf().getUnit())
 				&& StringUtils.isEmpty(hyCost.getHyOwnerRegistration().getOwnerName())
-				&& hyCost.getHyOwnerRegistration().getMobilePhone() == null
+				&& StringUtils.isEmpty(hyCost.getHyOwnerRegistration().getMobilePhone())
 				&& StringUtils.isEmpty(hyCost.getHyCollection().getIsCollection())) {
 		List<HyCost> relist = new ArrayList<HyCost>();
 		startPage();
@@ -412,60 +412,88 @@ public class HyCashierDeskController extends BaseController {
 	}
 	
 	/**
-     * 导入数据
-     */
-    @PostMapping("/importData")
-    @ResponseBody
-    public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception
-    {
-        ExcelUtil<HyCollection> util = new ExcelUtil<HyCollection>(HyCollection.class);
-        List<HyCollection> userList = util.importExcel(file.getInputStream());
-        String message = importUser(userList, updateSupport);
-        return AjaxResult.success(message);
-    }
-
-	private String importUser(List<HyCollection> userList, boolean updateSupport) {
-		if (StringUtils.isNull(userList) || userList.size() == 0) {
-			throw new BusinessException("导入抄表数据不能为空！");
-		}
-		int successNum = 0;
-		int failureNum = 0;
-		StringBuilder successMsg = new StringBuilder();
-		StringBuilder failureMsg = new StringBuilder();
-		for (HyCollection hyMeter : userList) {
-			/*List<HyMeter> dataList = this.selectHyMeter(hyMeter);
-			
-			//判断这些是否为空
-			if (StringUtils.isNull(hyMeter.getMeterSerialNum()) || StringUtils.isNull(hyMeter.getMeterName())
-					|| StringUtils.isNull(hyMeter.getMeterType())
-					|| StringUtils.isNull(hyMeter.getInitialRead())|| StringUtils.isNull(hyMeter.getAbnormalPrompt()))
-					 {
-				failureMsg.insert(0, "很抱歉，导入失败！共 " + failureNum + " 条数据格式不正确，错误如下：");
-				throw new BusinessException(failureMsg.toString());
+	 * 导出收银台列表
+	 */
+	@ApiOperation("收银台")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyCashierDesk", value = "项目实体类hyCashierDesk", required = true), })
+	@RequiresPermissions("system:cashierDesk:export")
+	@Log(title = "收银台", businessType = BusinessType.EXPORT)
+	@PostMapping("/export")
+	@ResponseBody
+	public AjaxResult export(HyCost hyCost) {
+		List<HyCost> relist = new ArrayList<HyCost>();
+		List<HyCost> list = hyCashierDeskService.selectHyCashierDeskList(hyCost);
+		for (HyCost cost : list) {
+			HyCost reCost = new HyCost();
+			HouseAndCost houseAndCost = new HouseAndCost();
+			houseAndCost.setCostId(cost.getId());
+			List<HouseAndCost> houseList = hyCustomerMapper.selectCostIds(houseAndCost);
+			for (int i = 0; i < houseList.size(); i++) {
+				reCost = (HyCost) Constants.REFLECT_UTIL.convertBean(new HyCost(), cost);
+				Long houseId = houseList.get(i).getHouseId();
+				HyHouseInf hyHouseInf = hyHouseInfService.selectHyHouseInfById(houseId);
+				reCost.setHyHouseInf(hyHouseInf);
+				Long buildingId = hyHouseInf.getBuildingId();
+				HyBuilding hyBuilding = hyBuildingMapper.selectHyBuildingById(buildingId);
+				reCost.setHyBuilding(hyBuilding);
+				Long ownerId = hyHouseInf.getOwnerId();
+				HyOwnerRegistration hyOwnerRegistration = hyOwnerRegistrationMapper
+						.selectHyOwnerRegistrationById(ownerId);
+				reCost.setHyOwnerRegistration(hyOwnerRegistration);
+				Long quartersId = hyBuilding.getQuartersId();
+				HyResidentialQuarters hyResidentialQuarters = hyResidentialQuartersMapper
+						.selectHyResidentialQuartersById(quartersId);
+				reCost.setHyResidentialQuarters(hyResidentialQuarters);
+				Long costId = cost.getId();
+				HyCollection hyCollection = new HyCollection();
+				hyCollection.setCostId(costId);
+				hyCollection.setHouseId(houseId);
+				hyCollection.setOwnerId(ownerId);
+				List<HyCollection> collList = hyCollectionMapper.selectHyCollectionList(hyCollection);
+				if (collList.size() != 0) {
+					reCost.setHyCollection(collList.get(0));
+				} else {
+					reCost.setHyCollection(new HyCollection());
+					reCost.getHyCollection().setAmount((long) 0);
+				}
+				relist.add(reCost);
 			}
-			
-			//查询数据是否存在
-			if (dataList == null || dataList.size() == 0) {
-				this.insertHyMeter(hyMeter);
-				successNum++;
-				successMsg.append("<br/>" + successNum + "、表计序号 " + hyMeter.getMeterSerialNum() + " 导入成功");
-			} else if (updateSupport) {
-				hyMeter.setId(dataList.get(0).getId());
-				this.updateHyMeter(hyMeter);
-				successNum++;
-				successMsg.append("<br/>" + successNum + "、表计序号" + hyMeter.getMeterSerialNum() + " 更新成功");
-			} else {
-				failureNum++;
-				failureMsg.append("<br/>" + failureNum + "、表计序号" + hyMeter.getMeterSerialNum() + " 已存在");
-			}*/
 		}
-		if (failureNum > 0) {
-			failureMsg.insert(0, "很抱歉，导入失败！共 " + failureNum + " 条数据格式不正确，错误如下：");
-			throw new BusinessException(failureMsg.toString());
-		} else {
-			successMsg.insert(0, "恭喜您，数据已全部导入成功！共 " + successNum + " 条，数据如下：");
+		List<HyCashierDesk> cashierDeskList = new ArrayList<HyCashierDesk>();
+		for(HyCost rel : relist) {
+			HyCashierDesk hyCashierDesk = new HyCashierDesk();
+			hyCashierDesk.setId(rel.getId());
+			hyCashierDesk.setCostItems(rel.getCostItems());
+			hyCashierDesk.setCommunityName(rel.getHyResidentialQuarters().getCommunityName());
+			hyCashierDesk.setBuildingName(rel.getHyBuilding().getBuildingName());
+			hyCashierDesk.setFeeDate(rel.getFeeDate());
+			hyCashierDesk.setIsCollection(rel.getHyCollection().getIsCollection());
+			hyCashierDesk.setAmountReceivable(rel.getAmountReceivable());
+			hyCashierDesk.setAmount(rel.getHyCollection().getAmount());
+			cashierDeskList.add(hyCashierDesk);
 		}
-		
-		return  successMsg.toString();
+		ExcelUtil<HyCashierDesk> util = new ExcelUtil<HyCashierDesk>(HyCashierDesk.class);
+		return util.exportExcel(cashierDeskList, "hyCashierDesk");
 	}
+	
+	/**
+	 * 导入费用数据
+	 * 
+	 * @param file
+	 * @param updateSupport
+	 * @return
+	 * @throws Exception
+	 */
+	@Log(title = "用户管理", businessType = BusinessType.IMPORT)
+	@RequiresPermissions("system:cashierDesk:import")
+	@PostMapping("/importData")
+	@ResponseBody
+	public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception {
+		ExcelUtil<HyCashierDesk> util = new ExcelUtil<HyCashierDesk>(HyCashierDesk.class);
+		List<HyCashierDesk> cashierDeskList = util.importExcel(file.getInputStream());
+		String operName = ShiroUtils.getSysUser().getLoginName();
+		String message = hyCashierDeskService.importCashierDesk(cashierDeskList, updateSupport, operName);
+		return AjaxResult.success(message);
+	}
+
 }

@@ -169,7 +169,7 @@ public class HyFrontDeskServiceImpl implements IHyFrontDeskService {
 			Long costId = hyCollection.getCostId();
 			HyCost hyCost = hyCostMapper.selectHyCostById(costId);
 			String costItems = hyCost.getCostItems();
-			Date feeDate = hyCost.getFeeDate();
+			String feeDate = hyCost.getFeeDate();
 			Date bilingStartDate = hyCost.getBilingStartDate();
 			Date bilingEndDate = hyCost.getBilingEndDate();
 			String amount = hyCollection.getAmount()+"";

@@ -33,11 +33,15 @@ public class HyOwnerRegistration extends BaseEntity
 
     /** 移动电话 */
     @Excel(name = "移动电话")
-    private Long mobilePhone;
+    private String mobilePhone;
 
     /** 证件号码 */
     @Excel(name = "证件号码")
     private String idCardNum;
+    
+    /** 身份证地址 */
+    @Excel(name = "身份证地址")
+    private String idCardAddress;
 
     /** 供应商类别 */
     @Excel(name = "供应商类别")
@@ -197,12 +201,12 @@ public class HyOwnerRegistration extends BaseEntity
     {
         return fixedTelephone;
     }
-    public void setMobilePhone(Long mobilePhone) 
+    public void setMobilePhone(String mobilePhone) 
     {
         this.mobilePhone = mobilePhone;
     }
 
-    public Long getMobilePhone() 
+    public String getMobilePhone() 
     {
         return mobilePhone;
     }
@@ -215,7 +219,15 @@ public class HyOwnerRegistration extends BaseEntity
     {
         return idCardNum;
     }
-    public void setSuplierCategory(Integer suplierCategory) 
+    public String getIdCardAddress() {
+		return idCardAddress;
+	}
+
+	public void setIdCardAddress(String idCardAddress) {
+		this.idCardAddress = idCardAddress;
+	}
+
+	public void setSuplierCategory(Integer suplierCategory) 
     {
         this.suplierCategory = suplierCategory;
     }
@@ -511,6 +523,7 @@ public class HyOwnerRegistration extends BaseEntity
             .append("fixedTelephone", getFixedTelephone())
             .append("mobilePhone", getMobilePhone())
             .append("idCardNum", getIdCardNum())
+            .append("idCardAddress", getIdCardAddress())
             .append("suplierCategory", getSuplierCategory())
             .append("lockedNot", getLockedNot())
             .append("accessNum", getAccessNum())

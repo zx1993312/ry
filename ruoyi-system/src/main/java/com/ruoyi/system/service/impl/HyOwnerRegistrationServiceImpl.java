@@ -110,12 +110,12 @@ public class HyOwnerRegistrationServiceImpl implements IHyOwnerRegistrationServi
 			List<HyOwnerRegistration> dataList = this.selectHyOwnerRegistrationList(hyOwnerRegistration);
 			
 			//判断这些是否为空
-			if (StringUtils.isNull(hyOwnerRegistration.getOwnerName()) || StringUtils.isNull(hyOwnerRegistration.getId())
+			/*if (StringUtils.isNull(hyOwnerRegistration.getOwnerName()) || StringUtils.isNull(hyOwnerRegistration.getId())
 					|| StringUtils.isNull(hyOwnerRegistration.getFixedTelephone())
 					|| StringUtils.isNull(hyOwnerRegistration.getMobilePhone())|| StringUtils.isNull(hyOwnerRegistration.getIdCardNum())) {
 				failureMsg.insert(0, "很抱歉，导入失败！共 " + failureNum + " 条数据格式不正确，错误如下：");
 				throw new BusinessException(failureMsg.toString());
-			}
+			}*/
 			
 			//查询数据是否存在
 			if (dataList == null || dataList.size() == 0) {
