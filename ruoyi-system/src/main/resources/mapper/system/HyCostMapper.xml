@@ -294,7 +294,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<sql id="selectHyCostDistinctVo">
 		SELECT
-		DISTINCT c.cost_items,c.id,c.expense_type
+		DISTINCT c.cost_items,c.id
 		FROM
 		hy_cost
 		c
@@ -314,13 +314,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="billingCycle != null and billingCycle !=''">and c.billing_cycle = #{billingCycle}</if>
 		<if test="calculationMehod != null and calculationMehod !=''">and c.calculation_mehod = #{calculationMehod}</if>
 		<if test="standardDescription != null and standardDescription !=''">and c.standard_description = #{standardDescription}</if>
-		<if test="bilingStartDate != null ">and c.biling_start_date = #{bilingStartDate}</if>
-		<if test="transferTenants != null ">and c.transfer_tenants = #{transferTenants}</if>
+		<if test="bilingStartDate != null and bilingEndDate != null">and c.fee_date between #{bilingStartDate} and #{bilingEndDate}</if>
+		<if test="transferTenants != null">and c.transfer_tenants = #{transferTenants}</if>
 		<if test="changeDate != null ">and c.change_date = #{changeDate}</if>
 		<if test="feeDate != null ">and c.fee_date = #{feeDate}</if>
 		<if test="dueDate != null ">and c.due_date = #{dueDate}</if>
-		<if test="bilingStartDate != null ">and c.biling_start_date = #{bilingStartDate}</if>
-		<if test="bilingEndDate != null ">and c.biling_end_date = #{bilingEndDate}</if>
 		<if test="hyOwnerRegistration != null">
 		<if test="hyOwnerRegistration.ownerName != null  and hyOwnerRegistration.ownerName != ''"> and o.owner_name = #{hyOwnerRegistration.ownerName}</if>
 		</if>
@@ -334,8 +332,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectHyCostListDistinct" parameterType="HyCost"
 		resultMap="HyCostResult">
 		<include refid="selectHyCostDistinctVo" />
-		<if test="costItems != null  and costItems != ''"> and c.cost_items = #{costItems}</if>
-		<if test="expenseType != null  and expenseType != ''"> and c.expense_type = #{expenseType}</if>
+		and month(NOW()) = month(str_to_date(fee_date,'%Y-%m-%d '))
 	</select>
 
 	<select id="selectHyCostById" parameterType="Long"

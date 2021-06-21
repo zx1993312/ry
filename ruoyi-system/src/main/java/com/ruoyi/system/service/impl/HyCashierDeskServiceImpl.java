@@ -22,6 +22,7 @@ import org.springframework.util.ResourceUtils;
 
 import com.ruoyi.common.exception.BusinessException;
 import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.system.domain.HouseAndCost;
 import com.ruoyi.system.domain.HyBuilding;
 import com.ruoyi.system.domain.HyCashierDesk;
 import com.ruoyi.system.domain.HyCost;
@@ -29,6 +30,8 @@ import com.ruoyi.system.domain.HyHouseInf;
 import com.ruoyi.system.domain.HyOwnerRegistration;
 import com.ruoyi.system.mapper.HyBuildingMapper;
 import com.ruoyi.system.mapper.HyCashierDeskMapper;
+import com.ruoyi.system.mapper.HyCostMapper;
+import com.ruoyi.system.mapper.HyCustomerMapper;
 import com.ruoyi.system.mapper.HyHouseInfMapper;
 import com.ruoyi.system.mapper.HyOwnerRegistrationMapper;
 import com.ruoyi.system.service.IHyCashierDeskService;
@@ -61,6 +64,12 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 	
 	@Autowired
 	private HyHouseInfMapper hyHouseInfMapper;
+	
+	@Autowired
+	private HyCustomerMapper hyCustomerMapper;
+	
+	@Autowired
+	private HyCostMapper hyCostMapper;
 
 	/**
 	 * 查询费用项目
@@ -218,7 +227,8 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 			File templateFile = new File(rootFile,"/pdf_template/printCollectionOne_db.jasper");
 			//2、准备数据库连接
 			Map params = new HashMap();
-			String pic = rootFile+"\\static\\pdfimg\\src=http___i.nibaku.com_img_0_1433531324x2230376662_26.jpg&refer=http___i.nibaku.jpg";
+			String erweima = rootFile+"\\static\\pdfimg\\src=http___i.nibaku.com_img_0_1433531324x2230376662_26.jpg&refer=http___i.nibaku.jpg";
+			 String pic = rootFile+"\\static\\pdfimg\\e813f89d5a4c8f33b567a553a60649b.png";
 			String houseNumber = hyCost.getHyHouseInf().getHouseNumber();
 		    String ownerName = hyCost.getHyOwnerRegistration().getOwnerName();
 		    String id = hyCost.getId()+"";
@@ -229,6 +239,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 		    String amountReceivable = hyCost.getAmountReceivable().setScale(2)+"";
 		    String amount = hyCost.getHyCollection().getAmount()+"";
 			params.put("pic",pic);
+			params.put("erweima",erweima);
 			params.put("house_number",houseNumber);
 		    params.put("owner_name",ownerName);
 		    params.put("id",id);
@@ -254,7 +265,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 		if (StringUtils.isNull(cashierDeskList) || cashierDeskList.size() == 0) {
 			throw new BusinessException("导入费用数据不能为空！");
 		}
-		int successNum = 0;
+ 		int successNum = 0;
 		int failureNum = 0;
 		StringBuilder successMsg = new StringBuilder();
 		StringBuilder failureMsg = new StringBuilder();
@@ -332,8 +343,23 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 					failureNum++;
 					failureMsg.append("<br/>" + failureNum + "、单元 " + hyHouseInf.getUnit() + "、房屋编号为 " + hyHouseInf.getHouseNumber() + "的房屋 已存在");
 				}
-				
-				
+				//费用
+				List<HyCost> costList = hyCostMapper.selectHyCostListDistinct(new HyCost());
+				for(int i=0;i<costList.size();i++) {
+					HyCost hyCost = new HyCost();
+					hyCost = costList.get(i);
+					Long costId = hyCost.getId();
+					HouseAndCost houseAndCost = new HouseAndCost();
+					List<HyHouseInf> houseInfListBy = hyHouseInfMapper.selectHyHouseInfList(hyHouseInf);
+					houseAndCost.setHouseId(houseInfListBy.get(0).getId());
+					houseAndCost.setCostId(costId);
+					List<HouseAndCost> houseAndCostList = hyCustomerMapper.selectCostIds(houseAndCost);
+					if (houseAndCostList == null || houseAndCostList.size() == 0) {
+						hyCustomerMapper.insertHouseAndCost(houseInfListBy.get(0).getId()+"", costId+"");
+						successNum++;
+						successMsg.append("<br/>" + successNum + "、费用项目为 " + hyCost.getCostItems() + "、和房屋编号为 " + hyHouseInf.getHouseNumber() + " 关系导入成功");
+					}
+				}
 			}
 			
 		
