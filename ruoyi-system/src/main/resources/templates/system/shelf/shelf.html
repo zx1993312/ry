@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('供应商列表')" />
+    <th:block th:include="include :: header('货架列表')" />
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -11,16 +11,23 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                <label>供应商名称：</label>
-                                <input type="text" name="supplierName"/>
+                                <label>货架名称：</label>
+                                <input type="text" name="shelfName"/>
                             </li>
                             <li>
-                                <label>供应商负责人：</label>
-                                <input type="text" name="supplierCharge"/>
+                                <label>货架类型：</label>
+                                <input name="shelfType" type="text">
                             </li>
                             <li>
-                                <label>供应商联系电话：</label>
-                                <input type="text" name="supplierPhone"/>
+                                <label>货架数量：</label>
+                                <input type="text" name="shelfCount"/>
+                            </li>
+                            <li>
+                                <label>所属仓库：</label>
+                                <select name="warehouseId" th:with="type=${@warehouse.getWarehouse()}" class="form-control m-b">
+									<option value="">请选择</option>
+									<option th:each="dict : ${type}" th:text="${dict.warehouseName}" th:value="${dict.id}"></option>
+								</select>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -32,16 +39,16 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:supplier:add">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:shelf:add">
                     <i class="fa fa-plus"></i> 添加
                 </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:supplier:edit">
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:shelf:edit">
                     <i class="fa fa-edit"></i> 修改
                 </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:supplier:remove">
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:shelf:remove">
                     <i class="fa fa-remove"></i> 删除
                 </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:supplier:export">
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:shelf:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
             </div>
@@ -52,9 +59,9 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('system:supplier:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('system:supplier:remove')}]];
-        var prefix = ctx + "system/supplier";
+        var editFlag = [[${@permission.hasPermi('system:shelf:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:shelf:remove')}]];
+        var prefix = ctx + "system/shelf";
 
         $(function() {
             var options = {
@@ -63,45 +70,30 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "供应商",
+                modalName: "货架",
                 columns: [{
                     checkbox: true
                 },
                 {
                     field: 'id',
-                    title: 'id',
+                    title: '货架id',
                     visible: false
                 },
                 {
-                    field: 'supplierName',
-                    title: '供应商名称'
+                    field: 'shelfName',
+                    title: '货架名称'
                 },
                 {
-                    field: 'supplierBusinessLicence',
-                    title: '供应商营业执照',
-                    formatter: function(value, row, index) {
-		    			return $.table.imageView("/img/"+value);
-				    }
+                    field: 'shelfType',
+                    title: '货架类型'
                 },
                 {
-                    field: 'supplierCharge',
-                    title: '供应商负责人'
+                    field: 'shelfCount',
+                    title: '货架数量'
                 },
                 {
-                    field: 'supplierPhone',
-                    title: '供应商联系电话'
-                },
-                {
-                    field: 'supplierEmail',
-                    title: '供应商电子邮箱'
-                },
-                {
-                    field: 'supplierAddress',
-                    title: '供应商地址'
-                },
-                {
-                    field: 'incorporationDate',
-                    title: '成立日期'
+                    field: 'hyWarehouse.warehouseName',
+                    title: '所属仓库'
                 },
                 {
                     title: '操作',

@@ -253,6 +253,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		         q.community_name,
 		         b.building_name,
 		         h.house_number,
+		         h.owner_id,
 		         h.unit,
 		         o.owner_name,
 		         c.fee_date,
@@ -315,6 +316,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="hyHouseInf != null">
 		<if test="hyHouseInf.unit != null  and hyHouseInf.unit != ''"> and son.unit = #{hyHouseInf.unit}</if>
 		</if>
+		AND son.is_collection is null
+	</select>
+	
+	<select id="selectHyReportDataCollection"  resultMap="HyCostResult">
+		<include refid="selectHyCostVoByIsCollection" />
+		<if test="houseNumber != null  and houseNumber != ''"> and son.house_number = #{houseNumber}</if>
+		<if test="ownerId != null  and ownerId != ''"> and son.owner_id = #{ownerId}</if>
 		AND son.is_collection is null
 	</select>
 

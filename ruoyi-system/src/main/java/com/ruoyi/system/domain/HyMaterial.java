@@ -90,6 +90,14 @@ public class HyMaterial extends BaseEntity
     @Excel(name = "仓库表")
     private HyWarehouse hyWarehouse;
     
+    /** 货架id */
+    @Excel(name = "货架id")
+    private Long shelfId;
+    
+    /** 货架表 */
+    @Excel(name = "货架表")
+    private HyGoodsShelf hyGoodsShelf;
+
     public void setId(Long id) 
     {
         this.id = id;
@@ -254,6 +262,22 @@ public class HyMaterial extends BaseEntity
 		this.hyWarehouse = hyWarehouse;
 	}
 
+	public Long getShelfId() {
+		return shelfId;
+	}
+
+	public void setShelfId(Long shelfId) {
+		this.shelfId = shelfId;
+	}
+
+	public HyGoodsShelf getHyGoodsShelf() {
+		return hyGoodsShelf;
+	}
+
+	public void setHyGoodsShelf(HyGoodsShelf hyGoodsShelf) {
+		this.hyGoodsShelf = hyGoodsShelf;
+	}
+
 	@Override
 	public String toString() {
 		return "HyMaterial [id=" + id + ", materialCode=" + materialCode + ", materialName=" + materialName
@@ -262,8 +286,10 @@ public class HyMaterial extends BaseEntity
 				+ materialAddress + ", materialDept=" + materialDept + ", materialCommute=" + materialCommute
 				+ ", state=" + state + ", specimen=" + specimen + ", specimendept=" + specimendept + ", checkmen="
 				+ checkmen + ", assessorId=" + assessorId + ", supplierId=" + supplierId + ", hySupplier=" + hySupplier
-				+ ", warehouseId=" + warehouseId + ", hyWarehouse=" + hyWarehouse + "]";
+				+ ", warehouseId=" + warehouseId + ", hyWarehouse=" + hyWarehouse + ", shelfId=" + shelfId
+				+ ", hyGoodsShelf=" + hyGoodsShelf + "]";
 	}
+
 
 
 
