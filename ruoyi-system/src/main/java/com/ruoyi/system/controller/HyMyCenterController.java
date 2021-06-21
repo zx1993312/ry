@@ -9,15 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.system.domain.HyOrder;
-import com.ruoyi.system.domain.HyProduct;
 import com.ruoyi.system.service.IHyOrderService;
 
 import io.swagger.annotations.Api;
@@ -46,6 +41,7 @@ public class HyMyCenterController extends BaseController {
 		return prefix + "/myCenter";
 	}
 
+	@SuppressWarnings("unused")
 	@ApiOperation("查询订单设置列表")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "hyOrder", value = "项目实体类", required = true), })
 	@RequestMapping("/list")

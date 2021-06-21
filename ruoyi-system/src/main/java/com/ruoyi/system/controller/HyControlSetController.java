@@ -25,7 +25,6 @@ import com.ruoyi.common.utils.ShiroUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.constants.Constants;
 import com.ruoyi.system.domain.HyControlSet;
-import com.ruoyi.system.domain.HyParkingInf;
 import com.ruoyi.system.service.IHyControlSetService;
 
 import io.swagger.annotations.Api;

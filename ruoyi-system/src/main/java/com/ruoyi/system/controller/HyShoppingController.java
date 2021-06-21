@@ -12,10 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.system.domain.HyPicture;
 import com.ruoyi.system.domain.HyProduct;
-import com.ruoyi.system.domain.HySetMeal;
-import com.ruoyi.system.service.IHyPictureService;
 import com.ruoyi.system.service.IHyProductService;
-import com.ruoyi.system.service.IHySetMealService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;

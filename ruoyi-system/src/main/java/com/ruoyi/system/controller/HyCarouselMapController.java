@@ -1,9 +1,6 @@
 package com.ruoyi.system.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,14 +18,9 @@ import com.ruoyi.system.domain.HyProduct;
 import com.ruoyi.system.domain.HySetMeal;
 import com.ruoyi.system.domain.HyShop;
 import com.ruoyi.system.service.IHyDeatilPictureService;
-import com.ruoyi.system.service.IHyPictureService;
 import com.ruoyi.system.service.IHyProductService;
 import com.ruoyi.system.service.IHySetMealService;
 import com.ruoyi.system.service.IHyShopService;
-import com.ruoyi.system.service.impl.HyPictureServiceImpl;
-import com.ruoyi.system.service.impl.HyPrinterServiceImpl;
-import com.ruoyi.system.service.impl.HySetMealServiceImpl;
-import com.ruoyi.system.service.impl.HyShopServiceImpl;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
