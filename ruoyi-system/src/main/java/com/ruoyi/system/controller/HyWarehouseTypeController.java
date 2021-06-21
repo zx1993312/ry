@@ -19,27 +19,24 @@ import com.ruoyi.common.core.domain.entity.SysDictData;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.ShiroUtils;
-import com.ruoyi.system.domain.HyMaterial;
 import com.ruoyi.system.service.ISysDictDataService;
 import com.ruoyi.system.service.ISysDictTypeService;
 
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 /**
- * 物料名称Controller
+ * 仓库类型Controller
  * 
  * @author Administrator
- * @date 2021-04-20
+ * @date 2021-06-11
  */
 @Controller
-@RequestMapping("/system/materialName")
-@Api(tags = "物料名称Controller")
-public class HyMaterialNameController extends BaseController {
+@RequestMapping("/system/warehouseType")
+@Api(tags = "仓库类型Controller")
+public class HyWarehouseTypeController extends BaseController {
 
-	private String prefix = "system/materialName";
+	private String prefix = "system/warehouseType";
 
 	@Autowired
 	private ISysDictDataService dictDataService;
@@ -47,23 +44,22 @@ public class HyMaterialNameController extends BaseController {
 	@Autowired
 	private ISysDictTypeService dictTypeService;
 
-	@RequiresPermissions("system:materialName:view")
+	@RequiresPermissions("system:warehouseType:view")
 	@GetMapping()
-	public String material() {
-		return prefix + "/material";
+	public String warehouse() {
+		return prefix + "/warehouse";
 	}
 
 	/**
-	 * 查询物料名称列表
+	 * 查询仓库类型列表
 	 */
-	@ApiOperation("物料名称")
-	@ApiImplicitParams({ @ApiImplicitParam(name = "hyMaterial", value = "项目实体类hyMaterial", required = true), })
-	@RequiresPermissions("system:materialName:list")
+	@ApiOperation("仓库类型")
+	@RequiresPermissions("system:warehouseType:list")
 	@PostMapping("/list")
 	@ResponseBody
-	public TableDataInfo list(HyMaterial hyMaterial) {
+	public TableDataInfo list() {
 		startPage();
-		List<SysDictData> list = dictTypeService.selectDictDataByType("hy_material_name");
+		List<SysDictData> list = dictTypeService.selectDictDataByType("hy_warehouse_type");
 		return getDataTable(list);
 	}
 
@@ -78,8 +74,8 @@ public class HyMaterialNameController extends BaseController {
 	/**
 	 * 新增保存字典类型
 	 */
-	@Log(title = "服务类型", businessType = BusinessType.INSERT)
-	@RequiresPermissions("system:materialName:add")
+	@Log(title = "仓库类型", businessType = BusinessType.INSERT)
+	@RequiresPermissions("system:warehouseType:add")
 	@PostMapping("/add")
 	@ResponseBody
 	public AjaxResult addSave(SysDictData dict) {
@@ -100,7 +96,7 @@ public class HyMaterialNameController extends BaseController {
 	/**
 	 * 修改保存字典类型
 	 */
-	@RequiresPermissions("system:materialName:edit")
+	@RequiresPermissions("system:warehouseType:edit")
 	@PostMapping("/edit")
 	@ResponseBody
 	public AjaxResult editSave(SysDictData dict) {
@@ -109,8 +105,8 @@ public class HyMaterialNameController extends BaseController {
 		return toAjax(dictDataService.updateDictData(dict));
 	}
 
-	@Log(title = "服务类型", businessType = BusinessType.DELETE)
-	@RequiresPermissions("system:materialName:remove")
+	@Log(title = "仓库类型", businessType = BusinessType.DELETE)
+	@RequiresPermissions("system:warehouseType:remove")
 	@PostMapping("/remove")
 	@ResponseBody
 	public AjaxResult remove(String ids) {

@@ -6,7 +6,6 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -83,7 +82,8 @@ public class HyMaterialTypeController extends BaseController {
 	@RequiresPermissions("system:materialType:add")
 	@PostMapping("/add")
 	@ResponseBody
-	public AjaxResult addSave(@Validated SysDictData dict) {
+	public AjaxResult addSave(SysDictData dict) {
+		dict.setDictValue(String.valueOf(dict.getDictSort()));
 		dict.setCreateBy(ShiroUtils.getLoginName());
 		return toAjax(dictDataService.insertDictData(dict));
 	}
@@ -103,7 +103,8 @@ public class HyMaterialTypeController extends BaseController {
 	@RequiresPermissions("system:materialType:edit")
 	@PostMapping("/edit")
 	@ResponseBody
-	public AjaxResult editSave(@Validated SysDictData dict) {
+	public AjaxResult editSave(SysDictData dict) {
+		dict.setDictValue(String.valueOf(dict.getDictSort()));
 		dict.setUpdateBy(ShiroUtils.getLoginName());
 		return toAjax(dictDataService.updateDictData(dict));
 	}
