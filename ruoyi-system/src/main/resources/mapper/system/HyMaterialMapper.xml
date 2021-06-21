@@ -19,10 +19,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="state"    column="state"    />
         <result property="supplierId"    column="supplier_id"    />
         <result property="warehouseId"    column="warehouse_id"    />
+        <result property="shelfId"    column="shelf_id"    />
         <association property="hySupplier"     column="id" 
         	javaType="HySupplier" resultMap="HySupplierResult" />
         <association property="hyWarehouse"     column="id" 
         	javaType="HyWarehouse" resultMap="HyWarehouseResult" />
+        <association property="hyGoodsShelf" column="id"
+			javaType="HyGoodsShelf" resultMap="HyGoodsShelfResult" />
+    </resultMap>
+    
+    <resultMap type="HyGoodsShelf" id="HyGoodsShelfResult">
+        <result property="id"    column="id"    />
+        <result property="shelfName"    column="shelf_name"    />
+        <result property="shelfType"    column="shelf_type"    />
+        <result property="shelfCount"    column="shelf_count"    />
+        <result property="warehouseId"    column="warehouse_id"    />
     </resultMap>
 	
 	<resultMap type="HySupplier" id="HySupplierResult">
@@ -63,12 +74,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         m.state, 
         m.supplier_id, 
         m.warehouse_id, 
+        m.shelf_id, 
         s.supplier_name, 
-        w.warehouse_name 
+        w.warehouse_name, 
+        g.shelf_name 
         from 
         hy_material m
         LEFT JOIN  hy_supplier s ON m.supplier_id = s.id
         LEFT JOIN  hy_warehouse w ON m.warehouse_id = w.id
+        LEFT JOIN  hy_goods_shelf g ON m.shelf_id =g.id
     </sql>
 
     <select id="selectHyMaterialList" parameterType="HyMaterial" resultMap="HyMaterialResult">
@@ -86,6 +100,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="state != null  and state != ''"> and m.state = #{state}</if>
             <if test="supplierId != null  and supplierId != ''"> and m.supplier_id = #{supplierId}</if>
             <if test="warehouseId != null  and warehouseId != ''"> and m.warehouse_id = #{warehouseId}</if>
+            <if test="shelfId != null  and shelfId != ''"> and m.shelf_id = #{shelfId}</if>
         </where>
     </select>
     
@@ -103,6 +118,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="materialCommute != null  and materialCommute != ''"> and m.material_commute = #{materialCommute}</if>
             <if test="supplierId != null  and supplierId != ''"> and m.supplier_id = #{supplierId}</if>
             <if test="warehouseId != null  and warehouseId != ''"> and m.warehouse_id = #{warehouseId}</if>
+            <if test="shelfId != null  and shelfId != ''"> and m.shelf_id = #{shelfId}</if>
             and state = "3"
         </where>
     </select>
@@ -131,6 +147,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="checkmen != null">checkmen,</if>
             <if test="supplierId != null">supplier_id,</if>
             <if test="warehouseId != null">warehouse_id,</if>
+            <if test="shelfId != null">shelf_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="materialCode != null">#{materialCode},</if>
@@ -148,6 +165,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="checkmen != null">#{checkmen},</if>
             <if test="supplierId != null">#{supplierId},</if>
             <if test="warehouseId != null">#{warehouseId},</if>
+            <if test="shelfId != null">#{shelfId},</if>
          </trim>
     </insert>
 
@@ -170,6 +188,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="checkmen != null">checkmen = #{checkmen},</if>
             <if test="supplierId != null">supplier_id = #{supplierId},</if>
             <if test="warehouseId != null">warehouse_id = #{warehouseId},</if>
+            <if test="shelfId != null">shelf_id = #{shelfId},</if>
         </trim>
         where id = #{id}
     </update>

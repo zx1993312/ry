@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyGoodsShelfMapper">
+    
+    <resultMap type="HyGoodsShelf" id="HyGoodsShelfResult">
+        <result property="id"    column="id"    />
+        <result property="shelfName"    column="shelf_name"    />
+        <result property="shelfType"    column="shelf_type"    />
+        <result property="shelfCount"    column="shelf_count"    />
+        <result property="warehouseId"    column="warehouse_id"    />
+        <association property="hyWarehouse" column="id"
+			javaType="HyWarehouse" resultMap="HyWarehouseResult" />
+    </resultMap>
+    
+    <resultMap type="HyWarehouse" id="HyWarehouseResult">
+        <result property="id"    column="id"    />
+        <result property="warehouseName"    column="warehouse_name"    />
+        <result property="warehouseAddress"    column="warehouse_address"    />
+        <result property="warehouseType"    column="warehouse_type"    />
+        <result property="warehouseArea"    column="warehouse_area"    />
+        <result property="warehouseNum"    column="warehouse_num"    />
+        <result property="warehousePhone"    column="warehouse_phone"    />
+        <result property="administrators"    column="administrators"    />
+    </resultMap>
+
+    <sql id="selectHyGoodsShelfVo">
+        select 
+        s.id, 
+        s.shelf_name, 
+        s.shelf_type, 
+        s.shelf_count, 
+        s.warehouse_id, 
+        w.warehouse_name 
+        from 
+        hy_goods_shelf s
+        LEFT JOIN hy_warehouse w ON s.warehouse_id =w.id
+    </sql>
+
+    <select id="selectHyGoodsShelfList" parameterType="HyGoodsShelf" resultMap="HyGoodsShelfResult">
+        <include refid="selectHyGoodsShelfVo"/>
+        <where>  
+            <if test="shelfName != null  and shelfName != ''"> and s.shelf_name like concat('%', #{shelfName}, '%')</if>
+            <if test="shelfType != null  and shelfType != ''"> and s.shelf_type = #{shelfType}</if>
+            <if test="shelfCount != null  and shelfCount != ''"> and s.shelf_count = #{shelfCount}</if>
+            <if test="warehouseId != null "> and s.warehouse_id = #{warehouseId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyGoodsShelfById" parameterType="Long" resultMap="HyGoodsShelfResult">
+        <include refid="selectHyGoodsShelfVo"/>
+        where s.id = #{id}
+    </select>
+        
+    <insert id="insertHyGoodsShelf" parameterType="HyGoodsShelf" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_goods_shelf
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="shelfName != null">shelf_name,</if>
+            <if test="shelfType != null">shelf_type,</if>
+            <if test="shelfCount != null">shelf_count,</if>
+            <if test="warehouseId != null">warehouse_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shelfName != null">#{shelfName},</if>
+            <if test="shelfType != null">#{shelfType},</if>
+            <if test="shelfCount != null">#{shelfCount},</if>
+            <if test="warehouseId != null">#{warehouseId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyGoodsShelf" parameterType="HyGoodsShelf">
+        update hy_goods_shelf
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="shelfName != null">shelf_name = #{shelfName},</if>
+            <if test="shelfType != null">shelf_type = #{shelfType},</if>
+            <if test="shelfCount != null">shelf_count = #{shelfCount},</if>
+            <if test="warehouseId != null">warehouse_id = #{warehouseId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyGoodsShelfById" parameterType="Long">
+        delete from hy_goods_shelf where id = #{id}
+    </delete>
+
+    <delete id="deleteHyGoodsShelfByIds" parameterType="String">
+        delete from hy_goods_shelf where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
