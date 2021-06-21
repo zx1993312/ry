@@ -126,6 +126,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 	@Override
 	public int printReceipt(HttpServletResponse response) throws JRException, InvalidPasswordException, IOException,
 			PrinterException, ClassNotFoundException, SQLException {
+		
 		String fileName = "d:\\" + new Date().getTime() + "收据.pdf";
 		try {
 			// 1、获取模版文件
