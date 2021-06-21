@@ -159,8 +159,10 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 			File templateFile = new File(rootFile,"/pdf_template/printCollection_db.jasper");
 			//2、准备数据库连接
 			Map params = new HashMap();
-			String pic = rootFile+"\\static\\pdfimg\\src=http___i.nibaku.com_img_0_1433531324x2230376662_26.jpg&refer=http___i.nibaku.jpg";
+			 String pic = rootFile+"\\static\\pdfimg\\e813f89d5a4c8f33b567a553a60649b.png";
+			String erweima = rootFile+"\\static\\pdfimg\\src=http___i.nibaku.com_img_0_1433531324x2230376662_26.jpg&refer=http___i.nibaku.jpg";
 			params.put("pic",pic);
+			params.put("erweima",erweima);
 			JasperPrint jasperPrint =JasperFillManager.fillReport(new FileInputStream(templateFile),params,getCon());
 			JasperExportManager.exportReportToPdfStream(jasperPrint,new FileOutputStream(fileName));
 			HyPrintPDFUtil.printPDF(fileName, "A4");
@@ -358,6 +360,9 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 						hyCustomerMapper.insertHouseAndCost(houseInfListBy.get(0).getId()+"", costId+"");
 						successNum++;
 						successMsg.append("<br/>" + successNum + "、费用项目为 " + hyCost.getCostItems() + "、和房屋编号为 " + hyHouseInf.getHouseNumber() + " 关系导入成功");
+					}else {
+						failureNum++;
+						failureMsg.append("<br/>" + failureNum + "、费用项目为 " + hyCost.getCostItems() + "、和房屋编号为 " + hyHouseInf.getHouseNumber() + "关系已存在");
 					}
 				}
 			}
