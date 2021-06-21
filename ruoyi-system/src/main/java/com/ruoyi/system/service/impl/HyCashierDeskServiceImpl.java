@@ -170,6 +170,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 			Map<String, Object> map = new HashMap<>();
 			map.put("pic", pic);
 			map.put("erweima", erweima);
+			
 			List<HyHouseInf> list = hyHouseInfMapper.selectHyHouseInfList(new HyHouseInf());
 
 			for (HyHouseInf inf : list) {
