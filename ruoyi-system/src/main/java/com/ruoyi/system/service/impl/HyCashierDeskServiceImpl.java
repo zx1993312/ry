@@ -167,6 +167,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 			String pic = rootFile + "\\static\\pdfimg\\e813f89d5a4c8f33b567a553a60649b.png";
 			String erweima = rootFile
 					+ "\\static\\pdfimg\\src=http___i.nibaku.com_img_0_1433531324x2230376662_26.jpg&refer=http___i.nibaku.jpg";
+			
 			Map<String, Object> map = new HashMap<>();
 			map.put("pic", pic);
 			map.put("erweima", erweima);
