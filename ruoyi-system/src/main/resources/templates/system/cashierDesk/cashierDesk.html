@@ -18,11 +18,18 @@
 						 	    </select>
                             </li>
                             <li>
-                                <label>选择楼宇：</label>
+                                <label>选择楼栋号：</label>
 						 	    <select name="hyBuilding.buildingName" class="form-control m-b" th:with="type=${@building.getBuilding()}">
 		                        <option value="">请选择</option>
-		                        <option th:each="dict : ${type}" th:text="${dict.buildingName}" th:value="${dict.buildingName}"></option>
+		                        <option th:each="dict : ${type}" th:text="${dict.buildingNumber}" th:value="${dict.buildingNumber}"></option>
 		                    </select>
+                            </li>
+                            <li>
+                                <label>选择房屋编号：</label>
+                                <select name="hyHouseInf.houseNumber" class="form-control" th:with="type=${@houseInf.getHouseNumber()}">
+									<option value="">请选择</option>
+									<option th:if="data!=null" th:each="data:${type}" th:text="${data.houseNumber}" th:value="${data.houseNumber}"></option>
+						 	    </select>
                             </li>
                             <li>
                                 <label>选择单元：</label>
@@ -133,8 +140,8 @@
                     title: '所在小区'
                 },
                 {
-                    field: 'hyBuilding.buildingName',
-                    title: '楼栋名称'
+                    field: 'hyBuilding.buildingNumber',
+                    title: '栋号'
                 },
                 {
                     field: 'hyHouseInf.houseNumber',

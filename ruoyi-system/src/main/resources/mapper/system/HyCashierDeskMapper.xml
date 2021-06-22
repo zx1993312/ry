@@ -63,72 +63,75 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<association property="hyBuilding" column="id"
 			javaType="HyBuilding" resultMap="HyBuildingResult" />
 		<association property="hyResidentialQuarters" column="id"
-			javaType="HyResidentialQuarters" resultMap="HyResidentialQuartersResult" />
+			javaType="HyResidentialQuarters"
+			resultMap="HyResidentialQuartersResult" />
 		<association property="hyCollection" column="id"
 			javaType="HyCollection" resultMap="HyCollectionResult" />
 	</resultMap>
-	
+
 	<resultMap type="HyCollection" id="HyCollectionResult">
-        <result property="id"    column="id"    />
-        <result property="applyTime"    column="apply_time"    />
-        <result property="startTime"    column="start_time"    />
-        <result property="endTime"    column="end_time"    />
-        <result property="receiptNumber"    column="receipt_number"    />
-        <result property="amount"    column="amount"    />
-        <result property="isCollection"    column="is_collection"    />
-        <result property="collectionType"    column="collection_type"    />
-        <result property="collectionTime"    column="collection_time"    />
-        <result property="payee"    column="payee"    />
-        <result property="isBook"    column="is_book"    />
-        <result property="bookTime"    column="book_time"    />
-        <result property="bookPerson"    column="book_person"    />
-        <result property="paymentStatue"    column="payment_statue"    />
-        <result property="payment"    column="payment"    />
-        <result property="paymentTime"    column="payment_time"    />
-        <result property="paymentPerson"    column="payment_person"    />
-        <result property="isDeferred"    column="is_deferred"    />
-        <result property="deferredTime"    column="deferred_time"    />
-        <result property="deferredPerson"    column="deferred_person"    />
-        <result property="deferredCause"    column="deferred_cause"    />
-        <result property="isRefund"    column="is_refund"    />
-        <result property="refundTime"    column="refund_time"    />
-        <result property="refundPerson"    column="refund_person"    />
-        <result property="collectionRemark"    column="collection_remark"    />
-        <result property="costId"    column="cost_id"    />
-        <result property="houseId"    column="house_id"    />
-        <result property="ownerId"    column="owner_id"    />
-    </resultMap>
-	
-	    <resultMap type="HyResidentialQuarters" id="HyResidentialQuartersResult">
-        <result property="id"    column="id"    />
-        <result property="communityAddress"    column="community_address"    />
-        <result property="communityName"    column="community_name"    />
-        <result property="contacts"    column="contacts"    />
-        <result property="contactNumber"    column="contact_number"    />
-        <result property="contactQq"    column="Contact_QQ"    />
-        <result property="city"    column="city"    />
-        <result property="area"    column="area"    />
-        <result property="county"    column="county"    />
-        <result property="address"    column="address"    />
-        <result property="longitude"    column="longitude"    />
-        <result property="latitude"    column="latitude"    />
-        <result property="customerLink"    column="customer_link"    />
-        <result property="externalLinks"    column="external_links"    />
-        <result property="propertyId"    column="property_id"    />
-    </resultMap>
-	
+		<result property="id" column="id" />
+		<result property="applyTime" column="apply_time" />
+		<result property="startTime" column="start_time" />
+		<result property="endTime" column="end_time" />
+		<result property="receiptNumber" column="receipt_number" />
+		<result property="amount" column="amount" />
+		<result property="isCollection" column="is_collection" />
+		<result property="collectionType" column="collection_type" />
+		<result property="collectionTime" column="collection_time" />
+		<result property="payee" column="payee" />
+		<result property="isBook" column="is_book" />
+		<result property="bookTime" column="book_time" />
+		<result property="bookPerson" column="book_person" />
+		<result property="paymentStatue" column="payment_statue" />
+		<result property="payment" column="payment" />
+		<result property="paymentTime" column="payment_time" />
+		<result property="paymentPerson" column="payment_person" />
+		<result property="isDeferred" column="is_deferred" />
+		<result property="deferredTime" column="deferred_time" />
+		<result property="deferredPerson" column="deferred_person" />
+		<result property="deferredCause" column="deferred_cause" />
+		<result property="isRefund" column="is_refund" />
+		<result property="refundTime" column="refund_time" />
+		<result property="refundPerson" column="refund_person" />
+		<result property="collectionRemark" column="collection_remark" />
+		<result property="costId" column="cost_id" />
+		<result property="houseId" column="house_id" />
+		<result property="ownerId" column="owner_id" />
+	</resultMap>
+
+	<resultMap type="HyResidentialQuarters"
+		id="HyResidentialQuartersResult">
+		<result property="id" column="id" />
+		<result property="communityAddress" column="community_address" />
+		<result property="communityName" column="community_name" />
+		<result property="contacts" column="contacts" />
+		<result property="contactNumber" column="contact_number" />
+		<result property="contactQq" column="Contact_QQ" />
+		<result property="city" column="city" />
+		<result property="area" column="area" />
+		<result property="county" column="county" />
+		<result property="address" column="address" />
+		<result property="longitude" column="longitude" />
+		<result property="latitude" column="latitude" />
+		<result property="customerLink" column="customer_link" />
+		<result property="externalLinks" column="external_links" />
+		<result property="propertyId" column="property_id" />
+	</resultMap>
+
 	<resultMap type="HyBuilding" id="HyBuildingResult">
-        <result property="id"    column="id"    />
-        <result property="buildingName"    column="building_name"    />
-        <result property="buildingHigh"    column="building_high"    />
-        <result property="buildingUnit"    column="building_unit"    />
-        <result property="buildingHouseholds"    column="building_households"    />
-        <result property="buildingAddress"    column="building_address"    />
-        <result property="buildingYear"    column="building_year"    />
-        <result property="buildingRemark"    column="building_remark"    />
-        <result property="quartersId"    column="quarters_id"    />
-        <result property="projectId"    column="project_id"    />
-    </resultMap>
+		<result property="id" column="id" />
+		<result property="buildingName" column="building_name" />
+		<result property="buildingHigh" column="building_high" />
+		<result property="buildingUnit" column="building_unit" />
+		<result property="buildingHouseholds"
+			column="building_households" />
+		<result property="buildingAddress" column="building_address" />
+		<result property="buildingYear" column="building_year" />
+		<result property="buildingRemark" column="building_remark" />
+		<result property="quartersId" column="quarters_id" />
+		<result property="projectId" column="project_id" />
+	</resultMap>
 
 	<resultMap type="HyHouseInf" id="HyHouseInfResult">
 		<result property="id" column="id" />
@@ -213,7 +216,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="bankAccountName" column="bank_account_name" />
 		<result property="projectId" column="project_id" />
 	</resultMap>
-	
+
 	<resultMap type="HouseAndCost" id="HouseAndCostResult">
 		<result property="houseId" column="house_id" />
 		<result property="costId" column="cost_id" />
@@ -235,41 +238,46 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM
 		hy_cost
 		c
+		LEFT JOIN house_and_cost a ON
+		a.cost_id = c.id
+		LEFT JOIN hy_house_inf h ON a.house_id = h.id
+		LEFT JOIN
+		hy_owner_registration o ON h.owner_id = o.id
+		LEFT JOIN hy_building b ON
+		h.building_id = b.id
+		LEFT JOIN hy_residential_quarters q ON
+		b.quarters_id = q.id
+		LEFT JOIN hy_collection t ON t.cost_id = c.id and
+		t.owner_id = o.id and t.house_id = h.id
+		WHERE
+		1 = 1
+	</sql>
+
+	<sql id="selectHyCostVoByIsCollection">
+		SELECT * from
+		(SELECT
+		c.id,
+		c.cost_items,
+		q.community_name,
+		b.building_number,
+		h.house_number,
+		h.owner_id,
+		h.unit,
+		o.owner_name,
+		c.fee_date,
+		t.is_collection,
+		c.amount_receivable,
+		t.amount
+		FROM
+		hy_cost c
 		LEFT JOIN house_and_cost a ON a.cost_id = c.id
 		LEFT JOIN hy_house_inf h ON a.house_id = h.id
 		LEFT JOIN hy_owner_registration o ON h.owner_id = o.id
 		LEFT JOIN hy_building b ON h.building_id = b.id
 		LEFT JOIN hy_residential_quarters q ON b.quarters_id = q.id
-		LEFT JOIN hy_collection t ON t.cost_id = c.id and t.owner_id = o.id and t.house_id = h.id
-		WHERE
-		1 = 1
-	</sql>
-	
-	<sql id="selectHyCostVoByIsCollection">
-		SELECT * from
-		    (SELECT
-		         c.id,
-		         c.cost_items,
-		         q.community_name,
-		         b.building_name,
-		         h.house_number,
-		         h.owner_id,
-		         h.unit,
-		         o.owner_name,
-		         c.fee_date,
-		         t.is_collection,
-		         c.amount_receivable,
-		         t.amount
-		     FROM
-		         hy_cost c
-		             LEFT JOIN house_and_cost a ON a.cost_id = c.id
-		             LEFT JOIN hy_house_inf h ON a.house_id = h.id
-		             LEFT JOIN hy_owner_registration o ON h.owner_id = o.id
-		             LEFT JOIN hy_building b ON h.building_id = b.id
-		             LEFT JOIN hy_residential_quarters q ON b.quarters_id = q.id
-		             LEFT JOIN hy_collection t ON t.cost_id = c.id
-		             AND t.owner_id = o.id
-		             AND t.house_id = h.id ) as son
+		LEFT JOIN hy_collection t ON t.cost_id = c.id
+		AND t.owner_id = o.id
+		AND t.house_id = h.id ) as son
 		WHERE
 		1 = 1
 	</sql>
@@ -278,48 +286,66 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		resultMap="HyCostResult">
 		<include refid="selectHyCostVo" />
 		<if test="costItems != null  and costItems != ''"> and c.cost_items = #{costItems}</if>
-		<if test="bilingStartDate != null and bilingEndDate != null">and c.fee_date between #{bilingStartDate} and #{bilingEndDate}</if>
+		<if test="bilingStartDate != null and bilingEndDate != null">and c.fee_date between #{bilingStartDate} and
+			#{bilingEndDate}</if>
 		<if test="hyOwnerRegistration != null">
-		<if test="hyOwnerRegistration.ownerName != null  and hyOwnerRegistration.ownerName != ''"> and o.owner_name = #{hyOwnerRegistration.ownerName}</if>
-		<if test="hyOwnerRegistration.mobilePhone != null  and hyOwnerRegistration.mobilePhone != ''"> and o.mobile_phone = #{hyOwnerRegistration.mobilePhone}</if>
+			<if
+				test="hyOwnerRegistration.ownerName != null  and hyOwnerRegistration.ownerName != ''"> and o.owner_name = #{hyOwnerRegistration.ownerName}</if>
+			<if
+				test="hyOwnerRegistration.mobilePhone != null  and hyOwnerRegistration.mobilePhone != ''"> and o.mobile_phone = #{hyOwnerRegistration.mobilePhone}</if>
 		</if>
 		<if test="hyResidentialQuarters != null">
-		<if test="hyResidentialQuarters.communityName != null  and hyResidentialQuarters.communityName != ''"> and q.community_name = #{hyResidentialQuarters.communityName}</if>
+			<if
+				test="hyResidentialQuarters.communityName != null  and hyResidentialQuarters.communityName != ''"> and q.community_name = #{hyResidentialQuarters.communityName}
+			</if>
 		</if>
 		<if test="hyBuilding != null">
-		<if test="hyBuilding.buildingName != null  and hyBuilding.buildingName != ''"> and b.building_name = #{hyBuilding.buildingName}</if>
+			<if
+				test="hyBuilding.buildingName != null  and hyBuilding.buildingName != ''"> and b.building_name = #{hyBuilding.buildingName}</if>
 		</if>
 		<if test="hyHouseInf != null">
-		<if test="hyHouseInf.unit != null  and hyHouseInf.unit != ''"> and h.unit = #{hyHouseInf.unit}</if>
+			<if
+				test="hyHouseInf.ownerId != null  and hyHouseInf.ownerId != ''"> and h.owner_id = #{hyHouseInf.ownerId}</if>
+			<if
+				test="hyHouseInf.houseNumber != null  and hyHouseInf.houseNumber != ''"> and h.house_number = #{hyHouseInf.houseNumber}</if>
+			<if test="hyHouseInf.unit != null  and hyHouseInf.unit != ''"> and h.unit = #{hyHouseInf.unit}</if>
 		</if>
 		<if test="hyCollection != null">
-		<if test="hyCollection.isCollection != null and hyCollection.isCollection != ''">
-		and t.is_collection = "0"
-		</if>
+			<if
+				test="hyCollection.isCollection != null and hyCollection.isCollection != ''">
+				and t.is_collection = "0"
+			</if>
 		</if>
 	</select>
-	<select id="selectHyCashierDeskListByIsCollection" parameterType="HyCost"
-		resultMap="HyCostResult">
+	<select id="selectHyCashierDeskListByIsCollection"
+		parameterType="HyCost" resultMap="HyCostResult">
 		<include refid="selectHyCostVoByIsCollection" />
 		<if test="costItems != null  and costItems != ''"> and son.cost_items = #{costItems}</if>
-		<if test="bilingStartDate != null and bilingEndDate != null">and son.fee_date between #{bilingStartDate} and #{bilingEndDate}</if>
+		<if test="bilingStartDate != null and bilingEndDate != null">and son.fee_date between #{bilingStartDate} and
+			#{bilingEndDate}</if>
 		<if test="hyOwnerRegistration != null">
-		<if test="hyOwnerRegistration.ownerName != null  and hyOwnerRegistration.ownerName != ''"> and son.owner_name = #{hyOwnerRegistration.ownerName}</if>
-		<if test="hyOwnerRegistration.mobilePhone != null  and hyOwnerRegistration.mobilePhone != ''"> and son.mobile_phone = #{hyOwnerRegistration.mobilePhone}</if>
+			<if
+				test="hyOwnerRegistration.ownerName != null  and hyOwnerRegistration.ownerName != ''"> and son.owner_name = #{hyOwnerRegistration.ownerName}</if>
+			<if
+				test="hyOwnerRegistration.mobilePhone != null  and hyOwnerRegistration.mobilePhone != ''"> and son.mobile_phone = #{hyOwnerRegistration.mobilePhone}</if>
 		</if>
 		<if test="hyResidentialQuarters != null">
-		<if test="hyResidentialQuarters.communityName != null  and hyResidentialQuarters.communityName != ''"> and son.community_name = #{hyResidentialQuarters.communityName}</if>
+			<if
+				test="hyResidentialQuarters.communityName != null  and hyResidentialQuarters.communityName != ''"> and son.community_name =
+				#{hyResidentialQuarters.communityName}</if>
 		</if>
 		<if test="hyBuilding != null">
-		<if test="hyBuilding.buildingName != null  and hyBuilding.buildingName != ''"> and son.building_name = #{hyBuilding.buildingName}</if>
+			<if
+				test="hyBuilding.buildingName != null  and hyBuilding.buildingName != ''"> and son.building_name = #{hyBuilding.buildingName}</if>
 		</if>
 		<if test="hyHouseInf != null">
-		<if test="hyHouseInf.unit != null  and hyHouseInf.unit != ''"> and son.unit = #{hyHouseInf.unit}</if>
+			<if test="hyHouseInf.unit != null  and hyHouseInf.unit != ''"> and son.unit = #{hyHouseInf.unit}</if>
 		</if>
 		AND son.is_collection is null
 	</select>
-	
-	<select id="selectHyReportDataCollection"  resultMap="HyCostResult">
+
+	<select id="selectHyReportDataCollection"
+		resultMap="HyCostResult">
 		<include refid="selectHyCostVoByIsCollection" />
 		<if test="houseNumber != null  and houseNumber != ''"> and son.house_number = #{houseNumber}</if>
 		<if test="ownerId != null  and ownerId != ''"> and son.owner_id = #{ownerId}</if>
@@ -347,5 +373,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</trim>
 		where id = #{id}
 	</update>
-	
+
 </mapper>

@@ -1,5 +1,6 @@
 package com.ruoyi.system.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -54,7 +55,7 @@ public class HyHouseInf extends BaseEntity
 
     /** 计费面积 */
     @Excel(name = "计费面积")
-    private String bilingArea;
+    private BigDecimal bilingArea;
 
     /** 套内面积 */
     @Excel(name = "套内面积")
@@ -259,12 +260,12 @@ public class HyHouseInf extends BaseEntity
     {
         return areaType;
     }
-    public void setBilingArea(String bilingArea) 
+    public void setBilingArea(BigDecimal bilingArea) 
     {
         this.bilingArea = bilingArea;
     }
 
-    public String getBilingArea() 
+    public BigDecimal getBilingArea() 
     {
         return bilingArea;
     }

@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -126,18 +127,51 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 	@Override
 	public int printReceipt(HttpServletResponse response) throws JRException, InvalidPasswordException, IOException,
 			PrinterException, ClassNotFoundException, SQLException {
+
 		String fileName = "d:\\" + new Date().getTime() + "收据.pdf";
 		try {
 			// 1、获取模版文件
 			File rootFile = new File(ResourceUtils.getURL("classpath:").getPath());
 			File templateFile = new File(rootFile, "/pdf_template/printReceipt_db.jasper");
 			// 2、准备数据库连接
-			Map<String, Object> params = new HashMap<String, Object>();
 			String pic = rootFile + "\\static\\pdfimg\\e813f89d5a4c8f33b567a553a60649b.png";
-			params.put("pic", pic);
-			JasperPrint jasperPrint = JasperFillManager.fillReport(new FileInputStream(templateFile), params, getCon());
-			JasperExportManager.exportReportToPdfStream(jasperPrint, new FileOutputStream(fileName));
-			HyPrintPDFUtil.printPDF(fileName, "RECEIPT");
+
+			Map<String, Object> map = new HashMap<>();
+			map.put("pic", pic);
+
+			List<HyHouseInf> list = hyHouseInfMapper.selectHyHouseInfList(new HyHouseInf());
+
+			for (HyHouseInf inf : list) {
+				List<Map<String, Object>> paramList = new ArrayList<>();
+				HyCost hyCost = new HyCost();
+				hyCost.setHyHouseInf(inf);
+
+				List<HyCost> costList = hyCashierDeskMapper.selectHyCashierDeskList(hyCost);
+
+				for (HyCost cost : costList) {
+					// 2、准备数据库连接
+					Map<String, Object> params = new HashMap<String, Object>();
+
+					params.put("id", cost.getId());
+					params.put("house_number", inf.getHouseNumber());
+					params.put("owner_name", cost.getHyOwnerRegistration().getOwnerName());
+					params.put("cost_items", cost.getCostItems());
+					params.put("community_name", cost.getHyResidentialQuarters().getCommunityName());
+					params.put("building_name", cost.getHyBuilding().getBuildingName());
+					params.put("fee_date", cost.getFeeDate());
+					params.put("is_collection", cost.getHyCollection().getIsCollection() == null ? "未支付" : "已支付");
+					params.put("amount_receivable", cost.getAmountReceivable().setScale(2));
+					params.put("amount", cost.getHyCollection().getAmount() == null ? new BigDecimal(0)
+							: new BigDecimal(cost.getHyCollection().getAmount()));
+					paramList.add(params);
+				}
+				JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(paramList);
+
+				JasperPrint jasperPrint = JasperFillManager.fillReport(new FileInputStream(templateFile), map,
+						dataSource);
+				JasperExportManager.exportReportToPdfStream(jasperPrint, new FileOutputStream(fileName));
+				HyPrintPDFUtil.printPDF(fileName, "RECEIPT");
+			}
 		} catch (java.io.EOFException e) {
 			log.error("没有字体的异常,没关系，不要在意" + e.getMessage());
 		}
@@ -237,7 +271,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 			String buildingName = hyCost.getHyBuilding().getBuildingName();
 			String feeDate = hyCost.getFeeDate();
 			String isCollection = hyCost.getHyCollection().getIsCollection();
-			String amountReceivable = hyCost.getAmountReceivable().setScale(2) + "";
+			String amountReceivable = hyCost.getAmountReceivable().setScale(2)+"";
 			String amount = hyCost.getHyCollection().getAmount() + "";
 			params.put("pic", pic);
 			params.put("house_number", houseNumber);
@@ -340,13 +374,13 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 				hyBuildingMapper.insertHyBuilding(hyBuilding);
 				successNum++;
 				successMsg.append("<br/>" + successNum + "、楼栋为 " + hyBuilding.getBuildingNumber() + "的楼宇 导入成功");
-			} else if (updateSupport) {
+			}/* else if (updateSupport) {
 				hyBuilding.setId(buildingList.get(0).getId());
 				hyBuilding.setQuartersId((long) 1);
 				hyBuildingMapper.updateHyBuilding(hyBuilding);
 				successNum++;
 				successMsg.append("<br/>" + successNum + "、楼栋为 " + hyBuilding.getBuildingNumber() + "的楼宇 更新成功");
-			}
+			}*/
 			// 业主
 			HyOwnerRegistration hyOwnerRegistration = new HyOwnerRegistration();
 			hyOwnerRegistration.setOwnerName(hyCashierDesk.getOwnerName());
@@ -360,7 +394,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 				successNum++;
 				successMsg.append("<br/>" + successNum + "、姓名 " + hyOwnerRegistration.getOwnerName() + "、身份证号码为 "
 						+ hyOwnerRegistration.getIdCardNum() + "的业主 导入成功");
-			} else if (updateSupport) {
+			}/* else if (updateSupport) {
 				hyOwnerRegistration.setId(ownerRegistrationList.get(0).getId());
 				hyOwnerRegistration.setMobilePhone(hyCashierDesk.getMobilePhone());
 				hyOwnerRegistration.setIdCardAddress(hyCashierDesk.getIdCardAddress());
@@ -372,23 +406,25 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 				failureNum++;
 				failureMsg.append("<br/>" + failureNum + "、姓名 " + hyOwnerRegistration.getOwnerName() + "、身份证号码为 "
 						+ hyOwnerRegistration.getIdCardNum() + "的业主 已存在");
-			}
+			}*/
 			// 房屋
 			HyHouseInf hyHouseInf = new HyHouseInf();
+			List<HyBuilding> buildingListBy = hyBuildingMapper.selectHyBuildingList(hyBuilding);
+			hyHouseInf.setBuildingId(buildingListBy.get(0).getId());
 			hyHouseInf.setUnit(hyCashierDesk.getUnit());
 			hyHouseInf.setHouseNumber(hyCashierDesk.getHouseNumber());
-			List<HyBuilding> buildingListBy = hyBuildingMapper.selectHyBuildingList(hyBuilding);
 			List<HyOwnerRegistration> ownerRegistrationListBy = hyOwnerRegistrationMapper
 					.selectHyOwnerRegistrationList(hyOwnerRegistration);
 			List<HyHouseInf> houseInfList = hyHouseInfMapper.selectHyHouseInfList(hyHouseInf);
 			if (houseInfList == null || houseInfList.size() == 0) {
 				hyHouseInf.setBuildingId(buildingListBy.get(0).getId());
 				hyHouseInf.setOwnerId(ownerRegistrationListBy.get(0).getId());
+				hyHouseInf.setBilingArea(hyCashierDesk.getBilingArea());
 				hyHouseInfMapper.insertHyHouseInf(hyHouseInf);
 				successNum++;
 				successMsg.append("<br/>" + successNum + "、单元 " + hyHouseInf.getUnit() + "、房屋编号为 "
 						+ hyHouseInf.getHouseNumber() + "的房屋 导入成功");
-			} else if (updateSupport) {
+			}/* else if (updateSupport) {
 				hyHouseInf.setId(houseInfList.get(0).getId());
 				hyHouseInf.setBuildingId(buildingListBy.get(0).getId());
 				hyHouseInf.setOwnerId(ownerRegistrationListBy.get(0).getId());
@@ -400,7 +436,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 				failureNum++;
 				failureMsg.append("<br/>" + failureNum + "、单元 " + hyHouseInf.getUnit() + "、房屋编号为 "
 						+ hyHouseInf.getHouseNumber() + "的房屋 已存在");
-			}
+			}*/
 			// 费用
 			List<HyCost> costList = hyCostMapper.selectHyCostListDistinct(new HyCost());
 			for (int i = 0; i < costList.size(); i++) {
@@ -417,11 +453,11 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 					successNum++;
 					successMsg.append("<br/>" + successNum + "、费用项目为 " + hyCost.getCostItems() + "、和房屋编号为 "
 							+ hyHouseInf.getHouseNumber() + " 关系导入成功");
-				} else {
+				}/* else {
 					failureNum++;
 					failureMsg.append("<br/>" + failureNum + "、费用项目为 " + hyCost.getCostItems() + "、和房屋编号为 "
 							+ hyHouseInf.getHouseNumber() + "关系已存在");
-				}
+				}*/
 			}
 		}
 

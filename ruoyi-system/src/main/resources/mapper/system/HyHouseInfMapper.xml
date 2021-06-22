@@ -155,7 +155,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from 
 		hy_house_inf
 	</sql>
-
+	
+	<sql id="selectHyHouseInfVoDistinctByhouseNumber">
+		select 
+		DISTINCT house_number
+		from 
+		hy_house_inf
+	</sql>
+	
 	<select id="selectHyHouseInfList" parameterType="HyHouseInf"
 		resultMap="HyHouseInfResult">
 		<include refid="selectHyHouseInfVo" />
@@ -197,6 +204,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectHyHouseInfListDistinct" parameterType="HyHouseInf"
 		resultMap="HyHouseInfResult">
 		<include refid="selectHyHouseInfVoDistinct" />
+	</select>
+	
+	<select id="selectHyHouseInfVoDistinctByhouseNumber" parameterType="HyHouseInf"
+		resultMap="HyHouseInfResult">
+		<include refid="selectHyHouseInfVoDistinctByhouseNumber" />
 	</select>
 
 	<select id="selectHyHouseInfById" parameterType="Long"

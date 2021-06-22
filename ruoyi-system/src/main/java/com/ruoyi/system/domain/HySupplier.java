@@ -27,6 +27,9 @@ public class HySupplier extends BaseEntity
     /** 供应商营业执照 */
     @Excel(name = "供应商营业执照")
     private String supplierBusinessLicence;
+    
+    /** 原供应商营业执照 */
+    private String deleteFile;
 
     /** 供应商负责人 */
     @Excel(name = "供应商负责人")
@@ -76,7 +79,16 @@ public class HySupplier extends BaseEntity
     {
         return supplierBusinessLicence;
     }
-    public void setSupplierCharge(String supplierCharge) 
+    
+    public String getDeleteFile() {
+		return deleteFile;
+	}
+
+	public void setDeleteFile(String deleteFile) {
+		this.deleteFile = deleteFile;
+	}
+
+	public void setSupplierCharge(String supplierCharge) 
     {
         this.supplierCharge = supplierCharge;
     }
@@ -128,6 +140,7 @@ public class HySupplier extends BaseEntity
             .append("id", getId())
             .append("supplierName", getSupplierName())
             .append("supplierBusinessLicence", getSupplierBusinessLicence())
+            .append("deleteFile", getDeleteFile())
             .append("supplierCharge", getSupplierCharge())
             .append("supplierPhone", getSupplierPhone())
             .append("supplierEmail", getSupplierEmail())

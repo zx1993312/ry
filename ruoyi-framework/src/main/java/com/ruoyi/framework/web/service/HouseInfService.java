@@ -30,4 +30,9 @@ public class HouseInfService {
 		return hyHouseInfMapper.selectHyHouseInfListDistinct(new HyHouseInf());
 		
 	}
+	
+	public List<HyHouseInf> getHouseNumber(){
+		return hyHouseInfMapper.selectHyHouseInfVoDistinctByhouseNumber(new HyHouseInf());
+		
+	}
 }

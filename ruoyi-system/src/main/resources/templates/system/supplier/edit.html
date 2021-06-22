@@ -12,7 +12,7 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">供应商名称：</label>
                 <div class="col-sm-8">
-                    <input name="supplierName" th:field="*{supplierName}" class="form-control" type="text">
+                    <input name="supplierName" id="supplierName" th:field="*{supplierName}" class="form-control" type="text">
                 </div>
             </div>
            <div class="form-group">
@@ -27,32 +27,32 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">供应商负责人：</label>
                 <div class="col-sm-8">
-                    <input name="supplierCharge" th:field="*{supplierCharge}" class="form-control" type="text">
+                    <input name="supplierCharge" id="supplierCharge" th:field="*{supplierCharge}" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">供应商联系电话：</label>
                 <div class="col-sm-8">
-                    <input name="supplierPhone" th:field="*{supplierPhone}" class="form-control" type="text">
+                    <input name="supplierPhone" id="supplierPhone" th:field="*{supplierPhone}" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">供应商电子邮箱：</label>
                 <div class="col-sm-8">
-                    <input name="supplierEmail" th:field="*{supplierEmail}" class="form-control" type="text">
+                    <input name="supplierEmail" id="supplierEmail" th:field="*{supplierEmail}" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">供应商地址：</label>
                 <div class="col-sm-8">
-                    <input name="supplierAddress" th:field="*{supplierAddress}" class="form-control" type="text">
+                    <input name="supplierAddress" id="supplierAddress" th:field="*{supplierAddress}" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">成立日期：</label>
                 <div class="col-sm-8">
                     <div class="input-group date">
-                        <input name="incorporationDate" th:value="${#dates.format(hySupplier.incorporationDate, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <input name="incorporationDate" id="incorporationDate" th:value="${#dates.format(hySupplier.incorporationDate, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                     </div>
                 </div>
@@ -90,9 +90,32 @@
         });
 
         function submitHandler() {
-            if ($.validate.form()) {
-                $.operate.save(prefix + "/edit", $('#form-supplier-edit').serialize());
-            }
+          	var supplierName = $("#supplierName").val();
+          	var supplierBusinessLicence = $("#remarks").val();
+          	var id = $("#id").val();
+          	var supplierCharge = $("#supplierCharge").val();
+          	var supplierPhone = $("#supplierPhone").val();
+          	var supplierEmail = $("#supplierEmail").val();
+          	var supplierAddress = $("#supplierAddress").val();
+          	var incorporationDate = $("#incorporationDate").val();
+          	var deleteFile = $("#deleteFile").val();
+          	$.ajax({
+                  type: "post",
+                  datatype: "json",
+                  url:  prefix + '/edit',
+                  data: {"id": id,"supplierName":supplierName,"supplierBusinessLicence":supplierBusinessLicence,
+                	  "supplierCharge":supplierCharge,"supplierPhone":supplierPhone,"supplierEmail":supplierEmail,
+                	  "supplierAddress":supplierAddress,"incorporationDate":incorporationDate,"deleteFile":deleteFile},
+                  async: true,
+                  success: function (result) {
+                      //console.log(result);
+
+                  	if (typeof callback == "function") {
+      	                callback(result);
+      	            }
+      	            $.operate.successCallback(result);
+                  }
+              });
         }
 
         $("input[name='incorporationDate']").datetimepicker({

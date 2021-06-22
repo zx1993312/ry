@@ -264,18 +264,7 @@
                 },
                 {
                     field: 'bilingArea',
-                    title: '计费面积',
-                    formatter: function(value, item, index) {
-                    	switch(value){
-	                    	case '30' : value =  "按计费面积*单价每月计算";break;
-	                    	case '120' : value =  "按计费面积*单价每季计算";break;
-	                    	case '365' : value =  "按计费面积*单价每年计算";break;
-	                    	case '31' : value =  "按定额每月计算";break;
-	                    	case '122' : value =  "按定额每季计算";break;
-	                    	case '366' : value =  "按定额每年计算";break;
-	                	}
-		            	return value;
-		            }
+                    title: '计费面积'
                 },
                 {
                     field: 'insideArea',

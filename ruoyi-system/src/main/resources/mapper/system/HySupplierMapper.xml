@@ -63,7 +63,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update hy_supplier
         <trim prefix="SET" suffixOverrides=",">
             <if test="supplierName != null">supplier_name = #{supplierName},</if>
-            <if test="supplierBusinessLicence != null">supplier_business_licence = #{supplierBusinessLicence},</if>
+            <if test="supplierBusinessLicence != null and supplierBusinessLicence != ''">supplier_business_licence = #{supplierBusinessLicence},</if>
             <if test="supplierCharge != null">supplier_charge = #{supplierCharge},</if>
             <if test="supplierPhone != null">supplier_phone = #{supplierPhone},</if>
             <if test="supplierEmail != null">supplier_email = #{supplierEmail},</if>

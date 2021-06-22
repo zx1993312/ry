@@ -1,10 +1,12 @@
 package com.ruoyi.system.service.impl;
 
+import java.io.File;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.ruoyi.system.mapper.HySupplierMapper;
+import com.ruoyi.system.domain.HyProduct;
 import com.ruoyi.system.domain.HySupplier;
 import com.ruoyi.system.service.IHySupplierService;
 import com.ruoyi.common.core.text.Convert;
@@ -68,6 +70,11 @@ public class HySupplierServiceImpl implements IHySupplierService
     @Override
     public int updateHySupplier(HySupplier hySupplier)
     {
+    	if(!"".equals(hySupplier.getSupplierBusinessLicence())) {
+    		String deleteFile = hySupplier.getDeleteFile();
+    		deleteFile(deleteFile);
+    	}
+    	
         return hySupplierMapper.updateHySupplier(hySupplier);
     }
 
@@ -81,6 +88,13 @@ public class HySupplierServiceImpl implements IHySupplierService
     @Override
     public int deleteHySupplierByIds(String ids)
     {
+    	String ida [] = ids.split(",");
+    	for(String id:ida) {
+    		Long idd = Long.valueOf(id);
+    		HySupplier hySupplier = hySupplierMapper.selectHySupplierById(idd);
+    		String fileName = hySupplier.getSupplierBusinessLicence();
+    		deleteFile(fileName);
+    	}
         return hySupplierMapper.deleteHySupplierByIds(Convert.toStrArray(ids));
     }
 
@@ -94,6 +108,31 @@ public class HySupplierServiceImpl implements IHySupplierService
     @Override
     public int deleteHySupplierById(Long id)
     {
+    	HySupplier hySupplier = hySupplierMapper.selectHySupplierById(id);
+    	String fileName = hySupplier.getSupplierBusinessLicence();
+		deleteFile(fileName);
         return hySupplierMapper.deleteHySupplierById(id);
     }
+    
+    /**
+     * 删除上传图片
+     * @return
+     */
+	@Override
+	public boolean deleteFile(String fileName) {
+		String fileName1 = System.getProperty("user.dir")+"\\src\\main\\resources\\static\\img\\"+fileName;
+		File file = new File(fileName1);
+		System.out.println("================file================"+file);
+		//判断文件存不存在
+		if(!file.exists()){
+			System.out.println("删除文件失败："+fileName+"不存在！");
+			return false;
+		}else{
+			//判断这是不是一个文件，ps：有可能是文件夹
+			if(file.isFile()){
+				return file.delete();
+			}
+		}
+		return false;
+	}
 }

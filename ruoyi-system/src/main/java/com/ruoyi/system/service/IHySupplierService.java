@@ -58,4 +58,10 @@ public interface IHySupplierService
      * @return 结果
      */
     public int deleteHySupplierById(Long id);
+
+    /**
+     * 删除上传图片
+     * @return
+     */
+	public boolean deleteFile(String fileName);
 }

@@ -153,14 +153,6 @@
         });
 
         function submitHandler() {
-        	if ($('#imagepaths').val() == ""|| $('#imagepaths').val() == null) {
-      		  $.modal.alertWarning("请先选择产品多图");
-      		  return;
-      		 }
-      		if ($('#pic').val() == ""|| $('#pic').val() == null) {
-      		  $.modal.alertWarning("请先选择产品信息缩略图");
-      		  return;
-      		 }
         	var pcitureAddress = $("#pic").val();
         	var imagepaths = $("#imagepaths").val();
         	var id = $("#id").val();
