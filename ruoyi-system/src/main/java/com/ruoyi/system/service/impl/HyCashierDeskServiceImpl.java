@@ -272,7 +272,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 			String feeDate = hyCost.getFeeDate();
 			String isCollection = hyCost.getHyCollection().getIsCollection();
 			String amountReceivable = hyCost.getAmountReceivable().setScale(2)+"";
-			String amount = hyCost.getHyCollection().getAmount() +"";
+			String amount = hyCost.getHyCollection().getAmount() + "";
 			params.put("pic", pic);
 			params.put("house_number", houseNumber);
 			params.put("owner_name", ownerName);
