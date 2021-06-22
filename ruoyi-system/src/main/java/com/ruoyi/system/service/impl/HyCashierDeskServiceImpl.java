@@ -409,6 +409,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 				failureMsg.append("<br/>" + failureNum + "、姓名 " + hyOwnerRegistration.getOwnerName() + "、身份证号码为 "
 						+ hyOwnerRegistration.getIdCardNum() + "的业主 已存在");
 			}*/
+			
 			// 房屋
 			HyHouseInf hyHouseInf = new HyHouseInf();
 			List<HyBuilding> buildingListBy = hyBuildingMapper.selectHyBuildingList(hyBuilding);
