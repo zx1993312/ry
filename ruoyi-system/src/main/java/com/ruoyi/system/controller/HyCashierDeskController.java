@@ -1,7 +1,11 @@
 package com.ruoyi.system.controller;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -42,6 +46,7 @@ import com.ruoyi.system.mapper.HyOwnerRegistrationMapper;
 import com.ruoyi.system.mapper.HyResidentialQuartersMapper;
 import com.ruoyi.system.service.IHyCashierDeskService;
 import com.ruoyi.system.service.IHyHouseInfService;
+import com.ruoyi.system.utils.ReceivableUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -96,24 +101,38 @@ public class HyCashierDeskController extends BaseController {
 	@PostMapping("/list")
 	@ResponseBody
 	public TableDataInfo list(HyCost hyCost) {
-		if (StringUtils.isEmpty(hyCost.getHyResidentialQuarters().getCommunityName())
+		/*if (StringUtils.isEmpty(hyCost.getHyResidentialQuarters().getCommunityName())
 				&& StringUtils.isEmpty(hyCost.getHyBuilding().getBuildingName())
 				&& StringUtils.isEmpty(hyCost.getHyHouseInf().getUnit())
 				&& StringUtils.isEmpty(hyCost.getHyOwnerRegistration().getOwnerName())
 				&& StringUtils.isEmpty(hyCost.getHyOwnerRegistration().getMobilePhone())
 				&& StringUtils.isEmpty(hyCost.getHyCollection().getIsCollection())) {
-			List<HyCost> relist = new ArrayList<HyCost>();
+			List<HyCost> relist = new ArrayList<HyCost>();*/
 			startPage();
+			Map<String, Object> map = new HashMap<>();
 			List<HyCost> list = hyCashierDeskService.selectHyCashierDeskList(hyCost);
 			for (HyCost cost : list) {
+				BigDecimal calculationStandard = cost.getCalculationStandard();
+				String costItems = cost.getCostItems();
+				BigDecimal bilingArea = cost.getHyHouseInf().getBilingArea();
+				BigDecimal amountReceivable = ReceivableUtil.getReceivable(calculationStandard, costItems, bilingArea);
+				cost.setAmountReceivable(amountReceivable);
+			}
+			return getDataTable(list);
+			/*for (HyCost cost : list) {
 				HyCost reCost = new HyCost();
 				HouseAndCost houseAndCost = new HouseAndCost();
 				houseAndCost.setCostId(cost.getId());
-				List<HouseAndCost> houseList = hyCustomerMapper.selectCostIds(houseAndCost);
-				for (int i = 0; i < houseList.size(); i++) {
+				List<HouseAndCost> houseList = hyCustomerMapper.selectCostIds(houseAndCost);*/
+				/*for (int i = 0; i < houseList.size(); i++) {
 					reCost = (HyCost) Constants.REFLECT_UTIL.convertBean(new HyCost(), cost);
+					BigDecimal calculationStandard = reCost.getCalculationStandard();
+					String costItems = reCost.getCostItems();
 					Long houseId = houseList.get(i).getHouseId();
 					HyHouseInf hyHouseInf = hyHouseInfService.selectHyHouseInfById(houseId);
+					BigDecimal bilingArea = hyHouseInf.getBilingArea();
+					BigDecimal amountReceivable = ReceivableUtil.getReceivable(calculationStandard, costItems, bilingArea);
+					reCost.setAmountReceivable(amountReceivable.setScale(2,RoundingMode.HALF_UP));
 					reCost.setHyHouseInf(hyHouseInf);
 					Long buildingId = hyHouseInf.getBuildingId();
 					HyBuilding hyBuilding = hyBuildingMapper.selectHyBuildingById(buildingId);
@@ -259,7 +278,7 @@ public class HyCashierDeskController extends BaseController {
 				}
 			}
 		}
-		return getDataTable(new ArrayList<>());
+		return getDataTable(new ArrayList<>());*/
 	}
 
 	/**

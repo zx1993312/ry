@@ -198,9 +198,9 @@
                     	received += res.rows[i].hyCollection.amount;
                     }
                     uncollected = receivable - received;
-                    $("#receivable").val(receivable);
-                    $("#received").val(received);
-                    $("#uncollected").val(uncollected);
+                    $("#receivable").val(receivable.toFixed(2));
+                    $("#received").val(received.toFixed(2));
+                    $("#uncollected").val(uncollected.toFixed(2));
                        return res.messages 
                    }
             };

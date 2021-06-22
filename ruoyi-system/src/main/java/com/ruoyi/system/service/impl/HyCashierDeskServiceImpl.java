@@ -148,10 +148,12 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 
 				List<HyCost> costList = hyCashierDeskMapper.selectHyCashierDeskList(hyCost);
 
+				if(costList.size()==0) {
+					continue;
+				}
 				for (HyCost cost : costList) {
 					// 2、准备数据库连接
 					Map<String, Object> params = new HashMap<String, Object>();
-
 					params.put("id", cost.getId());
 					params.put("house_number", inf.getHouseNumber());
 					params.put("owner_name", cost.getHyOwnerRegistration().getOwnerName());
