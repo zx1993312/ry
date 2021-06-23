@@ -1080,7 +1080,7 @@ var table = {
             		shade: 0.3,
             		title: title,
             		content: url,
-            		btn: ['发起收款', '关闭'],
+            		btn: ['确认收款', '关闭'],
             		// 弹层外区域关闭
             		shadeClose: true,
             		yes: callback,
@@ -1379,9 +1379,9 @@ var table = {
             			return;
             		}
             		var url = table.options.updateUrl.replace("{id}", row[table.options.uniqueId]);
-            		$.modal.opens("查看" + table.options.modalName, url);
+            		$.modal.opens("单笔收款", url);
             	} else {
-            		$.modal.opens("查看" + table.options.modalName, $.operate.editUrl(id));
+            		$.modal.opens("单笔收款", $.operate.editUrl(id));
             	}
             },
             // 审核
@@ -1494,6 +1494,7 @@ var table = {
             	}
                 return url;
             },
+            //延期交款
             editUrls: function(id) {
             	var url = "/404.html";
             	if ($.common.isNotEmpty(id)) {

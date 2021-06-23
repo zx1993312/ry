@@ -109,7 +109,6 @@ public class HyCashierDeskController extends BaseController {
 				&& StringUtils.isEmpty(hyCost.getHyCollection().getIsCollection())) {
 			List<HyCost> relist = new ArrayList<HyCost>();*/
 			startPage();
-			Map<String, Object> map = new HashMap<>();
 			List<HyCost> list = hyCashierDeskService.selectHyCashierDeskList(hyCost);
 			for (HyCost cost : list) {
 				BigDecimal calculationStandard = cost.getCalculationStandard();
@@ -117,6 +116,7 @@ public class HyCashierDeskController extends BaseController {
 				BigDecimal bilingArea = cost.getHyHouseInf().getBilingArea();
 				BigDecimal amountReceivable = ReceivableUtil.getReceivable(calculationStandard, costItems, bilingArea);
 				cost.setAmountReceivable(amountReceivable);
+				/*cost.setId(Long.valueOf(String.valueOf(cost.getId()).split(cost.getHyHouseInf().getHouseNumber())[0]));*/
 			}
 			return getDataTable(list);
 			/*for (HyCost cost : list) {
@@ -339,6 +339,36 @@ public class HyCashierDeskController extends BaseController {
 			}
 		}
 		return relist;
+	}
+	
+	/**
+	 * 查询应收总计未收总计已收总计列表
+	 */
+	@ApiOperation("收银台")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyCost", value = "项目实体类hyCost", required = true), })
+	@RequiresPermissions("system:cashierDesk:list")
+	@PostMapping("/jisuan")
+	@ResponseBody
+	public Map<String, Object> jisuan() {
+		Map<String, Object> map = new HashMap<>();
+		List<HyCost> list = hyCashierDeskService.selectHyCashierDeskList(new HyCost());
+		BigDecimal amountReceivableCount = new BigDecimal(0);
+		BigDecimal amountCount = new BigDecimal(0);
+		for (HyCost cost : list) {
+			BigDecimal calculationStandard = cost.getCalculationStandard();
+			String costItems = cost.getCostItems();
+			BigDecimal bilingArea = cost.getHyHouseInf().getBilingArea();
+			BigDecimal amountReceivable = ReceivableUtil.getReceivable(calculationStandard, costItems, bilingArea);
+			amountReceivableCount = amountReceivableCount.add(amountReceivable);
+			Long amount = cost.getHyCollection().getAmount() == null ? 0l : cost.getHyCollection().getAmount();
+			BigDecimal amountB = new BigDecimal(amount);
+			amountCount = amountCount.add(amountB);
+		}
+		BigDecimal uncollected = amountReceivableCount.subtract(amountCount);
+		map.put("amountReceivable", amountReceivableCount);
+		map.put("received", amountCount);
+		map.put("uncollected", uncollected);
+		return map;
 	}
 
 	/**

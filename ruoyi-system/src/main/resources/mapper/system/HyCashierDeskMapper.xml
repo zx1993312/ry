@@ -122,6 +122,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap type="HyBuilding" id="HyBuildingResult">
 		<result property="id" column="id" />
 		<result property="buildingName" column="building_name" />
+		<result property="buildingNumber" column="building_number" />
 		<result property="buildingHigh" column="building_high" />
 		<result property="buildingUnit" column="building_unit" />
 		<result property="buildingHouseholds"
@@ -232,32 +233,67 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			JOIN hy_residential_quarters q ON b.quarters_id = q.id LEFT JOIN hy_collection 
 			t ON t.cost_id = c.id and t.owner_id = o.id and t.house_id = h.id WHERE 1 
 			= 1 -->
-		select CONCAT(son.id,son.house_number) as id
-		,son.id,son.cost_items,son.community_name,son.building_name,son.house_number,son.biling_area,
-		son.owner_name,son.fee_date,son.is_collection,son.amount_receivable,son.calculation_standard,son.amount
-		from (SELECT c.id, c.cost_items, q.community_name, b.building_name,
+		SELECT
+		CONCAT( son.id, son.house_number, son.owner_id) AS id,
+		son.cost_items,
+		son.community_name,
+		son.building_number,
+		son.building_name,
+		son.house_number,
+		son.biling_area,
+		son.unit,
+		son.owner_id,
+		son.owner_name,
+		son.fee_date,
+		son.is_collection,
+		son.amount_receivable,
+		son.calculation_standard,
+		son.amount
+		FROM
+		(
+		SELECT
+		c.id,
+		c.cost_items,
+		q.community_name,
+		b.building_name,
+		b.building_number,
+		h.owner_id,
 		h.house_number,
 		h.biling_area,
-		o.owner_name, c.fee_date, t.is_collection,
+		h.unit,
+		o.owner_name,
+		c.fee_date,
+		t.is_collection,
 		c.amount_receivable,
 		c.calculation_standard,
-		t.amount FROM hy_cost c
+		t.amount
+		FROM
+		hy_cost c
 		LEFT JOIN house_and_cost a
 		ON a.cost_id = c.id
-		LEFT JOIN hy_house_inf h ON a.house_id = h.id
+		LEFT JOIN
+		hy_house_inf h ON a.house_id = h.id
 		LEFT
-		JOIN hy_owner_registration o ON h.owner_id = o.id
+		JOIN hy_owner_registration o
+		ON h.owner_id = o.id
 		LEFT JOIN hy_building
 		b ON h.building_id = b.id
 		LEFT JOIN hy_residential_quarters q ON
 		b.quarters_id = q.id
-		LEFT JOIN hy_collection t ON t.cost_id = c.id and
-		t.owner_id = o.id and
-		t.house_id = h.id WHERE 1 = 1
-		order by
-		o.owner_name ) son
-		where
-		1=1
+		LEFT JOIN
+		hy_collection t ON t.cost_id = c.id
+		AND
+		t.owner_id = o.id
+		AND t.house_id = h.id
+		WHERE
+		1 = 1
+		ORDER BY
+		o.owner_name
+		)
+		son
+		WHERE
+		1 = 1
+
 	</sql>
 
 	<sql id="selectHyCostVoByIsCollection">
@@ -364,7 +400,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectHyCashierDeskById" parameterType="Long"
 		resultMap="HyCostResult">
 		<include refid="selectHyCostVo" />
-		and c.id = #{id}
+		AND CONCAT( son.id, son.house_number,son.owner_id ) = #{id}
 	</select>
 
 	<update id="updateHyCashierDesk" parameterType="HyCost">
