@@ -115,7 +115,7 @@ public class HyCashierDeskController extends BaseController {
 				String costItems = cost.getCostItems();
 				BigDecimal bilingArea = cost.getHyHouseInf().getBilingArea();
 				BigDecimal amountReceivable = ReceivableUtil.getReceivable(calculationStandard, costItems, bilingArea);
-				cost.setAmountReceivable(amountReceivable);
+				cost.setAmountReceivable(amountReceivable.setScale(2,RoundingMode.HALF_UP));
 				/*cost.setId(Long.valueOf(String.valueOf(cost.getId()).split(cost.getHyHouseInf().getHouseNumber())[0]));*/
 			}
 			return getDataTable(list);

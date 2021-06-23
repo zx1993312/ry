@@ -1544,7 +1544,6 @@ var table = {
             				if (typeof callback == "function") {
             					callback(result);
             				}
-            				debugger;
             				if(result.msg=="操作失败"){
             	   	         	 $.modal.alertWarning("该条数据已被收款");
             	   	         	}else{

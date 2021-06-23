@@ -236,6 +236,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT
 		CONCAT( son.id, son.house_number, son.owner_id) AS id,
 		son.cost_items,
+		son.cost_id,
+		son.house_id,
 		son.community_name,
 		son.building_number,
 		son.building_name,
@@ -244,6 +246,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		son.unit,
 		son.owner_id,
 		son.owner_name,
+		son.mobile_phone,
+		son.id_card_num,
 		son.fee_date,
 		son.is_collection,
 		son.amount_receivable,
@@ -254,6 +258,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT
 		c.id,
 		c.cost_items,
+		a.cost_id,
+		a.house_id,
 		q.community_name,
 		b.building_name,
 		b.building_number,
@@ -262,6 +268,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		h.biling_area,
 		h.unit,
 		o.owner_name,
+		o.id_card_num,
+		o.mobile_phone,
 		c.fee_date,
 		t.is_collection,
 		c.amount_receivable,
@@ -269,28 +277,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		t.amount
 		FROM
 		hy_cost c
-		LEFT JOIN house_and_cost a
-		ON a.cost_id = c.id
+		LEFT JOIN house_and_cost a ON a.cost_id = c.id
 		LEFT JOIN
 		hy_house_inf h ON a.house_id = h.id
-		LEFT
-		JOIN hy_owner_registration o
+		LEFT JOIN hy_owner_registration o
 		ON h.owner_id = o.id
-		LEFT JOIN hy_building
-		b ON h.building_id = b.id
-		LEFT JOIN hy_residential_quarters q ON
-		b.quarters_id = q.id
+		LEFT JOIN hy_building b ON h.building_id = b.id
+		LEFT JOIN hy_residential_quarters q ON b.quarters_id = q.id
 		LEFT JOIN
 		hy_collection t ON t.cost_id = c.id
-		AND
-		t.owner_id = o.id
+		AND t.owner_id = o.id
 		AND t.house_id = h.id
 		WHERE
 		1 = 1
 		ORDER BY
 		o.owner_name
-		)
-		son
+		) son
 		WHERE
 		1 = 1
 
@@ -333,31 +335,47 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectHyCashierDeskList" parameterType="HyCost"
 		resultMap="HyCostResult">
 		<include refid="selectHyCostVo" />
-		<if test="costItems != null  and costItems != ''"> and c.cost_items = #{costItems}</if>
-		<if test="bilingStartDate != null and bilingEndDate != null">and c.fee_date between #{bilingStartDate} and
+		<if test="costItems != null  and costItems != ''"> and son.cost_items = #{costItems}</if>
+		<if test="bilingStartDate != null and bilingEndDate != null">and son.fee_date between #{bilingStartDate} and
 			#{bilingEndDate}
 		</if>
 		<if test="hyOwnerRegistration != null">
 			<if
-				test="hyOwnerRegistration.ownerName != null  and hyOwnerRegistration.ownerName != ''"> and o.owner_name = #{hyOwnerRegistration.ownerName}</if>
+				test="hyOwnerRegistration.ownerName != null  and hyOwnerRegistration.ownerName != ''"> and son.owner_name = #{hyOwnerRegistration.ownerName}</if>
 			<if
-				test="hyOwnerRegistration.mobilePhone != null  and hyOwnerRegistration.mobilePhone != ''"> and o.mobile_phone = #{hyOwnerRegistration.mobilePhone}</if>
+				test="hyOwnerRegistration.mobilePhone != null  and hyOwnerRegistration.mobilePhone != ''"> and son.mobile_phone = #{hyOwnerRegistration.mobilePhone}</if>
 		</if>
 		<if test="hyResidentialQuarters != null">
 			<if
-				test="hyResidentialQuarters.communityName != null  and hyResidentialQuarters.communityName != ''"> and q.community_name = #{hyResidentialQuarters.communityName}
+				test="hyResidentialQuarters.communityName != null  and hyResidentialQuarters.communityName != ''"> and son.community_name =
+				#{hyResidentialQuarters.communityName}
 			</if>
 		</if>
 		<if test="hyBuilding != null">
 			<if
-				test="hyBuilding.buildingName != null  and hyBuilding.buildingName != ''"> and b.building_name = #{hyBuilding.buildingName}</if>
+				test="hyBuilding.buildingNumber != null  and hyBuilding.buildingNumber != ''"> and son.building_number = #{hyBuilding.buildingNumber}</if>
+			<if
+				test="hyBuilding.buildingName != null  and hyBuilding.buildingName != ''"> and son.building_name = #{hyBuilding.buildingName}</if>
 		</if>
 		<if test="hyHouseInf != null">
 			<if
-				test="hyHouseInf.ownerId != null  and hyHouseInf.ownerId != ''"> and h.owner_id = #{hyHouseInf.ownerId}</if>
+				test="hyHouseInf.ownerId != null  and hyHouseInf.ownerId != ''"> and son.owner_id = #{hyHouseInf.ownerId}</if>
 			<if
-				test="hyHouseInf.houseNumber != null  and hyHouseInf.houseNumber != ''"> and h.house_number = #{hyHouseInf.houseNumber}</if>
-			<if test="hyHouseInf.unit != null  and hyHouseInf.unit != ''"> and h.unit = #{hyHouseInf.unit}</if>
+				test="hyHouseInf.houseNumber != null  and hyHouseInf.houseNumber != ''"> and son.house_number = #{hyHouseInf.houseNumber}</if>
+			<if test="hyHouseInf.unit != null  and hyHouseInf.unit != ''"> and son.unit = #{hyHouseInf.unit}</if>
+		</if>
+
+		<if test="hyCollection != null  and hyCollection != ''">
+			<if test="hyCollection.isCollection != null  and hyCollection.isCollection != ''"> 
+				<choose>
+					<when test="hyCollection.isCollection == 0">
+						and son.is_collection = #{hyCollection.isCollection}
+					</when>
+					<otherwise>
+						and (son.is_collection = #{hyCollection.isCollection} or son.is_collection is null)
+					</otherwise>
+				</choose>
+			</if>
 		</if>
 	</select>
 	<select id="selectHyCashierDeskListByIsCollection"
