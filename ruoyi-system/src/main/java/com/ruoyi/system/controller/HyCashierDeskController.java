@@ -116,6 +116,9 @@ public class HyCashierDeskController extends BaseController {
 				BigDecimal bilingArea = cost.getHyHouseInf().getBilingArea();
 				BigDecimal amountReceivable = ReceivableUtil.getReceivable(calculationStandard, costItems, bilingArea);
 				cost.setAmountReceivable(amountReceivable.setScale(2,RoundingMode.HALF_UP));
+				if(cost.getHyCollection().getAmount()==null) {
+					cost.getHyCollection().setAmount(new BigDecimal(0));
+				}
 				/*cost.setId(Long.valueOf(String.valueOf(cost.getId()).split(cost.getHyHouseInf().getHouseNumber())[0]));*/
 			}
 			return getDataTable(list);
@@ -334,7 +337,7 @@ public class HyCashierDeskController extends BaseController {
 				hyCollection.setHouseId(houseId);
 				hyCollection.setOwnerId(ownerId);
 				reCost.setHyCollection(new HyCollection());
-				reCost.getHyCollection().setAmount((long) 0);
+				reCost.getHyCollection().setAmount(new BigDecimal(0));
 				relist.add(reCost);
 			}
 		}
@@ -352,17 +355,16 @@ public class HyCashierDeskController extends BaseController {
 	public Map<String, Object> jisuan() {
 		Map<String, Object> map = new HashMap<>();
 		List<HyCost> list = hyCashierDeskService.selectHyCashierDeskList(new HyCost());
-		BigDecimal amountReceivableCount = new BigDecimal(0);
-		BigDecimal amountCount = new BigDecimal(0);
+		BigDecimal amountReceivableCount = new BigDecimal(0.00);
+		BigDecimal amountCount = new BigDecimal(0.00);
 		for (HyCost cost : list) {
 			BigDecimal calculationStandard = cost.getCalculationStandard();
 			String costItems = cost.getCostItems();
 			BigDecimal bilingArea = cost.getHyHouseInf().getBilingArea();
 			BigDecimal amountReceivable = ReceivableUtil.getReceivable(calculationStandard, costItems, bilingArea);
 			amountReceivableCount = amountReceivableCount.add(amountReceivable);
-			Long amount = cost.getHyCollection().getAmount() == null ? 0l : cost.getHyCollection().getAmount();
-			BigDecimal amountB = new BigDecimal(amount);
-			amountCount = amountCount.add(amountB);
+			BigDecimal amount = cost.getHyCollection().getAmount() == null ? new BigDecimal(0) : cost.getHyCollection().getAmount();
+			amountCount = amountCount.add(amount);
 		}
 		BigDecimal uncollected = amountReceivableCount.subtract(amountCount);
 		map.put("amountReceivable", amountReceivableCount);
@@ -379,6 +381,11 @@ public class HyCashierDeskController extends BaseController {
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") Long id, ModelMap mmap) {
 		HyCost hyCost = hyCashierDeskService.selectHyCashierDeskById(id);
+		BigDecimal calculationStandard = hyCost.getCalculationStandard();
+		String costItems = hyCost.getCostItems();
+		BigDecimal bilingArea = hyCost.getHyHouseInf().getBilingArea();
+		BigDecimal amountReceivable = ReceivableUtil.getReceivable(calculationStandard, costItems, bilingArea);
+		hyCost.setAmountReceivable(amountReceivable.setScale(2,RoundingMode.HALF_UP));
 		mmap.put("hyCost", hyCost);
 		return prefix + "/edit";
 	}
@@ -497,7 +504,7 @@ public class HyCashierDeskController extends BaseController {
 					reCost.setHyCollection(collList.get(0));
 				} else {
 					reCost.setHyCollection(new HyCollection());
-					reCost.getHyCollection().setAmount((long) 0);
+					reCost.getHyCollection().setAmount(new BigDecimal(0));
 				}
 				relist.add(reCost);
 			}

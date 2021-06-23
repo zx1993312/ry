@@ -163,8 +163,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 					params.put("fee_date", cost.getFeeDate());
 					params.put("is_collection", cost.getHyCollection().getIsCollection() == null ? "未支付" : "已支付");
 					params.put("amount_receivable", cost.getAmountReceivable().setScale(2));
-					params.put("amount", cost.getHyCollection().getAmount() == null ? new BigDecimal(0)
-							: new BigDecimal(cost.getHyCollection().getAmount()));
+					params.put("amount", cost.getHyCollection().getAmount() == null ? new BigDecimal(0): cost.getHyCollection().getAmount());
 					paramList.add(params);
 				}
 				JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(paramList);

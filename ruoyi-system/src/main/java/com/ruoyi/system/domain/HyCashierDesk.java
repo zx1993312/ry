@@ -35,7 +35,7 @@ public class HyCashierDesk extends BaseEntity {
 	private BigDecimal amountReceivable;
 	/** 已收费用*/
 	@Excel(name = "已收费用")
-	private Long amount;
+	private BigDecimal amount;
 	/** 栋号*/
 	@Excel(name = "栋号")
 	private String buildingNumber;
@@ -132,11 +132,11 @@ public class HyCashierDesk extends BaseEntity {
 		this.amountReceivable = amountReceivable;
 	}
 
-	public Long getAmount() {
+	public BigDecimal getAmount() {
 		return amount;
 	}
 
-	public void setAmount(Long amount) {
+	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
 	}
 

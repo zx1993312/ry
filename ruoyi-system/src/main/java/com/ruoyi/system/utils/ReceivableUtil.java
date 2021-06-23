@@ -7,8 +7,8 @@ public class ReceivableUtil {
 	
 
 	public static BigDecimal getReceivable(BigDecimal calculationStandard,String costItems,BigDecimal bilingArea) {
-		BigDecimal AmountReceivable = new BigDecimal("0.0");
-		BigDecimal month = new BigDecimal("12.0");
+		BigDecimal AmountReceivable = new BigDecimal("0.00");
+		BigDecimal month = new BigDecimal("12.00");
 		if("物业费".equals(costItems)) {
 			AmountReceivable = calculationStandard.multiply(bilingArea).multiply(month);
 		}else if("生活垃圾处理费".equals(costItems)) {
