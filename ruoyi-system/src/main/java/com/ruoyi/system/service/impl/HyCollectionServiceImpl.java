@@ -29,8 +29,10 @@ import com.ruoyi.system.mapper.HyCashierDeskMapper;
 import com.ruoyi.system.mapper.HyCollectionMapper;
 import com.ruoyi.system.service.IHyCollectionService;
 import com.ruoyi.system.utils.HyPrintPDFUtil;
+import com.ruoyi.system.utils.ObjectConverUtil;
 import com.ruoyi.system.utils.ReceivableUtil;
 
+import lombok.extern.slf4j.Slf4j;
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -44,13 +46,14 @@ import net.sf.jasperreports.engine.JasperPrint;
  * @date 2021-01-04
  */
 @Service
+@Slf4j
 public class HyCollectionServiceImpl implements IHyCollectionService {
 	@Autowired
 	private HyCollectionMapper hyCollectionMapper;
-	
+
 	@Autowired
 	private HyCashierDeskMapper hyCashierDeskMapper;
-	
+
 	@Autowired
 	private HyCashierDeskServiceImpl hyCashierDeskServiceImpl;
 
@@ -92,14 +95,15 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 	 * 
 	 * @param hyCollection 收款管理 Collection management
 	 * @return 结果
-	 * @throws PrinterException 
-	 * @throws IOException 
-	 * @throws JRException 
-	 * @throws InvalidPasswordException 
+	 * @throws PrinterException
+	 * @throws IOException
+	 * @throws JRException
+	 * @throws InvalidPasswordException
 	 */
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public int insertHyCollection(HyCollection hyCollection,HttpServletResponse response) throws InvalidPasswordException, JRException, IOException, PrinterException {
+	public int insertHyCollection(HyCollection hyCollection, HttpServletResponse response)
+			throws InvalidPasswordException, JRException, IOException, PrinterException {
 		Long costId = hyCollection.getCostId();
 		Long houseId = hyCollection.getHouseId();
 		Long ownerId = hyCollection.getOwnerId();
@@ -116,7 +120,7 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 		}
 
 	}
-	
+
 	/**
 	 * 新增收款管理 Collection management
 	 * 
@@ -127,31 +131,36 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 	@Transactional(rollbackFor = Exception.class)
 	public int insertHyCollectionByCostIds(HyCollection hyCollection) {
 		String[] ids = hyCollection.getCostIds().split(",");
-		for(String ida : ids) {
-			Long costIds = Long.valueOf(ida);
-			HyCost hyCost = hyCashierDeskMapper.selectHyCashierDeskById(costIds);
-			BigDecimal calculationStandard = hyCost.getCalculationStandard();
-			String costItems = hyCost.getCostItems();
-			BigDecimal bilingArea = hyCost.getHyHouseInf().getBilingArea();
-			BigDecimal amountReceivable = ReceivableUtil.getReceivable(calculationStandard, costItems, bilingArea);
-			Long houseId = hyCollection.getHouseId();
-			Long ownerId = hyCollection.getOwnerId();
-			String str = hyCost.getHyHouseInf().getHouseNumber() + hyCost.getHyHouseInf().getOwnerId();
-			Long costId = Long.valueOf(String.valueOf(ida).split(str)[0]);
-			HyCollection collection = new HyCollection();
-			collection.setCostId(costId);
-			collection.setHouseId(houseId);
-			collection.setOwnerId(ownerId);
-			List<HyCollection> list = hyCollectionMapper.selectHyCollectionList(collection);
-			if (list.size() == 0) {
-				hyCollection.setAmount(amountReceivable.setScale(2,RoundingMode.HALF_UP));
-				hyCollection.setCostId(costId);
-				//hyCashierDeskServiceImpl.printReceiptMore(datas);
-				hyCollectionMapper.insertHyCollection(hyCollection);
-			} else {
-				return 0;
+		try {
+			for (String ida : ids) {
+				Long costIds = Long.valueOf(ida);
+				HyCost hyCost = hyCashierDeskMapper.selectHyCashierDeskById(costIds);
+				BigDecimal calculationStandard = hyCost.getCalculationStandard();
+				String costItems = hyCost.getCostItems();
+				BigDecimal bilingArea = hyCost.getHyHouseInf().getBilingArea();
+				BigDecimal amountReceivable = ReceivableUtil.getReceivable(calculationStandard, costItems, bilingArea);
+				Long houseId = hyCollection.getHouseId();
+				Long ownerId = hyCollection.getOwnerId();
+				String str = hyCost.getHyHouseInf().getHouseNumber() + hyCost.getHyHouseInf().getOwnerId();
+				Long costId = Long.valueOf(String.valueOf(ida).split(str)[0]);
+				HyCollection collection = new HyCollection();
+				collection.setCostId(costId);
+				collection.setHouseId(houseId);
+				collection.setOwnerId(ownerId);
+				List<HyCollection> list = hyCollectionMapper.selectHyCollectionList(collection);
+				if (list.size() == 0) {
+					hyCollection.setAmount(amountReceivable.setScale(2, RoundingMode.HALF_UP));
+					hyCollection.setCostId(costId);
+					//hyCashierDeskServiceImpl.printReceiptMore(ObjectConverUtil.coverString(hyCost));
+					hyCollectionMapper.insertHyCollection(hyCollection);
+				} else {
+					return 0;
+				}
 			}
+		} catch (Exception e) {
+			log.error(e.getMessage());
 		}
+
 		return 1;
 	}
 

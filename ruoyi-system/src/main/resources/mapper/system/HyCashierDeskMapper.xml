@@ -303,11 +303,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		(SELECT
 		c.id,
 		c.cost_items,
+		c.calculation_standard,
 		q.community_name,
 		b.building_number,
 		h.house_number,
 		h.owner_id,
 		h.unit,
+		h.biling_area,
 		o.owner_name,
 		c.fee_date,
 		t.is_collection,

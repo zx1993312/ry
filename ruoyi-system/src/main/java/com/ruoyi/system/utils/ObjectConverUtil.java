@@ -1,5 +1,7 @@
 package com.ruoyi.system.utils;
 
+import java.lang.reflect.Field;
+
 import com.alibaba.fastjson.JSONArray;
 
 /**
@@ -8,10 +10,17 @@ import com.alibaba.fastjson.JSONArray;
  * @author Administrator
  *
  */
-public class ObjectConverUtil {
+public class ObjectConverUtil<T> {
 
-	public static String coverString(Object obj) {
-		return JSONArray.toJSON(obj).toString();
+	public String coverString(T t) {
+		Field[] fields = t.getClass().getFields();
+		for (Field f : fields) {
+			f.setAccessible(true);
+			/*if(f ) {
+				
+			}*/
+		}
+		return JSONArray.toJSON(t).toString();
 	}
 
 }

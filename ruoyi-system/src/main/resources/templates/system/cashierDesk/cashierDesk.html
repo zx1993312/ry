@@ -24,18 +24,18 @@
 		                        <option th:each="dict : ${type}" th:text="${dict.buildingNumber}" th:value="${dict.buildingNumber}"></option>
 		                    </select>
                             </li>
+                             <li>
+                                <label>选择单元：</label>
+                                <select name="hyHouseInf.unit" class="form-control" th:with="type=${@houseInf.getUnit()}">
+									<option value="">请选择</option>
+									<option th:if="data!=null" th:each="data:${type}" th:text="${data.unit}" th:value="${data.unit}"></option>
+						 	    </select>
+                            </li>
                             <li>
                                 <label>选择房屋编号：</label>
                                 <select name="hyHouseInf.houseNumber" class="form-control" th:with="type=${@houseInf.getHouseNumber()}">
 									<option value="">请选择</option>
 									<option th:if="data!=null" th:each="data:${type}" th:text="${data.houseNumber}" th:value="${data.houseNumber}"></option>
-						 	    </select>
-                            </li>
-                            <li>
-                                <label>选择单元：</label>
-                                <select name="hyHouseInf.unit" class="form-control" th:with="type=${@houseInf.getUnit()}">
-									<option value="">请选择</option>
-									<option th:if="data!=null" th:each="data:${type}" th:text="${data.unit}" th:value="${data.unit}"></option>
 						 	    </select>
                             </li>
                             <li>
@@ -203,11 +203,11 @@
                     formatter: function(value, row, index) {
                         var actions = [];
                         if(row.hyCollection.isCollection == '0'){
-                        	actions.push('<a class="btn btn-warning btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="printReceiptOne(\'' + row.id + '\',\'' + row.costItems + '\',\'' + row.hyResidentialQuarters.communityName + '\',\'' + row.hyBuilding.buildingName + '\',\'' + row.hyHouseInf.houseNumber + '\',\'' + row.hyOwnerRegistration.ownerName + '\',\'' + row.feeDate + '\',\'' + row.hyCollection.isCollection + '\',\'' + row.amountReceivable + '\',\'' + row.hyCollection.amount + '\')"><i class="fa fa-download"></i>打印收据</a> ');
+                        	actions.push('<a class="btn btn-warning btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="printReceiptOne(\'' + row.id + '\',\'' + row.costItems + '\',\'' + row.hyResidentialQuarters.communityName + '\',\'' + row.hyBuilding.buildingNumber + '\',\'' + row.hyHouseInf.houseNumber + '\',\'' + row.hyOwnerRegistration.ownerName + '\',\'' + row.feeDate + '\',\'' + row.hyCollection.isCollection + '\',\'' + row.amountReceivable + '\',\'' + row.hyCollection.amount + '\')"><i class="fa fa-download"></i>打印收据</a> ');
                         }else{
                         	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit4(\'' + row.id + '\')"><i class="fa fa-edit"></i>单笔收款</a> ');
                             actions.push('<a class="btn btn-primary btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="comprehensive(\'' + row.hyCollection.isCollection + '\',\'' + row.hyOwnerRegistration.ownerName + '\')"><i class="fa fa-edit"></i>综合收款</a> ');
-                        	actions.push('<a class="btn btn-warning btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="printCollectionOne(\'' + row.id + '\',\'' + row.costItems + '\',\'' + row.hyResidentialQuarters.communityName + '\',\'' + row.hyBuilding.buildingName + '\',\'' + row.hyHouseInf.houseNumber + '\',\'' + row.hyOwnerRegistration.ownerName + '\',\'' + row.feeDate + '\',\'' + row.hyCollection.isCollection + '\',\'' + row.amountReceivable + '\',\'' + row.hyCollection.amount + '\')"><i class="fa fa-download"></i>打印催收单</a> ');
+                        	actions.push('<a class="btn btn-warning btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="printCollectionOne(\'' + row.id + '\',\'' + row.costItems + '\',\'' + row.hyResidentialQuarters.communityName + '\',\'' + row.hyBuilding.buildingNumber + '\',\'' + row.hyHouseInf.houseNumber + '\',\'' + row.hyOwnerRegistration.ownerName + '\',\'' + row.feeDate + '\',\'' + row.hyCollection.isCollection + '\',\'' + row.amountReceivable + '\',\'' + row.hyCollection.amount + '\')"><i class="fa fa-download"></i>打印催收单</a> ');
                         }
                         return actions.join('');
                     }
@@ -248,7 +248,7 @@
         		var amountReceivable = rows[i].amountReceivable;
         		var amount = rows[i].hyCollection.amount;
         		if(isCollection=="0"){
-        			$.modal.alertWarning("选择的数据中又已支付的数据，请重新选择！");
+        			$.modal.alertWarning("选择的数据中有已支付的数据，请重新选择！");
     				return false;
         		}
                 list = list + id + ",";
@@ -418,22 +418,18 @@
             		var id = rows[i].id;
             		var costItems = rows[i].costItems;
             		var communityName = rows[i].hyResidentialQuarters.communityName;
-            		var buildingName = rows[i].hyBuilding.buildingName;
+            		var buildingNumber = rows[i].hyBuilding.buildingNumber;
             		var houseNumber = rows[i].hyHouseInf.houseNumber;
             		var ownerName = rows[i].hyOwnerRegistration.ownerName;
             		var feeDate = rows[i].feeDate;
             		var isCollection = rows[i].hyCollection.isCollection;
             		var amountReceivable = rows[i].amountReceivable;
             		var amount = rows[i].hyCollection.amount;
-            		if(isCollection=="0"){
-            			$.modal.alertWarning("选择的数据中又已支付的数据，请重新选择！");
-        				return false;
-            		}
                     list[i] = {
                        	'id' : id,
                    		'costItems' : costItems,
                    		'communityName' : communityName,
-                   		'buildingName' : buildingName,
+                   		'buildingNumber' : buildingNumber,
                    		'houseNumber' : houseNumber,
                    		'ownerName' : ownerName,
                    		'feeDate' : feeDate,
@@ -479,7 +475,7 @@
             		var id = rows[i].id;
             		var costItems = rows[i].costItems;
             		var communityName = rows[i].hyResidentialQuarters.communityName;
-            		var buildingName = rows[i].hyBuilding.buildingName;
+            		var buildingNumber = rows[i].hyBuilding.buildingNumber;
             		var houseNumber = rows[i].hyHouseInf.houseNumber;
             		var ownerName = rows[i].hyOwnerRegistration.ownerName;
             		var feeDate = rows[i].feeDate;
@@ -487,14 +483,14 @@
             		var amountReceivable = rows[i].amountReceivable;
             		var amount = rows[i].hyCollection.amount;
             		if(isCollection=="0"){
-            			$.modal.alertWarning("选择的数据中又已支付的数据，请重新选择！");
+            			$.modal.alertWarning("选择的数据中有已支付的数据，请重新选择！");
         				return false;
             		}
                     list[i] = {
                        	'id' : id,
                    		'costItems' : costItems,
                    		'communityName' : communityName,
-                   		'buildingName' : buildingName,
+                   		'buildingNumber' : buildingNumber,
                    		'houseNumber' : houseNumber,
                    		'ownerName' : ownerName,
                    		'feeDate' : feeDate,
@@ -517,13 +513,13 @@
                 });
             });
         }
-        function printReceiptOne(id,costItems,communityName,buildingName,houseNumber,ownerName,feeDate,isCollection,amountReceivable,amount){
+        function printReceiptOne(id,costItems,communityName,buildingNumber,houseNumber,ownerName,feeDate,isCollection,amountReceivable,amount){
         	$.modal.confirm("确定要对该条数据打印收据吗？", function() {
         	if(isCollection=="0"){
     		$.ajax({
                 type: "post",
                 datatype: "json",
-                data:{"id":id,"costItems":costItems,"hyResidentialQuarters.communityName":communityName,"hyBuilding.buildingName":buildingName,
+                data:{"id":id,"costItems":costItems,"hyResidentialQuarters.communityName":communityName,"hyBuilding.buildingNumber":buildingNumber,
                 	"hyHouseInf.houseNumber":houseNumber,"hyOwnerRegistration.ownerName":ownerName,"feeDate":feeDate,
                 	"hyCollection.isCollection":isCollection,"amountReceivable":amountReceivable,"hyCollection.amount":amount},
                 url:  prefix + "/printReceiptOne",
@@ -541,7 +537,7 @@
         	}
         	});
         }
-        function printCollectionOne(id,costItems,communityName,buildingName,houseNumber,ownerName,feeDate,isCollection,amountReceivable,amount){
+        function printCollectionOne(id,costItems,communityName,buildingNumber,houseNumber,ownerName,feeDate,isCollection,amountReceivable,amount){
         	$.modal.confirm("确定要对该条数据打印催收单吗？", function() {
         	if(isCollection=="0"){
         		$.modal.alertWarning("该条数据已支付，请选择未支付数据或者打印收据！");
@@ -550,7 +546,7 @@
     		$.ajax({
                 type: "post",
                 datatype: "json",
-                data:{"id":id,"costItems":costItems,"hyResidentialQuarters.communityName":communityName,"hyBuilding.buildingName":buildingName,
+                data:{"id":id,"costItems":costItems,"hyResidentialQuarters.communityName":communityName,"hyBuilding.buildingNumber":buildingNumber,
                 	"hyHouseInf.houseNumber":houseNumber,"hyOwnerRegistration.ownerName":ownerName,"feeDate":feeDate,
                 	"hyCollection.isCollection":isCollection,"amountReceivable":amountReceivable,"hyCollection.amount":amount},
                 url:  prefix + "/printCollectionOne",

@@ -30,6 +30,7 @@ import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.domain.HouseAndCost;
 import com.ruoyi.system.domain.HyBuilding;
 import com.ruoyi.system.domain.HyCashierDesk;
+import com.ruoyi.system.domain.HyCollection;
 import com.ruoyi.system.domain.HyCost;
 import com.ruoyi.system.domain.HyHouseInf;
 import com.ruoyi.system.domain.HyOwnerRegistration;
@@ -41,6 +42,7 @@ import com.ruoyi.system.mapper.HyHouseInfMapper;
 import com.ruoyi.system.mapper.HyOwnerRegistrationMapper;
 import com.ruoyi.system.service.IHyCashierDeskService;
 import com.ruoyi.system.utils.HyPrintPDFUtil;
+import com.ruoyi.system.utils.ReceivableUtil;
 
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jasperreports.engine.JREmptyDataSource;
@@ -148,7 +150,8 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 				List<Map<String, Object>> paramList = new ArrayList<>();
 				HyCost hyCost = new HyCost();
 				hyCost.setHyHouseInf(inf);
-
+				hyCost.setHyCollection(new HyCollection());
+				hyCost.getHyCollection().setIsCollection("0");
 				List<HyCost> costList = hyCashierDeskMapper.selectHyCashierDeskList(hyCost);
 
 				if(costList.size()==0) {
@@ -162,10 +165,11 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 					params.put("owner_name", cost.getHyOwnerRegistration().getOwnerName());
 					params.put("cost_items", cost.getCostItems());
 					params.put("community_name", cost.getHyResidentialQuarters().getCommunityName());
-					params.put("building_name", cost.getHyBuilding().getBuildingName());
+					params.put("building_number", cost.getHyBuilding().getBuildingNumber());
+					params.put("receipt_number", cost.getHyCollection().getReceiptNumber());
 					params.put("fee_date", cost.getFeeDate());
 					params.put("is_collection", cost.getHyCollection().getIsCollection() == null ? "未支付" : "已支付");
-					params.put("amount_receivable", cost.getAmountReceivable().setScale(2));
+					params.put("amount_receivable", cost.getHyCollection().getAmount().setScale(2,RoundingMode.HALF_UP));
 					params.put("amount", cost.getHyCollection().getAmount() == null ? new BigDecimal(0): cost.getHyCollection().getAmount());
 					paramList.add(params);
 				}
@@ -220,16 +224,19 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 				for (HyCost cost : costList) {
 					// 2、准备数据库连接
 					Map<String, Object> params = new HashMap<String, Object>();
-
+					BigDecimal calculationStandard = cost.getCalculationStandard();
+					String costItems = cost.getCostItems();
+					BigDecimal bilingArea = cost.getHyHouseInf().getBilingArea();
+					BigDecimal amountReceivable = ReceivableUtil.getReceivable(calculationStandard, costItems, bilingArea);
 					params.put("id", String.valueOf(cost.getId()));
 					params.put("house_number", inf.getHouseNumber());
 					params.put("owner_name", cost.getHyOwnerRegistration().getOwnerName());
 					params.put("cost_items", cost.getCostItems());
 					params.put("community_name", cost.getHyResidentialQuarters().getCommunityName());
-					params.put("building_name", cost.getHyBuilding().getBuildingName());
+					params.put("building_number", cost.getHyBuilding().getBuildingNumber());
 					params.put("fee_date", cost.getFeeDate());
 					params.put("is_collection", cost.getHyCollection().getIsCollection() == null ? "未支付" : "已支付");
-					params.put("amount_receivable", String.valueOf(cost.getAmountReceivable().setScale(2)));
+					params.put("amount_receivable", amountReceivable.setScale(2,RoundingMode.HALF_UP)+"");
 					params.put("amount", String.valueOf(
 							cost.getHyCollection().getAmount() == null ? "0" : cost.getHyCollection().getAmount()));
 					paramList.add(params);
@@ -284,12 +291,13 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 				params.put("owner_name", jsonObject.getString("ownerName"));
 				params.put("cost_items", jsonObject.getString("costItems"));
 				params.put("community_name", jsonObject.getString("communityName"));
-				params.put("building_name", jsonObject.getString("buildingName"));
+				params.put("building_number", jsonObject.getString("buildingNumber"));
+				params.put("receipt_number", jsonObject.getString("receiptNumber"));
 				params.put("fee_date", jsonObject.getString("feeDate"));
 				params.put("is_collection", jsonObject.getString("isCollection") == null ? "未支付" : "已支付");
-				params.put("amount_receivable", new BigDecimal(jsonObject.getString("amountReceivable")).setScale(2));
+				params.put("amount_receivable", new BigDecimal(jsonObject.getString("amountReceivable")).setScale(2,RoundingMode.HALF_UP));
 				params.put("amount", jsonObject.get("amount") == null ? new BigDecimal(0)
-						: new BigDecimal(jsonObject.getString("amount")).setScale(2));
+						: new BigDecimal(jsonObject.getString("amount")).setScale(2,RoundingMode.HALF_UP));
 				paramList.add(params);
 
 				//
@@ -335,7 +343,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 				params.put("owner_name", jsonObject.getString("ownerName"));
 				params.put("cost_items", jsonObject.getString("costItems"));
 				params.put("community_name", jsonObject.getString("communityName"));
-				params.put("building_name", jsonObject.getString("buildingName"));
+				params.put("building_number", jsonObject.getString("buildingNumber"));
 				params.put("fee_date", jsonObject.getString("feeDate"));
 				params.put("is_collection", jsonObject.getString("isCollection") == null ? "未支付" : "已支付");
 				params.put("amount_receivable", jsonObject.getString("amountReceivable"));
@@ -419,9 +427,9 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 			String id = hyCost.getId() + "";
 			String costItems = hyCost.getCostItems();
 			String communityName = hyCost.getHyResidentialQuarters().getCommunityName();
-			String buildingName = hyCost.getHyBuilding().getBuildingName();
+			String buildingNumber = hyCost.getHyBuilding().getBuildingNumber();
 			String feeDate = hyCost.getFeeDate();
-			String amountReceivable = hyCost.getAmountReceivable().setScale(2) + "";
+			String amountReceivable = hyCost.getAmountReceivable().setScale(2,RoundingMode.HALF_UP) + "";
 			String amount = hyCost.getHyCollection().getAmount() + "";
 			params.put("pic", pic);
 			params.put("erweima", erweima);
@@ -430,7 +438,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 			params.put("id", id);
 			params.put("cost_items", costItems);
 			params.put("community_name", communityName);
-			params.put("building_name", buildingName);
+			params.put("building_number", buildingNumber);
 			params.put("fee_date", feeDate);
 			params.put("amount_receivable", amountReceivable);
 			params.put("amount", amount);
