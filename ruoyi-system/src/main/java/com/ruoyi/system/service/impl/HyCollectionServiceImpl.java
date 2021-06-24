@@ -23,13 +23,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ResourceUtils;
 
 import com.ruoyi.common.core.text.Convert;
+import com.ruoyi.system.domain.HouseAndCost;
 import com.ruoyi.system.domain.HyCollection;
 import com.ruoyi.system.domain.HyCost;
 import com.ruoyi.system.mapper.HyCashierDeskMapper;
 import com.ruoyi.system.mapper.HyCollectionMapper;
+import com.ruoyi.system.mapper.HyCustomerMapper;
 import com.ruoyi.system.service.IHyCollectionService;
 import com.ruoyi.system.utils.HyPrintPDFUtil;
-import com.ruoyi.system.utils.ObjectConverUtil;
 import com.ruoyi.system.utils.ReceivableUtil;
 
 import lombok.extern.slf4j.Slf4j;
@@ -56,7 +57,10 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 
 	@Autowired
 	private HyCashierDeskServiceImpl hyCashierDeskServiceImpl;
-
+	
+	@Autowired
+	private HyCustomerMapper hyCustomerMapper;
+	
 	/**
 	 * 查询收款管理 Collection management
 	 * 
@@ -114,11 +118,121 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 		List<HyCollection> list = hyCollectionMapper.selectHyCollectionList(collection);
 		if (list.size() == 0) {
 			hyCashierDeskServiceImpl.printReceiptOne(hyCollection.getHyCost(), response);
+			HouseAndCost houseAndCost = new HouseAndCost();
+			houseAndCost.setCostId(costId);
+			houseAndCost.setHouseId(houseId);
+			String payFeeDate ="";
+			int m = 12;
+			String feeDate = hyCollection.getHyCost().getFeeDate();
+			String a = feeDate.split("-")[1];
+			String b = feeDate.split("-")[0];
+			int n = Integer.parseInt(a);
+			int y = Integer.parseInt(b);
+			if(m+n>12) {
+				String z = y + 1 + "";
+				String p=m+n-12+"";
+				payFeeDate =z+"-0"+p;
+			}else {
+				String p=m+n+"";
+				if(Integer.parseInt(p)>9) {
+					payFeeDate = b+"-"+p;
+				}else {
+					payFeeDate = b+"-0"+p;
+				}
+			}
+			houseAndCost.setPayFeeDate(payFeeDate);
+			hyCustomerMapper.updateHouseAndCost(houseAndCost);
 			return hyCollectionMapper.insertHyCollection(hyCollection);
 		} else {
 			return 0;
 		}
 
+	}
+	
+	/**
+	 * 部分新增收款管理 Collection management
+	 * 
+	 * @param hyCollection 收款管理 Collection management
+	 * @return 结果
+	 * @throws PrinterException
+	 * @throws IOException
+	 * @throws JRException
+	 * @throws InvalidPasswordException
+	 */
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public int insertHyCollectionBuFen(HyCollection hyCollection, HttpServletResponse response)
+			throws InvalidPasswordException, JRException, IOException, PrinterException {
+		Long costId = hyCollection.getCostId();
+		Long houseId = hyCollection.getHouseId();
+		Long ownerId = hyCollection.getOwnerId();
+		HyCollection collection = new HyCollection();
+		collection.setCostId(costId);
+		collection.setHouseId(houseId);
+		collection.setOwnerId(ownerId);
+		List<HyCollection> list = hyCollectionMapper.selectHyCollectionList(collection);
+		if (list.size() == 0) {
+			hyCashierDeskServiceImpl.printReceiptOne(hyCollection.getHyCost(), response);
+			HouseAndCost houseAndCost = new HouseAndCost();
+			houseAndCost.setCostId(costId);
+			houseAndCost.setHouseId(houseId);
+			String payFeeDate ="";
+			int m = hyCollection.getMonth();
+			String feeDate = hyCollection.getHyCost().getFeeDate();
+			String a = feeDate.split("-")[1];
+			String b = feeDate.split("-")[0];
+			int n = Integer.parseInt(a);
+			int y = Integer.parseInt(b);
+			if(m+n>12) {
+				String z = y + 1 + "";
+				String p=m+n-12+"";
+				payFeeDate =z+"-0"+p;
+			}else {
+				String p=m+n+"";
+				if(Integer.parseInt(p)>9) {
+					payFeeDate = b+"-"+p;
+				}else {
+					payFeeDate = b+"-0"+p;
+				}
+			}
+			houseAndCost.setPayFeeDate(payFeeDate);
+			hyCustomerMapper.updateHouseAndCost(houseAndCost);
+			return hyCollectionMapper.insertHyCollection(hyCollection);
+		} else {
+			BigDecimal amount = hyCollection.getAmount().add(list.get(0).getAmount());
+			hyCollection.setAmount(amount);
+			hyCollection.getHyCost().getHyCollection().setAmount(amount);
+			hyCollection.setId(list.get(0).getId());
+			hyCashierDeskServiceImpl.printReceiptOne(hyCollection.getHyCost(), response);
+			HouseAndCost houseAndCost = new HouseAndCost();
+			houseAndCost.setCostId(costId);
+			houseAndCost.setHouseId(houseId);
+			List<HouseAndCost> houseAndCostList = hyCustomerMapper.selectCostIds(houseAndCost);
+			houseAndCost = houseAndCostList.get(0);
+			String payFeeDate ="";
+			int m = hyCollection.getMonth();
+			String feeDate = houseAndCost.getPayFeeDate();
+			String a = feeDate.split("-")[1];
+			String b = feeDate.split("-")[0];
+			int n = Integer.parseInt(a);
+			int y = Integer.parseInt(b);
+			if(m+n>12) {
+				String z = y + 1 + "";
+				String p=m+n-12+"";
+				payFeeDate =z+"-0"+p;
+			}else {
+				String p=m+n+"";
+				if(Integer.parseInt(p)>9) {
+					payFeeDate = b+"-"+p;
+				}else {
+					payFeeDate = b+"-0"+p;
+				}
+			}
+			houseAndCost.setPayFeeDate(payFeeDate);
+			hyCustomerMapper.updateHouseAndCost(houseAndCost);
+			return hyCollectionMapper.updateHyCollection(hyCollection);
+		}
+		
 	}
 
 	/**
@@ -151,8 +265,31 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 				if (list.size() == 0) {
 					hyCollection.setAmount(amountReceivable.setScale(2, RoundingMode.HALF_UP));
 					hyCollection.setCostId(costId);
-					
 					//hyCashierDeskServiceImpl.printReceiptMore(ObjectConverUtil.coverString());
+					HouseAndCost houseAndCost = new HouseAndCost();
+					houseAndCost.setCostId(costId);
+					houseAndCost.setHouseId(houseId);
+					String payFeeDate ="";
+					int m = 12;
+					String feeDate = hyCollection.getHyCost().getFeeDate();
+					String a = feeDate.split("-")[1];
+					String b = feeDate.split("-")[0];
+					int n = Integer.parseInt(a);
+					int y = Integer.parseInt(b);
+					if(m+n>12) {
+						String z = y + 1 + "";
+						String p=m+n-12+"";
+						payFeeDate =z+"-0"+p;
+					}else {
+						String p=m+n+"";
+						if(Integer.parseInt(p)>9) {
+							payFeeDate = b+"-"+p;
+						}else {
+							payFeeDate = b+"-0"+p;
+						}
+					}
+					houseAndCost.setPayFeeDate(payFeeDate);
+					hyCustomerMapper.updateHouseAndCost(houseAndCost);
 					hyCollectionMapper.insertHyCollection(hyCollection);
 				} else {
 					return 0;

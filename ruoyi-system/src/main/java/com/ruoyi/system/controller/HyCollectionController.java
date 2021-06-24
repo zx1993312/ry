@@ -144,7 +144,7 @@ public class HyCollectionController extends BaseController
     @ResponseBody
     public AjaxResult addss(HyCollection hyCollection,HttpServletResponse response) throws InvalidPasswordException, JRException, IOException, PrinterException
     {
-        return toAjax(hyCollectionService.insertHyCollection(hyCollection, response));
+        return toAjax(hyCollectionService.insertHyCollectionBuFen(hyCollection, response));
     }
 
     /**

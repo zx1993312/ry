@@ -432,6 +432,7 @@ public class HyCashierDeskController extends BaseController {
 			hyCost.getHyHouseInf().setOwnerId(hyCostA.getHyHouseInf().getOwnerId());
 			hyCost.setHouseAndCost(new HouseAndCost());
 			hyCost.getHouseAndCost().setHouseId(hyCostA.getHouseAndCost().getHouseId());
+			hyCost.setFeeDate(hyCostA.getFeeDate());
 			BigDecimal calculationStandard = hyCostA.getCalculationStandard();
 			String costItems = hyCostA.getCostItems();
 			BigDecimal bilingArea = hyCostA.getHyHouseInf().getBilingArea();

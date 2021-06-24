@@ -79,15 +79,7 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">是否收款：</label>
-                <div class="col-sm-8">
-                    <select id="isCollection" name="isCollection" class="form-control" th:with="type=${@dict.getType('sys_yes_no')}">
-							<option value="">请选择</option>
-							<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-					</select>
-                </div>
-            </div>
+            		<input id="isCollection" name="isCollection" class="form-control" type="hidden">
                 	<input id="isBook" name="isBook" class="form-control" type="hidden">
                 	<input id="paymentStatue" name="paymentStatue" class="form-control" type="hidden">
                 	<input id="isDeferred" name="isDeferred" class="form-control" type="hidden">
@@ -119,7 +111,7 @@
         	var dateStr = year+"-"+Month+"-"+da+" "+hh+":"+mm+":"+ss;
         	$("#applyTime").val(dateStr);
         	$("#collectionTime").val(dateStr);
-        	$("#isCollection").val(1);
+        	$("#isCollection").val(0);
         	$("#isBook").val(1);
         	$("#paymentStatue").val(1);
         	$("#isDeferred").val(1);

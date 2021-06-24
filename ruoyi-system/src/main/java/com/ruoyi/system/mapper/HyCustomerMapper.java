@@ -21,6 +21,8 @@ public interface HyCustomerMapper {
 	public List<HouseAndCost> selectCostIds(HouseAndCost houseAndCost);
 
 	public Integer insertHouseAndCost(@Param("houseId") String houseId, @Param("costId") String costId);
+	
+	public Integer updateHouseAndCost(HouseAndCost houseAndCost);
 
 	public Integer deleteHouseAndCost(@Param("costId") Long costId);
 

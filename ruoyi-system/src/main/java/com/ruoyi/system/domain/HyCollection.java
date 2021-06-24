@@ -124,6 +124,9 @@ public class HyCollection extends BaseEntity
     /** 备注 */
     @Excel(name = "备注")
     private String collectionRemark;
+    
+    /** 月份 */
+    private int month;
 
     /** 费用项目id */
     private Long costId;
@@ -413,6 +416,14 @@ public class HyCollection extends BaseEntity
 		this.collectionType = collectionType;
 	}
 
+	public int getMonth() {
+		return month;
+	}
+
+	public void setMonth(int month) {
+		this.month = month;
+	}
+
 	public String getCostIds() {
 		return costIds;
 	}
@@ -430,10 +441,12 @@ public class HyCollection extends BaseEntity
 				+ paymentStatue + ", payment=" + payment + ", paymentTime=" + paymentTime + ", paymentPerson="
 				+ paymentPerson + ", isDeferred=" + isDeferred + ", deferredCause=" + deferredCause + ", deferredTime="
 				+ deferredTime + ", deferredPerson=" + deferredPerson + ", isRefund=" + isRefund + ", refundTime="
-				+ refundTime + ", refundPerson=" + refundPerson + ", collectionRemark=" + collectionRemark + ", costId="
-				+ costId + ", costIds=" + costIds + ", hyCost=" + hyCost + ", houseId=" + houseId + ", hyHouseInf="
-				+ hyHouseInf + ", ownerId=" + ownerId + ", hyOwnerRegistration=" + hyOwnerRegistration + "]";
+				+ refundTime + ", refundPerson=" + refundPerson + ", collectionRemark=" + collectionRemark + ", month="
+				+ month + ", costId=" + costId + ", costIds=" + costIds + ", hyCost=" + hyCost + ", houseId=" + houseId
+				+ ", hyHouseInf=" + hyHouseInf + ", ownerId=" + ownerId + ", hyOwnerRegistration=" + hyOwnerRegistration
+				+ "]";
 	}
+
 
 
 

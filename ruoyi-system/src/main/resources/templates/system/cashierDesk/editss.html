@@ -60,7 +60,7 @@
                 <label class="col-sm-2 control-label">选择交多少个月：</label>
                 <div class="col-sm-4">
                 	 <select id="month" name="month" class="form-control" onchange="amountChange()">
-							<option value="">请选择</option>
+							<option value=12>请选择</option>
 							<option value=1>1月</option>
 							<option value=2>2月</option>
 							<option value=3>3月</option>
@@ -82,8 +82,9 @@
                 	<select th:field="*{hyCollection.isCollection}" class="form-control" disabled="disabled">
 						<option value="">未支付</option>
 						<option value="0">已支付</option>
+						<option value="2">部分支付</option>
 					</select>
-					<input name="hyCost.hyCollection.isCollection" value="0" class="form-control" type="hidden">
+					<input name="hyCost.hyCollection.isCollection" id="issCollection" class="form-control" type="hidden">
                 </div>
             </div>
             <div class="form-group">    
@@ -97,7 +98,7 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">已收费用：</label>
                 <div class="col-sm-8">
-                	<input th:field="*{hyCollection.amount}" class="form-control" type="text" disabled="disabled">
+                	<input id="aamount" th:field="*{hyCollection.amount}" class="form-control" type="text" disabled="disabled">
                 	<input name="hyCost.hyCollection.amount" id="amounts" class="form-control" type="hidden">
                 </div>
             </div>
@@ -129,7 +130,7 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">总金额：</label>
                 <div class="col-sm-8">
-                    <input id="amountRece" th:field="*{amountReceivable}" class="form-control" type="text" disabled="disabled">
+                    <input id="amountRece" class="form-control" type="text" disabled="disabled">
                     <input name="amount" id="amount" class="form-control" type="hidden">
                 </div>
             </div>
@@ -221,6 +222,7 @@
         	var buildingNumber = $("#buildingNum").val();
         	var feeDate = $("#feeDat").val();
         	var amountReceivable = $("#amountReceiv").val();
+        	var aamount = $("#aamount").val();
         	$("#applyTime").val(dateStr);
         	$("#collectionTime").val(dateStr);
         	$("#isCollection").val(0);
@@ -239,6 +241,7 @@
         	$("#buildingNumber").val(buildingNumber);
         	$("#feeDate").val(feeDate);
         	$("#amountReceivable").val(amountReceivable);
+        	$("#amountRece").val((amountReceivable-aamount).toFixed(2));
         	
         });
 
@@ -255,13 +258,37 @@
         	var calculationStandard = $("#calculationStandard").val();
         	var calculationStandard = parseFloat(calculationStandard).toFixed(2);
         	var amountReceiv = $("#amountReceiv").val();
+        	var amountReceiv = parseFloat(amountReceiv).toFixed(2);
+        	var aamount = $("#aamount").val();
+        	if(aamount==""){
+        		aamount=0;
+        	}
+        	var aamount = parseFloat(aamount).toFixed(2);
         	var bilingArea = $("#bilingArea").val();
         	var month = $("#month").val();
         	var amout = calculationStandard*month*bilingArea;
         	var amout = parseFloat(amout).toFixed(2);
+        	if(FloatAdd(aamount, amout)>amountReceiv){
+        		$.modal.alertWarning("支付的金额已经超过应交的金额,请重选");
+        		return;
+        	}else if(FloatAdd(aamount, amout)!=amountReceiv&&FloatAdd(aamount, amout)!=0){
+        		$("#isCollection").val("2");
+        		$("#issCollection").val("2");
+        	}else{
+        		$("#isCollection").val("0");
+        		$("#issCollection").val("0");
+        	}
         	$("#amountRece").val(amout);
+        	$("#amounts").val(amout);
         	$("#amount").val(amout);
         };
+    	function FloatAdd(arg1,arg2){
+    		var r1,r2,m;
+    		try{r1=arg1.toString().split(".")[1].length}catch(e){r1=0}
+    		try{r2=arg2.toString().split(".")[1].length}catch(e){r2=0}
+    		m=Math.pow(10,Math.max(r1,r2));
+    		return (arg1*m+arg2*m)/m;
+    	}
     </script>
 </body>
 </html>

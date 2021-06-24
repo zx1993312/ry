@@ -178,7 +178,7 @@ public class HyHouseInf extends BaseEntity
     
     /** 房屋id */
     private Long houseId;
-
+    
     public void setId(Long id) 
     {
         this.id = id;
@@ -529,6 +529,7 @@ public class HyHouseInf extends BaseEntity
 	public void setHouseId(Long houseId) {
 		this.houseId = houseId;
 	}
+
 
 	@Override
     public String toString() {

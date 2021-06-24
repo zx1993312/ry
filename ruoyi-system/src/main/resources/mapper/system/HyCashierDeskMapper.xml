@@ -221,6 +221,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap type="HouseAndCost" id="HouseAndCostResult">
 		<result property="houseId" column="house_id" />
 		<result property="costId" column="cost_id" />
+		<result property="payFeeDate" column="pay_fee_date" />
 	</resultMap>
 
 
@@ -238,6 +239,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		son.cost_items,
 		son.cost_id,
 		son.house_id,
+		son.pay_fee_date,
 		son.community_name,
 		son.building_number,
 		son.building_name,
@@ -260,6 +262,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		c.cost_items,
 		a.cost_id,
 		a.house_id,
+		a.pay_fee_date,
 		q.community_name,
 		b.building_name,
 		b.building_number,
@@ -370,7 +373,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="hyCollection != null  and hyCollection != ''">
 			<if test="hyCollection.isCollection != null  and hyCollection.isCollection != ''"> 
 				<choose>
-					<when test="hyCollection.isCollection == 0">
+					<when test="hyCollection.isCollection == 0 or hyCollection.isCollection == 2">
 						and son.is_collection = #{hyCollection.isCollection}
 					</when>
 					<otherwise>
