@@ -1,6 +1,7 @@
 package com.ruoyi.system.service.impl;
 
 import java.awt.print.PrinterException;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -42,6 +43,7 @@ import com.ruoyi.system.mapper.HyHouseInfMapper;
 import com.ruoyi.system.mapper.HyOwnerRegistrationMapper;
 import com.ruoyi.system.service.IHyCashierDeskService;
 import com.ruoyi.system.utils.HyPrintPDFUtil;
+import com.ruoyi.system.utils.IoUtil;
 import com.ruoyi.system.utils.ReceivableUtil;
 
 import lombok.extern.slf4j.Slf4j;
@@ -173,6 +175,23 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 					params.put("amount", cost.getHyCollection().getAmount() == null ? new BigDecimal(0): cost.getHyCollection().getAmount());
 					paramList.add(params);
 				}
+
+				String os = System.getProperty("os.name");
+				if (os.toLowerCase().startsWith("win")) {
+
+				} else {
+					File realPath = new File("/root", "/pdf_template/printReceipt_db.jasper");
+					String img = "/root/image/e813f89d5a4c8f33b567a553a60649b.png";
+					map.put("pic", img);
+					JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(paramList);
+
+					JasperPrint jasperPrint = JasperFillManager.fillReport(new FileInputStream(realPath), map,
+							dataSource);
+					JasperExportManager.exportReportToPdfStream(jasperPrint, new FileOutputStream(fileName));
+					HyPrintPDFUtil.printPDF(fileName, "RECEIPT");
+					return 1;
+				}
+
 				JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(paramList);
 
 				JasperPrint jasperPrint = JasperFillManager.fillReport(new FileInputStream(templateFile), map,
@@ -241,6 +260,23 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 							cost.getHyCollection().getAmount() == null ? "0" : cost.getHyCollection().getAmount()));
 					paramList.add(params);
 				}
+
+				String os = System.getProperty("os.name");
+				if (os.toLowerCase().startsWith("win")) {
+
+				} else {
+					File realPath = new File("/root", "/pdf_template/printCollection_db.jasper");
+					String img = "/root/image/src=http___i.nibaku.com_img_0_1433531324x2230376662_26.jpg&refer=http___i.nibaku.jpg";
+					map.put("pic", img);
+					JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(paramList);
+
+					JasperPrint jasperPrint = JasperFillManager.fillReport(new FileInputStream(realPath), map,
+							dataSource);
+					JasperExportManager.exportReportToPdfStream(jasperPrint, new FileOutputStream(fileName));
+					HyPrintPDFUtil.printPDF(fileName, "A4");
+					return 1;
+				}
+
 				JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(paramList);
 
 				JasperPrint jasperPrint = JasperFillManager.fillReport(new FileInputStream(templateFile), map,
@@ -302,6 +338,20 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 
 				//
 			}
+			String os = System.getProperty("os.name");
+			if (os.toLowerCase().startsWith("win")) {
+
+			} else {
+				File realPath = new File("/root", "/pdf_template/printReceipt_db.jasper");
+				String img = "/root/image/e813f89d5a4c8f33b567a553a60649b.png";
+				map.put("pic", img);
+				JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(paramList);
+
+				JasperPrint jasperPrint = JasperFillManager.fillReport(new FileInputStream(realPath), map, dataSource);
+				JasperExportManager.exportReportToPdfStream(jasperPrint, new FileOutputStream(fileName));
+				HyPrintPDFUtil.printPDF(fileName, "RECEIPT");
+				return 1;
+			}
 			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(paramList);
 
 			JasperPrint jasperPrint = JasperFillManager.fillReport(new FileInputStream(templateFile), map, dataSource);
@@ -351,7 +401,22 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 				paramList.add(params);
 
 			}
-			
+
+			String os = System.getProperty("os.name");
+			if (os.toLowerCase().startsWith("win")) {
+
+			} else {
+				File realPath = new File("/root", "/pdf_template/printCollection_db.jasper");
+				String img = "/root/image/http___i.nibaku.com_img_0_1433531324x2230376662_26.jpg&refer=http___i.nibaku.jpg";
+				map.put("pic", img);
+				JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(paramList);
+
+				JasperPrint jasperPrint = JasperFillManager.fillReport(new FileInputStream(realPath), map, dataSource);
+				JasperExportManager.exportReportToPdfStream(jasperPrint, new FileOutputStream(fileName));
+				HyPrintPDFUtil.printPDF(fileName, "A4");
+				return 1;
+			}
+
 			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(paramList);
 
 			JasperPrint jasperPrint = JasperFillManager.fillReport(new FileInputStream(templateFile), map, dataSource);
@@ -364,7 +429,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 	}
 
 	@Override
-	public int printReceiptOne(HyCost hyCost, HttpServletResponse response)
+	public String printReceiptOne(HyCost hyCost, HttpServletResponse response)
 			throws JRException, InvalidPasswordException, IOException, PrinterException {
 		String fileName = "d:\\" + new Date().getTime() + "收据.pdf";
 		try {
@@ -399,14 +464,44 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 			params.put("amount_receivable", amountReceivable);
 			params.put("amount", amount);
 
+			String os = System.getProperty("os.name");
+			if (os.toLowerCase().startsWith("win")) {
+
+			} else {
+				File realPath = new File("/root", "/pdf_template/printReceiptOne_db.jasper");
+				String img = "/root/image/e813f89d5a4c8f33b567a553a60649b.png";
+				params.put("pic", img);
+				JasperPrint jasperPrint = JasperFillManager.fillReport(new FileInputStream(realPath), params,
+						new JREmptyDataSource());
+				JasperExportManager.exportReportToPdfStream(jasperPrint, new FileOutputStream(fileName));
+				HyPrintPDFUtil.printPDF(fileName, "RECEIPT");
+				return fileName;
+			}
+
 			JasperPrint jasperPrint = JasperFillManager.fillReport(new FileInputStream(templateFile), params,
 					new JREmptyDataSource());
 			JasperExportManager.exportReportToPdfStream(jasperPrint, new FileOutputStream(fileName));
-			HyPrintPDFUtil.printPDF(fileName, "RECEIPT");
+//			HyPrintPDFUtil.printPDF(fileName, "RECEIPT");
+
+			byte[] buffer = null;
+			FileInputStream fis = new FileInputStream(fileName);
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			byte[] b = new byte[1024];
+			int n;
+			while ((n = fis.read(b)) != -1) {
+				bos.write(b, 0, n);
+			}
+			fis.close();
+			bos.close();
+			buffer = bos.toByteArray();
+			
+			IoUtil.writePdfFile(buffer, fileName);
 		} catch (java.io.EOFException e) {
 			log.error("没有字体的异常,没关系，不要在意" + e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		return 1;
+		return fileName;
 	}
 
 	@Override
@@ -444,6 +539,21 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 			params.put("is_collection", isCollection);
 			params.put("amount_receivable", amountReceivable);
 			params.put("amount", amount);
+
+			String os = System.getProperty("os.name");
+			if (os.toLowerCase().startsWith("win")) {
+
+			} else {
+				File realPath = new File("/root", "/pdf_template/printCollectionOne_db.jasper");
+				String img = "/root/image/e813f89d5a4c8f33b567a553a60649b.png";
+				params.put("pic", img);
+				JasperPrint jasperPrint = JasperFillManager.fillReport(new FileInputStream(realPath), params,
+						new JREmptyDataSource());
+				JasperExportManager.exportReportToPdfStream(jasperPrint, new FileOutputStream(fileName));
+				HyPrintPDFUtil.printPDF(fileName, "A4");
+				return 1;
+			}
+
 			JasperPrint jasperPrint = JasperFillManager.fillReport(new FileInputStream(templateFile), params,
 					new JREmptyDataSource());
 			JasperExportManager.exportReportToPdfStream(jasperPrint, new FileOutputStream(fileName));

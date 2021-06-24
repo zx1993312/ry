@@ -71,7 +71,7 @@ public interface IHyCashierDeskService {
 	 * @param response
 	 * @return
 	 */
-	public int printReceiptOne(HyCost hyCost, HttpServletResponse response)throws Exception;
+	public String printReceiptOne(HyCost hyCost, HttpServletResponse response)throws Exception;
 	/**
 	 * 打印单条催收单
 	 * @param response

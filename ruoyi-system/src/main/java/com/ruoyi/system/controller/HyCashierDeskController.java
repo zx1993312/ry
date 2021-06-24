@@ -536,7 +536,7 @@ public class HyCashierDeskController extends BaseController {
 	@PostMapping("/printReceiptOne")
 	@ResponseBody
 	public AjaxResult printReceiptOne(HyCost hyCost, HttpServletResponse response) throws Exception {
-		return toAjax(hyCashierDeskService.printReceiptOne(hyCost, response));
+		return AjaxResult.success(hyCashierDeskService.printReceiptOne(hyCost, response));
 	}
 
 	/**
