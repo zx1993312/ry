@@ -65,7 +65,7 @@ public interface IHyCollectionService
      * @param hyCollection 收款管理 Collection management
      * @return 结果
      */
-    public int insertHyCollectionByCostIds(HyCollection hyCollection);
+    public String insertHyCollectionByCostIds(HyCollection hyCollection);
 
     /**
      * 修改收款管理 Collection management

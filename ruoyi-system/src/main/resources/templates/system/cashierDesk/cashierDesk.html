@@ -264,7 +264,6 @@
         		}
                 list = list + id + ",";
         	}
-        	window.location.href = ctx + "common/downloadPdf?fileName=" + encodeURI(result.msg) + "&delete=" + true;
         	$.modal.opens("合并收款", $.operate.editUrls(list));
         	});
         }
@@ -316,7 +315,6 @@
                     		var amount = result[i].hyCollection.amount;
                     		list = list + id + ",";
                      	}
-                     	window.location.href = ctx + "common/downloadPdf?fileName=" + encodeURI(result.msg) + "&delete=" + true;
                      	$.modal.opens("综合收款", $.operate.editUrls(list));
                      }
                  });
@@ -535,7 +533,7 @@
         }
         function printReceiptOne(id,costItems,communityName,buildingNumber,houseNumber,ownerName,feeDate,isCollection,amountReceivable,amount){
         	$.modal.confirm("确定要对该条数据打印收据吗？", function() {
-        	if(isCollection=="0"){
+        	if(isCollection=="0" || isCollection=="2"){
     		$.ajax({
                 type: "post",
                 datatype: "json",

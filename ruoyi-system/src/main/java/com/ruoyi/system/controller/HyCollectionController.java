@@ -128,7 +128,7 @@ public class HyCollectionController extends BaseController
     @ResponseBody
     public AjaxResult adds(HyCollection hyCollection)
     {
-    	return toAjax(hyCollectionService.insertHyCollectionByCostIds(hyCollection));
+    	return AjaxResult.success(hyCollectionService.insertHyCollectionByCostIds(hyCollection));
     }
     
     /**

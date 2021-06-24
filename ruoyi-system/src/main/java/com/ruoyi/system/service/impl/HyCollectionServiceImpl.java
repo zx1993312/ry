@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +23,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ResourceUtils;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.system.domain.HouseAndCost;
 import com.ruoyi.system.domain.HyCollection;
@@ -255,9 +258,11 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 	 */
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public int insertHyCollectionByCostIds(HyCollection hyCollection) {
+	public String insertHyCollectionByCostIds(HyCollection hyCollection) {
+		String result ="";
 		String[] ids = hyCollection.getCostIds().split(",");
 		try {
+			List<Map<String,Object>> beanList = new ArrayList<>();
 			for (String ida : ids) {
 				Long costIds = Long.valueOf(ida);
 				HyCost hyCost = hyCashierDeskMapper.selectHyCashierDeskById(costIds);
@@ -277,7 +282,21 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 				if (list.size() == 0) {
 					hyCollection.setAmount(amountReceivable.setScale(2, RoundingMode.HALF_UP));
 					hyCollection.setCostId(costId);
-					// hyCashierDeskServiceImpl.printReceiptMore(ObjectConverUtil.coverString());
+					
+					Map<String,Object> map = new HashMap<>();
+					map.put("id",hyCost.getId());
+					map.put("costItems",hyCost.getCostItems());
+					map.put("communityName",hyCost.getHyResidentialQuarters().getCommunityName());
+					map.put("buildingNumber",hyCost.getHyBuilding().getBuildingNumber());
+					map.put("receiptNumber",hyCollection.getHyCost().getHyCollection().getReceiptNumber());
+					map.put("houseNumber",hyCost.getHyHouseInf().getHouseNumber());
+					map.put("ownerName", hyCost.getHyOwnerRegistration().getOwnerName());
+					map.put("feeDate", hyCost.getFeeDate());
+					map.put("isCollection", hyCost.getHyCollection().getIsCollection());
+					map.put("amountReceivable", amountReceivable.setScale(2, RoundingMode.HALF_UP));
+					map.put("amount", hyCollection.getAmount());
+					
+					beanList.add(map);
 					HouseAndCost houseAndCost = new HouseAndCost();
 					houseAndCost.setCostId(costId);
 					houseAndCost.setHouseId(houseId);
@@ -304,14 +323,15 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 					hyCustomerMapper.updateHouseAndCost(houseAndCost);
 					hyCollectionMapper.insertHyCollection(hyCollection);
 				} else {
-					return 0;
+					return result;
 				}
 			}
+			result = hyCashierDeskServiceImpl.printReceiptMore(JSON.toJSONString(beanList));
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
 
-		return 1;
+		return result;
 	}
 
 	/**
