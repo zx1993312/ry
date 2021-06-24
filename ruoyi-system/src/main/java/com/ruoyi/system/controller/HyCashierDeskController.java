@@ -443,6 +443,22 @@ public class HyCashierDeskController extends BaseController {
 		mmap.put("hyCost", hyCost);
 		return prefix + "/edits";
 	}
+	/**
+	 * 修改收银台
+	 */
+	@ApiOperation("收银台")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "id", value = "主键id", required = true), })
+	@GetMapping("/editss/{id}")
+	public String editss(@PathVariable("id") Long id, ModelMap mmap) {
+		HyCost hyCost = hyCashierDeskService.selectHyCashierDeskById(id);
+		BigDecimal calculationStandard = hyCost.getCalculationStandard();
+		String costItems = hyCost.getCostItems();
+		BigDecimal bilingArea = hyCost.getHyHouseInf().getBilingArea();
+		BigDecimal amountReceivable = ReceivableUtil.getReceivable(calculationStandard, costItems, bilingArea);
+		hyCost.setAmountReceivable(amountReceivable.setScale(2,RoundingMode.HALF_UP));
+		mmap.put("hyCost", hyCost);
+		return prefix + "/editss";
+	}
 
 	/**
 	 * 修改保存收银台

@@ -1370,8 +1370,21 @@ var table = {
             	}
             },
             // 单笔收款
-            edit4: function(id) {
+            edit4: function(id,costItems) {
             	table.set();
+            	if(costItems=="物业费"){
+            		if($.common.isEmpty(id) && table.options.type == table_type.bootstrapTreeTable) {
+                		var row = $("#" + table.options.id).bootstrapTreeTable('getSelections')[0];
+                		if ($.common.isEmpty(row)) {
+                			$.modal.alertWarning("请至少选择一条记录");
+                			return;
+                		}
+                		var url = table.options.updateUrlss.replace("{id}", row[table.options.uniqueId]);
+                		$.modal.opens("单笔收款", url);
+                	} else {
+                		$.modal.opens("单笔收款", $.operate.editUrlss(id));
+                	}
+            	}else{
             	if($.common.isEmpty(id) && table.options.type == table_type.bootstrapTreeTable) {
             		var row = $("#" + table.options.id).bootstrapTreeTable('getSelections')[0];
             		if ($.common.isEmpty(row)) {
@@ -1382,6 +1395,7 @@ var table = {
             		$.modal.opens("单笔收款", url);
             	} else {
             		$.modal.opens("单笔收款", $.operate.editUrl(id));
+            	}
             	}
             },
             // 审核
@@ -1509,6 +1523,21 @@ var table = {
             	}
             	return url;
             },
+            //物业费交款
+            editUrlss: function(id) {
+            	var url = "/404.html";
+            	if ($.common.isNotEmpty(id)) {
+            		url = table.options.updateUrlss.replace("{id}", id);
+            	} else {
+            		var id = $.common.isEmpty(table.options.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns(table.options.uniqueId);
+            		if (id.length == 0) {
+            			$.modal.alertWarning("请至少选择一条记录");
+            			return;
+            		}
+            		url = table.options.updateUrlss.replace("{id}", id);
+            	}
+            	return url;
+            },
             // 保存信息 刷新表格
             save: function(url, data, callback) {
             	var config = {
@@ -1547,7 +1576,7 @@ var table = {
             				if(result.msg=="操作失败"){
             	   	         	 $.modal.alertWarning("该条数据已被收款");
             	   	         	}else{
-            	   	         	$.operate.successCallback(result);
+            	   	         	$.operate.successCallbacks(result);
             	   	         	}
         		   	         $.modal.closeLoading();
         		             $.modal.enable();
@@ -1650,6 +1679,29 @@ var table = {
                 }
                 $.modal.closeLoading();
                 $.modal.enable();
+            },
+            // 收款操作成功回调执行事件,不刷新表格（父窗体静默更新）
+            successCallbacks: function(result) {
+            	if (result.code == web_status.SUCCESS) {
+            		var parent = window.parent;
+            		if (parent.table.options.type == table_type.bootstrapTable) {
+            			$.modal.close();
+            			parent.$.modal.msgSuccess(result.msg);
+            			parent.$.table.refresh();
+            		} else if (parent.table.options.type == table_type.bootstrapTreeTable) {
+            			$.modal.close();
+            			parent.$.modal.msgSuccess(result.msg);
+            			parent.$.treeTable.refresh();
+            		} else {
+            			$.modal.msgReload("收款操作成功!", modal_status.SUCCESS);
+            		}
+            	} else if (result.code == web_status.WARNING) {
+            		$.modal.alertWarning(result.msg)
+            	}  else {
+            		$.modal.alertError(result.msg);
+            	}
+            	$.modal.closeLoading();
+            	$.modal.enable();
             },
             // 选项卡成功回调执行事件（父窗体静默更新）
             successTabCallback: function(result) {

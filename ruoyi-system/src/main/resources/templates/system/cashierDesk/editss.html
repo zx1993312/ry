@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-cost-edit" th:object="${hyCost}">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">编号：</label>
+                <div class="col-sm-8">
+                   <input id="i" th:field="*{id}" class="form-control" type="text" disabled="disabled">
+                   <input name="hyCost.id" id="id" class="form-control" type="hidden">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">费用项目：</label>
+                <div class="col-sm-8">
+                    <input id="costIt" th:field="*{costItems}" class="form-control" type="text" disabled="disabled">
+                    <input name="hyCost.costItems" id="costItems" class="form-control" type="hidden">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">所在小区：</label>
+                <div class="col-sm-8">
+                	<input id="communityNam" th:field="*{hyResidentialQuarters.communityName}" class="form-control" type="text" disabled="disabled">
+                	<input name="hyCost.hyResidentialQuarters.communityName" id="communityName" class="form-control" type="hidden">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">栋号：</label>
+                <div class="col-sm-8">
+                	<input id="buildingNum" th:field="*{hyBuilding.buildingNumber}" class="form-control" type="text" disabled="disabled">
+                	<input name="hyCost.hyBuilding.buildingNumber" id="buildingNumber" class="form-control" type="hidden">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">房屋编号：</label>
+                <div class="col-sm-8">
+                	<input id="houseNum" th:field="*{hyHouseInf.houseNumber}" class="form-control" type="text" disabled="disabled">
+                	<input name="hyCost.hyHouseInf.houseNumber" id="houseNumber" class="form-control" type="hidden">
+                	<input th:field="*{hyHouseInf.bilingArea}" id="bilingArea" class="form-control" type="hidden">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">业主名称：</label>
+                <div class="col-sm-8">
+                	<input id="ownerNam" th:field="*{hyOwnerRegistration.ownerName}" class="form-control" type="text" disabled="disabled">
+                	<input name="hyCost.hyOwnerRegistration.ownerName" id="ownerName" class="form-control" type="hidden">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-2 control-label">费用日期：</label>
+                <div class="col-sm-4">
+                	<div class="input-group date">
+                        <input id="feeDat" name="feeDate" th:field="*{feeDate}" class="form-control" type="text" disabled="disabled">
+                        <input name="hyCost.feeDate" id="feeDate" class="form-control" type="hidden">
+                    </div>
+                </div>
+                <label class="col-sm-2 control-label">选择交多少个月：</label>
+                <div class="col-sm-4">
+                	 <select id="month" name="month" class="form-control" onchange="amountChange()">
+							<option value="">请选择</option>
+							<option value=1>1月</option>
+							<option value=2>2月</option>
+							<option value=3>3月</option>
+							<option value=4>4月</option>
+							<option value=5>5月</option>
+							<option value=6>6月</option>
+							<option value=7>7月</option>
+							<option value=8>8月</option>
+							<option value=9>9月</option>
+							<option value=10>10月</option>
+							<option value=11>11月</option>
+							<option value=12>12月</option>
+					</select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">支付状态：</label>
+                <div class="col-sm-8">
+                	<select th:field="*{hyCollection.isCollection}" class="form-control" disabled="disabled">
+						<option value="">未支付</option>
+						<option value="0">已支付</option>
+					</select>
+					<input name="hyCost.hyCollection.isCollection" value="0" class="form-control" type="hidden">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">应收费用：</label>
+                <div class="col-sm-8">
+                	<input id="amountReceiv" th:field="*{amountReceivable}" class="form-control" type="text" disabled="disabled">
+                	<input name="hyCost.amountReceivable" id="amountReceivable" class="form-control" type="hidden">
+                	<input  th:field="*{calculationStandard}" id="calculationStandard" class="form-control" type="hidden">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">已收费用：</label>
+                <div class="col-sm-8">
+                	<input th:field="*{hyCollection.amount}" class="form-control" type="text" disabled="disabled">
+                	<input name="hyCost.hyCollection.amount" id="amounts" class="form-control" type="hidden">
+                </div>
+            </div>
+            <div class="form-group">    
+                <div class="col-sm-8">
+                   <input id="cost" th:field="*{houseAndCost.costId}" class="form-control" type="hidden">
+                   <input name="costId" id="costId" class="form-control" type="hidden">
+                </div>
+            </div>
+            <div class="form-group">    
+                <div class="col-sm-8">
+                   <input id="house" th:field="*{houseAndCost.houseId}" class="form-control" type="hidden">
+                   <input name="houseId" id="houseId" class="form-control" type="hidden">
+                </div>
+            </div>
+            <div class="form-group">    
+                <div class="col-sm-8">
+                   <input id="owner" th:field="*{hyHouseInf.ownerId}" class="form-control" type="hidden">
+                   <input name="ownerId" id="ownerId" class="form-control" type="hidden">
+                </div>
+            </div>
+             <div class="form-group">    
+                <label class="col-sm-3 control-label">收据号码：</label>
+                <div class="col-sm-8">
+                    <input id="receiptNumber" name="receiptNumber" class="form-control" type="text" onclick="selectBillSet()">
+                    <input name="hyCost.hyCollection.receiptNumber" id="receiptNum" class="form-control" type="hidden">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">总金额：</label>
+                <div class="col-sm-8">
+                    <input id="amountRece" th:field="*{amountReceivable}" class="form-control" type="text" disabled="disabled">
+                    <input name="amount" id="amount" class="form-control" type="hidden">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">申请时间：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input id="applyTime" name="applyTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">收款人：</label>
+                <div class="col-sm-8">
+                    <input name="payee" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">收款方式：</label>
+                <div class="col-sm-8">
+                    <select name="collectionType" class="form-control" th:with="type=${@dict.getType('hy_collection_type')}">
+							<option value="">请选择</option>
+							<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+					</select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">收款时间：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input id="collectionTime" name="collectionTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+                	<input id="isCollection" name="isCollection" class="form-control" type="hidden">
+                	<input id="isBook" name="isBook" class="form-control" type="hidden">
+                	<input id="paymentStatue" name="paymentStatue" class="form-control" type="hidden">
+                	<input id="isDeferred" name="isDeferred" class="form-control" type="hidden">
+                	<input id="isRefund" name="isRefund" class="form-control" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">备注：</label>
+                <div class="col-sm-8">
+                    <input name="collectionRemark" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    
+    <script th:inline="javascript">
+        var prefix = ctx + "system/collection";
+        $("#form-cost-edit").validate({
+        	rules : {
+        		receiptNumber : {
+					required : true,
+					maxlength:20,
+				},
+				amount : {
+					required : true,
+					maxlength:50,
+				},
+				collectionType : {
+					required : true,
+					maxlength:2,
+				},
+			},
+            focusCleanup: true
+        });
+        
+        $(function() {
+        	var date = new Date();
+        	var year = date.getFullYear();
+        	var Month = date.getMonth()+1;
+        	var da = date.getDate();
+        	var hh = date.getHours();
+        	var mm = date.getMinutes();
+        	var ss = date.getSeconds();
+        	var dateStr = year+"-"+Month+"-"+da+" "+hh+":"+mm+":"+ss;
+        	var costId = $("#cost").val();
+        	var houseId = $("#house").val();
+        	var ownerId = $("#owner").val();
+        	var houseNumber = $("#houseNum").val();
+        	var ownerName = $("#ownerNam").val();
+        	var id = $("#i").val();
+        	var costItems = $("#costIt").val();
+        	var communityName = $("#communityNam").val();
+        	var buildingNumber = $("#buildingNum").val();
+        	var feeDate = $("#feeDat").val();
+        	var amountReceivable = $("#amountReceiv").val();
+        	$("#applyTime").val(dateStr);
+        	$("#collectionTime").val(dateStr);
+        	$("#isCollection").val(0);
+        	$("#isBook").val(1);
+        	$("#paymentStatue").val(1);
+        	$("#isDeferred").val(1);
+        	$("#isRefund").val(1);
+        	$("#costId").val(costId);
+        	$("#houseId").val(houseId);
+        	$("#ownerId").val(ownerId);
+        	$("#houseNumber").val(houseNumber);
+        	$("#ownerName").val(ownerName);
+        	$("#id").val(id);
+        	$("#costItems").val(costItems);
+        	$("#communityName").val(communityName);
+        	$("#buildingNumber").val(buildingNumber);
+        	$("#feeDate").val(feeDate);
+        	$("#amountReceivable").val(amountReceivable);
+        	
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+            		$.operate.save1(prefix + "/addss", $('#form-cost-edit').serialize());
+            }
+                
+        }
+        function selectBillSet(){
+        	$.modal.open("票据页面","/system/selectBillSet");
+        };
+        function amountChange(){
+        	var calculationStandard = $("#calculationStandard").val();
+        	var calculationStandard = parseFloat(calculationStandard).toFixed(2);
+        	var amountReceiv = $("#amountReceiv").val();
+        	var bilingArea = $("#bilingArea").val();
+        	var month = $("#month").val();
+        	var amout = calculationStandard*month*bilingArea;
+        	var amout = parseFloat(amout).toFixed(2);
+        	$("#amountRece").val(amout);
+        	$("#amount").val(amout);
+        };
+    </script>
+</body>
+</html>

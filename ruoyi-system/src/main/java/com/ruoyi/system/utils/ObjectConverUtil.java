@@ -2,7 +2,7 @@ package com.ruoyi.system.utils;
 
 import java.lang.reflect.Field;
 
-import com.alibaba.fastjson.JSONArray;
+import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
  * javabean转换为JsonString
@@ -12,15 +12,29 @@ import com.alibaba.fastjson.JSONArray;
  */
 public class ObjectConverUtil<T> {
 
-	public String coverString(T t) {
-		Field[] fields = t.getClass().getFields();
-		for (Field f : fields) {
-			f.setAccessible(true);
-			/*if(f ) {
-				
-			}*/
+	public String coverString(T t) throws IllegalArgumentException, IllegalAccessException {
+		StringBuffer sb = new StringBuffer();
+		Field[] fields = t.getClass().getDeclaredFields();
+		sb.append("{");
+		for (int i = 0; i < fields.length; i++) {
+			fields[i].setAccessible(true);
+			if (BaseEntity.class.isAssignableFrom(fields[i].get(t).getClass())) {
+				Field[] sonFields = fields[i].get(t).getClass().getDeclaredFields();
+				for (int j = 0; j < sonFields.length; j++) {
+					sb.append("\" " + sonFields[j].getName() + "\" : " + sonFields[j].get(t));
+					if (j != sonFields.length - 1) {
+						sb.append(",");
+					}
+				}
+			}
+			sb.append("\" " + fields[i].getName() + "\" : " + fields[i].get(t));
+			if (i != fields.length - 1) {
+				sb.append(",");
+			}
+
 		}
-		return JSONArray.toJSON(t).toString();
+		sb.append("}");
+		return sb.toString();
 	}
 
 }

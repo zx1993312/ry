@@ -151,7 +151,8 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 				if (list.size() == 0) {
 					hyCollection.setAmount(amountReceivable.setScale(2, RoundingMode.HALF_UP));
 					hyCollection.setCostId(costId);
-					//hyCashierDeskServiceImpl.printReceiptMore(ObjectConverUtil.coverString(hyCost));
+					
+					//hyCashierDeskServiceImpl.printReceiptMore(ObjectConverUtil.coverString());
 					hyCollectionMapper.insertHyCollection(hyCollection);
 				} else {
 					return 0;

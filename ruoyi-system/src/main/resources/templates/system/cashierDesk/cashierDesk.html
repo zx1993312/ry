@@ -139,6 +139,7 @@
                 createUrl: prefix + "/add",
                 updateUrl: prefix + "/edit/{id}",
                 updateUrls: prefix + "/edits/{id}",
+                updateUrlss: prefix + "/editss/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
                 importUrl: prefix + "/importData",
@@ -205,7 +206,7 @@
                         if(row.hyCollection.isCollection == '0'){
                         	actions.push('<a class="btn btn-warning btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="printReceiptOne(\'' + row.id + '\',\'' + row.costItems + '\',\'' + row.hyResidentialQuarters.communityName + '\',\'' + row.hyBuilding.buildingNumber + '\',\'' + row.hyHouseInf.houseNumber + '\',\'' + row.hyOwnerRegistration.ownerName + '\',\'' + row.feeDate + '\',\'' + row.hyCollection.isCollection + '\',\'' + row.amountReceivable + '\',\'' + row.hyCollection.amount + '\')"><i class="fa fa-download"></i>打印收据</a> ');
                         }else{
-                        	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit4(\'' + row.id + '\')"><i class="fa fa-edit"></i>单笔收款</a> ');
+                        	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit4(\'' + row.id + '\',\'' + row.costItems + '\')"><i class="fa fa-edit"></i>单笔收款</a> ');
                             actions.push('<a class="btn btn-primary btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="comprehensive(\'' + row.hyCollection.isCollection + '\',\'' + row.hyOwnerRegistration.ownerName + '\')"><i class="fa fa-edit"></i>综合收款</a> ');
                         	actions.push('<a class="btn btn-warning btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="printCollectionOne(\'' + row.id + '\',\'' + row.costItems + '\',\'' + row.hyResidentialQuarters.communityName + '\',\'' + row.hyBuilding.buildingNumber + '\',\'' + row.hyHouseInf.houseNumber + '\',\'' + row.hyOwnerRegistration.ownerName + '\',\'' + row.feeDate + '\',\'' + row.hyCollection.isCollection + '\',\'' + row.amountReceivable + '\',\'' + row.hyCollection.amount + '\')"><i class="fa fa-download"></i>打印催收单</a> ');
                         }
@@ -287,7 +288,7 @@
 			}
         		 $.ajax({
                      url: prefix + "/lists",
-                     data: {'hyOwnerRegistration.ownerName' : ownerName},
+                     data: {'hyOwnerRegistration.ownerName' : ownerName,'hyCollection.isCollection' : '1'},
                      type: 'POST',
                      dataType : "json",
                      success: function (result) {

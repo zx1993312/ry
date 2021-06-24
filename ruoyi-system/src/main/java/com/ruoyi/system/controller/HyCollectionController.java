@@ -130,6 +130,22 @@ public class HyCollectionController extends BaseController
     {
     	return toAjax(hyCollectionService.insertHyCollectionByCostIds(hyCollection));
     }
+    
+    /**
+     * 新增保存收款管理 Collection management
+     */
+    @ApiOperation("收款管理 Collection management")
+    @ApiImplicitParams({ 
+		@ApiImplicitParam(name = "hyCollection", value = "项目实体类hyCollection", required = true),
+	})
+    @RequiresPermissions("system:collection:add")
+    @Log(title = "收款管理 Collection management", businessType = BusinessType.INSERT)
+    @PostMapping("/addss")
+    @ResponseBody
+    public AjaxResult addss(HyCollection hyCollection,HttpServletResponse response) throws InvalidPasswordException, JRException, IOException, PrinterException
+    {
+        return toAjax(hyCollectionService.insertHyCollection(hyCollection, response));
+    }
 
     /**
      * 修改收款管理 Collection management
