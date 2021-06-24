@@ -291,7 +291,17 @@ public class HyCashierDeskController extends BaseController {
 	@ResponseBody
 	public List<HyCost> lists(HyCost hyCost) {
 		startPage();
-		List<HyCost> list = hyCashierDeskService.selectHyCashierDeskListByIsCollection(hyCost);
+		List<HyCost> list = hyCashierDeskService.selectHyCashierDeskList(hyCost);
+		for (HyCost cost : list) {
+			BigDecimal calculationStandard = cost.getCalculationStandard();
+			String costItems = cost.getCostItems();
+			BigDecimal bilingArea = cost.getHyHouseInf().getBilingArea();
+			BigDecimal amountReceivable = ReceivableUtil.getReceivable(calculationStandard, costItems, bilingArea);
+			cost.setAmountReceivable(amountReceivable.setScale(2,RoundingMode.HALF_UP));
+			if(cost.getHyCollection().getAmount()==null) {
+				cost.getHyCollection().setAmount(new BigDecimal(0));
+			}
+		}
 		return list;
 	}
 
@@ -479,6 +489,24 @@ public class HyCashierDeskController extends BaseController {
 	 public AjaxResult editPrintReceiptMore(String datas, ModelMap mmap) {
 	  try {
 	   return toAjax(hyCashierDeskService.printReceiptMore(datas));
+	  } catch (Exception e) {
+	   e.printStackTrace();
+	   return toAjax(0);
+	  }
+	 }
+	 
+	 /**
+	  * 批量打印催收单
+	  */
+	 @ApiOperation("批量打印催收单")
+	 @ApiImplicitParams({ @ApiImplicitParam(name = "datas", value = "datas", required = true), })
+	 @RequiresPermissions("system:cashierDesk:printReceiptMore")
+	 @Log(title = "批量打印催收单", businessType = BusinessType.UPDATE)
+	 @PostMapping("/printCollectionMore")
+	 @ResponseBody
+	 public AjaxResult printCollectionMore(String datas, ModelMap mmap) {
+	  try {
+	   return toAjax(hyCashierDeskService.printCollectionMore(datas));
 	  } catch (Exception e) {
 	   e.printStackTrace();
 	   return toAjax(0);

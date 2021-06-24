@@ -118,18 +118,6 @@ public class HyPaymoneyController extends BaseController {
 		return prefix + "/add";
 	}
 
-	/**
-	 * 新增保存交款管理 Collection management
-	 */
-	@RequiresPermissions("system:paymoney:add")
-	@Log(title = "交款管理", businessType = BusinessType.INSERT)
-	@ApiOperation("新增保存交款管理")
-	@ApiImplicitParams({ @ApiImplicitParam(name = "hyCollection", value = "项目实体类", required = true), })
-	@PostMapping("/add")
-	@ResponseBody
-	public AjaxResult addSave(HyCollection hyCollection) {
-		return toAjax(hyCollectionService.insertHyCollection(hyCollection));
-	}
 
 	/**
 	 * 修改交款管理 Collection management

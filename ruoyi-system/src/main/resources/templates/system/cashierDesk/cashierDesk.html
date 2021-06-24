@@ -266,7 +266,7 @@
 			}
         	console.log(rows); */
         	var map = new Map();
-        	var list = new Array();
+        	var list = "";
 /*         	for(var i=0;i<rows.length;i++){
         		if(Object.getOwnPropertyNames(map).length != 0){
         			if(!map.hasOwnProperty(rows[i].hyOwnerRegistration.ownerName)){
@@ -303,31 +303,9 @@
                     		var isCollection = result[i].hyCollection.isCollection;
                     		var amountReceivable = result[i].amountReceivable;
                     		var amount = result[i].hyCollection.amount;
-                     		list[i] = {
-                	               	'id' : id,
-                	           		'costItems' : costItems,
-                	           		'communityName' : communityName,
-                	           		'buildingName' : buildingName,
-                	           		'houseNumber' : houseNumber,
-                	           		'ownerName' : ownerName,
-                	           		'feeDate' : feeDate,
-                	           		'isCollection' : isCollection,
-                	           		'amountReceivable' : amountReceivable,
-                	           		'amount' : amount
-                                };
+                    		list = list + id + ",";
                      	}
-                     	console.log(list);
-               		 $.ajax({
-                         url: prefix + "/edits",
-                         data: {
-                         	'datas' : JSON.stringify(list)
-                         },
-                         type: 'POST',
-                         dataType : "json",
-                         success: function (result) {
-                         	$.operate.successCallback(result);
-                         }
-                     });
+                     	$.modal.opens("综合收款", $.operate.editUrls(list));
                      }
                  });
         	});
@@ -467,6 +445,67 @@
             	
                 $.ajax({
                     url: prefix + "/printReceiptMore",
+                    data: {
+                    	'datas' : JSON.stringify(list)
+                    },
+                    type: 'POST',
+                    dataType : "json",
+                    success: function (result) {
+                    	$.operate.successCallback(result);
+                    }
+                });
+            });
+        }
+        function printCollectionMore(){
+        	$.modal.confirm("确定要对所选的数据打印催收单吗？", function() {
+            	var rows=$("#bootstrap-table").bootstrapTable('getSelections');
+            	if(rows.length == 0){
+        			$.modal.alertWarning("至少选择一条数据！！！");
+        			return false;
+        		}
+            	
+            	var map = new Map();
+            	
+            	var list = new Array();
+            	for(var i=0;i<rows.length;i++){
+            		if(Object.getOwnPropertyNames(map).length != 0){
+            			if(!map.hasOwnProperty(rows[i].hyOwnerRegistration.ownerName)){
+                			$.modal.alertWarning("所选数据不是一个人的");
+                			return false;
+                		}
+            		}
+            		map[rows[i].hyOwnerRegistration.ownerName] = rows[i];
+            		//map.set("rows[i].hyOwnerRegistration.ownerName",rows[i]);
+            		var id = rows[i].id;
+            		var costItems = rows[i].costItems;
+            		var communityName = rows[i].hyResidentialQuarters.communityName;
+            		var buildingName = rows[i].hyBuilding.buildingName;
+            		var houseNumber = rows[i].hyHouseInf.houseNumber;
+            		var ownerName = rows[i].hyOwnerRegistration.ownerName;
+            		var feeDate = rows[i].feeDate;
+            		var isCollection = rows[i].hyCollection.isCollection;
+            		var amountReceivable = rows[i].amountReceivable;
+            		var amount = rows[i].hyCollection.amount;
+            		if(isCollection=="0"){
+            			$.modal.alertWarning("选择的数据中又已支付的数据，请重新选择！");
+        				return false;
+            		}
+                    list[i] = {
+                       	'id' : id,
+                   		'costItems' : costItems,
+                   		'communityName' : communityName,
+                   		'buildingName' : buildingName,
+                   		'houseNumber' : houseNumber,
+                   		'ownerName' : ownerName,
+                   		'feeDate' : feeDate,
+                   		'isCollection' : isCollection,
+                   		'amountReceivable' : amountReceivable,
+                   		'amount' : amount
+                    };
+            	}
+            	
+                $.ajax({
+                    url: prefix + "/printCollectionMore",
                     data: {
                     	'datas' : JSON.stringify(list)
                     },

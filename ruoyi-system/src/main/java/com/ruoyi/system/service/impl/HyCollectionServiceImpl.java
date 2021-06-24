@@ -1,8 +1,10 @@
 package com.ruoyi.system.service.impl;
 
+import java.awt.print.PrinterException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.Connection;
@@ -14,6 +16,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.pdfbox.pdmodel.encryption.InvalidPasswordException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +32,7 @@ import com.ruoyi.system.utils.HyPrintPDFUtil;
 import com.ruoyi.system.utils.ReceivableUtil;
 
 import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -46,6 +50,9 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 	
 	@Autowired
 	private HyCashierDeskMapper hyCashierDeskMapper;
+	
+	@Autowired
+	private HyCashierDeskServiceImpl hyCashierDeskServiceImpl;
 
 	/**
 	 * 查询收款管理 Collection management
@@ -85,10 +92,14 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 	 * 
 	 * @param hyCollection 收款管理 Collection management
 	 * @return 结果
+	 * @throws PrinterException 
+	 * @throws IOException 
+	 * @throws JRException 
+	 * @throws InvalidPasswordException 
 	 */
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public int insertHyCollection(HyCollection hyCollection) {
+	public int insertHyCollection(HyCollection hyCollection,HttpServletResponse response) throws InvalidPasswordException, JRException, IOException, PrinterException {
 		Long costId = hyCollection.getCostId();
 		Long houseId = hyCollection.getHouseId();
 		Long ownerId = hyCollection.getOwnerId();
@@ -98,6 +109,7 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 		collection.setOwnerId(ownerId);
 		List<HyCollection> list = hyCollectionMapper.selectHyCollectionList(collection);
 		if (list.size() == 0) {
+			hyCashierDeskServiceImpl.printReceiptOne(hyCollection.getHyCost(), response);
 			return hyCollectionMapper.insertHyCollection(hyCollection);
 		} else {
 			return 0;
@@ -134,6 +146,7 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 			if (list.size() == 0) {
 				hyCollection.setAmount(amountReceivable.setScale(2,RoundingMode.HALF_UP));
 				hyCollection.setCostId(costId);
+				//hyCashierDeskServiceImpl.printReceiptMore(datas);
 				hyCollectionMapper.insertHyCollection(hyCollection);
 			} else {
 				return 0;

@@ -60,6 +60,13 @@ public interface IHyCashierDeskService {
 	  */
 	public int printReceiptMore(String datas) throws Exception;
 	/**
+	  * 批量打印催收单
+	  * 
+	  * @param datas
+	  * @return
+	  */
+	 public int printCollectionMore(String datas) throws Exception;
+	/**
 	 * 打印单条收据
 	 * @param response
 	 * @return

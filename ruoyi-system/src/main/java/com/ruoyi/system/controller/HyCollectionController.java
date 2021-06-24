@@ -1,6 +1,12 @@
 package com.ruoyi.system.controller;
 
+import java.awt.print.PrinterException;
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.pdfbox.pdmodel.encryption.InvalidPasswordException;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,8 +16,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.domain.HyCollection;
 import com.ruoyi.system.service.IHyCollectionService;
 
@@ -19,11 +30,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-
-import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.common.core.page.TableDataInfo;
+import net.sf.jasperreports.engine.JRException;
 
 /**
  * 收款管理 Collection managementController
@@ -103,9 +110,9 @@ public class HyCollectionController extends BaseController
     @Log(title = "收款管理 Collection management", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
-    public AjaxResult addSave(HyCollection hyCollection)
+    public AjaxResult addSave(HyCollection hyCollection,HttpServletResponse response) throws InvalidPasswordException, JRException, IOException, PrinterException
     {
-        return toAjax(hyCollectionService.insertHyCollection(hyCollection));
+        return toAjax(hyCollectionService.insertHyCollection(hyCollection, response));
     }
     
     /**

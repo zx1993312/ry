@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -303,6 +304,56 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 		}
 		return 1;
 	}
+	
+	@Override
+	public int printCollectionMore(String datas) throws Exception {
+		String fileName = "d:\\" + new Date().getTime() + "催收单.pdf";
+		try {
+			// 1、获取模版文件
+			File rootFile = new File(ResourceUtils.getURL("classpath:").getPath());
+			File templateFile = new File(rootFile, "/pdf_template/printCollection_db.jasper");
+
+			String pic = rootFile + "\\static\\pdfimg\\e813f89d5a4c8f33b567a553a60649b.png";
+			String erweima = rootFile
+					+ "\\static\\pdfimg\\src=http___i.nibaku.com_img_0_1433531324x2230376662_26.jpg&refer=http___i.nibaku.jpg";
+
+			Map<String, Object> map = new HashMap<>();
+			map.put("pic", pic);
+			map.put("erweima", erweima);
+
+			JSONArray jsonArray = JSONArray.parseArray(datas);
+
+			List<Map<String, Object>> paramList = new ArrayList<>();
+
+			for (int i = 0; i < jsonArray.size(); i++) {
+				JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+				// 2、准备数据库连接
+				Map<String, Object> params = new HashMap<String, Object>();
+				params.put("id", jsonObject.getString("id"));
+				params.put("house_number", jsonObject.getString("houseNumber"));
+				params.put("owner_name", jsonObject.getString("ownerName"));
+				params.put("cost_items", jsonObject.getString("costItems"));
+				params.put("community_name", jsonObject.getString("communityName"));
+				params.put("building_name", jsonObject.getString("buildingName"));
+				params.put("fee_date", jsonObject.getString("feeDate"));
+				params.put("is_collection", jsonObject.getString("isCollection") == null ? "未支付" : "已支付");
+				params.put("amount_receivable", jsonObject.getString("amountReceivable"));
+				params.put("amount", jsonObject.getString("amount") == null ? "" : jsonObject.getString("amount"));
+				paramList.add(params);
+
+			}
+			
+			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(paramList);
+
+			JasperPrint jasperPrint = JasperFillManager.fillReport(new FileInputStream(templateFile), map, dataSource);
+			JasperExportManager.exportReportToPdfStream(jasperPrint, new FileOutputStream(fileName));
+			HyPrintPDFUtil.printPDF(fileName, "A4");
+		} catch (java.io.EOFException e) {
+			log.error("没有字体的异常,没关系，不要在意" + e.getMessage());
+		}
+		return 1;
+	}
 
 	@Override
 	public int printReceiptOne(HyCost hyCost, HttpServletResponse response)
@@ -320,11 +371,12 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 			String id = hyCost.getId() + "";
 			String costItems = hyCost.getCostItems();
 			String communityName = hyCost.getHyResidentialQuarters().getCommunityName();
-			String buildingName = hyCost.getHyBuilding().getBuildingName();
+			String buildingNumber = hyCost.getHyBuilding().getBuildingNumber();
+			String receiptNumber = hyCost.getHyCollection().getReceiptNumber();
 			String feeDate = hyCost.getFeeDate();
 			String isCollection = hyCost.getHyCollection().getIsCollection();
-			String amountReceivable = hyCost.getAmountReceivable().setScale(2)+"";
-			String amount = hyCost.getHyCollection().getAmount() + "" ;
+			String amountReceivable = hyCost.getAmountReceivable().setScale(2,RoundingMode.HALF_UP) + "";
+			String amount = hyCost.getHyCollection().getAmount().setScale(2,RoundingMode.HALF_UP) + "";
 			
 			params.put("pic", pic);
 			params.put("house_number", houseNumber);
@@ -332,7 +384,8 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 			params.put("id", id);
 			params.put("cost_items", costItems);
 			params.put("community_name", communityName);
-			params.put("building_name", buildingName);
+			params.put("building_number", buildingNumber);
+			params.put("receipt_number", receiptNumber);
 			params.put("fee_date", feeDate);
 			params.put("is_collection", isCollection);
 			params.put("amount_receivable", amountReceivable);
