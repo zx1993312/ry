@@ -22,6 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.ruoyi.common.exception.BusinessException;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.domain.HouseAndCost;
@@ -252,6 +254,54 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 				"jdbc:mysql://39.105.185.22:3306/hy_database?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8",
 				"root", "hangyu123.root");
 		return connection;
+	}
+	
+	@Override
+	public int printReceiptMore(String datas)
+			throws JRException, InvalidPasswordException, IOException, PrinterException {
+		String fileName = "d:\\" + new Date().getTime() + "收据.pdf";
+		try {
+			// 1、获取模版文件
+			File rootFile = new File(ResourceUtils.getURL("classpath:").getPath());
+			File templateFile = new File(rootFile, "/pdf_template/printReceipt_db.jasper");
+			// 2、准备数据库连接
+			String pic = rootFile + "\\static\\pdfimg\\e813f89d5a4c8f33b567a553a60649b.png";
+
+			Map<String, Object> map = new HashMap<>();
+			map.put("pic", pic);
+
+			List<Map<String, Object>> paramList = new ArrayList<>();
+
+			JSONArray jsonArray = JSONArray.parseArray(datas);
+			for (int i = 0; i < jsonArray.size(); i++) {
+				JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+				// 2、准备数据库连接
+				Map<String, Object> params = new HashMap<String, Object>();
+				params.put("id", jsonObject.getLong("id"));
+				params.put("house_number", jsonObject.getString("houseNumber"));
+				params.put("owner_name", jsonObject.getString("ownerName"));
+				params.put("cost_items", jsonObject.getString("costItems"));
+				params.put("community_name", jsonObject.getString("communityName"));
+				params.put("building_name", jsonObject.getString("buildingName"));
+				params.put("fee_date", jsonObject.getString("feeDate"));
+				params.put("is_collection", jsonObject.getString("isCollection") == null ? "未支付" : "已支付");
+				params.put("amount_receivable", new BigDecimal(jsonObject.getString("amountReceivable")).setScale(2));
+				params.put("amount", jsonObject.get("amount") == null ? new BigDecimal(0)
+						: new BigDecimal(jsonObject.getString("amount")).setScale(2));
+				paramList.add(params);
+
+				//
+			}
+			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(paramList);
+
+			JasperPrint jasperPrint = JasperFillManager.fillReport(new FileInputStream(templateFile), map, dataSource);
+			JasperExportManager.exportReportToPdfStream(jasperPrint, new FileOutputStream(fileName));
+			HyPrintPDFUtil.printPDF(fileName, "RECEIPT");
+		} catch (java.io.EOFException e) {
+			log.error("没有字体的异常,没关系，不要在意" + e.getMessage());
+		}
+		return 1;
 	}
 
 	@Override

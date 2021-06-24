@@ -17,6 +17,9 @@ public class HyCost extends BaseEntity {
 
 	/** 主键 */
 	private Long id;
+	
+	/** 主键组 */
+	private String costIds;
 
 	/** 费用项目 */
 	@Excel(name = "费用项目")
@@ -301,6 +304,14 @@ public class HyCost extends BaseEntity {
 
 	public Long getId() {
 		return id;
+	}
+
+	public String getCostIds() {
+		return costIds;
+	}
+
+	public void setCostIds(String costIds) {
+		this.costIds = costIds;
 	}
 
 	public void setCostItems(String costItems) {
@@ -741,9 +752,9 @@ public class HyCost extends BaseEntity {
 
 	@Override
 	public String toString() {
-		return "HyCost [id=" + id + ", costItems=" + costItems + ", expenseType=" + expenseType + ", parentId="
-				+ parentId + ", ancestors=" + ancestors + ", standardName=" + standardName + ", feeNum=" + feeNum
-				+ ", chargingStandard=" + chargingStandard + ", calculationMehod=" + calculationMehod
+		return "HyCost [id=" + id + ", costIds=" + costIds + ", costItems=" + costItems + ", expenseType=" + expenseType
+				+ ", parentId=" + parentId + ", ancestors=" + ancestors + ", standardName=" + standardName + ", feeNum="
+				+ feeNum + ", chargingStandard=" + chargingStandard + ", calculationMehod=" + calculationMehod
 				+ ", standardDescription=" + standardDescription + ", standardState=" + standardState
 				+ ", proportionDamags=" + proportionDamags + ", projectModification=" + projectModification
 				+ ", billingCycle=" + billingCycle + ", bilingStartDate=" + bilingStartDate + ", bilingEndDate="
@@ -764,6 +775,8 @@ public class HyCost extends BaseEntity {
 				+ ", hyResidentialQuarters=" + hyResidentialQuarters + ", hyCollection=" + hyCollection
 				+ ", ownerAndCost=" + ownerAndCost + ", houseAndCost=" + houseAndCost + "]";
 	}
+
+	
 
 	
 

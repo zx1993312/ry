@@ -107,6 +107,22 @@ public class HyCollectionController extends BaseController
     {
         return toAjax(hyCollectionService.insertHyCollection(hyCollection));
     }
+    
+    /**
+     * 批量新增保存收款管理 Collection management
+     */
+    @ApiOperation("收款管理 Collection management")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyCollection", value = "项目实体类hyCollection", required = true),
+    })
+    @RequiresPermissions("system:collection:add")
+    @Log(title = "收款管理 Collection management", businessType = BusinessType.INSERT)
+    @PostMapping("/adds")
+    @ResponseBody
+    public AjaxResult adds(HyCollection hyCollection)
+    {
+    	return toAjax(hyCollectionService.insertHyCollectionByCostIds(hyCollection));
+    }
 
     /**
      * 修改收款管理 Collection management

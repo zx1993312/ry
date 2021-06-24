@@ -45,6 +45,14 @@ public interface IHyCollectionService
      * @return 结果
      */
     public int insertHyCollection(HyCollection hyCollection);
+    
+    /**
+     * 新增收款管理 Collection management
+     * 
+     * @param hyCollection 收款管理 Collection management
+     * @return 结果
+     */
+    public int insertHyCollectionByCostIds(HyCollection hyCollection);
 
     /**
      * 修改收款管理 Collection management
@@ -81,5 +89,6 @@ public interface IHyCollectionService
    	 * @throws Exception 
    	 */
 	public int collectionPDF(HttpServletResponse response)throws Exception;
+
 
 }

@@ -92,6 +92,12 @@
                 <a class="btn btn-warning" onclick="printCollection()">
                     <i class="fa fa-download"></i> 打印催收单
                 </a>
+                <a class="btn btn-warning" onclick="printReceiptMore()">
+                    <i class="fa fa-download"></i> 批量打印收据
+                </a>
+                <a class="btn btn-warning" onclick="printCollectionMore()">
+                    <i class="fa fa-download"></i> 批量打印催收单
+                </a>
                 <a class="btn btn-info" onclick="$.table.importExcel()" shiro:hasPermission="system:cashierDesk:import">
 			            <i class="fa fa-upload"></i> 导入
 			    </a>
@@ -132,6 +138,7 @@
                 url: prefix + "/list",
                 createUrl: prefix + "/add",
                 updateUrl: prefix + "/edit/{id}",
+                updateUrls: prefix + "/edits/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
                 importUrl: prefix + "/importData",
@@ -209,7 +216,7 @@
             $.table.init(options);
         });
         function merger(){
-        	$.modal.confirm("确定要对所选的数据进行催收吗？", function() {
+        	$.modal.confirm("确定要对所选的数据进行收款吗？", function() {
         	var rows=$("#bootstrap-table").bootstrapTable('getSelections');
         	if(rows.length == 0){
 				$.modal.alertWarning("至少选择一条数据！！！");
@@ -220,7 +227,7 @@
         	
         	var map = new Map();
         	
-        	var list = new Array();
+        	var list = "";
         	for(var i=0;i<rows.length;i++){
         		if(Object.getOwnPropertyNames(map).length != 0){
         			if(!map.hasOwnProperty(rows[i].hyOwnerRegistration.ownerName)){
@@ -244,35 +251,14 @@
         			$.modal.alertWarning("选择的数据中又已支付的数据，请重新选择！");
     				return false;
         		}
-                list[i] = {
-	               	'id' : id,
-	           		'costItems' : costItems,
-	           		'communityName' : communityName,
-	           		'buildingName' : buildingName,
-	           		'houseNumber' : houseNumber,
-	           		'ownerName' : ownerName,
-	           		'feeDate' : feeDate,
-	           		'isCollection' : isCollection,
-	           		'amountReceivable' : amountReceivable,
-	           		'amount' : amount
-                };
+                list = list + id + ",";
         	}
         	
-            $.ajax({
-                url: prefix + "/edits",
-                data: {
-                	'datas' : JSON.stringify(list)
-                },
-                type: 'POST',
-                dataType : "json",
-                success: function (result) {
-                	$.operate.successCallback(result);
-                }
-            });
+        	$.modal.opens("合并收款", $.operate.editUrls(list));
         	});
         }
         function comprehensive(isCollection,ownerName){
-        	$.modal.confirm("确定要对该条数据的业主所有的费用进行催收吗？", function() {
+        	$.modal.confirm("确定要对该条数据的业主所有的费用进行收款吗？", function() {
         	/* var rows=$("#bootstrap-table").bootstrapTable('getSelections');
         	if(rows.length == 0){
 				$.modal.alertWarning("至少选择一条数据！！！");
@@ -430,6 +416,67 @@
     	        }
             }); 
         	});
+        }
+        function printReceiptMore(){
+        	$.modal.confirm("确定要对所选的数据打印收据吗？", function() {
+            	var rows=$("#bootstrap-table").bootstrapTable('getSelections');
+            	if(rows.length == 0){
+        			$.modal.alertWarning("至少选择一条数据！！！");
+        			return false;
+        		}
+            	
+            	var map = new Map();
+            	
+            	var list = new Array();
+            	for(var i=0;i<rows.length;i++){
+            		if(Object.getOwnPropertyNames(map).length != 0){
+            			if(!map.hasOwnProperty(rows[i].hyOwnerRegistration.ownerName)){
+                			$.modal.alertWarning("所选数据不是一个人的");
+                			return false;
+                		}
+            		}
+            		map[rows[i].hyOwnerRegistration.ownerName] = rows[i];
+            		//map.set("rows[i].hyOwnerRegistration.ownerName",rows[i]);
+            		var id = rows[i].id;
+            		var costItems = rows[i].costItems;
+            		var communityName = rows[i].hyResidentialQuarters.communityName;
+            		var buildingName = rows[i].hyBuilding.buildingName;
+            		var houseNumber = rows[i].hyHouseInf.houseNumber;
+            		var ownerName = rows[i].hyOwnerRegistration.ownerName;
+            		var feeDate = rows[i].feeDate;
+            		var isCollection = rows[i].hyCollection.isCollection;
+            		var amountReceivable = rows[i].amountReceivable;
+            		var amount = rows[i].hyCollection.amount;
+            		if(isCollection=="0"){
+            			$.modal.alertWarning("选择的数据中又已支付的数据，请重新选择！");
+        				return false;
+            		}
+                    list[i] = {
+                       	'id' : id,
+                   		'costItems' : costItems,
+                   		'communityName' : communityName,
+                   		'buildingName' : buildingName,
+                   		'houseNumber' : houseNumber,
+                   		'ownerName' : ownerName,
+                   		'feeDate' : feeDate,
+                   		'isCollection' : isCollection,
+                   		'amountReceivable' : amountReceivable,
+                   		'amount' : amount
+                    };
+            	}
+            	
+                $.ajax({
+                    url: prefix + "/printReceiptMore",
+                    data: {
+                    	'datas' : JSON.stringify(list)
+                    },
+                    type: 'POST',
+                    dataType : "json",
+                    success: function (result) {
+                    	$.operate.successCallback(result);
+                    }
+                });
+            });
         }
         function printReceiptOne(id,costItems,communityName,buildingName,houseNumber,ownerName,feeDate,isCollection,amountReceivable,amount){
         	$.modal.confirm("确定要对该条数据打印收据吗？", function() {

@@ -128,6 +128,9 @@ public class HyCollection extends BaseEntity
     /** 费用项目id */
     private Long costId;
     
+    /** 费用项目id组 */
+    private String costIds;
+    
     /** 费用项目表 */
     private HyCost hyCost;
 
@@ -410,6 +413,14 @@ public class HyCollection extends BaseEntity
 		this.collectionType = collectionType;
 	}
 
+	public String getCostIds() {
+		return costIds;
+	}
+
+	public void setCostIds(String costIds) {
+		this.costIds = costIds;
+	}
+
 	@Override
 	public String toString() {
 		return "HyCollection [id=" + id + ", applyTime=" + applyTime + ", startTime=" + startTime + ", endTime="
@@ -420,9 +431,10 @@ public class HyCollection extends BaseEntity
 				+ paymentPerson + ", isDeferred=" + isDeferred + ", deferredCause=" + deferredCause + ", deferredTime="
 				+ deferredTime + ", deferredPerson=" + deferredPerson + ", isRefund=" + isRefund + ", refundTime="
 				+ refundTime + ", refundPerson=" + refundPerson + ", collectionRemark=" + collectionRemark + ", costId="
-				+ costId + ", hyCost=" + hyCost + ", houseId=" + houseId + ", hyHouseInf=" + hyHouseInf + ", ownerId="
-				+ ownerId + ", hyOwnerRegistration=" + hyOwnerRegistration + "]";
+				+ costId + ", costIds=" + costIds + ", hyCost=" + hyCost + ", houseId=" + houseId + ", hyHouseInf="
+				+ hyHouseInf + ", ownerId=" + ownerId + ", hyOwnerRegistration=" + hyOwnerRegistration + "]";
 	}
+
 
 
 }

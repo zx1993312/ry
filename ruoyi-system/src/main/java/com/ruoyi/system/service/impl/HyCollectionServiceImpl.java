@@ -3,6 +3,8 @@ package com.ruoyi.system.service.impl;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Date;
@@ -19,9 +21,12 @@ import org.springframework.util.ResourceUtils;
 
 import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.system.domain.HyCollection;
+import com.ruoyi.system.domain.HyCost;
+import com.ruoyi.system.mapper.HyCashierDeskMapper;
 import com.ruoyi.system.mapper.HyCollectionMapper;
 import com.ruoyi.system.service.IHyCollectionService;
 import com.ruoyi.system.utils.HyPrintPDFUtil;
+import com.ruoyi.system.utils.ReceivableUtil;
 
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -38,6 +43,9 @@ import net.sf.jasperreports.engine.JasperPrint;
 public class HyCollectionServiceImpl implements IHyCollectionService {
 	@Autowired
 	private HyCollectionMapper hyCollectionMapper;
+	
+	@Autowired
+	private HyCashierDeskMapper hyCashierDeskMapper;
 
 	/**
 	 * 查询收款管理 Collection management
@@ -95,6 +103,43 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 			return 0;
 		}
 
+	}
+	
+	/**
+	 * 新增收款管理 Collection management
+	 * 
+	 * @param hyCollection 收款管理 Collection management
+	 * @return 结果
+	 */
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public int insertHyCollectionByCostIds(HyCollection hyCollection) {
+		String[] ids = hyCollection.getCostIds().split(",");
+		for(String ida : ids) {
+			Long costIds = Long.valueOf(ida);
+			HyCost hyCost = hyCashierDeskMapper.selectHyCashierDeskById(costIds);
+			BigDecimal calculationStandard = hyCost.getCalculationStandard();
+			String costItems = hyCost.getCostItems();
+			BigDecimal bilingArea = hyCost.getHyHouseInf().getBilingArea();
+			BigDecimal amountReceivable = ReceivableUtil.getReceivable(calculationStandard, costItems, bilingArea);
+			Long houseId = hyCollection.getHouseId();
+			Long ownerId = hyCollection.getOwnerId();
+			String str = hyCost.getHyHouseInf().getHouseNumber() + hyCost.getHyHouseInf().getOwnerId();
+			Long costId = Long.valueOf(String.valueOf(ida).split(str)[0]);
+			HyCollection collection = new HyCollection();
+			collection.setCostId(costId);
+			collection.setHouseId(houseId);
+			collection.setOwnerId(ownerId);
+			List<HyCollection> list = hyCollectionMapper.selectHyCollectionList(collection);
+			if (list.size() == 0) {
+				hyCollection.setAmount(amountReceivable.setScale(2,RoundingMode.HALF_UP));
+				hyCollection.setCostId(costId);
+				hyCollectionMapper.insertHyCollection(hyCollection);
+			} else {
+				return 0;
+			}
+		}
+		return 1;
 	}
 
 	/**

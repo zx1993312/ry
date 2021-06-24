@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-cost-edit" th:object="${hyCost}">
+            <div class="form-group">    
+                <div class="col-sm-8">
+                   <input id="cost" th:field="*{costIds}" class="form-control" type="hidden" disabled="disabled">
+                   <input name="costIds" id="costIds" class="form-control" type="hidden">
+                </div>
+            </div>
+            <div class="form-group">    
+                <div class="col-sm-8">
+                   <input id="house" th:field="*{houseAndCost.houseId}" class="form-control" type="hidden">
+                   <input name="houseId" id="houseId" class="form-control" type="hidden">
+                </div>
+            </div>
+            <div class="form-group">    
+                <div class="col-sm-8">
+                   <input id="owner" th:field="*{hyHouseInf.ownerId}" class="form-control" type="hidden">
+                   <input name="ownerId" id="ownerId" class="form-control" type="hidden">
+                </div>
+            </div>
+             <div class="form-group">    
+                <label class="col-sm-3 control-label">收据号码：</label>
+                <div class="col-sm-8">
+                    <input id="receiptNumber" name="receiptNumber" class="form-control" type="text" onclick="selectBillSet()">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">总金额：</label>
+                <div class="col-sm-8">
+                    <input id="amountReceivable" th:field="*{amountReceivable}" class="form-control" type="text" disabled="disabled">
+                    <input name="amount" id="amount" class="form-control" type="hidden">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">申请时间：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input id="applyTime" name="applyTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">收款人：</label>
+                <div class="col-sm-8">
+                    <input name="payee" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">收款方式：</label>
+                <div class="col-sm-8">
+                    <select name="collectionType" class="form-control" th:with="type=${@dict.getType('hy_collection_type')}">
+							<option value="">请选择</option>
+							<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+					</select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">收款时间：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input id="collectionTime" name="collectionTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+                	<input id="isCollection" name="isCollection" class="form-control" type="hidden">
+                	<input id="isBook" name="isBook" class="form-control" type="hidden">
+                	<input id="paymentStatue" name="paymentStatue" class="form-control" type="hidden">
+                	<input id="isDeferred" name="isDeferred" class="form-control" type="hidden">
+                	<input id="isRefund" name="isRefund" class="form-control" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">备注：</label>
+                <div class="col-sm-8">
+                    <input name="collectionRemark" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    
+    <script th:inline="javascript">
+        var prefix = ctx + "system/collection";
+        $("#form-cost-edit").validate({
+        	rules : {
+        		receiptNumber : {
+					required : true,
+					maxlength:20,
+				},
+				amount : {
+					required : true,
+					maxlength:50,
+				},
+				collectionType : {
+					required : true,
+					maxlength:2,
+				},
+			},
+            focusCleanup: true
+        });
+        
+        $(function() {
+        	var date = new Date();
+        	var year = date.getFullYear();
+        	var Month = date.getMonth()+1;
+        	var da = date.getDate();
+        	var hh = date.getHours();
+        	var mm = date.getMinutes();
+        	var ss = date.getSeconds();
+        	var dateStr = year+"-"+Month+"-"+da+" "+hh+":"+mm+":"+ss;
+        	var costIds = $("#cost").val();
+        	var houseId = $("#house").val();
+        	var ownerId = $("#owner").val();
+        	var amount = $("#amountReceivable").val();
+        	$("#applyTime").val(dateStr);
+        	$("#collectionTime").val(dateStr);
+        	$("#isCollection").val(0);
+        	$("#isBook").val(1);
+        	$("#paymentStatue").val(1);
+        	$("#isDeferred").val(1);
+        	$("#isRefund").val(1);
+        	$("#costIds").val(costIds);
+        	$("#houseId").val(houseId);
+        	$("#ownerId").val(ownerId);
+        	$("#amount").val(amount);
+        	
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+            		$.operate.save1(prefix + "/adds", $('#form-cost-edit').serialize());
+            }
+                
+        }
+        function selectBillSet(){
+        	$.modal.open("票据页面","/system/selectBillSet");
+        };
+    </script>
+</body>
+</html>

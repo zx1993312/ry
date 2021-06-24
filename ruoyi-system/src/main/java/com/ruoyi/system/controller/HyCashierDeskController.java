@@ -20,15 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.ShiroUtils;
-import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.constants.Constants;
 import com.ruoyi.system.domain.HouseAndCost;
@@ -393,13 +390,12 @@ public class HyCashierDeskController extends BaseController {
 	/**
 	 * 修改保存收银台
 	 */
-	@ApiOperation("收银台")
+	/*@ApiOperation("收银台")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "hyCost", value = "项目实体类hyCost", required = true), })
 	@RequiresPermissions("system:cashierDesk:edit")
 	@Log(title = "收银台", businessType = BusinessType.UPDATE)
 	@PostMapping("/edits")
-	@ResponseBody
-	public AjaxResult editSave(String datas, ModelMap mmap) {
+	public String edits(String datas, ModelMap mmap) {
 		List<JSONObject> list = new ArrayList<>();
 		JSONArray jsonArray = JSONArray.parseArray(datas);
 		for (int i = 0; i < jsonArray.size(); i++) {
@@ -407,7 +403,35 @@ public class HyCashierDeskController extends BaseController {
 		}
 
 		mmap.put("list", list);
-		return toAjax(1);
+		return prefix + "/cashierDesk";
+	}*/
+	/**
+	 * 修改收银台
+	 */
+	@ApiOperation("收银台")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "id", value = "主键id", required = true), })
+	@GetMapping("/edits/{id}")
+	public String edits(@PathVariable("id") String id, ModelMap mmap) {
+		String[] ids = id.split(",");
+		HyCost hyCost = new HyCost();
+		BigDecimal amountReceivableCount = new BigDecimal(0.00);
+		for(String ida : ids) {
+			Long idd = Long.valueOf(ida);
+			HyCost hyCostA = hyCashierDeskService.selectHyCashierDeskById(idd);
+			hyCost.setHyHouseInf(new HyHouseInf());
+			hyCost.getHyHouseInf().setOwnerId(hyCostA.getHyHouseInf().getOwnerId());
+			hyCost.setHouseAndCost(new HouseAndCost());
+			hyCost.getHouseAndCost().setHouseId(hyCostA.getHouseAndCost().getHouseId());
+			BigDecimal calculationStandard = hyCostA.getCalculationStandard();
+			String costItems = hyCostA.getCostItems();
+			BigDecimal bilingArea = hyCostA.getHyHouseInf().getBilingArea();
+			BigDecimal amountReceivable = ReceivableUtil.getReceivable(calculationStandard, costItems, bilingArea);
+			amountReceivableCount = amountReceivableCount.add(amountReceivable);
+		}
+		hyCost.setCostIds(id);
+		hyCost.setAmountReceivable(amountReceivableCount.setScale(2,RoundingMode.HALF_UP));
+		mmap.put("hyCost", hyCost);
+		return prefix + "/edits";
 	}
 
 	/**
@@ -442,6 +466,24 @@ public class HyCashierDeskController extends BaseController {
 	public AjaxResult printCollection(HttpServletResponse response) throws Exception {
 		return toAjax(hyCashierDeskService.printCollection(response));
 	}
+	
+	/**
+	  * 批量打印收据
+	  */
+	 @ApiOperation("批量打印收据")
+	 @ApiImplicitParams({ @ApiImplicitParam(name = "datas", value = "datas", required = true), })
+	 @RequiresPermissions("system:cashierDesk:printReceiptMore")
+	 @Log(title = "批量打印收据", businessType = BusinessType.UPDATE)
+	 @PostMapping("/printReceiptMore")
+	 @ResponseBody
+	 public AjaxResult editPrintReceiptMore(String datas, ModelMap mmap) {
+	  try {
+	   return toAjax(hyCashierDeskService.printReceiptMore(datas));
+	  } catch (Exception e) {
+	   e.printStackTrace();
+	   return toAjax(0);
+	  }
+	 }
 
 	/**
 	 * 打印单条收据
