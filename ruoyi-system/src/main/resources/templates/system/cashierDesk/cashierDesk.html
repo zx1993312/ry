@@ -87,12 +87,12 @@
                 <a class="btn btn-primary multiple disabled" onclick="merger()">
                     <i class="fa fa-edit"></i> 合并收款
                 </a>
-                <a class="btn btn-warning" onclick="printReceipt()">
+               <!--  <a class="btn btn-warning" onclick="printReceipt()">
                     <i class="fa fa-download"></i> 打印收据
                 </a>
                 <a class="btn btn-warning" onclick="printCollection()">
                     <i class="fa fa-download"></i> 打印催收单
-                </a>
+                </a> -->
                 <a class="btn btn-warning" onclick="printReceiptMore()">
                     <i class="fa fa-download"></i> 批量打印收据
                 </a>
@@ -264,7 +264,7 @@
         		}
                 list = list + id + ",";
         	}
-        	
+        	window.location.href = ctx + "common/downloadPdf?fileName=" + encodeURI(result.msg) + "&delete=" + true;
         	$.modal.opens("合并收款", $.operate.editUrls(list));
         	});
         }
@@ -316,6 +316,7 @@
                     		var amount = result[i].hyCollection.amount;
                     		list = list + id + ",";
                      	}
+                     	window.location.href = ctx + "common/downloadPdf?fileName=" + encodeURI(result.msg) + "&delete=" + true;
                      	$.modal.opens("综合收款", $.operate.editUrls(list));
                      }
                  });
@@ -383,6 +384,7 @@
        	            $.modal.disable();
        	        },
                	success: function(result) {
+               		window.location.href = ctx + "common/downloadPdf?fileName=" + encodeURI(result.msg) + "&delete=" + true;
                		$.modal.closeLoading();
                		$.operate.successCallback(result);
     	        }
@@ -400,6 +402,7 @@
        	            $.modal.disable();
        	        },
                	success: function(result) {
+               		window.location.href = ctx + "common/downloadPdf?fileName=" + encodeURI(result.msg) + "&delete=" + true;
                		$.modal.closeLoading();
                		$.operate.successCallback(result);
     	        }
@@ -462,6 +465,7 @@
                     type: 'POST',
                     dataType : "json",
                     success: function (result) {
+                    	window.location.href = ctx + "common/downloadPdf?fileName=" + encodeURI(result.msg) + "&delete=" + true;
                     	$.operate.successCallback(result);
                     }
                 });
@@ -523,6 +527,7 @@
                     type: 'POST',
                     dataType : "json",
                     success: function (result) {
+                    	window.location.href = ctx + "common/downloadPdf?fileName=" + encodeURI(result.msg) + "&delete=" + true;
                     	$.operate.successCallback(result);
                     }
                 });
@@ -543,13 +548,7 @@
        	            $.modal.disable();
        	        },
                	success: function(result) {
-               		if (result.code == web_status.SUCCESS) {
-                        window.location.href = ctx + "common/downloadPdf?fileName=" + encodeURI(result.msg) + "&delete=" + true;
-                    } else if (result.code == web_status.WARNING) {
-                        $.modal.alertWarning(result.msg)
-                    } else {
-                        $.modal.alertError(result.msg);
-                    }
+                    window.location.href = ctx + "common/downloadPdf?fileName=" + encodeURI(result.msg) + "&delete=" + true;
                		$.modal.closeLoading();
                		$.operate.successCallback(result);
     	        }
@@ -559,7 +558,7 @@
         	}
         	});
         }
-        function printCollectionOne(id,costItems,communityName,buildingNumber,houseNumber,ownerName,feeDate,isCollection,amountReceivable,amount){
+       function printCollectionOne(id,costItems,communityName,buildingNumber,houseNumber,ownerName,feeDate,isCollection,amountReceivable,amount){
         	$.modal.confirm("确定要对该条数据打印催收单吗？", function() {
         	if(isCollection=="0"){
         		$.modal.alertWarning("该条数据已支付，请选择未支付数据或者打印收据！");
@@ -577,6 +576,7 @@
        	            $.modal.disable();
        	        },
                	success: function(result) {
+               		window.location.href = ctx + "common/downloadPdf?fileName=" + encodeURI(result.msg) + "&delete=" + true;
                		$.modal.closeLoading();
                		$.operate.successCallback(result);
     	        }

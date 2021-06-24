@@ -57,10 +57,10 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 
 	@Autowired
 	private HyCashierDeskServiceImpl hyCashierDeskServiceImpl;
-	
+
 	@Autowired
 	private HyCustomerMapper hyCustomerMapper;
-	
+
 	/**
 	 * 查询收款管理 Collection management
 	 * 
@@ -117,27 +117,31 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 		collection.setOwnerId(ownerId);
 		List<HyCollection> list = hyCollectionMapper.selectHyCollectionList(collection);
 		if (list.size() == 0) {
-			hyCashierDeskServiceImpl.printReceiptOne(hyCollection.getHyCost(), response);
+			try {
+				hyCashierDeskServiceImpl.printReceiptOne(hyCollection.getHyCost(), response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			HouseAndCost houseAndCost = new HouseAndCost();
 			houseAndCost.setCostId(costId);
 			houseAndCost.setHouseId(houseId);
-			String payFeeDate ="";
+			String payFeeDate = "";
 			int m = 12;
 			String feeDate = hyCollection.getHyCost().getFeeDate();
 			String a = feeDate.split("-")[1];
 			String b = feeDate.split("-")[0];
 			int n = Integer.parseInt(a);
 			int y = Integer.parseInt(b);
-			if(m+n>12) {
+			if (m + n > 12) {
 				String z = y + 1 + "";
-				String p=m+n-12+"";
-				payFeeDate =z+"-0"+p;
-			}else {
-				String p=m+n+"";
-				if(Integer.parseInt(p)>9) {
-					payFeeDate = b+"-"+p;
-				}else {
-					payFeeDate = b+"-0"+p;
+				String p = m + n - 12 + "";
+				payFeeDate = z + "-0" + p;
+			} else {
+				String p = m + n + "";
+				if (Integer.parseInt(p) > 9) {
+					payFeeDate = b + "-" + p;
+				} else {
+					payFeeDate = b + "-0" + p;
 				}
 			}
 			houseAndCost.setPayFeeDate(payFeeDate);
@@ -148,7 +152,7 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 		}
 
 	}
-	
+
 	/**
 	 * 部分新增收款管理 Collection management
 	 * 
@@ -172,27 +176,31 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 		collection.setOwnerId(ownerId);
 		List<HyCollection> list = hyCollectionMapper.selectHyCollectionList(collection);
 		if (list.size() == 0) {
-			hyCashierDeskServiceImpl.printReceiptOne(hyCollection.getHyCost(), response);
+			try {
+				hyCashierDeskServiceImpl.printReceiptOne(hyCollection.getHyCost(), response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			HouseAndCost houseAndCost = new HouseAndCost();
 			houseAndCost.setCostId(costId);
 			houseAndCost.setHouseId(houseId);
-			String payFeeDate ="";
+			String payFeeDate = "";
 			int m = hyCollection.getMonth();
 			String feeDate = hyCollection.getHyCost().getFeeDate();
 			String a = feeDate.split("-")[1];
 			String b = feeDate.split("-")[0];
 			int n = Integer.parseInt(a);
 			int y = Integer.parseInt(b);
-			if(m+n>12) {
+			if (m + n > 12) {
 				String z = y + 1 + "";
-				String p=m+n-12+"";
-				payFeeDate =z+"-0"+p;
-			}else {
-				String p=m+n+"";
-				if(Integer.parseInt(p)>9) {
-					payFeeDate = b+"-"+p;
-				}else {
-					payFeeDate = b+"-0"+p;
+				String p = m + n - 12 + "";
+				payFeeDate = z + "-0" + p;
+			} else {
+				String p = m + n + "";
+				if (Integer.parseInt(p) > 9) {
+					payFeeDate = b + "-" + p;
+				} else {
+					payFeeDate = b + "-0" + p;
 				}
 			}
 			houseAndCost.setPayFeeDate(payFeeDate);
@@ -203,36 +211,40 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 			hyCollection.setAmount(amount);
 			hyCollection.getHyCost().getHyCollection().setAmount(amount);
 			hyCollection.setId(list.get(0).getId());
-			hyCashierDeskServiceImpl.printReceiptOne(hyCollection.getHyCost(), response);
+			try {
+				hyCashierDeskServiceImpl.printReceiptOne(hyCollection.getHyCost(), response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			HouseAndCost houseAndCost = new HouseAndCost();
 			houseAndCost.setCostId(costId);
 			houseAndCost.setHouseId(houseId);
 			List<HouseAndCost> houseAndCostList = hyCustomerMapper.selectCostIds(houseAndCost);
 			houseAndCost = houseAndCostList.get(0);
-			String payFeeDate ="";
+			String payFeeDate = "";
 			int m = hyCollection.getMonth();
 			String feeDate = houseAndCost.getPayFeeDate();
 			String a = feeDate.split("-")[1];
 			String b = feeDate.split("-")[0];
 			int n = Integer.parseInt(a);
 			int y = Integer.parseInt(b);
-			if(m+n>12) {
+			if (m + n > 12) {
 				String z = y + 1 + "";
-				String p=m+n-12+"";
-				payFeeDate =z+"-0"+p;
-			}else {
-				String p=m+n+"";
-				if(Integer.parseInt(p)>9) {
-					payFeeDate = b+"-"+p;
-				}else {
-					payFeeDate = b+"-0"+p;
+				String p = m + n - 12 + "";
+				payFeeDate = z + "-0" + p;
+			} else {
+				String p = m + n + "";
+				if (Integer.parseInt(p) > 9) {
+					payFeeDate = b + "-" + p;
+				} else {
+					payFeeDate = b + "-0" + p;
 				}
 			}
 			houseAndCost.setPayFeeDate(payFeeDate);
 			hyCustomerMapper.updateHouseAndCost(houseAndCost);
 			return hyCollectionMapper.updateHyCollection(hyCollection);
 		}
-		
+
 	}
 
 	/**
@@ -265,27 +277,27 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 				if (list.size() == 0) {
 					hyCollection.setAmount(amountReceivable.setScale(2, RoundingMode.HALF_UP));
 					hyCollection.setCostId(costId);
-					//hyCashierDeskServiceImpl.printReceiptMore(ObjectConverUtil.coverString());
+					// hyCashierDeskServiceImpl.printReceiptMore(ObjectConverUtil.coverString());
 					HouseAndCost houseAndCost = new HouseAndCost();
 					houseAndCost.setCostId(costId);
 					houseAndCost.setHouseId(houseId);
-					String payFeeDate ="";
+					String payFeeDate = "";
 					int m = 12;
 					String feeDate = hyCollection.getHyCost().getFeeDate();
 					String a = feeDate.split("-")[1];
 					String b = feeDate.split("-")[0];
 					int n = Integer.parseInt(a);
 					int y = Integer.parseInt(b);
-					if(m+n>12) {
+					if (m + n > 12) {
 						String z = y + 1 + "";
-						String p=m+n-12+"";
-						payFeeDate =z+"-0"+p;
-					}else {
-						String p=m+n+"";
-						if(Integer.parseInt(p)>9) {
-							payFeeDate = b+"-"+p;
-						}else {
-							payFeeDate = b+"-0"+p;
+						String p = m + n - 12 + "";
+						payFeeDate = z + "-0" + p;
+					} else {
+						String p = m + n + "";
+						if (Integer.parseInt(p) > 9) {
+							payFeeDate = b + "-" + p;
+						} else {
+							payFeeDate = b + "-0" + p;
 						}
 					}
 					houseAndCost.setPayFeeDate(payFeeDate);

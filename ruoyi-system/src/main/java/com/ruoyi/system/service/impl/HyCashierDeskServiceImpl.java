@@ -127,13 +127,10 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 
 	/**
 	 * 打印收据
-	 * 
-	 * @throws SQLException
-	 * @throws ClassNotFoundException
+	 * @throws Exception 
 	 */
 	@Override
-	public int printReceipt(HttpServletResponse response) throws JRException, InvalidPasswordException, IOException,
-			PrinterException, ClassNotFoundException, SQLException {
+	public String printReceipt(HttpServletResponse response) throws Exception {
 
 		String fileName = "d:\\" + new Date().getTime() + "收据.pdf";
 		try {
@@ -189,7 +186,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 							dataSource);
 					JasperExportManager.exportReportToPdfStream(jasperPrint, new FileOutputStream(fileName));
 					HyPrintPDFUtil.printPDF(fileName, "RECEIPT");
-					return 1;
+					return fileName;
 				}
 
 				JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(paramList);
@@ -197,12 +194,24 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 				JasperPrint jasperPrint = JasperFillManager.fillReport(new FileInputStream(templateFile), map,
 						dataSource);
 				JasperExportManager.exportReportToPdfStream(jasperPrint, new FileOutputStream(fileName));
-				HyPrintPDFUtil.printPDF(fileName, "RECEIPT");
+				byte[] buffer = null;
+				FileInputStream fis = new FileInputStream(fileName);
+				ByteArrayOutputStream bos = new ByteArrayOutputStream();
+				byte[] b = new byte[10000000];
+				int n;
+				while ((n = fis.read(b)) != -1) {
+					bos.write(b, 0, n);
+				}
+				fis.close();
+				bos.close();
+				buffer = bos.toByteArray();
+				
+				IoUtil.writePdfFile(buffer, fileName);
 			}
 		} catch (java.io.EOFException e) {
 			log.error("没有字体的异常,没关系，不要在意" + e.getMessage());
 		}
-		return 1;
+		return fileName;
 	}
 
 	/**
@@ -217,7 +226,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 	 * @throws SQLException
 	 */
 	@Override
-	public int printCollection(HttpServletResponse response) throws JRException, InvalidPasswordException, IOException,
+	public String printCollection(HttpServletResponse response) throws JRException, InvalidPasswordException, IOException,
 			PrinterException, ClassNotFoundException, SQLException {
 		String fileName = "d:\\" + new Date().getTime() + "催收单.pdf";
 		try {
@@ -274,7 +283,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 							dataSource);
 					JasperExportManager.exportReportToPdfStream(jasperPrint, new FileOutputStream(fileName));
 					HyPrintPDFUtil.printPDF(fileName, "A4");
-					return 1;
+					return fileName;
 				}
 
 				JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(paramList);
@@ -282,13 +291,27 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 				JasperPrint jasperPrint = JasperFillManager.fillReport(new FileInputStream(templateFile), map,
 						dataSource);
 				JasperExportManager.exportReportToPdfStream(jasperPrint, new FileOutputStream(fileName));
-				HyPrintPDFUtil.printPDF(fileName, "A4");
+				byte[] buffer = null;
+				FileInputStream fis = new FileInputStream(fileName);
+				ByteArrayOutputStream bos = new ByteArrayOutputStream();
+				byte[] b = new byte[100000000];
+				int n;
+				while ((n = fis.read(b)) != -1) {
+					bos.write(b, 0, n);
+				}
+				fis.close();
+				bos.close();
+				buffer = bos.toByteArray();
+				
+				IoUtil.writePdfFile(buffer, fileName);
 			}
 
 		} catch (java.io.EOFException e) {
 			log.error("没有字体的异常,没关系，不要在意" + e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		return 1;
+		return fileName;
 	}
 
 	@SuppressWarnings("unused")
@@ -301,8 +324,8 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 	}
 	
 	@Override
-	public int printReceiptMore(String datas)
-			throws JRException, InvalidPasswordException, IOException, PrinterException {
+	public String printReceiptMore(String datas)
+			throws Exception {
 		String fileName = "d:\\" + new Date().getTime() + "收据.pdf";
 		try {
 			// 1、获取模版文件
@@ -350,21 +373,33 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 				JasperPrint jasperPrint = JasperFillManager.fillReport(new FileInputStream(realPath), map, dataSource);
 				JasperExportManager.exportReportToPdfStream(jasperPrint, new FileOutputStream(fileName));
 				HyPrintPDFUtil.printPDF(fileName, "RECEIPT");
-				return 1;
+				return fileName;
 			}
 			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(paramList);
 
 			JasperPrint jasperPrint = JasperFillManager.fillReport(new FileInputStream(templateFile), map, dataSource);
 			JasperExportManager.exportReportToPdfStream(jasperPrint, new FileOutputStream(fileName));
-			HyPrintPDFUtil.printPDF(fileName, "RECEIPT");
+			byte[] buffer = null;
+			FileInputStream fis = new FileInputStream(fileName);
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			byte[] b = new byte[1024];
+			int n;
+			while ((n = fis.read(b)) != -1) {
+				bos.write(b, 0, n);
+			}
+			fis.close();
+			bos.close();
+			buffer = bos.toByteArray();
+			
+			IoUtil.writePdfFile(buffer, fileName);
 		} catch (java.io.EOFException e) {
 			log.error("没有字体的异常,没关系，不要在意" + e.getMessage());
 		}
-		return 1;
+		return fileName;
 	}
 	
 	@Override
-	public int printCollectionMore(String datas) throws Exception {
+	public String printCollectionMore(String datas) throws Exception {
 		String fileName = "d:\\" + new Date().getTime() + "催收单.pdf";
 		try {
 			// 1、获取模版文件
@@ -414,23 +449,35 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 				JasperPrint jasperPrint = JasperFillManager.fillReport(new FileInputStream(realPath), map, dataSource);
 				JasperExportManager.exportReportToPdfStream(jasperPrint, new FileOutputStream(fileName));
 				HyPrintPDFUtil.printPDF(fileName, "A4");
-				return 1;
+				return fileName;
 			}
 
 			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(paramList);
 
 			JasperPrint jasperPrint = JasperFillManager.fillReport(new FileInputStream(templateFile), map, dataSource);
 			JasperExportManager.exportReportToPdfStream(jasperPrint, new FileOutputStream(fileName));
-			HyPrintPDFUtil.printPDF(fileName, "A4");
+			byte[] buffer = null;
+			FileInputStream fis = new FileInputStream(fileName);
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			byte[] b = new byte[1024];
+			int n;
+			while ((n = fis.read(b)) != -1) {
+				bos.write(b, 0, n);
+			}
+			fis.close();
+			bos.close();
+			buffer = bos.toByteArray();
+			
+			IoUtil.writePdfFile(buffer, fileName);
 		} catch (java.io.EOFException e) {
 			log.error("没有字体的异常,没关系，不要在意" + e.getMessage());
 		}
-		return 1;
+		return fileName;
 	}
 
 	@Override
 	public String printReceiptOne(HyCost hyCost, HttpServletResponse response)
-			throws JRException, InvalidPasswordException, IOException, PrinterException {
+			throws Exception {
 		String fileName = "d:\\" + new Date().getTime() + "收据.pdf";
 		try {
 			// 1、获取模版文件
@@ -498,15 +545,13 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 			IoUtil.writePdfFile(buffer, fileName);
 		} catch (java.io.EOFException e) {
 			log.error("没有字体的异常,没关系，不要在意" + e.getMessage());
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		return fileName;
 	}
 
 	@Override
-	public int printCollectionOne(HyCost hyCost, HttpServletResponse response)
-			throws JRException, InvalidPasswordException, IOException, PrinterException {
+	public String printCollectionOne(HyCost hyCost, HttpServletResponse response)
+			throws Exception {
 		String fileName = "d:\\" + new Date().getTime() + "催收单.pdf";
 		try {
 			// 1、获取模版文件
@@ -551,17 +596,29 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 						new JREmptyDataSource());
 				JasperExportManager.exportReportToPdfStream(jasperPrint, new FileOutputStream(fileName));
 				HyPrintPDFUtil.printPDF(fileName, "A4");
-				return 1;
+				return fileName;
 			}
 
 			JasperPrint jasperPrint = JasperFillManager.fillReport(new FileInputStream(templateFile), params,
 					new JREmptyDataSource());
 			JasperExportManager.exportReportToPdfStream(jasperPrint, new FileOutputStream(fileName));
-			HyPrintPDFUtil.printPDF(fileName, "A4");
+			byte[] buffer = null;
+			FileInputStream fis = new FileInputStream(fileName);
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			byte[] b = new byte[1024];
+			int n;
+			while ((n = fis.read(b)) != -1) {
+				bos.write(b, 0, n);
+			}
+			fis.close();
+			bos.close();
+			buffer = bos.toByteArray();
+			
+			IoUtil.writePdfFile(buffer, fileName);
 		} catch (java.io.EOFException e) {
 			log.error("没有字体的异常,没关系，不要在意" + e.getMessage());
-		}
-		return 1;
+		} 
+		return fileName;
 	}
 
 	/**

@@ -48,24 +48,24 @@ public interface IHyCashierDeskService {
 	 * @param response
 	 * @return
 	 */
-	public int printReceipt(HttpServletResponse response)throws Exception;
+	public String printReceipt(HttpServletResponse response)throws Exception;
 	/**
 	 * 打印所有催收单
 	 * @param response
 	 * @return
 	 */
-	public int printCollection(HttpServletResponse response)throws Exception;
+	public String printCollection(HttpServletResponse response)throws Exception;
 	/**
 	  * 批量打印收据
 	  */
-	public int printReceiptMore(String datas) throws Exception;
+	public String printReceiptMore(String datas) throws Exception;
 	/**
 	  * 批量打印催收单
 	  * 
 	  * @param datas
 	  * @return
 	  */
-	 public int printCollectionMore(String datas) throws Exception;
+	 public String printCollectionMore(String datas) throws Exception;
 	/**
 	 * 打印单条收据
 	 * @param response
@@ -77,7 +77,7 @@ public interface IHyCashierDeskService {
 	 * @param response
 	 * @return
 	 */
-	public int printCollectionOne(HyCost hyCost, HttpServletResponse response)throws Exception;
+	public String printCollectionOne(HyCost hyCost, HttpServletResponse response)throws Exception;
 	/**
 	 * 导入费用数据
 	 * 
