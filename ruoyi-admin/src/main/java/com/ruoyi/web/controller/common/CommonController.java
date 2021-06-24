@@ -106,15 +106,10 @@ public class CommonController {
 	@GetMapping("common/downloadPdf")
 	public void downloadPdf(String fileName, Boolean delete, HttpServletResponse response, HttpServletRequest request) {
 		try {
-			if (!FileUtils.checkAllowDownload(fileName)) {
-				throw new Exception(StringUtils.format("文件名称({})非法，不允许下载。 ", fileName));
-			}
 			response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
 			FileUtils.setAttachmentResponseHeader(response, fileName);
 			FileUtils.writeBytes(fileName, response.getOutputStream());
-			if (delete) {
-				FileUtils.deleteFile(fileName);
-			}
+			FileUtils.deleteFile(fileName);
 		} catch (Exception e) {
 			log.error("下载文件失败", e);
 		}
