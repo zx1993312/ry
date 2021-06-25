@@ -141,7 +141,6 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 			String pic = rootFile + "\\static\\pdfimg\\e813f89d5a4c8f33b567a553a60649b.png";
 
 			Map<String, Object> map = new HashMap<>();
-			map.put("pic", pic);
 
 			List<HyHouseInf> list = hyHouseInfMapper.selectHyHouseInfList(new HyHouseInf());
 
@@ -175,7 +174,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 
 				String os = System.getProperty("os.name");
 				if (os.toLowerCase().startsWith("win")) {
-
+					map.put("pic", pic);
 				} else {
 					File realPath = new File("/root", "/pdf_template/printReceipt_db.jasper");
 					String img = "/root/image/e813f89d5a4c8f33b567a553a60649b.png";
@@ -239,7 +238,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 					+ "\\static\\pdfimg\\src=http___i.nibaku.com_img_0_1433531324x2230376662_26.jpg&refer=http___i.nibaku.jpg";
 			
 			Map<String, Object> map = new HashMap<>();
-			map.put("pic", pic);
+			
 			map.put("erweima", erweima);
 			
 			List<HyHouseInf> list = hyHouseInfMapper.selectHyHouseInfList(new HyHouseInf());
@@ -272,7 +271,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 
 				String os = System.getProperty("os.name");
 				if (os.toLowerCase().startsWith("win")) {
-
+					map.put("pic", pic);
 				} else {
 					File realPath = new File("/root", "/pdf_template/printCollection_db.jasper");
 					String img = "/root/image/src=http___i.nibaku.com_img_0_1433531324x2230376662_26.jpg&refer=http___i.nibaku.jpg";
@@ -335,7 +334,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 			String pic = rootFile + "\\static\\pdfimg\\e813f89d5a4c8f33b567a553a60649b.png";
 
 			Map<String, Object> map = new HashMap<>();
-			map.put("pic", pic);
+			
 
 			List<Map<String, Object>> paramList = new ArrayList<>();
 
@@ -363,7 +362,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 			}
 			String os = System.getProperty("os.name");
 			if (os.toLowerCase().startsWith("win")) {
-
+				map.put("pic", pic);
 			} else {
 				File realPath = new File("/root", "/pdf_template/printReceipt_db.jasper");
 				String img = "/root/image/e813f89d5a4c8f33b567a553a60649b.png";
@@ -411,7 +410,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 					+ "\\static\\pdfimg\\src=http___i.nibaku.com_img_0_1433531324x2230376662_26.jpg&refer=http___i.nibaku.jpg";
 
 			Map<String, Object> map = new HashMap<>();
-			map.put("pic", pic);
+			
 			map.put("erweima", erweima);
 
 			JSONArray jsonArray = JSONArray.parseArray(datas);
@@ -439,7 +438,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 
 			String os = System.getProperty("os.name");
 			if (os.toLowerCase().startsWith("win")) {
-
+				map.put("pic", pic);
 			} else {
 				File realPath = new File("/root", "/pdf_template/printCollection_db.jasper");
 				String img = "/root/image/http___i.nibaku.com_img_0_1433531324x2230376662_26.jpg&refer=http___i.nibaku.jpg";
@@ -498,7 +497,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 			String amountReceivable = hyCost.getAmountReceivable().setScale(2,RoundingMode.HALF_UP) + "";
 			String amount = hyCost.getHyCollection().getAmount().setScale(2,RoundingMode.HALF_UP) + "";
 			
-			params.put("pic", pic);
+			
 			params.put("house_number", houseNumber);
 			params.put("owner_name", ownerName);
 			params.put("id", id);
@@ -513,7 +512,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 
 			String os = System.getProperty("os.name");
 			if (os.toLowerCase().startsWith("win")) {
-
+				params.put("pic", pic);
 			} else {
 				File realPath = new File("/root", "/pdf_template/printReceiptOne_db.jasper");
 				String img = "/root/image/e813f89d5a4c8f33b567a553a60649b.png";
@@ -572,7 +571,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 			String isCollection = hyCost.getHyCollection().getIsCollection();
 			String amountReceivable = hyCost.getAmountReceivable().setScale(2,RoundingMode.HALF_UP) + "";
 			String amount = hyCost.getHyCollection().getAmount() + "";
-			params.put("pic", pic);
+			
 			params.put("erweima", erweima);
 			params.put("house_number", houseNumber);
 			params.put("owner_name", ownerName);
@@ -587,7 +586,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 
 			String os = System.getProperty("os.name");
 			if (os.toLowerCase().startsWith("win")) {
-
+				params.put("pic", pic);
 			} else {
 				File realPath = new File("/root", "/pdf_template/printCollectionOne_db.jasper");
 				String img = "/root/image/e813f89d5a4c8f33b567a553a60649b.png";
