@@ -41,156 +41,131 @@ import net.sf.jasperreports.engine.JRException;
 @Controller
 @RequestMapping("/system/collection")
 @Api(tags = "收款管理 Collection managementController")
-public class HyCollectionController extends BaseController
-{
-    private String prefix = "system/collection";
+public class HyCollectionController extends BaseController {
+	private String prefix = "system/collection";
 
-    @Autowired
-    private IHyCollectionService hyCollectionService;
+	@Autowired
+	private IHyCollectionService hyCollectionService;
 
-    @RequiresPermissions("system:collection:view")
-    @GetMapping()
-    public String collection()
-    {
-        return prefix + "/collection";
-    }
+	@RequiresPermissions("system:collection:view")
+	@GetMapping()
+	public String collection() {
+		return prefix + "/collection";
+	}
 
-    /**
-     * 查询收款管理 Collection management列表
-     */
-    @ApiOperation("收款管理 Collection management")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyCollection", value = "项目实体类hyCollection", required = true),
-	})
-    @RequiresPermissions("system:collection:list")
-    @PostMapping("/list")
-    @ResponseBody
-    public TableDataInfo list(HyCollection hyCollection)
-    {
-        startPage();
-        List<HyCollection> list = hyCollectionService.selectHyCollectionList(hyCollection);
-        return getDataTable(list);
-    }
+	/**
+	 * 查询收款管理 Collection management列表
+	 */
+	@ApiOperation("收款管理 Collection management")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyCollection", value = "项目实体类hyCollection", required = true), })
+	@RequiresPermissions("system:collection:list")
+	@PostMapping("/list")
+	@ResponseBody
+	public TableDataInfo list(HyCollection hyCollection) {
+		startPage();
+		List<HyCollection> list = hyCollectionService.selectHyCollectionList(hyCollection);
+		return getDataTable(list);
+	}
 
-    /**
-     * 导出收款管理 Collection management列表
-     */
-    @ApiOperation("收款管理 Collection management")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyCollection", value = "项目实体类hyCollection", required = true),
-	})
-    @RequiresPermissions("system:collection:export")
-    @Log(title = "收款管理 Collection management", businessType = BusinessType.EXPORT)
-    @PostMapping("/export")
-    @ResponseBody
-    public AjaxResult export(HyCollection hyCollection)
-    {
-        List<HyCollection> list = hyCollectionService.selectHyCollectionList(hyCollection);
-        ExcelUtil<HyCollection> util = new ExcelUtil<HyCollection>(HyCollection.class);
-        return util.exportExcel(list, "collection");
-    }
+	/**
+	 * 导出收款管理 Collection management列表
+	 */
+	@ApiOperation("收款管理 Collection management")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyCollection", value = "项目实体类hyCollection", required = true), })
+	@RequiresPermissions("system:collection:export")
+	@Log(title = "收款管理 Collection management", businessType = BusinessType.EXPORT)
+	@PostMapping("/export")
+	@ResponseBody
+	public AjaxResult export(HyCollection hyCollection) {
+		List<HyCollection> list = hyCollectionService.selectHyCollectionList(hyCollection);
+		ExcelUtil<HyCollection> util = new ExcelUtil<HyCollection>(HyCollection.class);
+		return util.exportExcel(list, "collection");
+	}
 
-    /**
-     * 新增收款管理 Collection management
-     */
-    @GetMapping("/add")
-    public String add()
-    {
-        return prefix + "/add";
-    }
+	/**
+	 * 新增收款管理 Collection management
+	 */
+	@GetMapping("/add")
+	public String add() {
+		return prefix + "/add";
+	}
 
-    /**
-     * 新增保存收款管理 Collection management
-     */
-    @ApiOperation("收款管理 Collection management")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyCollection", value = "项目实体类hyCollection", required = true),
-	})
-    @RequiresPermissions("system:collection:add")
-    @Log(title = "收款管理 Collection management", businessType = BusinessType.INSERT)
-    @PostMapping("/add")
-    @ResponseBody
-    public AjaxResult addSave(HyCollection hyCollection,HttpServletResponse response) throws InvalidPasswordException, JRException, IOException, PrinterException
-    {
-        return toAjax(hyCollectionService.insertHyCollection(hyCollection, response));
-    }
-    
-    /**
-     * 批量新增保存收款管理 Collection management
-     */
-    @ApiOperation("收款管理 Collection management")
-    @ApiImplicitParams({ 
-    	@ApiImplicitParam(name = "hyCollection", value = "项目实体类hyCollection", required = true),
-    })
-    @RequiresPermissions("system:collection:add")
-    @Log(title = "收款管理 Collection management", businessType = BusinessType.INSERT)
-    @PostMapping("/adds")
-    @ResponseBody
-    public AjaxResult adds(HyCollection hyCollection)
-    {
-    	return AjaxResult.success(hyCollectionService.insertHyCollectionByCostIds(hyCollection));
-    }
-    
-    /**
-     * 新增保存收款管理 Collection management
-     */
-    @ApiOperation("收款管理 Collection management")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyCollection", value = "项目实体类hyCollection", required = true),
-	})
-    @RequiresPermissions("system:collection:add")
-    @Log(title = "收款管理 Collection management", businessType = BusinessType.INSERT)
-    @PostMapping("/addss")
-    @ResponseBody
-    public AjaxResult addss(HyCollection hyCollection,HttpServletResponse response) throws InvalidPasswordException, JRException, IOException, PrinterException
-    {
-        return toAjax(hyCollectionService.insertHyCollectionBuFen(hyCollection, response));
-    }
+	/**
+	 * 新增保存收款管理 Collection management
+	 */
+	@ApiOperation("收款管理 Collection management")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyCollection", value = "项目实体类hyCollection", required = true), })
+	@RequiresPermissions("system:collection:add")
+	@Log(title = "收款管理 Collection management", businessType = BusinessType.INSERT)
+	@PostMapping("/add")
+	@ResponseBody
+	public AjaxResult addSave(HyCollection hyCollection, HttpServletResponse response)
+			throws InvalidPasswordException, JRException, IOException, PrinterException {
+		return AjaxResult.success(hyCollectionService.insertHyCollection(hyCollection, response));
+	}
 
-    /**
-     * 修改收款管理 Collection management
-     */
-    @ApiOperation("收款管理 Collection management")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "id", value = "主键id", required = true),
-	})
-    @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Long id, ModelMap mmap)
-    {
-        HyCollection hyCollection = hyCollectionService.selectHyCollectionById(id);
-        mmap.put("hyCollection", hyCollection);
-        return prefix + "/edit";
-    }
+	/**
+	 * 批量新增保存收款管理 Collection management
+	 */
+	@ApiOperation("收款管理 Collection management")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyCollection", value = "项目实体类hyCollection", required = true), })
+	@RequiresPermissions("system:collection:add")
+	@Log(title = "收款管理 Collection management", businessType = BusinessType.INSERT)
+	@PostMapping("/adds")
+	@ResponseBody
+	public AjaxResult adds(HyCollection hyCollection) {
+		return AjaxResult.success(hyCollectionService.insertHyCollectionByCostIds(hyCollection));
+	}
 
-    /**
-     * 修改保存收款管理 Collection management
-     */
-    @ApiOperation("收款管理 Collection management")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyCollection", value = "项目实体类hyCollection", required = true),
-	})
-    @RequiresPermissions("system:collection:edit")
-    @Log(title = "收款管理 Collection management", businessType = BusinessType.UPDATE)
-    @PostMapping("/edit")
-    @ResponseBody
-    public AjaxResult editSave(HyCollection hyCollection)
-    {
-        return toAjax(hyCollectionService.updateHyCollection(hyCollection));
-    }
+	/**
+	 * 新增保存收款管理 Collection management
+	 */
+	@ApiOperation("收款管理 Collection management")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyCollection", value = "项目实体类hyCollection", required = true), })
+	@RequiresPermissions("system:collection:add")
+	@Log(title = "收款管理 Collection management", businessType = BusinessType.INSERT)
+	@PostMapping("/addss")
+	@ResponseBody
+	public AjaxResult addss(HyCollection hyCollection, HttpServletResponse response)
+			throws InvalidPasswordException, JRException, IOException, PrinterException {
+		return AjaxResult.success(hyCollectionService.insertHyCollectionBuFen(hyCollection, response));
+	}
 
-    /**
-     * 删除收款管理 Collection management
-     */
-    @ApiOperation("收款管理 Collection management")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "ids", value = "ids", required = true),
-	})
-    @RequiresPermissions("system:collection:remove")
-    @Log(title = "收款管理 Collection management", businessType = BusinessType.DELETE)
-    @PostMapping( "/remove")
-    @ResponseBody
-    public AjaxResult remove(String ids)
-    {
-        return toAjax(hyCollectionService.deleteHyCollectionByIds(ids));
-    }
+	/**
+	 * 修改收款管理 Collection management
+	 */
+	@ApiOperation("收款管理 Collection management")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "id", value = "主键id", required = true), })
+	@GetMapping("/edit/{id}")
+	public String edit(@PathVariable("id") Long id, ModelMap mmap) {
+		HyCollection hyCollection = hyCollectionService.selectHyCollectionById(id);
+		mmap.put("hyCollection", hyCollection);
+		return prefix + "/edit";
+	}
+
+	/**
+	 * 修改保存收款管理 Collection management
+	 */
+	@ApiOperation("收款管理 Collection management")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyCollection", value = "项目实体类hyCollection", required = true), })
+	@RequiresPermissions("system:collection:edit")
+	@Log(title = "收款管理 Collection management", businessType = BusinessType.UPDATE)
+	@PostMapping("/edit")
+	@ResponseBody
+	public AjaxResult editSave(HyCollection hyCollection) {
+		return toAjax(hyCollectionService.updateHyCollection(hyCollection));
+	}
+
+	/**
+	 * 删除收款管理 Collection management
+	 */
+	@ApiOperation("收款管理 Collection management")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "ids", value = "ids", required = true), })
+	@RequiresPermissions("system:collection:remove")
+	@Log(title = "收款管理 Collection management", businessType = BusinessType.DELETE)
+	@PostMapping("/remove")
+	@ResponseBody
+	public AjaxResult remove(String ids) {
+		return toAjax(hyCollectionService.deleteHyCollectionByIds(ids));
+	}
 }

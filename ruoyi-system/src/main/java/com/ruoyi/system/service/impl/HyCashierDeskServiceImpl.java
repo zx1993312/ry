@@ -42,7 +42,6 @@ import com.ruoyi.system.mapper.HyCustomerMapper;
 import com.ruoyi.system.mapper.HyHouseInfMapper;
 import com.ruoyi.system.mapper.HyOwnerRegistrationMapper;
 import com.ruoyi.system.service.IHyCashierDeskService;
-import com.ruoyi.system.utils.HyPrintPDFUtil;
 import com.ruoyi.system.utils.IoUtil;
 import com.ruoyi.system.utils.ReceivableUtil;
 
@@ -132,7 +131,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 	@Override
 	public String printReceipt(HttpServletResponse response) throws Exception {
 
-		String fileName = "d:\\" + new Date().getTime() + "收据.pdf";
+		String fileName = "d:\\" + new Date().getTime() + "printReceipt.pdf";
 		try {
 			// 1、获取模版文件
 			File rootFile = new File(ResourceUtils.getURL("classpath:").getPath());
@@ -184,7 +183,19 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 					JasperPrint jasperPrint = JasperFillManager.fillReport(new FileInputStream(realPath), map,
 							dataSource);
 					JasperExportManager.exportReportToPdfStream(jasperPrint, new FileOutputStream(fileName));
-					HyPrintPDFUtil.printPDF(fileName, "RECEIPT");
+					byte[] buffer = null;
+					FileInputStream fis = new FileInputStream(fileName);
+					ByteArrayOutputStream bos = new ByteArrayOutputStream();
+					byte[] b = new byte[1024];
+					int n;
+					while ((n = fis.read(b)) != -1) {
+						bos.write(b, 0, n);
+					}
+					fis.close();
+					bos.close();
+					buffer = bos.toByteArray();
+					
+					IoUtil.writePdfFile(buffer, fileName);
 					return fileName;
 				}
 
@@ -227,7 +238,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 	@Override
 	public String printCollection(HttpServletResponse response) throws JRException, InvalidPasswordException, IOException,
 			PrinterException, ClassNotFoundException, SQLException {
-		String fileName = "d:\\" + new Date().getTime() + "催收单.pdf";
+		String fileName = "d:\\" + new Date().getTime() + "printCollection.pdf";
 		try {
 			// 1、获取模版文件
 			File rootFile = new File(ResourceUtils.getURL("classpath:").getPath());
@@ -239,7 +250,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 			
 			Map<String, Object> map = new HashMap<>();
 			
-			map.put("erweima", erweima);
+			
 			
 			List<HyHouseInf> list = hyHouseInfMapper.selectHyHouseInfList(new HyHouseInf());
 
@@ -272,16 +283,31 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 				String os = System.getProperty("os.name");
 				if (os.toLowerCase().startsWith("win")) {
 					map.put("pic", pic);
+					map.put("erweima", erweima);
 				} else {
 					File realPath = new File("/root", "/pdf_template/printCollection_db.jasper");
 					String img = "/root/image/src=http___i.nibaku.com_img_0_1433531324x2230376662_26.jpg&refer=http___i.nibaku.jpg";
+					String rewma = "/root/image/src=http___i.nibaku.com_img_0_1433531324x2230376662_26.jpg&refer=http___i.nibaku.jpg";
 					map.put("pic", img);
+					map.put("erweima", rewma);
 					JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(paramList);
 
 					JasperPrint jasperPrint = JasperFillManager.fillReport(new FileInputStream(realPath), map,
 							dataSource);
 					JasperExportManager.exportReportToPdfStream(jasperPrint, new FileOutputStream(fileName));
-					HyPrintPDFUtil.printPDF(fileName, "A4");
+					byte[] buffer = null;
+					FileInputStream fis = new FileInputStream(fileName);
+					ByteArrayOutputStream bos = new ByteArrayOutputStream();
+					byte[] b = new byte[1024];
+					int n;
+					while ((n = fis.read(b)) != -1) {
+						bos.write(b, 0, n);
+					}
+					fis.close();
+					bos.close();
+					buffer = bos.toByteArray();
+					
+					IoUtil.writePdfFile(buffer, fileName);
 					return fileName;
 				}
 
@@ -325,7 +351,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 	@Override
 	public String printReceiptMore(String datas)
 			throws Exception {
-		String fileName = "d:\\" + new Date().getTime() + "收据.pdf";
+		String fileName = "d:\\" + new Date().getTime() + "printReceiptMore.pdf";
 		try {
 			// 1、获取模版文件
 			File rootFile = new File(ResourceUtils.getURL("classpath:").getPath());
@@ -371,7 +397,19 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 
 				JasperPrint jasperPrint = JasperFillManager.fillReport(new FileInputStream(realPath), map, dataSource);
 				JasperExportManager.exportReportToPdfStream(jasperPrint, new FileOutputStream(fileName));
-				HyPrintPDFUtil.printPDF(fileName, "RECEIPT");
+				byte[] buffer = null;
+				FileInputStream fis = new FileInputStream(fileName);
+				ByteArrayOutputStream bos = new ByteArrayOutputStream();
+				byte[] b = new byte[1024];
+				int n;
+				while ((n = fis.read(b)) != -1) {
+					bos.write(b, 0, n);
+				}
+				fis.close();
+				bos.close();
+				buffer = bos.toByteArray();
+				
+				IoUtil.writePdfFile(buffer, fileName);
 				return fileName;
 			}
 			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(paramList);
@@ -399,7 +437,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 	
 	@Override
 	public String printCollectionMore(String datas) throws Exception {
-		String fileName = "d:\\" + new Date().getTime() + "催收单.pdf";
+		String fileName = "d:\\" + new Date().getTime() + "printCollectionMore.pdf";
 		try {
 			// 1、获取模版文件
 			File rootFile = new File(ResourceUtils.getURL("classpath:").getPath());
@@ -411,7 +449,6 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 
 			Map<String, Object> map = new HashMap<>();
 			
-			map.put("erweima", erweima);
 
 			JSONArray jsonArray = JSONArray.parseArray(datas);
 
@@ -439,15 +476,30 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 			String os = System.getProperty("os.name");
 			if (os.toLowerCase().startsWith("win")) {
 				map.put("pic", pic);
+				map.put("erweima", erweima);
 			} else {
 				File realPath = new File("/root", "/pdf_template/printCollection_db.jasper");
-				String img = "/root/image/http___i.nibaku.com_img_0_1433531324x2230376662_26.jpg&refer=http___i.nibaku.jpg";
+				String img = "/root/image/e813f89d5a4c8f33b567a553a60649b.png";
+				String rewma = "/root/image/src=http___i.nibaku.com_img_0_1433531324x2230376662_26.jpg&refer=http___i.nibaku.jpg";
 				map.put("pic", img);
+				map.put("erweima", rewma);
 				JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(paramList);
 
 				JasperPrint jasperPrint = JasperFillManager.fillReport(new FileInputStream(realPath), map, dataSource);
 				JasperExportManager.exportReportToPdfStream(jasperPrint, new FileOutputStream(fileName));
-				HyPrintPDFUtil.printPDF(fileName, "A4");
+				byte[] buffer = null;
+				FileInputStream fis = new FileInputStream(fileName);
+				ByteArrayOutputStream bos = new ByteArrayOutputStream();
+				byte[] b = new byte[1024];
+				int n;
+				while ((n = fis.read(b)) != -1) {
+					bos.write(b, 0, n);
+				}
+				fis.close();
+				bos.close();
+				buffer = bos.toByteArray();
+				
+				IoUtil.writePdfFile(buffer, fileName);
 				return fileName;
 			}
 
@@ -477,7 +529,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 	@Override
 	public String printReceiptOne(HyCost hyCost, HttpServletResponse response)
 			throws Exception {
-		String fileName = "d:\\" + new Date().getTime() + "收据.pdf";
+		String fileName = "d:\\" + new Date().getTime() + "printReceiptOne.pdf";
 		try {
 			// 1、获取模版文件
 			File rootFile = new File(ResourceUtils.getURL("classpath:").getPath());
@@ -520,7 +572,19 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 				JasperPrint jasperPrint = JasperFillManager.fillReport(new FileInputStream(realPath), params,
 						new JREmptyDataSource());
 				JasperExportManager.exportReportToPdfStream(jasperPrint, new FileOutputStream(fileName));
-				HyPrintPDFUtil.printPDF(fileName, "RECEIPT");
+				byte[] buffer = null;
+				FileInputStream fis = new FileInputStream(fileName);
+				ByteArrayOutputStream bos = new ByteArrayOutputStream();
+				byte[] b = new byte[1024];
+				int n;
+				while ((n = fis.read(b)) != -1) {
+					bos.write(b, 0, n);
+				}
+				fis.close();
+				bos.close();
+				buffer = bos.toByteArray();
+				
+				IoUtil.writePdfFile(buffer, fileName);
 				return fileName;
 			}
 
@@ -551,7 +615,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 	@Override
 	public String printCollectionOne(HyCost hyCost, HttpServletResponse response)
 			throws Exception {
-		String fileName = "d:\\" + new Date().getTime() + "催收单.pdf";
+		String fileName = "d:\\" + new Date().getTime() + "printCollectionOne.pdf";
 		try {
 			// 1、获取模版文件
 			File rootFile = new File(ResourceUtils.getURL("classpath:").getPath());
@@ -572,7 +636,6 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 			String amountReceivable = hyCost.getAmountReceivable().setScale(2,RoundingMode.HALF_UP) + "";
 			String amount = hyCost.getHyCollection().getAmount() + "";
 			
-			params.put("erweima", erweima);
 			params.put("house_number", houseNumber);
 			params.put("owner_name", ownerName);
 			params.put("id", id);
@@ -587,14 +650,28 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 			String os = System.getProperty("os.name");
 			if (os.toLowerCase().startsWith("win")) {
 				params.put("pic", pic);
+				params.put("erweima", erweima);
 			} else {
 				File realPath = new File("/root", "/pdf_template/printCollectionOne_db.jasper");
 				String img = "/root/image/e813f89d5a4c8f33b567a553a60649b.png";
+				String rewma = "/root/image/src=http___i.nibaku.com_img_0_1433531324x2230376662_26.jpg&refer=http___i.nibaku.jpg";
 				params.put("pic", img);
+				params.put("erweima", rewma);
 				JasperPrint jasperPrint = JasperFillManager.fillReport(new FileInputStream(realPath), params,
 						new JREmptyDataSource());
 				JasperExportManager.exportReportToPdfStream(jasperPrint, new FileOutputStream(fileName));
-				HyPrintPDFUtil.printPDF(fileName, "A4");
+				byte[] buffer = null;
+				FileInputStream fis = new FileInputStream(fileName);
+				ByteArrayOutputStream bos = new ByteArrayOutputStream();
+				byte[] b = new byte[1024];
+				int n;
+				while ((n = fis.read(b)) != -1) {
+					bos.write(b, 0, n);
+				}
+				fis.close();
+				bos.close();
+				buffer = bos.toByteArray();
+				IoUtil.writePdfFile(buffer, fileName);
 				return fileName;
 			}
 

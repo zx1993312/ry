@@ -57,25 +57,25 @@ public class HyAdviceChargeServiceImpl implements IHyAdviceChargeService {
 		// 2、准备数据库连接
 		File realPath;
 
+		String pic = rootFile
+				+ "\\static\\pdfimg\\src=http___i.nibaku.com_img_0_1433531324x2230376662_26.jpg&refer=http___i.nibaku.jpg";
+		
 		Map params = new HashMap();
 		String os = System.getProperty("os.name");
 		if (os.toLowerCase().startsWith("win")) {
-
+			params.put("pic", pic);
 		} else {
 			realPath = new File("/root", "/pdf_template/advicecharge_db.jasper");
-			String pic = "/root/image/src=http___i.nibaku.com_img_0_1433531324x2230376662_26.jpg&refer=http___i.nibaku.jpg";
-			params.put("warm", warm);
-			params.put("pic", pic);
+			String img = "/root/image/src=http___i.nibaku.com_img_0_1433531324x2230376662_26.jpg&refer=http___i.nibaku.jpg";
+			params.put("pic", img);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(new FileInputStream(realPath), params, getCon());
 			JasperExportManager.exportReportToPdfStream(jasperPrint,
 					new FileOutputStream("d:\\" + new Date().getTime() + "缴费通知单.pdf"));
 			return 1;
 		}
 
-		String pic = rootFile
-				+ "\\static\\pdfimg\\src=http___i.nibaku.com_img_0_1433531324x2230376662_26.jpg&refer=http___i.nibaku.jpg";
 		params.put("warm", warm);
-		params.put("pic", pic);
+		
 
 		JasperPrint jasperPrint = JasperFillManager.fillReport(new FileInputStream(templateFile), params, getCon());
 		/*
