@@ -552,15 +552,20 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 			HyHouseInf hyHouseInf = new HyHouseInf();
 			HyBuilding hyBuilding = new HyBuilding();
 			hyBuilding.setBuildingNumber(buildingNumber);
-			List<HyBuilding> list = hyBuildingMapper.selectHyBuildingList(hyBuilding);
-			hyBuilding = list.get(0);
+			List<HyBuilding> buildingList = hyBuildingMapper.selectHyBuildingList(hyBuilding);
+			hyBuilding = buildingList.get(0);
 			Long buildingId = hyBuilding.getId();
 			hyHouseInf.setHouseNumber(houseNumber);
 			hyHouseInf.setBuildingId(buildingId);
-			List<HyHouseInf> list1 = hyHouseInfMapper.selectHyHouseInfList(hyHouseInf);
-			Long houseId = list1.get(0).getId();
-			
-			
+			List<HyHouseInf> houseInfList = hyHouseInfMapper.selectHyHouseInfList(hyHouseInf);
+			Long houseId = houseInfList.get(0).getId();
+			HouseAndCost houseAndCost = new HouseAndCost();
+			houseAndCost.setCostId(costId);
+			houseAndCost.setHouseId(houseId);
+			List<HouseAndCost> houseAndCostList = hyCustomerMapper.selectCostIds(houseAndCost);
+			houseAndCost = houseAndCostList.get(0);
+			String beginFeeDate = houseAndCost.getBeginFeeDate();
+			String payFeeDate = houseAndCost.getPayFeeDate();
 			params.put("house_number", houseNumber);
 			params.put("owner_name", ownerName);
 			params.put("id", id);
@@ -572,6 +577,8 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 			params.put("is_collection", isCollection);
 			params.put("amount_receivable", amountReceivable);
 			params.put("amount", amount);
+			params.put("beginFeeDate", beginFeeDate);
+			params.put("payFeeDate", payFeeDate);
 
 			String os = System.getProperty("os.name");
 			if (os.toLowerCase().startsWith("win")) {
