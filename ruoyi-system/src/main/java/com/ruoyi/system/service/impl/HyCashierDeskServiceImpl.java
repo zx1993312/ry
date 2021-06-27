@@ -383,6 +383,8 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 						new BigDecimal(jsonObject.getString("amountReceivable")).setScale(2, RoundingMode.HALF_UP));
 				params.put("amount", jsonObject.get("amount") == null ? new BigDecimal(0)
 						: new BigDecimal(jsonObject.getString("amount")).setScale(2, RoundingMode.HALF_UP));
+				params.put("beginFeeDate", jsonObject.getString("beginFeeDate"));
+				params.put("payFeeDate", jsonObject.getString("payFeeDate"));
 				paramList.add(params);
 
 				//

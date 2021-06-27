@@ -29,7 +29,6 @@ import com.ruoyi.system.constants.Constants;
 import com.ruoyi.system.domain.HouseAndCost;
 import com.ruoyi.system.domain.HyCollection;
 import com.ruoyi.system.domain.HyCost;
-import com.ruoyi.system.domain.HyOwnerRegistration;
 import com.ruoyi.system.mapper.HyCashierDeskMapper;
 import com.ruoyi.system.mapper.HyCollectionMapper;
 import com.ruoyi.system.mapper.HyCustomerMapper;
@@ -300,20 +299,6 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 					hyCollection.setAmount(amountReceivable.setScale(2, RoundingMode.HALF_UP));
 					hyCollection.setCostId(costId);
 
-					Map<String, Object> map = new HashMap<>();
-					map.put("id", hyCost.getId());
-					map.put("costItems", hyCost.getCostItems());
-					map.put("communityName", hyCost.getHyResidentialQuarters().getCommunityName());
-					map.put("buildingNumber", hyCost.getHyBuilding().getBuildingNumber());
-					map.put("receiptNumber", hyCollection.getHyCost().getHyCollection().getReceiptNumber());
-					map.put("houseNumber", hyCost.getHyHouseInf().getHouseNumber());
-					map.put("ownerName", hyCost.getHyOwnerRegistration().getOwnerName());
-					map.put("feeDate", hyCost.getFeeDate());
-					map.put("isCollection", hyCollection.getIsCollection());
-					map.put("amountReceivable", amountReceivable.setScale(2, RoundingMode.HALF_UP));
-					map.put("amount", hyCollection.getAmount());
-
-					beanList.add(map);
 					HouseAndCost houseAndCost = new HouseAndCost();
 					houseAndCost.setCostId(costId);
 					houseAndCost.setHouseId(houseId);
@@ -343,6 +328,21 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 					houseAndCost.setBeginFeeDate(beginFeeDate);
 					hyCustomerMapper.updateHouseAndCost(houseAndCost);
 					hyCollectionMapper.insertHyCollection(collection);
+					Map<String, Object> map = new HashMap<>();
+					map.put("id", hyCost.getId());
+					map.put("costItems", hyCost.getCostItems());
+					map.put("communityName", hyCost.getHyResidentialQuarters().getCommunityName());
+					map.put("buildingNumber", hyCost.getHyBuilding().getBuildingNumber());
+					map.put("receiptNumber", hyCollection.getHyCost().getHyCollection().getReceiptNumber());
+					map.put("houseNumber", hyCost.getHyHouseInf().getHouseNumber());
+					map.put("ownerName", hyCost.getHyOwnerRegistration().getOwnerName());
+					map.put("feeDate", hyCost.getFeeDate());
+					map.put("isCollection", hyCollection.getIsCollection());
+					map.put("amountReceivable", amountReceivable.setScale(2, RoundingMode.HALF_UP));
+					map.put("amount", hyCollection.getAmount());
+					map.put("beginFeeDate", beginFeeDate);
+					map.put("payFeeDate", payFeeDate);
+					beanList.add(map);
 				} else {
 					return result;
 				}
