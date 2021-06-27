@@ -105,6 +105,9 @@
 			    <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:cashierDesk:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
+                <a class="btn btn-primary multiple disabled" onclick="printReceiptSelect()">
+                    <i class="fa fa-edit"></i> 批量收款
+                </a>
             </div>
             <div class="col-sm-12 select-table table-striped">
                 <table id="bootstrap-table"></table>
@@ -585,6 +588,39 @@
             }); 
         	});
         }
+       function printReceiptSelect(){
+    	   $.modal.confirm("确定要对所选的数据进行收款吗？", function() {
+           	var rows=$("#bootstrap-table").bootstrapTable('getSelections');
+           	if(rows.length == 0){
+   				$.modal.alertWarning("至少选择一条数据！！！");
+   				return false;
+   			}
+           	
+           	var map = new Map();
+           	
+           	var list = "";
+           	for(var i=0;i<rows.length;i++){
+           		map[rows[i].hyOwnerRegistration.ownerName] = rows[i];
+           		//map.set("rows[i].hyOwnerRegistration.ownerName",rows[i]);
+           		var id = rows[i].id;
+           		var costItems = rows[i].costItems;
+           		var communityName = rows[i].hyResidentialQuarters.communityName;
+           		var buildingName = rows[i].hyBuilding.buildingName;
+           		var houseNumber = rows[i].hyHouseInf.houseNumber;
+           		var ownerName = rows[i].hyOwnerRegistration.ownerName;
+           		var feeDate = rows[i].feeDate;
+           		var isCollection = rows[i].hyCollection.isCollection;
+           		var amountReceivable = rows[i].amountReceivable;
+           		var amount = rows[i].hyCollection.amount;
+           		if(isCollection=="0"||isCollection=="2"){
+           			$.modal.alertWarning("请选择未支付的数据进行批量收款！");
+       				return false;
+           		}
+                   list = list + id + ",";
+           	}
+           	$.modal.opens("批量收款", $.operate.editUrls(list));
+           	});
+       }
     </script>
     <!-- 导入区域 -->
 <script id="importTpl" type="text/template">

@@ -25,6 +25,7 @@ import org.springframework.util.ResourceUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.ruoyi.common.core.text.Convert;
+import com.ruoyi.system.constants.Constants;
 import com.ruoyi.system.domain.HouseAndCost;
 import com.ruoyi.system.domain.HyCollection;
 import com.ruoyi.system.domain.HyCost;
@@ -284,11 +285,12 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 				String costItems = hyCost.getCostItems();
 				BigDecimal bilingArea = hyCost.getHyHouseInf().getBilingArea();
 				BigDecimal amountReceivable = ReceivableUtil.getReceivable(calculationStandard, costItems, bilingArea);
-				Long houseId = hyCollection.getHouseId();
-				Long ownerId = hyCollection.getOwnerId();
+				Long houseId = hyCost.getHyCollection().getHouseId();
+				Long ownerId = hyCost.getHyCollection().getOwnerId();
 				String str = hyCost.getHyHouseInf().getHouseNumber() + hyCost.getHyHouseInf().getOwnerId();
 				Long costId = Long.valueOf(String.valueOf(ida).split(str)[0]);
-				HyCollection collection = new HyCollection();
+				HyCollection collection = (HyCollection) Constants.REFLECT_UTIL.convertBean(new HyCollection(),
+						hyCollection);
 				collection.setCostId(costId);
 				collection.setHouseId(houseId);
 				collection.setOwnerId(ownerId);
@@ -339,7 +341,7 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 					houseAndCost.setPayFeeDate(payFeeDate);
 					houseAndCost.setBeginFeeDate(beginFeeDate);
 					hyCustomerMapper.updateHouseAndCost(houseAndCost);
-					hyCollectionMapper.insertHyCollection(hyCollection);
+					hyCollectionMapper.insertHyCollection(collection);
 				} else {
 					return result;
 				}

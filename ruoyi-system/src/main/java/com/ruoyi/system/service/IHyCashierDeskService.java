@@ -29,6 +29,7 @@ public interface IHyCashierDeskService {
 	 * @return 收银台集合
 	 */
 	public List<HyCost> selectHyCashierDeskList(HyCost hyCost);
+
 	/**
 	 * 根据已支付未支付查询收银台列表
 	 * 
@@ -36,6 +37,7 @@ public interface IHyCashierDeskService {
 	 * @return 收银台集合
 	 */
 	public List<HyCost> selectHyCashierDeskListByIsCollection(HyCost hyCost);
+
 	/**
 	 * 修改收银台
 	 * 
@@ -43,41 +45,52 @@ public interface IHyCashierDeskService {
 	 * @return 结果
 	 */
 	public int updateHyCashierDesk(HyCost hyCost);
+
 	/**
 	 * 打印所有收据
+	 * 
 	 * @param response
 	 * @return
 	 */
-	public String printReceipt(HttpServletResponse response)throws Exception;
+	public String printReceipt(HttpServletResponse response) throws Exception;
+
 	/**
 	 * 打印所有催收单
+	 * 
 	 * @param response
 	 * @return
 	 */
-	public String printCollection(HttpServletResponse response)throws Exception;
+	public String printCollection(HttpServletResponse response) throws Exception;
+
 	/**
-	  * 批量打印收据
-	  */
+	 * 批量打印收据
+	 */
 	public String printReceiptMore(String datas) throws Exception;
+
 	/**
-	  * 批量打印催收单
-	  * 
-	  * @param datas
-	  * @return
-	  */
-	 public String printCollectionMore(String datas) throws Exception;
+	 * 批量打印催收单
+	 * 
+	 * @param datas
+	 * @return
+	 */
+	public String printCollectionMore(String datas) throws Exception;
+
 	/**
 	 * 打印单条收据
+	 * 
 	 * @param response
 	 * @return
 	 */
-	public String printReceiptOne(HyCost hyCost, HttpServletResponse response)throws Exception;
+	public String printReceiptOne(HyCost hyCost, HttpServletResponse response) throws Exception;
+
 	/**
 	 * 打印单条催收单
+	 * 
 	 * @param response
 	 * @return
 	 */
-	public String printCollectionOne(HyCost hyCost, HttpServletResponse response)throws Exception;
+	public String printCollectionOne(HyCost hyCost, HttpServletResponse response) throws Exception;
+
 	/**
 	 * 导入费用数据
 	 * 
@@ -88,5 +101,12 @@ public interface IHyCashierDeskService {
 	 */
 	public String importCashierDesk(List<HyCashierDesk> cashierDeskList, boolean updateSupport, String operName);
 
+	/**
+	 * 批量打印数据
+	 * 
+	 * @param datas
+	 * @return
+	 */
+	public String printReceiptSelect(String datas) throws Exception;
 
 }

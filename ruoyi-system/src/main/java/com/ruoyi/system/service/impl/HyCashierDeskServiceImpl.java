@@ -236,8 +236,8 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 	 * @throws SQLException
 	 */
 	@Override
-	public String printCollection(HttpServletResponse response) throws JRException, InvalidPasswordException, IOException,
-			PrinterException, ClassNotFoundException, SQLException {
+	public String printCollection(HttpServletResponse response) throws JRException, InvalidPasswordException,
+			IOException, PrinterException, ClassNotFoundException, SQLException {
 		String fileName = "d:\\" + new Date().getTime() + "printCollection.pdf";
 		try {
 			// 1、获取模版文件
@@ -847,6 +847,91 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 		}
 
 		return successMsg.toString();
+	}
+
+	@Override
+	public String printReceiptSelect(String datas) throws Exception {
+		String fileName = "d:\\" + new Date().getTime() + "printReceiptMore.pdf";
+		try {
+			// 1、获取模版文件
+			File rootFile = new File(ResourceUtils.getURL("classpath:").getPath());
+			File templateFile = new File(rootFile, "/pdf_template/printReceipt_db.jasper");
+			// 2、准备数据库连接
+			String pic = rootFile + "\\static\\pdfimg\\e813f89d5a4c8f33b567a553a60649b.png";
+
+			Map<String, Object> map = new HashMap<>();
+
+			List<Map<String, Object>> paramList = new ArrayList<>();
+
+			JSONArray jsonArray = JSONArray.parseArray(datas);
+			for (int i = 0; i < jsonArray.size(); i++) {
+				JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+				// 2、准备数据库连接
+				Map<String, Object> params = new HashMap<String, Object>();
+				params.put("id", jsonObject.getLong("id"));
+				params.put("house_number", jsonObject.getString("houseNumber"));
+				params.put("owner_name", jsonObject.getString("ownerName"));
+				params.put("cost_items", jsonObject.getString("costItems"));
+				params.put("community_name", jsonObject.getString("communityName"));
+				params.put("building_number", jsonObject.getString("buildingNumber"));
+				params.put("receipt_number", jsonObject.getString("receiptNumber"));
+				params.put("fee_date", jsonObject.getString("feeDate"));
+				params.put("is_collection", jsonObject.getString("isCollection"));
+				params.put("amount_receivable",
+						new BigDecimal(jsonObject.getString("amountReceivable")).setScale(2, RoundingMode.HALF_UP));
+				params.put("amount", new BigDecimal(jsonObject.getString("amountReceivable")).setScale(2, RoundingMode.HALF_UP));
+				paramList.add(params);
+
+				//
+			}
+			String os = System.getProperty("os.name");
+			if (os.toLowerCase().startsWith("win")) {
+				map.put("pic", pic);
+			} else {
+				File realPath = new File("/root", "/pdf_template/printReceipt_db.jasper");
+				String img = "/root/image/e813f89d5a4c8f33b567a553a60649b.png";
+				map.put("pic", img);
+				JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(paramList);
+
+				JasperPrint jasperPrint = JasperFillManager.fillReport(new FileInputStream(realPath), map, dataSource);
+				JasperExportManager.exportReportToPdfStream(jasperPrint, new FileOutputStream(fileName));
+				byte[] buffer = null;
+				FileInputStream fis = new FileInputStream(fileName);
+				ByteArrayOutputStream bos = new ByteArrayOutputStream();
+				byte[] b = new byte[1024];
+				int n;
+				while ((n = fis.read(b)) != -1) {
+					bos.write(b, 0, n);
+				}
+				fis.close();
+				bos.close();
+				buffer = bos.toByteArray();
+
+				IoUtil.writePdfFile(buffer, fileName);
+				return fileName;
+			}
+			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(paramList);
+
+			JasperPrint jasperPrint = JasperFillManager.fillReport(new FileInputStream(templateFile), map, dataSource);
+			JasperExportManager.exportReportToPdfStream(jasperPrint, new FileOutputStream(fileName));
+			byte[] buffer = null;
+			FileInputStream fis = new FileInputStream(fileName);
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			byte[] b = new byte[1024];
+			int n;
+			while ((n = fis.read(b)) != -1) {
+				bos.write(b, 0, n);
+			}
+			fis.close();
+			bos.close();
+			buffer = bos.toByteArray();
+
+			IoUtil.writePdfFile(buffer, fileName);
+		} catch (java.io.EOFException e) {
+			log.error("没有字体的异常,没关系，不要在意" + e.getMessage());
+		}
+		return fileName;
 	}
 
 }

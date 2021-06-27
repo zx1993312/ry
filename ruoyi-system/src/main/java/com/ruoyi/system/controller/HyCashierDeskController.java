@@ -483,6 +483,24 @@ public class HyCashierDeskController extends BaseController {
 	}
 
 	/**
+	 * 一键打印未支付数据
+	 */
+	@ApiOperation("一键打印未支付数据")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "datas", value = "datas", required = true), })
+	@RequiresPermissions("system:cashierDesk:printReceiptSelect")
+	@Log(title = "一键打印未支付数据", businessType = BusinessType.UPDATE)
+	@PostMapping("/printReceiptSelect")
+	@ResponseBody
+	public AjaxResult printReceiptSelect(String datas, ModelMap mmap) {
+		try {
+			return AjaxResult.success(hyCashierDeskService.printReceiptSelect(datas));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return toAjax(0);
+		}
+	}
+
+	/**
 	 * 批量打印催收单
 	 */
 	@ApiOperation("批量打印催收单")
