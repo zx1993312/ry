@@ -168,4 +168,17 @@ public class HyCollectionController extends BaseController {
 	public AjaxResult remove(String ids) {
 		return toAjax(hyCollectionService.deleteHyCollectionByIds(ids));
 	}
+
+	/**
+	 * 删除收款管理修改中间表数据
+	 */
+	@ApiOperation("删除收款管理修改中间表数据")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "ids", value = "ids", required = true), })
+	@RequiresPermissions("system:collection:removeAndUpdate")
+	@Log(title = "删除收款管理修改中间表数据", businessType = BusinessType.DELETE)
+	@PostMapping("/removeAndUpdate")
+	@ResponseBody
+	public AjaxResult removeAndUpdate(String ids) {
+		return toAjax(hyCollectionService.deleteHyCollectionAndUpdate(ids));
+	}
 }

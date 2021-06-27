@@ -430,6 +430,23 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 		return 1;
 	}
 
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public int deleteHyCollectionAndUpdate(String ids) {
+		String[] idss = Convert.toStrArray(ids);
+		for (String id : idss) {
+			HyCollection hyCollection = hyCollectionMapper.selectHyCollectionById(Long.valueOf(id));
+			HouseAndCost houseAndCost = new HouseAndCost();
+			houseAndCost.setHouseId(hyCollection.getHouseId());
+			houseAndCost.setCostId(hyCollection.getCostId());
+
+			houseAndCost.setBeginFeeDate("");
+			houseAndCost.setPayFeeDate("");
+			hyCustomerMapper.updateHouseAndCost(houseAndCost);
+		}
+		return hyCollectionMapper.deleteHyCollectionByIds(Convert.toStrArray(ids));
+	}
+
 	private Connection getCon() throws Exception {
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		Connection connection = DriverManager.getConnection(
