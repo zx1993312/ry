@@ -182,7 +182,11 @@
                 },
                 {
                     field: 'houseAndCost.payFeeDate',
-                    title: '缴费结束日期'
+                    title: '起'
+                },
+                {
+                    field: 'houseAndCost.payFeeDate',
+                    title: '止'
                 },
                 {
                     field: 'hyCollection.isCollection',
@@ -420,10 +424,10 @@
             	var list = new Array();
             	for(var i=0;i<rows.length;i++){
             		if(Object.getOwnPropertyNames(map).length != 0){
-            			if(!map.hasOwnProperty(rows[i].hyOwnerRegistration.ownerName)){
+            			/* if(!map.hasOwnProperty(rows[i].hyOwnerRegistration.ownerName)){
                 			$.modal.alertWarning("所选数据不是一个人的");
                 			return false;
-                		}
+                		} */
             		}
             		map[rows[i].hyOwnerRegistration.ownerName] = rows[i];
             		//map.set("rows[i].hyOwnerRegistration.ownerName",rows[i]);
