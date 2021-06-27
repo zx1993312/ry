@@ -548,6 +548,17 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 			String isCollection = hyCost.getHyCollection().getIsCollection();
 			String amountReceivable = hyCost.getAmountReceivable().setScale(2,RoundingMode.HALF_UP) + "";
 			String amount = hyCost.getHyCollection().getAmount().setScale(2,RoundingMode.HALF_UP) + "";
+			Long costId = hyCost.getId();
+			HyHouseInf hyHouseInf = new HyHouseInf();
+			HyBuilding hyBuilding = new HyBuilding();
+			hyBuilding.setBuildingNumber(buildingNumber);
+			List<HyBuilding> list = hyBuildingMapper.selectHyBuildingList(hyBuilding);
+			hyBuilding = list.get(0);
+			Long buildingId = hyBuilding.getId();
+			hyHouseInf.setHouseNumber(houseNumber);
+			hyHouseInf.setBuildingId(buildingId);
+			List<HyHouseInf> list1 = hyHouseInfMapper.selectHyHouseInfList(hyHouseInf);
+			Long houseId = list1.get(0).getId();
 			
 			
 			params.put("house_number", houseNumber);

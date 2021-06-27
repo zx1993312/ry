@@ -13,7 +13,10 @@ public class HouseAndCost extends BaseEntity
     /**  费用项目id */
     private Long costId;
     
-    /**  费用项目id */
+    /**  费用起始时间 */
+    private String beginFeeDate;
+    
+    /**  费用结束时间 */
     private String payFeeDate;
 
 
@@ -41,10 +44,21 @@ public class HouseAndCost extends BaseEntity
 		this.payFeeDate = payFeeDate;
 	}
 
+	public String getBeginFeeDate() {
+		return beginFeeDate;
+	}
+
+	public void setBeginFeeDate(String beginFeeDate) {
+		this.beginFeeDate = beginFeeDate;
+	}
+
 	@Override
 	public String toString() {
-		return "HouseAndCost [houseId=" + houseId + ", costId=" + costId + ", payFeeDate=" + payFeeDate + "]";
+		return "HouseAndCost [houseId=" + houseId + ", costId=" + costId + ", beginFeeDate=" + beginFeeDate
+				+ ", payFeeDate=" + payFeeDate + "]";
 	}
+
+	
 
 	
 

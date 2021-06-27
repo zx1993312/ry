@@ -222,6 +222,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="houseId" column="house_id" />
 		<result property="costId" column="cost_id" />
 		<result property="payFeeDate" column="pay_fee_date" />
+		<result property="beginFeeDate" column="begin_fee_date" />
 	</resultMap>
 
 
@@ -240,6 +241,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		son.cost_id,
 		son.house_id,
 		son.pay_fee_date,
+		son.begin_fee_date,
 		son.community_name,
 		son.building_number,
 		son.building_name,
@@ -263,6 +265,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		a.cost_id,
 		a.house_id,
 		a.pay_fee_date,
+		a.begin_fee_date,
 		q.community_name,
 		b.building_name,
 		b.building_number,

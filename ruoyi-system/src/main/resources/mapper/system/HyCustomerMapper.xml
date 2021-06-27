@@ -236,6 +236,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="houseId" column="house_id" />
 		<result property="costId" column="cost_id" />
 		<result property="payFeeDate" column="pay_fee_date" />
+		<result property="beginFeeDate" column="begin_fee_date" />
 	</resultMap>
 
 	<sql id="selectHyCustomerVo">
@@ -324,7 +325,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</sql>
 	
 	<sql id="selectCostIdsVo">
-		select house_id, cost_id , pay_fee_date from house_and_cost where 1=1
+		select house_id, cost_id, pay_fee_date, begin_fee_date from house_and_cost where 1=1
 	</sql>
 
 	<select id="selectHyCustomerList" resultMap="HyCustomerResult">
@@ -381,6 +382,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update house_and_cost
 		<trim prefix="SET" suffixOverrides=",">
 			<if test="payFeeDate != null">pay_fee_date = #{payFeeDate},</if>
+			<if test="beginFeeDate != null">begin_fee_date = #{beginFeeDate},</if>
 		</trim>
 		where 1=1
 		<if test="houseId != null and houseId!='' ">and house_id = #{houseId}</if>
