@@ -126,7 +126,8 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 
 	/**
 	 * 打印收据
-	 * @throws Exception 
+	 * 
+	 * @throws Exception
 	 */
 	@Override
 	public String printReceipt(HttpServletResponse response) throws Exception {
@@ -151,7 +152,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 				hyCost.getHyCollection().setIsCollection("0");
 				List<HyCost> costList = hyCashierDeskMapper.selectHyCashierDeskList(hyCost);
 
-				if(costList.size()==0) {
+				if (costList.size() == 0) {
 					continue;
 				}
 				for (HyCost cost : costList) {
@@ -166,8 +167,10 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 					params.put("receipt_number", cost.getHyCollection().getReceiptNumber());
 					params.put("fee_date", cost.getFeeDate());
 					params.put("is_collection", cost.getHyCollection().getIsCollection());
-					params.put("amount_receivable", cost.getHyCollection().getAmount().setScale(2,RoundingMode.HALF_UP));
-					params.put("amount", cost.getHyCollection().getAmount() == null ? new BigDecimal(0): cost.getHyCollection().getAmount());
+					params.put("amount_receivable",
+							cost.getHyCollection().getAmount().setScale(2, RoundingMode.HALF_UP));
+					params.put("amount", cost.getHyCollection().getAmount() == null ? new BigDecimal(0)
+							: cost.getHyCollection().getAmount());
 					paramList.add(params);
 				}
 
@@ -194,7 +197,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 					fis.close();
 					bos.close();
 					buffer = bos.toByteArray();
-					
+
 					IoUtil.writePdfFile(buffer, fileName);
 					return fileName;
 				}
@@ -215,7 +218,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 				fis.close();
 				bos.close();
 				buffer = bos.toByteArray();
-				
+
 				IoUtil.writePdfFile(buffer, fileName);
 			}
 		} catch (java.io.EOFException e) {
@@ -247,11 +250,9 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 			String pic = rootFile + "\\static\\pdfimg\\e813f89d5a4c8f33b567a553a60649b.png";
 			String erweima = rootFile
 					+ "\\static\\pdfimg\\src=http___i.nibaku.com_img_0_1433531324x2230376662_26.jpg&refer=http___i.nibaku.jpg";
-			
+
 			Map<String, Object> map = new HashMap<>();
-			
-			
-			
+
 			List<HyHouseInf> list = hyHouseInfMapper.selectHyHouseInfList(new HyHouseInf());
 
 			for (HyHouseInf inf : list) {
@@ -265,7 +266,8 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 					BigDecimal calculationStandard = cost.getCalculationStandard();
 					String costItems = cost.getCostItems();
 					BigDecimal bilingArea = cost.getHyHouseInf().getBilingArea();
-					BigDecimal amountReceivable = ReceivableUtil.getReceivable(calculationStandard, costItems, bilingArea);
+					BigDecimal amountReceivable = ReceivableUtil.getReceivable(calculationStandard, costItems,
+							bilingArea);
 					params.put("id", String.valueOf(cost.getId()));
 					params.put("house_number", inf.getHouseNumber());
 					params.put("owner_name", cost.getHyOwnerRegistration().getOwnerName());
@@ -274,7 +276,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 					params.put("building_number", cost.getHyBuilding().getBuildingNumber());
 					params.put("fee_date", cost.getFeeDate());
 					params.put("is_collection", cost.getHyCollection().getIsCollection());
-					params.put("amount_receivable", amountReceivable.setScale(2,RoundingMode.HALF_UP)+"");
+					params.put("amount_receivable", amountReceivable.setScale(2, RoundingMode.HALF_UP) + "");
 					params.put("amount", String.valueOf(
 							cost.getHyCollection().getAmount() == null ? "0" : cost.getHyCollection().getAmount()));
 					paramList.add(params);
@@ -306,7 +308,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 					fis.close();
 					bos.close();
 					buffer = bos.toByteArray();
-					
+
 					IoUtil.writePdfFile(buffer, fileName);
 					return fileName;
 				}
@@ -327,7 +329,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 				fis.close();
 				bos.close();
 				buffer = bos.toByteArray();
-				
+
 				IoUtil.writePdfFile(buffer, fileName);
 			}
 
@@ -347,10 +349,9 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 				"root", "hangyu123.root");
 		return connection;
 	}
-	
+
 	@Override
-	public String printReceiptMore(String datas)
-			throws Exception {
+	public String printReceiptMore(String datas) throws Exception {
 		String fileName = "d:\\" + new Date().getTime() + "printReceiptMore.pdf";
 		try {
 			// 1、获取模版文件
@@ -360,7 +361,6 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 			String pic = rootFile + "\\static\\pdfimg\\e813f89d5a4c8f33b567a553a60649b.png";
 
 			Map<String, Object> map = new HashMap<>();
-			
 
 			List<Map<String, Object>> paramList = new ArrayList<>();
 
@@ -379,9 +379,10 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 				params.put("receipt_number", jsonObject.getString("receiptNumber"));
 				params.put("fee_date", jsonObject.getString("feeDate"));
 				params.put("is_collection", jsonObject.getString("isCollection"));
-				params.put("amount_receivable", new BigDecimal(jsonObject.getString("amountReceivable")).setScale(2,RoundingMode.HALF_UP));
+				params.put("amount_receivable",
+						new BigDecimal(jsonObject.getString("amountReceivable")).setScale(2, RoundingMode.HALF_UP));
 				params.put("amount", jsonObject.get("amount") == null ? new BigDecimal(0)
-						: new BigDecimal(jsonObject.getString("amount")).setScale(2,RoundingMode.HALF_UP));
+						: new BigDecimal(jsonObject.getString("amount")).setScale(2, RoundingMode.HALF_UP));
 				paramList.add(params);
 
 				//
@@ -408,7 +409,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 				fis.close();
 				bos.close();
 				buffer = bos.toByteArray();
-				
+
 				IoUtil.writePdfFile(buffer, fileName);
 				return fileName;
 			}
@@ -427,14 +428,14 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 			fis.close();
 			bos.close();
 			buffer = bos.toByteArray();
-			
+
 			IoUtil.writePdfFile(buffer, fileName);
 		} catch (java.io.EOFException e) {
 			log.error("没有字体的异常,没关系，不要在意" + e.getMessage());
 		}
 		return fileName;
 	}
-	
+
 	@Override
 	public String printCollectionMore(String datas) throws Exception {
 		String fileName = "d:\\" + new Date().getTime() + "printCollectionMore.pdf";
@@ -448,7 +449,6 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 					+ "\\static\\pdfimg\\src=http___i.nibaku.com_img_0_1433531324x2230376662_26.jpg&refer=http___i.nibaku.jpg";
 
 			Map<String, Object> map = new HashMap<>();
-			
 
 			JSONArray jsonArray = JSONArray.parseArray(datas);
 
@@ -498,7 +498,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 				fis.close();
 				bos.close();
 				buffer = bos.toByteArray();
-				
+
 				IoUtil.writePdfFile(buffer, fileName);
 				return fileName;
 			}
@@ -518,7 +518,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 			fis.close();
 			bos.close();
 			buffer = bos.toByteArray();
-			
+
 			IoUtil.writePdfFile(buffer, fileName);
 		} catch (java.io.EOFException e) {
 			log.error("没有字体的异常,没关系，不要在意" + e.getMessage());
@@ -527,8 +527,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 	}
 
 	@Override
-	public String printReceiptOne(HyCost hyCost, HttpServletResponse response)
-			throws Exception {
+	public String printReceiptOne(HyCost hyCost, HttpServletResponse response) throws Exception {
 		String fileName = "d:\\" + new Date().getTime() + "printReceiptOne.pdf";
 		try {
 			// 1、获取模版文件
@@ -546,9 +545,11 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 			String receiptNumber = hyCost.getHyCollection().getReceiptNumber();
 			String feeDate = hyCost.getFeeDate();
 			String isCollection = hyCost.getHyCollection().getIsCollection();
-			String amountReceivable = hyCost.getAmountReceivable().setScale(2,RoundingMode.HALF_UP) + "";
-			String amount = hyCost.getHyCollection().getAmount().setScale(2,RoundingMode.HALF_UP) + "";
-			Long costId = hyCost.getId();
+			String amountReceivable = hyCost.getAmountReceivable().setScale(2, RoundingMode.HALF_UP) + "";
+			String amount = hyCost.getHyCollection().getAmount().setScale(2, RoundingMode.HALF_UP) + "";
+			String ownerId = hyCost.getHyCollection().getOwnerId()+"";
+
+			Long costId = Long.valueOf(id.split(houseNumber + ownerId)[0]);
 			HyHouseInf hyHouseInf = new HyHouseInf();
 			HyBuilding hyBuilding = new HyBuilding();
 			hyBuilding.setBuildingNumber(buildingNumber);
@@ -601,7 +602,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 				fis.close();
 				bos.close();
 				buffer = bos.toByteArray();
-				
+
 				IoUtil.writePdfFile(buffer, fileName);
 				return fileName;
 			}
@@ -622,7 +623,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 			fis.close();
 			bos.close();
 			buffer = bos.toByteArray();
-			
+
 			IoUtil.writePdfFile(buffer, fileName);
 		} catch (java.io.EOFException e) {
 			log.error("没有字体的异常,没关系，不要在意" + e.getMessage());
@@ -631,8 +632,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 	}
 
 	@Override
-	public String printCollectionOne(HyCost hyCost, HttpServletResponse response)
-			throws Exception {
+	public String printCollectionOne(HyCost hyCost, HttpServletResponse response) throws Exception {
 		String fileName = "d:\\" + new Date().getTime() + "printCollectionOne.pdf";
 		try {
 			// 1、获取模版文件
@@ -651,9 +651,9 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 			String buildingNumber = hyCost.getHyBuilding().getBuildingNumber();
 			String feeDate = hyCost.getFeeDate();
 			String isCollection = hyCost.getHyCollection().getIsCollection();
-			String amountReceivable = hyCost.getAmountReceivable().setScale(2,RoundingMode.HALF_UP) + "";
+			String amountReceivable = hyCost.getAmountReceivable().setScale(2, RoundingMode.HALF_UP) + "";
 			String amount = hyCost.getHyCollection().getAmount() + "";
-			
+
 			params.put("house_number", houseNumber);
 			params.put("owner_name", ownerName);
 			params.put("id", id);
@@ -707,11 +707,11 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 			fis.close();
 			bos.close();
 			buffer = bos.toByteArray();
-			
+
 			IoUtil.writePdfFile(buffer, fileName);
 		} catch (java.io.EOFException e) {
 			log.error("没有字体的异常,没关系，不要在意" + e.getMessage());
-		} 
+		}
 		return fileName;
 	}
 
@@ -751,13 +751,13 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 				hyBuildingMapper.insertHyBuilding(hyBuilding);
 				successNum++;
 				successMsg.append("<br/>" + successNum + "、楼栋为 " + hyBuilding.getBuildingNumber() + "的楼宇 导入成功");
-			}/* else if (updateSupport) {
-				hyBuilding.setId(buildingList.get(0).getId());
-				hyBuilding.setQuartersId((long) 1);
-				hyBuildingMapper.updateHyBuilding(hyBuilding);
-				successNum++;
-				successMsg.append("<br/>" + successNum + "、楼栋为 " + hyBuilding.getBuildingNumber() + "的楼宇 更新成功");
-			}*/
+			} /*
+				 * else if (updateSupport) { hyBuilding.setId(buildingList.get(0).getId());
+				 * hyBuilding.setQuartersId((long) 1);
+				 * hyBuildingMapper.updateHyBuilding(hyBuilding); successNum++;
+				 * successMsg.append("<br/>" + successNum + "、楼栋为 " +
+				 * hyBuilding.getBuildingNumber() + "的楼宇 更新成功"); }
+				 */
 			// 业主
 			HyOwnerRegistration hyOwnerRegistration = new HyOwnerRegistration();
 			hyOwnerRegistration.setOwnerName(hyCashierDesk.getOwnerName());
@@ -771,20 +771,20 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 				successNum++;
 				successMsg.append("<br/>" + successNum + "、姓名 " + hyOwnerRegistration.getOwnerName() + "、身份证号码为 "
 						+ hyOwnerRegistration.getIdCardNum() + "的业主 导入成功");
-			}/* else if (updateSupport) {
-				hyOwnerRegistration.setId(ownerRegistrationList.get(0).getId());
-				hyOwnerRegistration.setMobilePhone(hyCashierDesk.getMobilePhone());
-				hyOwnerRegistration.setIdCardAddress(hyCashierDesk.getIdCardAddress());
-				hyOwnerRegistrationMapper.updateHyOwnerRegistration(hyOwnerRegistration);
-				successNum++;
-				successMsg.append("<br/>" + successNum + "、姓名 " + hyOwnerRegistration.getOwnerName() + "、身份证号码为 "
-						+ hyOwnerRegistration.getIdCardNum() + "的业主 更新成功");
-			} else {
-				failureNum++;
-				failureMsg.append("<br/>" + failureNum + "、姓名 " + hyOwnerRegistration.getOwnerName() + "、身份证号码为 "
-						+ hyOwnerRegistration.getIdCardNum() + "的业主 已存在");
-			}*/
-			
+			} /*
+				 * else if (updateSupport) {
+				 * hyOwnerRegistration.setId(ownerRegistrationList.get(0).getId());
+				 * hyOwnerRegistration.setMobilePhone(hyCashierDesk.getMobilePhone());
+				 * hyOwnerRegistration.setIdCardAddress(hyCashierDesk.getIdCardAddress());
+				 * hyOwnerRegistrationMapper.updateHyOwnerRegistration(hyOwnerRegistration);
+				 * successNum++; successMsg.append("<br/>" + successNum + "、姓名 " +
+				 * hyOwnerRegistration.getOwnerName() + "、身份证号码为 " +
+				 * hyOwnerRegistration.getIdCardNum() + "的业主 更新成功"); } else { failureNum++;
+				 * failureMsg.append("<br/>" + failureNum + "、姓名 " +
+				 * hyOwnerRegistration.getOwnerName() + "、身份证号码为 " +
+				 * hyOwnerRegistration.getIdCardNum() + "的业主 已存在"); }
+				 */
+
 			// 房屋
 			HyHouseInf hyHouseInf = new HyHouseInf();
 			List<HyBuilding> buildingListBy = hyBuildingMapper.selectHyBuildingList(hyBuilding);
@@ -802,19 +802,16 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 				successNum++;
 				successMsg.append("<br/>" + successNum + "、单元 " + hyHouseInf.getUnit() + "、房屋编号为 "
 						+ hyHouseInf.getHouseNumber() + "的房屋 导入成功");
-			}/* else if (updateSupport) {
-				hyHouseInf.setId(houseInfList.get(0).getId());
-				hyHouseInf.setBuildingId(buildingListBy.get(0).getId());
-				hyHouseInf.setOwnerId(ownerRegistrationListBy.get(0).getId());
-				hyHouseInfMapper.updateHyHouseInf(hyHouseInf);
-				successNum++;
-				successMsg.append("<br/>" + successNum + "、单元 " + hyHouseInf.getUnit() + "、房屋编号为 "
-						+ hyHouseInf.getHouseNumber() + "的房屋 更新成功");
-			} else {
-				failureNum++;
-				failureMsg.append("<br/>" + failureNum + "、单元 " + hyHouseInf.getUnit() + "、房屋编号为 "
-						+ hyHouseInf.getHouseNumber() + "的房屋 已存在");
-			}*/
+			} /*
+				 * else if (updateSupport) { hyHouseInf.setId(houseInfList.get(0).getId());
+				 * hyHouseInf.setBuildingId(buildingListBy.get(0).getId());
+				 * hyHouseInf.setOwnerId(ownerRegistrationListBy.get(0).getId());
+				 * hyHouseInfMapper.updateHyHouseInf(hyHouseInf); successNum++;
+				 * successMsg.append("<br/>" + successNum + "、单元 " + hyHouseInf.getUnit() +
+				 * "、房屋编号为 " + hyHouseInf.getHouseNumber() + "的房屋 更新成功"); } else { failureNum++;
+				 * failureMsg.append("<br/>" + failureNum + "、单元 " + hyHouseInf.getUnit() +
+				 * "、房屋编号为 " + hyHouseInf.getHouseNumber() + "的房屋 已存在"); }
+				 */
 			// 费用
 			List<HyCost> costList = hyCostMapper.selectHyCostListDistinct(new HyCost());
 			for (int i = 0; i < costList.size(); i++) {
@@ -831,11 +828,11 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 					successNum++;
 					successMsg.append("<br/>" + successNum + "、费用项目为 " + hyCost.getCostItems() + "、和房屋编号为 "
 							+ hyHouseInf.getHouseNumber() + " 关系导入成功");
-				}/* else {
-					failureNum++;
-					failureMsg.append("<br/>" + failureNum + "、费用项目为 " + hyCost.getCostItems() + "、和房屋编号为 "
-							+ hyHouseInf.getHouseNumber() + "关系已存在");
-				}*/
+				} /*
+					 * else { failureNum++; failureMsg.append("<br/>" + failureNum + "、费用项目为 " +
+					 * hyCost.getCostItems() + "、和房屋编号为 " + hyHouseInf.getHouseNumber() + "关系已存在");
+					 * }
+					 */
 			}
 		}
 
@@ -880,7 +877,8 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 				params.put("is_collection", jsonObject.getString("isCollection"));
 				params.put("amount_receivable",
 						new BigDecimal(jsonObject.getString("amountReceivable")).setScale(2, RoundingMode.HALF_UP));
-				params.put("amount", new BigDecimal(jsonObject.getString("amountReceivable")).setScale(2, RoundingMode.HALF_UP));
+				params.put("amount",
+						new BigDecimal(jsonObject.getString("amountReceivable")).setScale(2, RoundingMode.HALF_UP));
 				paramList.add(params);
 
 				//

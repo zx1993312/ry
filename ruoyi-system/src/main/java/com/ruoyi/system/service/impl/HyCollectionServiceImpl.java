@@ -29,6 +29,7 @@ import com.ruoyi.system.constants.Constants;
 import com.ruoyi.system.domain.HouseAndCost;
 import com.ruoyi.system.domain.HyCollection;
 import com.ruoyi.system.domain.HyCost;
+import com.ruoyi.system.domain.HyOwnerRegistration;
 import com.ruoyi.system.mapper.HyCashierDeskMapper;
 import com.ruoyi.system.mapper.HyCollectionMapper;
 import com.ruoyi.system.mapper.HyCustomerMapper;
@@ -122,11 +123,6 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 		collection.setOwnerId(ownerId);
 		List<HyCollection> list = hyCollectionMapper.selectHyCollectionList(collection);
 		if (list.size() == 0) {
-			try {
-				fileName = hyCashierDeskServiceImpl.printReceiptOne(hyCollection.getHyCost(), response);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
 			HouseAndCost houseAndCost = new HouseAndCost();
 			houseAndCost.setCostId(costId);
 			houseAndCost.setHouseId(houseId);
@@ -156,6 +152,11 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 			houseAndCost.setBeginFeeDate(beginFeeDate);
 			hyCustomerMapper.updateHouseAndCost(houseAndCost);
 			hyCollectionMapper.insertHyCollection(hyCollection);
+			try {
+				fileName = hyCashierDeskServiceImpl.printReceiptOne(hyCollection.getHyCost(), response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			return fileName;
 		} else {
 			return fileName;
@@ -187,11 +188,6 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 		collection.setOwnerId(ownerId);
 		List<HyCollection> list = hyCollectionMapper.selectHyCollectionList(collection);
 		if (list.size() == 0) {
-			try {
-				fileName = hyCashierDeskServiceImpl.printReceiptOne(hyCollection.getHyCost(), response);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
 			HouseAndCost houseAndCost = new HouseAndCost();
 			houseAndCost.setCostId(costId);
 			houseAndCost.setHouseId(houseId);
@@ -221,17 +217,17 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 			houseAndCost.setBeginFeeDate(beginFeeDate);
 			hyCustomerMapper.updateHouseAndCost(houseAndCost);
 			hyCollectionMapper.insertHyCollection(hyCollection);
+			try {
+				fileName = hyCashierDeskServiceImpl.printReceiptOne(hyCollection.getHyCost(), response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			return fileName;
 		} else {
 			BigDecimal amount = hyCollection.getAmount().add(list.get(0).getAmount());
 			hyCollection.setAmount(amount);
 			hyCollection.getHyCost().getHyCollection().setAmount(amount);
 			hyCollection.setId(list.get(0).getId());
-			try {
-				fileName = hyCashierDeskServiceImpl.printReceiptOne(hyCollection.getHyCost(), response);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
 			HouseAndCost houseAndCost = new HouseAndCost();
 			houseAndCost.setCostId(costId);
 			houseAndCost.setHouseId(houseId);
@@ -260,6 +256,11 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 			houseAndCost.setPayFeeDate(payFeeDate);
 			hyCustomerMapper.updateHouseAndCost(houseAndCost);
 			hyCollectionMapper.updateHyCollection(hyCollection);
+			try {
+				fileName = hyCashierDeskServiceImpl.printReceiptOne(hyCollection.getHyCost(), response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			return fileName;
 		}
 
