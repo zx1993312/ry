@@ -414,7 +414,7 @@
             }); 
         	});
         }
-        function printReceiptMore(){
+   111     function printReceiptMore(){
         	$.modal.confirm("确定要对所选的数据打印收据吗？", function() {
             	var rows=$("#bootstrap-table").bootstrapTable('getSelections');
             	if(rows.length == 0){
@@ -444,6 +444,10 @@
             		var isCollection = rows[i].hyCollection.isCollection;
             		var amountReceivable = rows[i].amountReceivable;
             		var amount = rows[i].hyCollection.amount;
+            		
+            		var beginFeeDate = rows[i].houseAndCost.beginFeeDate;
+            		var payFeeDate = rows[i].houseAndCost.payFeeDate;
+            		
             		if(isCollection!="0"&&isCollection!="2"){
             			$.modal.alertWarning("选择的数据中有未支付的数据，请重新选择！");
         				return false;
@@ -458,7 +462,9 @@
                    		'feeDate' : feeDate,
                    		'isCollection' : isCollection,
                    		'amountReceivable' : amountReceivable,
-                   		'amount' : amount
+                   		'amount' : amount,
+                   		'beginFeeDate' : beginFeeDate,
+                   		'payFeeDate' : payFeeDate
                     };
             	}
             	
@@ -476,7 +482,7 @@
                 });
             });
         }
-        function printCollectionMore(){
+       function printCollectionMore(){
         	$.modal.confirm("确定要对所选的数据打印催收单吗？", function() {
             	var rows=$("#bootstrap-table").bootstrapTable('getSelections');
             	if(rows.length == 0){
