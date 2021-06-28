@@ -386,9 +386,9 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 				params.put("beginFeeDate", jsonObject.getString("beginFeeDate"));
 				params.put("payFeeDate", jsonObject.getString("payFeeDate"));
 				paramList.add(params);
-
-				//
+				
 			}
+			
 			String os = System.getProperty("os.name");
 			if (os.toLowerCase().startsWith("win")) {
 				map.put("pic", pic);
@@ -547,9 +547,9 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 			String receiptNumber = hyCost.getHyCollection().getReceiptNumber();
 			String feeDate = hyCost.getFeeDate();
 			String isCollection = hyCost.getHyCollection().getIsCollection();
-			String amountReceivable = hyCost.getAmountReceivable().setScale(2, RoundingMode.HALF_UP) + "";
-			String amount = hyCost.getHyCollection().getAmount().setScale(2, RoundingMode.HALF_UP) + "";
-			String ownerId = hyCost.getHyCollection().getOwnerId()+"";
+			BigDecimal amountReceivable = hyCost.getAmountReceivable().setScale(2, RoundingMode.HALF_UP);
+			BigDecimal amount = hyCost.getHyCollection().getAmount().setScale(2, RoundingMode.HALF_UP);
+			String ownerId = hyCost.getHyCollection().getOwnerId() + "";
 
 			Long costId = Long.valueOf(id.split(houseNumber + ownerId)[0]);
 			HyHouseInf hyHouseInf = new HyHouseInf();

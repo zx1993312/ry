@@ -296,8 +296,7 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 				collection.setOwnerId(ownerId);
 				List<HyCollection> list = hyCollectionMapper.selectHyCollectionList(collection);
 				if (list.size() == 0) {
-					hyCollection.setAmount(amountReceivable.setScale(2, RoundingMode.HALF_UP));
-					hyCollection.setCostId(costId);
+					collection.setAmount(amountReceivable.setScale(2, RoundingMode.HALF_UP));
 
 					HouseAndCost houseAndCost = new HouseAndCost();
 					houseAndCost.setCostId(costId);
@@ -339,7 +338,7 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 					map.put("feeDate", hyCost.getFeeDate());
 					map.put("isCollection", hyCollection.getIsCollection());
 					map.put("amountReceivable", amountReceivable.setScale(2, RoundingMode.HALF_UP));
-					map.put("amount", hyCollection.getAmount());
+					map.put("amount", collection.getAmount());
 					map.put("beginFeeDate", beginFeeDate);
 					map.put("payFeeDate", payFeeDate);
 					beanList.add(map);
