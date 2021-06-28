@@ -1451,7 +1451,7 @@ $(function () {
 
 
                             [{
-                                text: '航宇物业平台',
+                                text: '盛邦物业平台',
                                 subtext: '   ',
                                 left: '35%',
                                 top: '15%',
