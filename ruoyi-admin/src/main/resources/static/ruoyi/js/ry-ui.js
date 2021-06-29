@@ -1704,6 +1704,27 @@ var table = {
             	$.modal.closeLoading();
             	$.modal.enable();
             },
+            // 收款操作成功回调执行事件,不刷新表格（父窗体静默更新）
+            successCallbackss: function(result) {
+            	if (result.code == web_status.SUCCESS) {
+            		var parent = window.parent;
+            		if (parent.table.options.type == table_type.bootstrapTable) {
+            			$.modal.close();
+            			parent.$.modal.msgSuccess(result.msg);
+            		} else if (parent.table.options.type == table_type.bootstrapTreeTable) {
+            			$.modal.close();
+            			parent.$.modal.msgSuccess(result.msg);
+            		} else {
+            			$.modal.msgSuccess("操作成功!");
+            		}
+            	} else if (result.code == web_status.WARNING) {
+            		$.modal.alertWarning(result.msg)
+            	}  else {
+            		$.modal.alertError(result.msg);
+            	}
+            	$.modal.closeLoading();
+            	$.modal.enable();
+            },
             // 选项卡成功回调执行事件（父窗体静默更新）
             successTabCallback: function(result) {
                 if (result.code == web_status.SUCCESS) {

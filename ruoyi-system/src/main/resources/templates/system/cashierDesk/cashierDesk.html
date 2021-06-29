@@ -481,7 +481,7 @@
                     dataType : "json",
                     success: function (result) {
                     	window.location.href = ctx + "common/downloadPdf?fileName=" + encodeURI(result.msg) + "&delete=" + true;
-                    	$.operate.successCallback(result);
+                    	$.operate.successCallbackss(result);
                     }
                 });
             });
@@ -565,8 +565,7 @@
        	        },
                	success: function(result) {
                     window.location.href = ctx + "common/downloadPdf?fileName=" + encodeURI(result.msg) + "&delete=" + true;
-               		$.modal.closeLoading();
-               		$.operate.successCallback(result);
+                    $.operate.successCallbackss(result);
     	        }
             }); 
         	}else{
