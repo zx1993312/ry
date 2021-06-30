@@ -225,7 +225,7 @@
                         	actions.push('<a class="btn btn-warning btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="printReceiptOne(\'' + row.id + '\',\'' + row.costItems + '\',\'' + row.hyResidentialQuarters.communityName + '\',\'' + row.hyBuilding.buildingNumber + '\',\'' + row.hyHouseInf.houseNumber + '\',\'' + row.hyOwnerRegistration.ownerName + '\',\'' + row.feeDate + '\',\'' + row.hyCollection.isCollection + '\',\'' + row.amountReceivable + '\',\'' + row.hyCollection.amount + '\',\'' + row.hyHouseInf.ownerId + '\')"><i class="fa fa-download"></i>打印收据</a> ');
                         }else if(row.hyCollection.isCollection != '0' && row.hyCollection.isCollection != '2'){
                         	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit4(\'' + row.id + '\',\'' + row.costItems + '\')"><i class="fa fa-edit"></i>单笔收款</a> ');
-                        	actions.push('<a class="btn btn-primary btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="comprehensive(\'' + row.hyCollection.isCollection + '\',\'' + row.hyOwnerRegistration.ownerName + '\')"><i class="fa fa-edit"></i>综合收款</a> ');
+                        	actions.push('<a class="btn btn-primary btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="comprehensive(\'' + row.hyCollection.isCollection + '\',\'' + row.hyOwnerRegistration.ownerName + '\',\'' + row.hyHouseInf.houseNumber + '\',\'' + row.hyBuilding.buildingNumber + '\')"><i class="fa fa-edit"></i>综合收款</a> ');
                         	actions.push('<a class="btn btn-warning btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="printCollectionOne(\'' + row.id + '\',\'' + row.costItems + '\',\'' + row.hyResidentialQuarters.communityName + '\',\'' + row.hyBuilding.buildingNumber + '\',\'' + row.hyHouseInf.houseNumber + '\',\'' + row.hyOwnerRegistration.ownerName + '\',\'' + row.feeDate + '\',\'' + row.hyCollection.isCollection + '\',\'' + row.amountReceivable + '\',\'' + row.hyCollection.amount + '\')"><i class="fa fa-download"></i>打印催收单</a> ');
                         }else if(row.hyCollection.isCollection == '2'){
                         	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit4(\'' + row.id + '\',\'' + row.costItems + '\')"><i class="fa fa-edit"></i>单笔收款</a> ');
@@ -252,12 +252,16 @@
         	var list = "";
         	for(var i=0;i<rows.length;i++){
         		if(Object.getOwnPropertyNames(map).length != 0){
-        			if(!map.hasOwnProperty(rows[i].hyOwnerRegistration.ownerName)){
-            			$.modal.alertWarning("所选数据不是一个人的");
+        			if(!map.hasOwnProperty(rows[i].hyOwnerRegistration.ownerName)||
+        					!map.hasOwnProperty(rows[i].hyHouseInf.houseNumber)||
+        					!map.hasOwnProperty(rows[i].hyBuilding.buildingNumber)){
+            			$.modal.alertWarning("所选数据不是一个房屋的费用");
             			return false;
             		}
         		}
         		map[rows[i].hyOwnerRegistration.ownerName] = rows[i];
+        		map[rows[i].hyHouseInf.houseNumber] = rows[i];
+        		map[rows[i].hyBuilding.buildingNumber] = rows[i];
         		//map.set("rows[i].hyOwnerRegistration.ownerName",rows[i]);
         		var id = rows[i].id;
         		var costItems = rows[i].costItems;
@@ -278,7 +282,7 @@
         	$.modal.opens("合并收款", $.operate.editUrls(list));
         	});
         }
-        function comprehensive(isCollection,ownerName){
+        function comprehensive(isCollection,ownerName,houseNumber,buildingNumber){
         	$.modal.confirm("确定要对该条数据的业主所有的费用进行收款吗？", function() {
         	/* var rows=$("#bootstrap-table").bootstrapTable('getSelections');
         	if(rows.length == 0){
@@ -308,7 +312,7 @@
 			}
         		 $.ajax({
                      url: prefix + "/lists",
-                     data: {'hyOwnerRegistration.ownerName' : ownerName,'hyCollection.isCollection' : '1'},
+                     data: {'hyOwnerRegistration.ownerName' : ownerName,'hyCollection.isCollection' : '1','hyHouseInf.houseNumber':houseNumber,'hyBuilding.buildingNumber':buildingNumber},
                      type: 'POST',
                      dataType : "json",
                      success: function (result) {
