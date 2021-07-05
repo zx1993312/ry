@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('账单生成')" />
+    <th:block th:include="include :: datetimepicker-css" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-generation-add">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">选择楼宇：</label>
+                <div class="col-sm-8">
+                    <select id="buildingId" name="buildingId" class="form-control" th:with="type=${@building.getBuilding()}" onchange="changeUnit()">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.buildingNumber}" th:value="${data.id}"></option>
+			 	    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">选择单元：</label>
+                <div class="col-sm-8">
+			 	    <select class="form-control" name="unit" id="unit" disabled="disabled">
+	                 	 <option value="">请选择</option>
+	                </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">选择房屋：</label>
+                <div class="col-sm-8">
+                	<input id="houseNum" name="houseNumber" class="form-control" type="text" onclick="selectHyHouseInf()">
+                    <input name="ids" id="id" class="form-control" type="hidden">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">费用项目：</label>
+                <div class="col-sm-8">
+                    <div class="col-sm-9" th:with="type=${@cost.getCost()}">
+                    <label  th:each="dict : ${type}" class="check-box">
+                    	<input name="costIds" type="checkbox" th:text="${dict.costItems}" th:value="${dict.id}">
+                    </label>
+        			</div>
+                </div>
+            </div>
+            <div class="form-group">
+				<label class="col-sm-2 control-label">费用开始日期：</label>
+				<div class="col-sm-4">
+					<div class="input-group date">
+                        <input name="beginFeeDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+				</div>
+				<label class="col-sm-2 control-label">费用结束日期：</label>
+				<div class="col-sm-4">
+					<div class="input-group date">
+                        <input name="endFeeDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+				</div>
+			</div>
+            <div class="form-group">
+				<label class="col-sm-3 control-label">打折：</label>
+				<div class="col-sm-4">
+					 <select class="form-control" name="discount">
+	                 	 <option value=0.1>一折</option>
+	                 	 <option value=0.2>二折</option>
+	                 	 <option value=0.3>三折</option>
+	                 	 <option value=0.4>四折</option>
+	                 	 <option value=0.5>五折</option>
+	                 	 <option value=0.6>六折</option>
+	                 	 <option value=0.7>七折</option>
+	                 	 <option value=0.8>八折</option>
+	                 	 <option value=0.9>九折</option>
+	                </select>
+				</div>
+			</div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: datetimepicker-js" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/generation"
+
+        $("#form-generation-add").validate({
+			onkeyup : false,
+			rules : {
+				buildingId : {
+					maxlength : 11,
+					required : true,
+				},
+				costIds : {
+					required : true,
+				},
+			},
+			focusCleanup : true
+		});
+        
+        $("input[name='beginFeeDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+        
+        $("input[name='endFeeDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+        
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-generation-add').serialize());
+            }
+        }
+        function selectHyHouseInf(){
+        	$.modal.open("房屋选择","/system/selectInf");
+        };
+        
+        var prefix1 = ctx + "system/inf"
+        //根据单元搜房屋
+        function changeUnit(){
+   			$("#unit").removeAttr("disabled");
+   			$.ajax({
+                url: prefix1 + "/getUnit",
+                data: {buildingId : $("#buildingId").val()},
+                dataType : 'json',
+                type: 'POST',
+                success: function (result) {
+                	var optArr = [];
+                	$("#unit").empty();
+					$("#unit").append("<option value=\"\">请选择</option>");
+                    for (var i = 0; i < result.length; i++) {
+                    	$("#unit").append("<option value=" + result[i].unit + ">" + result[i].unit + "</option>");
+                    }
+                        
+                    // 缺一不可  
+                    $("#unit").selectpicker('refresh');
+                    $("#unit").selectpicker('render');
+
+					console.log(result);
+                }
+            });
+   		}
+        
+    </script>
+</body>
+</html>

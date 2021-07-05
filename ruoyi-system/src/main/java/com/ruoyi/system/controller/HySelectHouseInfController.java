@@ -1,9 +1,6 @@
 package com.ruoyi.system.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.page.TableDataInfo;
-import com.ruoyi.system.constants.Constants;
-import com.ruoyi.system.domain.HyOwnerRegistration;
-import com.ruoyi.system.service.IHyOwnerRegistrationService;
+import com.ruoyi.system.domain.HyHouseInf;
+import com.ruoyi.system.service.IHyHouseInfService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -25,45 +21,38 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 /**
- * 业主资料登记Controller
+ * 房屋登记Controller
  * 
  * @author Administrator
  * @date 2021-01-09
  */
 @Controller
 @RequestMapping("/system/selectInf")
-@Api(tags = "业主资料登记Controller")
+@Api(tags = "房屋登记Controller")
 public class HySelectHouseInfController extends BaseController {
 	private String prefix = "system/selectInf";
 
 	@Autowired
-	private IHyOwnerRegistrationService hyOwnerRegistrationService;
+	private IHyHouseInfService hyHouseInfService;
 
-	@RequiresPermissions("system:registration:view")
+	@RequiresPermissions("system:inf:view")
 	@GetMapping()
 	public String registration() {
 		return prefix + "/inf";
 	}
 
 	/**
-	 * 查询业主资料登记列表
+	 * 查询房屋登记列表
 	 */
-	@ApiOperation("业主资料登记")
-	@ApiImplicitParams({
-			@ApiImplicitParam(name = "hyOwnerRegistration", value = "项目实体类hyOwnerRegistration", required = true), })
-	@RequiresPermissions("system:registration:list")
+	@ApiOperation("房屋登记")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyHouseInf", value = "项目实体类hyHouseInf", required = true), })
+	@RequiresPermissions("system:inf:list")
 	@PostMapping("/list")
 	@ResponseBody
-	public TableDataInfo list(HyOwnerRegistration hyOwnerRegistration) {
+	public TableDataInfo list(HyHouseInf hyHouseInf) {
 		startPage();
-		List<HyOwnerRegistration> list = hyOwnerRegistrationService.selectHyOwnerRegistrationList(hyOwnerRegistration);
-		List<Map<String, Object>> reList = new ArrayList<>();
-		for (HyOwnerRegistration hor : list) {
-			Map<String, Object> map = new HashMap<>();
-			map = Constants.REFLECT_UTIL.convertMap(hor);
-			reList.add(map);
-		}
-		return getDataTable(reList);
+		List<HyHouseInf> list = hyHouseInfService.selectHyHouseInfList(hyHouseInf);
+		return getDataTable(list);
 	}
 
 	

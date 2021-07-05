@@ -77,6 +77,13 @@ public class HyHouseInfController extends BaseController {
 	}
 	
 	@RequiresPermissions("system:inf:lists")
+	@PostMapping("/getUnit")
+	@ResponseBody
+	public List<HyHouseInf> getUnit(HyHouseInf hyHouseInf) {
+		return hyHouseInfService.selectHyHouseInfListDistinct(hyHouseInf);
+	}
+	
+	@RequiresPermissions("system:inf:lists")
 	@PostMapping("/owner")
 	@ResponseBody
 	public List<HyOwnerRegistration> ownerList(HyHouseInf hyHouseInf) {

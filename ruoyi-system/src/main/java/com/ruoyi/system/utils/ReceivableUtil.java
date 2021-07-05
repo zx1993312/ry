@@ -6,18 +6,16 @@ public class ReceivableUtil {
 	
 	
 
-	public static BigDecimal getReceivable(BigDecimal calculationStandard,String costItems,BigDecimal bilingArea) {
+	public static BigDecimal getReceivable(BigDecimal calculationStandard,String calculationMehod,BigDecimal bilingArea) {
 		BigDecimal AmountReceivable = new BigDecimal("0.00");
 		BigDecimal month = new BigDecimal("12.00");
-		if("物业费".equals(costItems)) {
+		if("按单价*计算面积每年计算".equals(calculationMehod)) {
 			AmountReceivable = calculationStandard.multiply(bilingArea).multiply(month);
-		}else if("生活垃圾处理费".equals(costItems)) {
+		}else if("按单价每年计算".equals(calculationMehod)) {
 			AmountReceivable = calculationStandard.multiply(month);
-		}else if("装修垃圾清运费".equals(costItems)) {
+		}else if("按单价*计费面积计算".equals(calculationMehod)) {
 			AmountReceivable = calculationStandard.multiply(bilingArea);
-		}else if("预存水费".equals(costItems)) {
-			AmountReceivable = calculationStandard;
-		}else if("预存电费".equals(costItems)) {
+		}else if("按定额计算".equals(calculationMehod)) {
 			AmountReceivable = calculationStandard;
 		}
 		

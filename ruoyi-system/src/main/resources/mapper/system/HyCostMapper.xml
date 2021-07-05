@@ -243,7 +243,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		c.biling_end_date,
 		c.audit_results_reason,
 		c.fee_date_old,
-		c.fee_date,
 		c.due_date_old,
 		c.due_date,
 		c.amount_receivable_old,
@@ -317,8 +316,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="bilingStartDate != null and bilingEndDate != null">and c.fee_date between #{bilingStartDate} and #{bilingEndDate}</if>
 		<if test="transferTenants != null">and c.transfer_tenants = #{transferTenants}</if>
 		<if test="changeDate != null ">and c.change_date = #{changeDate}</if>
-		<if test="feeDate != null ">and c.fee_date = #{feeDate}</if>
-		<if test="dueDate != null ">and c.due_date = #{dueDate}</if>
+<!-- 		<if test="feeDate != null ">and c.fee_date = #{feeDate}</if>
+ -->		<if test="dueDate != null ">and c.due_date = #{dueDate}</if>
 		<if test="hyOwnerRegistration != null">
 		<if test="hyOwnerRegistration.ownerName != null  and hyOwnerRegistration.ownerName != ''"> and o.owner_name = #{hyOwnerRegistration.ownerName}</if>
 		</if>
@@ -332,7 +331,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectHyCostListDistinct" parameterType="HyCost"
 		resultMap="HyCostResult">
 		<include refid="selectHyCostDistinctVo" />
-		and month(NOW()) = month(str_to_date(fee_date,'%Y-%m-%d '))
+		<!-- and month(NOW()) = month(str_to_date(fee_date,'%Y-%m-%d ')) -->
 	</select>
 
 	<select id="selectHyCostById" parameterType="Long"

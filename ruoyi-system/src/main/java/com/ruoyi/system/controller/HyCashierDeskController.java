@@ -111,9 +111,12 @@ public class HyCashierDeskController extends BaseController {
 		List<HyCost> list = hyCashierDeskService.selectHyCashierDeskList(hyCost);
 		for (HyCost cost : list) {
 			BigDecimal calculationStandard = cost.getCalculationStandard();
-			String costItems = cost.getCostItems();
+			String calculationMehod = cost.getCalculationMehod();
 			BigDecimal bilingArea = cost.getHyHouseInf().getBilingArea();
-			BigDecimal amountReceivable = ReceivableUtil.getReceivable(calculationStandard, costItems, bilingArea);
+			BigDecimal amountReceivable = ReceivableUtil.getReceivable(calculationStandard, calculationMehod, bilingArea);
+			if(cost.getHouseAndCost().getDiscount()!=null) {
+				amountReceivable = amountReceivable.multiply(cost.getHouseAndCost().getDiscount());
+			}
 			cost.setAmountReceivable(amountReceivable.setScale(2, RoundingMode.HALF_UP));
 			if (cost.getHyCollection().getAmount() == null) {
 				cost.getHyCollection().setAmount(new BigDecimal(0));
@@ -260,9 +263,12 @@ public class HyCashierDeskController extends BaseController {
 		List<HyCost> list = hyCashierDeskService.selectHyCashierDeskList(hyCost);
 		for (HyCost cost : list) {
 			BigDecimal calculationStandard = cost.getCalculationStandard();
-			String costItems = cost.getCostItems();
+			String calculationMehod = cost.getCalculationMehod();
 			BigDecimal bilingArea = cost.getHyHouseInf().getBilingArea();
-			BigDecimal amountReceivable = ReceivableUtil.getReceivable(calculationStandard, costItems, bilingArea);
+			BigDecimal amountReceivable = ReceivableUtil.getReceivable(calculationStandard, calculationMehod, bilingArea);
+			if(cost.getHouseAndCost().getDiscount()!=null) {
+				amountReceivable = amountReceivable.multiply(cost.getHouseAndCost().getDiscount());
+			}
 			cost.setAmountReceivable(amountReceivable.setScale(2, RoundingMode.HALF_UP));
 			if (cost.getHyCollection().getAmount() == null) {
 				cost.getHyCollection().setAmount(new BigDecimal(0));
@@ -332,9 +338,12 @@ public class HyCashierDeskController extends BaseController {
 		BigDecimal amountCount = new BigDecimal(0.00);
 		for (HyCost cost : list) {
 			BigDecimal calculationStandard = cost.getCalculationStandard();
-			String costItems = cost.getCostItems();
+			String calculationMehod = cost.getCalculationMehod();
 			BigDecimal bilingArea = cost.getHyHouseInf().getBilingArea();
-			BigDecimal amountReceivable = ReceivableUtil.getReceivable(calculationStandard, costItems, bilingArea);
+			BigDecimal amountReceivable = ReceivableUtil.getReceivable(calculationStandard, calculationMehod, bilingArea);
+			if(cost.getHouseAndCost().getDiscount()!=null) {
+				amountReceivable = amountReceivable.multiply(cost.getHouseAndCost().getDiscount());
+			}
 			amountReceivableCount = amountReceivableCount.add(amountReceivable);
 			BigDecimal amount = cost.getHyCollection().getAmount() == null ? new BigDecimal(0)
 					: cost.getHyCollection().getAmount();
@@ -356,9 +365,12 @@ public class HyCashierDeskController extends BaseController {
 	public String edit(@PathVariable("id") Long id, ModelMap mmap) {
 		HyCost hyCost = hyCashierDeskService.selectHyCashierDeskById(id);
 		BigDecimal calculationStandard = hyCost.getCalculationStandard();
-		String costItems = hyCost.getCostItems();
+		String calculationMehod = hyCost.getCalculationMehod();
 		BigDecimal bilingArea = hyCost.getHyHouseInf().getBilingArea();
-		BigDecimal amountReceivable = ReceivableUtil.getReceivable(calculationStandard, costItems, bilingArea);
+		BigDecimal amountReceivable = ReceivableUtil.getReceivable(calculationStandard, calculationMehod, bilingArea);
+		if(hyCost.getHouseAndCost().getDiscount()!=null) {
+			amountReceivable = amountReceivable.multiply(hyCost.getHouseAndCost().getDiscount());
+		}
 		hyCost.setAmountReceivable(amountReceivable.setScale(2, RoundingMode.HALF_UP));
 		mmap.put("hyCost", hyCost);
 		return prefix + "/edit";
@@ -394,6 +406,7 @@ public class HyCashierDeskController extends BaseController {
 		String[] ids = id.split(",");
 		HyCost hyCost = new HyCost();
 		BigDecimal amountReceivableCount = new BigDecimal(0.00);
+		List<HyCost> list = new ArrayList<>();
 		for (String ida : ids) {
 			Long idd = Long.valueOf(ida);
 			HyCost hyCostA = hyCashierDeskService.selectHyCashierDeskById(idd);
@@ -401,15 +414,24 @@ public class HyCashierDeskController extends BaseController {
 			hyCost.getHyHouseInf().setOwnerId(hyCostA.getHyHouseInf().getOwnerId());
 			hyCost.setHouseAndCost(new HouseAndCost());
 			hyCost.getHouseAndCost().setHouseId(hyCostA.getHouseAndCost().getHouseId());
-			hyCost.setFeeDate(hyCostA.getFeeDate());
+			hyCost.getHouseAndCost().setFeeDate(hyCostA.getHouseAndCost().getFeeDate());
 			BigDecimal calculationStandard = hyCostA.getCalculationStandard();
+			String calculationMehod = hyCostA.getCalculationMehod();
 			String costItems = hyCostA.getCostItems();
 			BigDecimal bilingArea = hyCostA.getHyHouseInf().getBilingArea();
-			BigDecimal amountReceivable = ReceivableUtil.getReceivable(calculationStandard, costItems, bilingArea);
+			BigDecimal amountReceivable = ReceivableUtil.getReceivable(calculationStandard, calculationMehod, bilingArea);
+			if(hyCostA.getHouseAndCost().getDiscount()!=null) {
+				amountReceivable = amountReceivable.multiply(hyCostA.getHouseAndCost().getDiscount());
+			}
 			amountReceivableCount = amountReceivableCount.add(amountReceivable);
+			HyCost hyCostB = new HyCost();
+			hyCostB.setCostItems(costItems);
+			hyCostB.setAmountReceivable(amountReceivable.setScale(2, RoundingMode.HALF_UP));
+			list.add(hyCostB);
 		}
 		hyCost.setCostIds(id);
 		hyCost.setAmountReceivable(amountReceivableCount.setScale(2, RoundingMode.HALF_UP));
+		mmap.put("list", list);
 		mmap.put("hyCost", hyCost);
 		return prefix + "/edits";
 	}
@@ -423,9 +445,12 @@ public class HyCashierDeskController extends BaseController {
 	public String editss(@PathVariable("id") Long id, ModelMap mmap) {
 		HyCost hyCost = hyCashierDeskService.selectHyCashierDeskById(id);
 		BigDecimal calculationStandard = hyCost.getCalculationStandard();
-		String costItems = hyCost.getCostItems();
+		String calculationMehod = hyCost.getCalculationMehod();
 		BigDecimal bilingArea = hyCost.getHyHouseInf().getBilingArea();
-		BigDecimal amountReceivable = ReceivableUtil.getReceivable(calculationStandard, costItems, bilingArea);
+		BigDecimal amountReceivable = ReceivableUtil.getReceivable(calculationStandard, calculationMehod, bilingArea);
+		if(hyCost.getHouseAndCost().getDiscount()!=null) {
+			amountReceivable = amountReceivable.multiply(hyCost.getHouseAndCost().getDiscount());
+		}
 		hyCost.setAmountReceivable(amountReceivable.setScale(2, RoundingMode.HALF_UP));
 		mmap.put("hyCost", hyCost);
 		return prefix + "/editss";
@@ -569,6 +594,12 @@ public class HyCashierDeskController extends BaseController {
 				HyResidentialQuarters hyResidentialQuarters = hyResidentialQuartersMapper
 						.selectHyResidentialQuartersById(quartersId);
 				reCost.setHyResidentialQuarters(hyResidentialQuarters);
+				HouseAndCost houseAndCost2 = new HouseAndCost();
+				houseAndCost2.setCostId(cost.getId());
+				houseAndCost2.setHouseId(houseId);
+				List<HouseAndCost> houseList1 = hyCustomerMapper.selectCostIds(houseAndCost2);
+				houseAndCost2 = houseList1.get(0);
+				reCost.setHouseAndCost(houseAndCost2);
 				Long costId = cost.getId();
 				HyCollection hyCollection = new HyCollection();
 				hyCollection.setCostId(costId);
@@ -591,7 +622,7 @@ public class HyCashierDeskController extends BaseController {
 			hyCashierDesk.setCostItems(rel.getCostItems());
 			hyCashierDesk.setCommunityName(rel.getHyResidentialQuarters().getCommunityName());
 			hyCashierDesk.setBuildingName(rel.getHyBuilding().getBuildingName());
-			hyCashierDesk.setFeeDate(rel.getFeeDate());
+			hyCashierDesk.setFeeDate(rel.getHouseAndCost().getFeeDate());
 			hyCashierDesk.setIsCollection(rel.getHyCollection().getIsCollection());
 			hyCashierDesk.setAmountReceivable(rel.getAmountReceivable());
 			hyCashierDesk.setAmount(rel.getHyCollection().getAmount());

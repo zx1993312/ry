@@ -11,12 +11,20 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                <label>房屋编号：</label>
-                                <input type="text" name="hyHouseInf.houseNumber" id="houseNumber"/>
+                                <!-- <label>楼宇：</label> -->
+                                <!-- <select id="buildingId" name="buildingId" class="form-control m-b" th:with="type=${@building.getBuilding()}">
+			                        <option value="">请选择</option>
+			                        <option th:each="dict : ${type}" th:text="${dict.buildingNumber}" th:value="${dict.id}"></option>
+			                    </select> -->
+			                    <input type="hidden" class="form-control m-b" name="buildingId" id="buildingId"/>
                             </li>
                             <li>
-                                <label>房屋名称：</label>
-                                <input type="text" name="houseName"/>
+                                <!-- <label>单元：</label> -->
+                                <!-- <select id="unit" name="unit" class="form-control m-b" th:value="1" th:with="type=${@houseInf.getUnit()}">
+									<option value="">请选择</option>
+									<option th:if="data!=null" th:each="data:${type}" th:text="${data.unit}" th:value="${data.unit}"></option>
+						 	    </select> -->
+						 	    <input type="hidden" class="form-control m-b" name="unit" id="unit"/>
                             </li>
                         </ul>
                     </div>
@@ -35,13 +43,16 @@
         var prefix = ctx + "system/selectInf";
 
         $(function() {
+        	
+        	$("#unit").val($("#unit",window.parent.document).val());
+        	$("#buildingId").val($("#buildingId",window.parent.document).val());
+        	
             var options = {
             		showSearch: false,
     		        showRefresh: false,
     		        showToggle: false,
     		        showColumns: false,
                 url: prefix + "/list",
-    
                 modalName: "房屋登记",
                 columns: [{
                     checkbox: true
@@ -51,33 +62,32 @@
                     title: '主键',
                     visible: false
                 },
-       
                 {
-                    field: 'hyHouseInf.houseNumber',
+                    field: 'hyBuilding.buildingNumber',
+                    title: '栋号'
+                },
+                {
+                    field: 'unit',
+                    title: '单元'
+                },
+                {
+                    field: 'houseNumber',
                     title: '房屋编号'
                 },
                 {
-                    field: 'ownerName',
+                    field: 'hyOwnerRegistration.ownerName',
                     title: '客户名称'
-                },
-                {
-                    field: 'hyHouseInf.houseName',
-                    title: '房屋名称'
-                },
-                {
-                    field: 'hyHouseInf.builtUpArea',
-                    title: '建筑面积'
-                }
-               ]
+                }]
             };
             $.table.init(options);
         });
         function submitHandler() {
         	var id= $.table.selectColumns('id');
-        	var houseNumber= $.table.selectColumns('hyHouseInf.houseNumber');
+        	var houseNumber= $.table.selectColumns('houseNumber');
         	if(id == ''){
         		$.modal.alertWarning("请至少选择一条记录");
         	}else{
+        		$("#id",window.parent.document).val(id);
         		$("#houseNum",window.parent.document).val(houseNumber);
         		$.modal.close();
         	}

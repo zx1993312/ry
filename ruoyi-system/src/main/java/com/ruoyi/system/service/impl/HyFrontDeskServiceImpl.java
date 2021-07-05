@@ -169,7 +169,7 @@ public class HyFrontDeskServiceImpl implements IHyFrontDeskService {
 			Long costId = hyCollection.getCostId();
 			HyCost hyCost = hyCostMapper.selectHyCostById(costId);
 			String costItems = hyCost.getCostItems();
-			String feeDate = hyCost.getFeeDate();
+			/*String feeDate = hyCost.getHouseAndCost().getFeeDate();*/
 			Date bilingStartDate = hyCost.getBilingStartDate();
 			Date bilingEndDate = hyCost.getBilingEndDate();
 			String amount = hyCollection.getAmount()+"";
@@ -186,7 +186,7 @@ public class HyFrontDeskServiceImpl implements IHyFrontDeskService {
 			params.put("receiptNumber", receiptNumber);
 			params.put("houseNumber", houseNumber);
 			params.put("costItems", costItems);
-			params.put("feeDate", feeDate);
+			/*params.put("feeDate", feeDate);*/
 			params.put("bilingStartDate", bilingStartDate);
 			params.put("bilingEndDate", bilingEndDate);
 			params.put("amount", amount);

@@ -11,7 +11,7 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">费用项目：</label>
                 <div class="col-sm-8">
-                     <select id="costId" name="costId" th:field="*{costId}" class="form-control" th:with="type=${@cost.getCost()}" onchange="changeHouse()">
+                     <select id="costId" name="costId" th:field="*{costId}" class="form-control" th:with="type=${@cost.getCost()}" onchange="changeHouse()" disabled="disabled">
 						<option value="">请选择</option>
 						<option th:if="data!=null" th:each="data:${type}" th:text="${data.costItems}" th:value="${data.id}"></option>
 			 	    </select>
@@ -22,7 +22,7 @@
                 <div class="col-sm-8">
                     <select class="form-control m-b" id="houseId" name="houseId" th:field="*{houseId}" th:with="type=${@houseInf.getHouseInf()}" disabled="disabled" onchange="changeOwner()">
 	                  		<option value="">请选择</option>
-	                  		<option th:each="dict : ${type}" th:text="${dict.houseName}" th:value="${dict.id}"></option>
+	                  		<option th:each="dict : ${type}" th:text="${dict.houseNumber}" th:value="${dict.id}"></option>
 	                </select>
                 </div>
             </div>
@@ -38,20 +38,20 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">收据号码：</label>
                 <div class="col-sm-8">
-                    <input id="receiptNumber" name="receiptNumber" th:field="*{receiptNumber}" class="form-control" type="text" onclick="selectBillSet()">
+                    <input id="receiptNumber" name="receiptNumber" th:field="*{receiptNumber}" class="form-control" type="text" onclick="selectBillSet()" disabled="disabled">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">总金额：</label>
                 <div class="col-sm-8">
-                    <input name="amount" th:field="*{amount}" class="form-control" type="text">
+                    <input name="amount" th:field="*{amount}" class="form-control" type="text" disabled="disabled">
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">申请时间：</label>
                 <div class="col-sm-8">
                     <div class="input-group date">
-                        <input id="applyTime" name="applyTime" th:value="${#dates.format(hyCollection.applyTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <input id="applyTime" name="applyTime" th:value="${#dates.format(hyCollection.applyTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text" disabled="disabled">
                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                     </div>
                 </div>
@@ -59,13 +59,13 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">收款人：</label>
                 <div class="col-sm-8">
-                    <input name="payee" th:field="*{payee}" class="form-control" type="text">
+                    <input name="payee" th:field="*{payee}" class="form-control" type="text" disabled="disabled">
                 </div>
             </div>
              <div class="form-group">    
                 <label class="col-sm-3 control-label">收款方式：</label>
                 <div class="col-sm-8">
-                    <select name="collectionType" class="form-control" th:field="*{collectionType}" th:with="type=${@dict.getType('hy_collection_type')}">
+                    <select name="collectionType" class="form-control" th:field="*{collectionType}" th:with="type=${@dict.getType('hy_collection_type')}" disabled="disabled">
 							<option value="">请选择</option>
 							<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 					</select>
@@ -75,7 +75,7 @@
                 <label class="col-sm-3 control-label">收款时间：</label>
                 <div class="col-sm-8">
                     <div class="input-group date">
-                        <input id="collectionTime" name="collectionTime" th:value="${#dates.format(hyCollection.collectionTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <input id="collectionTime" name="collectionTime" th:value="${#dates.format(hyCollection.collectionTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text" disabled="disabled">
                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                     </div>
                 </div>
@@ -88,7 +88,7 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">备注：</label>
                 <div class="col-sm-8">
-                    <input name="collectionRemark" th:field="*{collectionRemark}" class="form-control" type="text">
+                    <input name="collectionRemark" th:field="*{collectionRemark}" class="form-control" type="text" disabled="disabled">
                 </div>
             </div>
         </form>

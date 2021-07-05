@@ -2,7 +2,10 @@ package com.ruoyi.system.controller;
 
 import java.awt.print.PrinterException;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,7 +27,10 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.domain.HyCollection;
+import com.ruoyi.system.domain.HyCost;
+import com.ruoyi.system.service.IHyCashierDeskService;
 import com.ruoyi.system.service.IHyCollectionService;
+import com.ruoyi.system.utils.ReceivableUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -46,6 +52,9 @@ public class HyCollectionController extends BaseController {
 
 	@Autowired
 	private IHyCollectionService hyCollectionService;
+	
+	@Autowired
+	private IHyCashierDeskService hyCashierDeskService;
 
 	@RequiresPermissions("system:collection:view")
 	@GetMapping()
@@ -65,6 +74,58 @@ public class HyCollectionController extends BaseController {
 		startPage();
 		List<HyCollection> list = hyCollectionService.selectHyCollectionList(hyCollection);
 		return getDataTable(list);
+	}
+	
+	/**
+	 * 查询应收总计未收总计已收总计列表
+	 */
+	@ApiOperation("收款管理")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyCost", value = "项目实体类hyCost", required = true), })
+	@RequiresPermissions("system:collection:list")
+	@PostMapping("/jisuan")
+	@ResponseBody
+	public Map<String, Object> jisuan() {
+		Map<String, Object> map = new HashMap<>();
+		List<HyCost> list = hyCashierDeskService.selectHyCashierDeskList(new HyCost());
+		BigDecimal amountReceivableCount = new BigDecimal(0.00);
+		BigDecimal amountCount = new BigDecimal(0.00);
+		for (HyCost cost : list) {
+			BigDecimal calculationStandard = cost.getCalculationStandard();
+			String calculationMehod = cost.getCalculationMehod();
+			BigDecimal bilingArea = cost.getHyHouseInf().getBilingArea();
+			BigDecimal amountReceivable = ReceivableUtil.getReceivable(calculationStandard, calculationMehod, bilingArea);
+			if(cost.getHouseAndCost().getDiscount()!=null) {
+				amountReceivable = amountReceivable.multiply(cost.getHouseAndCost().getDiscount());
+			}
+			amountReceivableCount = amountReceivableCount.add(amountReceivable);
+			BigDecimal amount = cost.getHyCollection().getAmount() == null ? new BigDecimal(0)
+					: cost.getHyCollection().getAmount();
+			amountCount = amountCount.add(amount);
+		}
+		BigDecimal uncollected = amountReceivableCount.subtract(amountCount);
+		map.put("amountReceivable", amountReceivableCount);
+		map.put("received", amountCount);
+		map.put("uncollected", uncollected);
+		return map;
+	}
+	/**
+	 * 查询应收总计未收总计已收总计列表
+	 */
+	@ApiOperation("收款管理")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyCost", value = "项目实体类hyCost", required = true), })
+	@RequiresPermissions("system:collection:list")
+	@PostMapping("/jisuans")
+	@ResponseBody
+	public Map<String, Object> jisuans(HyCollection hyCollection) {
+		Map<String, Object> map = new HashMap<>();
+		List<HyCollection> list = hyCollectionService.selectHyCollectionList(hyCollection);
+		BigDecimal amountCount = new BigDecimal(0.00);
+		for (HyCollection collection : list) {
+			BigDecimal amount = collection.getAmount();
+			amountCount = amountCount.add(amount);
+		}
+		map.put("received", amountCount);
+		return map;
 	}
 
 	/**

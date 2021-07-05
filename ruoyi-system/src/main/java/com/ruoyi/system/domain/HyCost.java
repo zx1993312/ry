@@ -105,8 +105,8 @@ public class HyCost extends BaseEntity {
 	/**
 	 * 费用日期
 	 */
-	@Excel(name = "费用日期")
-	private String feeDate;
+	/*@Excel(name = "费用日期")
+	private String feeDate;*/
 	/**
 	 * 原应收日期
 	 */
@@ -436,13 +436,13 @@ public class HyCost extends BaseEntity {
 		this.feeDateOld = feeDateOld;
 	}
 
-	public String getFeeDate() {
+	/*public String getFeeDate() {
 		return feeDate;
 	}
 
 	public void setFeeDate(String feeDate) {
 		this.feeDate = feeDate;
-	}
+	}*/
 
 	public Date getDueDateOld() {
 		return dueDateOld;
@@ -759,7 +759,7 @@ public class HyCost extends BaseEntity {
 				+ ", proportionDamags=" + proportionDamags + ", projectModification=" + projectModification
 				+ ", billingCycle=" + billingCycle + ", bilingStartDate=" + bilingStartDate + ", bilingEndDate="
 				+ bilingEndDate + ", auditResultsReason=" + auditResultsReason + ", feeDateOld=" + feeDateOld
-				+ ", feeDate=" + feeDate + ", dueDateOld=" + dueDateOld + ", dueDate=" + dueDate
+				/*+ ", feeDate=" + feeDate*/ + ", dueDateOld=" + dueDateOld + ", dueDate=" + dueDate
 				+ ", paymentDeadlinTime=" + paymentDeadlinTime + ", amountReceivableOld=" + amountReceivableOld
 				+ ", amountReceivable=" + amountReceivable + ", amountActually=" + amountActually + ", penaltyContract="
 				+ penaltyContract + ", remarks=" + remarks + ", operationDate=" + operationDate + ", operationUser="

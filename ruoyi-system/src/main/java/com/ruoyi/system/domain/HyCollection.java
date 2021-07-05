@@ -142,6 +142,9 @@ public class HyCollection extends BaseEntity
     
     /** 房屋表 */
     private HyHouseInf hyHouseInf;
+    
+    /** 楼宇表 */
+    private HyBuilding hyBuilding;
 
     /** 业主id */
     private Long ownerId;
@@ -432,6 +435,14 @@ public class HyCollection extends BaseEntity
 		this.costIds = costIds;
 	}
 
+	public HyBuilding getHyBuilding() {
+		return hyBuilding;
+	}
+
+	public void setHyBuilding(HyBuilding hyBuilding) {
+		this.hyBuilding = hyBuilding;
+	}
+
 	@Override
 	public String toString() {
 		return "HyCollection [id=" + id + ", applyTime=" + applyTime + ", startTime=" + startTime + ", endTime="
@@ -443,9 +454,11 @@ public class HyCollection extends BaseEntity
 				+ deferredTime + ", deferredPerson=" + deferredPerson + ", isRefund=" + isRefund + ", refundTime="
 				+ refundTime + ", refundPerson=" + refundPerson + ", collectionRemark=" + collectionRemark + ", month="
 				+ month + ", costId=" + costId + ", costIds=" + costIds + ", hyCost=" + hyCost + ", houseId=" + houseId
-				+ ", hyHouseInf=" + hyHouseInf + ", ownerId=" + ownerId + ", hyOwnerRegistration=" + hyOwnerRegistration
-				+ "]";
+				+ ", hyHouseInf=" + hyHouseInf + ", hyBuilding=" + hyBuilding + ", ownerId=" + ownerId
+				+ ", hyOwnerRegistration=" + hyOwnerRegistration + "]";
 	}
+
+	
 
 
 

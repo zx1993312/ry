@@ -10,6 +10,13 @@
                 <form id="formId">
                     <div class="select-list">
                         <ul>
+ 							<li>
+                                <label>选择楼栋号：</label>
+						 	    <select name="buildingId" class="form-control m-b" th:with="type=${@building.getBuilding()}">
+		                        <option value="">请选择</option>
+		                        <option th:each="dict : ${type}" th:text="${dict.buildingNumber}" th:value="${dict.id}"></option>
+		                    </select>
+                            </li>
                             <li>
                                 <label>房屋编号：</label>
                                 <input type="text" name="houseNumber"/>
@@ -210,8 +217,8 @@
                     visible: false
                 },
                 {
-                    field: 'hyBuilding.buildingName',
-                    title: '楼宇名称'
+                    field: 'hyBuilding.buildingNumber',
+                    title: '栋号'
                 },
                 {
                     field: 'hyOwnerRegistration.ownerName',

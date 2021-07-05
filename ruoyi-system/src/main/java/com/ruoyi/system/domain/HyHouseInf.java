@@ -20,6 +20,9 @@ public class HyHouseInf extends BaseEntity
 
     /** 主键 */
     private Long id;
+    
+    /** 房屋主键组 */
+    private String ids;
 
     /** 房屋编号 */
     @Excel(name = "房屋编号")
@@ -171,6 +174,22 @@ public class HyHouseInf extends BaseEntity
     /** 业主表 */
     @Excel(name = "业主表")
     private HyOwnerRegistration hyOwnerRegistration;
+    
+    /**
+     * 费用开始时间
+     */
+    private Date beginFeeDate;
+    
+    /**
+     * 费用结束时间
+     */
+    private Date endFeeDate;
+    
+    /** 打折 */
+    private BigDecimal discount;
+    
+    /** 费用id组 */
+    private String costIds;
     
     /** 费用表 */
     @Excel(name = "费用表")
@@ -531,6 +550,46 @@ public class HyHouseInf extends BaseEntity
 	}
 
 
+	public String getIds() {
+		return ids;
+	}
+
+	public void setIds(String ids) {
+		this.ids = ids;
+	}
+
+	public Date getBeginFeeDate() {
+		return beginFeeDate;
+	}
+
+	public void setBeginFeeDate(Date beginFeeDate) {
+		this.beginFeeDate = beginFeeDate;
+	}
+
+	public Date getEndFeeDate() {
+		return endFeeDate;
+	}
+
+	public void setEndFeeDate(Date endFeeDate) {
+		this.endFeeDate = endFeeDate;
+	}
+
+	public BigDecimal getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(BigDecimal discount) {
+		this.discount = discount;
+	}
+
+	public String getCostIds() {
+		return costIds;
+	}
+
+	public void setCostIds(String costIds) {
+		this.costIds = costIds;
+	}
+
 	@Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -570,6 +629,11 @@ public class HyHouseInf extends BaseEntity
             .append("hyOwnerRegistration", getHyOwnerRegistration())
             .append("hyCost", getHyCost())
             .append("houseId", getHouseId())
+            .append("ids", getIds())
+            .append("costIds", getCostIds())
+            .append("beginFeeDate", getBeginFeeDate())
+            .append("endFeeDate", getEndFeeDate())
+            .append("discount", getDiscount())
             .toString();
     }
 }

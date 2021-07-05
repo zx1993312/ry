@@ -26,7 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="auditResultsReason"
 			column="audit_results_reason" />
 		<result property="feeDateOld" column="fee_date_old" />
-		<result property="feeDate" column="fee_date" />
+		<!-- <result property="feeDate" column="fee_date" /> -->
 		<result property="dueDateOld" column="due_date_old" />
 		<result property="dueDate" column="due_date" />
 		<result property="amountReceivableOld"
@@ -223,6 +223,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="costId" column="cost_id" />
 		<result property="payFeeDate" column="pay_fee_date" />
 		<result property="beginFeeDate" column="begin_fee_date" />
+		<result property="feeDate" column="fee_date" />
+		<result property="discount" column="discount" />
 	</resultMap>
 
 
@@ -238,10 +240,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT
 		CONCAT( son.id, son.house_number, son.owner_id) AS id,
 		son.cost_items,
+		son.calculation_mehod,
 		son.cost_id,
 		son.house_id,
 		son.pay_fee_date,
 		son.begin_fee_date,
+		son.fee_date,
+		son.discount,
 		son.community_name,
 		son.building_number,
 		son.building_name,
@@ -252,7 +257,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		son.owner_name,
 		son.mobile_phone,
 		son.id_card_num,
-		son.fee_date,
 		son.is_collection,
 		son.amount_receivable,
 		son.calculation_standard,
@@ -262,10 +266,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT
 		c.id,
 		c.cost_items,
+		c.calculation_mehod,
 		a.cost_id,
 		a.house_id,
 		a.pay_fee_date,
 		a.begin_fee_date,
+		a.fee_date,
+		a.discount,
 		q.community_name,
 		b.building_name,
 		b.building_number,
@@ -276,7 +283,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		o.owner_name,
 		o.id_card_num,
 		o.mobile_phone,
-		c.fee_date,
 		t.is_collection,
 		c.amount_receivable,
 		c.calculation_standard,
@@ -320,7 +326,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		c.fee_date,
 		t.is_collection,
 		c.amount_receivable,
-		t.amount
+		t.amount,
+		a.discount
 		FROM
 		hy_cost c
 		LEFT JOIN house_and_cost a ON a.cost_id = c.id
@@ -344,9 +351,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		resultMap="HyCostResult">
 		<include refid="selectHyCostVo" />
 		<if test="costItems != null  and costItems != ''"> and son.cost_items = #{costItems}</if>
-		<if test="bilingStartDate != null and bilingEndDate != null">and son.fee_date between #{bilingStartDate} and
-			#{bilingEndDate}
-		</if>
+		<if test="bilingStartDate != null">and son.begin_fee_date = #{bilingEndDate}</if>
+		<if test="bilingEndDate != null">and son.pay_fee_date = #{bilingEndDate}</if>
 		<if test="hyOwnerRegistration != null">
 			<if
 				test="hyOwnerRegistration.ownerName != null  and hyOwnerRegistration.ownerName != ''"> and son.owner_name = #{hyOwnerRegistration.ownerName}</if>

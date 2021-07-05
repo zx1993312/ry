@@ -39,6 +39,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			javaType="HyHouseInf" resultMap="HyHouseInfResult" />
         <association property="hyOwnerRegistration" column="id"
 			javaType="HyOwnerRegistration" resultMap="HyOwnerRegistrationResult" />
+        <association property="hyBuilding" column="id"
+			javaType="HyBuilding" resultMap="HyBuildingResult" />
+    </resultMap>
+    
+    <resultMap type="HyBuilding" id="HyBuildingResult">
+        <result property="id"    column="id"    />
+        <result property="buildingNumber"    column="building_number"    />
+        <result property="buildingName"    column="building_name"    />
+        <result property="buildingHigh"    column="building_high"    />
+        <result property="buildingUnit"    column="building_unit"    />
+        <result property="buildingHouseholds"    column="building_households"    />
+        <result property="buildingAddress"    column="building_address"    />
+        <result property="buildingYear"    column="building_year"    />
+        <result property="buildingRemark"    column="building_remark"    />
+        <result property="quartersId"    column="quarters_id"    />
+        <result property="projectId"    column="project_id"    />
     </resultMap>
     
     <resultMap type="HyCost" id="HyCostResult">
@@ -206,12 +222,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         s.cost_items,
         h.house_name,
         h.house_number,
+        h.unit,
         h.nature_property,
+        b.building_number,
         o.owner_name
         from 
         hy_collection c
         LEFT JOIN hy_cost s ON c.cost_id = s.id
         LEFT JOIN hy_house_inf h ON c.house_id = h.id
+        LEFT JOIN hy_building b ON h.building_id = b.id
         LEFT JOIN hy_owner_registration o ON c.owner_id = o.id
     </sql>
 
@@ -251,7 +270,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="hyHouseInf != null">
             <if test="hyHouseInf.houseNumber != null  and hyHouseInf.houseNumber != ''"> and h.house_number = #{hyHouseInf.houseNumber}</if>
             <if test="hyHouseInf.houseName != null  and hyHouseInf.houseName != ''"> and h.house_name = #{hyHouseInf.houseName}</if>
+            <if test="hyHouseInf.unit != null  and hyHouseInf.unit != ''"> and h.unit = #{hyHouseInf.unit}</if>
             <if test="hyHouseInf.natureProperty != null  and hyHouseInf.natureProperty != ''"> and h.nature_property = #{hyHouseInf.natureProperty}</if>
+            </if>
+            <if test="hyBuilding != null">
+            <if test="hyBuilding.buildingNumber != null  and hyBuilding.buildingNumber != ''"> and b.building_number = #{hyBuilding.buildingNumber}</if>
             </if>
             <if test="hyCost != null">
             <if test="hyCost.costItems != null  and hyCost.costItems != ''"> and s.cost_items = #{hyCost.costItems}</if>

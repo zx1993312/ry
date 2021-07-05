@@ -10,6 +10,34 @@
                 <form id="formId">
                     <div class="select-list">
                         <ul>
+                        	<li>
+                                <label>选择楼栋号：</label>
+						 	    <select name="hyBuilding.buildingNumber" class="form-control m-b" th:with="type=${@building.getBuilding()}">
+		                        <option value="">请选择</option>
+		                        <option th:each="dict : ${type}" th:text="${dict.buildingNumber}" th:value="${dict.buildingNumber}"></option>
+		                    </select>
+                            </li>
+                             <li>
+                                <label>选择单元：</label>
+                                <select name="hyHouseInf.unit" class="form-control" th:with="type=${@houseInf.getUnit()}">
+									<option value="">请选择</option>
+									<option th:if="data!=null" th:each="data:${type}" th:text="${data.unit}" th:value="${data.unit}"></option>
+						 	    </select>
+                            </li>
+                            <li>
+                                <label>选择房屋编号：</label>
+                                <select name="hyHouseInf.houseNumber" class="form-control" th:with="type=${@houseInf.getHouseNumber()}">
+									<option value="">请选择</option>
+									<option th:if="data!=null" th:each="data:${type}" th:text="${data.houseNumber}" th:value="${data.houseNumber}"></option>
+						 	    </select>
+                            </li>
+                            <li>
+                                <label>收款方式：</label>
+                                <select name="collectionType" class="form-control" th:with="type=${@dict.getType('hy_collection_type')}">
+										<option value="">请选择</option>
+										<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+								</select>
+                            </li>
                             <li>
                                 <label>收款开始时间：</label>
                                 <input type="text" class="time-input" placeholder="请选择开始时间" name="startTime"/>
@@ -18,15 +46,19 @@
                                 <label>收款结束时间：</label>
                                 <input type="text" class="time-input" placeholder="请选择结束时间" name="endTime"/>
                             </li>
-                            <li>
+                           <!--  <li>
                                 <label>总金额：</label>
                                 <input type="text" name="amount"/>
-                            </li>
+                            </li> -->
                             <li>
                                 <label>收款人：</label>
                                 <input type="text" name="payee"/>
                             </li>
                             <li>
+                                <label>业主姓名：</label>
+                                <input type="text" class="form-control" name="hyOwnerRegistration.ownerName"/>
+                            </li>
+                           <!--  <li>
                                 <label>支付状态：</label>
 								<select name="isCollection" class="form-control"> 
 									<option value="">请选择</option>
@@ -34,11 +66,11 @@
 									<option value="1">未支付</option>
 									<option value="2">部分支付</option>
 								</select> 
-                            </li>
-                            <li>
+                            </li> -->
+                            <!-- <li>
                                 <label>备注：</label>
                                 <input type="text" name="collectionRemark"/>
-                            </li>
+                            </li> -->
                             <!-- <li>
                                 <label>费用项目id：</label>
                                 <input type="text" name="costId"/>
@@ -52,19 +84,23 @@
                                 <input type="text" name="ownerId"/>
                             </li> -->
                             <li>
-                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
-                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="search1()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="reset1()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
                             </li>
                         </ul>
                     </div>
                 </form>
             </div>
-
+			<div class="col-sm-12 select-table">
+                <a style="color: red;cursor: auto;">应收</a><input id="receivable" style="border: none;" disabled="disabled">
+                <a style="color: red;cursor: auto;">未收</a><input id="uncollected" style="border: none;" disabled="disabled">
+                <a style="color: red;cursor: auto;">已收</a><input id="received" style="border: none;" disabled="disabled">
+            </div>
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:collection:add">
+                <!-- <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:collection:add">
                     <i class="fa fa-plus"></i> 添加
                 </a>
-                <!-- <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:collection:edit">
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:collection:edit">
                     <i class="fa fa-edit"></i> 修改
                 </a> -->
                 <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:collection:remove">
@@ -84,15 +120,61 @@
         var editFlag = [[${@permission.hasPermi('system:collection:edit')}]];
         var removeFlag = [[${@permission.hasPermi('system:collection:remove')}]];
         var prefix = ctx + "system/collection";
-
+		
+     // 搜索-默认第一个form
+        function search1() {
+        	var params = $("#bootstrap-table").bootstrapTable('getOptions');
+            $("#bootstrap-table").bootstrapTable('refresh', params);
+            $.ajax({
+                url: prefix + "/jisuans",
+                data: $('#formId').serialize(),
+                type: 'POST',
+                success: function (result) {
+                	$("#received").val(result.received.toFixed(2));
+                	/* var receivable = $("#receivable").val();
+                	var uncollected = receivable - result.received.toFixed(2);
+                	$("#uncollected").val(uncollected.toFixed(2)); */
+                    console.log(result);
+                }
+            });
+        };
+     // 重置-默认第一个form
+        function reset1() {
+        	$("#formId")[0].reset();
+            $("#bootstrap-table").bootstrapTable('refresh');
+            $.ajax({
+                url: prefix + "/jisuan",
+                type: 'POST',
+                success: function (result) {
+                	$("#receivable").val(result.amountReceivable.toFixed(2));
+                	$("#received").val(result.received.toFixed(2));
+                	$("#uncollected").val(result.uncollected.toFixed(2));
+                    console.log(result);
+                }
+            });
+        };
+        
         $(function() {
+        	
+        	$.ajax({
+                url: prefix + "/jisuan",
+                type: 'POST',
+                success: function (result) {
+                	$("#receivable").val(result.amountReceivable.toFixed(2));
+                	$("#received").val(result.received.toFixed(2));
+                	$("#uncollected").val(result.uncollected.toFixed(2));
+                    console.log(result);
+                }
+            });
+        	
             var options = {
                 url: prefix + "/list",
                 createUrl: prefix + "/add",
                 updateUrl: prefix + "/edit/{id}",
+                detailUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/removeAndUpdate",
                 exportUrl: prefix + "/export",
-                modalName: "收款管理",
+                modalName: "账单管理",
                 columns: [{
                     checkbox: true
                 },
@@ -106,8 +188,16 @@
                     title: '费用项目'
                 },
                 {
-                    field: 'hyHouseInf.houseName',
-                    title: '房屋名称'
+                    field: 'hyBuilding.buildingNumber',
+                    title: '栋号'
+                },
+                {
+                    field: 'hyHouseInf.houseNumber',
+                    title: '房屋编号'
+                },
+                {
+                    field: 'hyHouseInf.unit',
+                    title: '单元'
                 },
                 {
                     field: 'hyOwnerRegistration.ownerName',
@@ -266,6 +356,7 @@
                     align: 'center',
                     formatter: function(value, row, index) {
                         var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.detail(\'' + row.id + '\')"><i class="fa fa-edit"></i>查看订单</a> ');
                         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
                         return actions.join('');
                     }

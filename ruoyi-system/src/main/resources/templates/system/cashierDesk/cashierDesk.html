@@ -55,11 +55,11 @@
 								</select> 
                             </li>
                             <li>
-                                <label>费用开始时间：</label>
+                                <label>起：</label>
                                 <input type="text" class="time-input" placeholder="请选择开始时间" name="bilingStartDate"/>
                             </li>
                             <li>
-                                <label>费用结束时间：</label>
+                                <label>止：</label>
                                 <input type="text" class="time-input" placeholder="请选择结束时间" name="bilingEndDate"/>
                             </li>
                             <li>
@@ -180,7 +180,7 @@
                     title: '业主名称'
                 },
                 {
-                    field: 'feeDate',
+                    field: 'houseAndCost.feeDate',
                     title: '费用日期'
                 },
                 {
@@ -222,15 +222,15 @@
                     formatter: function(value, row, index) {
                         var actions = [];
                         if(row.hyCollection.isCollection == '0'){
-                        	actions.push('<a class="btn btn-warning btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="printReceiptOne(\'' + row.id + '\',\'' + row.costItems + '\',\'' + row.hyResidentialQuarters.communityName + '\',\'' + row.hyBuilding.buildingNumber + '\',\'' + row.hyHouseInf.houseNumber + '\',\'' + row.hyOwnerRegistration.ownerName + '\',\'' + row.feeDate + '\',\'' + row.hyCollection.isCollection + '\',\'' + row.amountReceivable + '\',\'' + row.hyCollection.amount + '\',\'' + row.hyHouseInf.ownerId + '\')"><i class="fa fa-download"></i>打印收据</a> ');
+                        	actions.push('<a class="btn btn-warning btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="printReceiptOne(\'' + row.id + '\',\'' + row.costItems + '\',\'' + row.hyResidentialQuarters.communityName + '\',\'' + row.hyBuilding.buildingNumber + '\',\'' + row.hyHouseInf.houseNumber + '\',\'' + row.hyOwnerRegistration.ownerName + '\',\'' + row.houseAndCost.feeDate + '\',\'' + row.hyCollection.isCollection + '\',\'' + row.amountReceivable + '\',\'' + row.hyCollection.amount + '\',\'' + row.hyHouseInf.ownerId + '\')"><i class="fa fa-download"></i>打印收据</a> ');
                         }else if(row.hyCollection.isCollection != '0' && row.hyCollection.isCollection != '2'){
                         	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit4(\'' + row.id + '\',\'' + row.costItems + '\')"><i class="fa fa-edit"></i>单笔收款</a> ');
                         	actions.push('<a class="btn btn-primary btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="comprehensive(\'' + row.hyCollection.isCollection + '\',\'' + row.hyOwnerRegistration.ownerName + '\',\'' + row.hyHouseInf.houseNumber + '\',\'' + row.hyBuilding.buildingNumber + '\')"><i class="fa fa-edit"></i>综合收款</a> ');
-                        	actions.push('<a class="btn btn-warning btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="printCollectionOne(\'' + row.id + '\',\'' + row.costItems + '\',\'' + row.hyResidentialQuarters.communityName + '\',\'' + row.hyBuilding.buildingNumber + '\',\'' + row.hyHouseInf.houseNumber + '\',\'' + row.hyOwnerRegistration.ownerName + '\',\'' + row.feeDate + '\',\'' + row.hyCollection.isCollection + '\',\'' + row.amountReceivable + '\',\'' + row.hyCollection.amount + '\')"><i class="fa fa-download"></i>打印催收单</a> ');
+                        	actions.push('<a class="btn btn-warning btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="printCollectionOne(\'' + row.id + '\',\'' + row.costItems + '\',\'' + row.hyResidentialQuarters.communityName + '\',\'' + row.hyBuilding.buildingNumber + '\',\'' + row.hyHouseInf.houseNumber + '\',\'' + row.hyOwnerRegistration.ownerName + '\',\'' + row.houseAndCost.feeDate + '\',\'' + row.hyCollection.isCollection + '\',\'' + row.amountReceivable + '\',\'' + row.hyCollection.amount + '\')"><i class="fa fa-download"></i>打印催收单</a> ');
                         }else if(row.hyCollection.isCollection == '2'){
                         	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit4(\'' + row.id + '\',\'' + row.costItems + '\')"><i class="fa fa-edit"></i>单笔收款</a> ');
-                        	actions.push('<a class="btn btn-warning btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="printReceiptOne(\'' + row.id + '\',\'' + row.costItems + '\',\'' + row.hyResidentialQuarters.communityName + '\',\'' + row.hyBuilding.buildingNumber + '\',\'' + row.hyHouseInf.houseNumber + '\',\'' + row.hyOwnerRegistration.ownerName + '\',\'' + row.feeDate + '\',\'' + row.hyCollection.isCollection + '\',\'' + row.amountReceivable + '\',\'' + row.hyCollection.amount + '\',\'' + row.hyHouseInf.ownerId + '\')"><i class="fa fa-download"></i>打印收据</a> ');
-                        	actions.push('<a class="btn btn-warning btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="printCollectionOne(\'' + row.id + '\',\'' + row.costItems + '\',\'' + row.hyResidentialQuarters.communityName + '\',\'' + row.hyBuilding.buildingNumber + '\',\'' + row.hyHouseInf.houseNumber + '\',\'' + row.hyOwnerRegistration.ownerName + '\',\'' + row.feeDate + '\',\'' + row.hyCollection.isCollection + '\',\'' + row.amountReceivable + '\',\'' + row.hyCollection.amount + '\')"><i class="fa fa-download"></i>打印催收单</a> ');
+                        	actions.push('<a class="btn btn-warning btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="printReceiptOne(\'' + row.id + '\',\'' + row.costItems + '\',\'' + row.hyResidentialQuarters.communityName + '\',\'' + row.hyBuilding.buildingNumber + '\',\'' + row.hyHouseInf.houseNumber + '\',\'' + row.hyOwnerRegistration.ownerName + '\',\'' + row.houseAndCost.feeDate + '\',\'' + row.hyCollection.isCollection + '\',\'' + row.amountReceivable + '\',\'' + row.hyCollection.amount + '\',\'' + row.hyHouseInf.ownerId + '\')"><i class="fa fa-download"></i>打印收据</a> ');
+                        	actions.push('<a class="btn btn-warning btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="printCollectionOne(\'' + row.id + '\',\'' + row.costItems + '\',\'' + row.hyResidentialQuarters.communityName + '\',\'' + row.hyBuilding.buildingNumber + '\',\'' + row.hyHouseInf.houseNumber + '\',\'' + row.hyOwnerRegistration.ownerName + '\',\'' + row.houseAndCost.feeDate + '\',\'' + row.hyCollection.isCollection + '\',\'' + row.amountReceivable + '\',\'' + row.hyCollection.amount + '\')"><i class="fa fa-download"></i>打印催收单</a> ');
                         }
                         return actions.join('');
                     }
@@ -448,7 +448,7 @@
             		var buildingNumber = rows[i].hyBuilding.buildingNumber;
             		var houseNumber = rows[i].hyHouseInf.houseNumber;
             		var ownerName = rows[i].hyOwnerRegistration.ownerName;
-            		var feeDate = rows[i].feeDate;
+            		var feeDate = rows[i].houseAndCost.feeDate;
             		var isCollection = rows[i].hyCollection.isCollection;
             		var amountReceivable = rows[i].amountReceivable;
             		var amount = rows[i].hyCollection.amount;
@@ -516,7 +516,7 @@
             		var buildingNumber = rows[i].hyBuilding.buildingNumber;
             		var houseNumber = rows[i].hyHouseInf.houseNumber;
             		var ownerName = rows[i].hyOwnerRegistration.ownerName;
-            		var feeDate = rows[i].feeDate;
+            		var feeDate = rows[i].houseAndCost.feeDate;
             		var isCollection = rows[i].hyCollection.isCollection;
             		var amountReceivable = rows[i].amountReceivable;
             		var amount = rows[i].hyCollection.amount;
@@ -560,7 +560,7 @@
                 type: "post",
                 datatype: "json",
                 data:{"id":id,"costItems":costItems,"hyResidentialQuarters.communityName":communityName,"hyBuilding.buildingNumber":buildingNumber,
-                	"hyHouseInf.houseNumber":houseNumber,"hyOwnerRegistration.ownerName":ownerName,"feeDate":feeDate,
+                	"hyHouseInf.houseNumber":houseNumber,"hyOwnerRegistration.ownerName":ownerName,"houseAndCost.feeDate":feeDate,
                 	"hyCollection.isCollection":isCollection,"amountReceivable":amountReceivable,"hyCollection.amount":amount,"hyCollection.ownerId":ownerId},
                 url:  prefix + "/printReceiptOne",
                	beforeSend: function () {
@@ -587,7 +587,7 @@
                 type: "post",
                 datatype: "json",
                 data:{"id":id,"costItems":costItems,"hyResidentialQuarters.communityName":communityName,"hyBuilding.buildingNumber":buildingNumber,
-                	"hyHouseInf.houseNumber":houseNumber,"hyOwnerRegistration.ownerName":ownerName,"feeDate":feeDate,
+                	"hyHouseInf.houseNumber":houseNumber,"hyOwnerRegistration.ownerName":ownerName,"houseAndCost.feeDate":feeDate,
                 	"hyCollection.isCollection":isCollection,"amountReceivable":amountReceivable,"hyCollection.amount":amount},
                 url:  prefix + "/printCollectionOne",
                	beforeSend: function () {
@@ -622,7 +622,7 @@
            		var buildingName = rows[i].hyBuilding.buildingName;
            		var houseNumber = rows[i].hyHouseInf.houseNumber;
            		var ownerName = rows[i].hyOwnerRegistration.ownerName;
-           		var feeDate = rows[i].feeDate;
+           		var feeDate = rows[i].houseAndCost.feeDate;
            		var isCollection = rows[i].hyCollection.isCollection;
            		var amountReceivable = rows[i].amountReceivable;
            		var amount = rows[i].hyCollection.amount;

@@ -22,6 +22,8 @@ public interface HyCustomerMapper {
 
 	public Integer insertHouseAndCost(@Param("houseId") String houseId, @Param("costId") String costId);
 	
+	public Integer insertHouseAndCostByHouseIdAndCostId(HouseAndCost houseAndCost);
+	
 	public Integer updateHouseAndCost(HouseAndCost houseAndCost);
 
 	public Integer deleteHouseAndCost(@Param("costId") Long costId);

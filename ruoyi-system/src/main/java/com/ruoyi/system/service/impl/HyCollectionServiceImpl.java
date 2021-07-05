@@ -128,7 +128,7 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 			String payFeeDate = "";
 			String beginFeeDate = "";
 			int m = 12;
-			String feeDate = hyCollection.getHyCost().getFeeDate();
+			String feeDate = hyCollection.getHyCost().getHouseAndCost().getFeeDate();
 			String a = feeDate.split("-")[1];
 			String b = feeDate.split("-")[0];
 			String c = feeDate.split("-")[2];
@@ -193,7 +193,7 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 			String payFeeDate = "";
 			String beginFeeDate = "";
 			int m = hyCollection.getMonth();
-			String feeDate = hyCollection.getHyCost().getFeeDate();
+			String feeDate = hyCollection.getHyCost().getHouseAndCost().getFeeDate();
 			String a = feeDate.split("-")[1];
 			String b = feeDate.split("-")[0];
 			String c = feeDate.split("-")[2];
@@ -282,9 +282,12 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 				Long costIds = Long.valueOf(ida);
 				HyCost hyCost = hyCashierDeskMapper.selectHyCashierDeskById(costIds);
 				BigDecimal calculationStandard = hyCost.getCalculationStandard();
-				String costItems = hyCost.getCostItems();
+				String calculationMehod = hyCost.getCalculationMehod();
 				BigDecimal bilingArea = hyCost.getHyHouseInf().getBilingArea();
-				BigDecimal amountReceivable = ReceivableUtil.getReceivable(calculationStandard, costItems, bilingArea);
+				BigDecimal amountReceivable = ReceivableUtil.getReceivable(calculationStandard, calculationMehod, bilingArea);
+				if(hyCost.getHouseAndCost().getDiscount()!=null) {
+					amountReceivable = amountReceivable.multiply(hyCost.getHouseAndCost().getDiscount());
+				}
 				Long houseId = hyCost.getHyCollection().getHouseId();
 				Long ownerId = hyCost.getHyCollection().getOwnerId();
 				String str = hyCost.getHyHouseInf().getHouseNumber() + hyCost.getHyHouseInf().getOwnerId();
@@ -304,7 +307,7 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 					String payFeeDate = "";
 					String beginFeeDate = "";
 					int m = 12;
-					String feeDate = hyCollection.getHyCost().getFeeDate();
+					String feeDate = hyCollection.getHyCost().getHouseAndCost().getFeeDate();
 					String a = feeDate.split("-")[1];
 					String b = feeDate.split("-")[0];
 					String c = feeDate.split("-")[2];
@@ -335,7 +338,7 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 					map.put("receiptNumber", hyCollection.getHyCost().getHyCollection().getReceiptNumber());
 					map.put("houseNumber", hyCost.getHyHouseInf().getHouseNumber());
 					map.put("ownerName", hyCost.getHyOwnerRegistration().getOwnerName());
-					map.put("feeDate", hyCost.getFeeDate());
+					map.put("feeDate", hyCost.getHouseAndCost().getFeeDate());
 					map.put("isCollection", hyCollection.getIsCollection());
 					map.put("amountReceivable", amountReceivable.setScale(2, RoundingMode.HALF_UP));
 					map.put("amount", collection.getAmount());
