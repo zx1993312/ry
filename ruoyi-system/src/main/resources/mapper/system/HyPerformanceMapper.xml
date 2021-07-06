@@ -92,7 +92,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			p.inspection_status,
 			p.change_status,
 			p.inspection_instructions,
-			p.deptId,
+			p.dept_id,
 			d.code,
 			n.name,
 			n.address,
