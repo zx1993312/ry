@@ -2,6 +2,7 @@ package com.ruoyi.system.controller;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -16,6 +17,7 @@ import io.swagger.annotations.Api;
  * @date 2021-03-05
  */
 @Controller
+@CrossOrigin
 @RequestMapping("/system/map")
 @Api(tags = "商家Controller")
 public class HyMapController extends BaseController {

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +34,7 @@ import io.swagger.annotations.ApiOperation;
  * @date 2021-05-29
  */
 @Controller
+@CrossOrigin
 @RequestMapping("/system/collectionPDF")
 @Api(tags = "收款管理 Collection managementController")
 public class HyCollectionPDFController extends BaseController

@@ -11,6 +11,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,6 +41,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @date 2021-06-11
  */
 @Controller
+@CrossOrigin
 @RequestMapping("/system/supplier")
 @Api(tags = "供应商Controller")
 public class HySupplierController extends BaseController

@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +28,7 @@ import io.swagger.annotations.ApiOperation;
  *
  */
 @Controller
+@CrossOrigin
 @RequestMapping("/system/projectSel")
 @Api(tags = "项目收费比例查询Controller")
 public class HyProjectSelController extends BaseController {

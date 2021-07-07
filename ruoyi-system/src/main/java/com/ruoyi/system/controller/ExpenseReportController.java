@@ -1,6 +1,7 @@
 package com.ruoyi.system.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import io.swagger.annotations.Api;
@@ -13,6 +14,7 @@ import io.swagger.annotations.ApiOperation;
  *
  */
 @Controller
+@CrossOrigin
 @RequestMapping("/system/report")
 @Api(tags = "费用报表Controller")
 public class ExpenseReportController {

@@ -36,8 +36,8 @@ import io.swagger.annotations.ApiOperation;
  * @author Administrator
  * @date 2021-04-25
  */
-@CrossOrigin
 @Controller
+@CrossOrigin
 @RequestMapping("/system/scheme")
 @Api(tags = "巡检计划Controller")
 public class HyPatrolSchemeController extends BaseController

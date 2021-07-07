@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,6 +37,7 @@ import io.swagger.annotations.ApiOperation;
  * @date 2021-03-06
  */
 @Controller
+@CrossOrigin
 @RequestMapping("/system/serviceType")
 @Api(tags = "服务类型Controller")
 public class HyServiceTypeController extends BaseController {

@@ -10,6 +10,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,6 +39,7 @@ import io.swagger.annotations.ApiOperation;
  * @date 2021-01-12
  */
 @Controller
+@CrossOrigin
 @RequestMapping("/system/updatePublicDistrictMeter")
 @Api(tags = "抄表设置Controller")
 public class HyUpdatePulbicDistriceMeterController extends BaseController {

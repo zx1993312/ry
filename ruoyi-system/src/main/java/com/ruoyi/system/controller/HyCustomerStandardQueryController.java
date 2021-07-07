@@ -6,6 +6,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,6 +35,7 @@ import io.swagger.annotations.ApiOperation;
  * @date 2021-01-06
  */
 @Controller
+@CrossOrigin
 @RequestMapping("/system/customerStandardQuery")
 @Api(tags = "费用项目Controller")
 public class HyCustomerStandardQueryController extends BaseController {

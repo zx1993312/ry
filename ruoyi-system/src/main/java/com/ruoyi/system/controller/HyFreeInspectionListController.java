@@ -4,6 +4,7 @@ import java.util.List;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +29,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @date 2021-04-28
  */
 @Controller
+@CrossOrigin
 @RequestMapping("/system/free")
 @Api(tags = "自由巡检一览表Controller")
 public class HyFreeInspectionListController extends BaseController

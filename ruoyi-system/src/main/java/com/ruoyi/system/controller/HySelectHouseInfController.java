@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +28,7 @@ import io.swagger.annotations.ApiOperation;
  * @date 2021-01-09
  */
 @Controller
+@CrossOrigin
 @RequestMapping("/system/selectInf")
 @Api(tags = "房屋登记Controller")
 public class HySelectHouseInfController extends BaseController {

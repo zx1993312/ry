@@ -9,6 +9,7 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,6 +23,7 @@ import com.ruoyi.system.service.IHyGroupRegistrationService;
 import com.ruoyi.system.service.IHyHouseInfService;
 
 @Controller
+@CrossOrigin
 @RequestMapping("/system/group")
 public class HyGroupController extends BaseController {
 

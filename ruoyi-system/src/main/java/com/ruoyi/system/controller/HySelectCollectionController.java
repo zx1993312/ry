@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ import com.ruoyi.system.service.IHyCollectionService;
  * @date 2021-05-29
  */
 @Controller
+@CrossOrigin
 @RequestMapping("/system/selectCollection")
 public class HySelectCollectionController extends BaseController {
 
