@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,6 +36,7 @@ import com.ruoyi.system.service.ISysUserService;
  * @author ruoyi
  */
 @Controller
+@CrossOrigin
 @RequestMapping("/system/user")
 public class SysUserController extends BaseController {
 	private String prefix = "system/user";

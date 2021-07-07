@@ -18,8 +18,8 @@ import com.ruoyi.system.service.ISysConfigService;
  * 
  * @author ruoyi
  */
-@CrossOrigin
 @Controller
+@CrossOrigin
 public class SysRegisterController extends BaseController
 {
     @Autowired

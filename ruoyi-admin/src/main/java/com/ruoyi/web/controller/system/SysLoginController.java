@@ -23,8 +23,8 @@ import com.ruoyi.common.utils.StringUtils;
  * 
  * @author ruoyi
  */
-@CrossOrigin
 @Controller
+@CrossOrigin
 public class SysLoginController extends BaseController
 {
     @GetMapping("/login")
