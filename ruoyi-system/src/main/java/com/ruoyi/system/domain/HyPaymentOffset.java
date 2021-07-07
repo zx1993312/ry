@@ -21,10 +21,6 @@ public class HyPaymentOffset extends BaseEntity
     /** 主键 */
     private Long id;
 
-    /** 冲抵类别 */
-    @Excel(name = "冲抵类别")
-    private Integer offsetCategory;
-
     /** 冲抵人 */
     @Excel(name = "冲抵人")
     private String offsetPreson;
@@ -33,10 +29,6 @@ public class HyPaymentOffset extends BaseEntity
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Excel(name = "冲抵操作时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date offsetOperationDate;
-
-    /** 冲抵范围 */
-    @Excel(name = "冲抵范围")
-    private String offsetRange;
 
     /** 冲抵年度 */
     @Excel(name = "冲抵年度")
@@ -50,13 +42,9 @@ public class HyPaymentOffset extends BaseEntity
     @Excel(name = "冲抵金额")
     private BigDecimal offsetMoney;
     
-    /** 实收金额 */
-    @Excel(name = "实收金额")
-    private BigDecimal amountActually;
-
-    /** 处理方式 */
-    @Excel(name = "处理方式")
-    private String offsetType;
+    /** 截止日期 */
+    @Excel(name = "截止日期")
+    private String offsetDate;
 
     /** 审核流程 */
     @Excel(name = "审核流程")
@@ -70,9 +58,13 @@ public class HyPaymentOffset extends BaseEntity
     @Excel(name = "房屋id")
     private Long houseId;
 
-    /** 票据id */
-    @Excel(name = "票据id")
-    private Long setId;
+    /** 费用id */
+    @Excel(name = "费用id")
+    private Long costId;
+    
+    /** 费用id组 */
+    @Excel(name = "费用id组")
+    private String costIds;
     
     /** 房屋表 */
     @Excel(name = "房屋表")
@@ -86,191 +78,175 @@ public class HyPaymentOffset extends BaseEntity
     @Excel(name = "费用项目表")
     private HyCost hyCost;
     
-    /** 车位表 */
-    @Excel(name = "车位表")
-    private HyParkingInf hyParkingInf;
 
-
-    public void setId(Long id) 
-    {
-        this.id = id;
-    }
-
-    public Long getId() 
-    {
-        return id;
-    }
-    public void setOffsetCategory(Integer offsetCategory) 
-    {
-        this.offsetCategory = offsetCategory;
-    }
-
-    public Integer getOffsetCategory() 
-    {
-        return offsetCategory;
-    }
-    public void setOffsetPreson(String offsetPreson) 
-    {
-        this.offsetPreson = offsetPreson;
-    }
-
-    public String getOffsetPreson() 
-    {
-        return offsetPreson;
-    }
-    public void setOffsetOperationDate(Date offsetOperationDate) 
-    {
-        this.offsetOperationDate = offsetOperationDate;
-    }
-
-    public Date getOffsetOperationDate() 
-    {
-        return offsetOperationDate;
-    }
-    public void setOffsetRange(String offsetRange) 
-    {
-        this.offsetRange = offsetRange;
-    }
-
-    public String getOffsetRange() 
-    {
-        return offsetRange;
-    }
-    public void setOffsetYear(String offsetYear) 
-    {
-        this.offsetYear = offsetYear;
-    }
-
-    public String getOffsetYear() 
-    {
-        return offsetYear;
-    }
-    public void setOffsetMonth(String offsetMonth) 
-    {
-        this.offsetMonth = offsetMonth;
-    }
-
-    public String getOffsetMonth() 
-    {
-        return offsetMonth;
-    }
-    public void setOffsetMoney(BigDecimal offsetMoney) 
-    {
-        this.offsetMoney = offsetMoney;
-    }
-
-    public BigDecimal getOffsetMoney() 
-    {
-        return offsetMoney;
-    }
-    
-    public BigDecimal getAmountActually() {
-		return amountActually;
+	public Long getId() {
+		return id;
 	}
 
-	public void setAmountActually(BigDecimal amountActually) {
-		this.amountActually = amountActually;
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public void setOffsetType(String offsetType) 
-    {
-        this.offsetType = offsetType;
-    }
 
-    public String getOffsetType() 
-    {
-        return offsetType;
-    }
-    public void setAuditProcess(String auditProcess) 
-    {
-        this.auditProcess = auditProcess;
-    }
+	public String getOffsetPreson() {
+		return offsetPreson;
+	}
 
-    public String getAuditProcess() 
-    {
-        return auditProcess;
-    }
-    public void setAuditStatus(String auditStatus) 
-    {
-        this.auditStatus = auditStatus;
-    }
 
-    public String getAuditStatus() 
-    {
-        return auditStatus;
-    }
-    public void setHouseId(Long houseId) 
-    {
-        this.houseId = houseId;
-    }
+	public void setOffsetPreson(String offsetPreson) {
+		this.offsetPreson = offsetPreson;
+	}
 
-    public Long getHouseId() 
-    {
-        return houseId;
-    }
-    public void setSetId(Long setId) 
-    {
-        this.setId = setId;
-    }
 
-    public Long getSetId() 
-    {
-        return setId;
-    }
+	public Date getOffsetOperationDate() {
+		return offsetOperationDate;
+	}
 
-    public HyHouseInf getHyHouseInf() {
+
+	public void setOffsetOperationDate(Date offsetOperationDate) {
+		this.offsetOperationDate = offsetOperationDate;
+	}
+
+
+	public String getOffsetYear() {
+		return offsetYear;
+	}
+
+
+	public void setOffsetYear(String offsetYear) {
+		this.offsetYear = offsetYear;
+	}
+
+
+	public String getOffsetMonth() {
+		return offsetMonth;
+	}
+
+
+	public void setOffsetMonth(String offsetMonth) {
+		this.offsetMonth = offsetMonth;
+	}
+
+
+	public BigDecimal getOffsetMoney() {
+		return offsetMoney;
+	}
+
+
+	public void setOffsetMoney(BigDecimal offsetMoney) {
+		this.offsetMoney = offsetMoney;
+	}
+
+
+	public String getOffsetDate() {
+		return offsetDate;
+	}
+
+
+	public void setOffsetDate(String offsetDate) {
+		this.offsetDate = offsetDate;
+	}
+
+
+	public String getAuditProcess() {
+		return auditProcess;
+	}
+
+
+	public void setAuditProcess(String auditProcess) {
+		this.auditProcess = auditProcess;
+	}
+
+
+	public String getAuditStatus() {
+		return auditStatus;
+	}
+
+
+	public void setAuditStatus(String auditStatus) {
+		this.auditStatus = auditStatus;
+	}
+
+
+	public Long getHouseId() {
+		return houseId;
+	}
+
+
+	public void setHouseId(Long houseId) {
+		this.houseId = houseId;
+	}
+
+
+	public Long getCostId() {
+		return costId;
+	}
+
+
+	public void setCostId(Long costId) {
+		this.costId = costId;
+	}
+
+
+	public String getCostIds() {
+		return costIds;
+	}
+
+
+	public void setCostIds(String costIds) {
+		this.costIds = costIds;
+	}
+
+
+	public HyHouseInf getHyHouseInf() {
 		return hyHouseInf;
 	}
+
 
 	public void setHyHouseInf(HyHouseInf hyHouseInf) {
 		this.hyHouseInf = hyHouseInf;
 	}
 
+
 	public HyOwnerRegistration getHyOwnerRegistration() {
 		return hyOwnerRegistration;
 	}
+
 
 	public void setHyOwnerRegistration(HyOwnerRegistration hyOwnerRegistration) {
 		this.hyOwnerRegistration = hyOwnerRegistration;
 	}
 
+
 	public HyCost getHyCost() {
 		return hyCost;
 	}
+
 
 	public void setHyCost(HyCost hyCost) {
 		this.hyCost = hyCost;
 	}
 
-	public HyParkingInf getHyParkingInf() {
-		return hyParkingInf;
-	}
-
-	public void setHyParkingInf(HyParkingInf hyParkingInf) {
-		this.hyParkingInf = hyParkingInf;
-	}
 
 	@Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
-            .append("offsetCategory", getOffsetCategory())
             .append("offsetPreson", getOffsetPreson())
             .append("offsetOperationDate", getOffsetOperationDate())
-            .append("offsetRange", getOffsetRange())
             .append("offsetYear", getOffsetYear())
             .append("offsetMonth", getOffsetMonth())
             .append("offsetMoney", getOffsetMoney())
-            .append("amountActually", getAmountActually())
-            .append("offsetType", getOffsetType())
+            .append("offsetDate", getOffsetDate())
             .append("auditProcess", getAuditProcess())
             .append("auditStatus", getAuditStatus())
             .append("houseId", getHouseId())
-            .append("setId", getSetId())
+            .append("costId", getCostId())
+            .append("costIds", getCostIds())
             .append("hyHouseInf", getHyHouseInf())
             .append("hyOwnerRegistration", getHyOwnerRegistration())
             .append("hyCost", getHyCost())
-            .append("hyParkingInf", getHyParkingInf())
             .toString();
     }
 }

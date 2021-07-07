@@ -271,7 +271,7 @@ public class QrCodeUtiles {
 	public static void main(String[] args) throws Exception {
 		String text = "http://www.baidu.com";
 		
-		QrCodeUtiles.encode(text, "C:\\Users\\Administrator\\Desktop\\0.jpg", "c:/a/", true);
+		QrCodeUtiles.encode(text, "E:\\img.png", "c:/a/", true);
 	}
 }
  

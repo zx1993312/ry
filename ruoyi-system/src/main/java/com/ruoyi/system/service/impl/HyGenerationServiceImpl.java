@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ruoyi.system.domain.HouseAndCost;
+import com.ruoyi.system.domain.HyBuilding;
 import com.ruoyi.system.domain.HyHouseInf;
+import com.ruoyi.system.mapper.HyBuildingMapper;
 import com.ruoyi.system.mapper.HyCustomerMapper;
 import com.ruoyi.system.mapper.HyGenerationMapper;
 import com.ruoyi.system.service.IHyGenerationService;
@@ -28,6 +30,9 @@ public class HyGenerationServiceImpl implements IHyGenerationService {
 
 	@Autowired
 	private HyCustomerMapper hyCustomerMapper;
+	
+	@Autowired
+	private HyBuildingMapper hyBuildingMapper;
 
 	/**
 	 * 查询账单生成
@@ -297,6 +302,83 @@ public class HyGenerationServiceImpl implements IHyGenerationService {
 							houseAndCost.setDiscount(discount);
 						}
 						hyCustomerMapper.insertHouseAndCostByHouseIdAndCostId(houseAndCost);
+					}
+				}
+				return 1;
+			}
+		}else if(hyHouseInf.getQuartersId()!=null){//房屋没选单元没选楼栋没选判定选择没选择小区
+			if (hyHouseInf.getCostIds().indexOf(",") != -1) {// 判定选择的费用项目不止一个
+				HyBuilding hyBuilding = new HyBuilding();
+				hyBuilding.setQuartersId(hyHouseInf.getQuartersId());
+				List<HyBuilding> buildinglist = hyBuildingMapper.selectHyBuildingList(hyBuilding);
+				for(HyBuilding building : buildinglist) {
+					HyHouseInf houseInf = new HyHouseInf();
+					houseInf.setBuildingId(building.getId());
+					List<HyHouseInf> houseInfList = hyGenerationMapper.selectHyGenerationList(houseInf);
+					String houseId = "";
+					for(HyHouseInf inf : houseInfList) {
+						houseId = houseId + inf.getId() + ",";
+					}
+					String[] houseIds = houseId.split(",");
+					String costId = hyHouseInf.getCostIds();
+					String[] costIds = costId.split(",");
+					for (String ida : houseIds) {
+						for (String ids : costIds) {
+							HouseAndCost houseAndCost = new HouseAndCost();
+							houseAndCost.setCostId(Long.valueOf(ids));
+							houseAndCost.setHouseId(Long.valueOf(ida));
+							List<HouseAndCost> houseAndList = hyCustomerMapper.selectCostIds(houseAndCost);
+							if (houseAndList.size() == 0) {
+								Date beginFeeDate = hyHouseInf.getBeginFeeDate();
+								Date endFeeDate = hyHouseInf.getEndFeeDate();
+								SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+								String beginFeeDateStr = sdf.format(beginFeeDate);
+								String endFeeDateeStr = sdf.format(endFeeDate);
+								String feeDate = beginFeeDateStr + "-" + endFeeDateeStr;
+								houseAndCost.setFeeDate(feeDate);
+								if(hyHouseInf.getDiscount()!=null) {
+									BigDecimal discount = hyHouseInf.getDiscount();
+									houseAndCost.setDiscount(discount);
+								}
+								hyCustomerMapper.insertHouseAndCostByHouseIdAndCostId(houseAndCost);
+							}
+						}
+					}
+				}
+				return 1;
+			} else {// 判定选择的费用项目只有一个
+				HyBuilding hyBuilding = new HyBuilding();
+				hyBuilding.setQuartersId(hyHouseInf.getQuartersId());
+				List<HyBuilding> buildinglist = hyBuildingMapper.selectHyBuildingList(hyBuilding);
+				for(HyBuilding building : buildinglist) {
+					HyHouseInf houseInf = new HyHouseInf();
+					houseInf.setBuildingId(building.getId());
+					List<HyHouseInf> houseInfList = hyGenerationMapper.selectHyGenerationList(houseInf);
+					String houseId = "";
+					for(HyHouseInf inf : houseInfList) {
+						houseId = houseId + inf.getId() + ",";
+					}
+					String[] houseIds = houseId.split(",");
+					String costId = hyHouseInf.getCostIds();
+					for (String ida : houseIds) {
+						HouseAndCost houseAndCost = new HouseAndCost();
+						houseAndCost.setCostId(Long.valueOf(costId));
+						houseAndCost.setHouseId(Long.valueOf(ida));
+						List<HouseAndCost> list = hyCustomerMapper.selectCostIds(houseAndCost);
+						if (list.size() == 0) {
+							Date beginFeeDate = hyHouseInf.getBeginFeeDate();
+							Date endFeeDate = hyHouseInf.getEndFeeDate();
+							SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+							String beginFeeDateStr = sdf.format(beginFeeDate);
+							String endFeeDateeStr = sdf.format(endFeeDate);
+							String feeDate = beginFeeDateStr + "-" + endFeeDateeStr;
+							houseAndCost.setFeeDate(feeDate);
+							if(hyHouseInf.getDiscount()!=null) {
+								BigDecimal discount = hyHouseInf.getDiscount();
+								houseAndCost.setDiscount(discount);
+							}
+							hyCustomerMapper.insertHouseAndCostByHouseIdAndCostId(houseAndCost);
+						}
 					}
 				}
 				return 1;

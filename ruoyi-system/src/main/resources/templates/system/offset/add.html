@@ -7,51 +7,94 @@
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
         <form class="form-horizontal m" id="form-offset-add">
+        	<div class="form-group">    
+                <label class="col-sm-3 control-label">选择小区：</label>
+                <div class="col-sm-8">
+                    <select id="quartersId" name="quartersId" class="form-control" th:with="type=${@quarters.getQuarters()}" onchange="changeBuilding()">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.communityName}" th:value="${data.id}"></option>
+			 	    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">选择楼宇：</label>
+                <div class="col-sm-8">
+			 	    <select class="form-control" name="buildingId" id="buildingId" disabled="disabled" onchange="changeUnit()">
+	                 	 <option value="">请选择</option>
+	                </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">选择单元：</label>
+                <div class="col-sm-8">
+			 	    <select class="form-control" name="unit" id="unit" disabled="disabled" onchange="changeHouse()">
+	                 	 <option value="">请选择</option>
+	                </select>
+                </div>
+            </div>
         	 <div class="form-group">    
                 <label class="col-sm-3 control-label">选择房屋：</label>
                 <div class="col-sm-8">
-                    <select name="houseId" class="form-control m-b" th:with="type=${@houseInf.getHouseInf()}">
+                    <select id="houseId" name="houseId" class="form-control m-b" disabled="disabled" onchange="changeCost()">
                           <option value="">请选择</option>
-                          <option th:each="dict : ${type}" th:text="${dict.houseName}" th:value="${dict.id}"></option>
-                      </select>
+                    </select>
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">选择票据：</label>
+                <label class="col-sm-3 control-label">费用项目：</label>
                 <div class="col-sm-8">
-                    <select name="setId" class="form-control m-b" th:with="type=${@set.getSet()}">
+                    <!-- <div class="col-sm-9" th:with="type=${@cost.getCost()}">
+                    <label  th:each="dict : ${type}" class="check-box" id="costIds">
+                    	<input name="costIds" type="checkbox" th:text="${dict.costItems}" th:value="${dict.id}">
+                    </label>
+        			</div> -->
+                    <div class="col-sm-9" id="costId">
+                    
+        			</div>
+                </div>
+            </div>
+			<input id="offsetOperationDate" name="offsetOperationDate" class="form-control" placeholder="yyyy-MM-dd" type="hidden">
+            <div class="form-group">   
+            	<label class="col-sm-3 control-label">选择年：</label> 
+                <div class="col-sm-8">
+                     <select id="offsetYear" name="offsetYear" class="form-control m-b" onchange="changeOffsetMoney()">
                           <option value="">请选择</option>
-                          <option th:each="dict : ${type}" th:text="${dict.billNumber}" th:value="${dict.id}"></option>
-                      </select>
+                          <option value="1">预交一年</option>
+                          <option value="2">预交二年</option>
+                          <option value="3">预交三年</option>
+                          <option value="4">预交四年</option>
+                    </select>
                 </div>
             </div>
-            <div class="form-group">    
+            <div class="form-group">   
+            	<label class="col-sm-3 control-label">选择月：</label> 
                 <div class="col-sm-8">
-                    <div class="input-group date">
-                        <input id="offsetOperationDate" name="offsetOperationDate" class="form-control" placeholder="yyyy-MM-dd" type="hidden">
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">冲抵范围：</label>
-                <div class="col-sm-8">
-                    <input name="offsetRange" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <div class="col-sm-8">
-                    <input id="offsetYear" name="offsetYear" class="form-control" type="hidden">
-                </div>
-            </div>
-            <div class="form-group">    
-                <div class="col-sm-8">
-                    <input id="offsetMonth" name="offsetMonth" class="form-control" type="hidden">
+                     <select id="offsetMonth" name="offsetMonth" class="form-control m-b" onchange="changeOffsetMoney()">
+                          <option value="">请选择</option>
+                          <option value="1">预交一个月</option>
+                          <option value="2">预交二个月</option>
+                          <option value="3">预交三个月</option>
+                          <option value="4">预交四个月</option>
+                          <option value="5">预交五个月</option>
+                          <option value="6">预交六个月</option>
+                          <option value="7">预交七个月</option>
+                          <option value="8">预交八个月</option>
+                          <option value="9">预交九个月</option>
+                          <option value="10">预交十个月</option>
+                          <option value="11">预交十一个月</option>
+                    </select>
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">冲抵金额：</label>
                 <div class="col-sm-8">
-                    <input name="offsetMoney" class="form-control" type="text">
+                    <input id="offsetMoney" name="offsetMoney" class="form-control" type="text" disabled="disabled">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">冲抵人：</label>
+                <div class="col-sm-8">
+                    <input name="offsetPreson" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
@@ -63,10 +106,25 @@
         </form>
     </div>
     <th:block th:include="include :: footer" />
+    <th:block th:include="include :: jquery-cxselect-js" />
     <th:block th:include="include :: datetimepicker-js" />
     <script th:inline="javascript">
         var prefix = ctx + "system/offset"
         $("#form-offset-add").validate({
+			rules : {
+				houseId : {
+					required : true,
+				},
+				costIds : {
+					required : true,
+				},
+				offsetMoney : {
+					required : true,
+				},
+				offsetPreson : {
+					required : true,
+				},
+			},
             focusCleanup: true
         });
         
@@ -77,8 +135,6 @@
         	var da = date.getDate();
         	var dateStr = year+"-"+Month+"-"+da;
         	$("#offsetOperationDate").val(dateStr);
-        	$("#offsetYear").val(year);
-        	$("#offsetMonth").val(Month);
         });
 
         function submitHandler() {
@@ -92,6 +148,167 @@
             minView: "month",
             autoclose: true
         });
+        
+        var prefix1 = ctx + "system/inf"
+      	//根据楼栋和单元搜房屋
+        function changeHouse(){
+   			$("#houseId").removeAttr("disabled");
+   			$.ajax({
+                url: prefix1 + "/lists",
+                data: {buildingId : $("#buildingId").val(),unit : $("#unit").val()},
+                dataType : 'json',
+                type: 'POST',
+                success: function (result) {
+                	var optArr = [];
+                	$("#houseId").empty();
+					$("#houseId").append("<option value=\"\">请选择</option>");
+                    for (var i = 0; i < result.length; i++) {
+                    	$("#houseId").append("<option value=" + result[i].id + ">" + result[i].houseNumber + "</option>");
+                    }
+                        
+                    // 缺一不可  
+                    $("#houseId").selectpicker('refresh');
+                    $("#houseId").selectpicker('render');
+
+					console.log(result);
+                }
+            });
+   		};
+        //根据楼栋搜单元
+        function changeUnit(){
+   			$("#unit").removeAttr("disabled");
+   			$.ajax({
+                url: prefix1 + "/getUnit",
+                data: {buildingId : $("#buildingId").val()},
+                dataType : 'json',
+                type: 'POST',
+                success: function (result) {
+                	var optArr = [];
+                	$("#unit").empty();
+					$("#unit").append("<option value=\"\">请选择</option>");
+                    for (var i = 0; i < result.length; i++) {
+                    	$("#unit").append("<option value=" + result[i].unit + ">" + result[i].unit + "</option>");
+                    }
+                        
+                    // 缺一不可  
+                    $("#unit").selectpicker('refresh');
+                    $("#unit").selectpicker('render');
+
+					console.log(result);
+                }
+            });
+   		};
+        var prefix2 = ctx + "system/building"
+        //根据小区搜楼栋
+        function changeBuilding(){
+   			$("#buildingId").removeAttr("disabled");
+   			$.ajax({
+                url: prefix2 + "/lists",
+                data: {quartersId : $("#quartersId").val()},
+                dataType : 'json',
+                type: 'POST',
+                success: function (result) {
+                	var optArr = [];
+                	$("#buildingId").empty();
+					$("#buildingId").append("<option value=\"\">请选择</option>");
+                    for (var i = 0; i < result.length; i++) {
+                    	$("#buildingId").append("<option value=" + result[i].id + ">" + result[i].buildingNumber + "</option>");
+                    }
+                        
+                    // 缺一不可  
+                    $("#buildingId").selectpicker('refresh');
+                    $("#buildingId").selectpicker('render');
+
+					console.log(result);
+                }
+            });
+   		};
+        var prefix3 = ctx + "system/customer"
+        //根据房屋搜费用
+        function changeCost(){
+   			$.ajax({
+                url: prefix3 + "/houseOrCostList",
+                data: {houseId : $("#houseId").val()},
+                dataType : 'json',
+                type: 'POST',
+                success: function (result) {
+                	var optArr = [];
+                	$("#costId").empty();
+                    for (var i = 0; i < result.length; i++) {
+                    	$("#costId").append("<label class='check-box'>"+result[i].costItems+"<input name='costIds'  class='icheckbox-blue' type='checkbox' value=" + result[i].id + " onclick='changeOffsetMoney()'></label>");
+                    }
+                        
+                    // 缺一不可  
+                    $("#costId").selectpicker('refresh');
+                    $("#costId").selectpicker('render');
+
+					console.log(result);
+                }
+            });
+   		};
+        //根据年份月份费用项目改变冲抵金额
+        function changeOffsetMoney(){
+   			var n="";
+   			$("#offsetMoney").val(n);
+   			$(".check-box input[type=checkbox]:checked").each(function(){
+   					var m = $(this).val()+',';
+   					n+=m;
+   			})
+   			if(n){
+   				if($("#offsetYear").val()!=""){
+   					$.ajax({
+   	   	                url: prefix1 + "/offsetMoney",
+   	   	                data: {houseId : $("#houseId").val(),costIds : n},
+   	   	                dataType : 'json',
+   	   	                type: 'POST',
+   	   	                success: function (result) {
+   	   	                	var offsetMoney = result[0].amountReceivableCount;
+   	   	                	$("#offsetMoney").val(offsetMoney*$("#offsetYear").val());
+   	   						console.log(result);
+   	   	                }
+   	   	            });
+   					if($("#offsetMonth").val()!=""){
+   						$.ajax({
+   	   	   	                url: prefix1 + "/offsetMoney",
+   	   	   	                data: {houseId : $("#houseId").val(),costIds : n},
+   	   	   	                dataType : 'json',
+   	   	   	                type: 'POST',
+   	   	   	                success: function (result) {
+   	   	   	                	var offsetMoney = result[0].amountReceivableCount;
+   	   	   	           			var offsetMoneyByYear = offsetMoney*$("#offsetYear").val()
+   	   	   						console.log(result);
+		   	   	   				$.ajax({
+		   	   	   	                url: prefix1 + "/offsetMoneyByMonth",
+		   	   	   	                data: {houseId : $("#houseId").val(),costIds : n,month : $("#offsetMonth").val()},
+		   	   	   	                dataType : 'json',
+		   	   	   	                type: 'POST',
+		   	   	   	                success: function (result) {
+		   	   	   	                	var offsetMoneyByMonth = result[0].amountReceivableCount;
+		   	   	   	                	$("#offsetMoney").val(offsetMoneyByYear+offsetMoneyByMonth);
+		   	   	   						console.log(result);
+		   	   	   	                }
+		   	   	   	            });
+   	   	   	                }
+   	   	   	            });
+   					}
+   				}else if($("#offsetMonth").val()!=""){
+   					$.ajax({
+	   	   	                url: prefix1 + "/offsetMoneyByMonth",
+	   	   	                data: {houseId : $("#houseId").val(),costIds : n,month : $("#offsetMonth").val()},
+	   	   	                dataType : 'json',
+	   	   	                type: 'POST',
+	   	   	                success: function (result) {
+	   	   	                	var offsetMoneyByMonth = result[0].amountReceivableCount;
+	   	   	                	$("#offsetMoney").val(offsetMoneyByMonth);
+	   	   						console.log(result);
+	   	   	                }
+	   	   	            });
+   				}
+   				
+   			}
+   			
+   			
+   		};
     </script>
 </body>
 </html>

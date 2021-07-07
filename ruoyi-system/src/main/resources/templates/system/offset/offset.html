@@ -11,13 +11,6 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                <label>冲抵类别：</label>
-                                <select name="offsetCategory" class="form-control " >
-			                      <option value="">请选择</option>
-			                      <option value=1>批量冲抵</option>
-			                     </select>
-                            </li>
-                            <li>
                                 <label>冲抵人：</label>
                                 <input type="text" name="offsetPreson"/>
                             </li>
@@ -26,20 +19,12 @@
                                 <input type="text" class="time-input" placeholder="请选择冲抵操作时间" name="offsetOperationDate"/>
                             </li>
                             <li>
-                                <label>冲抵范围：</label>
-                                <input type="text" name="offsetRange"/>
-                            </li>
-                            <li>
                                 <label>冲抵年度：</label>
                                 <input type="text" name="offsetYear"/>
                             </li>
                             <li>
                                 <label>冲抵月份：</label>
                                 <input type="text" name="offsetMonth"/>
-                            </li>
-                            <li>
-                                <label>审核流程：</label>
-                                <input type="text" name="auditProcess"/>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -96,59 +81,16 @@
                     title: '客户名称'
                 },
                 {
-                    field: 'hyHouseInf.houseName',
-                    title: '房屋名称'
-                },
-                {
                     field: 'hyHouseInf.houseNumber',
                     title: '房屋编号'
-                },
-                {
-                    field: 'hyParkingInf.parkingNumber',
-                    title: '车位编号'
                 },
                 {
                     field: 'hyCost.costItems',
                     title: '费用名称'
                 },
                 {
-                    field: 'hyCost.amountReceivable',
-                    title: '原预交余额'
-                },
-                {
                     field: 'offsetMoney',
                     title: '冲抵金额'
-                },
-                {
-                    field: 'amountActually',
-                    title: '实收金额'
-                },
-                {
-                    field: 'offsetType',
-                    title: '处理方式'
-                },
-                {
-                    field: 'offsetCategory',
-                    title: '冲抵类别',
-                 	 formatter: function(value, item, index) {
-                        	switch(value){
-      	                    	case 1 : value =  "批量冲抵";break;
-      	                
-      	                	}
-      		            	return value;
-      		            }
-                },
-                {
-                    field: 'offsetPreson',
-                    title: '冲抵人'
-                },
-                {
-                    field: 'offsetOperationDate',
-                    title: '冲抵操作时间'
-                },
-                {
-                    field: 'offsetRange',
-                    title: '冲抵范围'
                 },
                 {
                     field: 'offsetYear',
@@ -159,8 +101,16 @@
                     title: '冲抵月份'
                 },
                 {
-                    field: 'hyCost.dueDate',
-                    title: '应收日期'
+                    field: 'offsetDate',
+                    title: '截止日期'
+                },
+                {
+                    field: 'offsetOperationDate',
+                    title: '冲抵操作时间'
+                },
+                {
+                    field: 'offsetPreson',
+                    title: '冲抵人'
                 },
                 {
                     field: 'auditProcess',

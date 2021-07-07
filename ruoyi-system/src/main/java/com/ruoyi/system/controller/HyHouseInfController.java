@@ -1,7 +1,11 @@
 package com.ruoyi.system.controller;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +25,13 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.ShiroUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.system.domain.HyCost;
 import com.ruoyi.system.domain.HyHouseInf;
 import com.ruoyi.system.domain.HyOwnerRegistration;
+import com.ruoyi.system.mapper.HyCostMapper;
 import com.ruoyi.system.service.IHyHouseInfService;
 import com.ruoyi.system.service.IHyOwnerRegistrationService;
+import com.ruoyi.system.utils.ReceivableUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -48,6 +55,9 @@ public class HyHouseInfController extends BaseController {
 	
 	@Autowired
 	private IHyOwnerRegistrationService hyOwnerRegistrationService;
+	
+	@Autowired
+	private HyCostMapper hyCostMapper;
 
 	@RequiresPermissions("system:inf:view")
 	@GetMapping()
@@ -74,6 +84,44 @@ public class HyHouseInfController extends BaseController {
 	@ResponseBody
 	public List<HyHouseInf> lists(HyHouseInf hyHouseInf) {
 		return hyHouseInfService.selectHyHouseInfList(hyHouseInf);
+	}
+	
+	@RequiresPermissions("system:inf:lists")
+	@PostMapping("/offsetMoney")
+	@ResponseBody
+	public List<Map<String, Object>> offsetMoney(HyHouseInf hyHouseInf) {
+		List<Map<String, Object>> list = new ArrayList<>();
+		BigDecimal amountReceivableCount = new BigDecimal(0.00);
+		String[] costIds = hyHouseInf.getCostIds().split(",");
+		Map<String, Object> map = new HashMap<String, Object>();
+		for(String costId : costIds) {
+			HyHouseInf inf = hyHouseInfService.selectHyHouseInfById(hyHouseInf.getHouseId());
+			HyCost hyCost = hyCostMapper.selectHyCostById(Long.valueOf(costId));
+			BigDecimal amountReceivable = ReceivableUtil.getReceivable(hyCost.getCalculationStandard(), hyCost.getCalculationMehod(), inf.getBilingArea());
+			amountReceivableCount = amountReceivableCount.add(amountReceivable.setScale(2,RoundingMode.HALF_UP));
+		}
+		map.put("amountReceivableCount", amountReceivableCount);
+		list.add(map);
+		return list;
+	}
+	
+	@RequiresPermissions("system:inf:lists")
+	@PostMapping("/offsetMoneyByMonth")
+	@ResponseBody
+	public List<Map<String, Object>> offsetMoneyByMonth(HyHouseInf hyHouseInf) {
+		List<Map<String, Object>> list = new ArrayList<>();
+		BigDecimal amountReceivableCount = new BigDecimal(0.00);
+		String[] costIds = hyHouseInf.getCostIds().split(",");
+		Map<String, Object> map = new HashMap<String, Object>();
+		for(String costId : costIds) {
+			HyHouseInf inf = hyHouseInfService.selectHyHouseInfById(hyHouseInf.getHouseId());
+			HyCost hyCost = hyCostMapper.selectHyCostById(Long.valueOf(costId));
+			BigDecimal amountReceivable = ReceivableUtil.getReceivable(hyCost.getCalculationStandard(), hyCost.getCalculationMehod(), inf.getBilingArea(), hyHouseInf.getMonth());
+			amountReceivableCount = amountReceivableCount.add(amountReceivable.setScale(2,RoundingMode.HALF_UP));
+		}
+		map.put("amountReceivableCount", amountReceivableCount);
+		list.add(map);
+		return list;
 	}
 	
 	@RequiresPermissions("system:inf:lists")

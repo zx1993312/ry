@@ -41,8 +41,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			javaType="HyCost" resultMap="HyCostResult" />
 		<association property="hyRevoke" column="id"
 			javaType="HyRevoke" resultMap="HyRevokeResult" />
-		<association property="hyPaymentOffset" column="id"
-			javaType="HyPaymentOffset" resultMap="HyPaymentOffsetResult" />
 	</resultMap>
 	
 	<resultMap type="HyOwnerRegistration"
@@ -182,23 +180,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="setId" column="set_id" />
 	</resultMap>
 
-	<resultMap type="HyPaymentOffset" id="HyPaymentOffsetResult">
-        <result property="id"    column="id"    />
-        <result property="offsetCategory"    column="offset_category"    />
-        <result property="offsetPreson"    column="offset_preson"    />
-        <result property="offsetOperationDate"    column="offset_operation_date"    />
-        <result property="offsetRange"    column="offset_range"    />
-        <result property="offsetYear"    column="offset_year"    />
-        <result property="offsetMonth"    column="offset_month"    />
-        <result property="offsetMoney"    column="offset_money"    />
-        <result property="amountActually"    column="amount_actually"    />
-        <result property="offsetType"    column="offset_type"    />
-        <result property="auditProcess"    column="audit_process"    />
-        <result property="auditStatus"    column="audit_status"    />
-        <result property="houseId"    column="house_id"    />
-        <result property="setId"    column="set_id"    />
-    </resultMap>
-
 	 <sql id="selectHyBillSetVo">
 		select
 		b.id, 
@@ -240,9 +221,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		c.penalty_contract,
 		r.revoke_date,
 		r.revoke_reason,
-		r.revoke_remark,
-		p.offset_operation_date,
-		p.offset_money
+		r.revoke_remark
 		from
 		hy_bill_set b
 		left
@@ -257,9 +236,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		b.cost_id=c.id
 		left join 
 		hy_revoke r on r.set_id=b.id
-		left join
-		hy_payment_offset p on
-		p.set_id=b.id
 	</sql> 
 	
 	<select id="selectHyBillSetList" parameterType="HyBillSet" resultMap="HyBillSetResult">

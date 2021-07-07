@@ -20,10 +20,13 @@ import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.constants.Constants;
 import com.ruoyi.system.domain.HouseAndCost;
+import com.ruoyi.system.domain.HyCollection;
 import com.ruoyi.system.domain.HyCost;
 import com.ruoyi.system.domain.HyCustomer;
 import com.ruoyi.system.domain.HyHouseInf;
 import com.ruoyi.system.domain.ReHyCustomer;
+import com.ruoyi.system.mapper.HyCollectionMapper;
+import com.ruoyi.system.mapper.HyCostMapper;
 import com.ruoyi.system.service.CustomerService;
 import com.ruoyi.system.service.impl.HyHouseInfServiceImpl;
 
@@ -48,6 +51,12 @@ public class CustomerController extends BaseController {
 	
 	@Autowired
 	private HyHouseInfServiceImpl hyhouseInfServiceImpl;
+	
+	@Autowired
+	private HyCostMapper hyCostMapper;
+	
+	@Autowired
+	private HyCollectionMapper hyCollectionMapper;
 
 	/**
 	 * 查询客户标准单项设置列表
@@ -97,6 +106,27 @@ public class CustomerController extends BaseController {
 		for (HouseAndCost list : houseAndCostList) {
 			HyHouseInf hyHouseInf = hyhouseInfServiceImpl.selectHyHouseInfById(list.getHouseId());
 			relist.add(hyHouseInf);
+		}
+		return relist;
+	}
+	
+	@RequiresPermissions("system:registration:list")
+	@PostMapping("/houseOrCostList")
+	@ResponseBody
+	public List<HyCost> houseOrCostList(HouseAndCost houseAndCost) {
+		List<HyCost> relist = new ArrayList<HyCost>();
+		List<HouseAndCost> houseAndCostList = customerService.selectCostIds(houseAndCost);
+		for (HouseAndCost houseAndcost : houseAndCostList) {
+			HyCollection hyCollection = new HyCollection();
+			hyCollection.setCostId(houseAndcost.getCostId());
+			hyCollection.setHouseId(houseAndcost.getHouseId());
+			List<HyCollection> collectionList = hyCollectionMapper.selectHyCollectionList(hyCollection);
+			if(collectionList.size()!=0) {
+				for(HyCollection collection :collectionList) {
+					HyCost hyCost = hyCostMapper.selectHyCostById(collection.getCostId());
+					relist.add(hyCost);
+				}
+			}
 		}
 		return relist;
 	}

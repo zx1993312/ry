@@ -161,6 +161,9 @@ public class HyHouseInf extends BaseEntity
     @Excel(name = "营销编号")
     private String marketingNum;
     
+    /** 小区id */
+    private Long quartersId;
+    
     /** 楼宇id */
     private Long buildingId;
     
@@ -174,6 +177,11 @@ public class HyHouseInf extends BaseEntity
     /** 业主表 */
     @Excel(name = "业主表")
     private HyOwnerRegistration hyOwnerRegistration;
+    
+    /**
+     * 月份
+     */
+    private String month;
     
     /**
      * 费用开始时间
@@ -509,6 +517,14 @@ public class HyHouseInf extends BaseEntity
 		this.hyOwnerRegistration = hyOwnerRegistration;
 	}
 
+	public Long getQuartersId() {
+		return quartersId;
+	}
+
+	public void setQuartersId(Long quartersId) {
+		this.quartersId = quartersId;
+	}
+
 	public Long getBuildingId() {
 		return buildingId;
 	}
@@ -590,6 +606,14 @@ public class HyHouseInf extends BaseEntity
 		this.costIds = costIds;
 	}
 
+	public String getMonth() {
+		return month;
+	}
+
+	public void setMonth(String month) {
+		this.month = month;
+	}
+
 	@Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -623,6 +647,7 @@ public class HyHouseInf extends BaseEntity
             .append("salesStatus", getSalesStatus())
             .append("purchaseContract", getPurchaseContract())
             .append("marketingNum", getMarketingNum())
+            .append("quartersId", getQuartersId())
             .append("buildingId", getBuildingId())
             .append("ownerId", getOwnerId())
             .append("hyBuilding", getHyBuilding())
@@ -634,6 +659,7 @@ public class HyHouseInf extends BaseEntity
             .append("beginFeeDate", getBeginFeeDate())
             .append("endFeeDate", getEndFeeDate())
             .append("discount", getDiscount())
+            .append("month", getMonth())
             .toString();
     }
 }

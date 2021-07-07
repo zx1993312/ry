@@ -145,9 +145,6 @@ public class HyBillSet extends BaseEntity
     @Excel(name = "撤销表")
     private HyRevoke hyRevoke;
     
-    /** 预交表 */
-    @Excel(name = "预交表")
-    private HyPaymentOffset hyPaymentOffset;
 
 
     public void setId(Long id) 
@@ -426,13 +423,6 @@ public class HyBillSet extends BaseEntity
 		this.hyRevoke = hyRevoke;
 	}
 
-	public HyPaymentOffset getHyPaymentOffset() {
-		return hyPaymentOffset;
-	}
-
-	public void setHyPaymentOffset(HyPaymentOffset hyPaymentOffset) {
-		this.hyPaymentOffset = hyPaymentOffset;
-	}
 
 	@Override
     public String toString() {
@@ -469,7 +459,6 @@ public class HyBillSet extends BaseEntity
             .append("hyOwnerRegistration", getHyOwnerRegistration())
             .append("hyCost", getHyCost())
             .append("hyRevoke", getHyRevoke())
-            .append("hyPaymentOffset", getHyPaymentOffset())
             .toString();
     }
 }

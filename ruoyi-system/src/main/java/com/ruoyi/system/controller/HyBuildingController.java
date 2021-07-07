@@ -64,6 +64,23 @@ public class HyBuildingController extends BaseController
         List<HyBuilding> list = hyBuildingService.selectHyBuildingList(hyBuilding);
         return getDataTable(list);
     }
+    
+    /**
+     * 查询楼宇列表
+     */
+    @ApiOperation("楼宇")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyBuilding", value = "项目实体类hyBuilding", required = true),
+    })
+    @RequiresPermissions("system:building:list")
+    @PostMapping("/lists")
+    @ResponseBody
+    public List<HyBuilding> lists(HyBuilding hyBuilding)
+    {
+    	startPage();
+    	List<HyBuilding> list = hyBuildingService.selectHyBuildingList(hyBuilding);
+    	return list;
+    }
 
     /**
      * 导出楼宇列表
