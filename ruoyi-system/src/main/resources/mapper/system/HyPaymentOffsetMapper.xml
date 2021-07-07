@@ -22,6 +22,42 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			javaType="HyOwnerRegistration" resultMap="HyOwnerRegistrationResult" />
 		<association property="hyCost" column="id"
 			javaType="HyCost" resultMap="HyCostResult" />
+		<association property="hyBuilding" column="id"
+			javaType="HyBuilding" resultMap="HyBuildingResult" />
+		<association property="hyResidentialQuarters" column="id"
+			javaType="HyResidentialQuarters" resultMap="HyResidentialQuartersResult" />
+    </resultMap>
+    
+    <resultMap type="HyResidentialQuarters" id="HyResidentialQuartersResult">
+        <result property="id"    column="id"    />
+        <result property="communityAddress"    column="community_address"    />
+        <result property="communityName"    column="community_name"    />
+        <result property="contacts"    column="contacts"    />
+        <result property="contactNumber"    column="contact_number"    />
+        <result property="contactQq"    column="Contact_QQ"    />
+        <result property="city"    column="city"    />
+        <result property="area"    column="area"    />
+        <result property="county"    column="county"    />
+        <result property="address"    column="address"    />
+        <result property="longitude"    column="longitude"    />
+        <result property="latitude"    column="latitude"    />
+        <result property="customerLink"    column="customer_link"    />
+        <result property="externalLinks"    column="external_links"    />
+        <result property="propertyId"    column="property_id"    />
+    </resultMap>
+    
+    <resultMap type="HyBuilding" id="HyBuildingResult">
+        <result property="id"    column="id"    />
+        <result property="buildingNumber"    column="building_number"    />
+        <result property="buildingName"    column="building_name"    />
+        <result property="buildingHigh"    column="building_high"    />
+        <result property="buildingUnit"    column="building_unit"    />
+        <result property="buildingHouseholds"    column="building_households"    />
+        <result property="buildingAddress"    column="building_address"    />
+        <result property="buildingYear"    column="building_year"    />
+        <result property="buildingRemark"    column="building_remark"    />
+        <result property="quartersId"    column="quarters_id"    />
+        <result property="projectId"    column="project_id"    />
     </resultMap>
     
     <resultMap type="HyHouseInf" id="HyHouseInfResult">
@@ -172,16 +208,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         p.house_id, 
         p.cost_id, 
         h.house_number, 
+        h.unit, 
         o.owner_name, 
         c.cost_items, 
         c.due_date,
-        c.amount_receivable 
+        c.amount_receivable,
+        b.building_number,
+        q.community_name 
         from 
         hy_payment_offset p
         LEFT JOIN hy_house_inf h ON p.house_id=h.id
         LEFT JOIN hy_owner_registration o ON h.owner_id = o.id
         LEFT JOIN house_and_cost a ON a.house_id=h.id
         LEFT JOIN hy_cost c ON p.cost_id=c.id
+        LEFT JOIN hy_building b ON h.building_id=b.id
+        LEFT JOIN hy_residential_quarters q ON b.quarters_id=q.id
     </sql>
 
     <select id="selectHyPaymentOffsetList" parameterType="HyPaymentOffset" resultMap="HyPaymentOffsetResult">
@@ -197,6 +238,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             and p.audit_status = "1"
             <if test="houseId != null "> and p.house_id = #{houseId}</if>
             <if test="costId != null "> and p.cost_id = #{costId}</if>
+            <if test="hyResidentialQuarters != null ">
+            <if test="hyResidentialQuarters.communityName != null and hyResidentialQuarters.communityName !=''">and q.community_name = #{hyResidentialQuarters.communityName}</if>
+            </if>
+            <if test="hyBuilding != null ">
+            <if test="hyBuilding.buildingNumber != null and hyBuilding.buildingNumber !=''">and b.building_number = #{hyBuilding.buildingNumber}</if>
+            </if>
+            <if test="hyHouseInf != null ">
+            <if test="hyHouseInf.unit != null and hyHouseInf.unit !=''">and h.unit = #{hyHouseInf.unit}</if>
+            <if test="hyHouseInf.houseNumber != null and hyHouseInf.houseNumber !=''">and h.house_number = #{hyHouseInf.houseNumber}</if>
+            </if>
+            <if test="hyCost != null ">
+            <if test="hyCost.costItems != null and hyCost.costItems !=''">and c.cost_items = #{hyCost.costItems}</if>
+            </if>
+            <if test="hyOwnerRegistration != null ">
+            <if test="hyOwnerRegistration.ownerName != null and hyOwnerRegistration.ownerName !=''">and o.owner_name = #{hyOwnerRegistration.ownerName}</if>
+            </if>
         </where>
     </select>
     <select id="selectHyPaymentOffsetListAAA" parameterType="HyPaymentOffset" resultMap="HyPaymentOffsetResult">
@@ -212,6 +269,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             and p.audit_status = "0"
             <if test="houseId != null "> and p.house_id = #{houseId}</if>
             <if test="costId != null "> and p.cost_id = #{costId}</if>
+            <if test="hyResidentialQuarters != null ">
+            <if test="hyResidentialQuarters.communityName != null and hyResidentialQuarters.communityName !=''">and q.community_name = #{hyResidentialQuarters.communityName}</if>
+            </if>
+            <if test="hyBuilding != null ">
+            <if test="hyBuilding.buildingNumber != null and hyBuilding.buildingNumber !=''">and b.building_number = #{hyBuilding.buildingNumber}</if>
+            </if>
+            <if test="hyHouseInf != null ">
+            <if test="hyHouseInf.unit != null and hyHouseInf.unit !=''">and h.unit = #{hyHouseInf.unit}</if>
+            <if test="hyHouseInf.houseNumber != null and hyHouseInf.houseNumber !=''">and h.house_number = #{hyHouseInf.houseNumber}</if>
+            </if>
+            <if test="hyCost != null ">
+            <if test="hyCost.costItems != null and hyCost.costItems !=''">and c.cost_items = #{hyCost.costItems}</if>
+            </if>
+            <if test="hyOwnerRegistration != null ">
+            <if test="hyOwnerRegistration.ownerName != null and hyOwnerRegistration.ownerName !=''">and o.owner_name = #{hyOwnerRegistration.ownerName}</if>
+            </if>
         </where>
     </select>
     
@@ -228,13 +301,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="auditStatus != null  and auditStatus != ''"> and p.audit_status = #{auditStatus}</if>
             <if test="houseId != null "> and p.house_id = #{houseId}</if>
             <if test="costId != null "> and p.cost_id = #{costId}</if>
-            
+            <if test="hyResidentialQuarters != null ">
+            <if test="hyResidentialQuarters.communityName != null and hyResidentialQuarters.communityName !=''">and q.community_name = #{hyResidentialQuarters.communityName}</if>
+            </if>
+            <if test="hyBuilding != null ">
+            <if test="hyBuilding.buildingNumber != null and hyBuilding.buildingNumber !=''">and b.building_number = #{hyBuilding.buildingNumber}</if>
+            </if>
+            <if test="hyOwnerRegistration != null">
             <if test="hyOwnerRegistration.ownerName != null  and hyOwnerRegistration.ownerName != ''"> and o.owner_name = #{hyOwnerRegistration.ownerName}</if>
+            </if>
+            <if test="hyHouseInf != null">
             <if test="hyHouseInf.houseNumber != null  and hyHouseInf.houseNumber != ''"> and h.house_number = #{hyHouseInf.houseNumber}</if>
             <if test="hyHouseInf.houseName != null  and hyHouseInf.houseName != ''"> and h.house_name = #{hyHouseInf.houseName}</if>
             <if test="hyHouseInf.natureProperty != null  and hyHouseInf.natureProperty != ''"> and h.nature_property = #{hyHouseInf.natureProperty}</if>
+            </if>
+            <if test="hyCost != null">
             <if test="hyCost.costItems != null  and hyCost.costItems != ''"> and c.cost_items = #{hyCost.costItems}</if>
-            
+            </if>
         </where>
     </select>
     
@@ -275,6 +358,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update hy_payment_offset
         <trim prefix="SET" suffixOverrides=",">
             <if test="offsetPreson != null and offsetPreson !=''">offset_preson = #{offsetPreson},</if>
+            <if test="offsetOperationDate != null">offset_operation_date = #{offsetOperationDate},</if>
             <if test="offsetYear != null and offsetYear !=''">offset_year = #{offsetYear},</if>
             <if test="offsetMonth != null and offsetMonth !=''">offset_month = #{offsetMonth},</if>
             <if test="offsetMoney != null and offsetMoney !=''">offset_money = #{offsetMoney},</if>

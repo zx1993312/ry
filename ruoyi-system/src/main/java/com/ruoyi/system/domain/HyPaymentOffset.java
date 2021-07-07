@@ -78,6 +78,14 @@ public class HyPaymentOffset extends BaseEntity
     @Excel(name = "费用项目表")
     private HyCost hyCost;
     
+    /** 楼宇表 */
+    @Excel(name = "楼宇表")
+    private HyBuilding hyBuilding;
+    
+    /** 小区表 */
+    @Excel(name = "小区表")
+    private HyResidentialQuarters hyResidentialQuarters;
+    
 
 	public Long getId() {
 		return id;
@@ -229,6 +237,26 @@ public class HyPaymentOffset extends BaseEntity
 	}
 
 
+	public HyBuilding getHyBuilding() {
+		return hyBuilding;
+	}
+
+
+	public void setHyBuilding(HyBuilding hyBuilding) {
+		this.hyBuilding = hyBuilding;
+	}
+
+
+	public HyResidentialQuarters getHyResidentialQuarters() {
+		return hyResidentialQuarters;
+	}
+
+
+	public void setHyResidentialQuarters(HyResidentialQuarters hyResidentialQuarters) {
+		this.hyResidentialQuarters = hyResidentialQuarters;
+	}
+
+
 	@Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -247,6 +275,8 @@ public class HyPaymentOffset extends BaseEntity
             .append("hyHouseInf", getHyHouseInf())
             .append("hyOwnerRegistration", getHyOwnerRegistration())
             .append("hyCost", getHyCost())
+            .append("hyBuilding", getHyBuilding())
+            .append("hyResidentialQuarters", getHyResidentialQuarters())
             .toString();
     }
 }

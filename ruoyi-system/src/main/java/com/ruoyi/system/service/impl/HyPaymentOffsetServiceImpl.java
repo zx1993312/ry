@@ -92,7 +92,7 @@ public class HyPaymentOffsetServiceImpl implements IHyPaymentOffsetService {
 			HyPaymentOffset offset = new HyPaymentOffset();
 			offset.setCostId(Long.valueOf(costId));
 			offset.setHouseId(hyPaymentOffset.getHouseId());
-			List<HyPaymentOffset> paymentOffsetList = hyPaymentOffsetMapper.selectHyPaymentOffsetList(offset);
+			List<HyPaymentOffset> paymentOffsetList = hyPaymentOffsetMapper.selectHyPaymentOffsetListAll(offset);
 			if (paymentOffsetList.size() == 0) {//冲抵没有该条记录 插入操作
 				HyPaymentOffset reOffset = new HyPaymentOffset();
 				reOffset = (HyPaymentOffset) Constants.REFLECT_UTIL.convertBean(new HyPaymentOffset(), hyPaymentOffset);
@@ -294,6 +294,7 @@ public class HyPaymentOffsetServiceImpl implements IHyPaymentOffsetService {
 				reOffset.setId(hyPaymentOffsets.getId());
 				reOffset.setOffsetDate(offsetDate);
 				reOffset.setOffsetMoney(offsetMoney);
+				reOffset.setAuditStatus("0");
 				hyPaymentOffsetMapper.updateHyPaymentOffset(reOffset);
 			}
 		}

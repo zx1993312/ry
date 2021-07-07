@@ -10,21 +10,48 @@
                 <form id="formId">
                     <div class="select-list">
                         <ul>
+                        	<li>
+                                <label>选择小区：</label>
+                                <select name="hyResidentialQuarters.communityName" class="form-control" th:with="type=${@quarters.getQuarters()}">
+									<option value="">请选择</option>
+									<option th:if="data!=null" th:each="data:${type}" th:text="${data.communityName}" th:value="${data.communityName}"></option>
+						 	    </select>
+                            </li>
+                            <li>
+                                <label>选择楼栋号：</label>
+						 	    <select name="hyBuilding.buildingNumber" class="form-control m-b" th:with="type=${@building.getBuilding()}">
+		                        <option value="">请选择</option>
+		                        <option th:each="dict : ${type}" th:text="${dict.buildingNumber}" th:value="${dict.buildingNumber}"></option>
+		                    </select>
+                            </li>
+                             <li>
+                                <label>选择单元：</label>
+                                <select name="hyHouseInf.unit" class="form-control" th:with="type=${@houseInf.getUnit()}">
+									<option value="">请选择</option>
+									<option th:if="data!=null" th:each="data:${type}" th:text="${data.unit}" th:value="${data.unit}"></option>
+						 	    </select>
+                            </li>
+                            <li>
+                                <label>选择房屋编号：</label>
+                                <select name="hyHouseInf.houseNumber" class="form-control" th:with="type=${@houseInf.getHouseNumber()}">
+									<option value="">请选择</option>
+									<option th:if="data!=null" th:each="data:${type}" th:text="${data.houseNumber}" th:value="${data.houseNumber}"></option>
+						 	    </select>
+                            </li>
+                            <li>
+                                <label>费用项目：</label>
+                                <select name="hyCost.costItems" class="form-control" th:with="type=${@cost.getCost()}"> 
+									<option value="">请选择</option>
+									<option th:if="data != null" th:each="data : ${type}" th:text="${data.costItems}" th:value="${data.costItems}"></option>
+								</select> 
+                            </li>
+                            <li>
+                                <label>业主姓名：</label>
+                                <input type="text" class="form-control" name="hyOwnerRegistration.ownerName"/>
+                            </li>
                             <li>
                                 <label>冲抵人：</label>
                                 <input type="text" name="offsetPreson"/>
-                            </li>
-                            <li>
-                                <label>冲抵操作时间：</label>
-                                <input type="text" class="time-input" placeholder="请选择冲抵操作时间" name="offsetOperationDate"/>
-                            </li>
-                            <li>
-                                <label>冲抵年度：</label>
-                                <input type="text" name="offsetYear"/>
-                            </li>
-                            <li>
-                                <label>冲抵月份：</label>
-                                <input type="text" name="offsetMonth"/>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -77,12 +104,24 @@
                     visible: false
                 },
                 {
-                    field: 'hyOwnerRegistration.ownerName',
-                    title: '客户名称'
+                    field: 'hyResidentialQuarters.communityName',
+                    title: '小区名称'
+                },
+                {
+                    field: 'hyBuilding.buildingNumber',
+                    title: '栋号'
+                },
+                {
+                    field: 'hyHouseInf.unit',
+                    title: '单元'
                 },
                 {
                     field: 'hyHouseInf.houseNumber',
                     title: '房屋编号'
+                },
+                {
+                    field: 'hyOwnerRegistration.ownerName',
+                    title: '业主名称'
                 },
                 {
                     field: 'hyCost.costItems',
@@ -94,7 +133,7 @@
                 },
                 {
                     field: 'offsetYear',
-                    title: '冲抵年度'
+                    title: '冲抵年份'
                 },
                 {
                     field: 'offsetMonth',
