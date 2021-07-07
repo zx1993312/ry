@@ -109,10 +109,14 @@ public class HyPaymentOffsetServiceImpl implements IHyPaymentOffsetService {
 					String a = payFeeDate.split("-")[1];
 					String b = payFeeDate.split("-")[0];
 					String c = payFeeDate.split("-")[2];
-					int n = Integer.parseInt(a);
+					int n = Integer.parseInt(a);//止日期的月份
 					int y = Integer.parseInt(b);
 					String z = y + m + "";
-					offsetDate = z + "-0" + n + "-" + c;
+					if (n > 9) {
+						offsetDate = z + n + "-" + c;
+					} else {
+						offsetDate = z + "-0" + n + "-" + c;
+					}
 					HyCost hyCost = hyCostMapper.selectHyCostById(Long.valueOf(costId));
 					HyHouseInf hyHouseInf = hyHouseInfMapper.selectHyHouseInfById(hyPaymentOffset.getHouseId());
 					BigDecimal amountReceivable = ReceivableUtil.getReceivable(hyCost.getCalculationStandard(),
@@ -134,10 +138,15 @@ public class HyPaymentOffsetServiceImpl implements IHyPaymentOffsetService {
 						c = payFeeDate.split("-")[2];
 						n = Integer.parseInt(a);
 						y = Integer.parseInt(b);
-						if (m + n > 12) {
+						if (m + n >= 12) {
 							z = y + 1 + w + "";
 							String p = m + n - 12 + "";
-							offsetDate = z + "-0" + p + "-" + c;
+							if (Integer.parseInt(p) > 9) {
+								offsetDate = z + p + "-" + c;
+							} else {
+								offsetDate = z + "-0" + p + "-" + c;
+							}
+							
 						} else {
 							String p = m + n + "";
 							if (Integer.parseInt(p) > 9) {
@@ -161,10 +170,14 @@ public class HyPaymentOffsetServiceImpl implements IHyPaymentOffsetService {
 					BigDecimal amountReceivable = ReceivableUtil.getReceivable(hyCost.getCalculationStandard(),
 							hyCost.getCalculationMehod(), hyHouseInf.getBilingArea(), m + "");
 					offsetMoney = amountReceivable;
-					if (m + n > 12) {
+					if (m + n >= 12) {
 						String z = y + 1 + "";
 						String p = m + n - 12 + "";
-						offsetDate = z + "-0" + p + "-" + c;
+						if (Integer.parseInt(p) > 9) {
+							offsetDate = z + p + "-" + c;
+						} else {
+							offsetDate = z + "-0" + p + "-" + c;
+						}
 					} else {
 						String p = m + n + "";
 						if (Integer.parseInt(p) > 9) {
@@ -193,7 +206,11 @@ public class HyPaymentOffsetServiceImpl implements IHyPaymentOffsetService {
 					int n = Integer.parseInt(a);
 					int y = Integer.parseInt(b);
 					String z = y + m + "";
-					offsetDate = z + "-0" + n + "-" + c;
+					if (n > 9) {
+						offsetDate = z + n + "-" + c;
+					} else {
+						offsetDate = z + "-0" + n + "-" + c;
+					}
 					HyCost hyCost = hyCostMapper.selectHyCostById(Long.valueOf(costId));
 					HyHouseInf hyHouseInf = hyHouseInfMapper.selectHyHouseInfById(hyPaymentOffset.getHouseId());
 					BigDecimal amountReceivable = ReceivableUtil.getReceivable(hyCost.getCalculationStandard(),
@@ -215,10 +232,14 @@ public class HyPaymentOffsetServiceImpl implements IHyPaymentOffsetService {
 						c = payFeeDate.split("-")[2];
 						n = Integer.parseInt(a);
 						y = Integer.parseInt(b);
-						if (m + n > 12) {
+						if (m + n >= 12) {
 							z = y + 1 + w + "";
 							String p = m + n - 12 + "";
-							offsetDate = z + "-0" + p + "-" + c;
+							if (Integer.parseInt(p) > 9) {
+								offsetDate = z + p + "-" + c;
+							} else {
+								offsetDate = z + "-0" + p + "-" + c;
+							}
 						} else {
 							String p = m + n + "";
 							if (Integer.parseInt(p) > 9) {
@@ -242,10 +263,14 @@ public class HyPaymentOffsetServiceImpl implements IHyPaymentOffsetService {
 					BigDecimal amountReceivable = ReceivableUtil.getReceivable(hyCost.getCalculationStandard(),
 							hyCost.getCalculationMehod(), hyHouseInf.getBilingArea(), m + "");
 					offsetMoney = hyPaymentOffsets.getOffsetMoney().add(amountReceivable);
-					if (m + n > 12) {
+					if (m + n >= 12) {
 						String z = y + 1 + "";
 						String p = m + n - 12 + "";
-						offsetDate = z + "-0" + p + "-" + c;
+						if (Integer.parseInt(p) > 9) {
+							offsetDate = z + p + "-" + c;
+						} else {
+							offsetDate = z + "-0" + p + "-" + c;
+						}
 					} else {
 						String p = m + n + "";
 						if (Integer.parseInt(p) > 9) {
@@ -260,7 +285,6 @@ public class HyPaymentOffsetServiceImpl implements IHyPaymentOffsetService {
 					int y =Integer.valueOf(hyPaymentOffsets.getOffsetYear())+Integer.valueOf(hyPaymentOffset.getOffsetYear());
 					reOffset.setOffsetYear(y+"");
 					if(hyPaymentOffset.getOffsetMonth()!=null&&!"".equals(hyPaymentOffset.getOffsetMonth())) {
-						if(hyPaymentOffset.getOffsetMonth()!=null&&!"".equals(hyPaymentOffset.getOffsetMonth())) {
 							int m = Integer.valueOf(hyPaymentOffsets.getOffsetMonth())+Integer.valueOf(hyPaymentOffset.getOffsetMonth());
 							if(m>=12) {
 								reOffset.setOffsetMonth(m-12+"");
@@ -268,7 +292,6 @@ public class HyPaymentOffsetServiceImpl implements IHyPaymentOffsetService {
 							}else {
 								reOffset.setOffsetMonth(m+"");
 							}
-						}
 						
 					}
 				}else if(hyPaymentOffset.getOffsetMonth()!=null&&!"".equals(hyPaymentOffset.getOffsetMonth())) {
@@ -281,7 +304,7 @@ public class HyPaymentOffsetServiceImpl implements IHyPaymentOffsetService {
 						}else {
 							reOffset.setOffsetMonth(m+"");
 						}
-					}else {
+					}else {  
 						int m = Integer.valueOf(hyPaymentOffsets.getOffsetMonth())+Integer.valueOf(hyPaymentOffset.getOffsetMonth());
 						if(m>=12) {
 							reOffset.setOffsetMonth(m-12+"");
