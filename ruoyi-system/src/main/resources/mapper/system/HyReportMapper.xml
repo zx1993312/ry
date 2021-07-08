@@ -6,6 +6,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <resultMap type="HyReport" id="HyReportResult">
         <result property="id"    column="id"    />
+        <result property="reportUsername"    column="report_username"    />
+        <result property="reportPhone"    column="report_phone"    />
         <result property="reportAddress"    column="report_address"    />
         <result property="reportArea"    column="report_area"    />
         <result property="reportLevel"    column="report_level"    />
@@ -93,6 +95,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <sql id="selectHyReportVo">
         select 
         r.id, 
+        r.report_username, 
+        r.report_phone, 
         r.report_address, 
         r.report_area, 
         r.report_level, 
@@ -134,6 +138,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectHyReportList" parameterType="HyReport" resultMap="HyReportResult">
         <include refid="selectHyReportVo"/>
         <where>  
+            <if test="reportUsername != null  and reportUsername != ''"> and r.report_username = #{reportUsername}</if>
+            <if test="reportPhone != null  and reportPhone != ''"> and r.report_phone = #{reportPhone}</if>
             <if test="reportAddress != null  and reportAddress != ''"> and r.report_address = #{reportAddress}</if>
             <if test="reportArea != null  and reportArea != ''"> and r.report_area = #{reportArea}</if>
             <if test="reportLevel != null  and reportLevel != ''"> and r.report_level = #{reportLevel}</if>
@@ -157,6 +163,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectHyReportListByDP" parameterType="HyReport" resultMap="HyReportResult">
         <include refid="selectHyReportVo"/>
         <where>  
+            <if test="reportUsername != null  and reportUsername != ''"> and r.report_Username = #{reportUsername}</if>
+            <if test="reportPhone != null  and reportPhone != ''"> and r.report_phone = #{reportPhone}</if>
             <if test="reportAddress != null  and reportAddress != ''"> and r.report_address = #{reportAddress}</if>
             <if test="reportArea != null  and reportArea != ''"> and r.report_area = #{reportArea}</if>
             <if test="reportLevel != null  and reportLevel != ''"> and r.report_level = #{reportLevel}</if>
@@ -180,6 +188,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectHyReportListByYP" parameterType="HyReport" resultMap="HyReportResult">
         <include refid="selectHyReportVo"/>
         <where>  
+            <if test="reportUsername != null  and reportUsername != ''"> and r.report_username = #{reportUsername}</if>
+            <if test="reportPhone != null  and reportPhone != ''"> and r.report_phone = #{reportPhone}</if>
             <if test="reportAddress != null  and reportAddress != ''"> and r.report_address = #{reportAddress}</if>
             <if test="reportArea != null  and reportArea != ''"> and r.report_area = #{reportArea}</if>
             <if test="reportLevel != null  and reportLevel != ''"> and r.report_level = #{reportLevel}</if>
@@ -203,6 +213,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectHyReportListByYWC" parameterType="HyReport" resultMap="HyReportResult">
         <include refid="selectHyReportVo"/>
         <where>  
+            <if test="reportUsername != null  and reportUsername != ''"> and r.report_username = #{reportUsername}</if>
+            <if test="reportPhone != null  and reportPhone != ''"> and r.report_phone = #{reportPhone}</if>
             <if test="reportAddress != null  and reportAddress != ''"> and r.report_address = #{reportAddress}</if>
             <if test="reportArea != null  and reportArea != ''"> and r.report_area = #{reportArea}</if>
             <if test="reportLevel != null  and reportLevel != ''"> and r.report_level = #{reportLevel}</if>
@@ -236,6 +248,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="insertHyReport" parameterType="HyReport" useGeneratedKeys="true" keyProperty="id">
         insert into hy_report
         <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="reportUsername != null">report_username,</if>
+            <if test="reportPhone != null">report_phone,</if>
             <if test="reportAddress != null">report_address,</if>
             <if test="reportArea != null">report_area,</if>
             <if test="reportLevel != null">report_level,</if>
@@ -255,6 +269,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="recipientsId != null">recipients_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="reportUsername != null">#{reportUsername},</if>
+            <if test="reportPhone != null">#{reportPhone},</if>
             <if test="reportAddress != null">#{reportAddress},</if>
             <if test="reportArea != null">#{reportArea},</if>
             <if test="reportLevel != null">#{reportLevel},</if>
@@ -278,6 +294,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateHyReport" parameterType="HyReport">
         update hy_report
         <trim prefix="SET" suffixOverrides=",">
+            <if test="reportUsername != null">report_username = #{reportUsername},</if>
+            <if test="reportPhone != null">report_phone = #{reportPhone},</if>
             <if test="reportAddress != null">report_address = #{reportAddress},</if>
             <if test="reportArea != null">report_area = #{reportArea},</if>
             <if test="reportLevel != null">report_level = #{reportLevel},</if>

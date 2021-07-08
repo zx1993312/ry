@@ -21,6 +21,14 @@ public class HyReport extends BaseEntity
     /** 报事管理id */
     private Long id;
 
+    /** 报事发起者 */
+    @Excel(name = "报事发起者")
+    private String reportUsername;
+    
+    /** 发起人电话 */
+    @Excel(name = "发起人电话")
+    private String reportPhone;
+    
     /** 地址/所在位置 */
     @Excel(name = "地址")
     private String reportAddress;
@@ -112,7 +120,24 @@ public class HyReport extends BaseEntity
     {
         return id;
     }
-    public void setReportAddress(String reportAddress) 
+    
+    public String getReportUsername() {
+		return reportUsername;
+	}
+
+	public void setReportUsername(String reportUsername) {
+		this.reportUsername = reportUsername;
+	}
+
+	public String getReportPhone() {
+		return reportPhone;
+	}
+
+	public void setReportPhone(String reportPhone) {
+		this.reportPhone = reportPhone;
+	}
+
+	public void setReportAddress(String reportAddress) 
     {
         this.reportAddress = reportAddress;
     }
@@ -286,15 +311,17 @@ public class HyReport extends BaseEntity
 
 	@Override
 	public String toString() {
-		return "HyReport [id=" + id + ", reportAddress=" + reportAddress + ", reportArea=" + reportArea
-				+ ", reportLevel=" + reportLevel + ", reportClassify=" + reportClassify + ", reportContent="
-				+ reportContent + ", reportDescription=" + reportDescription + ", reportDate=" + reportDate
-				+ ", reportQuality=" + reportQuality + ", reportState=" + reportState + ", reportAudit=" + reportAudit
-				+ ", reportEvaluate=" + reportEvaluate + ", reportCost=" + reportCost + ", reportVisit=" + reportVisit
-				+ ", reportPush=" + reportPush + ", reportPicture=" + reportPicture + ", quartersId=" + quartersId
-				+ ", hyResidentialQuarters=" + hyResidentialQuarters + ", recipientsId=" + recipientsId
-				+ ", hyRecipients=" + hyRecipients + ", sysUser=" + sysUser + "]";
+		return "HyReport [id=" + id + ", reportUsername=" + reportUsername + ", reportPhone=" + reportPhone
+				+ ", reportAddress=" + reportAddress + ", reportArea=" + reportArea + ", reportLevel=" + reportLevel
+				+ ", reportClassify=" + reportClassify + ", reportContent=" + reportContent + ", reportDescription="
+				+ reportDescription + ", reportDate=" + reportDate + ", reportQuality=" + reportQuality
+				+ ", reportState=" + reportState + ", reportAudit=" + reportAudit + ", reportEvaluate=" + reportEvaluate
+				+ ", reportCost=" + reportCost + ", reportVisit=" + reportVisit + ", reportPush=" + reportPush
+				+ ", reportPicture=" + reportPicture + ", quartersId=" + quartersId + ", hyResidentialQuarters="
+				+ hyResidentialQuarters + ", recipientsId=" + recipientsId + ", hyRecipients=" + hyRecipients
+				+ ", sysUser=" + sysUser + "]";
 	}
+
 
 
 	
