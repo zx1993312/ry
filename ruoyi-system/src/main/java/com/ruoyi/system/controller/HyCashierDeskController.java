@@ -2,6 +2,7 @@ package com.ruoyi.system.controller;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -149,13 +150,15 @@ public class HyCashierDeskController extends BaseController {
 
 	/**
 	 * 综合收款查询收银台列表
+	 * 
+	 * @throws ParseException
 	 */
 	@ApiOperation("收银台")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "hyCost", value = "项目实体类hyCost", required = true), })
 	@RequiresPermissions("system:cashierDesk:list")
 	@PostMapping("/appSelectHyCostList")
 	@ResponseBody
-	public List<Map<String, Object>> appSelectHyCostList(HyCost hyCost) {
+	public List<Map<String, Object>> appSelectHyCostList(HyCost hyCost) throws ParseException {
 		startPage();
 		return hyCashierDeskService.appSelectHyCostList(hyCost);
 	}

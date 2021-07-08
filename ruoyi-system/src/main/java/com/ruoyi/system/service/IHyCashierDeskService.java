@@ -1,5 +1,6 @@
 package com.ruoyi.system.service;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
@@ -116,6 +117,6 @@ public interface IHyCashierDeskService {
 	 * @param hyCost
 	 * @return
 	 */
-	public List<Map<String, Object>> appSelectHyCostList(HyCost hyCost);
+	public List<Map<String, Object>> appSelectHyCostList(HyCost hyCost) throws ParseException;
 
 }

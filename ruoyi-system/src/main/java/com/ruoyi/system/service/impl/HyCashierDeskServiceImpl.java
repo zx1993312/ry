@@ -11,6 +11,7 @@ import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -46,6 +47,7 @@ import com.ruoyi.system.mapper.HyOwnerRegistrationMapper;
 import com.ruoyi.system.service.IHyCashierDeskService;
 import com.ruoyi.system.utils.IoUtil;
 import com.ruoyi.system.utils.ReceivableUtil;
+import com.ruoyi.system.utils.TimeUtil;
 
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jasperreports.engine.JREmptyDataSource;
@@ -943,7 +945,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 	}
 
 	@Override
-	public List<Map<String, Object>> appSelectHyCostList(HyCost hyCost) {
+	public List<Map<String, Object>> appSelectHyCostList(HyCost hyCost) throws ParseException {
 		BigDecimal sumArea = new BigDecimal(0);// 面积和
 		BigDecimal sumAmount = new BigDecimal(0);// 实收和
 
@@ -952,19 +954,39 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 		Date startDate = hyCost.getBilingStartDate();
 		Date endDate = hyCost.getBilingEndDate();
 
-		houseAndCost.setFeeDate(
-				Constants.TIME_YEAR_MONTH.format(startDate) + "-" + Constants.TIME_YEAR_MONTH.format(endDate));
+		Map<String, Object> map = TimeUtil.getTime(startDate, endDate);// 获取开始时间 结束时间
 
 		List<HouseAndCost> list = hyCustomerMapper.selectCostIds(houseAndCost);
+
+		String startTime = "";
+		String endTime = "";
+
+		List<HouseAndCost> dataList = new ArrayList<>();
 		for (HouseAndCost hac : list) {// 计算总面积
+
+			if (!StringUtils.isEmpty(hac.getFeeDate())) {
+				startTime = hac.getFeeDate().substring(0, 10);
+				endTime = hac.getFeeDate().substring(11);
+			}
+
+			Date firstDate = Constants.TIME_ALL.parse(String.valueOf(map.get("firstday")));
+			Date lastDate = Constants.TIME_ALL.parse(String.valueOf(map.get("lastday")));
+			if (Constants.TIME_YEAR_MONTH_DAY.parse(startTime).getTime() >= firstDate.getTime()
+					&& Constants.TIME_YEAR_MONTH_DAY.parse(endTime).getTime() <= lastDate.getTime()) {
+				dataList.add(hac);
+			}
+
+		}
+
+		for (HouseAndCost hac : dataList) {
 			HyHouseInf hyHouseInf = hyHouseInfMapper.selectHyHouseInfById(hac.getHouseId());
-			sumArea.add(hyHouseInf.getBilingArea());
+			sumArea = sumArea.add(hyHouseInf.getBilingArea());
 		}
 
 		HyCollection hyCollection = new HyCollection();
 		List<HyCollection> collList = hyCollectionMapper.selectHyCollectionList(hyCollection);
 		for (HyCollection collection : collList) {// 计算实收和
-			sumAmount.add(collection.getAmount());
+			sumAmount = sumAmount.add(collection.getAmount());
 		}
 
 		HyCost reCost = hyCostMapper.selectHyCostById(hyCost.getId());
@@ -972,11 +994,11 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 				reCost.getCalculationMehod(), sumArea);// 应收总金额
 
 		List<Map<String, Object>> reList = new ArrayList<>();
-		Map<String, Object> map = new HashMap<>();
-		map.put("receivable", returnReceivable.setScale(2, RoundingMode.HALF_UP));// 应收
-		map.put("received", sumAmount.setScale(2, RoundingMode.HALF_UP));// 实收
-		map.put("uncollected", returnReceivable.subtract(sumAmount).setScale(2, RoundingMode.HALF_UP));// 未收
-		reList.add(map);
+		Map<String, Object> resultMap = new HashMap<>();
+		resultMap.put("receivable", returnReceivable.setScale(2, RoundingMode.HALF_UP));// 应收
+		resultMap.put("received", sumAmount.setScale(2, RoundingMode.HALF_UP));// 实收
+		resultMap.put("uncollected", returnReceivable.subtract(sumAmount).setScale(2, RoundingMode.HALF_UP));// 未收
+		reList.add(resultMap);
 		return reList;
 	}
 
