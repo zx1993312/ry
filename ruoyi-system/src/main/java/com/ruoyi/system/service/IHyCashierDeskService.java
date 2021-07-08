@@ -1,7 +1,7 @@
 package com.ruoyi.system.service;
 
-import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -109,5 +109,13 @@ public interface IHyCashierDeskService {
 	 * @return
 	 */
 	public String printReceiptSelect(String datas) throws Exception;
+
+	/**
+	 * app端接口,根据时间范围值查询
+	 * 
+	 * @param hyCost
+	 * @return
+	 */
+	public List<Map<String, Object>> appSelectHyCostList(HyCost hyCost);
 
 }

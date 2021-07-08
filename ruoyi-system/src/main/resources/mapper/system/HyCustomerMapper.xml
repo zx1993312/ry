@@ -365,6 +365,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<include refid="selectCostIdsVo" />
 		<if test="houseId != null  and houseId != ''"> and house_id = #{houseId}</if>
 		<if test="costId != null  and costId != ''"> and cost_id = #{costId}</if>
+		<if test="feeDate != null and feeDate != ''">and fee_date = #{feeDate}</if>
 	</select>
 
 

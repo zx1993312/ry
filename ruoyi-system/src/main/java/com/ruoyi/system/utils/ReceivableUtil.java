@@ -3,9 +3,13 @@ package com.ruoyi.system.utils;
 import java.math.BigDecimal;
 
 public class ReceivableUtil {
-	
-	
 
+	/**
+	 * @param calculationStandard 单价
+	 * @param calculationMehod 计算方式
+	 * @param bilingArea 计费面积
+	 * @return
+	 */
 	public static BigDecimal getReceivable(BigDecimal calculationStandard,String calculationMehod,BigDecimal bilingArea) {
 		BigDecimal AmountReceivable = new BigDecimal("0.00");
 		BigDecimal month = new BigDecimal("12.00");

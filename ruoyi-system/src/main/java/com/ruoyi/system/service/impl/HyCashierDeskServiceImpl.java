@@ -28,6 +28,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.ruoyi.common.exception.BusinessException;
 import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.system.constants.Constants;
 import com.ruoyi.system.domain.HouseAndCost;
 import com.ruoyi.system.domain.HyBuilding;
 import com.ruoyi.system.domain.HyCashierDesk;
@@ -37,6 +38,7 @@ import com.ruoyi.system.domain.HyHouseInf;
 import com.ruoyi.system.domain.HyOwnerRegistration;
 import com.ruoyi.system.mapper.HyBuildingMapper;
 import com.ruoyi.system.mapper.HyCashierDeskMapper;
+import com.ruoyi.system.mapper.HyCollectionMapper;
 import com.ruoyi.system.mapper.HyCostMapper;
 import com.ruoyi.system.mapper.HyCustomerMapper;
 import com.ruoyi.system.mapper.HyHouseInfMapper;
@@ -79,6 +81,9 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 
 	@Autowired
 	private HyCostMapper hyCostMapper;
+
+	@Autowired
+	private HyCollectionMapper hyCollectionMapper;
 
 	/**
 	 * 查询费用项目
@@ -268,7 +273,7 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 					BigDecimal bilingArea = cost.getHyHouseInf().getBilingArea();
 					BigDecimal amountReceivable = ReceivableUtil.getReceivable(calculationStandard, calculationMehod,
 							bilingArea);
-					if(cost.getHouseAndCost().getDiscount()!=null) {
+					if (cost.getHouseAndCost().getDiscount() != null) {
 						amountReceivable = amountReceivable.multiply(cost.getHouseAndCost().getDiscount());
 					}
 					params.put("id", String.valueOf(cost.getId()));
@@ -389,9 +394,9 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 				params.put("beginFeeDate", jsonObject.getString("beginFeeDate"));
 				params.put("payFeeDate", jsonObject.getString("payFeeDate"));
 				paramList.add(params);
-				
+
 			}
-			
+
 			String os = System.getProperty("os.name");
 			if (os.toLowerCase().startsWith("win")) {
 				map.put("pic", pic);
@@ -935,6 +940,44 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 			log.error("没有字体的异常,没关系，不要在意" + e.getMessage());
 		}
 		return fileName;
+	}
+
+	@Override
+	public List<Map<String, Object>> appSelectHyCostList(HyCost hyCost) {
+		BigDecimal sumArea = new BigDecimal(0);// 面积和
+		BigDecimal sumAmount = new BigDecimal(0);// 实收和
+
+		HouseAndCost houseAndCost = new HouseAndCost();
+		houseAndCost.setCostId(hyCost.getId());
+		Date startDate = hyCost.getBilingStartDate();
+		Date endDate = hyCost.getBilingEndDate();
+
+		houseAndCost.setFeeDate(
+				Constants.TIME_YEAR_MONTH.format(startDate) + "-" + Constants.TIME_YEAR_MONTH.format(endDate));
+
+		List<HouseAndCost> list = hyCustomerMapper.selectCostIds(houseAndCost);
+		for (HouseAndCost hac : list) {// 计算总面积
+			HyHouseInf hyHouseInf = hyHouseInfMapper.selectHyHouseInfById(hac.getHouseId());
+			sumArea.add(hyHouseInf.getBilingArea());
+		}
+
+		HyCollection hyCollection = new HyCollection();
+		List<HyCollection> collList = hyCollectionMapper.selectHyCollectionList(hyCollection);
+		for (HyCollection collection : collList) {// 计算实收和
+			sumAmount.add(collection.getAmount());
+		}
+
+		HyCost reCost = hyCostMapper.selectHyCostById(hyCost.getId());
+		BigDecimal returnReceivable = ReceivableUtil.getReceivable(reCost.getCalculationStandard(),
+				reCost.getCalculationMehod(), sumArea);// 应收总金额
+
+		List<Map<String, Object>> reList = new ArrayList<>();
+		Map<String, Object> map = new HashMap<>();
+		map.put("receivable", returnReceivable.setScale(2, RoundingMode.HALF_UP));// 应收
+		map.put("received", sumAmount.setScale(2, RoundingMode.HALF_UP));// 实收
+		map.put("uncollected", returnReceivable.subtract(sumAmount).setScale(2, RoundingMode.HALF_UP));// 未收
+		reList.add(map);
+		return reList;
 	}
 
 }
