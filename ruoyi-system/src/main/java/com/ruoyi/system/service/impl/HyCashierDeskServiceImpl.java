@@ -967,13 +967,12 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 			if (!StringUtils.isEmpty(hac.getFeeDate())) {
 				startTime = hac.getFeeDate().substring(0, 10);
 				endTime = hac.getFeeDate().substring(11);
-			}
-
-			Date firstDate = Constants.TIME_ALL.parse(String.valueOf(map.get("firstday")));
-			Date lastDate = Constants.TIME_ALL.parse(String.valueOf(map.get("lastday")));
-			if (Constants.TIME_YEAR_MONTH_DAY.parse(startTime).getTime() >= firstDate.getTime()
-					&& Constants.TIME_YEAR_MONTH_DAY.parse(endTime).getTime() <= lastDate.getTime()) {
-				dataList.add(hac);
+				Date firstDate = Constants.TIME_ALL.parse(String.valueOf(map.get("firstday")));
+				Date lastDate = Constants.TIME_ALL.parse(String.valueOf(map.get("lastday")));
+				if (Constants.TIME_YEAR_MONTH_DAY.parse(startTime).getTime() >= firstDate.getTime()
+						&& Constants.TIME_YEAR_MONTH_DAY.parse(endTime).getTime() <= lastDate.getTime()) {
+					dataList.add(hac);
+				}
 			}
 
 		}
