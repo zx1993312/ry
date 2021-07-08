@@ -1,9 +1,8 @@
 package com.ruoyi.system.domain;
 
 import java.util.Date;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
@@ -32,6 +31,15 @@ public class HyFitmentManage extends BaseEntity
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Excel(name = "预期工期", width = 30, dateFormat = "yyyy-MM-dd")
     private Date fitmentManageExpect;
+    
+    /** 装修开始日期 */
+    private Date fitmentStartTime;
+    
+    /** 装修结束日期 */
+    private Date fitmentEndTime;
+    
+    /** 手持图片地址 */
+    private String processImg;
 
     /** 业主id */
     @Excel(name = "业主id")
@@ -41,53 +49,71 @@ public class HyFitmentManage extends BaseEntity
     @Excel(name = "业主表")
     private HyOwnerRegistration hyOwnerRegistration;
 
-    public void setId(Long id) 
-    {
-        this.id = id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public Long getId() 
-    {
-        return id;
-    }
-    public void setFitmentManageState(String fitmentManageState) 
-    {
-        this.fitmentManageState = fitmentManageState;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getFitmentManageState() 
-    {
-        return fitmentManageState;
-    }
-    public void setFitmentManageContent(String fitmentManageContent) 
-    {
-        this.fitmentManageContent = fitmentManageContent;
-    }
+	public String getFitmentManageState() {
+		return fitmentManageState;
+	}
 
-    public String getFitmentManageContent() 
-    {
-        return fitmentManageContent;
-    }
-    public void setFitmentManageExpect(Date fitmentManageExpect) 
-    {
-        this.fitmentManageExpect = fitmentManageExpect;
-    }
+	public void setFitmentManageState(String fitmentManageState) {
+		this.fitmentManageState = fitmentManageState;
+	}
 
-    public Date getFitmentManageExpect() 
-    {
-        return fitmentManageExpect;
-    }
-    public void setOwnerRegistrationId(Long ownerRegistrationId) 
-    {
-        this.ownerRegistrationId = ownerRegistrationId;
-    }
+	public String getFitmentManageContent() {
+		return fitmentManageContent;
+	}
 
-    public Long getOwnerRegistrationId() 
-    {
-        return ownerRegistrationId;
-    }
+	public void setFitmentManageContent(String fitmentManageContent) {
+		this.fitmentManageContent = fitmentManageContent;
+	}
 
-    public HyOwnerRegistration getHyOwnerRegistration() {
+	public Date getFitmentManageExpect() {
+		return fitmentManageExpect;
+	}
+
+	public void setFitmentManageExpect(Date fitmentManageExpect) {
+		this.fitmentManageExpect = fitmentManageExpect;
+	}
+
+	public Date getFitmentStartTime() {
+		return fitmentStartTime;
+	}
+
+	public void setFitmentStartTime(Date fitmentStartTime) {
+		this.fitmentStartTime = fitmentStartTime;
+	}
+
+	public Date getFitmentEndTime() {
+		return fitmentEndTime;
+	}
+
+	public void setFitmentEndTime(Date fitmentEndTime) {
+		this.fitmentEndTime = fitmentEndTime;
+	}
+
+	public String getProcessImg() {
+		return processImg;
+	}
+
+	public void setProcessImg(String processImg) {
+		this.processImg = processImg;
+	}
+
+	public Long getOwnerRegistrationId() {
+		return ownerRegistrationId;
+	}
+
+	public void setOwnerRegistrationId(Long ownerRegistrationId) {
+		this.ownerRegistrationId = ownerRegistrationId;
+	}
+
+	public HyOwnerRegistration getHyOwnerRegistration() {
 		return hyOwnerRegistration;
 	}
 
@@ -95,12 +121,6 @@ public class HyFitmentManage extends BaseEntity
 		this.hyOwnerRegistration = hyOwnerRegistration;
 	}
 
-	@Override
-	public String toString() {
-		return "HyFitmentManage [id=" + id + ", fitmentManageState=" + fitmentManageState + ", fitmentManageContent="
-				+ fitmentManageContent + ", fitmentManageExpect=" + fitmentManageExpect + ", ownerRegistrationId="
-				+ ownerRegistrationId + ", hyOwnerRegistration=" + hyOwnerRegistration + "]";
-	}
 
 	
 }

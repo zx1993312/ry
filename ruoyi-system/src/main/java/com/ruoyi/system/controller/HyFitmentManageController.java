@@ -36,124 +36,122 @@ import com.ruoyi.common.core.page.TableDataInfo;
 @CrossOrigin
 @RequestMapping("/system/manage")
 @Api(tags = "装修管理Controller")
-public class HyFitmentManageController extends BaseController
-{
-    private String prefix = "system/manage";
+public class HyFitmentManageController extends BaseController {
+	private String prefix = "system/manage";
 
-    @Autowired
-    private IHyFitmentManageService hyFitmentManageService;
+	@Autowired
+	private IHyFitmentManageService hyFitmentManageService;
 
-    @RequiresPermissions("system:manage:view")
-    @GetMapping()
-    public String manage()
-    {
-        return prefix + "/manage";
-    }
+	@RequiresPermissions("system:manage:view")
+	@GetMapping()
+	public String manage() {
+		return prefix + "/manage";
+	}
 
-    /**
-     * 查询装修管理列表
-     */
-    @ApiOperation("装修管理")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyFitmentManage", value = "项目实体类hyFitmentManage", required = true),
-	})
-    @RequiresPermissions("system:manage:list")
-    @PostMapping("/list")
-    @ResponseBody
-    public TableDataInfo list(HyFitmentManage hyFitmentManage)
-    {
-        startPage();
-        List<HyFitmentManage> list = hyFitmentManageService.selectHyFitmentManageList(hyFitmentManage);
-        return getDataTable(list);
-    }
+	/**
+	 * 查询装修管理列表
+	 */
+	@ApiOperation("装修管理")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "hyFitmentManage", value = "项目实体类hyFitmentManage", required = true), })
+	@RequiresPermissions("system:manage:list")
+	@PostMapping("/list")
+	@ResponseBody
+	public TableDataInfo list(HyFitmentManage hyFitmentManage) {
+		startPage();
+		List<HyFitmentManage> list = hyFitmentManageService.selectHyFitmentManageList(hyFitmentManage);
+		return getDataTable(list);
+	}
 
-    /**
-     * 导出装修管理列表
-     */
-    @ApiOperation("装修管理")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyFitmentManage", value = "项目实体类hyFitmentManage", required = true),
-	})
-    @RequiresPermissions("system:manage:export")
-    @Log(title = "装修管理", businessType = BusinessType.EXPORT)
-    @PostMapping("/export")
-    @ResponseBody
-    public AjaxResult export(HyFitmentManage hyFitmentManage)
-    {
-        List<HyFitmentManage> list = hyFitmentManageService.selectHyFitmentManageList(hyFitmentManage);
-        ExcelUtil<HyFitmentManage> util = new ExcelUtil<HyFitmentManage>(HyFitmentManage.class);
-        return util.exportExcel(list, "manage");
-    }
+	/**
+	 * 导出装修管理列表
+	 */
+	@ApiOperation("装修管理")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "hyFitmentManage", value = "项目实体类hyFitmentManage", required = true), })
+	@RequiresPermissions("system:manage:export")
+	@Log(title = "装修管理", businessType = BusinessType.EXPORT)
+	@PostMapping("/export")
+	@ResponseBody
+	public AjaxResult export(HyFitmentManage hyFitmentManage) {
+		List<HyFitmentManage> list = hyFitmentManageService.selectHyFitmentManageList(hyFitmentManage);
+		ExcelUtil<HyFitmentManage> util = new ExcelUtil<HyFitmentManage>(HyFitmentManage.class);
+		return util.exportExcel(list, "manage");
+	}
 
-    /**
-     * 新增装修管理
-     */
-    @GetMapping("/add")
-    public String add()
-    {
-        return prefix + "/add";
-    }
+	/**
+	 * 新增装修管理
+	 */
+	@GetMapping("/add")
+	public String add() {
+		return prefix + "/add";
+	}
 
-    /**
-     * 新增保存装修管理
-     */
-    @ApiOperation("装修管理")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyFitmentManage", value = "项目实体类hyFitmentManage", required = true),
-	})
-    @RequiresPermissions("system:manage:add")
-    @Log(title = "装修管理", businessType = BusinessType.INSERT)
-    @PostMapping("/add")
-    @ResponseBody
-    public AjaxResult addSave(HyFitmentManage hyFitmentManage)
-    {
-        return toAjax(hyFitmentManageService.insertHyFitmentManage(hyFitmentManage));
-    }
+	/**
+	 * 新增保存装修管理
+	 */
+	@ApiOperation("装修管理")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "hyFitmentManage", value = "项目实体类hyFitmentManage", required = true), })
+	@RequiresPermissions("system:manage:add")
+	@Log(title = "装修管理", businessType = BusinessType.INSERT)
+	@PostMapping("/add")
+	@ResponseBody
+	public AjaxResult addSave(HyFitmentManage hyFitmentManage) {
+		return toAjax(hyFitmentManageService.insertHyFitmentManage(hyFitmentManage));
+	}
 
-    /**
-     * 修改装修管理
-     */
-    @ApiOperation("装修管理")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "id", value = "主键id", required = true),
-	})
-    @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Long id, ModelMap mmap)
-    {
-        HyFitmentManage hyFitmentManage = hyFitmentManageService.selectHyFitmentManageById(id);
-        mmap.put("hyFitmentManage", hyFitmentManage);
-        return prefix + "/edit";
-    }
+	/**
+	 * 装修管理新增APP接口
+	 */
+	@ApiOperation("装修管理新增APP接口")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "hyFitmentManage", value = "项目实体类hyFitmentManage", required = true), })
+	@RequiresPermissions("system:manage:add")
+	@Log(title = "装修管理新增APP接口", businessType = BusinessType.INSERT)
+	@PostMapping("/addAppSaveFitment")
+	@ResponseBody
+	public AjaxResult addAppSaveFitment(HyFitmentManage hyFitmentManage) {
+		//TODO 添加装修申请
+		return toAjax(hyFitmentManageService.insertHyFitmentManage(hyFitmentManage));
+	}
 
-    /**
-     * 修改保存装修管理
-     */
-    @ApiOperation("装修管理")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyFitmentManage", value = "项目实体类hyFitmentManage", required = true),
-	})
-    @RequiresPermissions("system:manage:edit")
-    @Log(title = "装修管理", businessType = BusinessType.UPDATE)
-    @PostMapping("/edit")
-    @ResponseBody
-    public AjaxResult editSave(HyFitmentManage hyFitmentManage)
-    {
-        return toAjax(hyFitmentManageService.updateHyFitmentManage(hyFitmentManage));
-    }
+	/**
+	 * 修改装修管理
+	 */
+	@ApiOperation("装修管理")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "id", value = "主键id", required = true), })
+	@GetMapping("/edit/{id}")
+	public String edit(@PathVariable("id") Long id, ModelMap mmap) {
+		HyFitmentManage hyFitmentManage = hyFitmentManageService.selectHyFitmentManageById(id);
+		mmap.put("hyFitmentManage", hyFitmentManage);
+		return prefix + "/edit";
+	}
 
-    /**
-     * 删除装修管理
-     */
-    @ApiOperation("装修管理")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "ids", value = "ids", required = true),
-	})
-    @RequiresPermissions("system:manage:remove")
-    @Log(title = "装修管理", businessType = BusinessType.DELETE)
-    @PostMapping( "/remove")
-    @ResponseBody
-    public AjaxResult remove(String ids)
-    {
-        return toAjax(hyFitmentManageService.deleteHyFitmentManageByIds(ids));
-    }
+	/**
+	 * 修改保存装修管理
+	 */
+	@ApiOperation("装修管理")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "hyFitmentManage", value = "项目实体类hyFitmentManage", required = true), })
+	@RequiresPermissions("system:manage:edit")
+	@Log(title = "装修管理", businessType = BusinessType.UPDATE)
+	@PostMapping("/edit")
+	@ResponseBody
+	public AjaxResult editSave(HyFitmentManage hyFitmentManage) {
+		return toAjax(hyFitmentManageService.updateHyFitmentManage(hyFitmentManage));
+	}
+
+	/**
+	 * 删除装修管理
+	 */
+	@ApiOperation("装修管理")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "ids", value = "ids", required = true), })
+	@RequiresPermissions("system:manage:remove")
+	@Log(title = "装修管理", businessType = BusinessType.DELETE)
+	@PostMapping("/remove")
+	@ResponseBody
+	public AjaxResult remove(String ids) {
+		return toAjax(hyFitmentManageService.deleteHyFitmentManageByIds(ids));
+	}
 }

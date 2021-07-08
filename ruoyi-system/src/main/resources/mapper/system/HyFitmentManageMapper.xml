@@ -3,17 +3,21 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.system.mapper.HyFitmentManageMapper">
-    
-    <resultMap type="HyFitmentManage" id="HyFitmentManageResult">
-        <result property="id"    column="id"    />
-        <result property="fitmentManageState"    column="fitment_manage_state"    />
-        <result property="fitmentManageContent"    column="fitment_manage_content"    />
-        <result property="fitmentManageExpect"    column="fitment_manage_expect"    />
-        <result property="ownerRegistrationId"    column="owner_registration_id"    />
-        <association property="hyOwnerRegistration" column="id" 
-        javaType="HyOwnerRegistration" resultMap="HyOwnerRegistrationResult" />
-    </resultMap>
-	
+
+	<resultMap type="HyFitmentManage" id="HyFitmentManageResult">
+		<result property="id" column="id" />
+		<result property="fitmentManageState"
+			column="fitment_manage_state" />
+		<result property="fitmentManageContent"
+			column="fitment_manage_content" />
+		<result property="fitmentManageExpect"
+			column="fitment_manage_expect" />
+		<result property="ownerRegistrationId"
+			column="owner_registration_id" />
+		<association property="hyOwnerRegistration" column="id"
+			javaType="HyOwnerRegistration" resultMap="HyOwnerRegistrationResult" />
+	</resultMap>
+
 	<resultMap type="HyOwnerRegistration"
 		id="HyOwnerRegistrationResult">
 		<result property="id" column="id" />
@@ -55,74 +59,94 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="bankNum" column="bank_num" />
 		<result property="bankAccountName" column="bank_account_name" />
 	</resultMap>
-	
-    <sql id="selectHyFitmentManageVo">
-        select 
-        m.id, 
-        m.fitment_manage_state, 
-        m.fitment_manage_content, 
-        m.fitment_manage_expect, 
-        m.owner_registration_id,
-        o.owner_name 
-        from 
-        hy_fitment_manage m
-        LEFT JOIN hy_owner_registration o ON m.owner_registration_id = o.id
-    </sql>
 
-    <select id="selectHyFitmentManageList" parameterType="HyFitmentManage" resultMap="HyFitmentManageResult">
-        <include refid="selectHyFitmentManageVo"/>
-        <where>  
-            <if test="fitmentManageState != null  and fitmentManageState != ''"> and m.fitment_manage_state = #{fitmentManageState}</if>
-            <if test="fitmentManageContent != null  and fitmentManageContent != ''"> and m.fitment_manage_content = #{fitmentManageContent}</if>
-            <if test="fitmentManageExpect != null "> and m.fitment_manage_expect = #{fitmentManageExpect}</if>
-            <if test="ownerRegistrationId != null "> and m.owner_registration_id = #{ownerRegistrationId}</if>
-            <if test="hyOwnerRegistration != null and hyOwnerRegistration != ''">
-            <if test="hyOwnerRegistration.ownerName != null and hyOwnerRegistration.ownerName != ''"> and o.owner_name = #{hyOwnerRegistration.ownerName}</if>
-            </if>
-        </where>
-    </select>
-    
-    <select id="selectHyFitmentManageById" parameterType="Long" resultMap="HyFitmentManageResult">
-        <include refid="selectHyFitmentManageVo"/>
-        where m.id = #{id}
-    </select>
-        
-    <insert id="insertHyFitmentManage" parameterType="HyFitmentManage" useGeneratedKeys="true" keyProperty="id">
-        insert into hy_fitment_manage
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="fitmentManageState != null">fitment_manage_state,</if>
-            <if test="fitmentManageContent != null">fitment_manage_content,</if>
-            <if test="fitmentManageExpect != null">fitment_manage_expect,</if>
-            <if test="ownerRegistrationId != null">owner_registration_id,</if>
-         </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="fitmentManageState != null">#{fitmentManageState},</if>
-            <if test="fitmentManageContent != null">#{fitmentManageContent},</if>
-            <if test="fitmentManageExpect != null">#{fitmentManageExpect},</if>
-            <if test="ownerRegistrationId != null">#{ownerRegistrationId},</if>
-         </trim>
-    </insert>
+	<sql id="selectHyFitmentManageVo">
+		select
+		m.id,
+		m.fitment_manage_state,
+		m.fitment_manage_content,
+		m.fitment_manage_expect,
+		m.owner_registration_id,
+		o.owner_name
+		from
+		hy_fitment_manage m
+		LEFT JOIN hy_owner_registration o ON m.owner_registration_id = o.id
+	</sql>
 
-    <update id="updateHyFitmentManage" parameterType="HyFitmentManage">
-        update hy_fitment_manage
-        <trim prefix="SET" suffixOverrides=",">
-            <if test="fitmentManageState != null">fitment_manage_state = #{fitmentManageState},</if>
-            <if test="fitmentManageContent != null">fitment_manage_content = #{fitmentManageContent},</if>
-            <if test="fitmentManageExpect != null">fitment_manage_expect = #{fitmentManageExpect},</if>
-            <if test="ownerRegistrationId != null">owner_registration_id = #{ownerRegistrationId},</if>
-        </trim>
-        where id = #{id}
-    </update>
+	<select id="selectHyFitmentManageList"
+		parameterType="HyFitmentManage" resultMap="HyFitmentManageResult">
+		<include refid="selectHyFitmentManageVo" />
+		<where>
+			<if
+				test="fitmentManageState != null  and fitmentManageState != ''"> and m.fitment_manage_state = #{fitmentManageState}</if>
+			<if
+				test="fitmentManageContent != null  and fitmentManageContent != ''"> and m.fitment_manage_content = #{fitmentManageContent}</if>
+			<if test="fitmentManageExpect != null "> and m.fitment_manage_expect = #{fitmentManageExpect}
+			</if>
+			<if test="ownerRegistrationId != null "> and m.owner_registration_id = #{ownerRegistrationId}
+			</if>
+			<if
+				test="hyOwnerRegistration != null and hyOwnerRegistration != ''">
+				<if
+					test="hyOwnerRegistration.ownerName != null and hyOwnerRegistration.ownerName != ''"> and o.owner_name = #{hyOwnerRegistration.ownerName}</if>
+			</if>
+		</where>
+	</select>
 
-    <delete id="deleteHyFitmentManageById" parameterType="Long">
-        delete from hy_fitment_manage where id = #{id}
-    </delete>
+	<select id="selectHyFitmentManageById" parameterType="Long"
+		resultMap="HyFitmentManageResult">
+		<include refid="selectHyFitmentManageVo" />
+		where m.id = #{id}
+	</select>
 
-    <delete id="deleteHyFitmentManageByIds" parameterType="String">
-        delete from hy_fitment_manage where id in 
-        <foreach item="id" collection="array" open="(" separator="," close=")">
-            #{id}
-        </foreach>
-    </delete>
+	<insert id="insertHyFitmentManage"
+		parameterType="HyFitmentManage" useGeneratedKeys="true"
+		keyProperty="id">
+		insert into hy_fitment_manage
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="fitmentManageState != null">fitment_manage_state,</if>
+			<if test="fitmentManageContent != null">fitment_manage_content,</if>
+			<if test="fitmentManageExpect != null">fitment_manage_expect,</if>
+			<if test="ownerRegistrationId != null">owner_registration_id,</if>
+
+			<if test="fitmentStartTime != null">fitment_start_time,</if>
+			<if test="fitmentEndTime != null">fitment_end_time,</if>
+			<if test="processImg != null">process_img,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="fitmentManageState != null">#{fitmentManageState},</if>
+			<if test="fitmentManageContent != null">#{fitmentManageContent},</if>
+			<if test="fitmentManageExpect != null">#{fitmentManageExpect},</if>
+			<if test="ownerRegistrationId != null">#{ownerRegistrationId},</if>
+			
+			<if test="fitmentStartTime != null">#{fitmentStartTime},</if>
+			<if test="fitmentEndTime != null">#{fitmentEndTime},</if>
+			<if test="processImg != null">#{processImg},</if>
+		</trim>
+	</insert>
+
+	<update id="updateHyFitmentManage"
+		parameterType="HyFitmentManage">
+		update hy_fitment_manage
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="fitmentManageState != null">fitment_manage_state = #{fitmentManageState},</if>
+			<if test="fitmentManageContent != null">fitment_manage_content = #{fitmentManageContent},</if>
+			<if test="fitmentManageExpect != null">fitment_manage_expect = #{fitmentManageExpect},</if>
+			<if test="ownerRegistrationId != null">owner_registration_id = #{ownerRegistrationId},</if>
+		</trim>
+		where id = #{id}
+	</update>
+
+	<delete id="deleteHyFitmentManageById" parameterType="Long">
+		delete from hy_fitment_manage where id = #{id}
+	</delete>
+
+	<delete id="deleteHyFitmentManageByIds" parameterType="String">
+		delete from hy_fitment_manage where id in
+		<foreach item="id" collection="array" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
 
 </mapper>
