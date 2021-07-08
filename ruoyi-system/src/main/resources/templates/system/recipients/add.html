@@ -53,6 +53,11 @@
                 </div>
             </div>
             <div class="form-group">    
+               	<div class="col-sm-8">
+	                <input id="recipientsNumber" name="recipientsNumber" class="form-control" type="hidden">
+                </div>
+            </div>
+            <div class="form-group">    
                 <!-- <label class="col-sm-3 control-label">电话：</label> -->
                 <div class="col-sm-8">
                     <input id="recipientsPhone" name="recipientsPhone" class="form-control" type="hidden" onkeyup="this.value=this.value.replace(/\D/g,'')">
@@ -282,7 +287,18 @@
                 }
             });
    		}
+   	 	$(function() {
+	     	var date = new Date();
+	     	var time = date.getTime();
+	     	var year = date.getFullYear();
+	     	var Month = "0"+(date.getMonth()+1);
+	     	var da = date.getDate();
+	     	var dateStr = year+"-"+Month+"-"+da;
+	     	$("#recipientsNumber").val(time);
+   	 	});
    		function changePhone(){
+   			
+   			
    			$.ajax({
                 url: prefix2 + "/lists",
                 data: {userId : $("#employee").val()},

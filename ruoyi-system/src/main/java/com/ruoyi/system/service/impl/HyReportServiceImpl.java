@@ -44,6 +44,40 @@ public class HyReportServiceImpl implements IHyReportService
     {
         return hyReportMapper.selectHyReportList(hyReport);
     }
+    
+    /**
+     * 查询待派报事管理列表APP
+     * 
+     * @param hyReport 报事管理
+     * @return 报事管理
+     */
+    @Override
+	public List<HyReport> selectHyReportListByDP(HyReport hyReport) {
+    	return hyReportMapper.selectHyReportListByDP(hyReport);
+	}
+    
+    /**
+     * 查询已派报事管理列表APP
+     * 
+     * @param hyReport 报事管理
+     * @return 报事管理
+     */
+    @Override
+    public List<HyReport> selectHyReportListByYP(HyReport hyReport) {
+    	return hyReportMapper.selectHyReportListByYP(hyReport);
+    }
+    
+    /**
+     * 查询已完成报事管理列表APP
+     * 
+     * @param hyReport 报事管理
+     * @return 报事管理
+     */
+    @Override
+    public List<HyReport> selectHyReportListByYWC(HyReport hyReport) {
+    	return hyReportMapper.selectHyReportListByYWC(hyReport);
+    }
+
 
     /**
      * 新增报事管理
@@ -57,6 +91,18 @@ public class HyReportServiceImpl implements IHyReportService
     {
         return hyReportMapper.insertHyReport(hyReport);
     }
+    
+    /**
+     * 新增报事管理App
+     * 
+     * @param hyReport 报事管理
+     * @return 结果
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+	public int insertHyReportByApp(HyReport hyReport) {
+    	return hyReportMapper.insertHyReport(hyReport);
+	}
 
     /**
      * 修改报事管理
@@ -107,5 +153,4 @@ public class HyReportServiceImpl implements IHyReportService
     {
         return hyReportMapper.deleteHyReportById(id);
     }
-
 }

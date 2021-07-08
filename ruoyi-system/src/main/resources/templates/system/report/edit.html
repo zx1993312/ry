@@ -23,7 +23,7 @@
                 <div class="col-sm-8">
                 <select id="recipientsId" name="recipientsId" th:field="*{recipientsId}" class="form-control" th:with="type=${@recipients.getRecipients()}">
 					<option value="">请选择</option>
-					<option th:if="data!=null" th:each="data:${type}" th:text="${data.recipientsEmployee}" th:value="${data.id}"></option>
+					<option th:if="data!=null" th:each="data:${type}" th:text="${data.sysUser.userName}" th:value="${data.id}"></option>
 		 	    </select>
                 </div>
             </div>
@@ -34,7 +34,7 @@
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">分类：</label>
+                <label class="col-sm-3 control-label">类型：</label>
                 <div class="col-sm-8">
                 	<select name="reportClassify" th:field="*{reportClassify}" class="form-control" th:with="type=${@dict.getType('hy_serve_type')}">
 						<option value="">请选择</option>

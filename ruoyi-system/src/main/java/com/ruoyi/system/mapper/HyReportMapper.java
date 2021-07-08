@@ -18,6 +18,14 @@ public interface HyReportMapper
      * @return 报事管理
      */
     public HyReport selectHyReportById(Long id);
+    
+    /**
+     * 查询单数
+     * 
+     * @param id 接收员ID
+     * @return 报事管理
+     */
+    public HyReport selectHyReportCount(Long id);
 
     /**
      * 查询报事管理列表
@@ -26,6 +34,30 @@ public interface HyReportMapper
      * @return 报事管理集合
      */
     public List<HyReport> selectHyReportList(HyReport hyReport);
+    
+    /**
+     * 查询待派报事管理列表APP
+     * 
+     * @param hyReport 报事管理
+     * @return 报事管理集合
+     */
+    public List<HyReport> selectHyReportListByDP(HyReport hyReport);
+    
+    /**
+     * 查询已派报事管理列表APP
+     * 
+     * @param hyReport 报事管理
+     * @return 报事管理集合
+     */
+    public List<HyReport> selectHyReportListByYP(HyReport hyReport);
+    
+    /**
+     * 查询已完成报事管理列表APP
+     * 
+     * @param hyReport 报事管理
+     * @return 报事管理集合
+     */
+    public List<HyReport> selectHyReportListByYWC(HyReport hyReport);
 
     /**
      * 新增报事管理

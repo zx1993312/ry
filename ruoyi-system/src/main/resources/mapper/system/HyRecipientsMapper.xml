@@ -6,6 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <resultMap type="HyRecipients" id="HyRecipientsResult">
         <result property="id"    column="id"    />
+        <result property="recipientsNumber"    column="recipients_number"    />
         <result property="personType"    column="person_type"    />
         <result property="recipientsProperty"    column="recipients_property"    />
         <result property="recipientsParent"    column="recipients_parent"    />
@@ -47,6 +48,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <sql id="selectHyRecipientsVo">
         select 
         c.id, 
+        c.recipients_number, 
         c.person_type, 
         c.recipients_property, 
         c.recipients_parent, 
@@ -67,6 +69,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectHyRecipientsList" parameterType="HyRecipients" resultMap="HyRecipientsResult">
         <include refid="selectHyRecipientsVo"/>
         <where>  
+            <if test="recipientsNumber != null  and recipientsNumber != ''"> and c.recipients_number = #{recipientsNumber}</if>
             <if test="personType != null  and personType != ''"> and c.person_type = #{personType}</if>
             <if test="recipientsProperty != null  and recipientsProperty != ''"> and c.recipients_property = #{recipientsProperty}</if>
             <if test="recipientsParent != null  and recipientsParent != ''"> and c.recipients_parent = #{recipientsParent}</if>
@@ -89,6 +92,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="insertHyRecipients" parameterType="HyRecipients" useGeneratedKeys="true" keyProperty="id">
         insert into hy_recipients
         <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="recipientsNumber != null">recipients_number,</if>
             <if test="personType != null">person_type,</if>
             <if test="recipientsProperty != null">recipients_property,</if>
             <if test="recipientsParent != null">recipients_parent,</if>
@@ -102,6 +106,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="recipientsArea != null">recipients_area,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="recipientsNumber != null">#{recipientsNumber},</if>
             <if test="personType != null">#{personType},</if>
             <if test="recipientsProperty != null">#{recipientsProperty},</if>
             <if test="recipientsParent != null">#{recipientsParent},</if>
@@ -119,6 +124,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateHyRecipients" parameterType="HyRecipients">
         update hy_recipients
         <trim prefix="SET" suffixOverrides=",">
+            <if test="recipientsNumber != null">recipients_number = #{recipientsNumber},</if>
             <if test="personType != null">person_type = #{personType},</if>
             <if test="recipientsProperty != null">recipients_property = #{recipientsProperty},</if>
             <if test="recipientsParent != null">recipients_parent = #{recipientsParent},</if>

@@ -14,7 +14,7 @@
                                 <label>姓名：</label>
                                 <select id="reportId" name="reportId" class="form-control" th:with="type=${@recipients.getRecipients()}">
 									<option value="">请选择</option>
-									<option th:if="data!=null" th:each="data:${type}" th:text="${data.recipientsEmployee}" th:value="${data.id}"></option>
+									<option th:if="data!=null" th:each="data:${type}" th:text="${data.sysUser.userName}" th:value="${data.id}"></option>
 						 	    </select>
                             </li>
                             <li>
@@ -31,8 +31,11 @@
                                 <input type="text" name="reportAddress"/>
                             </li>
                             <li>
-                                <label>分类：</label>
-                                <input type="text" name="reportClassify"/>
+                                <label>类型：</label>
+                                <select name="reportClassify" class="form-control" th:with="type=${@dict.getType('hy_serve_type')}">
+									<option value="">请选择</option>
+									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+						 	    </select>
                             </li>
                             <li>
                                 <label>日期：</label>
@@ -46,9 +49,9 @@
                                 <label>状态：</label>
                                 <select name="reportState" class="form-control " >
 			                      <option value="">请选择</option>
-			                      <option value="1">未处理</option>
-			                      <option value="2">处理中</option>
-			                      <option value="2">已处理</option>
+			                      <option value="1">待派</option>
+			                      <option value="2">已派</option>
+			                      <option value="2">已完成</option>
 			                     </select>
                             </li>
                             <!-- <li>
@@ -136,7 +139,7 @@
                     title: '类型'
                 },
                 {
-                    field: 'hyRecipients.recipientsEmployee',
+                    field: 'sysUser.userName',
                     title: '姓名'
                 },
                 {
@@ -161,9 +164,9 @@
                     formatter: function(value, item, index) {
                     	switch(value){
 	                    	case "" : value =  "请选择";break;
-	                    	case "1" : value =  "未处理";break;
-	                    	case "2" : value =  "处理中";break;
-	                    	case "3" : value =  "已处理";break;
+	                    	case "1" : value =  "待派";break;
+	                    	case "2" : value =  "已派";break;
+	                    	case "3" : value =  "已完成";break;
 	                	}
 		            	return value;
 		            }
@@ -330,11 +333,11 @@
                 }
             });
         	}else if(reportState=="1"){
-        		$.modal.alertWarning("该条报修未处理");
+        		$.modal.alertWarning("该条报修待派");
         	}else if(reportState=="3"){
-        		$.modal.alertWarning("该条报修已处理");
+        		$.modal.alertWarning("该条报修已派");
         	}else if(reportPush=="2"){
-        		$.modal.alertWarning("该条报修已推送");
+        		$.modal.alertWarning("该条报修已完成");
         	}
 
         }

@@ -26,6 +26,30 @@ public interface IHyReportService
      * @return 报事管理集合
      */
     public List<HyReport> selectHyReportList(HyReport hyReport);
+    
+    /**
+     * 查询待派报事管理列表APP
+     * 
+     * @param hyReport 报事管理
+     * @return 报事管理集合
+     */
+    public List<HyReport> selectHyReportListByDP(HyReport hyReport);
+    
+    /**
+     * 查询已派报事管理列表APP
+     * 
+     * @param hyReport 报事管理
+     * @return 报事管理集合
+     */
+    public List<HyReport> selectHyReportListByYP(HyReport hyReport);
+    
+    /**
+     * 查询已完成报事管理列表APP
+     * 
+     * @param hyReport 报事管理
+     * @return 报事管理集合
+     */
+    public List<HyReport> selectHyReportListByYWC(HyReport hyReport);
 
     /**
      * 新增报事管理
@@ -34,6 +58,14 @@ public interface IHyReportService
      * @return 结果
      */
     public int insertHyReport(HyReport hyReport);
+    
+    /**
+     * 新增报事管理App
+     * 
+     * @param hyReport 报事管理
+     * @return 结果
+     */
+    public int insertHyReportByApp(HyReport hyReport);
 
     /**
      * 修改报事管理

@@ -2,11 +2,11 @@ package com.ruoyi.system.domain;
 
 import java.math.BigDecimal;
 import java.util.Date;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
+import com.ruoyi.common.core.domain.entity.SysUser;
 
 /**
  * 报事管理对象 hy_report
@@ -21,9 +21,17 @@ public class HyReport extends BaseEntity
     /** 报事管理id */
     private Long id;
 
-    /** 地址 */
+    /** 地址/所在位置 */
     @Excel(name = "地址")
     private String reportAddress;
+    
+    /** 报事区域 */
+    @Excel(name = "报事区域")
+    private String reportArea;
+    
+    /** 报事等级 */
+    @Excel(name = "报事等级")
+    private String reportLevel;
 
     /** 分类 */
     @Excel(name = "分类")
@@ -32,6 +40,10 @@ public class HyReport extends BaseEntity
     /** 报修内容 */
     @Excel(name = "报修内容")
     private String reportContent;
+    
+    /** 详情描述 */
+    @Excel(name = "详情描述")
+    private String reportDescription;
 
     /** 日期 */
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -65,6 +77,10 @@ public class HyReport extends BaseEntity
     /** 推送 */
     @Excel(name = "推送")
     private String reportPush;
+    
+    /** 图片 */
+    @Excel(name = "图片")
+    private String reportPicture;
 
     /** 小区id */
     @Excel(name = "小区id")
@@ -81,6 +97,11 @@ public class HyReport extends BaseEntity
     /** 接收员表 */
     @Excel(name = "接收员表")
     private HyRecipients hyRecipients;
+    
+    /** 员工表 */
+    @Excel(name = "员工表")
+    private SysUser sysUser;
+    
 
     public void setId(Long id) 
     {
@@ -223,15 +244,58 @@ public class HyReport extends BaseEntity
 		this.hyRecipients = hyRecipients;
 	}
 
+	public String getReportArea() {
+		return reportArea;
+	}
+
+	public void setReportArea(String reportArea) {
+		this.reportArea = reportArea;
+	}
+
+	public String getReportLevel() {
+		return reportLevel;
+	}
+
+	public void setReportLevel(String reportLevel) {
+		this.reportLevel = reportLevel;
+	}
+
+	public String getReportDescription() {
+		return reportDescription;
+	}
+
+	public void setReportDescription(String reportDescription) {
+		this.reportDescription = reportDescription;
+	}
+
+	public String getReportPicture() {
+		return reportPicture;
+	}
+
+	public void setReportPicture(String reportPicture) {
+		this.reportPicture = reportPicture;
+	}
+
+	public SysUser getSysUser() {
+		return sysUser;
+	}
+
+	public void setSysUser(SysUser sysUser) {
+		this.sysUser = sysUser;
+	}
+
 	@Override
 	public String toString() {
-		return "HyReport [id=" + id + ", reportAddress=" + reportAddress + ", reportClassify=" + reportClassify
-				+ ", reportContent=" + reportContent + ", reportDate=" + reportDate + ", reportQuality=" + reportQuality
-				+ ", reportState=" + reportState + ", reportAudit=" + reportAudit + ", reportEvaluate=" + reportEvaluate
-				+ ", reportCost=" + reportCost + ", reportVisit=" + reportVisit + ", reportPush=" + reportPush
-				+ ", quartersId=" + quartersId + ", hyResidentialQuarters=" + hyResidentialQuarters + ", recipientsId="
-				+ recipientsId + ", hyRecipients=" + hyRecipients + "]";
+		return "HyReport [id=" + id + ", reportAddress=" + reportAddress + ", reportArea=" + reportArea
+				+ ", reportLevel=" + reportLevel + ", reportClassify=" + reportClassify + ", reportContent="
+				+ reportContent + ", reportDescription=" + reportDescription + ", reportDate=" + reportDate
+				+ ", reportQuality=" + reportQuality + ", reportState=" + reportState + ", reportAudit=" + reportAudit
+				+ ", reportEvaluate=" + reportEvaluate + ", reportCost=" + reportCost + ", reportVisit=" + reportVisit
+				+ ", reportPush=" + reportPush + ", reportPicture=" + reportPicture + ", quartersId=" + quartersId
+				+ ", hyResidentialQuarters=" + hyResidentialQuarters + ", recipientsId=" + recipientsId
+				+ ", hyRecipients=" + hyRecipients + ", sysUser=" + sysUser + "]";
 	}
+
 
 	
 

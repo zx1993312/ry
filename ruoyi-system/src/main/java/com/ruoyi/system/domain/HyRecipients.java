@@ -1,7 +1,5 @@
 package com.ruoyi.system.domain;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 import com.ruoyi.common.core.domain.entity.SysUser;
@@ -19,6 +17,10 @@ public class HyRecipients extends BaseEntity
     /** 接收员id */
     private Long id;
 
+    /** 工号 */
+    @Excel(name = "工号")
+    private String recipientsNumber;
+    
     /** 人员类型 */
     @Excel(name = "人员类型")
     private String personType;
@@ -66,6 +68,10 @@ public class HyRecipients extends BaseEntity
     /** 员工表 */
     @Excel(name = "员工表")
     private SysUser sysUser;
+    
+    /** 单数 */
+    @Excel(name = "单数")
+    private String singular;
 
     public void setId(Long id) 
     {
@@ -76,7 +82,17 @@ public class HyRecipients extends BaseEntity
     {
         return id;
     }
-    public void setPersonType(String personType) 
+    
+    
+	public String getRecipientsNumber() {
+		return recipientsNumber;
+	}
+
+	public void setRecipientsNumber(String recipientsNumber) {
+		this.recipientsNumber = recipientsNumber;
+	}
+
+	public void setPersonType(String personType) 
     {
         this.personType = personType;
     }
@@ -181,15 +197,31 @@ public class HyRecipients extends BaseEntity
 		this.sysUser = sysUser;
 	}
 
+	public String getSingular() {
+		return singular;
+	}
+
+	public void setSingular(String singular) {
+		this.singular = singular;
+	}
+
 	@Override
 	public String toString() {
-		return "HyRecipients [id=" + id + ", personType=" + personType + ", recipientsProperty=" + recipientsProperty
-				+ ", recipientsParent=" + recipientsParent + ", recipientsDept=" + recipientsDept
-				+ ", recipientsEmployee=" + recipientsEmployee + ", recipientsPhone=" + recipientsPhone
-				+ ", notificationWay=" + notificationWay + ", notificationType=" + notificationType
-				+ ", recipientsProvince=" + recipientsProvince + ", recipientsCity=" + recipientsCity
-				+ ", recipientsArea=" + recipientsArea + ", sysUser=" + sysUser + "]";
+		return "HyRecipients [id=" + id + ", recipientsNumber=" + recipientsNumber + ", personType=" + personType
+				+ ", recipientsProperty=" + recipientsProperty + ", recipientsParent=" + recipientsParent
+				+ ", recipientsDept=" + recipientsDept + ", recipientsEmployee=" + recipientsEmployee
+				+ ", recipientsPhone=" + recipientsPhone + ", notificationWay=" + notificationWay
+				+ ", notificationType=" + notificationType + ", recipientsProvince=" + recipientsProvince
+				+ ", recipientsCity=" + recipientsCity + ", recipientsArea=" + recipientsArea + ", sysUser=" + sysUser
+				+ ", singular=" + singular + "]";
 	}
+
+
+	
+
+	
+
+	
 
 	
 

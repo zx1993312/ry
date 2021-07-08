@@ -1,12 +1,12 @@
 package com.ruoyi.system.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.httpclient.Header;  
-import org.apache.commons.httpclient.HttpClient;  
-import org.apache.commons.httpclient.NameValuePair;  
-import org.apache.commons.httpclient.methods.PostMethod;  
-  
+import org.apache.commons.httpclient.Header;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.NameValuePair;
+import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -73,6 +73,54 @@ public class HyReportController extends BaseController
         List<HyReport> list = hyReportService.selectHyReportList(hyReport);
         return getDataTable(list);
     }
+    
+    /**
+     * 查询待派单报事管理列表APP
+     */
+    @ApiOperation("报事管理")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyReport", value = "项目实体类hyReport", required = true),
+    })
+    @RequiresPermissions("system:report:list")
+    @PostMapping("/listDP")
+    @ResponseBody
+    public List<HyReport> listDP(HyReport hyReport)
+    {
+    	List<HyReport> list = hyReportService.selectHyReportListByDP(hyReport);
+    	return list;
+    }
+    
+    /**
+     * 查询已派单报事管理列表APP
+     */
+    @ApiOperation("报事管理")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyReport", value = "项目实体类hyReport", required = true),
+    })
+    @RequiresPermissions("system:report:list")
+    @PostMapping("/listYP")
+    @ResponseBody
+    public List<HyReport> listYP(HyReport hyReport)
+    {
+    	List<HyReport> list = hyReportService.selectHyReportListByYP(hyReport);
+    	return list;
+    }
+    
+    /**
+     * 查询已完成报事管理列表APP
+     */
+    @ApiOperation("报事管理")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyReport", value = "项目实体类hyReport", required = true),
+    })
+    @RequiresPermissions("system:report:list")
+    @PostMapping("/listYWC")
+    @ResponseBody
+    public List<HyReport> listYWC(HyReport hyReport)
+    {
+    	List<HyReport> list = hyReportService.selectHyReportListByYWC(hyReport);
+    	return list;
+    }
 
     /**
      * 导出报事管理列表
@@ -116,6 +164,22 @@ public class HyReportController extends BaseController
     {
         return toAjax(hyReportService.insertHyReport(hyReport));
     }
+    
+    /**
+     * 新增保存报事管理App
+     */
+    @ApiOperation("报事管理")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyReport", value = "项目实体类hyReport", required = true),
+    })
+    @RequiresPermissions("system:report:add")
+    @Log(title = "报事管理", businessType = BusinessType.INSERT)
+    @PostMapping("/appAdd")
+    @ResponseBody
+    public AjaxResult appAdd(HyReport hyReport)
+    {
+    	return toAjax(hyReportService.insertHyReportByApp(hyReport));
+    }
 
     /**
      * 修改报事管理
@@ -145,6 +209,22 @@ public class HyReportController extends BaseController
         HyReport hyReport = hyReportService.selectHyReportById(id);
         mmap.put("hyReport", hyReport);
         return prefix + "/edit";
+    }
+    
+    /**
+     * 查看报事管理详情App
+     */
+    @ApiOperation("报事管理")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "id", value = "主键id", required = true),
+    })
+    @GetMapping("/detail")
+    public List<HyReport> detail(Long id)
+    {
+    	List<HyReport> list = new ArrayList<HyReport>();
+    	HyReport hyReport = hyReportService.selectHyReportById(id);
+    	list.add(hyReport);
+    	return list;
     }
 
     /**

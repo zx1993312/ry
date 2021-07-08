@@ -7,8 +7,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="HyReport" id="HyReportResult">
         <result property="id"    column="id"    />
         <result property="reportAddress"    column="report_address"    />
+        <result property="reportArea"    column="report_area"    />
+        <result property="reportLevel"    column="report_level"    />
         <result property="reportClassify"    column="report_classify"    />
         <result property="reportContent"    column="report_content"    />
+        <result property="reportDescription"    column="report_description"    />
         <result property="reportDate"    column="report_date"    />
         <result property="reportQuality"    column="report_quality"    />
         <result property="reportState"    column="report_state"    />
@@ -17,6 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="reportCost"    column="report_cost"    />
         <result property="reportVisit"    column="report_visit"    />
         <result property="reportPush"    column="report_push"    />
+        <result property="reportPicture"    column="report_picture"    />
         <result property="quartersId"    column="quarters_id"    />
         <result property="recipientsId"    column="recipients_id"    />
         <association property="hyResidentialQuarters"
@@ -25,6 +29,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <association property="hyRecipients"
 			column="id" javaType="HyRecipients"
 			resultMap="HyRecipientsResult" />
+        <association property="sysUser"
+			column="id" javaType="SysUser"
+			resultMap="SysUserResult" />
     </resultMap>
 
 	<resultMap type="HyRecipients" id="HyRecipientsResult">
@@ -37,6 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="recipientsProvince"    column="recipients_province"    />
         <result property="recipientsCity"    column="recipients_city"    />
         <result property="recipientsArea"    column="recipients_area"    />
+        <result property="singular"    column="singular"    />
         <result property="reportId"    column="report_id"    />
     </resultMap>
 
@@ -57,13 +65,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="externalLinks"    column="external_links"    />
         <result property="propertyId"    column="property_id"    />
     </resultMap>
+    
+    <resultMap type="SysUser" id="SysUserResult">
+		<id     property="userId"        column="user_id"         />
+		<result property="deptId"        column="dept_id"         />
+		<result property="loginName"     column="login_name"      />
+		<result property="userName"      column="user_name"       />
+		<result property="userType"      column="user_type"       />
+		<result property="email"         column="email"           />
+		<result property="phonenumber"   column="phonenumber"     />
+		<result property="sex"           column="sex"             />
+		<result property="avatar"        column="avatar"          />
+		<result property="password"      column="password"        />
+		<result property="salt"          column="salt"            />
+		<result property="status"        column="status"          />
+		<result property="delFlag"       column="del_flag"        />
+		<result property="loginIp"       column="login_ip"        />
+		<result property="loginDate"     column="login_date"      />
+		<result property="pwdUpdateDate" column="pwd_update_date" />
+		<result property="createBy"      column="create_by"       />
+		<result property="createTime"    column="create_time"     />
+		<result property="updateBy"      column="update_by"       />
+		<result property="updateTime"    column="update_time"     />
+		<result property="remark"        column="remark"          />
+	</resultMap>
 
     <sql id="selectHyReportVo">
         select 
         r.id, 
         r.report_address, 
+        r.report_area, 
+        r.report_level, 
         r.report_classify, 
         r.report_content, 
+        r.report_description, 
         r.report_date, 
         r.report_quality, 
         r.report_state, 
@@ -72,23 +107,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         r.report_cost, 
         r.report_visit, 
         r.report_push, 
+        r.report_picture, 
         r.quarters_id,
         r.recipients_id,
         q.community_name,
         e.recipients_employee,
-        e.recipients_phone 
+        e.recipients_phone,
+        u.user_name 
         from 
         hy_report r
         LEFT JOIN hy_residential_quarters q ON r.quarters_id=q.id
         LEFT JOIN hy_recipients e ON r.recipients_id=e.id
+        left join sys_user u on e.recipients_employee = u.user_id
+    </sql>
+    
+    <sql id="selectHyReportCount">
+        select 
+       COUNT(*) singular
+        from 
+        hy_report r
+        LEFT JOIN hy_residential_quarters q ON r.quarters_id=q.id
+        LEFT JOIN hy_recipients e ON r.recipients_id=e.id
+        left join sys_user u on e.recipients_employee = u.user_id
     </sql>
 
     <select id="selectHyReportList" parameterType="HyReport" resultMap="HyReportResult">
         <include refid="selectHyReportVo"/>
         <where>  
             <if test="reportAddress != null  and reportAddress != ''"> and r.report_address = #{reportAddress}</if>
+            <if test="reportArea != null  and reportArea != ''"> and r.report_area = #{reportArea}</if>
+            <if test="reportLevel != null  and reportLevel != ''"> and r.report_level = #{reportLevel}</if>
             <if test="reportClassify != null  and reportClassify != ''"> and r.report_classify = #{reportClassify}</if>
             <if test="reportContent != null  and reportContent != ''"> and r.report_content = #{reportContent}</if>
+            <if test="reportDescription != null  and reportDescription != ''"> and r.report_description = #{reportDescription}</if>
             <if test="reportDate != null "> and r.report_date = #{reportDate}</if>
             <if test="reportQuality != null  and reportQuality != ''"> and r.report_quality = #{reportQuality}</if>
             <if test="reportState != null  and reportState != ''"> and r.report_state = #{reportState}</if>
@@ -97,9 +148,84 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="reportCost != null "> and r.report_cost = #{reportCost}</if>
             <if test="reportVisit != null  and reportVisit != ''"> and r.report_visit = #{reportVisit}</if>
             <if test="reportPush != null  and reportPush != ''"> and r.report_push = #{reportPush}</if>
+            <if test="reportPicture != null  and reportPicture != ''"> and r.report_picture = #{reportPicture}</if>
             <if test="quartersId != null "> and r.quarters_id = #{quartersId}</if>
             <if test="recipientsId != null "> and r.recipients_id = #{recipientsId}</if>
         </where>
+    </select>
+    
+    <select id="selectHyReportListByDP" parameterType="HyReport" resultMap="HyReportResult">
+        <include refid="selectHyReportVo"/>
+        <where>  
+            <if test="reportAddress != null  and reportAddress != ''"> and r.report_address = #{reportAddress}</if>
+            <if test="reportArea != null  and reportArea != ''"> and r.report_area = #{reportArea}</if>
+            <if test="reportLevel != null  and reportLevel != ''"> and r.report_level = #{reportLevel}</if>
+            <if test="reportClassify != null  and reportClassify != ''"> and r.report_classify = #{reportClassify}</if>
+            <if test="reportContent != null  and reportContent != ''"> and r.report_content = #{reportContent}</if>
+            <if test="reportDescription != null  and reportDescription != ''"> and r.report_description = #{reportDescription}</if>
+            <if test="reportDate != null "> and r.report_date = #{reportDate}</if>
+            <if test="reportQuality != null  and reportQuality != ''"> and r.report_quality = #{reportQuality}</if>
+            and r.report_state = "1"
+            <if test="reportAudit != null  and reportAudit != ''"> and r.report_audit = #{reportAudit}</if>
+            <if test="reportEvaluate != null  and reportEvaluate != ''"> and r.report_evaluate = #{reportEvaluate}</if>
+            <if test="reportCost != null "> and r.report_cost = #{reportCost}</if>
+            <if test="reportVisit != null  and reportVisit != ''"> and r.report_visit = #{reportVisit}</if>
+            <if test="reportPush != null  and reportPush != ''"> and r.report_push = #{reportPush}</if>
+            <if test="reportPicture != null  and reportPicture != ''"> and r.report_picture = #{reportPicture}</if>
+            <if test="quartersId != null "> and r.quarters_id = #{quartersId}</if>
+            <if test="recipientsId != null "> and r.recipients_id = #{recipientsId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyReportListByYP" parameterType="HyReport" resultMap="HyReportResult">
+        <include refid="selectHyReportVo"/>
+        <where>  
+            <if test="reportAddress != null  and reportAddress != ''"> and r.report_address = #{reportAddress}</if>
+            <if test="reportArea != null  and reportArea != ''"> and r.report_area = #{reportArea}</if>
+            <if test="reportLevel != null  and reportLevel != ''"> and r.report_level = #{reportLevel}</if>
+            <if test="reportClassify != null  and reportClassify != ''"> and r.report_classify = #{reportClassify}</if>
+            <if test="reportContent != null  and reportContent != ''"> and r.report_content = #{reportContent}</if>
+            <if test="reportDescription != null  and reportDescription != ''"> and r.report_description = #{reportDescription}</if>
+            <if test="reportDate != null "> and r.report_date = #{reportDate}</if>
+            <if test="reportQuality != null  and reportQuality != ''"> and r.report_quality = #{reportQuality}</if>
+            and r.report_state = "2"
+            <if test="reportAudit != null  and reportAudit != ''"> and r.report_audit = #{reportAudit}</if>
+            <if test="reportEvaluate != null  and reportEvaluate != ''"> and r.report_evaluate = #{reportEvaluate}</if>
+            <if test="reportCost != null "> and r.report_cost = #{reportCost}</if>
+            <if test="reportVisit != null  and reportVisit != ''"> and r.report_visit = #{reportVisit}</if>
+            <if test="reportPush != null  and reportPush != ''"> and r.report_push = #{reportPush}</if>
+            <if test="reportPicture != null  and reportPicture != ''"> and r.report_picture = #{reportPicture}</if>
+            <if test="quartersId != null "> and r.quarters_id = #{quartersId}</if>
+            <if test="recipientsId != null "> and r.recipients_id = #{recipientsId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyReportListByYWC" parameterType="HyReport" resultMap="HyReportResult">
+        <include refid="selectHyReportVo"/>
+        <where>  
+            <if test="reportAddress != null  and reportAddress != ''"> and r.report_address = #{reportAddress}</if>
+            <if test="reportArea != null  and reportArea != ''"> and r.report_area = #{reportArea}</if>
+            <if test="reportLevel != null  and reportLevel != ''"> and r.report_level = #{reportLevel}</if>
+            <if test="reportClassify != null  and reportClassify != ''"> and r.report_classify = #{reportClassify}</if>
+            <if test="reportContent != null  and reportContent != ''"> and r.report_content = #{reportContent}</if>
+            <if test="reportDescription != null  and reportDescription != ''"> and r.report_description = #{reportDescription}</if>
+            <if test="reportDate != null "> and r.report_date = #{reportDate}</if>
+            <if test="reportQuality != null  and reportQuality != ''"> and r.report_quality = #{reportQuality}</if>
+            and r.report_state = "3"
+            <if test="reportAudit != null  and reportAudit != ''"> and r.report_audit = #{reportAudit}</if>
+            <if test="reportEvaluate != null  and reportEvaluate != ''"> and r.report_evaluate = #{reportEvaluate}</if>
+            <if test="reportCost != null "> and r.report_cost = #{reportCost}</if>
+            <if test="reportVisit != null  and reportVisit != ''"> and r.report_visit = #{reportVisit}</if>
+            <if test="reportPush != null  and reportPush != ''"> and r.report_push = #{reportPush}</if>
+            <if test="reportPicture != null  and reportPicture != ''"> and r.report_picture = #{reportPicture}</if>
+            <if test="quartersId != null "> and r.quarters_id = #{quartersId}</if>
+            <if test="recipientsId != null "> and r.recipients_id = #{recipientsId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyReportCount" parameterType="Long" resultMap="HyReportResult">
+        <include refid="selectHyReportCount"/>
+        where r.recipients_id = #{id}
     </select>
     
     <select id="selectHyReportById" parameterType="Long" resultMap="HyReportResult">
@@ -111,8 +237,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         insert into hy_report
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="reportAddress != null">report_address,</if>
+            <if test="reportArea != null">report_area,</if>
+            <if test="reportLevel != null">report_level,</if>
             <if test="reportClassify != null">report_classify,</if>
             <if test="reportContent != null">report_content,</if>
+            <if test="reportDescription != null">report_description,</if>
             report_date,
             <if test="reportQuality != null">report_quality,</if>
             report_state,
@@ -121,13 +250,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="reportCost != null">report_cost,</if>
             <if test="reportVisit != null">report_visit,</if>
             <if test="reportPush != null">report_push,</if>
+            <if test="reportPicture != null">report_picture,</if>
             <if test="quartersId != null">quarters_id,</if>
             <if test="recipientsId != null">recipients_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="reportAddress != null">#{reportAddress},</if>
+            <if test="reportArea != null">#{reportArea},</if>
+            <if test="reportLevel != null">#{reportLevel},</if>
             <if test="reportClassify != null">#{reportClassify},</if>
             <if test="reportContent != null">#{reportContent},</if>
+            <if test="reportDescription != null">#{reportDescription},</if>
             NOW(),
             <if test="reportQuality != null">#{reportQuality},</if>
             "1",
@@ -136,6 +269,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="reportCost != null">#{reportCost},</if>
             <if test="reportVisit != null">#{reportVisit},</if>
             <if test="reportPush != null">#{reportPush},</if>
+            <if test="reportPicture != null">#{reportPicture},</if>
             <if test="quartersId != null">#{quartersId},</if>
             <if test="recipientsId != null">#{recipientsId},</if>
          </trim>
@@ -145,8 +279,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update hy_report
         <trim prefix="SET" suffixOverrides=",">
             <if test="reportAddress != null">report_address = #{reportAddress},</if>
+            <if test="reportArea != null">report_area = #{reportArea},</if>
+            <if test="reportLevel != null">report_level = #{reportLevel},</if>
             <if test="reportClassify != null">report_classify = #{reportClassify},</if>
             <if test="reportContent != null">report_content = #{reportContent},</if>
+            <if test="reportDescription != null">reportDescription = #{reportDescription},</if>
             report_date = NOW(),
             <if test="reportQuality != null">report_quality = #{reportQuality},</if>
             <if test="reportState != null">report_state = #{reportState},</if>
@@ -155,6 +292,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="reportCost != null">report_cost = #{reportCost},</if>
             <if test="reportVisit != null">report_visit = #{reportVisit},</if>
             <if test="reportPush != null">report_push = #{reportPush},</if>
+            <if test="reportPicture != null">report_picture = #{reportPicture},</if>
             <if test="quartersId != null">quarters_id = #{quartersId},</if>
             <if test="recipientsId != null">recipients_id = #{recipientsId},</if>
         </trim>

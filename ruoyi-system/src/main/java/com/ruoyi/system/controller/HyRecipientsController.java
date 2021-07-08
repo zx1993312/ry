@@ -1,5 +1,6 @@
 package com.ruoyi.system.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.system.domain.HyRecipients;
+import com.ruoyi.system.domain.HyReport;
+import com.ruoyi.system.mapper.HyReportMapper;
 import com.ruoyi.system.service.IHyRecipientsService;
 
 import io.swagger.annotations.Api;
@@ -42,6 +45,9 @@ public class HyRecipientsController extends BaseController
 
     @Autowired
     private IHyRecipientsService hyRecipientsService;
+    
+    @Autowired
+    private HyReportMapper hyReportMapper;
 
     @RequiresPermissions("system:recipients:view")
     @GetMapping()
@@ -63,8 +69,41 @@ public class HyRecipientsController extends BaseController
     public TableDataInfo list(HyRecipients hyRecipients)
     {
         startPage();
+        List<HyRecipients> reList = new ArrayList<HyRecipients>();
         List<HyRecipients> list = hyRecipientsService.selectHyRecipientsList(hyRecipients);
-        return getDataTable(list);
+        for(HyRecipients recipients: list) {
+        	Long recipientsId = recipients.getId();
+        	HyReport hyReport = hyReportMapper.selectHyReportCount(recipientsId);
+        	;
+        	recipients.setSingular(hyReport.getHyRecipients().getSingular());
+        	reList.add(recipients);
+        }
+        return getDataTable(reList);
+    }
+    
+    /**
+     * 查询接收员列表App
+     */
+    @ApiOperation("接收员")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyRecipients", value = "项目实体类hyRecipients", required = true),
+    })
+    @RequiresPermissions("system:recipients:list")
+    @PostMapping("/listApp")
+    @ResponseBody
+    public List<HyRecipients> listApp(HyRecipients hyRecipients)
+    {
+    	startPage();
+    	List<HyRecipients> reList = new ArrayList<HyRecipients>();
+    	List<HyRecipients> list = hyRecipientsService.selectHyRecipientsList(hyRecipients);
+    	for(HyRecipients recipients: list) {
+    		Long recipientsId = recipients.getId();
+    		HyReport hyReport = hyReportMapper.selectHyReportCount(recipientsId);
+    		;
+    		recipients.setSingular(hyReport.getHyRecipients().getSingular());
+    		reList.add(recipients);
+    	}
+    	return reList;
     }
 
     /**
