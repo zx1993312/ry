@@ -135,7 +135,7 @@
                     title: '装修审核人'
                 },
                 {
-                    field: 'suggestStatus',
+                    field: 'fitmentStatus',
                     title: '审核状态',
                     formatter: function(value, item, index) {
                     	switch(value){
@@ -159,7 +159,7 @@
                     align: 'center',
                     formatter: function(value, row, index) {
                         var actions = [];
-                        if(row.suggestStatus == '1'){
+                        if(row.fitmentStatus == '1'){
                             actions.push('<a class="btn btn-primary btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="editThrough(\'' + row.id + '\')"><i class="fa fa-spin fa-calendar-check-o"></i>通过</a> ');
                             actions.push('<a class="btn btn-danger btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="editRefusal(\'' + row.id + '\')"><i class="fa fa-spin fa-calendar-times-o"></i>拒绝</a> ');
                             }

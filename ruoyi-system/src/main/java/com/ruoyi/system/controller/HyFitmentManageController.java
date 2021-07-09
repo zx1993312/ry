@@ -1,5 +1,6 @@
 package com.ruoyi.system.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,48 @@ public class HyFitmentManageController extends BaseController {
 		startPage();
 		List<HyFitmentManage> list = hyFitmentManageService.selectHyFitmentManageList(hyFitmentManage);
 		return getDataTable(list);
+	}
+	
+	/**
+	 * 查询装修管理待审核列表
+	 */
+	@ApiOperation("装修管理")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "hyFitmentManage", value = "项目实体类hyFitmentManage", required = true), })
+	@RequiresPermissions("system:manage:list")
+	@PostMapping("/listByAudit")
+	@ResponseBody
+	public List<HyFitmentManage> listByAudit(HyFitmentManage hyFitmentManage) {
+		List<HyFitmentManage> list = hyFitmentManageService.selectHyFitmentManageListByAudit(hyFitmentManage);
+		return list;
+	}
+	
+	/**
+	 * 查询装修管理已通过列表
+	 */
+	@ApiOperation("装修管理")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "hyFitmentManage", value = "项目实体类hyFitmentManage", required = true), })
+	@RequiresPermissions("system:manage:list")
+	@PostMapping("/listByThrough")
+	@ResponseBody
+	public List<HyFitmentManage> listByThrough(HyFitmentManage hyFitmentManage) {
+		List<HyFitmentManage> list = hyFitmentManageService.selectHyFitmentManageListByThrough(hyFitmentManage);
+		return list;
+	}
+	
+	/**
+	 * 查询装修管理已拒绝列表
+	 */
+	@ApiOperation("装修管理")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "hyFitmentManage", value = "项目实体类hyFitmentManage", required = true), })
+	@RequiresPermissions("system:manage:list")
+	@PostMapping("/listByRefusal")
+	@ResponseBody
+	public List<HyFitmentManage> listByRefusal(HyFitmentManage hyFitmentManage) {
+		List<HyFitmentManage> list = hyFitmentManageService.selectHyFitmentManageListByRefusal(hyFitmentManage);
+		return list;
 	}
 
 	/**
@@ -126,6 +169,19 @@ public class HyFitmentManageController extends BaseController {
 		HyFitmentManage hyFitmentManage = hyFitmentManageService.selectHyFitmentManageById(id);
 		mmap.put("hyFitmentManage", hyFitmentManage);
 		return prefix + "/edit";
+	}
+	
+	/**
+	 * 修改装修管理
+	 */
+	@ApiOperation("装修管理")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "id", value = "主键id", required = true), })
+	@GetMapping("/editApp")
+	public List<HyFitmentManage> editApp(@PathVariable("id") Long id) {
+		List<HyFitmentManage> list = new ArrayList<HyFitmentManage>();
+		HyFitmentManage hyFitmentManage = hyFitmentManageService.selectHyFitmentManageById(id);
+		list.add(hyFitmentManage);
+		return list;
 	}
 	
 	/**

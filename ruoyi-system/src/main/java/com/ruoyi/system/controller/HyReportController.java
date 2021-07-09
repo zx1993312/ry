@@ -218,7 +218,7 @@ public class HyReportController extends BaseController
     @ApiImplicitParams({ 
     	@ApiImplicitParam(name = "id", value = "主键id", required = true),
     })
-    @GetMapping("/detail")
+    @GetMapping("/detailApp")
     public List<HyReport> detail(Long id)
     {
     	List<HyReport> list = new ArrayList<HyReport>();

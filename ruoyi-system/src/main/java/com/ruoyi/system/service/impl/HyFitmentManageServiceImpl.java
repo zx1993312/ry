@@ -41,6 +41,39 @@ public class HyFitmentManageServiceImpl implements IHyFitmentManageService {
 	public List<HyFitmentManage> selectHyFitmentManageList(HyFitmentManage hyFitmentManage) {
 		return hyFitmentManageMapper.selectHyFitmentManageList(hyFitmentManage);
 	}
+	
+	/**
+	 * 查询装修管理待审核列表
+	 * 
+	 * @param hyFitmentManage 装修管理
+	 * @return 装修管理
+	 */
+	@Override
+	public List<HyFitmentManage> selectHyFitmentManageListByAudit(HyFitmentManage hyFitmentManage) {
+		return hyFitmentManageMapper.selectHyFitmentManageListByAudit(hyFitmentManage);
+	}
+	
+	/**
+	 * 查询装修管理已通过列表
+	 * 
+	 * @param hyFitmentManage 装修管理
+	 * @return 装修管理
+	 */
+	@Override
+	public List<HyFitmentManage> selectHyFitmentManageListByThrough(HyFitmentManage hyFitmentManage) {
+		return hyFitmentManageMapper.selectHyFitmentManageListByThrough(hyFitmentManage);
+	}
+	
+	/**
+	 * 查询装修管理已拒绝列表
+	 * 
+	 * @param hyFitmentManage 装修管理
+	 * @return 装修管理
+	 */
+	@Override
+	public List<HyFitmentManage> selectHyFitmentManageListByRefusal(HyFitmentManage hyFitmentManage) {
+		return hyFitmentManageMapper.selectHyFitmentManageListByRefusal(hyFitmentManage);
+	}
 
 	/**
 	 * 新增装修管理

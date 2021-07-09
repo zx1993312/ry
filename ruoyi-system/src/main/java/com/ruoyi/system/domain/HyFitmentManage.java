@@ -51,7 +51,7 @@ public class HyFitmentManage extends BaseEntity
     private String fitmentAuditor;
     
     /** 审核状态 */
-    private String suggestStatus;
+    private String fitmentStatus;
     
     /** 拒绝原因 */
     private String refusalReason;
@@ -159,12 +159,13 @@ public class HyFitmentManage extends BaseEntity
 		this.fitmentAuditor = fitmentAuditor;
 	}
 
-	public String getSuggestStatus() {
-		return suggestStatus;
+
+	public String getFitmentStatus() {
+		return fitmentStatus;
 	}
 
-	public void setSuggestStatus(String suggestStatus) {
-		this.suggestStatus = suggestStatus;
+	public void setFitmentStatus(String fitmentStatus) {
+		this.fitmentStatus = fitmentStatus;
 	}
 
 	public String getRefusalReason() {
@@ -229,11 +230,12 @@ public class HyFitmentManage extends BaseEntity
 				+ fitmentManageContent + ", fitmentManageExpect=" + fitmentManageExpect + ", fitmentStartTime="
 				+ fitmentStartTime + ", fitmentEndTime=" + fitmentEndTime + ", processImg=" + processImg
 				+ ", fitmentUsername=" + fitmentUsername + ", fitmentDept=" + fitmentDept + ", fitmentAuditor="
-				+ fitmentAuditor + ", suggestStatus=" + suggestStatus + ", refusalReason=" + refusalReason
+				+ fitmentAuditor + ", fitmentStatus=" + fitmentStatus + ", refusalReason=" + refusalReason
 				+ ", throughReason=" + throughReason + ", ownerRegistrationId=" + ownerRegistrationId
 				+ ", hyOwnerRegistration=" + hyOwnerRegistration + ", hyHouseInf=" + hyHouseInf + ", hyBuilding="
 				+ hyBuilding + ", hyResidentialQuarters=" + hyResidentialQuarters + "]";
 	}
+
 
 
 

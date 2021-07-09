@@ -24,8 +24,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			column="fitment_dept" />
 		<result property="fitmentAuditor"
 			column="fitment_auditor" />
-		<result property="suggestStatus"
-			column="suggest_status" />
+		<result property="fitmentStatus"
+			column="fitment_status" />
 		<result property="refusalReason"
 			column="refusal_reason" />
 		<result property="throughReason"
@@ -168,7 +168,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		m.fitment_username,
 		m.fitment_dept,
 		m.fitment_auditor,
-		m.suggest_status,
+		m.fitment_status,
 		m.refusal_reason,
 		m.through_reason,
 		m.owner_registration_id,
@@ -207,8 +207,118 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			</if>
 			<if test="fitmentAuditor != null and fitmentAuditor != ''"> and m.fitment_auditor = #{fitmentAuditor}
 			</if>
-			<if test="suggestStatus != null and suggestStatus != ''"> and m.suggest_status = #{suggestStatus}
+			<if test="fitmentStatus != null and fitmentStatus != ''"> and m.fitment_status = #{fitmentStatus}
 			</if>
+			<if test="refusalReason != null and refusalReason != ''"> and m.refusal_reason = #{refusalReason}
+			</if>
+			<if test="throughReason != null and throughReason != ''"> and m.through_reason = #{throughReason}
+			</if>
+			<if test="ownerRegistrationId != null and ownerRegistrationId != ''"> and m.owner_registration_id = #{ownerRegistrationId}
+			</if>
+			<if
+				test="hyOwnerRegistration != null and hyOwnerRegistration != ''">
+				<if
+					test="hyOwnerRegistration.ownerName != null and hyOwnerRegistration.ownerName != ''"> and o.owner_name = #{hyOwnerRegistration.ownerName}</if>
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectHyFitmentManageListByAudit"
+		parameterType="HyFitmentManage" resultMap="HyFitmentManageResult">
+		<include refid="selectHyFitmentManageVo" />
+		<where>
+			<if
+				test="fitmentManageState != null  and fitmentManageState != ''"> and m.fitment_manage_state = #{fitmentManageState}</if>
+			<if
+				test="fitmentManageContent != null  and fitmentManageContent != ''"> and m.fitment_manage_content = #{fitmentManageContent}</if>
+			<if test="fitmentManageExpect != null "> and m.fitment_manage_expect = #{fitmentManageExpect}
+			</if>
+			<if test="fitmentStartTime != null"> and m.fitment_start_time = #{fitmentStartTime}
+			</if>
+			<if test="fitmentEndTime != null"> and m.fitment_end_time = #{fitmentEndTime}
+			</if>
+			<if test="processImg != null and processImg != ''"> and m.process_img = #{processImg}
+			</if>
+			<if test="fitmentUsername != null and fitmentUsername != ''"> and m.fitment_username = #{fitmentUsername}
+			</if>
+			<if test="fitmentDept != null and fitmentDept != ''"> and m.fitment_dept = #{fitmentDept}
+			</if>
+			<if test="fitmentAuditor != null and fitmentAuditor != ''"> and m.fitment_auditor = #{fitmentAuditor}
+			</if>
+			and m.fitment_status = "1"
+			<if test="refusalReason != null and refusalReason != ''"> and m.refusal_reason = #{refusalReason}
+			</if>
+			<if test="throughReason != null and throughReason != ''"> and m.through_reason = #{throughReason}
+			</if>
+			<if test="ownerRegistrationId != null and ownerRegistrationId != ''"> and m.owner_registration_id = #{ownerRegistrationId}
+			</if>
+			<if
+				test="hyOwnerRegistration != null and hyOwnerRegistration != ''">
+				<if
+					test="hyOwnerRegistration.ownerName != null and hyOwnerRegistration.ownerName != ''"> and o.owner_name = #{hyOwnerRegistration.ownerName}</if>
+			</if>
+		</where>
+	</select>
+	<select id="selectHyFitmentManageListByThrough"
+		parameterType="HyFitmentManage" resultMap="HyFitmentManageResult">
+		<include refid="selectHyFitmentManageVo" />
+		<where>
+			<if
+				test="fitmentManageState != null  and fitmentManageState != ''"> and m.fitment_manage_state = #{fitmentManageState}</if>
+			<if
+				test="fitmentManageContent != null  and fitmentManageContent != ''"> and m.fitment_manage_content = #{fitmentManageContent}</if>
+			<if test="fitmentManageExpect != null "> and m.fitment_manage_expect = #{fitmentManageExpect}
+			</if>
+			<if test="fitmentStartTime != null"> and m.fitment_start_time = #{fitmentStartTime}
+			</if>
+			<if test="fitmentEndTime != null"> and m.fitment_end_time = #{fitmentEndTime}
+			</if>
+			<if test="processImg != null and processImg != ''"> and m.process_img = #{processImg}
+			</if>
+			<if test="fitmentUsername != null and fitmentUsername != ''"> and m.fitment_username = #{fitmentUsername}
+			</if>
+			<if test="fitmentDept != null and fitmentDept != ''"> and m.fitment_dept = #{fitmentDept}
+			</if>
+			<if test="fitmentAuditor != null and fitmentAuditor != ''"> and m.fitment_auditor = #{fitmentAuditor}
+			</if>
+			and m.fitment_status = "2"
+			<if test="refusalReason != null and refusalReason != ''"> and m.refusal_reason = #{refusalReason}
+			</if>
+			<if test="throughReason != null and throughReason != ''"> and m.through_reason = #{throughReason}
+			</if>
+			<if test="ownerRegistrationId != null and ownerRegistrationId != ''"> and m.owner_registration_id = #{ownerRegistrationId}
+			</if>
+			<if
+				test="hyOwnerRegistration != null and hyOwnerRegistration != ''">
+				<if
+					test="hyOwnerRegistration.ownerName != null and hyOwnerRegistration.ownerName != ''"> and o.owner_name = #{hyOwnerRegistration.ownerName}</if>
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectHyFitmentManageListByRefusal"
+		parameterType="HyFitmentManage" resultMap="HyFitmentManageResult">
+		<include refid="selectHyFitmentManageVo" />
+		<where>
+			<if
+				test="fitmentManageState != null  and fitmentManageState != ''"> and m.fitment_manage_state = #{fitmentManageState}</if>
+			<if
+				test="fitmentManageContent != null  and fitmentManageContent != ''"> and m.fitment_manage_content = #{fitmentManageContent}</if>
+			<if test="fitmentManageExpect != null "> and m.fitment_manage_expect = #{fitmentManageExpect}
+			</if>
+			<if test="fitmentStartTime != null"> and m.fitment_start_time = #{fitmentStartTime}
+			</if>
+			<if test="fitmentEndTime != null"> and m.fitment_end_time = #{fitmentEndTime}
+			</if>
+			<if test="processImg != null and processImg != ''"> and m.process_img = #{processImg}
+			</if>
+			<if test="fitmentUsername != null and fitmentUsername != ''"> and m.fitment_username = #{fitmentUsername}
+			</if>
+			<if test="fitmentDept != null and fitmentDept != ''"> and m.fitment_dept = #{fitmentDept}
+			</if>
+			<if test="fitmentAuditor != null and fitmentAuditor != ''"> and m.fitment_auditor = #{fitmentAuditor}
+			</if>
+			and m.fitment_status = "3"
 			<if test="refusalReason != null and refusalReason != ''"> and m.refusal_reason = #{refusalReason}
 			</if>
 			<if test="throughReason != null and throughReason != ''"> and m.through_reason = #{throughReason}
@@ -243,7 +353,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="fitmentUsername != null">fitment_username,</if>
 			<if test="fitmentDept != null">fitment_dept,</if>
 			<if test="fitmentAuditor != null">fitment_auditor,</if>
-			<if test="suggestStatus != null">suggest_status,</if>
+			<if test="fitmentStatus != null">fitment_status,</if>
 			<if test="refusalReason != null">refusal_reason,</if>
 			<if test="throughReason != null">through_reason,</if>
 			<if test="ownerRegistrationId != null">owner_registration_id,</if>
@@ -258,7 +368,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="fitmentUsername != null">#{fitmentUsername},</if>
 			<if test="fitmentDept != null">#{fitmentDept},</if>
 			<if test="fitmentAuditor != null">#{fitmentAuditor},</if>
-			<if test="suggestStatus != null">#{suggestStatus},</if>
+			<if test="fitmentStatus != null">#{fitmentStatus},</if>
 			<if test="refusalReason != null">#{refusalReason},</if>
 			<if test="throughReason != null">#{throughReason},</if>
 			<if test="ownerRegistrationId != null">#{ownerRegistrationId},</if>
@@ -278,7 +388,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="fitmentUsername != null">fitment_username = #{fitmentUsername},</if>
 			<if test="fitmentDept != null">fitment_dept = #{fitmentDept},</if>
 			<if test="fitmentAuditor != null">fitment_auditor = #{fitmentAuditor},</if>
-			<if test="suggestStatus != null">suggest_status = #{suggestStatus},</if>
+			<if test="fitmentStatus != null">fitment_status = #{fitmentStatus},</if>
 			<if test="refusalReason != null">refusal_reason = #{refusalReason},</if>
 			<if test="throughReason != null">through_reason = #{throughReason},</if>
 			<if test="ownerRegistrationId != null">owner_registration_id = #{ownerRegistrationId},</if>

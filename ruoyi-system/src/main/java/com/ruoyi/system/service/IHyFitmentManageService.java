@@ -26,6 +26,30 @@ public interface IHyFitmentManageService
      * @return 装修管理集合
      */
     public List<HyFitmentManage> selectHyFitmentManageList(HyFitmentManage hyFitmentManage);
+    
+    /**
+     * 查询装修管理待审核列表
+     * 
+     * @param hyFitmentManage 装修管理
+     * @return 装修管理集合
+     */
+    public List<HyFitmentManage> selectHyFitmentManageListByAudit(HyFitmentManage hyFitmentManage);
+    
+    /**
+     * 查询装修管理已通过列表
+     * 
+     * @param hyFitmentManage 装修管理
+     * @return 装修管理集合
+     */
+    public List<HyFitmentManage> selectHyFitmentManageListByThrough(HyFitmentManage hyFitmentManage);
+    
+    /**
+     * 查询装修管理已拒绝列表
+     * 
+     * @param hyFitmentManage 装修管理
+     * @return 装修管理集合
+     */
+    public List<HyFitmentManage> selectHyFitmentManageListByRefusal(HyFitmentManage hyFitmentManage);
 
     /**
      * 新增装修管理
@@ -58,4 +82,5 @@ public interface IHyFitmentManageService
      * @return 结果
      */
     public int deleteHyFitmentManageById(Long id);
+
 }

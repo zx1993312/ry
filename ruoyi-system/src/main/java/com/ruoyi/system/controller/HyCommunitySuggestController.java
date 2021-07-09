@@ -1,5 +1,6 @@
 package com.ruoyi.system.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -174,6 +175,22 @@ public class HyCommunitySuggestController extends BaseController
         HyCommunitySuggest hyCommunitySuggest = hyCommunitySuggestService.selectHyCommunitySuggestById(id);
         mmap.put("hyCommunitySuggest", hyCommunitySuggest);
         return prefix + "/edit";
+    }
+    
+    /**
+     * 修改社区建议
+     */
+    @ApiOperation("社区建议")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "id", value = "主键id", required = true),
+    })
+    @GetMapping("/editApp")
+    public List<HyCommunitySuggest> editApp(@PathVariable("id") Long id)
+    {
+    	List<HyCommunitySuggest> list = new ArrayList<HyCommunitySuggest>();
+    	HyCommunitySuggest hyCommunitySuggest = hyCommunitySuggestService.selectHyCommunitySuggestById(id);
+    	list.add(hyCommunitySuggest);
+    	return list;
     }
     
     /**
