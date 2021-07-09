@@ -1,7 +1,7 @@
 package com.ruoyi.system.domain;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import java.util.Date;
+
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
@@ -43,20 +43,43 @@ public class HyLifting extends BaseEntity
     @Excel(name = "物料id")
     private Long materialId;
     
+    /** 申请原因*/
+    @Excel(name = "申请原因")
+    private String reason;
+    
+    /** 开始时间*/
+    @Excel(name = "开始时间")
+    private Date startTime;
+    
+    /** 结束时间*/
+    @Excel(name = "结束时间")
+    private Date endTime;
+    
+    /** 是否长期*/
+    @Excel(name = "是否长期")
+    private String isLong;
+    
+    /** 负责人*/
+    @Excel(name = "负责人")
+    private String leadingCadre;
+    
+    /** 负责人部门*/
+    @Excel(name = "负责人部门")
+    private String leadingDepartment;
+    
     /** 物料表 */
     @Excel(name = "物料表")
     private HyMaterial hyMaterial;
 
-    public void setId(Long id) 
-    {
-        this.id = id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public Long getId() 
-    {
-        return id;
-    }
-    public Long getMaterialNumber() {
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Long getMaterialNumber() {
 		return materialNumber;
 	}
 
@@ -64,48 +87,92 @@ public class HyLifting extends BaseEntity
 		this.materialNumber = materialNumber;
 	}
 
-	public void setMaterialUse(String materialUse) 
-    {
-        this.materialUse = materialUse;
-    }
+	public String getMaterialUse() {
+		return materialUse;
+	}
 
-    public String getMaterialUse() 
-    {
-        return materialUse;
-    }
-    public void setIsreturn(String isreturn) 
-    {
-        this.isreturn = isreturn;
-    }
+	public void setMaterialUse(String materialUse) {
+		this.materialUse = materialUse;
+	}
 
-    public String getIsreturn() 
-    {
-        return isreturn;
-    }
-    public void setDepts(String depts) 
-    {
-        this.depts = depts;
-    }
+	public String getIsreturn() {
+		return isreturn;
+	}
 
-    public String getDepts() 
-    {
-        return depts;
-    }
-    public void setProposer(String proposer) 
-    {
-        this.proposer = proposer;
-    }
+	public void setIsreturn(String isreturn) {
+		this.isreturn = isreturn;
+	}
 
-    public String getProposer() 
-    {
-        return proposer;
-    }
-    public Long getMaterialId() {
+	public String getDepts() {
+		return depts;
+	}
+
+	public void setDepts(String depts) {
+		this.depts = depts;
+	}
+
+	public String getProposer() {
+		return proposer;
+	}
+
+	public void setProposer(String proposer) {
+		this.proposer = proposer;
+	}
+
+	public Long getMaterialId() {
 		return materialId;
 	}
 
 	public void setMaterialId(Long materialId) {
 		this.materialId = materialId;
+	}
+
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+
+	public Date getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
+
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
+	}
+
+	public String getIsLong() {
+		return isLong;
+	}
+
+	public void setIsLong(String isLong) {
+		this.isLong = isLong;
+	}
+
+	public String getLeadingCadre() {
+		return leadingCadre;
+	}
+
+	public void setLeadingCadre(String leadingCadre) {
+		this.leadingCadre = leadingCadre;
+	}
+
+	public String getLeadingDepartment() {
+		return leadingDepartment;
+	}
+
+	public void setLeadingDepartment(String leadingDepartment) {
+		this.leadingDepartment = leadingDepartment;
 	}
 
 	public HyMaterial getHyMaterial() {
@@ -120,15 +187,9 @@ public class HyLifting extends BaseEntity
 	public String toString() {
 		return "HyLifting [id=" + id + ", materialNumber=" + materialNumber + ", materialUse=" + materialUse
 				+ ", isreturn=" + isreturn + ", depts=" + depts + ", proposer=" + proposer + ", materialId="
-				+ materialId + ", hyMaterial=" + hyMaterial + "]";
+				+ materialId + ", reason=" + reason + ", startTime=" + startTime + ", endTime=" + endTime + ", isLong="
+				+ isLong + ", leadingCadre=" + leadingCadre + ", leadingDepartment=" + leadingDepartment
+				+ ", hyMaterial=" + hyMaterial + "]";
 	}
 
-	
-
-
-	
-
-	
-
-    
 }

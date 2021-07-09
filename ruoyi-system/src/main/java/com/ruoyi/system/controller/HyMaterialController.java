@@ -36,140 +36,128 @@ import com.ruoyi.common.core.page.TableDataInfo;
 @CrossOrigin
 @RequestMapping("/system/material")
 @Api(tags = "物料Controller")
-public class HyMaterialController extends BaseController
-{
-    private String prefix = "system/material";
+public class HyMaterialController extends BaseController {
+	private String prefix = "system/material";
 
-    @Autowired
-    private IHyMaterialService hyMaterialService;
+	@Autowired
+	private IHyMaterialService hyMaterialService;
 
-    @RequiresPermissions("system:material:view")
-    @GetMapping()
-    public String material()
-    {
-        return prefix + "/material";
-    }
+	@RequiresPermissions("system:material:view")
+	@GetMapping()
+	public String material() {
+		return prefix + "/material";
+	}
 
-    /**
-     * 查询物料列表
-     */
-    @ApiOperation("物料")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyMaterial", value = "项目实体类hyMaterial", required = true),
-	})
-    @RequiresPermissions("system:material:list")
-    @PostMapping("/list")
-    @ResponseBody
-    public TableDataInfo list(HyMaterial hyMaterial)
-    {
-        startPage();
-        List<HyMaterial> list = hyMaterialService.selectHyMaterialList(hyMaterial);
-        return getDataTable(list);
-    }
+	/**
+	 * 查询物料列表
+	 */
+	@ApiOperation("物料")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyMaterial", value = "项目实体类hyMaterial", required = true), })
+	@RequiresPermissions("system:material:list")
+	@PostMapping("/list")
+	@ResponseBody
+	public TableDataInfo list(HyMaterial hyMaterial) {
+		startPage();
+		List<HyMaterial> list = hyMaterialService.selectHyMaterialList(hyMaterial);
+		return getDataTable(list);
+	}
 
-    /**
-     * 导出物料列表
-     */
-    @ApiOperation("物料")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyMaterial", value = "项目实体类hyMaterial", required = true),
-	})
-    @RequiresPermissions("system:material:export")
-    @Log(title = "物料", businessType = BusinessType.EXPORT)
-    @PostMapping("/export")
-    @ResponseBody
-    public AjaxResult export(HyMaterial hyMaterial)
-    {
-        List<HyMaterial> list = hyMaterialService.selectHyMaterialList(hyMaterial);
-        ExcelUtil<HyMaterial> util = new ExcelUtil<HyMaterial>(HyMaterial.class);
-        return util.exportExcel(list, "material");
-    }
+	/**
+	 * 查询物料列表
+	 */
+	@RequiresPermissions("system:material:appMaterialName")
+	@PostMapping("/appMaterialName")
+	@ResponseBody
+	public TableDataInfo appMaterialName(HyMaterial hyMaterial) {
+		startPage();
+		List<HyMaterial> list = hyMaterialService.appMaterialName(hyMaterial);
+		return getDataTable(list);
+	}
 
-    /**
-     * 新增物料
-     */
-    @GetMapping("/add")
-    public String add()
-    {
-        return prefix + "/add";
-    }
+	/**
+	 * 导出物料列表
+	 */
+	@ApiOperation("物料")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyMaterial", value = "项目实体类hyMaterial", required = true), })
+	@RequiresPermissions("system:material:export")
+	@Log(title = "物料", businessType = BusinessType.EXPORT)
+	@PostMapping("/export")
+	@ResponseBody
+	public AjaxResult export(HyMaterial hyMaterial) {
+		List<HyMaterial> list = hyMaterialService.selectHyMaterialList(hyMaterial);
+		ExcelUtil<HyMaterial> util = new ExcelUtil<HyMaterial>(HyMaterial.class);
+		return util.exportExcel(list, "material");
+	}
 
-    /**
-     * 新增保存物料
-     */
-    @ApiOperation("物料")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyMaterial", value = "项目实体类hyMaterial", required = true),
-	})
-    @RequiresPermissions("system:material:add")
-    @Log(title = "物料", businessType = BusinessType.INSERT)
-    @PostMapping("/add")
-    @ResponseBody
-    public AjaxResult addSave(HyMaterial hyMaterial)
-    {
-        return toAjax(hyMaterialService.insertHyMaterial(hyMaterial));
-    }
+	/**
+	 * 新增物料
+	 */
+	@GetMapping("/add")
+	public String add() {
+		return prefix + "/add";
+	}
 
-    /**
-     * 修改物料
-     */
-    @ApiOperation("物料")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "id", value = "主键id", required = true),
-	})
-    @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Long id, ModelMap mmap)
-    {
-        HyMaterial hyMaterial = hyMaterialService.selectHyMaterialById(id);
-        mmap.put("hyMaterial", hyMaterial);
-        return prefix + "/edit";
-    }
+	/**
+	 * 新增保存物料
+	 */
+	@ApiOperation("物料")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyMaterial", value = "项目实体类hyMaterial", required = true), })
+	@RequiresPermissions("system:material:add")
+	@Log(title = "物料", businessType = BusinessType.INSERT)
+	@PostMapping("/add")
+	@ResponseBody
+	public AjaxResult addSave(HyMaterial hyMaterial) {
+		return toAjax(hyMaterialService.insertHyMaterial(hyMaterial));
+	}
 
-    /**
-     * 修改保存物料
-     */
-    @ApiOperation("物料")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyMaterial", value = "项目实体类hyMaterial", required = true),
-	})
-    @RequiresPermissions("system:material:edit")
-    @Log(title = "物料", businessType = BusinessType.UPDATE)
-    @PostMapping("/edit")
-    @ResponseBody
-    public AjaxResult editSave(HyMaterial hyMaterial)
-    {
-        return toAjax(hyMaterialService.updateHyMaterial(hyMaterial));
-    }
-    
-    /**
-     * 修改保存物料
-     */
-    @ApiOperation("物料")
-    @ApiImplicitParams({ 
-    	@ApiImplicitParam(name = "hyMaterial", value = "项目实体类hyMaterial", required = true),
-    })
-    @RequiresPermissions("system:material:edit")
-    @Log(title = "物料", businessType = BusinessType.UPDATE)
-    @PostMapping("/edits")
-    @ResponseBody
-    public AjaxResult edit(HyMaterial hyMaterial)
-    {
-    	return toAjax(hyMaterialService.updateHyMaterials(hyMaterial));
-    }
+	/**
+	 * 修改物料
+	 */
+	@ApiOperation("物料")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "id", value = "主键id", required = true), })
+	@GetMapping("/edit/{id}")
+	public String edit(@PathVariable("id") Long id, ModelMap mmap) {
+		HyMaterial hyMaterial = hyMaterialService.selectHyMaterialById(id);
+		mmap.put("hyMaterial", hyMaterial);
+		return prefix + "/edit";
+	}
 
-    /**
-     * 删除物料
-     */
-    @ApiOperation("物料")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "ids", value = "ids", required = true),
-	})
-    @RequiresPermissions("system:material:remove")
-    @Log(title = "物料", businessType = BusinessType.DELETE)
-    @PostMapping( "/remove")
-    @ResponseBody
-    public AjaxResult remove(String ids)
-    {
-        return toAjax(hyMaterialService.deleteHyMaterialByIds(ids));
-    }
+	/**
+	 * 修改保存物料
+	 */
+	@ApiOperation("物料")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyMaterial", value = "项目实体类hyMaterial", required = true), })
+	@RequiresPermissions("system:material:edit")
+	@Log(title = "物料", businessType = BusinessType.UPDATE)
+	@PostMapping("/edit")
+	@ResponseBody
+	public AjaxResult editSave(HyMaterial hyMaterial) {
+		return toAjax(hyMaterialService.updateHyMaterial(hyMaterial));
+	}
+
+	/**
+	 * 修改保存物料
+	 */
+	@ApiOperation("物料")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyMaterial", value = "项目实体类hyMaterial", required = true), })
+	@RequiresPermissions("system:material:edit")
+	@Log(title = "物料", businessType = BusinessType.UPDATE)
+	@PostMapping("/edits")
+	@ResponseBody
+	public AjaxResult edit(HyMaterial hyMaterial) {
+		return toAjax(hyMaterialService.updateHyMaterials(hyMaterial));
+	}
+
+	/**
+	 * 删除物料
+	 */
+	@ApiOperation("物料")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "ids", value = "ids", required = true), })
+	@RequiresPermissions("system:material:remove")
+	@Log(title = "物料", businessType = BusinessType.DELETE)
+	@PostMapping("/remove")
+	@ResponseBody
+	public AjaxResult remove(String ids) {
+		return toAjax(hyMaterialService.deleteHyMaterialByIds(ids));
+	}
 }

@@ -13,6 +13,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="depts"    column="depts"    />
         <result property="proposer"    column="proposer"    />
         <result property="materialId"    column="material_id"    />
+        
+        <result property="reason"    column="reason"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="isLong"    column="is_long"    />
+        <result property="leadingCadre"    column="leading_cadre"    />
+        <result property="leadingDepartment"    column="leading_department"    />
+
         <association property="hyMaterial" column="id"
 			javaType="HyMaterial" resultMap="HyMaterialResult" />
     </resultMap>
@@ -45,6 +53,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         l.depts, 
         l.proposer, 
         l.material_id, 
+        l.reason,
+        l.start_time,
+        l.end_time,
+        l.is_long,
+        l.leading_cadre,
+        l.leading_department,
         m.material_name, 
         m.material_type, 
         m.state,
@@ -88,6 +102,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="depts != null">depts,</if>
             <if test="proposer != null">proposer,</if>
             <if test="materialId != null">material_id,</if>
+            
+            <if test="reason != null">reason,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="isLong != null">is_long,</if>
+            <if test="leadingCadre != null">leading_cadre,</if>
+            <if test="leadingDepartment != null">leading_department,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="materialNumber != null">#{materialNumber},</if>
@@ -97,6 +118,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="depts != null">#{depts},</if>
             <if test="proposer != null">#{proposer},</if>
             <if test="materialId != null">#{materialId},</if>
+            
+            <if test="reason != null">#{reason},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="isLong != null">#{isLong},</if>
+            <if test="leadingCadre != null">#{leadingCadre},</if>
+            <if test="leadingDepartment != null">#{leadingDepartment},</if>
          </trim>
     </insert>
 
@@ -110,6 +138,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="depts != null">depts = #{depts},</if>
             <if test="proposer != null">proposer = #{proposer},</if>
             <if test="materialId != null">material_id = #{materialId},</if>
+            
+            <if test="reason != null">reason = #{reason},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="isLong != null">is_long = #{isLong},</if>
+            <if test="leadingCadre != null">leading_cadre = #{leadingCadre},</if>
+            <if test="leadingDepartment != null">leading_department = #{leadingDepartment},</if>
+            
         </trim>
         where id = #{id}
     </update>

@@ -66,4 +66,12 @@ public interface IHyMaterialService
      * @return 结果
      */
     public int deleteHyMaterialById(Long id);
+
+    /**
+     * app端查询物料名
+     * 
+     * @param hyMaterial
+     * @return
+     */
+	public List<HyMaterial> appMaterialName(HyMaterial hyMaterial);
 }

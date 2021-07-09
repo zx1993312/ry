@@ -2,9 +2,6 @@ package com.ruoyi.system.mapper;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-
 import com.ruoyi.system.domain.HyMaterial;
 
 /**
@@ -37,7 +34,7 @@ public interface HyMaterialMapper
      * @param hyMaterial 物料
      * @return 物料集合
      */
-    public List<HyMaterial> selectHyMaterialLists(HyMaterial hyMaterial);
+	public List<HyMaterial> selectHyMaterialLists(HyMaterial hyMaterial);
 
     /**
      * 新增物料
