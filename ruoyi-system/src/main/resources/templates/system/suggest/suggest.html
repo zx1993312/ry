@@ -81,6 +81,8 @@
                 url: prefix + "/list",
                 createUrl: prefix + "/add",
                 updateUrl: prefix + "/edit/{id}",
+                updateUrlThrough: prefix + "/editThrough/{id}",
+                updateUrlRefusal: prefix + "/editRefusal/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
                 modalName: "社区建议",
@@ -117,10 +119,38 @@
                     title: '所属社区'
                 },
                 {
+                    field: 'refusalReason',
+                    title: '拒绝原因'
+                },
+                {
+                    field: 'throughReason',
+                    title: '通过原因'
+                },
+                {
+                    field: 'suggestStatus',
+                    title: '审核状态',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case '1' : value =  "待审核";break;
+	                    	case '2' : value =  "已通过";break;
+	                    	case '3' : value =  "已拒绝";break;
+	                	}
+		            	return value;
+		            }
+                },
+                {
+                    field: 'suggestAuditor',
+                    title: '审核人'
+                },
+                {
                     title: '操作',
                     align: 'center',
                     formatter: function(value, row, index) {
                         var actions = [];
+                        if(row.suggestStatus == '1'){
+                        actions.push('<a class="btn btn-primary btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="editThrough(\'' + row.id + '\')"><i class="fa fa-spin fa-calendar-check-o"></i>通过</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="editRefusal(\'' + row.id + '\')"><i class="fa fa-spin fa-calendar-times-o"></i>拒绝</a> ');
+                        }
                         actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
                         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
                         return actions.join('');
@@ -129,6 +159,49 @@
             };
             $.table.init(options);
         });
+        
+        function editThrough(id){
+        $.modal.confirm("确定要通过该条数据吗？", function() {
+        $.modal.opens("同意审核", $.operate.editUrlThrough(id));
+   		 /* $.ajax({
+             url: prefix + "/edit",
+             data: {'id' : id,'suggestStatus' : "2"},
+             type: 'POST',
+             dataType : "json",
+         	beforeSend: function () {
+   	            $.modal.loading("正在处理中，请稍后...");
+   	            $.modal.disable();
+   	        },
+             success: function (result) {
+            	 $.modal.alertSuccess(result.msg);
+            	 $.modal.closeLoading();
+               	 $.modal.enable();
+            	 $.table.refresh();
+             }
+         }); */
+        });
+        };
+        function editRefusal(id){
+        $.modal.confirm("确定要拒绝该条数据吗？", function() {
+        	$.modal.opens("拒绝审核", $.operate.editUrlRefusal(id));
+        	/* $.ajax({
+                url: prefix + "/edit",
+                data: {'id' : id,'suggestStatus' : "3"},
+                type: 'POST',
+                dataType : "json",
+               	beforeSend: function () {
+       	            $.modal.loading("正在处理中，请稍后...");
+       	            $.modal.disable();
+       	        },
+                success: function (result) {
+               	 $.modal.alertSuccess(result.msg);
+               	 $.modal.closeLoading();
+               	 $.modal.enable();
+               	 $.table.refresh();
+                }
+            }); */
+        });
+        };
     </script>
 </body>
 </html>

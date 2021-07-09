@@ -11,6 +11,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="suggestName"    column="suggest_name"    />
         <result property="suggestDate"    column="suggest_date"    />
         <result property="contactInformation"    column="contact_information"    />
+        <result property="suggestAuditor"    column="suggest_auditor"    />
+        <result property="suggestStatus"    column="suggest_status"    />
+        <result property="refusalReason"    column="refusal_reason"    />
+        <result property="throughReason"    column="through_reason"    />
         <result property="communityId"    column="community_id"    />
         <association property="hyCommunity" column="id"
 			javaType="HyCommunity" resultMap="HyCommunityResult" />
@@ -42,6 +46,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         s.suggest_name, 
         s.suggest_date, 
         s.contact_information, 
+        s.suggest_auditor, 
+        s.suggest_status, 
+        s.refusal_reason, 
+        s.through_reason, 
         s.community_id,
         c.community_name 
         from 
@@ -57,6 +65,58 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="suggestName != null  and suggestName != ''"> and s.suggest_name like concat('%', #{suggestName}, '%')</if>
             <if test="suggestDate != null "> and s.suggest_date = #{suggestDate}</if>
             <if test="contactInformation != null  and contactInformation != ''"> and s.contact_information = #{contactInformation}</if>
+            <if test="suggestAuditor != null  and suggestAuditor != ''"> and s.suggest_auditor = #{suggestAuditor}</if>
+            <if test="suggestStatus != null  and suggestStatus != ''"> and s.suggest_status = #{suggestStatus}</if>
+            <if test="refusalReason != null  and refusalReason != ''"> and s.refusal_reason = #{refusalReason}</if>
+            <if test="throughReason != null  and throughReason != ''"> and s.through_reason = #{throughReason}</if>
+            <if test="communityId != null "> and s.community_id = #{communityId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyCommunitySuggestListByAudit" parameterType="HyCommunitySuggest" resultMap="HyCommunitySuggestResult">
+        <include refid="selectHyCommunitySuggestVo"/>
+        <where>  
+            <if test="suggestType != null  and suggestType != ''"> and s.suggest_type = #{suggestType}</if>
+            <if test="informationContent != null  and informationContent != ''"> and s.information_content = #{informationContent}</if>
+            <if test="suggestName != null  and suggestName != ''"> and s.suggest_name like concat('%', #{suggestName}, '%')</if>
+            <if test="suggestDate != null "> and s.suggest_date = #{suggestDate}</if>
+            <if test="contactInformation != null  and contactInformation != ''"> and s.contact_information = #{contactInformation}</if>
+            <if test="suggestAuditor != null  and suggestAuditor != ''"> and s.suggest_auditor = #{suggestAuditor}</if>
+            and s.suggest_status = "1"
+            <if test="refusalReason != null  and refusalReason != ''"> and s.refusal_reason = #{refusalReason}</if>
+            <if test="throughReason != null  and throughReason != ''"> and s.through_reason = #{throughReason}</if>
+            <if test="communityId != null "> and s.community_id = #{communityId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyCommunitySuggestListByThrough" parameterType="HyCommunitySuggest" resultMap="HyCommunitySuggestResult">
+        <include refid="selectHyCommunitySuggestVo"/>
+        <where>  
+            <if test="suggestType != null  and suggestType != ''"> and s.suggest_type = #{suggestType}</if>
+            <if test="informationContent != null  and informationContent != ''"> and s.information_content = #{informationContent}</if>
+            <if test="suggestName != null  and suggestName != ''"> and s.suggest_name like concat('%', #{suggestName}, '%')</if>
+            <if test="suggestDate != null "> and s.suggest_date = #{suggestDate}</if>
+            <if test="contactInformation != null  and contactInformation != ''"> and s.contact_information = #{contactInformation}</if>
+            <if test="suggestAuditor != null  and suggestAuditor != ''"> and s.suggest_auditor = #{suggestAuditor}</if>
+            and s.suggest_status = "2"
+            <if test="refusalReason != null  and refusalReason != ''"> and s.refusal_reason = #{refusalReason}</if>
+            <if test="throughReason != null  and throughReason != ''"> and s.through_reason = #{throughReason}</if>
+            <if test="communityId != null "> and s.community_id = #{communityId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyCommunitySuggestListByRefusal" parameterType="HyCommunitySuggest" resultMap="HyCommunitySuggestResult">
+        <include refid="selectHyCommunitySuggestVo"/>
+        <where>  
+            <if test="suggestType != null  and suggestType != ''"> and s.suggest_type = #{suggestType}</if>
+            <if test="informationContent != null  and informationContent != ''"> and s.information_content = #{informationContent}</if>
+            <if test="suggestName != null  and suggestName != ''"> and s.suggest_name like concat('%', #{suggestName}, '%')</if>
+            <if test="suggestDate != null "> and s.suggest_date = #{suggestDate}</if>
+            <if test="contactInformation != null  and contactInformation != ''"> and s.contact_information = #{contactInformation}</if>
+            <if test="suggestAuditor != null  and suggestAuditor != ''"> and s.suggest_auditor = #{suggestAuditor}</if>
+            and s.suggest_status = "3"
+            <if test="refusalReason != null  and refusalReason != ''"> and s.refusal_reason = #{refusalReason}</if>
+            <if test="throughReason != null  and throughReason != ''"> and s.through_reason = #{throughReason}</if>
             <if test="communityId != null "> and s.community_id = #{communityId}</if>
         </where>
     </select>
@@ -74,6 +134,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="suggestName != null">suggest_name,</if>
             <if test="suggestDate != null">suggest_date,</if>
             <if test="contactInformation != null">contact_information,</if>
+            <if test="suggestAuditor != null">suggest_auditor,</if>
+            <if test="suggestStatus != null">suggest_status,</if>
+            <if test="refusalReason != null">refusal_reason,</if>
+            <if test="throughReason != null">through_reason,</if>
             <if test="communityId != null">community_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -82,6 +146,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="suggestName != null">#{suggestName},</if>
             <if test="suggestDate != null">#{suggestDate},</if>
             <if test="contactInformation != null">#{contactInformation},</if>
+            <if test="suggestAuditor != null">#{suggestAuditor},</if>
+            <if test="suggestStatus != null">#{suggestStatus},</if>
+            <if test="refusalReason != null">#{refusalReason},</if>
+            <if test="throughReason != null">#{throughReason},</if>
             <if test="communityId != null">#{communityId},</if>
          </trim>
     </insert>
@@ -94,6 +162,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="suggestName != null">suggest_name = #{suggestName},</if>
             <if test="suggestDate != null">suggest_date = #{suggestDate},</if>
             <if test="contactInformation != null">contact_information = #{contactInformation},</if>
+            <if test="suggestAuditor != null">suggest_auditor = #{suggestAuditor},</if>
+            <if test="suggestStatus != null">suggest_status = #{suggestStatus},</if>
+            <if test="refusalReason != null">refusal_reason = #{refusalReason},</if>
+            <if test="throughReason != null">through_reason = #{throughReason},</if>
             <if test="communityId != null">community_id = #{communityId},</if>
         </trim>
         where id = #{id}

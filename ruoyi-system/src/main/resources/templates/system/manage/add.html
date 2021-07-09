@@ -8,6 +8,47 @@
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
         <form class="form-horizontal m" id="form-manage-add">
+        	<div class="form-group">    
+                <label class="col-sm-3 control-label">选择小区：</label>
+                <div class="col-sm-8">
+                    <select id="quartersId" name="quartersId" class="form-control" th:with="type=${@quarters.getQuarters()}" onchange="changeBuilding()">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.communityName}" th:value="${data.id}"></option>
+			 	    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">选择楼宇：</label>
+                <div class="col-sm-8">
+			 	    <select class="form-control" name="buildingId" id="buildingId" disabled="disabled" onchange="changeUnit()">
+	                 	 <option value="">请选择</option>
+	                </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">选择单元：</label>
+                <div class="col-sm-8">
+			 	    <select class="form-control" name="unit" id="unit" disabled="disabled" onchange="changeHouse()">
+	                 	 <option value="">请选择</option>
+	                </select>
+                </div>
+            </div>
+        	 <div class="form-group">    
+                <label class="col-sm-3 control-label">选择房屋：</label>
+                <div class="col-sm-8">
+                    <select id="houseId" name="houseId" class="form-control m-b" disabled="disabled" onchange="changeOwner()">
+                          <option value="">请选择</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">业主名称：</label>
+                <div class="col-sm-8">
+                    <select id="ownerRegistrationId" name="ownerRegistrationId" class="form-control" disabled="disabled">
+						<option value="">请选择</option>
+			 	    </select>
+                </div>
+            </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">装修状态：</label>
                 <div class="col-sm-8">
@@ -36,14 +77,42 @@
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">业主名称：</label>
+                <label class="col-sm-3 control-label">装修开始时间：</label>
                 <div class="col-sm-8">
-                    <select id="ownerRegistrationId" name="ownerRegistrationId" class="form-control" th:with="type=${@ownerRegistration.getOwnerRegistration()}">
-						<option value="">请选择</option>
-						<option th:if="data!=null" th:each="data:${type}" th:text="${data.ownerName}" th:value="${data.id}"></option>
-			 	    </select>
+                    <div class="input-group date">
+                        <input name="fitmentStartTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
                 </div>
             </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">装修结束时间：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input name="fitmentEndTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">图片：</label>
+                <div class="col-sm-8">
+                    <input name="processImg" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">装修发起人：</label>
+                <div class="col-sm-8">
+                    <input name="fitmentUsername" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">发起人部门：</label>
+                <div class="col-sm-8">
+                    <input name="fitmentDept" class="form-control" type="text">
+                </div>
+            </div>
+            <input name="suggestStatus" value="1" class="form-control" type="hidden">
         </form>
     </div>
     <th:block th:include="include :: footer" />
@@ -76,6 +145,18 @@
         }
 
         $("input[name='fitmentManageExpect']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+        
+        $("input[name='fitmentStartTime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+        
+        $("input[name='fitmentEndTime']").datetimepicker({
             format: "yyyy-mm-dd",
             minView: "month",
             autoclose: true
@@ -115,6 +196,107 @@
                 }
             });
         });
+        
+        var prefix1 = ctx + "system/inf"
+      	//根据楼栋和单元搜房屋
+        function changeHouse(){
+   			$("#houseId").removeAttr("disabled");
+   			$.ajax({
+                url: prefix1 + "/lists",
+                data: {buildingId : $("#buildingId").val(),unit : $("#unit").val()},
+                dataType : 'json',
+                type: 'POST',
+                success: function (result) {
+                	var optArr = [];
+                	$("#houseId").empty();
+					$("#houseId").append("<option value=\"\">请选择</option>");
+                    for (var i = 0; i < result.length; i++) {
+                    	$("#houseId").append("<option value=" + result[i].ownerId + ">" + result[i].houseNumber + "</option>");
+                    }
+                        
+                    // 缺一不可  
+                    $("#houseId").selectpicker('refresh');
+                    $("#houseId").selectpicker('render');
+
+					console.log(result);
+                }
+            });
+   		};
+        //根据楼栋搜单元
+        function changeUnit(){
+   			$("#unit").removeAttr("disabled");
+   			$.ajax({
+                url: prefix1 + "/getUnit",
+                data: {buildingId : $("#buildingId").val()},
+                dataType : 'json',
+                type: 'POST',
+                success: function (result) {
+                	var optArr = [];
+                	$("#unit").empty();
+					$("#unit").append("<option value=\"\">请选择</option>");
+                    for (var i = 0; i < result.length; i++) {
+                    	$("#unit").append("<option value=" + result[i].unit + ">" + result[i].unit + "</option>");
+                    }
+                        
+                    // 缺一不可  
+                    $("#unit").selectpicker('refresh');
+                    $("#unit").selectpicker('render');
+
+					console.log(result);
+                }
+            });
+   		};
+        var prefix2 = ctx + "system/building"
+        //根据小区搜楼栋
+        function changeBuilding(){
+   			$("#buildingId").removeAttr("disabled");
+   			$.ajax({
+                url: prefix2 + "/lists",
+                data: {quartersId : $("#quartersId").val()},
+                dataType : 'json',
+                type: 'POST',
+                success: function (result) {
+                	var optArr = [];
+                	$("#buildingId").empty();
+					$("#buildingId").append("<option value=\"\">请选择</option>");
+                    for (var i = 0; i < result.length; i++) {
+                    	$("#buildingId").append("<option value=" + result[i].id + ">" + result[i].buildingNumber + "</option>");
+                    }
+                        
+                    // 缺一不可  
+                    $("#buildingId").selectpicker('refresh');
+                    $("#buildingId").selectpicker('render');
+
+					console.log(result);
+                }
+            });
+   		};
+        var prefix3 = ctx + "system/registration"
+        //根据房屋搜业主
+        function changeOwner(){
+        	$("#ownerRegistrationId").removeAttr("disabled");
+   			$.ajax({
+                url: prefix3 + "/lists",
+                data: {id : $("#houseId").val()},
+                dataType : 'json',
+                type: 'POST',
+                success: function (result) {
+                	var optArr = [];
+                	$("#ownerRegistrationId").empty();
+					$("#ownerRegistrationId").append("<option value=\"\">请选择</option>");
+                    for (var i = 0; i < result.length; i++) {
+                    	$("#ownerRegistrationId").append("<option value=" + result[i].id + ">" + result[i].ownerName + "</option>");
+                    }
+                        
+                    // 缺一不可  
+                    $("#ownerRegistrationId").selectpicker('refresh');
+                    $("#ownerRegistrationId").selectpicker('render');
+
+					console.log(result);
+                }
+            });
+   		};
+   		
     </script>
 </body>
 </html>

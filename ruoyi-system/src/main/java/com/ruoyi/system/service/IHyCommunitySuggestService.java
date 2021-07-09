@@ -26,6 +26,30 @@ public interface IHyCommunitySuggestService
      * @return 社区建议集合
      */
     public List<HyCommunitySuggest> selectHyCommunitySuggestList(HyCommunitySuggest hyCommunitySuggest);
+    
+    /**
+     * 查询社区建议待审核列表
+     * 
+     * @param hyCommunitySuggest 社区建议
+     * @return 社区建议集合
+     */
+    public List<HyCommunitySuggest> selectHyCommunitySuggestListByAudit(HyCommunitySuggest hyCommunitySuggest);
+    
+    /**
+     * 查询社区建议已通过列表
+     * 
+     * @param hyCommunitySuggest 社区建议
+     * @return 社区建议集合
+     */
+    public List<HyCommunitySuggest> selectHyCommunitySuggestListByThrough(HyCommunitySuggest hyCommunitySuggest);
+    
+    /**
+     * 查询社区建议已拒绝列表
+     * 
+     * @param hyCommunitySuggest 社区建议
+     * @return 社区建议集合
+     */
+    public List<HyCommunitySuggest> selectHyCommunitySuggestListByRefusal(HyCommunitySuggest hyCommunitySuggest);
 
     /**
      * 新增社区建议

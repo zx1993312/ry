@@ -1,65 +1,56 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('装修管理列表')" />
+<th:block th:include="include :: header('装修管理列表')" />
 </head>
 <body class="gray-bg">
-     <div class="container-div">
-        <div class="row">
-            <div class="col-sm-12 search-collapse">
-                <form id="formId">
-                    <div class="select-list">
-                        <ul>
-                            <li>
-                                <label>装修状态：</label>
-                                <select name="fitmentManageState" class="form-control " >
-                                <option value="">请选择</option>
-                                <option value="1">未装修</option>
-                                <option value="2">正在装修</option>
-                                <option value="3">已装修</option>
-                                </select>
-                            </li>
-                            <li>
-                                <label>预期工期：</label>
-                                <input type="text" class="time-input" placeholder="请选择预期工期" name="fitmentManageExpect"/>
-                            </li>
-                            <li>
-                                <label>业主名称：</label>
-                                <select id="ownerRegistrationId" name="ownerRegistrationId" class="form-control" th:with="type=${@ownerRegistration.getOwnerRegistration()}">
+	<div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li><label>业主名称：</label> <select id="ownerRegistrationId"
+								name="ownerRegistrationId" class="form-control"
+								th:with="type=${@ownerRegistration.getOwnerRegistration()}">
 									<option value="">请选择</option>
-									<option th:if="data!=null" th:each="data:${type}" th:text="${data.ownerName}" th:value="${data.id}"></option>
-			 	   				 </select>
-                            </li>
-                            <li>
-                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
-                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
-                            </li>
-                        </ul>
-                    </div>
-                </form>
-            </div>
+									<option th:if="data!=null" th:each="data:${type}"
+										th:text="${data.ownerName}" th:value="${data.id}"></option>
+							</select></li>
+							<li><a class="btn btn-primary btn-rounded btn-sm"
+								onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm"
+								onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
 
-            <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:manage:add">
-                    <i class="fa fa-plus"></i> 添加
-                </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:manage:edit">
-                    <i class="fa fa-edit"></i> 修改
-                </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:manage:remove">
-                    <i class="fa fa-remove"></i> 删除
-                </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:manage:export">
-                    <i class="fa fa-download"></i> 导出
-                </a>
-            </div>
-            <div class="col-sm-12 select-table table-striped">
-                <table id="bootstrap-table"></table>
-            </div>
-        </div>
-    </div>
-    <th:block th:include="include :: footer" />
-    <script th:inline="javascript">
+			<div class="btn-group-sm" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.add()"
+					shiro:hasPermission="system:manage:add"> <i class="fa fa-plus"></i>
+					添加
+				</a> <a class="btn btn-primary single disabled"
+					onclick="$.operate.edit()" shiro:hasPermission="system:manage:edit">
+					<i class="fa fa-edit"></i> 修改
+				</a> <a class="btn btn-danger multiple disabled"
+					onclick="$.operate.removeAll()"
+					shiro:hasPermission="system:manage:remove"> <i
+					class="fa fa-remove"></i> 删除
+				</a> <a class="btn btn-warning" onclick="$.table.exportExcel()"
+					shiro:hasPermission="system:manage:export"> <i
+					class="fa fa-download"></i> 导出
+				</a>
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table"></table>
+			</div>
+		</div>
+	</div>
+	<th:block th:include="include :: footer" />
+	<script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('system:manage:edit')}]];
         var removeFlag = [[${@permission.hasPermi('system:manage:remove')}]];
         var prefix = ctx + "system/manage";
@@ -69,6 +60,8 @@
                 url: prefix + "/list",
                 createUrl: prefix + "/add",
                 updateUrl: prefix + "/edit/{id}",
+                updateUrlThrough: prefix + "/editThrough/{id}",
+                updateUrlRefusal: prefix + "/editRefusal/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
                 modalName: "装修管理",
@@ -79,6 +72,26 @@
                     field: 'id',
                     title: '装修管理id',
                     visible: false
+                },
+                {
+                    field: 'hyResidentialQuarters.communityName',
+                    title: '小区名称'
+                },
+                {
+                    field: 'hyBuilding.buildingNumber',
+                    title: '栋号'
+                },
+                {
+                    field: 'hyHouseInf.unit',
+                    title: '单元'
+                },
+                {
+                    field: 'hyHouseInf.houseNumber',
+                    title: '房屋编号'
+                },
+                {
+                    field: 'hyOwnerRegistration.ownerName',
+                    title: '业主名称'
                 },
                 {
                     field: 'fitmentManageState',
@@ -98,18 +111,58 @@
                     title: '装修描述'
                 },
                 {
-                    field: 'fitmentManageExpect',
-                    title: '预期工期'
+                    field: 'fitmentStartTime',
+                    title: '装修开始时间'
                 },
                 {
-                    field: 'hyOwnerRegistration.ownerName',
-                    title: '业主名称'
+                    field: 'fitmentEndTime',
+                    title: '装修结束时间'
+                },
+                {
+                    field: 'processImg',
+                    title: '图片'
+                },
+                {
+                    field: 'fitmentUsername',
+                    title: '装修发起人'
+                },
+                {
+                    field: 'fitmentDept',
+                    title: '发起人部门'
+                },
+                {
+                    field: 'fitmentAuditor',
+                    title: '装修审核人'
+                },
+                {
+                    field: 'suggestStatus',
+                    title: '审核状态',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case '1' : value =  "待审核";break;
+	                    	case '2' : value =  "已通过";break;
+	                    	case '3' : value =  "已拒绝";break;
+	                	}
+		            	return value;
+		            }
+                },
+                {
+                    field: 'refusalReason',
+                    title: '拒绝原因'
+                },
+                {
+                    field: 'throughReason',
+                    title: '通过原因'
                 },
                 {
                     title: '操作',
                     align: 'center',
                     formatter: function(value, row, index) {
                         var actions = [];
+                        if(row.suggestStatus == '1'){
+                            actions.push('<a class="btn btn-primary btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="editThrough(\'' + row.id + '\')"><i class="fa fa-spin fa-calendar-check-o"></i>通过</a> ');
+                            actions.push('<a class="btn btn-danger btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="editRefusal(\'' + row.id + '\')"><i class="fa fa-spin fa-calendar-times-o"></i>拒绝</a> ');
+                            }
                         actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
                         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
                         return actions.join('');
@@ -118,6 +171,16 @@
             };
             $.table.init(options);
         });
+        function editThrough(id){
+            $.modal.confirm("确定要通过该条数据吗？", function() {
+            $.modal.opens("同意审核", $.operate.editUrlThrough(id));
+            });
+            };
+        function editRefusal(id){
+        $.modal.confirm("确定要拒绝该条数据吗？", function() {
+        	$.modal.opens("拒绝审核", $.operate.editUrlRefusal(id));
+        });
+        };
     </script>
 </body>
 </html>

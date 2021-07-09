@@ -44,6 +44,40 @@ public class HyCommunitySuggestServiceImpl implements IHyCommunitySuggestService
     {
         return hyCommunitySuggestMapper.selectHyCommunitySuggestList(hyCommunitySuggest);
     }
+    
+    /**
+     * 查询社区建议待审核列表
+     * 
+     * @param hyCommunitySuggest 社区建议
+     * @return 社区建议
+     */
+    @Override
+    public List<HyCommunitySuggest> selectHyCommunitySuggestListByAudit(HyCommunitySuggest hyCommunitySuggest)
+    {
+    	return hyCommunitySuggestMapper.selectHyCommunitySuggestListByAudit(hyCommunitySuggest);
+    }
+    /**
+     * 查询社区建议已通过列表
+     * 
+     * @param hyCommunitySuggest 社区建议
+     * @return 社区建议
+     */
+    @Override
+    public List<HyCommunitySuggest> selectHyCommunitySuggestListByThrough(HyCommunitySuggest hyCommunitySuggest)
+    {
+    	return hyCommunitySuggestMapper.selectHyCommunitySuggestListByThrough(hyCommunitySuggest);
+    }
+    /**
+     * 查询社区建议已拒绝列表
+     * 
+     * @param hyCommunitySuggest 社区建议
+     * @return 社区建议
+     */
+    @Override
+    public List<HyCommunitySuggest> selectHyCommunitySuggestListByRefusal(HyCommunitySuggest hyCommunitySuggest)
+    {
+    	return hyCommunitySuggestMapper.selectHyCommunitySuggestListByRefusal(hyCommunitySuggest);
+    }
 
     /**
      * 新增社区建议

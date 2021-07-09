@@ -66,6 +66,57 @@ public class HyCommunitySuggestController extends BaseController
         List<HyCommunitySuggest> list = hyCommunitySuggestService.selectHyCommunitySuggestList(hyCommunitySuggest);
         return getDataTable(list);
     }
+    
+    /**
+     * 查询社区建议待审核列表
+     */
+    @ApiOperation("社区建议")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyCommunitySuggest", value = "项目实体类hyCommunitySuggest", required = true),
+    })
+    @RequiresPermissions("system:suggest:list")
+    @PostMapping("/listByAudit")
+    @ResponseBody
+    public TableDataInfo listByAudit(HyCommunitySuggest hyCommunitySuggest)
+    {
+    	startPage();
+    	List<HyCommunitySuggest> list = hyCommunitySuggestService.selectHyCommunitySuggestListByAudit(hyCommunitySuggest);
+    	return getDataTable(list);
+    }
+    
+    /**
+     * 查询社区建议已通过列表
+     */
+    @ApiOperation("社区建议")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyCommunitySuggest", value = "项目实体类hyCommunitySuggest", required = true),
+    })
+    @RequiresPermissions("system:suggest:list")
+    @PostMapping("/listByThrough")
+    @ResponseBody
+    public TableDataInfo listByThrough(HyCommunitySuggest hyCommunitySuggest)
+    {
+    	startPage();
+    	List<HyCommunitySuggest> list = hyCommunitySuggestService.selectHyCommunitySuggestListByThrough(hyCommunitySuggest);
+    	return getDataTable(list);
+    }
+    
+    /**
+     * 查询社区建议已拒绝列表
+     */
+    @ApiOperation("社区建议")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyCommunitySuggest", value = "项目实体类hyCommunitySuggest", required = true),
+    })
+    @RequiresPermissions("system:suggest:list")
+    @PostMapping("/listByRefusal")
+    @ResponseBody
+    public TableDataInfo listByRefusal(HyCommunitySuggest hyCommunitySuggest)
+    {
+    	startPage();
+    	List<HyCommunitySuggest> list = hyCommunitySuggestService.selectHyCommunitySuggestListByRefusal(hyCommunitySuggest);
+    	return getDataTable(list);
+    }
 
     /**
      * 导出社区建议列表
@@ -123,6 +174,36 @@ public class HyCommunitySuggestController extends BaseController
         HyCommunitySuggest hyCommunitySuggest = hyCommunitySuggestService.selectHyCommunitySuggestById(id);
         mmap.put("hyCommunitySuggest", hyCommunitySuggest);
         return prefix + "/edit";
+    }
+    
+    /**
+     * 修改社区建议已通过
+     */
+    @ApiOperation("社区建议")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "id", value = "主键id", required = true),
+    })
+    @GetMapping("/editThrough/{id}")
+    public String editThrough(@PathVariable("id") Long id, ModelMap mmap)
+    {
+    	HyCommunitySuggest hyCommunitySuggest = hyCommunitySuggestService.selectHyCommunitySuggestById(id);
+    	mmap.put("hyCommunitySuggest", hyCommunitySuggest);
+    	return prefix + "/editThrough";
+    }
+    
+    /**
+     * 修改社区建议已拒绝
+     */
+    @ApiOperation("社区建议")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "id", value = "主键id", required = true),
+    })
+    @GetMapping("/editRefusal/{id}")
+    public String editRefusal(@PathVariable("id") Long id, ModelMap mmap)
+    {
+    	HyCommunitySuggest hyCommunitySuggest = hyCommunitySuggestService.selectHyCommunitySuggestById(id);
+    	mmap.put("hyCommunitySuggest", hyCommunitySuggest);
+    	return prefix + "/editRefusal";
     }
 
     /**

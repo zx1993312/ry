@@ -40,6 +40,24 @@ public class HyFitmentManage extends BaseEntity
     
     /** 手持图片地址 */
     private String processImg;
+    
+    /** 装修发起人 */
+    private String fitmentUsername;
+    
+    /** 发起人部门 */
+    private String fitmentDept;
+    
+    /** 审核人 */
+    private String fitmentAuditor;
+    
+    /** 审核状态 */
+    private String suggestStatus;
+    
+    /** 拒绝原因 */
+    private String refusalReason;
+    
+    /** 通过原因 */
+    private String throughReason;
 
     /** 业主id */
     @Excel(name = "业主id")
@@ -48,6 +66,18 @@ public class HyFitmentManage extends BaseEntity
     /** 业主表 */
     @Excel(name = "业主表")
     private HyOwnerRegistration hyOwnerRegistration;
+    
+    /** 房屋表 */
+    @Excel(name = "房屋表")
+    private HyHouseInf hyHouseInf;
+    
+    /** 楼宇表 */
+    @Excel(name = "楼宇表")
+    private HyBuilding hyBuilding;
+    
+    /** 小区表 */
+    @Excel(name = "小区表")
+    private HyResidentialQuarters hyResidentialQuarters;
 
 	public Long getId() {
 		return id;
@@ -105,6 +135,54 @@ public class HyFitmentManage extends BaseEntity
 		this.processImg = processImg;
 	}
 
+	public String getFitmentUsername() {
+		return fitmentUsername;
+	}
+
+	public void setFitmentUsername(String fitmentUsername) {
+		this.fitmentUsername = fitmentUsername;
+	}
+
+	public String getFitmentDept() {
+		return fitmentDept;
+	}
+
+	public void setFitmentDept(String fitmentDept) {
+		this.fitmentDept = fitmentDept;
+	}
+
+	public String getFitmentAuditor() {
+		return fitmentAuditor;
+	}
+
+	public void setFitmentAuditor(String fitmentAuditor) {
+		this.fitmentAuditor = fitmentAuditor;
+	}
+
+	public String getSuggestStatus() {
+		return suggestStatus;
+	}
+
+	public void setSuggestStatus(String suggestStatus) {
+		this.suggestStatus = suggestStatus;
+	}
+
+	public String getRefusalReason() {
+		return refusalReason;
+	}
+
+	public void setRefusalReason(String refusalReason) {
+		this.refusalReason = refusalReason;
+	}
+
+	public String getThroughReason() {
+		return throughReason;
+	}
+
+	public void setThroughReason(String throughReason) {
+		this.throughReason = throughReason;
+	}
+
 	public Long getOwnerRegistrationId() {
 		return ownerRegistrationId;
 	}
@@ -120,6 +198,43 @@ public class HyFitmentManage extends BaseEntity
 	public void setHyOwnerRegistration(HyOwnerRegistration hyOwnerRegistration) {
 		this.hyOwnerRegistration = hyOwnerRegistration;
 	}
+
+	public HyHouseInf getHyHouseInf() {
+		return hyHouseInf;
+	}
+
+	public void setHyHouseInf(HyHouseInf hyHouseInf) {
+		this.hyHouseInf = hyHouseInf;
+	}
+
+	public HyBuilding getHyBuilding() {
+		return hyBuilding;
+	}
+
+	public void setHyBuilding(HyBuilding hyBuilding) {
+		this.hyBuilding = hyBuilding;
+	}
+
+	public HyResidentialQuarters getHyResidentialQuarters() {
+		return hyResidentialQuarters;
+	}
+
+	public void setHyResidentialQuarters(HyResidentialQuarters hyResidentialQuarters) {
+		this.hyResidentialQuarters = hyResidentialQuarters;
+	}
+
+	@Override
+	public String toString() {
+		return "HyFitmentManage [id=" + id + ", fitmentManageState=" + fitmentManageState + ", fitmentManageContent="
+				+ fitmentManageContent + ", fitmentManageExpect=" + fitmentManageExpect + ", fitmentStartTime="
+				+ fitmentStartTime + ", fitmentEndTime=" + fitmentEndTime + ", processImg=" + processImg
+				+ ", fitmentUsername=" + fitmentUsername + ", fitmentDept=" + fitmentDept + ", fitmentAuditor="
+				+ fitmentAuditor + ", suggestStatus=" + suggestStatus + ", refusalReason=" + refusalReason
+				+ ", throughReason=" + throughReason + ", ownerRegistrationId=" + ownerRegistrationId
+				+ ", hyOwnerRegistration=" + hyOwnerRegistration + ", hyHouseInf=" + hyHouseInf + ", hyBuilding="
+				+ hyBuilding + ", hyResidentialQuarters=" + hyResidentialQuarters + "]";
+	}
+
 
 
 	

@@ -12,10 +12,106 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			column="fitment_manage_content" />
 		<result property="fitmentManageExpect"
 			column="fitment_manage_expect" />
+		<result property="fitmentStartTime"
+			column="fitment_start_time" />
+		<result property="fitmentEndTime"
+			column="fitment_end_time" />
+		<result property="processImg"
+			column="process_img" />
+		<result property="fitmentUsername"
+			column="fitment_username" />
+		<result property="fitmentDept"
+			column="fitment_dept" />
+		<result property="fitmentAuditor"
+			column="fitment_auditor" />
+		<result property="suggestStatus"
+			column="suggest_status" />
+		<result property="refusalReason"
+			column="refusal_reason" />
+		<result property="throughReason"
+			column="through_reason" />
 		<result property="ownerRegistrationId"
 			column="owner_registration_id" />
 		<association property="hyOwnerRegistration" column="id"
 			javaType="HyOwnerRegistration" resultMap="HyOwnerRegistrationResult" />
+		<association property="hyHouseInf" column="id"
+			javaType="HyHouseInf" resultMap="HyHouseInfResult" />
+		<association property="hyBuilding" column="id"
+			javaType="HyBuilding" resultMap="HyBuildingResult" />
+		<association property="hyResidentialQuarters" column="id"
+			javaType="HyResidentialQuarters" resultMap="HyResidentialQuartersResult" />
+	</resultMap>
+	
+	<resultMap type="HyResidentialQuarters" id="HyResidentialQuartersResult">
+        <result property="id"    column="id"    />
+        <result property="communityAddress"    column="community_address"    />
+        <result property="communityName"    column="community_name"    />
+        <result property="contacts"    column="contacts"    />
+        <result property="contactNumber"    column="contact_number"    />
+        <result property="contactQq"    column="Contact_QQ"    />
+        <result property="city"    column="city"    />
+        <result property="area"    column="area"    />
+        <result property="county"    column="county"    />
+        <result property="address"    column="address"    />
+        <result property="longitude"    column="longitude"    />
+        <result property="latitude"    column="latitude"    />
+        <result property="customerLink"    column="customer_link"    />
+        <result property="externalLinks"    column="external_links"    />
+        <result property="propertyId"    column="property_id"    />
+    </resultMap>
+	
+	<resultMap type="HyBuilding" id="HyBuildingResult">
+        <result property="id"    column="id"    />
+        <result property="buildingName"    column="building_name"    />
+        <result property="buildingNumber"    column="building_number"    />
+        <result property="buildingHigh"    column="building_high"    />
+        <result property="buildingUnit"    column="building_unit"    />
+        <result property="buildingHouseholds"    column="building_households"    />
+        <result property="buildingAddress"    column="building_address"    />
+        <result property="buildingYear"    column="building_year"    />
+        <result property="buildingRemark"    column="building_remark"    />
+        <result property="quartersId"    column="quarters_id"    />
+        <result property="projectId"    column="project_id"    />
+    </resultMap>
+	
+	<resultMap type="HyHouseInf" id="HyHouseInfResult">
+		<result property="id" column="id" />
+		<result property="houseNumber" column="house_number" />
+		<result property="houseName" column="house_name" />
+		<result property="builtUpArea" column="built_up_area" />
+		<result property="groupArea" column="group_area" />
+		<result property="unit" column="unit" />
+		<result property="floor" column="floor" />
+		<result property="sameUnitNumber" column="same_unit_number" />
+		<result property="areaType" column="area_type" />
+		<result property="bilingArea" column="biling_area" />
+		<result property="insideArea" column="inside_area" />
+		<result property="sharedArea" column="shared_area" />
+		<result property="gardenArea" column="garden_area" />
+		<result property="basementArea" column="basement_area" />
+		<result property="sharedLobbyArea" column="shared_lobby_area" />
+		<result property="sharedLayersArea" column="shared_layers_area" />
+		<result property="shareRatio" column="share_ratio" />
+		<result property="buildingStructure"
+			column="building_structure" />
+		<result property="parametersPer" column="parameters_per" />
+		<result property="houseLayout" column="house_layout" />
+		<result property="floorHeight" column="floor_height" />
+		<result property="natureProperty" column="nature_property" />
+		<result property="natureUse" column="nature_use" />
+		<result property="usageStatus" column="usage_status" />
+		<result property="occupancyStatus" column="occupancy_status" />
+		<result property="deliveryStatus" column="delivery_status" />
+		<result property="houseType" column="house_type" />
+		<result property="salesStatus" column="sales_status" />
+		<result property="purchaseContract" column="purchase_contract" />
+		<result property="marketingNum" column="marketing_num" />
+		<result property="deliveryStatusBefore" column="delivery_status_before" />
+		<result property="changeDate" column="change_date" />
+		<result property="changePerson" column="change_person" />
+		<result property="remark" column="remark" />
+		<result property="buildingId" column="building_id" />
+		<result property="ownerId" column="owner_id" />
 	</resultMap>
 
 	<resultMap type="HyOwnerRegistration"
@@ -66,11 +162,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		m.fitment_manage_state,
 		m.fitment_manage_content,
 		m.fitment_manage_expect,
+		m.fitment_start_time,
+		m.fitment_end_time,
+		m.process_img,
+		m.fitment_username,
+		m.fitment_dept,
+		m.fitment_auditor,
+		m.suggest_status,
+		m.refusal_reason,
+		m.through_reason,
 		m.owner_registration_id,
-		o.owner_name
+		o.owner_name, 
+		h.house_number, 
+		h.unit, 
+		b.building_number, 
+		q.community_name 
 		from
 		hy_fitment_manage m
 		LEFT JOIN hy_owner_registration o ON m.owner_registration_id = o.id
+		LEFT JOIN hy_house_inf h ON h.owner_id = o.id
+		LEFT JOIN hy_building b ON h.building_id = b.id
+		LEFT JOIN hy_residential_quarters q ON b.quarters_id = q.id
 	</sql>
 
 	<select id="selectHyFitmentManageList"
@@ -83,7 +195,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				test="fitmentManageContent != null  and fitmentManageContent != ''"> and m.fitment_manage_content = #{fitmentManageContent}</if>
 			<if test="fitmentManageExpect != null "> and m.fitment_manage_expect = #{fitmentManageExpect}
 			</if>
-			<if test="ownerRegistrationId != null "> and m.owner_registration_id = #{ownerRegistrationId}
+			<if test="fitmentStartTime != null"> and m.fitment_start_time = #{fitmentStartTime}
+			</if>
+			<if test="fitmentEndTime != null"> and m.fitment_end_time = #{fitmentEndTime}
+			</if>
+			<if test="processImg != null and processImg != ''"> and m.process_img = #{processImg}
+			</if>
+			<if test="fitmentUsername != null and fitmentUsername != ''"> and m.fitment_username = #{fitmentUsername}
+			</if>
+			<if test="fitmentDept != null and fitmentDept != ''"> and m.fitment_dept = #{fitmentDept}
+			</if>
+			<if test="fitmentAuditor != null and fitmentAuditor != ''"> and m.fitment_auditor = #{fitmentAuditor}
+			</if>
+			<if test="suggestStatus != null and suggestStatus != ''"> and m.suggest_status = #{suggestStatus}
+			</if>
+			<if test="refusalReason != null and refusalReason != ''"> and m.refusal_reason = #{refusalReason}
+			</if>
+			<if test="throughReason != null and throughReason != ''"> and m.through_reason = #{throughReason}
+			</if>
+			<if test="ownerRegistrationId != null and ownerRegistrationId != ''"> and m.owner_registration_id = #{ownerRegistrationId}
 			</if>
 			<if
 				test="hyOwnerRegistration != null and hyOwnerRegistration != ''">
@@ -107,21 +237,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="fitmentManageState != null">fitment_manage_state,</if>
 			<if test="fitmentManageContent != null">fitment_manage_content,</if>
 			<if test="fitmentManageExpect != null">fitment_manage_expect,</if>
-			<if test="ownerRegistrationId != null">owner_registration_id,</if>
-
 			<if test="fitmentStartTime != null">fitment_start_time,</if>
 			<if test="fitmentEndTime != null">fitment_end_time,</if>
 			<if test="processImg != null">process_img,</if>
+			<if test="fitmentUsername != null">fitment_username,</if>
+			<if test="fitmentDept != null">fitment_dept,</if>
+			<if test="fitmentAuditor != null">fitment_auditor,</if>
+			<if test="suggestStatus != null">suggest_status,</if>
+			<if test="refusalReason != null">refusal_reason,</if>
+			<if test="throughReason != null">through_reason,</if>
+			<if test="ownerRegistrationId != null">owner_registration_id,</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="fitmentManageState != null">#{fitmentManageState},</if>
 			<if test="fitmentManageContent != null">#{fitmentManageContent},</if>
 			<if test="fitmentManageExpect != null">#{fitmentManageExpect},</if>
-			<if test="ownerRegistrationId != null">#{ownerRegistrationId},</if>
-			
 			<if test="fitmentStartTime != null">#{fitmentStartTime},</if>
 			<if test="fitmentEndTime != null">#{fitmentEndTime},</if>
 			<if test="processImg != null">#{processImg},</if>
+			<if test="fitmentUsername != null">#{fitmentUsername},</if>
+			<if test="fitmentDept != null">#{fitmentDept},</if>
+			<if test="fitmentAuditor != null">#{fitmentAuditor},</if>
+			<if test="suggestStatus != null">#{suggestStatus},</if>
+			<if test="refusalReason != null">#{refusalReason},</if>
+			<if test="throughReason != null">#{throughReason},</if>
+			<if test="ownerRegistrationId != null">#{ownerRegistrationId},</if>
 		</trim>
 	</insert>
 
@@ -132,6 +272,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="fitmentManageState != null">fitment_manage_state = #{fitmentManageState},</if>
 			<if test="fitmentManageContent != null">fitment_manage_content = #{fitmentManageContent},</if>
 			<if test="fitmentManageExpect != null">fitment_manage_expect = #{fitmentManageExpect},</if>
+			<if test="fitmentStartTime != null">fitment_start_time = #{fitmentStartTime},</if>
+			<if test="fitmentEndTime != null">fitment_end_time = #{fitmentEndTime},</if>
+			<if test="processImg != null">process_img = #{processImg},</if>
+			<if test="fitmentUsername != null">fitment_username = #{fitmentUsername},</if>
+			<if test="fitmentDept != null">fitment_dept = #{fitmentDept},</if>
+			<if test="fitmentAuditor != null">fitment_auditor = #{fitmentAuditor},</if>
+			<if test="suggestStatus != null">suggest_status = #{suggestStatus},</if>
+			<if test="refusalReason != null">refusal_reason = #{refusalReason},</if>
+			<if test="throughReason != null">through_reason = #{throughReason},</if>
 			<if test="ownerRegistrationId != null">owner_registration_id = #{ownerRegistrationId},</if>
 		</trim>
 		where id = #{id}

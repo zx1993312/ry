@@ -1538,6 +1538,36 @@ var table = {
             	}
             	return url;
             },
+            //审核通过
+            editUrlThrough: function(id) {
+            	var url = "/404.html";
+            	if ($.common.isNotEmpty(id)) {
+            		url = table.options.updateUrlThrough.replace("{id}", id);
+            	} else {
+            		var id = $.common.isEmpty(table.options.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns(table.options.uniqueId);
+            		if (id.length == 0) {
+            			$.modal.alertWarning("请至少选择一条记录");
+            			return;
+            		}
+            		url = table.options.updateUrlThrough.replace("{id}", id);
+            	}
+            	return url;
+            },
+            //审核拒绝
+            editUrlRefusal: function(id) {
+            	var url = "/404.html";
+            	if ($.common.isNotEmpty(id)) {
+            		url = table.options.updateUrlRefusal.replace("{id}", id);
+            	} else {
+            		var id = $.common.isEmpty(table.options.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns(table.options.uniqueId);
+            		if (id.length == 0) {
+            			$.modal.alertWarning("请至少选择一条记录");
+            			return;
+            		}
+            		url = table.options.updateUrlRefusal.replace("{id}", id);
+            	}
+            	return url;
+            },
             // 保存信息 刷新表格
             save: function(url, data, callback) {
             	var config = {

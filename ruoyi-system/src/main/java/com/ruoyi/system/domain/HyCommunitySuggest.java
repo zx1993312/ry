@@ -1,9 +1,8 @@
 package com.ruoyi.system.domain;
 
 import java.util.Date;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
@@ -40,6 +39,22 @@ public class HyCommunitySuggest extends BaseEntity
     /** 联系方式 */
     @Excel(name = "联系方式")
     private String contactInformation;
+    
+    /** 审核人 */
+    @Excel(name = "审核人")
+    private String suggestAuditor;
+    
+    /** 审核状态 */
+    @Excel(name = "审核状态")
+    private String suggestStatus;
+    
+    /** 拒绝原因 */
+    @Excel(name = "拒绝原因")
+    private String refusalReason;
+    
+    /** 通过原因 */
+    @Excel(name = "通过原因")
+    private String throughReason;
 
     /** 社区id */
     @Excel(name = "社区id")
@@ -102,7 +117,40 @@ public class HyCommunitySuggest extends BaseEntity
     {
         return contactInformation;
     }
-    public void setCommunityId(Long communityId) 
+    
+    public String getSuggestAuditor() {
+		return suggestAuditor;
+	}
+
+	public void setSuggestAuditor(String suggestAuditor) {
+		this.suggestAuditor = suggestAuditor;
+	}
+
+	public String getSuggestStatus() {
+		return suggestStatus;
+	}
+
+	public void setSuggestStatus(String suggestStatus) {
+		this.suggestStatus = suggestStatus;
+	}
+
+	public String getRefusalReason() {
+		return refusalReason;
+	}
+
+	public void setRefusalReason(String refusalReason) {
+		this.refusalReason = refusalReason;
+	}
+
+	public String getThroughReason() {
+		return throughReason;
+	}
+
+	public void setThroughReason(String throughReason) {
+		this.throughReason = throughReason;
+	}
+
+	public void setCommunityId(Long communityId) 
     {
         this.communityId = communityId;
     }
@@ -124,9 +172,12 @@ public class HyCommunitySuggest extends BaseEntity
 	public String toString() {
 		return "HyCommunitySuggest [id=" + id + ", suggestType=" + suggestType + ", informationContent="
 				+ informationContent + ", suggestName=" + suggestName + ", suggestDate=" + suggestDate
-				+ ", contactInformation=" + contactInformation + ", communityId=" + communityId + ", hyCommunity="
-				+ hyCommunity + "]";
+				+ ", contactInformation=" + contactInformation + ", suggestAuditor=" + suggestAuditor
+				+ ", suggestStatus=" + suggestStatus + ", refusalReason=" + refusalReason + ", throughReason="
+				+ throughReason + ", communityId=" + communityId + ", hyCommunity=" + hyCommunity + "]";
 	}
+
+
 
 	
 }

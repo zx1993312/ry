@@ -127,6 +127,30 @@ public class HyFitmentManageController extends BaseController {
 		mmap.put("hyFitmentManage", hyFitmentManage);
 		return prefix + "/edit";
 	}
+	
+	/**
+	 * 修改装修管理通过
+	 */
+	@ApiOperation("装修管理")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "id", value = "主键id", required = true), })
+	@GetMapping("/editThrough/{id}")
+	public String editThrough(@PathVariable("id") Long id, ModelMap mmap) {
+		HyFitmentManage hyFitmentManage = hyFitmentManageService.selectHyFitmentManageById(id);
+		mmap.put("hyFitmentManage", hyFitmentManage);
+		return prefix + "/editThrough";
+	}
+	
+	/**
+	 * 修改装修管理拒绝
+	 */
+	@ApiOperation("装修管理")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "id", value = "主键id", required = true), })
+	@GetMapping("/editRefusal/{id}")
+	public String editRefusal(@PathVariable("id") Long id, ModelMap mmap) {
+		HyFitmentManage hyFitmentManage = hyFitmentManageService.selectHyFitmentManageById(id);
+		mmap.put("hyFitmentManage", hyFitmentManage);
+		return prefix + "/editRefusal";
+	}
 
 	/**
 	 * 修改保存装修管理
