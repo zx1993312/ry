@@ -219,11 +219,11 @@ public class HyReportController extends BaseController
     	@ApiImplicitParam(name = "id", value = "主键id", required = true),
     })
     @GetMapping("/detailApp")
-    public List<HyReport> detail(Long id)
+    public List<HyReport> detail(HyReport hyReport)
     {
-    	List<HyReport> list = new ArrayList<HyReport>();
-    	HyReport hyReport = hyReportService.selectHyReportById(id);
-    	list.add(hyReport);
+    	List<HyReport> list = hyReportService.selectHyReportList(hyReport);
+    	/*HyReport hyReport = hyReportService.selectHyReportById(id);
+    	list.add(hyReport);*/
     	return list;
     }
 
