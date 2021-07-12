@@ -148,6 +148,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectHyReportList" parameterType="HyReport" resultMap="HyReportResult">
         <include refid="selectHyReportVo"/>
         <where>  
+            <if test="id != null  and id != ''"> and r.id = #{id}</if>
             <if test="reportNumber != null  and reportNumber != ''"> and r.report_number = #{reportNumber}</if>
             <if test="reportUsername != null  and reportUsername != ''"> and r.report_username = #{reportUsername}</if>
             <if test="reportPhone != null  and reportPhone != ''"> and r.report_phone = #{reportPhone}</if>
