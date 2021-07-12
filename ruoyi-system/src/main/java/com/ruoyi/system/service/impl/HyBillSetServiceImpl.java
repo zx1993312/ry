@@ -1,8 +1,6 @@
 package com.ruoyi.system.service.impl;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +10,6 @@ import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.system.domain.HyBillSet;
 import com.ruoyi.system.mapper.HyBillSetMapper;
 import com.ruoyi.system.service.IHyBillSetService;
-import com.ruoyi.system.utils.HyDateUtil;
 
 /**
  * 票据设置Service业务层处理

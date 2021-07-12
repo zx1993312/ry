@@ -2,10 +2,9 @@ package com.ruoyi.system.domain;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
-
-import lombok.Data;
 
 /**
  * 小区对象 hy_residential_quarters
@@ -17,7 +16,7 @@ import lombok.Data;
  * @author Administrator
  *
  */
-@Data
+
 public class HyResidentialQuarters extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
@@ -83,7 +82,7 @@ public class HyResidentialQuarters extends BaseEntity
     /**物业表*/
     private HyProperty hyProperty;
 
-    /*public void setId(Long id) 
+    public void setId(Long id) 
     {
         this.id = id;
     }
@@ -245,5 +244,5 @@ public class HyResidentialQuarters extends BaseEntity
             .append("externalLinks", getExternalLinks())
             .append("propertyId", getPropertyId())
             .toString();
-    }*/
+    }
 }

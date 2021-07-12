@@ -1,14 +1,14 @@
 package com.ruoyi.system.service.impl;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ruoyi.system.mapper.HyEntryMapper;
 import com.ruoyi.system.domain.HyCollection;
+import com.ruoyi.system.mapper.HyEntryMapper;
 import com.ruoyi.system.service.IHyEntryService;
-import com.ruoyi.common.core.text.Convert;
 
 /**
  * 入账处理Service业务层处理

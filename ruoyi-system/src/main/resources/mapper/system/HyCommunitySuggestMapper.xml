@@ -60,6 +60,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectHyCommunitySuggestList" parameterType="HyCommunitySuggest" resultMap="HyCommunitySuggestResult">
         <include refid="selectHyCommunitySuggestVo"/>
         <where>  
+            <if test="id != null  and id != ''"> and s.id = #{id}</if>
             <if test="suggestType != null  and suggestType != ''"> and s.suggest_type = #{suggestType}</if>
             <if test="informationContent != null  and informationContent != ''"> and s.information_content = #{informationContent}</if>
             <if test="suggestName != null  and suggestName != ''"> and s.suggest_name like concat('%', #{suggestName}, '%')</if>

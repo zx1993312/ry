@@ -6,8 +6,6 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
-import com.ruoyi.system.annotation.EnumAnn;
-import com.ruoyi.system.enums.AuditEnum;
 
 /**
  * 费用减免对象 hy_fee_remission

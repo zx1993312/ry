@@ -1,8 +1,8 @@
 package com.ruoyi.system.service;
 
 import java.util.List;
+
 import com.ruoyi.system.domain.HyLable;
-import com.ruoyi.system.domain.HyShop;
 
 /**
  * 标签Service接口

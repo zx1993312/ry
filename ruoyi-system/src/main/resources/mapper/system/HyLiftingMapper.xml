@@ -88,6 +88,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="hyMaterial.materialType != null and hyMaterial.materialType != ''"> and m.material_type = #{hyMaterial.materialType}</if>
 			<if test="hyMaterial.checkmen != null and hyMaterial.checkmen != ''"> and m.checkmen = #{hyMaterial.checkmen}</if>
 			</if>
+			<if test="id != null  and id != ''"> and l.id = #{id}</if>
             <if test="materialNumber != null and materialNumber != ''"> and l.material_number = #{materialNumber}</if>
             <if test="materialUse != null  and materialUse != ''"> and l.material_use = #{materialUse}</if>
             <if test="isreturn != null  and isreturn != ''"> and l.isreturn = #{isreturn}</if>

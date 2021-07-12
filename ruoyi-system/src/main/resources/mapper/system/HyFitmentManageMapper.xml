@@ -189,10 +189,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		parameterType="HyFitmentManage" resultMap="HyFitmentManageResult">
 		<include refid="selectHyFitmentManageVo" />
 		<where>
-			<if
-				test="fitmentManageState != null  and fitmentManageState != ''"> and m.fitment_manage_state = #{fitmentManageState}</if>
-			<if
-				test="fitmentManageContent != null  and fitmentManageContent != ''"> and m.fitment_manage_content = #{fitmentManageContent}</if>
+			<if test="id != null  and id != ''"> and m.id = #{id}</if>
+			<if test="fitmentManageState != null  and fitmentManageState != ''"> and m.fitment_manage_state = #{fitmentManageState}</if>
+			<if test="fitmentManageContent != null  and fitmentManageContent != ''"> and m.fitment_manage_content = #{fitmentManageContent}</if>
 			<if test="fitmentManageExpect != null "> and m.fitment_manage_expect = #{fitmentManageExpect}
 			</if>
 			<if test="fitmentStartTime != null"> and m.fitment_start_time = #{fitmentStartTime}

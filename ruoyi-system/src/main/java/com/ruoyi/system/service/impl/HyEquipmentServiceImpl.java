@@ -2,17 +2,18 @@ package com.ruoyi.system.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.ruoyi.system.mapper.HyEquipmentMapper;
-import com.ruoyi.system.domain.HyCost;
-import com.ruoyi.system.domain.HyEquipment;
-import com.ruoyi.system.service.IHyEquipmentService;
+
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.Ztree;
 import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.system.domain.HyEquipment;
+import com.ruoyi.system.mapper.HyEquipmentMapper;
+import com.ruoyi.system.service.IHyEquipmentService;
 
 /**
  * 设备类别Service业务层处理

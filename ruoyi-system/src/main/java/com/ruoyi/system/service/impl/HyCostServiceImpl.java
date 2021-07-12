@@ -25,12 +25,10 @@ import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.domain.BatchHouseInf;
 import com.ruoyi.system.domain.HyBuilding;
 import com.ruoyi.system.domain.HyCost;
-import com.ruoyi.system.domain.OwnerAndCost;
 import com.ruoyi.system.mapper.BatchMapper;
 import com.ruoyi.system.mapper.HyBuildingMapper;
 import com.ruoyi.system.mapper.HyCostMapper;
 import com.ruoyi.system.mapper.HyCustomerMapper;
-import com.ruoyi.system.mapper.OwnerAndCostMapper;
 import com.ruoyi.system.service.IHyCostService;
 
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -47,9 +45,6 @@ import net.sf.jasperreports.engine.JasperPrint;
 public class HyCostServiceImpl implements IHyCostService {
 	@Autowired
 	private HyCostMapper hyCostMapper;
-
-	@Autowired
-	private OwnerAndCostMapper ownerAndCostMapper;
 
 	@Autowired
 	private BatchMapper batchMapper;

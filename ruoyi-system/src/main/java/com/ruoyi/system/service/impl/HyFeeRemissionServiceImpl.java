@@ -7,17 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ruoyi.common.core.text.Convert;
-import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.domain.HyFeeRemission;
-import com.ruoyi.system.domain.HyHouseInf;
-import com.ruoyi.system.domain.HyMeter;
-import com.ruoyi.system.domain.HyOwnerRegistration;
-import com.ruoyi.system.domain.HyParkingInf;
 import com.ruoyi.system.mapper.HyFeeRemissionMapper;
-import com.ruoyi.system.mapper.HyHouseInfMapper;
-import com.ruoyi.system.mapper.HyMeterMapper;
-import com.ruoyi.system.mapper.HyOwnerRegistrationMapper;
-import com.ruoyi.system.mapper.HyParkingInfMapper;
 import com.ruoyi.system.service.IHyFeeRemissionService;
 
 /**
@@ -32,7 +23,7 @@ public class HyFeeRemissionServiceImpl implements IHyFeeRemissionService {
 	@Autowired
 	private HyFeeRemissionMapper hyFeeRemissionMapper;
 
-	@Autowired
+	/*@Autowired
 	private HyOwnerRegistrationMapper hyOwnerRegistrationMapper;
 
 	@Autowired
@@ -42,7 +33,7 @@ public class HyFeeRemissionServiceImpl implements IHyFeeRemissionService {
 	private HyHouseInfMapper hyHouseInfMapper;
 
 	@Autowired
-	private HyParkingInfMapper hyParkingInfMapper;
+	private HyParkingInfMapper hyParkingInfMapper;*/
 
 	/**
 	 * 查询费用减免
@@ -140,7 +131,6 @@ public class HyFeeRemissionServiceImpl implements IHyFeeRemissionService {
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public int deleteHyFeeRemissionByIds(String ids) {
-		String[] idss = Convert.toStrArray(ids);
 		/*for (String id : idss) {
 			HyFeeRemission hyFeeRemission = hyFeeRemissionMapper.selectHyFeeRemissionById(Long.valueOf(id));
 			hyOwnerRegistrationMapper

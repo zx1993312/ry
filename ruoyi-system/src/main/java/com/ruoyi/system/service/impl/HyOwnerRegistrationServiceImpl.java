@@ -1,17 +1,17 @@
 package com.ruoyi.system.service.impl;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ruoyi.system.mapper.HyOwnerRegistrationMapper;
-import com.ruoyi.system.domain.HyHouseInf;
-import com.ruoyi.system.domain.HyOwnerRegistration;
-import com.ruoyi.system.service.IHyOwnerRegistrationService;
 import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.common.exception.BusinessException;
 import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.system.domain.HyOwnerRegistration;
+import com.ruoyi.system.mapper.HyOwnerRegistrationMapper;
+import com.ruoyi.system.service.IHyOwnerRegistrationService;
 
 /**
  * 业主资料登记Service业务层处理

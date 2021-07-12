@@ -1,6 +1,5 @@
 package com.ruoyi.system.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.httpclient.Header;
@@ -219,11 +218,10 @@ public class HyReportController extends BaseController
     	@ApiImplicitParam(name = "id", value = "主键id", required = true),
     })
     @GetMapping("/detailApp")
+    @ResponseBody
     public List<HyReport> detail(HyReport hyReport)
     {
     	List<HyReport> list = hyReportService.selectHyReportList(hyReport);
-    	/*HyReport hyReport = hyReportService.selectHyReportById(id);
-    	list.add(hyReport);*/
     	return list;
     }
 

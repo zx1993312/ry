@@ -1,7 +1,7 @@
 package com.ruoyi.system.controller;
 
-import java.util.ArrayList;
 import java.util.List;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,8 +12,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.domain.HyLifting;
 import com.ruoyi.system.service.IHyLiftingService;
 
@@ -21,11 +26,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-
-import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
  * 提料审核Controller
@@ -159,10 +159,9 @@ public class HyLiftingAuditController extends BaseController {
 	@ApiOperation("提料审核")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "id", value = "主键id", required = true), })
 	@GetMapping("/editApp")
-	public List<HyLifting> editApp(@PathVariable("id") Long id) {
-		List<HyLifting> list = new ArrayList<HyLifting>();
-		HyLifting hyLifting = hyLiftingService.selectHyLiftingById(id);
-		list.add(hyLifting);
+	@ResponseBody
+	public List<HyLifting> editApp(HyLifting hyLifting) {
+		List<HyLifting> list = hyLiftingService.selectHyLiftingList(hyLifting);
 		return list;
 	}
 	

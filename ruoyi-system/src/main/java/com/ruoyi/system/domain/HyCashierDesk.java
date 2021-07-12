@@ -1,7 +1,6 @@
 package com.ruoyi.system.domain;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;

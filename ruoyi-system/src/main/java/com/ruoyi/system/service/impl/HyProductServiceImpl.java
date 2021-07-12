@@ -3,21 +3,18 @@ package com.ruoyi.system.service.impl;
 import java.io.File;
 import java.util.List;
 
-import org.apache.poi.poifs.property.Parent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ruoyi.common.core.text.Convert;
+import com.ruoyi.system.domain.HyDeatilPicture;
+import com.ruoyi.system.domain.HyPicture;
+import com.ruoyi.system.domain.HyProduct;
 import com.ruoyi.system.mapper.HyDeatilPictureMapper;
 import com.ruoyi.system.mapper.HyPictureMapper;
 import com.ruoyi.system.mapper.HyProductMapper;
-import com.ruoyi.system.domain.HyDeatilPicture;
-import com.ruoyi.system.domain.HyLable;
-import com.ruoyi.system.domain.HyOrder;
-import com.ruoyi.system.domain.HyPicture;
-import com.ruoyi.system.domain.HyProduct;
 import com.ruoyi.system.service.IHyProductService;
-import com.ruoyi.common.core.text.Convert;
 
 /**
  * 产品Service业务层处理
