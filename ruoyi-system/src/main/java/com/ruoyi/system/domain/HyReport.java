@@ -21,6 +21,10 @@ public class HyReport extends BaseEntity
     /** 报事管理id */
     private Long id;
 
+    /** 编号 */
+    @Excel(name = "编号")
+    private String reportNumber;
+    
     /** 报事发起者 */
     @Excel(name = "报事发起者")
     private String reportUsername;
@@ -77,6 +81,14 @@ public class HyReport extends BaseEntity
     /** 维修费用 */
     @Excel(name = "维修费用")
     private BigDecimal reportCost;
+    
+    /** 耗材费用 */
+    @Excel(name = "耗材费用")
+    private BigDecimal reportConsumable;
+    
+    /** 合计 */
+    @Excel(name = "合计")
+    private BigDecimal reportTotal;
 
     /** 回访 */
     @Excel(name = "回访")
@@ -89,6 +101,14 @@ public class HyReport extends BaseEntity
     /** 图片 */
     @Excel(name = "图片")
     private String reportPicture;
+    
+    /** 时长 */
+    @Excel(name = "时长")
+    private String reportDuration;
+    
+    /** 维修难度 */
+    @Excel(name = "维修难度")
+    private String maintenanceDifficulty;
 
     /** 小区id */
     @Excel(name = "小区id")
@@ -121,7 +141,15 @@ public class HyReport extends BaseEntity
         return id;
     }
     
-    public String getReportUsername() {
+    public String getReportNumber() {
+		return reportNumber;
+	}
+
+	public void setReportNumber(String reportNumber) {
+		this.reportNumber = reportNumber;
+	}
+
+	public String getReportUsername() {
 		return reportUsername;
 	}
 
@@ -218,7 +246,24 @@ public class HyReport extends BaseEntity
     {
         return reportCost;
     }
-    public void setReportVisit(String reportVisit) 
+    
+    public BigDecimal getReportConsumable() {
+		return reportConsumable;
+	}
+
+	public void setReportConsumable(BigDecimal reportConsumable) {
+		this.reportConsumable = reportConsumable;
+	}
+
+	public BigDecimal getReportTotal() {
+		return reportTotal;
+	}
+
+	public void setReportTotal(BigDecimal reportTotal) {
+		this.reportTotal = reportTotal;
+	}
+
+	public void setReportVisit(String reportVisit) 
     {
         this.reportVisit = reportVisit;
     }
@@ -233,6 +278,22 @@ public class HyReport extends BaseEntity
 
 	public void setReportPush(String reportPush) {
 		this.reportPush = reportPush;
+	}
+
+	public String getReportDuration() {
+		return reportDuration;
+	}
+
+	public void setReportDuration(String reportDuration) {
+		this.reportDuration = reportDuration;
+	}
+
+	public String getMaintenanceDifficulty() {
+		return maintenanceDifficulty;
+	}
+
+	public void setMaintenanceDifficulty(String maintenanceDifficulty) {
+		this.maintenanceDifficulty = maintenanceDifficulty;
 	}
 
 	public void setQuartersId(Long quartersId) 
@@ -311,16 +372,19 @@ public class HyReport extends BaseEntity
 
 	@Override
 	public String toString() {
-		return "HyReport [id=" + id + ", reportUsername=" + reportUsername + ", reportPhone=" + reportPhone
-				+ ", reportAddress=" + reportAddress + ", reportArea=" + reportArea + ", reportLevel=" + reportLevel
-				+ ", reportClassify=" + reportClassify + ", reportContent=" + reportContent + ", reportDescription="
-				+ reportDescription + ", reportDate=" + reportDate + ", reportQuality=" + reportQuality
-				+ ", reportState=" + reportState + ", reportAudit=" + reportAudit + ", reportEvaluate=" + reportEvaluate
-				+ ", reportCost=" + reportCost + ", reportVisit=" + reportVisit + ", reportPush=" + reportPush
-				+ ", reportPicture=" + reportPicture + ", quartersId=" + quartersId + ", hyResidentialQuarters="
-				+ hyResidentialQuarters + ", recipientsId=" + recipientsId + ", hyRecipients=" + hyRecipients
-				+ ", sysUser=" + sysUser + "]";
+		return "HyReport [id=" + id + ", reportNumber=" + reportNumber + ", reportUsername=" + reportUsername
+				+ ", reportPhone=" + reportPhone + ", reportAddress=" + reportAddress + ", reportArea=" + reportArea
+				+ ", reportLevel=" + reportLevel + ", reportClassify=" + reportClassify + ", reportContent="
+				+ reportContent + ", reportDescription=" + reportDescription + ", reportDate=" + reportDate
+				+ ", reportQuality=" + reportQuality + ", reportState=" + reportState + ", reportAudit=" + reportAudit
+				+ ", reportEvaluate=" + reportEvaluate + ", reportCost=" + reportCost + ", reportConsumable="
+				+ reportConsumable + ", reportTotal=" + reportTotal + ", reportVisit=" + reportVisit + ", reportPush="
+				+ reportPush + ", reportPicture=" + reportPicture + ", reportDuration=" + reportDuration
+				+ ", maintenanceDifficulty=" + maintenanceDifficulty + ", quartersId=" + quartersId
+				+ ", hyResidentialQuarters=" + hyResidentialQuarters + ", recipientsId=" + recipientsId
+				+ ", hyRecipients=" + hyRecipients + ", sysUser=" + sysUser + "]";
 	}
+
 
 
 

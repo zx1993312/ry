@@ -10,6 +10,12 @@
         <form class="form-horizontal m" id="form-report-detail" th:object="${hyReport}">
             <input name="id" th:field="*{id}" type="hidden">
             <div class="form-group">    
+                <label class="col-sm-3 control-label">编号：</label>
+                <div class="col-sm-8">
+               		<input name="reportNumber" class="form-control" type="text" th:field="*{reportNumber}" disabled="disabled">
+		 	    </div>
+            </div>
+            <div class="form-group">    
                 <label class="col-sm-3 control-label">报事发起者：</label>
                 <div class="col-sm-8">
                		<input name="reportUsername" class="form-control" type="text" th:field="*{reportUsername}" disabled="disabled">
@@ -77,6 +83,18 @@
                 </div>
             </div>
             <div class="form-group">    
+                <label class="col-sm-3 control-label">耗材费用：</label>
+                <div class="col-sm-8">
+                    <input name="reportConsumable" th:field="*{reportConsumable}" class="form-control" type="text" disabled="disabled">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">合计：</label>
+                <div class="col-sm-8">
+                    <input name="reportTotal" th:field="*{reportTotal}" class="form-control" type="text" disabled="disabled">
+                </div>
+            </div>
+            <div class="form-group">    
                 <label class="col-sm-3 control-label">推送：</label>
                 <div class="col-sm-8">
                 	<select name="reportPush" th:field="*{reportPush}" class="form-control " disabled="disabled">
@@ -84,6 +102,18 @@
                       <option value="1">未推送</option>
                       <option value="2">已推送</option>
                      </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">时长：</label>
+                <div class="col-sm-8">
+                    <input name="reportDuration" th:field="*{reportDuration}" class="form-control" type="text" disabled="disabled">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">维修难度：</label>
+                <div class="col-sm-8">
+                    <input name="maintenanceDifficulty" th:field="*{maintenanceDifficulty}" class="form-control" type="text" disabled="disabled">
                 </div>
             </div>
             <div class="form-group">    

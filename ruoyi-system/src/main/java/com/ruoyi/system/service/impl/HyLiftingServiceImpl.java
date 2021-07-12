@@ -54,6 +54,39 @@ public class HyLiftingServiceImpl implements IHyLiftingService {
 	public List<HyLifting> selectHyLiftingList(HyLifting hyLifting) {
 		return hyLiftingMapper.selectHyLiftingList(hyLifting);
 	}
+	
+	/**
+	 * 查询提料人待审核列表
+	 * 
+	 * @param hyLifting 提料人
+	 * @return 提料人
+	 */
+	@Override
+	public List<HyLifting> selectHyLiftingListByAudit(HyLifting hyLifting) {
+		return hyLiftingMapper.selectHyLiftingListByAudit(hyLifting);
+	}
+	
+	/**
+	 * 查询提料人已通过列表
+	 * 
+	 * @param hyLifting 提料人
+	 * @return 提料人
+	 */
+	@Override
+	public List<HyLifting> selectHyLiftingListByThrough(HyLifting hyLifting) {
+		return hyLiftingMapper.selectHyLiftingListByThrough(hyLifting);
+	}
+	
+	/**
+	 * 查询提料人已拒绝列表
+	 * 
+	 * @param hyLifting 提料人
+	 * @return 提料人
+	 */
+	@Override
+	public List<HyLifting> selectHyLiftingListByRefusal(HyLifting hyLifting) {
+		return hyLiftingMapper.selectHyLiftingListByRefusal(hyLifting);
+	}
 
 	/**
 	 * 新增提料人

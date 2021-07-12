@@ -2,6 +2,7 @@ package com.ruoyi.system.domain;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
@@ -30,6 +31,11 @@ public class HyLifting extends BaseEntity
     /** 是否归还 */
     @Excel(name = "是否归还")
     private String isreturn;
+    
+    /** 申请时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Excel(name = "申请时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
+    private Date createTime;
 
     /** 申请部门 */
     @Excel(name = "申请部门")
@@ -67,6 +73,26 @@ public class HyLifting extends BaseEntity
     @Excel(name = "负责人部门")
     private String leadingDepartment;
     
+    /** 审核人*/
+    @Excel(name = "审核人")
+    private String liftingAuditor;
+    
+    /** 审核人部门*/
+    @Excel(name = "审核人部门")
+    private String auditorDept;
+    
+    /** 审核状态*/
+    @Excel(name = "审核状态")
+    private String liftingStatus;
+    
+    /** 拒绝原因*/
+    @Excel(name = "拒绝原因")
+    private String refusalReason;
+    
+    /** 通过原因*/
+    @Excel(name = "通过原因")
+    private String throughReason;
+    
     /** 物料表 */
     @Excel(name = "物料表")
     private HyMaterial hyMaterial;
@@ -101,6 +127,14 @@ public class HyLifting extends BaseEntity
 
 	public void setIsreturn(String isreturn) {
 		this.isreturn = isreturn;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
 
 	public String getDepts() {
@@ -175,6 +209,46 @@ public class HyLifting extends BaseEntity
 		this.leadingDepartment = leadingDepartment;
 	}
 
+	public String getLiftingAuditor() {
+		return liftingAuditor;
+	}
+
+	public void setLiftingAuditor(String liftingAuditor) {
+		this.liftingAuditor = liftingAuditor;
+	}
+
+	public String getAuditorDept() {
+		return auditorDept;
+	}
+
+	public void setAuditorDept(String auditorDept) {
+		this.auditorDept = auditorDept;
+	}
+
+	public String getLiftingStatus() {
+		return liftingStatus;
+	}
+
+	public void setLiftingStatus(String liftingStatus) {
+		this.liftingStatus = liftingStatus;
+	}
+
+	public String getRefusalReason() {
+		return refusalReason;
+	}
+
+	public void setRefusalReason(String refusalReason) {
+		this.refusalReason = refusalReason;
+	}
+
+	public String getThroughReason() {
+		return throughReason;
+	}
+
+	public void setThroughReason(String throughReason) {
+		this.throughReason = throughReason;
+	}
+
 	public HyMaterial getHyMaterial() {
 		return hyMaterial;
 	}
@@ -186,10 +260,14 @@ public class HyLifting extends BaseEntity
 	@Override
 	public String toString() {
 		return "HyLifting [id=" + id + ", materialNumber=" + materialNumber + ", materialUse=" + materialUse
-				+ ", isreturn=" + isreturn + ", depts=" + depts + ", proposer=" + proposer + ", materialId="
-				+ materialId + ", reason=" + reason + ", startTime=" + startTime + ", endTime=" + endTime + ", isLong="
-				+ isLong + ", leadingCadre=" + leadingCadre + ", leadingDepartment=" + leadingDepartment
-				+ ", hyMaterial=" + hyMaterial + "]";
+				+ ", isreturn=" + isreturn + ", createTime=" + createTime + ", depts=" + depts + ", proposer="
+				+ proposer + ", materialId=" + materialId + ", reason=" + reason + ", startTime=" + startTime
+				+ ", endTime=" + endTime + ", isLong=" + isLong + ", leadingCadre=" + leadingCadre
+				+ ", leadingDepartment=" + leadingDepartment + ", liftingAuditor=" + liftingAuditor + ", auditorDept="
+				+ auditorDept + ", liftingStatus=" + liftingStatus + ", refusalReason=" + refusalReason
+				+ ", throughReason=" + throughReason + ", hyMaterial=" + hyMaterial + "]";
 	}
+
+
 
 }

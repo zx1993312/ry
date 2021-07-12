@@ -83,7 +83,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="materialNumber"    column="material_number"    />
         <result property="materialAddress"    column="material_address"    />
         <result property="materialDept"    column="material_dept"    />
-        <result property="materialSupplier"    column="material_supplier"    />
         <result property="materialCommute"    column="material_commute"    />
         <result property="createTime"    column="create_time"    />
         <result property="state"    column="state"    />
@@ -104,7 +103,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         m.material_number, 
         m.material_address, 
         m.material_dept, 
-        m.material_supplier, 
         m.material_commute, 
         m.create_time, 
         m.state,

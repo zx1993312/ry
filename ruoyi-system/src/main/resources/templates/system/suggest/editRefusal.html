@@ -30,6 +30,16 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/suggest";
         $("#form-suggest-edit").validate({
+        	rules : {
+        		suggestAuditor : {
+					required : true,
+					maxlength:20,
+				},
+				refusalReason : {
+					required : true,
+					maxlength:255,
+				},
+			},
             focusCleanup: true
         });
 

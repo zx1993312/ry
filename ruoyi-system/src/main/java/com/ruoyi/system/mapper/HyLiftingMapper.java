@@ -26,6 +26,30 @@ public interface HyLiftingMapper
      * @return 提料人集合
      */
     public List<HyLifting> selectHyLiftingList(HyLifting hyLifting);
+    
+    /**
+     * 查询提料人待审核列表
+     * 
+     * @param hyLifting 提料人
+     * @return 提料人集合
+     */
+    public List<HyLifting> selectHyLiftingListByAudit(HyLifting hyLifting);
+    
+    /**
+     * 查询提料人已通过列表
+     * 
+     * @param hyLifting 提料人
+     * @return 提料人集合
+     */
+    public List<HyLifting> selectHyLiftingListByThrough(HyLifting hyLifting);
+    
+    /**
+     * 查询提料人已拒绝列表
+     * 
+     * @param hyLifting 提料人
+     * @return 提料人集合
+     */
+    public List<HyLifting> selectHyLiftingListByRefusal(HyLifting hyLifting);
 
     /**
      * 新增提料人

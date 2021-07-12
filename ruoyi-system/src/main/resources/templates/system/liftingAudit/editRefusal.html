@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
-    <th:block th:include="include :: header('修改装修管理')" />
-    <th:block th:include="include :: datetimepicker-css" />
-    <th:block th:include="include :: summernote-css" />
+    <th:block th:include="include :: header('修改提料人')" />
 </head>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-manage-edit" th:object="${hyFitmentManage}">
+        <form class="form-horizontal m" id="form-lifting-edit" th:object="${hyLifting}">
             <input name="id" th:field="*{id}" type="hidden">
             <div class="form-group">    
                 <label class="col-sm-3 control-label">审核人：</label>
                 <div class="col-sm-8">
-                    <input name="fitmentAuditor " class="form-control" type="text">
+                    <input name="liftingAuditor" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">审核人部门：</label>
+                <div class="col-sm-8">
+                    <input name="auditorDept" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
@@ -21,17 +25,19 @@
                     <input name="refusalReason" class="form-control" type="text">
                 </div>
             </div>
-            <input name="fitmentStatus" value="3" class="form-control" type="hidden">
+            <input name="liftingStatus" value="3" class="form-control" type="hidden">
         </form>
     </div>
     <th:block th:include="include :: footer" />
-    <th:block th:include="include :: datetimepicker-js" />
-    <th:block th:include="include :: summernote-js" />
     <script th:inline="javascript">
-        var prefix = ctx + "system/manage";
-        $("#form-manage-edit").validate({
+        var prefix = ctx + "system/lifting";
+        $("#form-lifting-edit").validate({
         	rules : {
-        		fitmentAuditor : {
+        		liftingAuditor : {
+					required : true,
+					maxlength:20,
+				},
+				auditorDept : {
 					required : true,
 					maxlength:20,
 				},
@@ -45,10 +51,9 @@
 
         function submitHandler() {
             if ($.validate.form()) {
-                $.operate.save(prefix + "/edit", $('#form-manage-edit').serialize());
+                $.operate.save(prefix + "/edit", $('#form-lifting-edit').serialize());
             }
         }
-
     </script>
 </body>
 </html>
