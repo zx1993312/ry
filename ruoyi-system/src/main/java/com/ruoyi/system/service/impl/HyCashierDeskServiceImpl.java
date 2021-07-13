@@ -961,31 +961,31 @@ public class HyCashierDeskServiceImpl implements IHyCashierDeskService {
 		String startTime = "";
 		String endTime = "";
 
-		List<HouseAndCost> dataList = new ArrayList<>();
 		for (HouseAndCost hac : list) {// 计算总面积
 
 			if (!StringUtils.isEmpty(hac.getFeeDate())) {
-				startTime = hac.getFeeDate().substring(0, 10);
-				endTime = hac.getFeeDate().substring(11);
-				Date firstDate = Constants.TIME_ALL.parse(String.valueOf(map.get("firstday")));
-				Date lastDate = Constants.TIME_ALL.parse(String.valueOf(map.get("lastday")));
+				startTime = hac.getFeeDate().substring(0, 10);// 数据库查询出的开始时间
+				endTime = hac.getFeeDate().substring(11);// 数据库查询出的结束时间
+
+				Date firstDate = Constants.TIME_ALL.parse(String.valueOf(map.get("firstday")));// 参数开始时间
+				Date lastDate = Constants.TIME_ALL.parse(String.valueOf(map.get("lastday")));// 参数结束时间
+
 				if (Constants.TIME_YEAR_MONTH_DAY.parse(startTime).getTime() >= firstDate.getTime()
 						&& Constants.TIME_YEAR_MONTH_DAY.parse(endTime).getTime() <= lastDate.getTime()) {
-					dataList.add(hac);
+					HyHouseInf hyHouseInf = hyHouseInfMapper.selectHyHouseInfById(hac.getHouseId());
+
+					HyCollection hyCollection = new HyCollection();
+					hyCollection.setCostId(hyCost.getId());
+					hyCollection.setHouseId(hac.getHouseId());
+
+					List<HyCollection> collList = hyCollectionMapper.selectHyCollectionList(hyCollection);
+					for (HyCollection collection : collList) {// 计算实收和
+						sumAmount = sumAmount.add(collection.getAmount());// 计算实收
+					}
+					
+					sumArea = sumArea.add(hyHouseInf.getBilingArea());
 				}
 			}
-
-		}
-
-		for (HouseAndCost hac : dataList) {
-			HyHouseInf hyHouseInf = hyHouseInfMapper.selectHyHouseInfById(hac.getHouseId());
-			sumArea = sumArea.add(hyHouseInf.getBilingArea());
-		}
-
-		HyCollection hyCollection = new HyCollection();
-		List<HyCollection> collList = hyCollectionMapper.selectHyCollectionList(hyCollection);
-		for (HyCollection collection : collList) {// 计算实收和
-			sumAmount = sumAmount.add(collection.getAmount());
 		}
 
 		HyCost reCost = hyCostMapper.selectHyCostById(hyCost.getId());
