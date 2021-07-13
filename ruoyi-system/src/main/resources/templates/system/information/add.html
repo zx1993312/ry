@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
-    <th:block th:include="include :: header('新增社区资讯')" />
+    <th:block th:include="include :: header('新增社区资询')" />
     <th:block th:include="include :: datetimepicker-css" />
     <th:block th:include="include :: summernote-css" />
 </head>
@@ -9,78 +9,18 @@
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
         <form class="form-horizontal m" id="form-information-add">
             <div class="form-group">    
-                <label class="col-sm-3 control-label">资讯类型：</label>
-                <div class="col-sm-8">
-                    <input name="informationType" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">来源：</label>
-                <div class="col-sm-8">
-                    <input name="source" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
                 <label class="col-sm-3 control-label">标题：</label>
                 <div class="col-sm-8">
-                    <input name="title" class="form-control" type="text">
+                    <input name="informationTitle" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">开始时间：</label>
+                <label class="col-sm-3 control-label">操作时间：</label>
                 <div class="col-sm-8">
                     <div class="input-group date">
-                        <input name="startTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <input name="operationTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                     </div>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">有效时间：</label>
-                <div class="col-sm-8">
-                    <div class="input-group date">
-                        <input name="effectiveTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">是否重要公告：</label>
-                <div class="col-sm-8">
-                    <input name="importantAnnouncement" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">状态：</label>
-                <div class="col-sm-8">
-                    <input name="state" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">上次操作人：</label>
-                <div class="col-sm-8">
-                    <input name="historyOperator" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">上次操作时间：</label>
-                <div class="col-sm-8">
-                    <div class="input-group date">
-                        <input name="historyOperationTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">公告范围项目：</label>
-                <div class="col-sm-8">
-                    <input name="announcementScopeItems" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">公告范围楼栋：</label>
-                <div class="col-sm-8">
-                    <input name="noticeScopeBuilding" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
@@ -88,15 +28,6 @@
                 <div class="col-sm-8">
                     <input type="hidden" class="form-control" name="informationContent">
                     <div class="summernote" id="informationContent"></div>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">选择社区：</label>
-                <div class="col-sm-8">
-                   	<select name="communityId" class="form-control" th:with="type=${@community.getCommunity()}">
-						<option value="">请选择</option>
-						<option th:if="data!=null" th:each="data:${type}" th:text="${data.communityName}" th:value="${data.id}"></option>
-			 	    </select>
                 </div>
             </div>
         </form>
@@ -107,47 +38,6 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/information"
         $("#form-information-add").validate({
-			rules : {
-				informationType : {
-					required : true,
-					maxlength:20,
-				},
-				source : {
-					maxlength:255,
-				},
-				title : {
-					required : true,
-					maxlength:30,
-				},
-				importantAnnouncement : {
-					required : true,
-					maxlength:2,
-				},
-				state : {
-					required : true,
-					maxlength:50,
-				},
-				historyOperator : {
-					required : true,
-					maxlength:50,
-				},
-				announcementScopeItems : {
-					required : true,
-					maxlength:255,
-				},
-				noticeScopeBuilding : {
-					required : true,
-					maxlength:255,
-				},
-				informationContent : {
-					required : true,
-					maxlength:255,
-				},
-				communityId : {
-					required : true,
-					maxlength:50,
-				},
-			},
             focusCleanup: true
         });
 
@@ -157,19 +47,7 @@
             }
         }
 
-        $("input[name='startTime']").datetimepicker({
-            format: "yyyy-mm-dd",
-            minView: "month",
-            autoclose: true
-        });
-
-        $("input[name='effectiveTime']").datetimepicker({
-            format: "yyyy-mm-dd",
-            minView: "month",
-            autoclose: true
-        });
-
-        $("input[name='historyOperationTime']").datetimepicker({
+        $("input[name='operationTime']").datetimepicker({
             format: "yyyy-mm-dd",
             minView: "month",
             autoclose: true

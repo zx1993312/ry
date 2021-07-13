@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('社区资讯列表')" />
+    <th:block th:include="include :: header('社区资询列表')" />
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -11,56 +11,13 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                <label>资讯类型：</label>
-                                <input type="text" name="informationType">
-                            </li>
-                            <li>
-                                <label>来源：</label>
-                                <input type="text" name="source"/>
-                            </li>
-                            <li>
                                 <label>标题：</label>
-                                <input type="text" name="title"/>
+                                <input type="text" name="informationTitle"/>
                             </li>
                             <li>
-                                <label>开始时间：</label>
-                                <input type="text" class="time-input" placeholder="请选择开始时间" name="startTime"/>
+                                <label>操作时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择操作时间" name="operationTime"/>
                             </li>
-                            <li>
-                                <label>有效时间：</label>
-                                <input type="text" class="time-input" placeholder="请选择有效时间" name="effectiveTime"/>
-                            </li>
-                            <li>
-                                <label>是否重要公告：</label>
-                                <input type="text" name="importantAnnouncement"/>
-                            </li>
-                            <li>
-                                <label>状态：</label>
-                                <input type="text" name="state"/>
-                            </li>
-                            <li>
-                                <label>上次操作人：</label>
-                                <input type="text" name="historyOperator"/>
-                            </li>
-                            <li>
-                                <label>上次操作时间：</label>
-                                <input type="text" class="time-input" placeholder="请选择上次操作时间" name="historyOperationTime"/>
-                            </li>
-                            <li>
-                                <label>公告范围项目：</label>
-                                <input type="text" name="announcementScopeItems"/>
-                            </li>
-                            <li>
-                                <label>公告范围楼栋：</label>
-                                <input type="text" name="noticeScopeBuilding"/>
-                            </li>
-                			<li>
-                			<label>所属社区：</label>
-			                   	<select name="communityId" class="form-control" th:with="type=${@community.getCommunity()}">
-									<option value="">请选择</option>
-									<option th:if="data!=null" th:each="data:${type}" th:text="${data.communityName}" th:value="${data.id}"></option>
-						 	    </select>
-                			</li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                                 <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
@@ -102,66 +59,26 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "社区资讯",
+                modalName: "社区资询",
                 columns: [{
                     checkbox: true
                 },
                 {
                     field: 'id',
-                    title: ' 社区资讯id',
+                    title: '社区资询id',
                     visible: false
                 },
                 {
-                    field: 'informationType',
-                    title: '资讯类型'
-                },
-                {
-                    field: 'source',
-                    title: '来源'
-                },
-                {
-                    field: 'title',
+                    field: 'informationTitle',
                     title: '标题'
                 },
                 {
-                    field: 'startTime',
-                    title: '开始时间'
-                },
-                {
-                    field: 'effectiveTime',
-                    title: '有效时间'
-                },
-                {
-                    field: 'importantAnnouncement',
-                    title: '是否重要公告'
-                },
-                {
-                    field: 'state',
-                    title: '状态'
-                },
-                {
-                    field: 'historyOperator',
-                    title: '上次操作人'
-                },
-                {
-                    field: 'historyOperationTime',
-                    title: '上次操作时间'
-                },
-                {
-                    field: 'announcementScopeItems',
-                    title: '公告范围项目'
-                },
-                {
-                    field: 'noticeScopeBuilding',
-                    title: '公告范围楼栋'
+                    field: 'operationTime',
+                    title: '操作时间'
                 },
                 {
                     field: 'informationContent',
                     title: '信息内容'
-                },
-                {
-                    field: 'hyCommunity.communityName',
-                    title: '所属社区'
                 },
                 {
                     title: '操作',

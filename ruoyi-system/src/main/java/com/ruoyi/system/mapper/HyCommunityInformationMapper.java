@@ -4,55 +4,55 @@ import java.util.List;
 import com.ruoyi.system.domain.HyCommunityInformation;
 
 /**
- * 社区咨询Mapper接口
+ * 社区资询Mapper接口
  * 
  * @author Administrator
- * @date 2021-03-15
+ * @date 2021-07-13
  */
 public interface HyCommunityInformationMapper 
 {
     /**
-     * 查询社区咨询
+     * 查询社区资询
      * 
-     * @param id 社区咨询ID
-     * @return 社区咨询
+     * @param id 社区资询ID
+     * @return 社区资询
      */
     public HyCommunityInformation selectHyCommunityInformationById(Long id);
 
     /**
-     * 查询社区咨询列表
+     * 查询社区资询列表
      * 
-     * @param hyCommunityInformation 社区咨询
-     * @return 社区咨询集合
+     * @param hyCommunityInformation 社区资询
+     * @return 社区资询集合
      */
     public List<HyCommunityInformation> selectHyCommunityInformationList(HyCommunityInformation hyCommunityInformation);
 
     /**
-     * 新增社区咨询
+     * 新增社区资询
      * 
-     * @param hyCommunityInformation 社区咨询
+     * @param hyCommunityInformation 社区资询
      * @return 结果
      */
     public int insertHyCommunityInformation(HyCommunityInformation hyCommunityInformation);
 
     /**
-     * 修改社区咨询
+     * 修改社区资询
      * 
-     * @param hyCommunityInformation 社区咨询
+     * @param hyCommunityInformation 社区资询
      * @return 结果
      */
     public int updateHyCommunityInformation(HyCommunityInformation hyCommunityInformation);
 
     /**
-     * 删除社区咨询
+     * 删除社区资询
      * 
-     * @param id 社区咨询ID
+     * @param id 社区资询ID
      * @return 结果
      */
     public int deleteHyCommunityInformationById(Long id);
 
     /**
-     * 批量删除社区咨询
+     * 批量删除社区资询
      * 
      * @param ids 需要删除的数据ID
      * @return 结果
