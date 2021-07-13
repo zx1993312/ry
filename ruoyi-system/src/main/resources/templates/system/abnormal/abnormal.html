@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('设备异常列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>异常名称：</label>
+                                <input type="text" name="abnormalName"/>
+                            </li>
+                            <li>
+                                <label>异常描述：</label>
+                                <input type="text" name="abnormalDescribe"/>
+                            </li>
+                            <li>
+                                <label>审核人：</label>
+                                <input type="text" name="abnormalAuditor"/>
+                            </li>
+                            <li>
+                                <label>状态：</label>
+                                <select name="abnormalStatus">
+			                      <option value="">请选择</option>
+			                      <option value="1">待审核</option>
+			                      <option value="2">已通过</option>
+			                      <option value="3">已拒绝</option>
+			                    </select>
+                            </li>
+                            <li>
+                                <label>拒绝原因：</label>
+                                <input type="text" name="refusalReason"/>
+                            </li>
+                            <li>
+                                <label>通过原因：</label>
+                                <input type="text" name="throughReason"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:abnormal:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:abnormal:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:abnormal:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:abnormal:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:abnormal:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:abnormal:remove')}]];
+        var prefix = ctx + "system/abnormal";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                updateUrlThrough: prefix + "/editThrough/{id}",
+                updateUrlRefusal: prefix + "/editRefusal/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "设备异常",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '设备异常表id',
+                    visible: false
+                },
+                {
+                    field: 'abnormalName',
+                    title: '异常名称'
+                },
+                {
+                    field: 'abnormalDescribe',
+                    title: '异常描述'
+                },
+                {
+                    field: 'abnormalPicture',
+                    title: '异常图片'
+                },
+                {
+                    field: 'abnormalAuditor',
+                    title: '审核人'
+                },
+                {
+                    field: 'abnormalStatus',
+                    title: '状态',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case '1' : value =  "待审核";break;
+	                    	case '2' : value =  "已通过";break;
+	                    	case '3' : value =  "已拒绝";break;
+	                	}
+		            	return value;
+		            }
+                },
+                {
+                    field: 'refusalReason',
+                    title: '拒绝原因'
+                },
+                {
+                    field: 'throughReason',
+                    title: '通过原因'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        if(row.abnormalStatus == '1'){
+                            actions.push('<a class="btn btn-primary btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="editThrough(\'' + row.id + '\')"><i class="fa fa-spin fa-calendar-check-o"></i>通过</a> ');
+                            actions.push('<a class="btn btn-danger btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="editRefusal(\'' + row.id + '\')"><i class="fa fa-spin fa-calendar-times-o"></i>拒绝</a> ');
+                            }
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+        function editThrough(id){
+            $.modal.confirm("确定要通过该条数据吗？", function() {
+            $.modal.open("同意审核", $.operate.editUrlThrough(id));
+            });
+            };
+        function editRefusal(id){
+        $.modal.confirm("确定要拒绝该条数据吗？", function() {
+        	$.modal.open("拒绝审核", $.operate.editUrlRefusal(id));
+        });
+        };
+    </script>
+</body>
+</html>

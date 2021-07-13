@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改品质异常')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-deviation-edit" th:object="${hyQualityDeviation}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">审核人：</label>
+                <div class="col-sm-8">
+                    <input name="deviationAuditor" th:field="*{deviationAuditor}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">通过原因：</label>
+                <div class="col-sm-8">
+                    <input name="throughReason" th:field="*{throughReason}" class="form-control" type="text">
+                </div>
+            </div>
+            <input name="deviationStatus" value="2" class="form-control" type="hidden">
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/deviation";
+        $("#form-deviation-edit").validate({
+        	rules : {
+        		deviationAuditor : {
+					required : true,
+					maxlength:20,
+				},
+				throughReason : {
+					required : true,
+					maxlength:255,
+				},
+			},
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-deviation-edit').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

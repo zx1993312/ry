@@ -175,12 +175,12 @@
         
         function editThrough(id){
             $.modal.confirm("确定要通过该条数据吗？", function() {
-            $.modal.opens("同意审核", $.operate.editUrlThrough(id));
+            $.modal.open("同意审核", $.operate.editUrlThrough(id));
             });
         };
         function editRefusal(id){
         $.modal.confirm("确定要拒绝该条数据吗？", function() {
-        	$.modal.opens("拒绝审核", $.operate.editUrlRefusal(id));
+        	$.modal.open("拒绝审核", $.operate.editUrlRefusal(id));
         });
         };
     </script>

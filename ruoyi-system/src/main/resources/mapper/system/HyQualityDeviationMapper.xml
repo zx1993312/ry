@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyQualityDeviationMapper">
+    
+    <resultMap type="HyQualityDeviation" id="HyQualityDeviationResult">
+        <result property="id"    column="id"    />
+        <result property="deviationName"    column="deviation_name"    />
+        <result property="deviationDescribe"    column="deviation_describe"    />
+        <result property="deviationPicture"    column="deviation_picture"    />
+        <result property="deviationAuditor"    column="deviation_auditor"    />
+        <result property="deviationStatus"    column="deviation_status"    />
+        <result property="refusalReason"    column="refusal_reason"    />
+        <result property="throughReason"    column="through_reason"    />
+    </resultMap>
+
+    <sql id="selectHyQualityDeviationVo">
+        select 
+        id, 
+        deviation_name, 
+        deviation_describe, 
+        deviation_picture, 
+        deviation_auditor, 
+        deviation_status, 
+        refusal_reason, 
+        through_reason 
+        from 
+        hy_quality_deviation
+    </sql>
+
+    <select id="selectHyQualityDeviationList" parameterType="HyQualityDeviation" resultMap="HyQualityDeviationResult">
+        <include refid="selectHyQualityDeviationVo"/>
+        <where>  
+            <if test="id != null  and id != ''"> and id = #{id}</if>
+            <if test="deviationName != null  and deviationName != ''"> and deviation_name like concat('%', #{deviationName}, '%')</if>
+            <if test="deviationDescribe != null  and deviationDescribe != ''"> and deviation_describe = #{deviationDescribe}</if>
+            <if test="deviationPicture != null  and deviationPicture != ''"> and deviation_picture = #{deviationPicture}</if>
+            <if test="deviationAuditor != null  and deviationAuditor != ''"> and deviation_auditor = #{deviationAuditor}</if>
+            <if test="deviationStatus != null  and deviationStatus != ''"> and deviation_status = #{deviationStatus}</if>
+            <if test="refusalReason != null  and refusalReason != ''"> and refusal_reason = #{refusalReason}</if>
+            <if test="throughReason != null  and throughReason != ''"> and through_reason = #{throughReason}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyQualityDeviationListByAudit" parameterType="HyQualityDeviation" resultMap="HyQualityDeviationResult">
+        <include refid="selectHyQualityDeviationVo"/>
+        <where>  
+            <if test="deviationName != null  and deviationName != ''"> and deviation_name like concat('%', #{deviationName}, '%')</if>
+            <if test="deviationDescribe != null  and deviationDescribe != ''"> and deviation_describe = #{deviationDescribe}</if>
+            <if test="deviationPicture != null  and deviationPicture != ''"> and deviation_picture = #{deviationPicture}</if>
+            <if test="deviationAuditor != null  and deviationAuditor != ''"> and deviation_auditor = #{deviationAuditor}</if>
+            and deviation_status = "1"
+            <if test="refusalReason != null  and refusalReason != ''"> and refusal_reason = #{refusalReason}</if>
+            <if test="throughReason != null  and throughReason != ''"> and through_reason = #{throughReason}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyQualityDeviationListByThrough" parameterType="HyQualityDeviation" resultMap="HyQualityDeviationResult">
+        <include refid="selectHyQualityDeviationVo"/>
+        <where>  
+            <if test="deviationName != null  and deviationName != ''"> and deviation_name like concat('%', #{deviationName}, '%')</if>
+            <if test="deviationDescribe != null  and deviationDescribe != ''"> and deviation_describe = #{deviationDescribe}</if>
+            <if test="deviationPicture != null  and deviationPicture != ''"> and deviation_picture = #{deviationPicture}</if>
+            <if test="deviationAuditor != null  and deviationAuditor != ''"> and deviation_auditor = #{deviationAuditor}</if>
+            and deviation_status = "2"
+            <if test="refusalReason != null  and refusalReason != ''"> and refusal_reason = #{refusalReason}</if>
+            <if test="throughReason != null  and throughReason != ''"> and through_reason = #{throughReason}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyQualityDeviationListByRefusal" parameterType="HyQualityDeviation" resultMap="HyQualityDeviationResult">
+        <include refid="selectHyQualityDeviationVo"/>
+        <where>  
+            <if test="deviationName != null  and deviationName != ''"> and deviation_name like concat('%', #{deviationName}, '%')</if>
+            <if test="deviationDescribe != null  and deviationDescribe != ''"> and deviation_describe = #{deviationDescribe}</if>
+            <if test="deviationPicture != null  and deviationPicture != ''"> and deviation_picture = #{deviationPicture}</if>
+            <if test="deviationAuditor != null  and deviationAuditor != ''"> and deviation_auditor = #{deviationAuditor}</if>
+            and deviation_status = "3"
+            <if test="refusalReason != null  and refusalReason != ''"> and refusal_reason = #{refusalReason}</if>
+            <if test="throughReason != null  and throughReason != ''"> and through_reason = #{throughReason}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyQualityDeviationById" parameterType="Long" resultMap="HyQualityDeviationResult">
+        <include refid="selectHyQualityDeviationVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyQualityDeviation" parameterType="HyQualityDeviation" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_quality_deviation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="deviationName != null">deviation_name,</if>
+            <if test="deviationDescribe != null">deviation_describe,</if>
+            <if test="deviationPicture != null">deviation_picture,</if>
+            <if test="deviationAuditor != null">deviation_auditor,</if>
+            <if test="deviationStatus != null">deviation_status,</if>
+            <if test="refusalReason != null">refusal_reason,</if>
+            <if test="throughReason != null">through_reason,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="deviationName != null">#{deviationName},</if>
+            <if test="deviationDescribe != null">#{deviationDescribe},</if>
+            <if test="deviationPicture != null">#{deviationPicture},</if>
+            <if test="deviationAuditor != null">#{deviationAuditor},</if>
+            <if test="deviationStatus != null">#{deviationStatus},</if>
+            <if test="refusalReason != null">#{refusalReason},</if>
+            <if test="throughReason != null">#{throughReason},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyQualityDeviation" parameterType="HyQualityDeviation">
+        update hy_quality_deviation
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="deviationName != null">deviation_name = #{deviationName},</if>
+            <if test="deviationDescribe != null">deviation_describe = #{deviationDescribe},</if>
+            <if test="deviationPicture != null">deviation_picture = #{deviationPicture},</if>
+            <if test="deviationAuditor != null">deviation_auditor = #{deviationAuditor},</if>
+            <if test="deviationStatus != null">deviation_status = #{deviationStatus},</if>
+            <if test="refusalReason != null">refusal_reason = #{refusalReason},</if>
+            <if test="throughReason != null">through_reason = #{throughReason},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyQualityDeviationById" parameterType="Long">
+        delete from hy_quality_deviation where id = #{id}
+    </delete>
+
+    <delete id="deleteHyQualityDeviationByIds" parameterType="String">
+        delete from hy_quality_deviation where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

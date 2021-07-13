@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyEquipmentAbnormalMapper">
+    
+    <resultMap type="HyEquipmentAbnormal" id="HyEquipmentAbnormalResult">
+        <result property="id"    column="id"    />
+        <result property="abnormalName"    column="abnormal_name"    />
+        <result property="abnormalDescribe"    column="abnormal_describe"    />
+        <result property="abnormalPicture"    column="abnormal_picture"    />
+        <result property="abnormalAuditor"    column="abnormal_auditor"    />
+        <result property="abnormalStatus"    column="abnormal_status"    />
+        <result property="refusalReason"    column="refusal_reason"    />
+        <result property="throughReason"    column="through_reason"    />
+    </resultMap>
+
+    <sql id="selectHyEquipmentAbnormalVo">
+        select id, abnormal_name, abnormal_describe, abnormal_picture, abnormal_auditor, abnormal_status, refusal_reason, through_reason from hy_equipment_abnormal
+    </sql>
+
+    <select id="selectHyEquipmentAbnormalList" parameterType="HyEquipmentAbnormal" resultMap="HyEquipmentAbnormalResult">
+        <include refid="selectHyEquipmentAbnormalVo"/>
+        <where>  
+            <if test="id != null  and id != ''"> and id = #{id}</if>
+            <if test="abnormalName != null  and abnormalName != ''"> and abnormal_name like concat('%', #{abnormalName}, '%')</if>
+            <if test="abnormalDescribe != null  and abnormalDescribe != ''"> and abnormal_describe = #{abnormalDescribe}</if>
+            <if test="abnormalPicture != null  and abnormalPicture != ''"> and abnormal_picture = #{abnormalPicture}</if>
+            <if test="abnormalAuditor != null  and abnormalAuditor != ''"> and abnormal_auditor = #{abnormalAuditor}</if>
+            <if test="abnormalStatus != null  and abnormalStatus != ''"> and abnormal_status = #{abnormalStatus}</if>
+            <if test="refusalReason != null  and refusalReason != ''"> and refusal_reason = #{refusalReason}</if>
+            <if test="throughReason != null  and throughReason != ''"> and through_reason = #{throughReason}</if>
+        </where>
+    </select>
+    <select id="selectHyEquipmentAbnormalListByAudit" parameterType="HyEquipmentAbnormal" resultMap="HyEquipmentAbnormalResult">
+        <include refid="selectHyEquipmentAbnormalVo"/>
+        <where>  
+            <if test="abnormalName != null  and abnormalName != ''"> and abnormal_name like concat('%', #{abnormalName}, '%')</if>
+            <if test="abnormalDescribe != null  and abnormalDescribe != ''"> and abnormal_describe = #{abnormalDescribe}</if>
+            <if test="abnormalPicture != null  and abnormalPicture != ''"> and abnormal_picture = #{abnormalPicture}</if>
+            <if test="abnormalAuditor != null  and abnormalAuditor != ''"> and abnormal_auditor = #{abnormalAuditor}</if>
+            and abnormal_status = "1"
+            <if test="refusalReason != null  and refusalReason != ''"> and refusal_reason = #{refusalReason}</if>
+            <if test="throughReason != null  and throughReason != ''"> and through_reason = #{throughReason}</if>
+        </where>
+    </select>
+    <select id="selectHyEquipmentAbnormalListByThrough" parameterType="HyEquipmentAbnormal" resultMap="HyEquipmentAbnormalResult">
+        <include refid="selectHyEquipmentAbnormalVo"/>
+        <where>  
+            <if test="abnormalName != null  and abnormalName != ''"> and abnormal_name like concat('%', #{abnormalName}, '%')</if>
+            <if test="abnormalDescribe != null  and abnormalDescribe != ''"> and abnormal_describe = #{abnormalDescribe}</if>
+            <if test="abnormalPicture != null  and abnormalPicture != ''"> and abnormal_picture = #{abnormalPicture}</if>
+            <if test="abnormalAuditor != null  and abnormalAuditor != ''"> and abnormal_auditor = #{abnormalAuditor}</if>
+            and abnormal_status = "2"
+            <if test="refusalReason != null  and refusalReason != ''"> and refusal_reason = #{refusalReason}</if>
+            <if test="throughReason != null  and throughReason != ''"> and through_reason = #{throughReason}</if>
+        </where>
+    </select>
+    <select id="selectHyEquipmentAbnormalListByRefusal" parameterType="HyEquipmentAbnormal" resultMap="HyEquipmentAbnormalResult">
+        <include refid="selectHyEquipmentAbnormalVo"/>
+        <where>  
+            <if test="abnormalName != null  and abnormalName != ''"> and abnormal_name like concat('%', #{abnormalName}, '%')</if>
+            <if test="abnormalDescribe != null  and abnormalDescribe != ''"> and abnormal_describe = #{abnormalDescribe}</if>
+            <if test="abnormalPicture != null  and abnormalPicture != ''"> and abnormal_picture = #{abnormalPicture}</if>
+            <if test="abnormalAuditor != null  and abnormalAuditor != ''"> and abnormal_auditor = #{abnormalAuditor}</if>
+            and abnormal_status = "3"
+            <if test="refusalReason != null  and refusalReason != ''"> and refusal_reason = #{refusalReason}</if>
+            <if test="throughReason != null  and throughReason != ''"> and through_reason = #{throughReason}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyEquipmentAbnormalById" parameterType="Long" resultMap="HyEquipmentAbnormalResult">
+        <include refid="selectHyEquipmentAbnormalVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyEquipmentAbnormal" parameterType="HyEquipmentAbnormal" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_equipment_abnormal
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="abnormalName != null">abnormal_name,</if>
+            <if test="abnormalDescribe != null">abnormal_describe,</if>
+            <if test="abnormalPicture != null">abnormal_picture,</if>
+            <if test="abnormalAuditor != null">abnormal_auditor,</if>
+            <if test="abnormalStatus != null">abnormal_status,</if>
+            <if test="refusalReason != null">refusal_reason,</if>
+            <if test="throughReason != null">through_reason,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="abnormalName != null">#{abnormalName},</if>
+            <if test="abnormalDescribe != null">#{abnormalDescribe},</if>
+            <if test="abnormalPicture != null">#{abnormalPicture},</if>
+            <if test="abnormalAuditor != null">#{abnormalAuditor},</if>
+            <if test="abnormalStatus != null">#{abnormalStatus},</if>
+            <if test="refusalReason != null">#{refusalReason},</if>
+            <if test="throughReason != null">#{throughReason},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyEquipmentAbnormal" parameterType="HyEquipmentAbnormal">
+        update hy_equipment_abnormal
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="abnormalName != null">abnormal_name = #{abnormalName},</if>
+            <if test="abnormalDescribe != null">abnormal_describe = #{abnormalDescribe},</if>
+            <if test="abnormalPicture != null">abnormal_picture = #{abnormalPicture},</if>
+            <if test="abnormalAuditor != null">abnormal_auditor = #{abnormalAuditor},</if>
+            <if test="abnormalStatus != null">abnormal_status = #{abnormalStatus},</if>
+            <if test="refusalReason != null">refusal_reason = #{refusalReason},</if>
+            <if test="throughReason != null">through_reason = #{throughReason},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyEquipmentAbnormalById" parameterType="Long">
+        delete from hy_equipment_abnormal where id = #{id}
+    </delete>
+
+    <delete id="deleteHyEquipmentAbnormalByIds" parameterType="String">
+        delete from hy_equipment_abnormal where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
