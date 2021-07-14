@@ -1,6 +1,7 @@
 package com.ruoyi.system.service.impl;
 
 import java.util.List;
+import com.ruoyi.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,7 +14,7 @@ import com.ruoyi.common.core.text.Convert;
  * 社区活动Service业务层处理
  * 
  * @author Administrator
- * @date 2021-04-12
+ * @date 2021-07-14
  */
 @Service
 public class HyCommunityActivityServiceImpl implements IHyCommunityActivityService 
@@ -55,6 +56,7 @@ public class HyCommunityActivityServiceImpl implements IHyCommunityActivityServi
     @Override
     public int insertHyCommunityActivity(HyCommunityActivity hyCommunityActivity)
     {
+        hyCommunityActivity.setCreateTime(DateUtils.getNowDate());
         return hyCommunityActivityMapper.insertHyCommunityActivity(hyCommunityActivity);
     }
 

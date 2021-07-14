@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改催缴通知')" />
+    <th:block th:include="include :: datetimepicker-css" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-notice-edit" th:object="${hyReminderNotice}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">欠款：</label>
+                <div class="col-sm-8">
+                    <input name="noticeArrearage" th:field="*{noticeArrearage}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">日期：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input name="noticeDate" th:value="${#dates.format(hyReminderNotice.noticeDate, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">选择接收员：</label>
+                <div class="col-sm-8">
+                    <select id="recipientsId" name="recipientsId" th:field="*{recipientsId}" class="form-control" th:with="type=${@recipients.getRecipients()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.sysUser.userName}" th:value="${data.id}"></option>
+			 	    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">选择业主：</label>
+                <div class="col-sm-8">
+                    <select name="ownerId" class="form-control" th:field="*{ownerId}" th:with="type=${@ownerRegistration.getOwnerRegistration()}">
+							<option value="">请选择</option>
+							<option th:if="data!=null" th:each="data:${type}" th:text="${data.ownerName}" th:value="${data.id}"></option>
+				 	</select>
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: datetimepicker-js" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/notices";
+        $("#form-notice-edit").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-notice-edit').serialize());
+            }
+        }
+
+        $("input[name='noticeDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+    </script>
+</body>
+</html>

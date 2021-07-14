@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('社区活动列表')" />
+    <th:block th:include="include :: header('催缴通知列表')" />
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -12,15 +12,25 @@
                         <ul>
                             <li>
                                 <label>标题：</label>
-                                <input type="text" name="activityTitle"/>
+                                <input type="text" name="noticeTitle"/>
                             </li>
                             <li>
-                                <label>活动时间：</label>
-                                <input type="text" name="activityDate"/>
+                                <label>日期：</label>
+                                <input type="text" class="time-input" placeholder="请选择日期" name="noticeDate"/>
                             </li>
                             <li>
-                                <label>活动地点：</label>
-                                <input type="text" name="activityAddress"/>
+                                <label>选择接收员：</label>
+                                <select id="reportId" name="reportId" class="form-control" th:with="type=${@recipients.getRecipients()}">
+									<option value="">请选择</option>
+									<option th:if="data!=null" th:each="data:${type}" th:text="${data.sysUser.userName}" th:value="${data.id}"></option>
+						 	    </select>
+                            </li>
+                            <li>
+                                <label>选择业主：</label>
+                                <select name="ownerId" class="form-control" th:with="type=${@ownerRegistration.getOwnerRegistration()}">
+										<option value="">请选择</option>
+										<option th:if="data!=null" th:each="data:${type}" th:text="${data.ownerName}" th:value="${data.id}"></option>
+							 	</select>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -32,16 +42,16 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:activity:add">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:notice:add">
                     <i class="fa fa-plus"></i> 添加
                 </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:activity:edit">
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:notice:edit">
                     <i class="fa fa-edit"></i> 修改
                 </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:activity:remove">
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:notice:remove">
                     <i class="fa fa-remove"></i> 删除
                 </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:activity:export">
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:notice:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
             </div>
@@ -52,9 +62,9 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('system:activity:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('system:activity:remove')}]];
-        var prefix = ctx + "system/activity";
+        var editFlag = [[${@permission.hasPermi('system:notice:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:notice:remove')}]];
+        var prefix = ctx + "system/notices";
 
         $(function() {
             var options = {
@@ -63,38 +73,30 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "社区活动",
+                modalName: "催缴通知",
                 columns: [{
                     checkbox: true
                 },
                 {
                     field: 'id',
-                    title: '社区活动id',
+                    title: '催缴通知id',
                     visible: false
                 },
                 {
-                    field: 'activityTitle',
-                    title: '标题'
+                    field: 'noticeArrearage',
+                    title: '欠款'
                 },
                 {
-                    field: 'informationContent',
-                    title: '信息内容'
+                    field: 'noticeDate',
+                    title: '日期'
                 },
                 {
-                    field: 'activityDate',
-                    title: '活动时间'
+                    field: 'hyRecipients.sysUser.userName',
+                    title: '接收员名称'
                 },
                 {
-                    field: 'activityAddress',
-                    title: '活动地点'
-                },
-                {
-                    field: 'activityPopulation',
-                    title: '限制人数'
-                },
-                {
-                    field: 'createTime',
-                    title: '创建时间'
+                    field: 'hyOwnerRegistration.ownerName',
+                    title: '业主名称'
                 },
                 {
                     title: '操作',

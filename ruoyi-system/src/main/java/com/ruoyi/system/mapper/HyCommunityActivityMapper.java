@@ -7,7 +7,7 @@ import com.ruoyi.system.domain.HyCommunityActivity;
  * 社区活动Mapper接口
  * 
  * @author Administrator
- * @date 2021-04-12
+ * @date 2021-07-14
  */
 public interface HyCommunityActivityMapper 
 {

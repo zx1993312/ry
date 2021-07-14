@@ -22,6 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectHyCommunityIntroductionList" parameterType="HyCommunityIntroduction" resultMap="HyCommunityIntroductionResult">
         <include refid="selectHyCommunityIntroductionVo"/>
         <where>  
+            <if test="id != null  and id != ''"> and id = #{id}</if>
             <if test="introductionPhotoAddress != null  and introductionPhotoAddress != ''"> and introduction_photo_address = #{introductionPhotoAddress}</if>
             <if test="introduction != null "> and introduction = #{introduction}</if>
         </where>

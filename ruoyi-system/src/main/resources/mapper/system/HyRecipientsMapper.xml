@@ -69,6 +69,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectHyRecipientsList" parameterType="HyRecipients" resultMap="HyRecipientsResult">
         <include refid="selectHyRecipientsVo"/>
         <where>  
+            <if test="id != null  and id != ''"> and c.id = #{id}</if>
             <if test="recipientsNumber != null  and recipientsNumber != ''"> and c.recipients_number = #{recipientsNumber}</if>
             <if test="personType != null  and personType != ''"> and c.person_type = #{personType}</if>
             <if test="recipientsProperty != null  and recipientsProperty != ''"> and c.recipients_property = #{recipientsProperty}</if>

@@ -51,6 +51,14 @@ public interface IHyCollectionService {
 	 */
 	public String insertHyCollection(HyCollection hyCollection, HttpServletResponse response)
 			throws InvalidPasswordException, JRException, IOException, PrinterException;
+	
+	/**
+	 * 新增收款管理 Collection management
+	 * 
+	 * @param hyCollection 收款管理 Collection management
+	 * @return 结果
+	 */
+	public int insertHyCollection(HyCollection hyCollection);
 
 	/**
 	 * 部分新增收款管理 Collection management

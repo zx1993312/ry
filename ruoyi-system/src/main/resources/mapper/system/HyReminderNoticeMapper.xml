@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyReminderNoticeMapper">
+    
+    <resultMap type="HyReminderNotice" id="HyReminderNoticeResult">
+        <result property="id"    column="id"    />
+        <result property="noticeArrearage"    column="notice_arrearage"    />
+        <result property="noticeDate"    column="notice_date"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="recipientsId"    column="recipients_id"    />
+        <result property="ownerId"    column="owner_id"    />
+        <association property="hyRecipients"     column="id" 
+        	javaType="HyRecipients" resultMap="HyRecipientsResult" />
+        <association property="hyOwnerRegistration" column="id" 
+			javaType="HyOwnerRegistration" resultMap="HyOwnerRegistrationResult" />
+    </resultMap>
+    
+    <resultMap type="HyOwnerRegistration"
+		id="HyOwnerRegistrationResult">
+		<result property="id" column="id" />
+		<result property="ownerName" column="owner_name" />
+		<result property="fixedTelephone" column="fixed_telephone" />
+		<result property="mobilePhone" column="mobile_phone" />
+		<result property="idCardNum" column="id_card_num" />
+		<result property="suplierCategory" column="suplier_category" />
+		<result property="lockedNot" column="locked_not" />
+		<result property="accessNum" column="access_num" />
+		<result property="certificateName" column="certificate_name" />
+		<result property="customerCategoy" column="customer_categoy" />
+		<result property="faxPhone" column="fax_phone" />
+		<result property="contactAddress" column="contact_address" />
+		<result property="postalCode" column="postal_code" />
+		<result property="postalPreson" column="postal_preson" />
+		<result property="eMail" column="e_mail" />
+		<result property="phoneAccount" column="phone_account" />
+		<result property="bindingPhoneNum" column="binding_phone_num" />
+		<result property="coOwner" column="co_owner" />
+		<result property="ownerIdentification"
+			column="owner_identification" />
+		<result property="firName" column="fir_name" />
+		<result property="secName" column="sec_name" />
+		<result property="gender" column="gender" />
+		<result property="nationality" column="nationality" />
+		<result property="birthDate" column="birth_date" />
+		<result property="workUnit" column="work_unit" />
+		<result property="ownerJob" column="owner_job" />
+		<result property="ownerHobby" column="owner_hobby" />
+		<result property="ownerId" column="owner_id" />
+		<result property="taxpayerNum" column="taxpayer_num" />
+		<result property="ownerAddPhone" column="owner_add_phone" />
+		<result property="bankAccount" column="bank_account" />
+		<result property="collectionCategory"
+			column="collection_category" />
+		<result property="bankType" column="bank_type" />
+		<result property="bankNum" column="bank_num" />
+		<result property="bankAccountName" column="bank_account_name" />
+		<result property="projectId" column="project_id" />
+	</resultMap>
+    
+    <resultMap type="HyRecipients" id="HyRecipientsResult">
+        <result property="id"    column="id"    />
+        <result property="recipientsNumber"    column="recipients_number"    />
+        <result property="personType"    column="person_type"    />
+        <result property="recipientsProperty"    column="recipients_property"    />
+        <result property="recipientsParent"    column="recipients_parent"    />
+        <result property="recipientsDept"    column="recipients_dept"    />
+        <result property="recipientsEmployee"    column="recipients_employee"    />
+        <result property="recipientsPhone"    column="recipients_phone"    />
+        <result property="notificationWay"    column="notification_way"    />
+        <result property="notificationType"    column="notification_type"    />
+        <result property="recipientsProvince"    column="recipients_province"    />
+        <result property="recipientsCity"    column="recipients_city"    />
+        <result property="recipientsArea"    column="recipients_area"    />
+        <association property="sysUser"     column="id" javaType="SysUser" resultMap="SysUserResult" />
+    </resultMap>
+    
+    <resultMap type="SysUser" id="SysUserResult">
+		<id     property="userId"        column="user_id"         />
+		<result property="deptId"        column="dept_id"         />
+		<result property="loginName"     column="login_name"      />
+		<result property="userName"      column="user_name"       />
+		<result property="userType"      column="user_type"       />
+		<result property="email"         column="email"           />
+		<result property="phonenumber"   column="phonenumber"     />
+		<result property="sex"           column="sex"             />
+		<result property="avatar"        column="avatar"          />
+		<result property="password"      column="password"        />
+		<result property="salt"          column="salt"            />
+		<result property="status"        column="status"          />
+		<result property="delFlag"       column="del_flag"        />
+		<result property="loginIp"       column="login_ip"        />
+		<result property="loginDate"     column="login_date"      />
+		<result property="pwdUpdateDate" column="pwd_update_date" />
+		<result property="createBy"      column="create_by"       />
+		<result property="createTime"    column="create_time"     />
+		<result property="updateBy"      column="update_by"       />
+		<result property="updateTime"    column="update_time"     />
+		<result property="remark"        column="remark"          />
+	</resultMap>
+
+    <sql id="selectHyReminderNoticeVo">
+        select 
+        n.id, 
+        n.notice_arrearage, 
+        n.notice_date, 
+        n.del_flag, 
+        n.recipients_id, 
+        n.owner_id, 
+        o.owner_name, 
+        u.user_name 
+        from 
+        hy_reminder_notice n
+        left join hy_owner_registration o on n.owner_id = o.id
+        left join hy_recipients c on n.recipients_id = c.id
+        left join sys_user u on c.recipients_employee = u.user_id
+    </sql>
+
+    <select id="selectHyReminderNoticeList" parameterType="HyReminderNotice" resultMap="HyReminderNoticeResult">
+        <include refid="selectHyReminderNoticeVo"/>
+        <where>  
+            <if test="id != null  and id != ''"> and n.id = #{id}</if>
+            <if test="noticeArrearage != null  and noticeArrearage != ''"> and n.notice_arrearage = #{noticeArrearage}</if>
+            <if test="noticeDate != null "> and n.notice_date = #{noticeDate}</if>
+            and n.del_flag = "0"
+            <if test="recipientsId != null "> and n.recipients_id = #{recipientsId}</if>
+            <if test="ownerId != null "> and n.owner_id = #{ownerId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyReminderNoticeById" parameterType="Long" resultMap="HyReminderNoticeResult">
+        <include refid="selectHyReminderNoticeVo"/>
+        where n.id = #{id}
+    </select>
+        
+    <insert id="insertHyReminderNotice" parameterType="HyReminderNotice" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_reminder_notice
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="noticeArrearage != null">notice_arrearage,</if>
+            <if test="noticeDate != null">notice_date,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="recipientsId != null">recipients_id,</if>
+            <if test="ownerId != null">owner_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="noticeArrearage != null">#{noticeArrearage},</if>
+            <if test="noticeDate != null">#{noticeDate},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="recipientsId != null">#{recipientsId},</if>
+            <if test="ownerId != null">#{ownerId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyReminderNotice" parameterType="HyReminderNotice">
+        update hy_reminder_notice
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="noticeArrearage != null">notice_arrearage = #{noticeArrearage},</if>
+            <if test="noticeDate != null">notice_date = #{noticeDate},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="recipientsId != null">recipients_id = #{recipientsId},</if>
+            <if test="ownerId != null">owner_id = #{ownerId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyReminderNoticeById" parameterType="Long">
+        delete from hy_reminder_notice where id = #{id}
+    </delete>
+
+    <delete id="deleteHyReminderNoticeByIds" parameterType="String">
+        delete from hy_reminder_notice where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

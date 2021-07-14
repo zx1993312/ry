@@ -162,6 +162,65 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 		}
 
 	}
+	
+	/**
+	 * 新增收款管理 Collection management App
+	 * 
+	 * @param hyCollection 收款管理 Collection management
+	 * @return 结果
+	 * @throws PrinterException
+	 * @throws IOException
+	 * @throws JRException
+	 * @throws InvalidPasswordException
+	 */
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public int insertHyCollection(HyCollection hyCollection)
+		{
+		Long costId = hyCollection.getCostId();
+		Long houseId = hyCollection.getHouseId();
+		Long ownerId = hyCollection.getOwnerId();
+		HyCollection collection = new HyCollection();
+		collection.setCostId(costId);
+		collection.setHouseId(houseId);
+		collection.setOwnerId(ownerId);
+		List<HyCollection> list = hyCollectionMapper.selectHyCollectionList(collection);
+		if (list.size() == 0) {
+			HouseAndCost houseAndCost = new HouseAndCost();
+			houseAndCost.setCostId(costId);
+			houseAndCost.setHouseId(houseId);
+			String payFeeDate = "";
+			String beginFeeDate = "";
+			int m = 12;
+			String feeDate = hyCollection.getHyCost().getHouseAndCost().getFeeDate();
+			String a = feeDate.split("-")[1];
+			String b = feeDate.split("-")[0];
+			String c = feeDate.split("-")[2];
+			int n = Integer.parseInt(a);
+			int y = Integer.parseInt(b);
+			if (m + n > 12) {
+				String z = y + 1 + "";
+				String p = m + n - 12 + "";
+				payFeeDate = z + "-0" + p+"-"+c;
+			} else {
+				String p = m + n + "";
+				if (Integer.parseInt(p) > 9) {
+					payFeeDate = b + "-" + p+"-"+c;
+				} else {
+					payFeeDate = b + "-0" + p+"-"+c;
+				}
+			}
+			beginFeeDate = b+"-"+a+"-"+c;
+			houseAndCost.setPayFeeDate(payFeeDate);
+			houseAndCost.setBeginFeeDate(beginFeeDate);
+			hyCustomerMapper.updateHouseAndCost(houseAndCost);
+			hyCollectionMapper.insertHyCollection(hyCollection);
+			return 1;
+		} else {
+			return 0;
+		}
+		
+	}
 
 	/**
 	 * 部分新增收款管理 Collection management

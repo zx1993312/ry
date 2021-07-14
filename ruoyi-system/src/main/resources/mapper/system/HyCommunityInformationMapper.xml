@@ -18,6 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectHyCommunityInformationList" parameterType="HyCommunityInformation" resultMap="HyCommunityInformationResult">
         <include refid="selectHyCommunityInformationVo"/>
         <where>  
+            <if test="id != null  and id != ''"> and id = #{id}</if>
             <if test="informationTitle != null  and informationTitle != ''"> and information_title = #{informationTitle}</if>
             <if test="operationTime != null "> and operation_time = #{operationTime}</if>
             <if test="informationContent != null  and informationContent != ''"> and information_content = #{informationContent}</if>

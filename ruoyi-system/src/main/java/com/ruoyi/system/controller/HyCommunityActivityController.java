@@ -30,7 +30,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 社区活动Controller
  * 
  * @author Administrator
- * @date 2021-04-12
+ * @date 2021-07-14
  */
 @Controller
 @CrossOrigin
@@ -65,6 +65,22 @@ public class HyCommunityActivityController extends BaseController
         startPage();
         List<HyCommunityActivity> list = hyCommunityActivityService.selectHyCommunityActivityList(hyCommunityActivity);
         return getDataTable(list);
+    }
+    
+    /**
+     * 查询社区活动列表App
+     */
+    @ApiOperation("社区活动")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyCommunityActivity", value = "项目实体类hyCommunityActivity", required = true),
+    })
+    @RequiresPermissions("system:activity:list")
+    @PostMapping("/listApp")
+    @ResponseBody
+    public List<HyCommunityActivity> listApp(HyCommunityActivity hyCommunityActivity)
+    {
+    	List<HyCommunityActivity> list = hyCommunityActivityService.selectHyCommunityActivityList(hyCommunityActivity);
+    	return list;
     }
 
     /**
@@ -123,6 +139,21 @@ public class HyCommunityActivityController extends BaseController
         HyCommunityActivity hyCommunityActivity = hyCommunityActivityService.selectHyCommunityActivityById(id);
         mmap.put("hyCommunityActivity", hyCommunityActivity);
         return prefix + "/edit";
+    }
+    
+    /**
+     * 社区活动详情App
+     */
+    @ApiOperation("社区活动")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "id", value = "主键id", required = true),
+    })
+    @GetMapping("/editApp")
+    @ResponseBody
+    public List<HyCommunityActivity> editApp(HyCommunityActivity hyCommunityActivity)
+    {
+    	List<HyCommunityActivity> list = hyCommunityActivityService.selectHyCommunityActivityList(hyCommunityActivity);
+    	return list;
     }
 
     /**
