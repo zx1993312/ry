@@ -1,14 +1,17 @@
 package com.ruoyi.system.service.impl;
 
 import java.util.List;
-import com.ruoyi.common.utils.DateUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.ruoyi.system.mapper.HyCommunityActivityMapper;
-import com.ruoyi.system.domain.HyCommunityActivity;
-import com.ruoyi.system.service.IHyCommunityActivityService;
+
 import com.ruoyi.common.core.text.Convert;
+import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.system.domain.HyCommunityActivity;
+import com.ruoyi.system.domain.OwnerAndActivity;
+import com.ruoyi.system.mapper.HyCommunityActivityMapper;
+import com.ruoyi.system.service.IHyCommunityActivityService;
 
 /**
  * 社区活动Service业务层处理
@@ -59,6 +62,29 @@ public class HyCommunityActivityServiceImpl implements IHyCommunityActivityServi
         hyCommunityActivity.setCreateTime(DateUtils.getNowDate());
         return hyCommunityActivityMapper.insertHyCommunityActivity(hyCommunityActivity);
     }
+    
+    /**
+     * 报名
+     * 
+     * @param ownerAndActivity 报名
+     * @return 报名
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+	public int insertOwnerAndActivity(OwnerAndActivity ownerAndActivity) {
+
+    	HyCommunityActivity hyCommunityActivity = hyCommunityActivityMapper.selectHyCommunityActivityById(ownerAndActivity.getActivityId());
+    	int activityPopulation = hyCommunityActivity.getActivityPopulation();
+    	OwnerAndActivity ownerAndActivity2 = new OwnerAndActivity();
+    	ownerAndActivity2.setActivityId(ownerAndActivity.getActivityId());
+    	ownerAndActivity2 = hyCommunityActivityMapper.selectOwnerAndActivityListCount(ownerAndActivity2);
+    	int singular = ownerAndActivity2.getSingular();
+    	if(activityPopulation>=singular) {
+    		return hyCommunityActivityMapper.insertOwnerAndActivity(ownerAndActivity);
+    	}else {
+    		return 0;
+    	}
+	}
 
     /**
      * 修改社区活动
@@ -98,4 +124,5 @@ public class HyCommunityActivityServiceImpl implements IHyCommunityActivityServi
     {
         return hyCommunityActivityMapper.deleteHyCommunityActivityById(id);
     }
+
 }

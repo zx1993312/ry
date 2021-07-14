@@ -16,9 +16,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			javaType="OwnerAndActivity" resultMap="OwnerAndActivityResult" />
     </resultMap>
 	
-	 <resultMap type="OwnerAndActivity" id="OwnerAndActivityResult">
+	<resultMap type="OwnerAndActivity" id="OwnerAndActivityResult">
         <result property="activityId"    column="activity_id"    />
         <result property="ownerId"    column="owner_id"    />
+        <result property="singular"    column="singular"    />
     </resultMap>
 	
     <sql id="selectHyCommunityActivityVo">
@@ -35,6 +36,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         LEFT JOIN owner_and_activity a ON c.id = a.activity_id
         LEFT JOIN hy_owner_registration o ON a.owner_id = o.id
     </sql>
+    
+    <sql id="selectOwnerAndActivityVo">
+        select  COUNT(*) singular from owner_and_activity
+    </sql>
 
     <select id="selectHyCommunityActivityList" parameterType="HyCommunityActivity" resultMap="HyCommunityActivityResult">
         <include refid="selectHyCommunityActivityVo"/>
@@ -46,6 +51,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="activityAddress != null  and activityAddress != ''"> and c.activity_address = #{activityAddress}</if>
             <if test="activityPopulation != null  and activityPopulation != ''"> and c.activity_population = #{activityPopulation}</if>
             <if test="activityPopulation != null  and activityPopulation != ''"> and c.activity_population = #{activityPopulation}</if>
+        </where>
+    </select>
+    
+    <select id="selectOwnerAndActivityListCount" parameterType="OwnerAndActivity" resultMap="OwnerAndActivityResult">
+        <include refid="selectOwnerAndActivityVo"/>
+        <where>  
+            <if test="activityId != null "> and activity_id = #{activityId}</if>
+            <if test="ownerId != null "> and owner_id = #{ownerId}</if>
         </where>
     </select>
     
@@ -71,6 +84,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="activityAddress != null">#{activityAddress},</if>
             <if test="activityPopulation != null">#{activityPopulation},</if>
             <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+    
+    <insert id="insertOwnerAndActivity" parameterType="OwnerAndActivity">
+        insert into owner_and_activity
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="activityId != null">activity_id,</if>
+            <if test="ownerId != null">owner_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="activityId != null">#{activityId},</if>
+            <if test="ownerId != null">#{ownerId},</if>
          </trim>
     </insert>
 

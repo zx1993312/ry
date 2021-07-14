@@ -2,6 +2,7 @@ package com.ruoyi.system.service;
 
 import java.util.List;
 import com.ruoyi.system.domain.HyCommunityActivity;
+import com.ruoyi.system.domain.OwnerAndActivity;
 
 /**
  * 社区活动Service接口
@@ -34,6 +35,14 @@ public interface IHyCommunityActivityService
      * @return 结果
      */
     public int insertHyCommunityActivity(HyCommunityActivity hyCommunityActivity);
+    
+    /**
+     * 报名
+     * 
+     * @param ownerAndActivity 报名
+     * @return 结果
+     */
+    public int insertOwnerAndActivity(OwnerAndActivity ownerAndActivity);
 
     /**
      * 修改社区活动
@@ -58,4 +67,5 @@ public interface IHyCommunityActivityService
      * @return 结果
      */
     public int deleteHyCommunityActivityById(Long id);
+
 }

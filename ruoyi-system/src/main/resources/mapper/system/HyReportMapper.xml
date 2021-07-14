@@ -367,7 +367,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="reportPicture != null">#{reportPicture},</if>
             <if test="reportDuration != null">#{reportDuration},</if>
             <if test="maintenanceDifficulty != null">#{maintenanceDifficulty},</if>
-            <if test="quarters != null">#{quarters},</if>
+            <if test="quartersId != null">#{quartersId},</if>
             <if test="ownerId != null">#{ownerId},</if>
             <if test="recipientsId != null">#{recipientsId},</if>
          </trim>
@@ -396,7 +396,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="reportPicture != null">report_picture = #{reportPicture},</if>
             <if test="reportDuration != null">report_duration = #{reportDuration},</if>
             <if test="maintenanceDifficulty != null">maintenance_difficulty = #{maintenanceDifficulty},</if>
-            <if test="quarters != null">quarters_id = #{quarters},</if>
+            <if test="quartersId != null">quarters_id = #{quartersId},</if>
             <if test="ownerId != null">owner_id = #{ownerId},</if>
             <if test="recipientsId != null">recipients_id = #{recipientsId},</if>
         </trim>

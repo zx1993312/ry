@@ -22,6 +22,10 @@ public class OwnerAndActivity extends BaseEntity
     /** 业主id */
     @Excel(name = "业主id")
     private Long ownerId;
+    
+    /** 数量 */
+    @Excel(name = "数量")
+    private int singular;
 
     public void setActivityId(Long activityId) 
     {
@@ -42,11 +46,20 @@ public class OwnerAndActivity extends BaseEntity
         return ownerId;
     }
 
-    @Override
+    public int getSingular() {
+		return singular;
+	}
+
+	public void setSingular(int singular) {
+		this.singular = singular;
+	}
+
+	@Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("activityId", getActivityId())
             .append("ownerId", getOwnerId())
+            .append("singular", getSingular())
             .toString();
     }
 }

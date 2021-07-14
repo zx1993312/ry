@@ -2,6 +2,7 @@ package com.ruoyi.system.mapper;
 
 import java.util.List;
 import com.ruoyi.system.domain.HyCommunityActivity;
+import com.ruoyi.system.domain.OwnerAndActivity;
 
 /**
  * 社区活动Mapper接口
@@ -34,6 +35,22 @@ public interface HyCommunityActivityMapper
      * @return 结果
      */
     public int insertHyCommunityActivity(HyCommunityActivity hyCommunityActivity);
+    
+    /**
+     * 报名
+     * 
+     * @param ownerAndActivity 报名
+     * @return 结果
+     */
+    public int insertOwnerAndActivity(OwnerAndActivity ownerAndActivity);
+    
+    /**
+     * 查限制人数
+     * 
+     * @param ownerAndActivity 查限制人数
+     * @return 结果
+     */
+    public OwnerAndActivity selectOwnerAndActivityListCount(OwnerAndActivity ownerAndActivity);
 
     /**
      * 修改社区活动
@@ -58,4 +75,5 @@ public interface HyCommunityActivityMapper
      * @return 结果
      */
     public int deleteHyCommunityActivityByIds(String[] ids);
+
 }

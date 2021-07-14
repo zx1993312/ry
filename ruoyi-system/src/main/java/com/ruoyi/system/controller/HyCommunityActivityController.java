@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.system.domain.HyCommunityActivity;
+import com.ruoyi.system.domain.OwnerAndActivity;
 import com.ruoyi.system.service.IHyCommunityActivityService;
 
 import io.swagger.annotations.Api;
@@ -124,6 +125,22 @@ public class HyCommunityActivityController extends BaseController
     public AjaxResult addSave(HyCommunityActivity hyCommunityActivity)
     {
         return toAjax(hyCommunityActivityService.insertHyCommunityActivity(hyCommunityActivity));
+    }
+    
+    /**
+     * 报名接口
+     */
+    @ApiOperation("报名接口")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyCommunityActivity", value = "项目实体类hyCommunityActivity", required = true),
+    })
+    @RequiresPermissions("system:activity:add")
+    @Log(title = "报名接口", businessType = BusinessType.INSERT)
+    @PostMapping("/addApp")
+    @ResponseBody
+    public AjaxResult addApp(OwnerAndActivity ownerAndActivity)
+    {
+    	return toAjax(hyCommunityActivityService.insertOwnerAndActivity(ownerAndActivity));
     }
 
     /**

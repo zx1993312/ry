@@ -38,7 +38,9 @@ public class HyCommunityActivity extends BaseEntity
     @Excel(name = "限制人数")
     private int activityPopulation;
     
-    
+    /** 业主活动中间表 */
+    @Excel(name = "业主活动中间表")
+    private OwnerAndActivity ownerAndActivity;
 
     public void setId(Long id) 
     {
@@ -94,6 +96,14 @@ public class HyCommunityActivity extends BaseEntity
 		this.activityPopulation = activityPopulation;
 	}
 
+	public OwnerAndActivity getOwnerAndActivity() {
+		return ownerAndActivity;
+	}
+
+	public void setOwnerAndActivity(OwnerAndActivity ownerAndActivity) {
+		this.ownerAndActivity = ownerAndActivity;
+	}
+
 	@Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -104,6 +114,7 @@ public class HyCommunityActivity extends BaseEntity
             .append("activityAddress", getActivityAddress())
             .append("activityPopulation", getActivityPopulation())
             .append("createTime", getCreateTime())
+            .append("ownerAndActivity", getOwnerAndActivity())
             .toString();
     }
 }
