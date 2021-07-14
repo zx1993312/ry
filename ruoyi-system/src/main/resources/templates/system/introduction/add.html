@@ -2,6 +2,7 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
     <th:block th:include="include :: header('新增社区简介')" />
+    <th:block th:include="include :: summernote-css" />
 </head>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
@@ -15,17 +16,16 @@
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">选择社区：</label>
+                <label class="col-sm-3 control-label">简介内容：</label>
                 <div class="col-sm-8">
-                	<select name="communityId" class="form-control" th:with="type=${@community.getCommunity()}">
-						<option value="">请选择</option>
-						<option th:if="data!=null" th:each="data:${type}" th:text="${data.communityName}" th:value="${data.id}"></option>
-			 	    </select>
+                	<input type="hidden" class="form-control" name="introduction">
+                    <div class="summernote" id="introduction"></div>
                 </div>
             </div>
         </form>
     </div>
     <th:block th:include="include :: footer" />
+    <th:block th:include="include :: summernote-js" />
     <script th:inline="javascript">
         var prefix = ctx + "system/introduction"
         $("#form-introduction-add").validate({
@@ -72,6 +72,40 @@
 				}
 			});
 		});
+        $(function() {
+            $('.summernote').summernote({
+                lang: 'zh-CN',
+                callbacks: {
+                    onChange: function(contents, $edittable) {
+                        $("input[name='" + this.id + "']").val(contents);
+                    },
+                    onImageUpload: function(files) {
+                        var obj = this;
+                    	var data = new FormData();
+                    	data.append("file", files[0]);
+                    	$.ajax({
+                            type: "post",
+                            url: ctx + "common/upload",
+                    		data: data,
+                    		cache: false,
+                    		contentType: false,
+                    		processData: false,
+                    		dataType: 'json',
+                    		success: function(result) {
+                    		    if (result.code == web_status.SUCCESS) {
+                    		        $('#' + obj.id).summernote('insertImage', result.url);
+                    		    } else {
+                    		        $.modal.alertError(result.msg);
+                    		    }
+                    		},
+                    		error: function(error) {
+                    		    $.modal.alertWarning("图片上传失败。");
+                    		}
+                    	});
+                    }
+                }
+            });
+        });
     </script>
 </body>
 </html>

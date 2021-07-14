@@ -7,8 +7,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="HyReport" id="HyReportResult">
         <result property="id"    column="id"    />
         <result property="reportNumber"    column="report_number"    />
-        <result property="reportUsername"    column="report_username"    />
-        <result property="reportPhone"    column="report_phone"    />
         <result property="reportAddress"    column="report_address"    />
         <result property="reportArea"    column="report_area"    />
         <result property="reportLevel"    column="report_level"    />
@@ -29,8 +27,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="reportDuration"    column="report_duration"    />
         <result property="maintenanceDifficulty"    column="maintenance_difficulty"    />
         <result property="quartersId"    column="quarters_id"    />
+        <result property="ownerId"    column="owner_id"    />
         <result property="recipientsId"    column="recipients_id"    />
-        <association property="hyResidentialQuarters"
+        <association property="hyOwnerRegistration"
+			column="id" javaType="HyOwnerRegistration"
+			resultMap="HyOwnerRegistrationResult" />
+		<association property="hyResidentialQuarters"
 			column="id" javaType="HyResidentialQuarters"
 			resultMap="HyResidentialQuartersResult" />
         <association property="hyRecipients"
@@ -40,22 +42,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			column="id" javaType="SysUser"
 			resultMap="SysUserResult" />
     </resultMap>
-
-	<resultMap type="HyRecipients" id="HyRecipientsResult">
-        <result property="id"    column="id"    />
-        <result property="personType"    column="person_type"    />
-        <result property="recipientsDept"    column="recipients_dept"    />
-        <result property="recipientsEmployee"    column="recipients_employee"    />
-        <result property="recipientsPhone"    column="recipients_phone"    />
-        <result property="notificationWay"    column="notification_way"    />
-        <result property="recipientsProvince"    column="recipients_province"    />
-        <result property="recipientsCity"    column="recipients_city"    />
-        <result property="recipientsArea"    column="recipients_area"    />
-        <result property="singular"    column="singular"    />
-        <result property="reportId"    column="report_id"    />
-    </resultMap>
-
-	<resultMap type="HyResidentialQuarters" id="HyResidentialQuartersResult">
+    
+     <resultMap type="HyResidentialQuarters" id="HyResidentialQuartersResult">
         <result property="id"    column="id"    />
         <result property="communityAddress"    column="community_address"    />
         <result property="communityName"    column="community_name"    />
@@ -72,6 +60,62 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="externalLinks"    column="external_links"    />
         <result property="propertyId"    column="property_id"    />
     </resultMap>
+
+	<resultMap type="HyRecipients" id="HyRecipientsResult">
+        <result property="id"    column="id"    />
+        <result property="personType"    column="person_type"    />
+        <result property="recipientsDept"    column="recipients_dept"    />
+        <result property="recipientsEmployee"    column="recipients_employee"    />
+        <result property="recipientsPhone"    column="recipients_phone"    />
+        <result property="notificationWay"    column="notification_way"    />
+        <result property="recipientsProvince"    column="recipients_province"    />
+        <result property="recipientsCity"    column="recipients_city"    />
+        <result property="recipientsArea"    column="recipients_area"    />
+        <result property="singular"    column="singular"    />
+        <result property="reportId"    column="report_id"    />
+    </resultMap>
+
+    	<resultMap type="HyOwnerRegistration"
+		id="HyOwnerRegistrationResult">
+		<result property="id" column="id" />
+		<result property="ownerName" column="owner_name" />
+		<result property="fixedTelephone" column="fixed_telephone" />
+		<result property="mobilePhone" column="mobile_phone" />
+		<result property="idCardNum" column="id_card_num" />
+		<result property="suplierCategory" column="suplier_category" />
+		<result property="lockedNot" column="locked_not" />
+		<result property="accessNum" column="access_num" />
+		<result property="certificateName" column="certificate_name" />
+		<result property="customerCategoy" column="customer_categoy" />
+		<result property="faxPhone" column="fax_phone" />
+		<result property="contactAddress" column="contact_address" />
+		<result property="postalCode" column="postal_code" />
+		<result property="postalPreson" column="postal_preson" />
+		<result property="eMail" column="e_mail" />
+		<result property="phoneAccount" column="phone_account" />
+		<result property="bindingPhoneNum" column="binding_phone_num" />
+		<result property="coOwner" column="co_owner" />
+		<result property="ownerIdentification"
+			column="owner_identification" />
+		<result property="firName" column="fir_name" />
+		<result property="secName" column="sec_name" />
+		<result property="gender" column="gender" />
+		<result property="nationality" column="nationality" />
+		<result property="birthDate" column="birth_date" />
+		<result property="workUnit" column="work_unit" />
+		<result property="ownerJob" column="owner_job" />
+		<result property="ownerHobby" column="owner_hobby" />
+		<result property="ownerId" column="owner_id" />
+		<result property="taxpayerNum" column="taxpayer_num" />
+		<result property="ownerAddPhone" column="owner_add_phone" />
+		<result property="bankAccount" column="bank_account" />
+		<result property="collectionCategory"
+			column="collection_category" />
+		<result property="bankType" column="bank_type" />
+		<result property="bankNum" column="bank_num" />
+		<result property="bankAccountName" column="bank_account_name" />
+		<result property="projectId" column="project_id" />
+	</resultMap>
     
     <resultMap type="SysUser" id="SysUserResult">
 		<id     property="userId"        column="user_id"         />
@@ -101,8 +145,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select 
         r.id, 
         r.report_number, 
-        r.report_username, 
-        r.report_phone, 
         r.report_address, 
         r.report_area, 
         r.report_level, 
@@ -123,13 +165,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         r.report_duration, 
         r.maintenance_difficulty, 
         r.quarters_id,
+        r.owner_id,
         r.recipients_id,
+        o.owner_name,
+        o.mobile_phone,
         q.community_name,
         e.recipients_employee,
         e.recipients_phone,
         u.user_name 
         from 
         hy_report r
+        LEFT JOIN hy_owner_registration o ON r.owner_id=o.id
         LEFT JOIN hy_residential_quarters q ON r.quarters_id=q.id
         LEFT JOIN hy_recipients e ON r.recipients_id=e.id
         left join sys_user u on e.recipients_employee = u.user_id
@@ -140,7 +186,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
        COUNT(*) singular
         from 
         hy_report r
-        LEFT JOIN hy_residential_quarters q ON r.quarters_id=q.id
+       LEFT JOIN hy_owner_registration o ON o.owner_id=o.id
+       LEFT JOIN hy_residential_quarters q ON r.quarters_id=q.id
         LEFT JOIN hy_recipients e ON r.recipients_id=e.id
         left join sys_user u on e.recipients_employee = u.user_id
     </sql>
@@ -150,8 +197,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
             <if test="id != null  and id != ''"> and r.id = #{id}</if>
             <if test="reportNumber != null  and reportNumber != ''"> and r.report_number = #{reportNumber}</if>
-            <if test="reportUsername != null  and reportUsername != ''"> and r.report_username = #{reportUsername}</if>
-            <if test="reportPhone != null  and reportPhone != ''"> and r.report_phone = #{reportPhone}</if>
             <if test="reportAddress != null  and reportAddress != ''"> and r.report_address = #{reportAddress}</if>
             <if test="reportArea != null  and reportArea != ''"> and r.report_area = #{reportArea}</if>
             <if test="reportLevel != null  and reportLevel != ''"> and r.report_level = #{reportLevel}</if>
@@ -172,6 +217,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="reportDuration != null  and reportDuration != ''"> and r.report_duration = #{reportDuration}</if>
             <if test="maintenanceDifficulty != null  and maintenanceDifficulty != ''"> and r.maintenance_difficulty = #{maintenanceDifficulty}</if>
             <if test="quartersId != null "> and r.quarters_id = #{quartersId}</if>
+            <if test="ownerId != null "> and r.owner_id = #{ownerId}</if>
             <if test="recipientsId != null "> and r.recipients_id = #{recipientsId}</if>
         </where>
     </select>
@@ -180,8 +226,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectHyReportVo"/>
         <where>  
             <if test="reportNumber != null  and reportNumber != ''"> and r.report_number = #{reportNumber}</if>
-            <if test="reportUsername != null  and reportUsername != ''"> and r.report_username = #{reportUsername}</if>
-            <if test="reportPhone != null  and reportPhone != ''"> and r.report_phone = #{reportPhone}</if>
             <if test="reportAddress != null  and reportAddress != ''"> and r.report_address = #{reportAddress}</if>
             <if test="reportArea != null  and reportArea != ''"> and r.report_area = #{reportArea}</if>
             <if test="reportLevel != null  and reportLevel != ''"> and r.report_level = #{reportLevel}</if>
@@ -202,6 +246,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="reportDuration != null  and reportDuration != ''"> and r.report_duration = #{reportDuration}</if>
             <if test="maintenanceDifficulty != null  and maintenanceDifficulty != ''"> and r.maintenance_difficulty = #{maintenanceDifficulty}</if>
             <if test="quartersId != null "> and r.quarters_id = #{quartersId}</if>
+            <if test="ownerId != null "> and r.owner_id = #{ownerId}</if>
             <if test="recipientsId != null "> and r.recipients_id = #{recipientsId}</if>
         </where>
     </select>
@@ -210,8 +255,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectHyReportVo"/>
         <where>  
             <if test="reportNumber != null  and reportNumber != ''"> and r.report_number = #{reportNumber}</if>
-            <if test="reportUsername != null  and reportUsername != ''"> and r.report_username = #{reportUsername}</if>
-            <if test="reportPhone != null  and reportPhone != ''"> and r.report_phone = #{reportPhone}</if>
             <if test="reportAddress != null  and reportAddress != ''"> and r.report_address = #{reportAddress}</if>
             <if test="reportArea != null  and reportArea != ''"> and r.report_area = #{reportArea}</if>
             <if test="reportLevel != null  and reportLevel != ''"> and r.report_level = #{reportLevel}</if>
@@ -232,6 +275,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="reportDuration != null  and reportDuration != ''"> and r.report_duration = #{reportDuration}</if>
             <if test="maintenanceDifficulty != null  and maintenanceDifficulty != ''"> and r.maintenance_difficulty = #{maintenanceDifficulty}</if>
             <if test="quartersId != null "> and r.quarters_id = #{quartersId}</if>
+            <if test="ownerId != null "> and r.owner_id = #{ownerId}</if>
             <if test="recipientsId != null "> and r.recipients_id = #{recipientsId}</if>
         </where>
     </select>
@@ -240,8 +284,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectHyReportVo"/>
         <where>  
             <if test="reportNumber != null  and reportNumber != ''"> and r.report_number = #{reportNumber}</if>
-            <if test="reportUsername != null  and reportUsername != ''"> and r.report_username = #{reportUsername}</if>
-            <if test="reportPhone != null  and reportPhone != ''"> and r.report_phone = #{reportPhone}</if>
             <if test="reportAddress != null  and reportAddress != ''"> and r.report_address = #{reportAddress}</if>
             <if test="reportArea != null  and reportArea != ''"> and r.report_area = #{reportArea}</if>
             <if test="reportLevel != null  and reportLevel != ''"> and r.report_level = #{reportLevel}</if>
@@ -262,6 +304,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="reportDuration != null  and reportDuration != ''"> and r.report_duration = #{reportDuration}</if>
             <if test="maintenanceDifficulty != null  and maintenanceDifficulty != ''"> and r.maintenance_difficulty = #{maintenanceDifficulty}</if>
             <if test="quartersId != null "> and r.quarters_id = #{quartersId}</if>
+            <if test="ownerId != null "> and r.owner_id = #{ownerId}</if>
             <if test="recipientsId != null "> and r.recipients_id = #{recipientsId}</if>
         </where>
     </select>
@@ -280,8 +323,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         insert into hy_report
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="reportNumber != null">report_number,</if>
-            <if test="reportUsername != null">report_username,</if>
-            <if test="reportPhone != null">report_phone,</if>
             <if test="reportAddress != null">report_address,</if>
             <if test="reportArea != null">report_area,</if>
             <if test="reportLevel != null">report_level,</if>
@@ -302,12 +343,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="reportDuration != null">report_duration,</if>
             <if test="maintenanceDifficulty != null">maintenance_difficulty,</if>
             <if test="quartersId != null">quarters_id,</if>
+            <if test="ownerId != null">owner_id,</if>
             <if test="recipientsId != null">recipients_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="reportNumber != null">#{reportNumber},</if>
-            <if test="reportUsername != null">#{reportUsername},</if>
-            <if test="reportPhone != null">#{reportPhone},</if>
             <if test="reportAddress != null">#{reportAddress},</if>
             <if test="reportArea != null">#{reportArea},</if>
             <if test="reportLevel != null">#{reportLevel},</if>
@@ -327,7 +367,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="reportPicture != null">#{reportPicture},</if>
             <if test="reportDuration != null">#{reportDuration},</if>
             <if test="maintenanceDifficulty != null">#{maintenanceDifficulty},</if>
-            <if test="quartersId != null">#{quartersId},</if>
+            <if test="quarters != null">#{quarters},</if>
+            <if test="ownerId != null">#{ownerId},</if>
             <if test="recipientsId != null">#{recipientsId},</if>
          </trim>
     </insert>
@@ -336,8 +377,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update hy_report
         <trim prefix="SET" suffixOverrides=",">
             <if test="reportNumber != null">report_number = #{reportNumber},</if>
-            <if test="reportUsername != null">report_username = #{reportUsername},</if>
-            <if test="reportPhone != null">report_phone = #{reportPhone},</if>
             <if test="reportAddress != null">report_address = #{reportAddress},</if>
             <if test="reportArea != null">report_area = #{reportArea},</if>
             <if test="reportLevel != null">report_level = #{reportLevel},</if>
@@ -357,7 +396,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="reportPicture != null">report_picture = #{reportPicture},</if>
             <if test="reportDuration != null">report_duration = #{reportDuration},</if>
             <if test="maintenanceDifficulty != null">maintenance_difficulty = #{maintenanceDifficulty},</if>
-            <if test="quartersId != null">quarters_id = #{quartersId},</if>
+            <if test="quarters != null">quarters_id = #{quarters},</if>
+            <if test="ownerId != null">owner_id = #{ownerId},</if>
             <if test="recipientsId != null">recipients_id = #{recipientsId},</if>
         </trim>
         where id = #{id}

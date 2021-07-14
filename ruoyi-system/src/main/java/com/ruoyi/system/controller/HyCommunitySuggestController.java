@@ -69,6 +69,22 @@ public class HyCommunitySuggestController extends BaseController
     }
     
     /**
+     * 查询社区建议列表App
+     */
+    @ApiOperation("社区建议")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyCommunitySuggest", value = "项目实体类hyCommunitySuggest", required = true),
+    })
+    @RequiresPermissions("system:suggest:list")
+    @PostMapping("/listApp")
+    @ResponseBody
+    public List<HyCommunitySuggest> listApp(HyCommunitySuggest hyCommunitySuggest)
+    {
+    	List<HyCommunitySuggest> list = hyCommunitySuggestService.selectHyCommunitySuggestList(hyCommunitySuggest);
+    	return list;
+    }
+    
+    /**
      * 查询社区建议待审核列表
      */
     @ApiOperation("社区建议")

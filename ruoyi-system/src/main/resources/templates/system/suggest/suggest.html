@@ -24,24 +24,20 @@
 			                    </select>
                             </li>
                             <li>
-                                <label>建议人姓名：</label>
-                                <input type="text" name="suggestName"/>
-                            </li>
-                            <li>
                                 <label>建议日期：</label>
                                 <input type="text" class="time-input" placeholder="请选择建议日期" name="suggestDate"/>
+                            </li>
+                            <li>
+                                <label>建议人姓名：</label>
+                                	<select name="ownerId" class="form-control" th:with="type=${@ownerRegistration.getOwnerRegistration()}">
+										<option value="">请选择</option>
+										<option th:if="data!=null" th:each="data:${type}" th:text="${data.ownerName}" th:value="${data.id}"></option>
+							 	    </select>
                             </li>
                             <li>
                                 <label>联系方式：</label>
                                 <input type="text" name="contactInformation"/>
                             </li>
-                            <li>
-                			<label>所属社区：</label>
-			                   	<select name="communityId" class="form-control" th:with="type=${@community.getCommunity()}">
-									<option value="">请选择</option>
-									<option th:if="data!=null" th:each="data:${type}" th:text="${data.communityName}" th:value="${data.id}"></option>
-						 	    </select>
-                			</li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                                 <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
@@ -103,7 +99,7 @@
                     title: '建议内容'
                 },
                 {
-                    field: 'suggestName',
+                    field: 'hyOwnerRegistration.ownerName',
                     title: '建议人姓名'
                 },
                 {
@@ -113,10 +109,6 @@
                 {
                     field: 'contactInformation',
                     title: '联系方式'
-                },
-                {
-                    field: 'hyCommunity.communityName',
-                    title: '所属社区'
                 },
                 {
                     field: 'refusalReason',

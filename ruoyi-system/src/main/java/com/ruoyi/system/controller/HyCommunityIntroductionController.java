@@ -66,6 +66,22 @@ public class HyCommunityIntroductionController extends BaseController
         List<HyCommunityIntroduction> list = hyCommunityIntroductionService.selectHyCommunityIntroductionList(hyCommunityIntroduction);
         return getDataTable(list);
     }
+    
+    /**
+     * 查询社区简介列表App
+     */
+    @ApiOperation("社区简介")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyCommunityIntroduction", value = "项目实体类hyCommunityIntroduction", required = true),
+    })
+    @RequiresPermissions("system:introduction:list")
+    @PostMapping("/listApp")
+    @ResponseBody
+    public List<HyCommunityIntroduction> listApp(HyCommunityIntroduction hyCommunityIntroduction)
+    {
+    	List<HyCommunityIntroduction> list = hyCommunityIntroductionService.selectHyCommunityIntroductionList(hyCommunityIntroduction);
+    	return list;
+    }
 
     /**
      * 导出社区简介列表
@@ -123,6 +139,21 @@ public class HyCommunityIntroductionController extends BaseController
         HyCommunityIntroduction hyCommunityIntroduction = hyCommunityIntroductionService.selectHyCommunityIntroductionById(id);
         mmap.put("hyCommunityIntroduction", hyCommunityIntroduction);
         return prefix + "/edit";
+    }
+    
+    /**
+     * 社区简介详情App
+     */
+    @ApiOperation("社区简介")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "id", value = "主键id", required = true),
+    })
+    @GetMapping("/editApp")
+    @ResponseBody
+    public List<HyCommunityIntroduction> editApp(HyCommunityIntroduction hyCommunityIntroduction)
+    {
+    	List<HyCommunityIntroduction> list = hyCommunityIntroductionService.selectHyCommunityIntroductionList(hyCommunityIntroduction);
+    	return list;
     }
 
     /**

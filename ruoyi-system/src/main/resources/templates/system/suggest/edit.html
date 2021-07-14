@@ -28,7 +28,10 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">建议人姓名：</label>
                 <div class="col-sm-8">
-                    <input name="suggestName" th:field="*{suggestName}" class="form-control" type="text">
+                   	<select name="ownerId" th:field="*{ownerId}" class="form-control" th:with="type=${@ownerRegistration.getOwnerRegistration()}">
+						<option value="">请选择</option>
+						<option th:if="data!=null" th:each="data:${type}" th:text="${data.ownerName}" th:value="${data.id}"></option>
+			 	    </select>
                 </div>
             </div>
             <div class="form-group">    
@@ -44,15 +47,6 @@
                 <label class="col-sm-3 control-label">联系方式：</label>
                 <div class="col-sm-8">
                     <input name="contactInformation" th:field="*{contactInformation}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">所属社区：</label>
-                <div class="col-sm-8">
-                   	<select name="communityId" th:field="*{communityId}" class="form-control" th:with="type=${@community.getCommunity()}">
-						<option value="">请选择</option>
-						<option th:if="data!=null" th:each="data:${type}" th:text="${data.communityName}" th:value="${data.id}"></option>
-			 	    </select>
                 </div>
             </div>
         </form>
@@ -72,15 +66,11 @@
 					required : true,
 					maxlength:255,
 				},
-				suggestName : {
-					required : true,
-					maxlength:20,
-				},
 				contactInformation : {
 					required : true,
 					maxlength:11,
 				},
-				communityId : {
+				ownerId : {
 					required : true,
 					maxlength:50,
 				},

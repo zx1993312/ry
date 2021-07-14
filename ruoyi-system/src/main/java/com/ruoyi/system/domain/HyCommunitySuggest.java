@@ -27,10 +27,6 @@ public class HyCommunitySuggest extends BaseEntity
     @Excel(name = "建议内容")
     private String informationContent;
 
-    /** 建议人姓名 */
-    @Excel(name = "建议人姓名")
-    private String suggestName;
-
     /** 建议日期 */
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Excel(name = "建议日期", width = 30, dateFormat = "yyyy-MM-dd")
@@ -56,13 +52,13 @@ public class HyCommunitySuggest extends BaseEntity
     @Excel(name = "通过原因")
     private String throughReason;
 
-    /** 社区id */
-    @Excel(name = "社区id")
-    private Long communityId;
+    /** 业主id */
+    @Excel(name = "业主id")
+    private Long ownerId;
     
-    /** 社区表 */
-    @Excel(name = "社区表")
-    private HyCommunity hyCommunity;
+    /** 业主表 */
+    @Excel(name = "业主表")
+    private HyOwnerRegistration hyOwnerRegistration;
     public void setId(Long id) 
     {
         this.id = id;
@@ -89,15 +85,6 @@ public class HyCommunitySuggest extends BaseEntity
     public String getInformationContent() 
     {
         return informationContent;
-    }
-    public void setSuggestName(String suggestName) 
-    {
-        this.suggestName = suggestName;
-    }
-
-    public String getSuggestName() 
-    {
-        return suggestName;
     }
     public void setSuggestDate(Date suggestDate) 
     {
@@ -150,32 +137,32 @@ public class HyCommunitySuggest extends BaseEntity
 		this.throughReason = throughReason;
 	}
 
-	public void setCommunityId(Long communityId) 
-    {
-        this.communityId = communityId;
-    }
 
-    public Long getCommunityId() 
-    {
-        return communityId;
-    }
-
-    public HyCommunity getHyCommunity() {
-		return hyCommunity;
+	public Long getOwnerId() {
+		return ownerId;
 	}
 
-	public void setHyCommunity(HyCommunity hyCommunity) {
-		this.hyCommunity = hyCommunity;
+	public void setOwnerId(Long ownerId) {
+		this.ownerId = ownerId;
+	}
+
+	public HyOwnerRegistration getHyOwnerRegistration() {
+		return hyOwnerRegistration;
+	}
+
+	public void setHyOwnerRegistration(HyOwnerRegistration hyOwnerRegistration) {
+		this.hyOwnerRegistration = hyOwnerRegistration;
 	}
 
 	@Override
 	public String toString() {
 		return "HyCommunitySuggest [id=" + id + ", suggestType=" + suggestType + ", informationContent="
-				+ informationContent + ", suggestName=" + suggestName + ", suggestDate=" + suggestDate
-				+ ", contactInformation=" + contactInformation + ", suggestAuditor=" + suggestAuditor
-				+ ", suggestStatus=" + suggestStatus + ", refusalReason=" + refusalReason + ", throughReason="
-				+ throughReason + ", communityId=" + communityId + ", hyCommunity=" + hyCommunity + "]";
+				+ informationContent + ", suggestDate=" + suggestDate + ", contactInformation=" + contactInformation
+				+ ", suggestAuditor=" + suggestAuditor + ", suggestStatus=" + suggestStatus + ", refusalReason="
+				+ refusalReason + ", throughReason=" + throughReason + ", ownerId=" + ownerId + ", hyOwnerRegistration="
+				+ hyOwnerRegistration + "]";
 	}
+
 
 
 

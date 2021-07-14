@@ -11,14 +11,14 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                <label>姓名：</label>
+                                <label>接收员姓名：</label>
                                 <select id="reportId" name="reportId" class="form-control" th:with="type=${@recipients.getRecipients()}">
 									<option value="">请选择</option>
 									<option th:if="data!=null" th:each="data:${type}" th:text="${data.sysUser.userName}" th:value="${data.id}"></option>
 						 	    </select>
                             </li>
                             <li>
-                                <label>手机：</label>
+                                <label>接收员手机：</label>
                                 <div class="col-sm-8">
 			                    <select id="reportId" name="reportId" class="form-control" th:with="type=${@recipients.getRecipients()}">
 									<option value="">请选择</option>
@@ -143,11 +143,11 @@
                     title: '类型'
                 },
                 {
-                    field: 'reportUsername',
+                    field: 'hyOwnerRegistration.ownerName',
                     title: '报事发起者'
                 },
                 {
-                    field: 'reportPhone',
+                    field: 'hyOwnerRegistration.mobilePhone',
                     title: '发起人电话号'
                 },
                 {

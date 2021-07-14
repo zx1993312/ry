@@ -8,34 +8,58 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="id"    column="id"    />
         <result property="suggestType"    column="suggest_type"    />
         <result property="informationContent"    column="information_content"    />
-        <result property="suggestName"    column="suggest_name"    />
         <result property="suggestDate"    column="suggest_date"    />
         <result property="contactInformation"    column="contact_information"    />
         <result property="suggestAuditor"    column="suggest_auditor"    />
         <result property="suggestStatus"    column="suggest_status"    />
         <result property="refusalReason"    column="refusal_reason"    />
         <result property="throughReason"    column="through_reason"    />
-        <result property="communityId"    column="community_id"    />
-        <association property="hyCommunity" column="id"
-			javaType="HyCommunity" resultMap="HyCommunityResult" />
+        <result property="ownerId"    column="owner_id"    />
+        <association property="hyOwnerRegistration" column="id" 
+			javaType="HyOwnerRegistration" resultMap="HyOwnerRegistrationResult" />
+        
     </resultMap>
-
-	<resultMap type="HyCommunity" id="HyCommunityResult">
+	
+	<resultMap type="HyOwnerRegistration"
+		id="HyOwnerRegistrationResult">
 		<result property="id" column="id" />
-		<result property="title" column="title" />
-		<result property="releaseTime" column="release_time" />
-		<result property="introductionContent"
-			column="introduction_content" />
-		<result property="communityName"
-			column="community_name" />
-		<result property="communityProvince"
-			column="community_province" />
-		<result property="communityCity"
-			column="community_city" />
-		<result property="communityArea"
-			column="community_area" />
-		<result property="communityAddress"
-			column="community_address" />
+		<result property="ownerName" column="owner_name" />
+		<result property="fixedTelephone" column="fixed_telephone" />
+		<result property="mobilePhone" column="mobile_phone" />
+		<result property="idCardNum" column="id_card_num" />
+		<result property="suplierCategory" column="suplier_category" />
+		<result property="lockedNot" column="locked_not" />
+		<result property="accessNum" column="access_num" />
+		<result property="certificateName" column="certificate_name" />
+		<result property="customerCategoy" column="customer_categoy" />
+		<result property="faxPhone" column="fax_phone" />
+		<result property="contactAddress" column="contact_address" />
+		<result property="postalCode" column="postal_code" />
+		<result property="postalPreson" column="postal_preson" />
+		<result property="eMail" column="e_mail" />
+		<result property="phoneAccount" column="phone_account" />
+		<result property="bindingPhoneNum" column="binding_phone_num" />
+		<result property="coOwner" column="co_owner" />
+		<result property="ownerIdentification"
+			column="owner_identification" />
+		<result property="firName" column="fir_name" />
+		<result property="secName" column="sec_name" />
+		<result property="gender" column="gender" />
+		<result property="nationality" column="nationality" />
+		<result property="birthDate" column="birth_date" />
+		<result property="workUnit" column="work_unit" />
+		<result property="ownerJob" column="owner_job" />
+		<result property="ownerHobby" column="owner_hobby" />
+		<result property="ownerId" column="owner_id" />
+		<result property="taxpayerNum" column="taxpayer_num" />
+		<result property="ownerAddPhone" column="owner_add_phone" />
+		<result property="bankAccount" column="bank_account" />
+		<result property="collectionCategory"
+			column="collection_category" />
+		<result property="bankType" column="bank_type" />
+		<result property="bankNum" column="bank_num" />
+		<result property="bankAccountName" column="bank_account_name" />
+		<result property="projectId" column="project_id" />
 	</resultMap>
 
     <sql id="selectHyCommunitySuggestVo">
@@ -43,18 +67,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         s.id, 
         s.suggest_type, 
         s.information_content, 
-        s.suggest_name, 
         s.suggest_date, 
         s.contact_information, 
         s.suggest_auditor, 
         s.suggest_status, 
         s.refusal_reason, 
         s.through_reason, 
-        s.community_id,
-        c.community_name 
+        s.owner_id,
+        o.owner_name 
         from 
         hy_community_suggest s
-        LEFT JOIN hy_community c ON s.community_id = c.id
+        LEFT JOIN hy_owner_registration o ON s.owner_id = o.id
     </sql>
 
     <select id="selectHyCommunitySuggestList" parameterType="HyCommunitySuggest" resultMap="HyCommunitySuggestResult">
@@ -63,14 +86,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="id != null  and id != ''"> and s.id = #{id}</if>
             <if test="suggestType != null  and suggestType != ''"> and s.suggest_type = #{suggestType}</if>
             <if test="informationContent != null  and informationContent != ''"> and s.information_content = #{informationContent}</if>
-            <if test="suggestName != null  and suggestName != ''"> and s.suggest_name like concat('%', #{suggestName}, '%')</if>
             <if test="suggestDate != null "> and s.suggest_date = #{suggestDate}</if>
             <if test="contactInformation != null  and contactInformation != ''"> and s.contact_information = #{contactInformation}</if>
             <if test="suggestAuditor != null  and suggestAuditor != ''"> and s.suggest_auditor = #{suggestAuditor}</if>
             <if test="suggestStatus != null  and suggestStatus != ''"> and s.suggest_status = #{suggestStatus}</if>
             <if test="refusalReason != null  and refusalReason != ''"> and s.refusal_reason = #{refusalReason}</if>
             <if test="throughReason != null  and throughReason != ''"> and s.through_reason = #{throughReason}</if>
-            <if test="communityId != null "> and s.community_id = #{communityId}</if>
+            <if test="ownerId != null "> and s.owner_id = #{ownerId}</if>
         </where>
     </select>
     
@@ -79,14 +101,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
             <if test="suggestType != null  and suggestType != ''"> and s.suggest_type = #{suggestType}</if>
             <if test="informationContent != null  and informationContent != ''"> and s.information_content = #{informationContent}</if>
-            <if test="suggestName != null  and suggestName != ''"> and s.suggest_name like concat('%', #{suggestName}, '%')</if>
             <if test="suggestDate != null "> and s.suggest_date = #{suggestDate}</if>
             <if test="contactInformation != null  and contactInformation != ''"> and s.contact_information = #{contactInformation}</if>
             <if test="suggestAuditor != null  and suggestAuditor != ''"> and s.suggest_auditor = #{suggestAuditor}</if>
             and s.suggest_status = "1"
             <if test="refusalReason != null  and refusalReason != ''"> and s.refusal_reason = #{refusalReason}</if>
             <if test="throughReason != null  and throughReason != ''"> and s.through_reason = #{throughReason}</if>
-            <if test="communityId != null "> and s.community_id = #{communityId}</if>
+            <if test="ownerId != null "> and s.owner_id = #{ownerId}</if>
         </where>
     </select>
     
@@ -95,14 +116,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
             <if test="suggestType != null  and suggestType != ''"> and s.suggest_type = #{suggestType}</if>
             <if test="informationContent != null  and informationContent != ''"> and s.information_content = #{informationContent}</if>
-            <if test="suggestName != null  and suggestName != ''"> and s.suggest_name like concat('%', #{suggestName}, '%')</if>
             <if test="suggestDate != null "> and s.suggest_date = #{suggestDate}</if>
             <if test="contactInformation != null  and contactInformation != ''"> and s.contact_information = #{contactInformation}</if>
             <if test="suggestAuditor != null  and suggestAuditor != ''"> and s.suggest_auditor = #{suggestAuditor}</if>
             and s.suggest_status = "2"
             <if test="refusalReason != null  and refusalReason != ''"> and s.refusal_reason = #{refusalReason}</if>
             <if test="throughReason != null  and throughReason != ''"> and s.through_reason = #{throughReason}</if>
-            <if test="communityId != null "> and s.community_id = #{communityId}</if>
+            <if test="ownerId != null "> and s.owner_id = #{ownerId}</if>
         </where>
     </select>
     
@@ -111,14 +131,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
             <if test="suggestType != null  and suggestType != ''"> and s.suggest_type = #{suggestType}</if>
             <if test="informationContent != null  and informationContent != ''"> and s.information_content = #{informationContent}</if>
-            <if test="suggestName != null  and suggestName != ''"> and s.suggest_name like concat('%', #{suggestName}, '%')</if>
             <if test="suggestDate != null "> and s.suggest_date = #{suggestDate}</if>
             <if test="contactInformation != null  and contactInformation != ''"> and s.contact_information = #{contactInformation}</if>
             <if test="suggestAuditor != null  and suggestAuditor != ''"> and s.suggest_auditor = #{suggestAuditor}</if>
             and s.suggest_status = "3"
             <if test="refusalReason != null  and refusalReason != ''"> and s.refusal_reason = #{refusalReason}</if>
             <if test="throughReason != null  and throughReason != ''"> and s.through_reason = #{throughReason}</if>
-            <if test="communityId != null "> and s.community_id = #{communityId}</if>
+            <if test="ownerId != null "> and s.owner_id = #{ownerId}</if>
         </where>
     </select>
     
@@ -132,26 +151,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="suggestType != null">suggest_type,</if>
             <if test="informationContent != null">information_content,</if>
-            <if test="suggestName != null">suggest_name,</if>
             <if test="suggestDate != null">suggest_date,</if>
             <if test="contactInformation != null">contact_information,</if>
             <if test="suggestAuditor != null">suggest_auditor,</if>
             <if test="suggestStatus != null">suggest_status,</if>
             <if test="refusalReason != null">refusal_reason,</if>
             <if test="throughReason != null">through_reason,</if>
-            <if test="communityId != null">community_id,</if>
+            <if test="ownerId != null">owner_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="suggestType != null">#{suggestType},</if>
             <if test="informationContent != null">#{informationContent},</if>
-            <if test="suggestName != null">#{suggestName},</if>
             <if test="suggestDate != null">#{suggestDate},</if>
             <if test="contactInformation != null">#{contactInformation},</if>
             <if test="suggestAuditor != null">#{suggestAuditor},</if>
             <if test="suggestStatus != null">#{suggestStatus},</if>
             <if test="refusalReason != null">#{refusalReason},</if>
             <if test="throughReason != null">#{throughReason},</if>
-            <if test="communityId != null">#{communityId},</if>
+            <if test="ownerId != null">#{ownerId},</if>
          </trim>
     </insert>
 
@@ -160,14 +177,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="SET" suffixOverrides=",">
             <if test="suggestType != null">suggest_type = #{suggestType},</if>
             <if test="informationContent != null">information_content = #{informationContent},</if>
-            <if test="suggestName != null">suggest_name = #{suggestName},</if>
             <if test="suggestDate != null">suggest_date = #{suggestDate},</if>
             <if test="contactInformation != null">contact_information = #{contactInformation},</if>
             <if test="suggestAuditor != null">suggest_auditor = #{suggestAuditor},</if>
             <if test="suggestStatus != null">suggest_status = #{suggestStatus},</if>
             <if test="refusalReason != null">refusal_reason = #{refusalReason},</if>
             <if test="throughReason != null">through_reason = #{throughReason},</if>
-            <if test="communityId != null">community_id = #{communityId},</if>
+            <if test="ownerId != null">owner_id = #{ownerId},</if>
         </trim>
         where id = #{id}
     </update>
