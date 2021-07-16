@@ -6,29 +6,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <resultMap type="HyProduct" id="HyProductResult">
         <result property="id"    column="id"    />
+        <result property="productNumber"    column="product_number"    />
         <result property="productName"    column="product_name"    />
         <result property="briefIntroduction"    column="brief_introduction"    />
+        <result property="productType"    column="product_type"    />
+        <result property="originalPrice"    column="original_price"    />
+        <result property="currentPrice"    column="current_price"    />
         <result property="soldNumber"    column="sold_number"    />
         <result property="stockNumber"    column="stock_number"    />
         <result property="state"    column="state"    />
-        <result property="snapUpDate"    column="snap_up_date"    />
-        <result property="sendCodeDate"    column="send_code_date"    />
-        <result property="appointmentDate"    column="appointment_date"    />  
-        <result property="appointmentMode"    column="appointment_mode"    />
-        <result property="useDate"    column="use_date"    />
-        <result property="shopId"    column="shop_id"    />
-        <result property="limitedQuantity"    column="limited_quantity"    />
         <result property="productOrderBy"    column="product_order_by"    />
-        <result property="customerServiceTel"    column="customer_service_tel"    />
-        <result property="shareTitle"    column="share_title"    />
-        <result property="salState"  column="sal_state"/>
-        <result property="lableId"  column="lable_id"/>
+        <result property="shopId"    column="shop_id"    />
+        <result property="lableId"    column="lable_id"    />
          <association property="hyShop" column="id"
 			javaType="HyShop" resultMap="HyShopResult" />
          <association property="hyPicture" column="id"
 			javaType="HyPicture" resultMap="HyPictureResult" />
-         <association property="hySetMeal" column="id"
-			javaType="HySetMeal" resultMap="HySetMealResult" />
          <association property="hyLable" column="id"
 			javaType="HyLable" resultMap="HyLableResult" />
          <association property="hyDeatilPicture" column="id"
@@ -46,15 +39,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="lableName"    column="lable_name"    />
     </resultMap>
     
-    <resultMap type="HySetMeal" id="HySetMealResult">
-        <result property="id"    column="id"    />
-        <result property="setMealContent"    column="set_meal_content"    />
-        <result property="retailPrice"    column="retail_price"    />
-        <result property="marketPrice"    column="market_price"    />
-        <result property="setMealName"    column="set_meal_name"    />
-        <result property="productId"    column="product_id"    />
-    </resultMap>
-    
     <resultMap type="HyShop" id="HyShopResult">
         <result property="id"    column="id"    />
         <result property="shopName"    column="shop_name"    />
@@ -66,197 +50,53 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
  	<resultMap type="HyPicture" id="HyPictureResult">
         <result property="id"    column="id"    />
-        <result property="pcitureAddress"    column="pciture_address"    />
-        <result property="productId"    column="product_id"    />
-    </resultMap>
-
-    <resultMap type="HyPoster" id="HyPosterResult">
-        <result property="id"    column="id"    />
-        <result property="posterAddress"    column="poster_address"    />
+        <result property="pictureAddress"    column="picture_address"    />
         <result property="productId"    column="product_id"    />
     </resultMap>
 
     <sql id="selectHyProductVo">
         select 
         p.id, 
+        p.product_number, 
         p.product_name, 
         p.brief_introduction, 
+        p.product_type, 
+        p.original_price, 
+        p.current_price, 
         p.sold_number, 
         p.stock_number, 
         p.state, 
-        p.snap_up_date, 
-        p.send_code_date,  
-        p.appointment_date,  
-        p.appointment_mode, 
-        p.use_date, 
-        p.shop_id,
-        p.limited_quantity,
         p.product_order_by,
-        p.customer_service_tel,
-        p.share_title,
-        p.sal_state,
+        p.shop_id,
         p.lable_id,
         s.shop_name,
-        a.pciture_address,
-        c.poster_address,
+        a.picture_address,
         l.lable_name,
         d.deatil_picture
         from 
         hy_product p
         LEFT JOIN hy_shop s ON  p.shop_id=s.id
         LEFT JOIN hy_picture a ON a.product_id = p.id
-        LEFT JOIN hy_poster c ON c.product_id=p.id
         LEFT JOIN hy_lable l ON p.lable_id=l.id
         LEFT JOIN hy_deatil_picture d ON d.product_id=p.id
         where 1=1
     </sql>
     
-    <sql id="selectHyProductVoTest">
-        select 
-        p.id, 
-        p.product_name, 
-        p.brief_introduction, 
-        p.sold_number, 
-        p.stock_number, 
-        p.state, 
-        p.snap_up_date, 
-        p.send_code_date,  
-        p.appointment_date,  
-        p.appointment_mode, 
-        p.use_date, 
-        p.shop_id,
-        p.limited_quantity,
-        p.product_order_by,
-        p.customer_service_tel,
-        p.share_title,
-        p.sal_state,
-        p.lable_id,
-        s.shop_name,
-        a.pciture_address,
-        c.poster_address,
-        l.lable_name,
-        d.deatil_picture,
-        b.business_name,
-        e.retail_price,
-        e.market_price
-        from 
-        hy_product p
-        LEFT JOIN hy_shop s ON  p.shop_id=s.id
-        LEFT JOIN hy_picture a ON a.product_id = p.id
-        LEFT JOIN hy_poster c ON c.product_id=p.id
-        LEFT JOIN hy_lable l ON p.lable_id=l.id
-        LEFT JOIN hy_deatil_picture d ON d.product_id=p.id
-        LEFT JOIN hy_business b ON s.business_id=b.id
-        LEFT JOIN hy_set_meal e ON p.id=e.product_id
-       	ORDER BY  p.product_order_by DESC 
-        
-    </sql>
-    
-    <sql id="selectHyProductById">
-    	 select 
-        p.id, 
-        p.product_name, 
-        p.brief_introduction, 
-        p.sold_number, 
-        p.stock_number, 
-        p.state, 
-        p.snap_up_date, 
-        p.send_code_date,  
-        p.appointment_date,  
-        p.appointment_mode, 
-        p.use_date, 
-        p.shop_id,
-        p.limited_quantity,
-        p.product_order_by,
-        p.customer_service_tel,
-        p.share_title,
-        p.sal_state
-        from 
-        hy_product p
-       
-        where 1=1
-    </sql>
-    
-    <sql id="selectHyProductByIdAndPictor">
-    	select 
-    	p.id,
-    	p.brief_introduction,
-    	s.retail_price,
-    	s.set_meal_name,
-    	h.pciture_address
-    	from hy_product p 
-    	LEFT JOIN hy_set_meal s ON p.id=s.product_id
-    	LEFT JOIN hy_picture h ON p.id=h.product_id
-    	where 1=1
-    </sql>
-    
-    <sql id="selectHyProductVoDistinct">
-    	select distinct p.id,p.product_name  
-    	from 
-        hy_product p
-        LEFT JOIN hy_shop s ON  p.shop_id=s.id 
-        LEFT JOIN hy_picture a ON a.product_id = p.id
-        LEFT JOIN hy_poster c ON c.product_id=p.id
-        where 1=1
-    </sql>
-    
-    <select id="selectHyId" parameterType="Long" resultMap="HyProductResult">
-    	<include refid="selectHyProductByIdAndPictor" />
-    	and p.id = #{id}
-    </select>
-
     <select id="selectHyProductList" parameterType="HyProduct" resultMap="HyProductResult">
         <include refid="selectHyProductVo"/>
             <if test="id != null"> and p.id = #{id}</if>
-            <if test="productName != null  and productName != ''"> and  p.product_name like concat('%', #{productName}, '%')</if>
-            <if test="briefIntroduction != null  and briefIntroduction != ''"> and  p.brief_introduction = #{briefIntroduction}</if>
-            <if test="soldNumber != null "> and  p.sold_number = #{soldNumber}</if>
-            <if test="stockNumber != null "> and  p.stock_number = #{stockNumber}</if>
-            <if test="state != null "> and  p.state = #{state}</if>
-            <if test="snapUpDate != null "> and  p.snap_up_date = #{snapUpDate}</if>
-            <if test="sendCodeDate != null "> and  p.send_code_date = #{sendCodeDate}</if>
-            <if test=" appointmentDate != null "> and   p.appointment_date = #{appointmentDate}</if>
-            <if test=" appointmentMode != null  and appointmentMode != ''"> and   p.appointment_mode = #{appointmentMode}</if>
-            <if test="useDate != null "> and  p.use_date = #{useDate}</if>
-            <if test="shopId != null "> and  p.shop_id = #{shopId}</if>
-            <if test="limitedQuantity != null "> and  p.limited_quantity = #{limitedQuantity}</if>
-            <if test="productOrderBy != null "> and  p.product_order_by = #{productOrderBy}</if>
-            <if test="customerServiceTel != null and customerServiceTel != '' "> and  p.customer_service_tel = #{customerServiceTel}</if>
-            <if test="shareTitle != null and shareTitle != '' "> and  p.share_title = #{shareTitle}</if>
-            <if test="salState != null and salState != '' "> and  p.sal_state = #{salState}</if>
-            <if test="lableId != null and lableId != '' "> and  p.lable_id = #{lableId}</if>
-            <if test="hyShop != null and hyShop != ''">
-            <if test="hyShop.shopName != null and hyShop.shopName != ''"> and s.shop_name = #{hyShop.shopName}</if>
-            </if>
-            <if test="hyLable!=null and hyLable!=''">
-            <if test="hyLable.lableName!=null and hyLable.lableName!=''"> and l.lable_name = #{hyLable.lableName}</if>
-            </if>
-            
-    </select>
-    
-    
-    <select id="selectHyProductListTest" parameterType="HyProduct" resultMap="HyProductResult">
-        <include refid="selectHyProductVoTest"/>
-            <if test="id != null  and id != ''">and id=#{id}</if>
-            <if test="briefIntroduction != null  and briefIntroduction != ''"> and brief_introduction = #{briefIntroduction}</if>
-            <if test="soldNumber != null "> and sold_number = #{soldNumber}</if>
-            <if test="stockNumber != null "> and stock_number = #{stockNumber}</if>
-            <if test="state != null "> and state = #{state}</if>
-            <if test="snapUpDate != null "> and snap_up_date = #{snapUpDate}</if>
-            <if test="sendCodeDate != null "> and send_code_date = #{sendCodeDate}</if>
-            <if test=" appointmentDate != null "> and  appointment_date = #{appointmentDate}</if>
-            <if test=" appointmentMode != null  and appointmentMode != ''"> and  appointment_mode = #{appointmentMode}</if>
-            <if test="useDate != null "> and use_date = #{useDate}</if>
-            <if test="shopId != null "> and shop_id = #{shopId}</if>
-            <if test="limitedQuantity != null "> and limited_quantity = #{limitedQuantity}</if>
-            <if test="productOrderBy != null "> and product_order_by = #{productOrderBy}</if>
-            <if test="customerServiceTel != null "> and customer_service_tel = #{customerServiceTel}</if>
-            <if test="shareTitle != null "> and share_title = #{shareTitle}</if>
-            <if test="salState != null and salState != '' "> and  p.sal_state = #{salState}</if>
-    </select>
-    
-     <select id="selectHyProductVoDistinct" parameterType="HyProduct" resultMap="HyProductResult">
-        <include refid="selectHyProductVoDistinct"/>
+            <if test="productNumber != null  and productNumber != ''"> and p.product_number = #{productNumber}</if>
+            <if test="productName != null  and productName != ''"> and p.product_name like concat('%', #{productName}, '%')</if>
+            <if test="briefIntroduction != null  and briefIntroduction != ''"> and p.brief_introduction = #{briefIntroduction}</if>
+            <if test="productType != null  and productType != ''"> and p.product_type = #{productType}</if>
+            <if test="originalPrice != null "> and p.original_price = #{originalPrice}</if>
+            <if test="currentPrice != null "> and p.current_price = #{currentPrice}</if>
+            <if test="soldNumber != null "> and p.sold_number = #{soldNumber}</if>
+            <if test="stockNumber != null "> and p.stock_number = #{stockNumber}</if>
+            <if test="state != null  and state != ''"> and p.state = #{state}</if>
+            <if test="productOrderBy != null "> and p.product_order_by = #{productOrderBy}</if>
+            <if test="shopId != null "> and p.shop_id = #{shopId}</if>
+            <if test="lableId != null "> and p.lable_id = #{lableId}</if>
     </select>
     
     <select id="selectHyProductById" parameterType="Long" resultMap="HyProductResult">
@@ -264,71 +104,52 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         and p.id = #{id}
     </select>
     
-	<!-- <select id="selectMaxId" >
-		select max(id) productId from hy_product
-	</select> -->
-
     <insert id="insertHyProduct" parameterType="HyProduct" useGeneratedKeys="true" keyProperty="id">
         insert into hy_product
         <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="productNumber != null">product_number,</if>
             <if test="productName != null">product_name,</if>
             <if test="briefIntroduction != null">brief_introduction,</if>
+            <if test="productType != null">product_type,</if>
+            <if test="originalPrice != null">original_price,</if>
+            <if test="currentPrice != null">current_price,</if>
             <if test="soldNumber != null">sold_number,</if>
             <if test="stockNumber != null">stock_number,</if>
             <if test="state != null">state,</if>
-            <if test="snapUpDate != null">snap_up_date,</if>
-            <if test="sendCodeDate != null">send_code_date,</if>
-            <if test=" appointmentDate != null">appointment_date,</if>
-            <if test=" appointmentMode != null">appointment_mode,</if>
-            <if test="useDate != null">use_date,</if>
-            <if test="shopId != null">shop_id,</if>
-            <if test="limitedQuantity != null">limited_quantity,</if>
             <if test="productOrderBy != null">product_order_by,</if>
-            <if test="customerServiceTel != null">customer_service_tel,</if>
-            <if test="shareTitle != null">share_title,</if>
-            <if test="salState != null ">sal_state,</if>
-            <if test="lableId != null ">lable_id,</if>
+            <if test="shopId != null">shop_id,</if>
+            <if test="lableId != null">lable_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="productNumber != null">#{productNumber},</if>
             <if test="productName != null">#{productName},</if>
             <if test="briefIntroduction != null">#{briefIntroduction},</if>
+            <if test="productType != null">#{productType},</if>
+            <if test="originalPrice != null">#{originalPrice},</if>
+            <if test="currentPrice != null">#{currentPrice},</if>
             <if test="soldNumber != null">#{soldNumber},</if>
             <if test="stockNumber != null">#{stockNumber},</if>
             <if test="state != null">#{state},</if>
-            <if test="snapUpDate != null">#{snapUpDate},</if>
-            <if test="sendCodeDate != null">#{sendCodeDate},</if>
-            <if test=" appointmentDate != null">#{ appointmentDate},</if>
-            <if test=" appointmentMode != null">#{ appointmentMode},</if>
-            <if test="useDate != null">#{useDate},</if>
-            <if test="shopId != null">#{shopId},</if>
-            <if test="limitedQuantity != null">#{limitedQuantity},</if>
             <if test="productOrderBy != null">#{productOrderBy},</if>
-            <if test="customerServiceTel != null">#{customerServiceTel},</if>
-            <if test="shareTitle != null">#{shareTitle},</if>
-            <if test="salState != null"> #{salState},</if>
-            <if test="lableId != null"> #{lableId},</if>
+            <if test="shopId != null">#{shopId},</if>
+            <if test="lableId != null">#{lableId},</if>
          </trim>
     </insert>
     <update id="updateHyProduct" parameterType="HyProduct">
         update hy_product
         <trim prefix="SET" suffixOverrides=",">
+            <if test="productNumber != null">product_number = #{productNumber},</if>
             <if test="productName != null">product_name = #{productName},</if>
             <if test="briefIntroduction != null">brief_introduction = #{briefIntroduction},</if>
+            <if test="productType != null">product_type = #{productType},</if>
+            <if test="originalPrice != null">original_price = #{originalPrice},</if>
+            <if test="currentPrice != null">current_price = #{currentPrice},</if>
             <if test="soldNumber != null">sold_number = #{soldNumber},</if>
             <if test="stockNumber != null">stock_number = #{stockNumber},</if>
             <if test="state != null">state = #{state},</if>
-            <if test="snapUpDate != null">snap_up_date = #{snapUpDate},</if>
-            <if test="sendCodeDate != null">send_code_date = #{sendCodeDate},</if>
-            <if test=" appointmentDate != null">appointment_date = #{ appointmentDate},</if>
-            <if test=" appointmentMode != null">appointment_mode = #{ appointmentMode},</if>
-            <if test="useDate != null">use_date = #{useDate},</if>
+            <if test="productOrderBy != null">product_order_by = #{productOrderBy},</if>
             <if test="shopId != null">shop_id = #{shopId},</if>
-            <if test="limitedQuantity != null ">limited_quantity = #{limitedQuantity}</if>
-            <if test="productOrderBy != null ">product_order_by = #{productOrderBy}</if>
-            <if test="customerServiceTel != null ">customer_service_tel = #{customerServiceTel}</if>
-            <if test="shareTitle != null ">share_title = #{shareTitle}</if>
-            <if test="salState != null ">sal_state = #{salState}</if>
-            <if test="lableId != null ">lable_id = #{lableId}</if>
+            <if test="lableId != null">lable_id = #{lableId},</if>
         </trim>
         where id = #{id}
     </update>

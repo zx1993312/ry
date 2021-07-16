@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ruoyi.common.core.text.Convert;
+import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.domain.HyDeatilPicture;
 import com.ruoyi.system.domain.HyPicture;
 import com.ruoyi.system.domain.HyProduct;
@@ -17,7 +18,7 @@ import com.ruoyi.system.mapper.HyProductMapper;
 import com.ruoyi.system.service.IHyProductService;
 
 /**
- * 产品Service业务层处理
+ * 商品Service业务层处理
  * 
  * @author Administrator
  * @date 2021-03-06
@@ -33,10 +34,10 @@ public class HyProductServiceImpl implements IHyProductService {
 	@Autowired
     private HyDeatilPictureMapper hyDeatilPictureMapper;
 	/**
-	 * 查询产品
+	 * 查询商品
 	 * 
-	 * @param id 产品ID
-	 * @return 产品
+	 * @param id 商品ID
+	 * @return 商品
 	 */
 	@Override
 	public HyProduct selectHyProductById(Long id) {
@@ -44,19 +45,10 @@ public class HyProductServiceImpl implements IHyProductService {
 	}
 	
 	/**
-	 * 查询产品，图片，套餐名，简介根据id
-	 * @param id
-	 * @return
-	 */
-	public HyProduct selectHyId(Long id) {
-		return hyProductMapper.selectHyId(id);
-	}
-
-	/**
-	 * 查询产品列表
+	 * 查询商品列表
 	 * 
-	 * @param hyProduct 产品
-	 * @return 产品
+	 * @param hyProduct 商品
+	 * @return 商品
 	 */
 	@Override
 	public List<HyProduct> selectHyProductList(HyProduct hyProduct) {
@@ -65,36 +57,23 @@ public class HyProductServiceImpl implements IHyProductService {
 	
 	
 	/**
-	 * 查询产品列表(测试方法)
+	 * 新增商品
 	 * 
-	 * @param hyProduct 产品
-	 * @return 产品
-	 */
-	@Override
-	public List<HyProduct> selectHyProductListTest(HyProduct hyProduct) {
-		return hyProductMapper.selectHyProductListTest(hyProduct);
-	}
-
-	/**
-	 * 新增产品
-	 * 
-	 * @param hyProduct 产品
+	 * @param hyProduct 商品
 	 * @return 结果
 	 */
 	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int insertHyProduct(HyProduct hyProduct) {
 		HyPicture hyPicture = new HyPicture();
-		String pcitureAddress = hyProduct.getHyPicture().getPcitureAddress();
-		hyPicture.setPcitureAddress(pcitureAddress);
+		String pictureAddress = hyProduct.getHyPicture().getPictureAddress();
+		hyPicture.setPictureAddress(pictureAddress);
 		String a = hyProductMapper.selectNextValue("hy_database", "hy_product");
 		Long productId = Long.valueOf(a);
 		hyPicture.setProductId(productId);
 		HyDeatilPicture hyDeatilPicture = new HyDeatilPicture();
-		String pictureAddress = hyProduct.getHyDeatilPicture().getDeatilPicture();
-		System.out.println("=============pictureAddress============="+pictureAddress);
-		String pictureAdd = pictureAddress.substring(0,pictureAddress.length()-1);
-		System.out.println("=============pictureAdd============="+pictureAdd);
+		String picturesAddress = hyProduct.getHyDeatilPicture().getDeatilPicture();
+		String pictureAdd = picturesAddress.substring(0,picturesAddress.length()-1);
 		String[]pictureArr = pictureAdd.split(",");
 		int row1 = 0;
 		for(String picture:pictureArr) {
@@ -114,16 +93,16 @@ public class HyProductServiceImpl implements IHyProductService {
 	}
 
 	/**
-	 * 修改产品
+	 * 修改商品
 	 * 
-	 * @param hyProduct 产品
+	 * @param hyProduct 商品
 	 * @return 结果
 	 */
 	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int updateHyProduct(HyProduct hyProduct) {
 		Long productId = hyProduct.getId();
-		if(hyProduct.getHyDeatilPicture().getDeatilPicture()!=null||!"".equals(hyProduct.getHyDeatilPicture().getDeatilPicture())) {
+		if(hyProduct.getHyDeatilPicture().getDeatilPicture()!=null && !"".equals(hyProduct.getHyDeatilPicture().getDeatilPicture())) {
 			HyDeatilPicture hyDeatilPicture = new HyDeatilPicture();
 			hyDeatilPicture.setProductId(productId);
 			List<HyDeatilPicture> list1 =  hyDeatilPictureMapper.selectHyDeatilPictureList(hyDeatilPicture);
@@ -151,25 +130,32 @@ public class HyProductServiceImpl implements IHyProductService {
 				i++;
 			}
 		}
-		if(hyProduct.getHyPicture().getPcitureAddress()!=null||!"".equals(hyProduct.getHyPicture().getPcitureAddress())) {
+		if(hyProduct.getHyPicture().getPictureAddress()!=null && !"".equals(hyProduct.getHyPicture().getPictureAddress())) {
 			HyPicture hyPicture = new HyPicture();
 			hyPicture.setProductId(productId);
 			List<HyPicture> list = hyPictureMapper.selectHyPictureList(hyPicture);
-			HyPicture hy = (HyPicture)list.get(0);
-			Long id = hy.getId();
-			String deleteFile = hy.getPcitureAddress();
-			deleteFile(deleteFile);
-			hyPicture.setId(id);
-			String pcitureAddress = hyProduct.getHyPicture().getPcitureAddress();
-			hyPicture.setPcitureAddress(pcitureAddress);
-			hyPictureMapper.updateHyPicture(hyPicture);
+			if(StringUtils.isNotEmpty(list)) {
+				HyPicture hy = list.get(0);
+				Long id = hy.getId();
+				String deleteFile = hy.getPictureAddress();
+				deleteFile(deleteFile);
+				hyPicture.setId(id);
+				String pictureAddress = hyProduct.getHyPicture().getPictureAddress();
+				hyPicture.setPictureAddress(pictureAddress);
+				hyPictureMapper.updateHyPicture(hyPicture);
+			}else {
+				String pictureAddress = hyProduct.getHyPicture().getPictureAddress();
+				hyPicture.setPictureAddress(pictureAddress);
+				hyPictureMapper.insertHyPicture(hyPicture);
+			}
+			
 		}
 		
 		return hyProductMapper.updateHyProduct(hyProduct);
 	}
 
 	/**
-	 * 删除产品对象
+	 * 删除商品对象
 	 * 
 	 * @param ids 需要删除的数据ID
 	 * @return 结果
@@ -181,7 +167,7 @@ public class HyProductServiceImpl implements IHyProductService {
     	for(String id:ida) {
     		Long idd = Long.valueOf(id);
     		HyProduct hyProduct = hyProductMapper.selectHyProductById(idd);
-    		String fileName = hyProduct.getHyPicture().getPcitureAddress();
+    		String fileName = hyProduct.getHyPicture().getPictureAddress();
     		deleteFile(fileName);
     		HyPicture hyPicture = new HyPicture();
     		hyPicture.setProductId(idd);
@@ -206,9 +192,9 @@ public class HyProductServiceImpl implements IHyProductService {
 	}
 
 	/**
-	 * 删除产品信息
+	 * 删除商品信息
 	 * 
-	 * @param id 产品ID
+	 * @param id 商品ID
 	 * @return 结果
 	 */
 	@Transactional(rollbackFor = Exception.class)
@@ -216,17 +202,7 @@ public class HyProductServiceImpl implements IHyProductService {
 	public int deleteHyProductById(Long id) {
 		return hyProductMapper.deleteHyProductById(id);
 	}
-
-	/**
-	 * 查询产品
-	 * 
-	 * @param hyProduct 产品
-	 * @return 产品
-	 */
-	@Override
-	public List<HyProduct> selectHyProductVoDistinct(HyProduct hyProduct) {
-		return hyProductMapper.selectHyProductVoDistinct(hyProduct);
-	}
+	
 	/**
      * 删除上传图片
      * @return
@@ -235,7 +211,6 @@ public class HyProductServiceImpl implements IHyProductService {
 	public boolean deleteFile(String fileName) {
 		String fileName1 = System.getProperty("user.dir")+"\\src\\main\\resources\\static\\img\\"+fileName;
 		File file = new File(fileName1);
-		System.out.println("================file================"+file);
 		//判断文件存不存在
 		if(!file.exists()){
 			System.out.println("删除文件失败："+fileName+"不存在！");

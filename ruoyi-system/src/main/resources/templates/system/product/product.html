@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('产品列表')" />
+    <th:block th:include="include :: header('商品列表')" />
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -10,30 +10,31 @@
                 <form id="formId">
                     <div class="select-list">
                         <ul>
-                             <li>
-                                <label>选择店铺：</label>
-                               	<select name="shopId" class="form-control" th:with="type=${@shop.getShop()}">
-									<option value="">请选择</option>
-									<option th:if="data!=null" th:each="data:${type}" th:text="${data.shopName}" th:value="${data.id}"></option>
-						 	    </select>
-                            </li>
-                             <li>
-                                <label>关联标签：</label>
-                               	<select name="lableId" class="form-control" th:with="type=${@lable.getLable()}">
-									<option value="">请选择</option>
-									<option th:if="data!=null" th:each="data:${type}" th:text="${data.lableName}" th:value="${data.id}"></option>
-						 	    </select>
+                        	<li>
+                                <label>商品编号：</label>
+                                <input type="text" name="productNumber"/>
                             </li>
                             <li>
-                                <label>产品名称：</label>
-                                 	<select name="productName" class="form-control" th:with="type=${@product.getProduct()}">
+                                <label>商品名称：</label>
+                                <select name="productName" class="form-control" th:with="type=${@product.getProduct()}">
 										<option value="">请选择</option>
 										<option th:if="data!=null" th:each="data : ${type}" th:text="${data.productName}" th:value="${data.productName}"></option>
-								 	</select>
+								 </select>
                             </li>
-                            <!-- <li>
-                                <label>产品介绍：</label>
-                                <input type="text" name="briefIntroduction"/>
+                            <li>
+                                <label>商品类型：</label>
+                                <select name="productType">
+                                    <option value="">请选择</option>
+                                    <option value="1"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>原价：</label>
+                                <input type="text" name="originalPrice"/>
+                            </li>
+                            <li>
+                                <label>现价：</label>
+                                <input type="text" name="currentPrice"/>
                             </li>
                             <li>
                                 <label>已售数量：</label>
@@ -42,29 +43,33 @@
                             <li>
                                 <label>库存数量：</label>
                                 <input type="text" name="stockNumber"/>
-                            </li> -->
+                            </li>
                             <li>
-                                <label>产品状态：</label>
+                                <label>状态：</label>
                                 <select name="state" class="form-control " >
-                                <option value="">请选择</option>
-                                <option value=1>上线</option>
-                                <option value=2>下线</option>
+	                                <option value="">请选择</option>
+	                                <option value=1>上线</option>
+	                                <option value=2>下线</option>
                                 </select>
                             </li>
-                            <!-- <li>
-                                <label>限购数量：</label>
-                                <input type="text" name="limitedQuantity"/>
-                            </li>
                             <li>
-                                <label>产品排序权重：</label>
+                                <label>商品排序权重：</label>
                                 <input type="text" name="productOrderBy"/>
                             </li>
                             <li>
-                                <label>客服电话：</label>
-                                <input type="text" name="customerServiceTel" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
-                            </li> -->
-                        
-                       
+                                <label>选择店铺：</label>
+                               	<select name="shopId" class="form-control" th:with="type=${@shop.getShop()}">
+									<option value="">请选择</option>
+									<option th:if="data!=null" th:each="data:${type}" th:text="${data.shopName}" th:value="${data.id}"></option>
+						 	    </select>
+                            </li>
+                            <li>
+                                <label>选择标签：</label>
+                               	<select name="lableId" class="form-control" th:with="type=${@lable.getLable()}">
+									<option value="">请选择</option>
+									<option th:if="data!=null" th:each="data:${type}" th:text="${data.lableName}" th:value="${data.id}"></option>
+						 	    </select>
+                            </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                                 <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
@@ -107,18 +112,18 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "产品",
+                modalName: "商品",
                 columns: [{
                     checkbox: true
                 },
                 {
                     field: 'id',
-                    title: '产品id',
+                    title: '商品id',
                     visible: false
                 },
                 {
-                    field: 'hyPicture.pcitureAddress',
-                    title: '产品信息缩略图',
+                    field: 'hyPicture.pictureAddress',
+                    title: '商品信息缩略图',
                     formatter: function(value, row, index) {
 				    	// 图片预览（注意：如存储在本地直接获取数据库路径，如有配置context-path需要使用ctx+路径）
 				    	// 如：/profile/upload/2019/08/08/3b7a839aced67397bac694d77611ce72.png
@@ -131,24 +136,40 @@
 				    }
                 },
                 {
+                    field: 'productNumber',
+                    title: '商品编号'
+                },
+                {
                     field: 'productName',
-                    title: '产品名称'
+                    title: '商品名称'
                 },
                 {
                     field: 'briefIntroduction',
-                    title: '产品介绍'
+                    title: '商品介绍'
+                },
+                {
+                    field: 'productType',
+                    title: '商品类型'
+                },
+                {
+                    field: 'originalPrice',
+                    title: '原价'
+                },
+                {
+                    field: 'currentPrice',
+                    title: '现价'
                 },
                 {
                     field: 'soldNumber',
-                    title: '产品销量'
+                    title: '商品销量'
                 },
                 {
                     field: 'stockNumber',
-                    title: '产品库存'
+                    title: '商品库存'
                 },
                 {
                     field: 'state',
-                    title: '产品状态',
+                    title: '商品状态',
                     formatter: function(value, item, index) {
                     	switch(value){
 	                    	case "" : value =  "请选择";break;
@@ -159,24 +180,8 @@
 		            }
                 },
                 {
-                    field: 'snapUpDate',
-                    title: '抢购日期'
-                },
-                {
-                    field: 'sendCodeDate',
-                    title: '发码日期'
-                },
-                {
-                    field: 'appointmentDate',
-                    title: '预约日期'
-                },
-                {
-                    field: 'appointmentMode',
-                    title: '预约方式'
-                },
-                {
-                    field: 'useDate',
-                    title: '使用日期'
+                    field: 'productOrderBy',
+                    title: '商品排序权重'
                 },
                 {
                     field: 'hyShop.shopName',

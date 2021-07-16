@@ -36,7 +36,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 /**
- * 产品Controller
+ * 商品Controller
  * 
  * @author Administrator
  * @date 2021-03-06
@@ -44,7 +44,7 @@ import io.swagger.annotations.ApiOperation;
 @Controller
 @CrossOrigin
 @RequestMapping("/system/product")
-@Api(tags = "产品Controller")
+@Api(tags = "商品Controller")
 public class HyProductController extends BaseController
 {
     private String prefix = "system/product";
@@ -63,9 +63,9 @@ public class HyProductController extends BaseController
     }
 
     /**
-     * 查询产品列表
+     * 查询商品列表
      */
-    @ApiOperation("产品")
+    @ApiOperation("商品")
     @ApiImplicitParams({ 
 		@ApiImplicitParam(name = "hyProduct", value = "项目实体类hyProduct", required = true),
 	})
@@ -76,21 +76,20 @@ public class HyProductController extends BaseController
     {
         startPage();
         List<HyProduct> list = hyProductService.selectHyProductList(hyProduct);
-        System.out.println("===================list=================="+list);
         return getDataTable(list);
     }
     
 
 
     /**
-     * 导出产品列表
+     * 导出商品列表
      */
-    @ApiOperation("产品")
+    @ApiOperation("商品")
     @ApiImplicitParams({ 
 		@ApiImplicitParam(name = "hyProduct", value = "项目实体类hyProduct", required = true),
 	})
     @RequiresPermissions("system:product:export")
-    @Log(title = "产品", businessType = BusinessType.EXPORT)
+    @Log(title = "商品", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ResponseBody
     public AjaxResult export(HyProduct hyProduct)
@@ -101,7 +100,7 @@ public class HyProductController extends BaseController
     }
 
     /**
-     * 新增产品
+     * 新增商品
      */
     @GetMapping("/add")
     public String add ()
@@ -110,26 +109,25 @@ public class HyProductController extends BaseController
     }
 
     /**
-     * 新增保存产品
+     * 新增保存商品
      */
-    @ApiOperation("产品")
+    @ApiOperation("商品")
     @ApiImplicitParams({ 
 		@ApiImplicitParam(name = "hyProduct", value = "项目实体类hyProduct", required = true),
 	})
     @RequiresPermissions("system:product:add")
-    @Log(title = "产品", businessType = BusinessType.INSERT)
+    @Log(title = "商品", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(HyProduct hyProduct)
     {
-    	System.out.println("===================hyProduct==================="+hyProduct);
         return toAjax(hyProductService.insertHyProduct(hyProduct));
     }
 
     /**
-     * 修改产品
+     * 修改商品
      */
-    @ApiOperation("产品")
+    @ApiOperation("商品")
     @ApiImplicitParams({ 
 		@ApiImplicitParam(name = "id", value = "主键id", required = true),
 	})
@@ -140,27 +138,25 @@ public class HyProductController extends BaseController
         HyDeatilPicture hyDeatilPicture = new HyDeatilPicture();
         hyDeatilPicture.setProductId(id);
         List<HyDeatilPicture> list  = hyDeatilPictureService.selectHyDeatilPictureList(hyDeatilPicture);
-        System.out.println("==============hyProduct============"+hyProduct);
-        System.out.println("==============list============"+list);
         mmap.put("hyProduct", hyProduct);
         mmap.put("list", list);
         return prefix + "/edit";
     }
 
     /**
-     * 修改保存产品
+     * 修改保存商品
      */
-    @ApiOperation("产品")
+    @ApiOperation("商品")
     @ApiImplicitParams({ 
 		@ApiImplicitParam(name = "hyProduct", value = "项目实体类hyProduct", required = true),
 	})
     @RequiresPermissions("system:product:edit")
-    @Log(title = "产品", businessType = BusinessType.UPDATE)
+    @Log(title = "商品", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(HyProduct hyProduct)
     {
-    	if(hyProduct.getHyPicture().getPcitureAddress()!=null&&!"".equals(hyProduct.getHyPicture().getPcitureAddress())) {
+    	if(hyProduct.getHyPicture().getPictureAddress()!=null&&!"".equals(hyProduct.getHyPicture().getPictureAddress())) {
     		String fileName = hyProduct.getFileName();
         	hyProductService.deleteFile(fileName);
     	}
@@ -169,14 +165,14 @@ public class HyProductController extends BaseController
     }
 
     /**
-     * 删除产品
+     * 删除商品
      */
-    @ApiOperation("产品")
+    @ApiOperation("商品")
     @ApiImplicitParams({ 
 		@ApiImplicitParam(name = "ids", value = "ids", required = true),
 	})
     @RequiresPermissions("system:product:remove")
-    @Log(title = "产品", businessType = BusinessType.DELETE)
+    @Log(title = "商品", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")
     @ResponseBody
     public AjaxResult remove(String ids)
@@ -184,7 +180,7 @@ public class HyProductController extends BaseController
         return toAjax(hyProductService.deleteHyProductByIds(ids));
     }
     /**
-     * 产品信息缩略图
+     * 商品信息缩略图
      * @param imagepath
      * @return
      * @throws IllegalStateException
@@ -226,7 +222,7 @@ public class HyProductController extends BaseController
 		}
 	}
 	/**
-	 * 上传产品多图
+	 * 上传商品多图
 	 * @param imagepath
 	 * @return
 	 * @throws IllegalStateException

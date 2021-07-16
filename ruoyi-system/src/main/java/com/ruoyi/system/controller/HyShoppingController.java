@@ -49,7 +49,7 @@ public class HyShoppingController extends BaseController {
 	@GetMapping("/list")
 	public String list(HyPicture hyPicture, ModelMap mmap) {
 
-		List<HyProduct> list = hyProductService.selectHyProductListTest(new HyProduct());
+		List<HyProduct> list = hyProductService.selectHyProductList(new HyProduct());
 		mmap.put("list", list);
 		return prefix + "/shoppingMall";
 	}

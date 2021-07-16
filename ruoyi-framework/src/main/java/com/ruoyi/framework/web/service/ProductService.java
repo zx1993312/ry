@@ -21,7 +21,7 @@ public class ProductService {
 	 */
 
 	public List<HyProduct> getProduct(){
-		return hyProductService.selectHyProductVoDistinct(new HyProduct());
+		return hyProductService.selectHyProductList(new HyProduct());
 		
 	}
 

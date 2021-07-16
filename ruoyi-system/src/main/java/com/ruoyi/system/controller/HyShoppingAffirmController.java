@@ -87,7 +87,7 @@ public class HyShoppingAffirmController extends BaseController
 		
     	String id = request.getParameter("id");
     	
-    	HyProduct product = hyProductService.selectHyId(Long.parseLong(id));
+    	HyProduct product = hyProductService.selectHyProductById(Long.parseLong(id));
 		mmap.put("product", product);
 		
 		/*HyOrder hyOrder = hyOrderService.selectId(new HyOrder());

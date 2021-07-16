@@ -1,35 +1,47 @@
 package com.ruoyi.system.domain;
 
-import java.util.Date;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.math.BigDecimal;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
- * 产品对象 hy_product
+ * 商品对象 hy_product
  * 
  * @author Administrator
- * @date 2021-03-06
- */
-/**
- * @author Administrator
- *
+ * @date 2021-07-16
  */
 public class HyProduct extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
-    /** 产品id */
+    /** 商品id */
     private Long id;
 
-    /** 产品名称 */
-    @Excel(name = "产品名称")
+    /** 商品编号 */
+    @Excel(name = "商品编号")
+    private String productNumber;
+
+    /** 商品名称 */
+    @Excel(name = "商品名称")
     private String productName;
 
     /** 简介 */
     @Excel(name = "简介")
     private String briefIntroduction;
+
+    /** 商品类型 */
+    @Excel(name = "商品类型")
+    private String productType;
+
+    /** 原价 */
+    @Excel(name = "原价")
+    private BigDecimal originalPrice;
+
+    /** 现价 */
+    @Excel(name = "现价")
+    private BigDecimal currentPrice;
 
     /** 已售数量 */
     @Excel(name = "已售数量")
@@ -41,79 +53,43 @@ public class HyProduct extends BaseEntity
 
     /** 状态 */
     @Excel(name = "状态")
-    private Long state;
+    private String state;
 
-    /** 抢购日期 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "抢购日期", width = 30, dateFormat = "yyyy-MM-dd")
-    private Date snapUpDate;
-
-    /** 发码日期 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "发码日期", width = 30, dateFormat = "yyyy-MM-dd")
-    private Date sendCodeDate;
-
-    /** 预约日期 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "预约日期", width = 30, dateFormat = "yyyy-MM-dd")
-    private Date  appointmentDate;
-
-    /** 预约方式 */
-    @Excel(name = "预约方式")
-    private String  appointmentMode;
-
-    /** 使用日期 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "使用日期", width = 30, dateFormat = "yyyy-MM-dd")
-    private Date useDate;
+    /** 商品排序权重 */
+    @Excel(name = "商品排序权重")
+    private Long productOrderBy;
 
     /** 店铺id */
     @Excel(name = "店铺id")
     private Long shopId;
+    
     /**店铺表*/
     @Excel(name="店铺表")
     private HyShop hyShop;
-    /**图片表*/
-    @Excel(name="图片表")
-    private HyPicture hyPicture;
-    /**详细信息表（海报表）*/
-    @Excel(name="详细信息表（海报表）")
-    private HyPoster hyPoster;
-    /**套餐表*/
-    @Excel(name="套餐信息表")
-    private HySetMeal hySetMeal;
-    /**标签表*/
-    @Excel(name="标签表")
-    private HyLable hyLable;
+    
     /** 标签id */
     @Excel(name = "标签id")
     private Long lableId;
-    /**限购数量*/
-    @Excel(name="限购数量")
-    private Integer limitedQuantity;
-    /**产品排序权重*/
-    @Excel(name="产品排序权重")
-    private Integer productOrderBy;
-    /**客服电话*/
-    @Excel(name="客服电话")
-    private String customerServiceTel;
-    /**分享标题*/
-    @Excel(name="分享标题")
-    private String shareTitle;
-    /**销售状态*/
-    @Excel(name="销售状态")
-    private String salState;
-    /**产品缩略图地址*/
-    @Excel(name="图片地址")
-    private String fileName;
-    /**产品多图地址*/
-    @Excel(name="图片地址")
-    private String deleteFiles;
+    
+    /**标签表*/
+    @Excel(name="标签表")
+    private HyLable hyLable;
+    
+    /**图片表*/
+    @Excel(name="图片表")
+    private HyPicture hyPicture;
+    
     /**商品详情的图片表*/
     @Excel(name="商品详情的图片表")
     private HyDeatilPicture hyDeatilPicture;
-
     
+    /**商品缩略图地址*/
+    @Excel(name="图片地址")
+    private String fileName;
+    
+    /**商品多图地址*/
+    @Excel(name="图片地址")
+    private String deleteFiles;
 
     public void setId(Long id) 
     {
@@ -123,6 +99,15 @@ public class HyProduct extends BaseEntity
     public Long getId() 
     {
         return id;
+    }
+    public void setProductNumber(String productNumber) 
+    {
+        this.productNumber = productNumber;
+    }
+
+    public String getProductNumber() 
+    {
+        return productNumber;
     }
     public void setProductName(String productName) 
     {
@@ -142,6 +127,33 @@ public class HyProduct extends BaseEntity
     {
         return briefIntroduction;
     }
+    public void setProductType(String productType) 
+    {
+        this.productType = productType;
+    }
+
+    public String getProductType() 
+    {
+        return productType;
+    }
+    public void setOriginalPrice(BigDecimal originalPrice) 
+    {
+        this.originalPrice = originalPrice;
+    }
+
+    public BigDecimal getOriginalPrice() 
+    {
+        return originalPrice;
+    }
+    public void setCurrentPrice(BigDecimal currentPrice) 
+    {
+        this.currentPrice = currentPrice;
+    }
+
+    public BigDecimal getCurrentPrice() 
+    {
+        return currentPrice;
+    }
     public void setSoldNumber(Long soldNumber) 
     {
         this.soldNumber = soldNumber;
@@ -160,59 +172,23 @@ public class HyProduct extends BaseEntity
     {
         return stockNumber;
     }
-    public void setState(Long state) 
+    public void setState(String state) 
     {
         this.state = state;
     }
 
-    public Long getState() 
+    public String getState() 
     {
         return state;
     }
-    public void setSnapUpDate(Date snapUpDate) 
+    public void setProductOrderBy(Long productOrderBy) 
     {
-        this.snapUpDate = snapUpDate;
+        this.productOrderBy = productOrderBy;
     }
 
-    public Date getSnapUpDate() 
+    public Long getProductOrderBy() 
     {
-        return snapUpDate;
-    }
-    public void setSendCodeDate(Date sendCodeDate) 
-    {
-        this.sendCodeDate = sendCodeDate;
-    }
-
-    public Date getSendCodeDate() 
-    {
-        return sendCodeDate;
-    }
-    public void setAppointmentDate(Date  appointmentDate) 
-    {
-        this. appointmentDate =  appointmentDate;
-    }
-
-    public Date getAppointmentDate() 
-    {
-        return  appointmentDate;
-    }
-    public void setAppointmentMode(String  appointmentMode) 
-    {
-        this. appointmentMode =  appointmentMode;
-    }
-
-    public String getAppointmentMode() 
-    {
-        return  appointmentMode;
-    }
-    public void setUseDate(Date useDate) 
-    {
-        this.useDate = useDate;
-    }
-
-    public Date getUseDate() 
-    {
-        return useDate;
+        return productOrderBy;
     }
     public void setShopId(Long shopId) 
     {
@@ -223,6 +199,15 @@ public class HyProduct extends BaseEntity
     {
         return shopId;
     }
+    public void setLableId(Long lableId) 
+    {
+        this.lableId = lableId;
+    }
+
+    public Long getLableId() 
+    {
+        return lableId;
+    }
 
     public HyShop getHyShop() {
 		return hyShop;
@@ -230,80 +215,6 @@ public class HyProduct extends BaseEntity
 
 	public void setHyShop(HyShop hyShop) {
 		this.hyShop = hyShop;
-	}
-
-	public HyPicture getHyPicture() {
-		return hyPicture;
-	}
-
-	public void setHyPicture(HyPicture hyPicture) {
-		this.hyPicture = hyPicture;
-	}
-
-	public HyPoster getHyPoster() {
-		return hyPoster;
-	}
-
-	public void setHyPoster(HyPoster hyPoster) {
-		this.hyPoster = hyPoster;
-	}
-
-	public Integer getLimitedQuantity() {
-		return limitedQuantity;
-	}
-
-	public void setLimitedQuantity(Integer limitedQuantity) {
-		this.limitedQuantity = limitedQuantity;
-	}
-
-	public Integer getProductOrderBy() {
-		return productOrderBy;
-	}
-
-	public void setProductOrderBy(Integer productOrderBy) {
-		this.productOrderBy = productOrderBy;
-	}
-
-	public String getCustomerServiceTel() {
-		return customerServiceTel;
-	}
-
-	public void setCustomerServiceTel(String customerServiceTel) {
-		this.customerServiceTel = customerServiceTel;
-	}
-	
-	public String getShareTitle() {
-		return shareTitle;
-	}
-
-	public void setShareTitle(String shareTitle) {
-		this.shareTitle = shareTitle;
-	}
-	
-	
-	public HySetMeal getHySetMeal() {
-		return hySetMeal;
-	}
-
-	public void setHySetMeal(HySetMeal hySetMeal) {
-		this.hySetMeal = hySetMeal;
-	}
-
-	public String getFileName() {
-		return fileName;
-	}
-
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
-	
-	
-	public String getSalState() {
-		return salState;
-	}
-
-	public void setSalState(String salState) {
-		this.salState = salState;
 	}
 
 	public HyLable getHyLable() {
@@ -314,21 +225,12 @@ public class HyProduct extends BaseEntity
 		this.hyLable = hyLable;
 	}
 
-	public Long getLableId() {
-		return lableId;
+	public HyPicture getHyPicture() {
+		return hyPicture;
 	}
 
-	public void setLableId(Long lableId) {
-		this.lableId = lableId;
-	}
-	
-
-	public String getDeleteFiles() {
-		return deleteFiles;
-	}
-
-	public void setDeleteFiles(String deleteFiles) {
-		this.deleteFiles = deleteFiles;
+	public void setHyPicture(HyPicture hyPicture) {
+		this.hyPicture = hyPicture;
 	}
 
 	public HyDeatilPicture getHyDeatilPicture() {
@@ -339,30 +241,43 @@ public class HyProduct extends BaseEntity
 		this.hyDeatilPicture = hyDeatilPicture;
 	}
 
-	@Override
-	public String toString() {
-		return "HyProduct [id=" + id + ", productName=" + productName + ", briefIntroduction=" + briefIntroduction
-				+ ", soldNumber=" + soldNumber + ", stockNumber=" + stockNumber + ", state=" + state + ", snapUpDate="
-				+ snapUpDate + ", sendCodeDate=" + sendCodeDate + ", appointmentDate=" + appointmentDate
-				+ ", appointmentMode=" + appointmentMode + ", useDate=" + useDate + ", shopId=" + shopId + ", hyShop="
-				+ hyShop + ", hyPicture=" + hyPicture + ", hyPoster=" + hyPoster + ", hySetMeal=" + hySetMeal
-				+ ", hyLable=" + hyLable + ", lableId=" + lableId + ", limitedQuantity=" + limitedQuantity
-				+ ", productOrderBy=" + productOrderBy + ", customerServiceTel=" + customerServiceTel + ", shareTitle="
-				+ shareTitle + ", salState=" + salState + ", fileName=" + fileName + ", deleteFiles=" + deleteFiles
-				+ ", hyDeatilPicture=" + hyDeatilPicture + "]";
+	public String getFileName() {
+		return fileName;
 	}
 
-	
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
 
-	
+	public String getDeleteFiles() {
+		return deleteFiles;
+	}
 
-	
+	public void setDeleteFiles(String deleteFiles) {
+		this.deleteFiles = deleteFiles;
+	}
 
-	
-
-	
-
-	
-
-
+	@Override
+    public String toString() {
+        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+            .append("id", getId())
+            .append("productNumber", getProductNumber())
+            .append("productName", getProductName())
+            .append("briefIntroduction", getBriefIntroduction())
+            .append("productType", getProductType())
+            .append("originalPrice", getOriginalPrice())
+            .append("currentPrice", getCurrentPrice())
+            .append("soldNumber", getSoldNumber())
+            .append("stockNumber", getStockNumber())
+            .append("state", getState())
+            .append("productOrderBy", getProductOrderBy())
+            .append("shopId", getShopId())
+            .append("lableId", getLableId())
+            .append("hyShop", getHyShop())
+            .append("hyLable", getHyLable())
+            .append("hyPicture", getHyPicture())
+            .append("fileName", getFileName())
+            .append("deleteFiles", getDeleteFiles())
+            .toString();
+    }
 }

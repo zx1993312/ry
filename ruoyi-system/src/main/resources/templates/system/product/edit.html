@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
-    <th:block th:include="include :: header('新增产品')" />
+    <th:block th:include="include :: header('新增商品')" />
     <th:block th:include="include :: datetimepicker-css" />
     <th:block th:include="include :: summernote-css" />
     	<th:block th:include="include :: bootstrap-fileinput-css" />
@@ -11,8 +11,8 @@
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
        <form class="form-horizontal m" id="form-product-edit" th:object="${hyProduct}">
             <input name="id" th:field="*{id}" type="hidden">
-                <div class="form-group">    
-                 <label class="col-sm-3 control-label">选择店铺：</label>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">选择店铺：</label>
                 <div class="col-sm-8">
                     <select name="shopId" id="shopId" th:field="*{shopId}" class="form-control" th:with="type=${@shop.getShop()}">
 						<option value="">请选择</option>
@@ -21,71 +21,8 @@
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">产品名称：</label>
-                <div class="col-sm-8">
-                  	<select name="productName" id="productName" th:field="*{productName}" class="form-control" th:with="type=${@product.getProduct()}">
-						<option value="">请选择</option>
-						<option th:if="data!=null" th:each="data:${type}" th:text="${data.productName}" th:value="${data.productName}"></option>
-				 	</select>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">产品介绍：</label>
-                <div class="col-sm-8">
-                        <input type="hidden" class="form-control" th:field="*{briefIntroduction}">
-                 	<div class="summernote" id="briefIntroduction"></div>
-                </div>
-            </div>
-            <div class="form-group">
-				<label class="col-sm-2 control-label">产品信息缩略图：</label>
-				<div class="col-sm-10">
-					<input name="pcitureAddress" id="pic" class="form-control" type="hidden">
-					<a id="url"><img th:src="*{hyPicture.pcitureAddress}" style="width: 90px;height: 90px"></a>
-					<input type="file" id="abc">
-				</div>
-			</div>
-            <!-- <div class="form-group">
-                <label class="font-noraml">产品信息缩略图：</label>
-                <div class="file-loading">
-		            <input type="file" name="imagepath" data-ref="hyPicture.pcitureAddress"  class="myfile" value=""/> 
-		        </div>
-            </div>
-            <input type="hidden" name="hyPicture.pcitureAddress" id="remarks" value="">
-            <img alt="" th:src="*{hyPicture.pcitureAddress}" width="200px" height="200px">
-            <input id="deleteFile" th:value="*{hyPicture.pcitureAddress}" type="hidden"> -->
-             
-            <div class="form-group">
-                <label class="font-noraml">产品多图：</label>
-                <div class="file-loading">
-		            <input type="file" name="imagepaths" data-ref="Pcitures"  class="yourfile" value=""/> 
-		        </div>
-            </div>
-		            <input type="hidden" name="Pcitures" id="imagepaths" value="">
-		    <img th:if="data!=null" th:each="data:${list}" alt="" th:src="'/img/'+${data.deatilPicture}" width="90px" height="90px">
-            <input id="deleteFiles" th:value="*{hyDeatilPicture.deatilPicture}" type="hidden">
-            
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">产品销量：</label>
-                <div class="col-sm-8">
-                    <input name="soldNumber" id="soldNumber" th:field="*{soldNumber}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">产品库存：</label>
-                <div class="col-sm-8">
-                    <input name="stockNumber" id="stockNumber" th:field="*{stockNumber}" class="form-control" type="text">
-                </div>    
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">产品排序权重：</label>
-                <div class="col-sm-8">
-                    <input name="productOrderBy" id="productOrderBy" th:field="*{productOrderBy}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">关联标签：</label>
+                <label class="col-sm-3 control-label">选择标签：</label>
                  <div class="col-sm-8">
-                    <!-- <input name="hyLable.lableName" id="hyLable.lableName" th:field="*{hyLable.lableName}" class="form-control" type="text"> -->
                  	<select name="lableId" id="lableId" th:field="*{lableId}" class="form-control" th:with="type=${@lable.getLable()}">
 						<option value="">请选择</option>
 						<option th:if="data!=null" th:each="data:${type}" th:text="${data.lableName}" th:value="${data.id}"></option>
@@ -93,23 +30,98 @@
                 </div> 
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">客服电话：</label>
+                <label class="col-sm-3 control-label">商品编号：</label>
                 <div class="col-sm-8">
-                    <input name="customerServiceTel" id="customerServiceTel" th:field="*{customerServiceTel}" class="form-control" type="text" onkeyup="this.value=this.value.replace(/\D/g,'')">
+                    <input id="productNumber" name="productNumber" th:field="*{productNumber}" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">产品状态：</label>
+                <label class="col-sm-3 control-label">商品名称：</label>
+                <div class="col-sm-8">
+                    <input id="productNumber" name="productName" th:field="*{productName}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+				<label class="col-sm-2 control-label">商品信息缩略图：</label>
+				<div class="col-sm-10">
+					<input name="pictureAddress" id="pic" class="form-control" type="hidden">
+					<a id="url"><img th:src="*{hyPicture.pictureAddress}" style="width: 90px;height: 90px"></a>
+					<input type="file" id="abc">
+				</div>
+			</div>
+            <!-- <div class="form-group">
+                <label class="font-noraml">商品信息缩略图：</label>
+                <div class="file-loading">
+		            <input type="file" name="imagepath" data-ref="hyPicture.pictureAddress"  class="myfile" value=""/> 
+		        </div>
+            </div>
+            <input type="hidden" name="hyPicture.pictureAddress" id="remarks" value="">
+            <img alt="" th:src="*{hyPicture.pictureAddress}" width="200px" height="200px">
+            <input id="deleteFile" th:value="*{hyPicture.pictureAddress}" type="hidden"> -->
+            <div class="form-group">
+                <label class="font-noraml">商品多图：</label>
+                <div class="file-loading">
+		            <input type="file" name="imagepaths" data-ref="Pictures"  class="yourfile" value=""/> 
+		        </div>
+            </div>
+		            <input type="hidden" name="Pictures" id="imagepaths" value="">
+		    <img th:if="data!=null" th:each="data:${list}" alt="" th:src="'/img/'+${data.deatilPicture}" width="90px" height="90px">
+            <input id="deleteFiles" th:value="*{hyDeatilPicture.deatilPicture}" type="hidden">
+            <div class="form-group">
+                <label class="col-sm-3 control-label">简介：</label>
+                <div class="col-sm-8">
+                   <input type="hidden" class="form-control" th:field="*{briefIntroduction}">
+                 	<div class="summernote" id="briefIntroduction"></div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">商品类型：</label>
+                <div class="col-sm-8">
+                    <select id="productType" name="productType" class="form-control m-b">
+                        <option value="">请选择</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">原价：</label>
+                <div class="col-sm-8">
+                    <input id="originalPrice" name="originalPrice" th:field="*{originalPrice}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">现价：</label>
+                <div class="col-sm-8">
+                    <input id="currentPrice" name="currentPrice" th:field="*{currentPrice}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">已售数量：</label>
+                <div class="col-sm-8">
+                    <input id="soldNumber" name="soldNumber" th:field="*{soldNumber}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">库存数量：</label>
+                <div class="col-sm-8">
+                    <input id="stockNumber" name="stockNumber" th:field="*{stockNumber}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">状态：</label>
                 <div class="col-sm-8">
                     <select id="state" name="state" th:field="*{state}"  class="form-control " >
                        <option value="">请选择</option>
                        <option value=1>上线</option>
                        <option value=2>下线</option>
-     			</select>
+     				</select>
                 </div>
             </div>
-            
-        
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">商品排序权重：</label>
+                <div class="col-sm-8">
+                    <input id="productOrderBy" name="productOrderBy" th:field="*{productOrderBy}" class="form-control" type="text">
+                </div>
+            </div>
         </form>
     </div>
     <th:block th:include="include :: footer" />
@@ -153,25 +165,33 @@
         });
 
         function submitHandler() {
-        	var pcitureAddress = $("#pic").val();
+        	var pictureAddress = $("#pic").val();
         	var imagepaths = $("#imagepaths").val();
         	var id = $("#id").val();
         	var shopId = $("#shopId").val();
         	var lableId = $("#lableId").val();
+        	var productNumber = $("#productNumber").val();
         	var productName = $("#productName").val();
         	var briefIntroduction = $("#briefIntroduction").val();
+        	var productType = $("#productType").val();
+        	var originalPrice = $("#originalPrice").val();
+        	var currentPrice = $("#currentPrice").val();
         	var soldNumber = $("#soldNumber").val();
         	var stockNumber = $("#stockNumber").val();
         	var state = $("#state").val();
+        	var productOrderBy = $("#productOrderBy").val();
         	var deleteFile = $("#deleteFile").val();
         	var deleteFiles = $("#deleteFiles").val();
         	$.ajax({
                 type: "post",
                 datatype: "json",
                 url:  prefix + '/edit',
-                data: {"hyPicture.pcitureAddress": pcitureAddress,"id":id,"productName":productName,"briefIntroduction":briefIntroduction
-                	,"soldNumber":soldNumber,"stockNumber":stockNumber,"state":state,"shopId":shopId,"fileName":deleteFile,"deleteFiles":deleteFiles
-                	,"hyDeatilPicture.deatilPicture":imagepaths,"lableId":lableId},
+                data: {"hyPicture.pictureAddress": pictureAddress,"id":id,"productNumber":productNumber,
+                	"productName":productName,"briefIntroduction":briefIntroduction,"soldNumber":soldNumber,
+                	"stockNumber":stockNumber,"originalPrice":originalPrice,"currentPrice":currentPrice,
+                	"state":state,"productType":productType,"productOrderBy":productOrderBy,"shopId":shopId,
+                	"fileName":deleteFile,"deleteFiles":deleteFiles,"hyDeatilPicture.deatilPicture":imagepaths,
+                	"lableId":lableId},
                 async: true,
                 success: function (result) {
                     //console.log(result);
@@ -208,41 +228,45 @@
             autoclose: true
         });
         $(function() {
-            $('.summernote').summernote({
-                lang: 'zh-CN',
-                callbacks: {
-                    onChange: function(contents, $edittable) {
-                        $("input[name='" + this.id + "']").val(contents);
-                    },
-                    onImageUpload: function(files) {
-                        var obj = this;
-                    	var data = new FormData();
-                    	data.append("file", files[0]);
-                    	$.ajax({
-                            type: "post",
-                            url: ctx + "common/upload",
-                    		data: data,
-                    		cache: false,
-                    		contentType: false,
-                    		processData: false,
-                    		dataType: 'json',
-                    		success: function(result) {
-                    		    if (result.code == web_status.SUCCESS) {
-                    		        $('#' + obj.id).summernote('insertImage', result.url);
-                    		    } else {
-                    		        $.modal.alertError(result.msg);
-                    		    }
-                    		},
-                    		error: function(error) {
-                    		    $.modal.alertWarning("图片上传失败。");
-                    		}
-                    	});
+        	$('.summernote').each(function(i) {
+                $('#' + this.id).summernote({
+                    lang: 'zh-CN',
+                    callbacks: {
+                        onChange: function(contents, $edittable) {
+                            $("input[name='" + this.id + "']").val(contents);
+                        },
+                        onImageUpload: function(files) {
+                            var obj = this;
+                            var data = new FormData();
+                            data.append("file", files[0]);
+                            $.ajax({
+                                type: "post",
+                                url: ctx + "common/upload",
+                                data: data,
+                                cache: false,
+                                contentType: false,
+                                processData: false,
+                                dataType: 'json',
+                                success: function(result) {
+                                    if (result.code == web_status.SUCCESS) {
+                                        $('#' + obj.id).summernote('insertImage', result.url);
+                                    } else {
+                                        $.modal.alertError(result.msg);
+                                    }
+                                },
+                                error: function(error) {
+                                    $.modal.alertWarning("图片上传失败。");
+                                }
+                            });
+                        }
                     }
-                }
-            });
+                });
+                var content = $("input[name='" + this.id + "']").val();
+                $('#' + this.id).summernote('code', content);
+            })
         });
         /* $(document).ready(function () {
-        	//上传产品缩略图操作
+        	//上传商品缩略图操作
 	        $(".myfile").fileinput({
 	        	uploadUrl : prefix + '/uploadFile', //接受请求地址
 	            uploadAsync: true, //默认异步上传
@@ -289,7 +313,7 @@
 	        });
             
         }); */
-      //上传产品缩略图操作
+      //上传商品缩略图操作
         $("#abc").change(function () {
 			var data = new FormData();
 			data.append("file", $("#abc")[0].files[0]);
@@ -313,7 +337,7 @@
 				}
 			});
 		});
-      //上传产品多图操作
+      //上传商品多图操作
         $(document).ready(function () {
         	var imgPath = '';
 	        $(".yourfile").fileinput({

@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <resultMap type="HyPicture" id="HyPictureResult">
         <result property="id"    column="id"    />
-        <result property="pcitureAddress"    column="pciture_address"    />
+        <result property="pictureAddress"    column="picture_address"    />
         <result property="productId"    column="product_id"    />
        <association property="hyProduct"
 			column="id" javaType="HyProduct"
@@ -36,7 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <sql id="selectHyPictureVo">
         select 
         o.id, 
-        o.pciture_address, 
+        o.picture_address, 
         o.product_id,
         p.state 
         from 
@@ -47,13 +47,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <select id="selectHyPictureAddress" parameterType="HyPicture" resultMap="HyPictureResult">
         <include refid="selectHyPictureVo"/>
-        and o.pciture_address=#{pcitureAddress}
+        and o.picture_address=#{pictureAddress}
     </select>
 
     <select id="selectHyPictureList" parameterType="HyPicture" resultMap="HyPictureResult">
         <include refid="selectHyPictureVo"/>
         
-            <if test="pcitureAddress != null  and pcitureAddress != ''"> and o.pciture_address = #{pcitureAddress}</if>
+            <if test="pictureAddress != null  and pictureAddress != ''"> and o.picture_address = #{pictureAddress}</if>
             <if test="productId != null "> and o.product_id = #{productId}</if>
             and p.state = 1        
             
@@ -67,11 +67,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="insertHyPicture" parameterType="HyPicture" useGeneratedKeys="true" keyProperty="id">
         insert into hy_picture
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="pcitureAddress != null">pciture_address,</if>
+            <if test="pictureAddress != null">picture_address,</if>
             <if test="productId != null">product_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="pcitureAddress != null">#{pcitureAddress},</if>
+            <if test="pictureAddress != null">#{pictureAddress},</if>
             <if test="productId != null">#{productId},</if>
          </trim>
     </insert>
@@ -79,7 +79,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateHyPicture" parameterType="HyPicture">
         update hy_picture
         <trim prefix="SET" suffixOverrides=",">
-            <if test="pcitureAddress != null and pcitureAddress !=''">pciture_address = #{pcitureAddress},</if>
+            <if test="pictureAddress != null and pictureAddress !=''">picture_address = #{pictureAddress},</if>
             <if test="productId != null">product_id = #{productId},</if>
         </trim>
         where id = #{id}

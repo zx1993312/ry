@@ -18,7 +18,7 @@ public class HyPicture extends BaseEntity
 
     /** 图片地址 */
     @Excel(name = "图片地址")
-    private String pcitureAddress;
+    private String pictureAddress;
 
     /** 产品id */
     @Excel(name = "产品id")
@@ -47,14 +47,14 @@ public class HyPicture extends BaseEntity
     {
         return id;
     }
-    public void setPcitureAddress(String pcitureAddress) 
+    public void setPictureAddress(String pictureAddress) 
     {
-        this.pcitureAddress = pcitureAddress;
+        this.pictureAddress = pictureAddress;
     }
 
-    public String getPcitureAddress() 
+    public String getPictureAddress() 
     {
-        return pcitureAddress;
+        return pictureAddress;
     }
     public void setProductId(Long productId) 
     {
@@ -68,7 +68,7 @@ public class HyPicture extends BaseEntity
 
 	@Override
 	public String toString() {
-		return "HyPicture [id=" + id + ", pcitureAddress=" + pcitureAddress + ", productId=" + productId
+		return "HyPicture [id=" + id + ", pictureAddress=" + pictureAddress + ", productId=" + productId
 				+ ", hyProduct=" + hyProduct + "]";
 	}
 
