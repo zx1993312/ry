@@ -14,7 +14,7 @@ public class LableService {
 	private IHyLableService hyLableService;
 	
 	public List<HyLable> getLable(){
-		return hyLableService.selectHyLableVoDistinct(new HyLable());
+		return hyLableService.selectHyLableList(new HyLable());
 		 
 	}
 }

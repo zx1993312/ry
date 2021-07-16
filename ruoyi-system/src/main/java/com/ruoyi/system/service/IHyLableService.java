@@ -1,14 +1,13 @@
 package com.ruoyi.system.service;
 
 import java.util.List;
-
 import com.ruoyi.system.domain.HyLable;
 
 /**
  * 标签Service接口
  * 
  * @author Administrator
- * @date 2021-03-16
+ * @date 2021-07-16
  */
 public interface IHyLableService 
 {
@@ -59,11 +58,4 @@ public interface IHyLableService
      * @return 结果
      */
     public int deleteHyLableById(Long id);
-    /**
-     * 查询标签列表
-     * 
-     * @param hyLable 标签
-     * @return 标签集合
-     */
-	public List<HyLable> selectHyLableVoDistinct(HyLable hyLable);
 }

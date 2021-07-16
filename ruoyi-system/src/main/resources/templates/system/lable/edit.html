@@ -10,7 +10,7 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">标签名称：</label>
                 <div class="col-sm-8">
-                    <input name="labelName" th:field="*{labelName}" class="form-control" type="text">
+                    <input name="lableName" th:field="*{lableName}" class="form-control" type="text">
                 </div>
             </div>
         </form>
@@ -19,7 +19,6 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/lable";
         $("#form-lable-edit").validate({
-        	 
             focusCleanup: true
         });
 

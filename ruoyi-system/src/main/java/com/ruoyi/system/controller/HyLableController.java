@@ -5,7 +5,6 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,10 +29,9 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 标签Controller
  * 
  * @author Administrator
- * @date 2021-03-16
+ * @date 2021-07-16
  */
 @Controller
-@CrossOrigin
 @RequestMapping("/system/lable")
 @Api(tags = "标签Controller")
 public class HyLableController extends BaseController
@@ -65,6 +63,22 @@ public class HyLableController extends BaseController
         startPage();
         List<HyLable> list = hyLableService.selectHyLableList(hyLable);
         return getDataTable(list);
+    }
+    
+    /**
+     * 查询标签列表App
+     */
+    @ApiOperation("标签")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyLable", value = "项目实体类hyLable", required = true),
+    })
+    @RequiresPermissions("system:lable:list")
+    @PostMapping("/listApp")
+    @ResponseBody
+    public List<HyLable> listApp(HyLable hyLable)
+    {
+    	List<HyLable> list = hyLableService.selectHyLableList(hyLable);
+    	return list;
     }
 
     /**

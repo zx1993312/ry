@@ -12,10 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <sql id="selectHyLableVo">
         select id, lable_name from hy_lable
     </sql>
-	<sql id="selectHyLableVoDistinct">
-		select distinct id,lable_name from hy_lable
-        where 1=1
-	</sql>
+
     <select id="selectHyLableList" parameterType="HyLable" resultMap="HyLableResult">
         <include refid="selectHyLableVo"/>
         <where>  
@@ -27,10 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectHyLableVo"/>
         where id = #{id}
     </select>
-    
-    <select id="selectHyLableVoDistinct" parameterType="HyLable" resultMap="HyLableResult">
-       <include refid="selectHyLableVoDistinct"/>
-    </select>
+        
     <insert id="insertHyLable" parameterType="HyLable" useGeneratedKeys="true" keyProperty="id">
         insert into hy_lable
         <trim prefix="(" suffix=")" suffixOverrides=",">

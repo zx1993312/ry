@@ -7,7 +7,7 @@ import com.ruoyi.system.domain.HyLable;
  * 标签Mapper接口
  * 
  * @author Administrator
- * @date 2021-03-16
+ * @date 2021-07-16
  */
 public interface HyLableMapper 
 {
@@ -58,6 +58,4 @@ public interface HyLableMapper
      * @return 结果
      */
     public int deleteHyLableByIds(String[] ids);
-
-	public List<HyLable> selectHyLableVoDistinct(HyLable hyLable);
 }

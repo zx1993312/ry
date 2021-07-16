@@ -19,6 +19,10 @@ public class HyCommunitySuggest extends BaseEntity
     /** 社区建议id */
     private Long id;
 
+    /** 建议标题 */
+    @Excel(name = "建议标题")
+    private String suggestTitle;
+    
     /** 建议类别 */
     @Excel(name = "建议类别")
     private String suggestType;
@@ -68,7 +72,16 @@ public class HyCommunitySuggest extends BaseEntity
     {
         return id;
     }
-    public void setSuggestType(String suggestType) 
+    
+    public String getSuggestTitle() {
+		return suggestTitle;
+	}
+
+	public void setSuggestTitle(String suggestTitle) {
+		this.suggestTitle = suggestTitle;
+	}
+
+	public void setSuggestType(String suggestType) 
     {
         this.suggestType = suggestType;
     }
@@ -156,13 +169,12 @@ public class HyCommunitySuggest extends BaseEntity
 
 	@Override
 	public String toString() {
-		return "HyCommunitySuggest [id=" + id + ", suggestType=" + suggestType + ", informationContent="
-				+ informationContent + ", suggestDate=" + suggestDate + ", contactInformation=" + contactInformation
-				+ ", suggestAuditor=" + suggestAuditor + ", suggestStatus=" + suggestStatus + ", refusalReason="
-				+ refusalReason + ", throughReason=" + throughReason + ", ownerId=" + ownerId + ", hyOwnerRegistration="
-				+ hyOwnerRegistration + "]";
+		return "HyCommunitySuggest [id=" + id + ", suggestTitle=" + suggestTitle + ", suggestType=" + suggestType
+				+ ", informationContent=" + informationContent + ", suggestDate=" + suggestDate
+				+ ", contactInformation=" + contactInformation + ", suggestAuditor=" + suggestAuditor
+				+ ", suggestStatus=" + suggestStatus + ", refusalReason=" + refusalReason + ", throughReason="
+				+ throughReason + ", ownerId=" + ownerId + ", hyOwnerRegistration=" + hyOwnerRegistration + "]";
 	}
-
 
 
 

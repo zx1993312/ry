@@ -4,7 +4,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.ruoyi.system.mapper.HyLableMapper;
 import com.ruoyi.system.domain.HyLable;
 import com.ruoyi.system.service.IHyLableService;
@@ -14,7 +13,7 @@ import com.ruoyi.common.core.text.Convert;
  * 标签Service业务层处理
  * 
  * @author Administrator
- * @date 2021-03-16
+ * @date 2021-07-16
  */
 @Service
 public class HyLableServiceImpl implements IHyLableService 
@@ -97,9 +96,4 @@ public class HyLableServiceImpl implements IHyLableService
     {
         return hyLableMapper.deleteHyLableById(id);
     }
-
-	@Override
-	public List<HyLable> selectHyLableVoDistinct(HyLable hyLable) {
-		return hyLableMapper.selectHyLableVoDistinct(hyLable);
-	}
 }
