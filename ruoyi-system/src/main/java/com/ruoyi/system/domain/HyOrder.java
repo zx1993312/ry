@@ -1,15 +1,16 @@
 package com.ruoyi.system.domain;
 
-import java.util.Date;
+import java.math.BigDecimal;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
-import com.ruoyi.common.annotation.Excel.Type;
 import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
  * 订单对象 hy_order
  * 
  * @author Administrator
- * @date 2021-03-15
+ * @date 2021-07-15
  */
 public class HyOrder extends BaseEntity
 {
@@ -18,71 +19,46 @@ public class HyOrder extends BaseEntity
     /** 订单id */
     private Long id;
 
-    /** 用户id */
-    @Excel(name = "用户id")
-    private Long userId;
-    
-    /** 用户头像 */
-    @Excel(name = "用户头像")
-    private String userPicture;
-
     /** 订单编号 */
     @Excel(name = "订单编号")
     private String orderNumber;
 
-    /** 单价 */
-    @Excel(name = "单价")
-    private Double unitPrice;
+    /** 订单状态 */
+    @Excel(name = "订单状态")
+    private String orderState;
 
-    /** 数量 */
-    @Excel(name = "数量")
-    private Long number;
-    /**订单状态*/
-    @Excel(name="订单状态", readConverterExp = "1=已支付,2=已预约,3=已完成")
-    private String state;
-    /**用户表*/
-    @Excel(name="用户表")
-    private HyUser hyUser;
-    /**产品表*/
-    @Excel(name="产品表")
-    private HyProduct hyProduct;
-    /**图片地址*/
-    @Excel(name="图片地址")
-    private String fileName;
-    /**创建时间*/
-    @Excel(name="创建时间",width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss", type = Type.EXPORT)
-    private Date createTime;
-    
-    /**产品id*/
-    @Excel(name="产品id")
-    private Long productId;
-    
-    /**店铺表*/
-    @Excel(name="店铺表")
-    private HyShop hyShop;
-    
-    /**店家表*/
-    @Excel(name="店家表")
-    private HyBusiness hyBusiness;
-    
-    
-    public HyShop getHyShop() {
-		return hyShop;
-	}
+    /** 退款原因 */
+    @Excel(name = "退款原因")
+    private String refundReason;
 
-	public void setHyShop(HyShop hyShop) {
-		this.hyShop = hyShop;
-	}
+    /** 退款说明 */
+    @Excel(name = "退款说明")
+    private String refundInstructions;
 
-	public HyBusiness getHyBusiness() {
-		return hyBusiness;
-	}
+    /** 退款金额 */
+    @Excel(name = "退款金额")
+    private BigDecimal refundAmount;
 
-	public void setHyBusiness(HyBusiness hyBusiness) {
-		this.hyBusiness = hyBusiness;
-	}
+    /** 商品id组 */
+    @Excel(name = "商品id组")
+    private String productIds;
+    
+    /** 业主id */
+    @Excel(name = "业主id")
+    private Long ownerId;
+    
+    /** 业主表 */
+    @Excel(name = "业主表")
+    private HyOwnerRegistration hyOwnerRegistration;
+    
+    /** 订单商品中间表 */
+    @Excel(name = "订单商品中间表")
+    private OrderAndProduct orderAndProduct;
+    
+    /** 商品数量组 */
+    private String numbers;
 
-	public void setId(Long id) 
+    public void setId(Long id) 
     {
         this.id = id;
     }
@@ -91,27 +67,7 @@ public class HyOrder extends BaseEntity
     {
         return id;
     }
-    public void setUserId(Long userId) 
-    {
-        this.userId = userId;
-    }
-
-    public Long getUserId() 
-    {
-        return userId;
-    }
-    
-   
-
-	public String getUserPicture() {
-		return userPicture;
-	}
-
-	public void setUserPicture(String userPicture) {
-		this.userPicture = userPicture;
-	}
-
-	public void setOrderNumber(String orderNumber) 
+    public void setOrderNumber(String orderNumber) 
     {
         this.orderNumber = orderNumber;
     }
@@ -120,92 +76,100 @@ public class HyOrder extends BaseEntity
     {
         return orderNumber;
     }
+    public void setOrderState(String orderState) 
+    {
+        this.orderState = orderState;
+    }
+
+    public String getOrderState() 
+    {
+        return orderState;
+    }
+    public void setRefundReason(String refundReason) 
+    {
+        this.refundReason = refundReason;
+    }
+
+    public String getRefundReason() 
+    {
+        return refundReason;
+    }
+    public void setRefundInstructions(String refundInstructions) 
+    {
+        this.refundInstructions = refundInstructions;
+    }
+
+    public String getRefundInstructions() 
+    {
+        return refundInstructions;
+    }
+    public void setRefundAmount(BigDecimal refundAmount) 
+    {
+        this.refundAmount = refundAmount;
+    }
+
+    public BigDecimal getRefundAmount() 
+    {
+        return refundAmount;
+    }
     
-    public void setUnitPrice(Double unitPrice) 
+    public String getProductIds() {
+		return productIds;
+	}
+
+	public void setProductIds(String productIds) {
+		this.productIds = productIds;
+	}
+
+	public void setOwnerId(Long ownerId) 
     {
-        this.unitPrice = unitPrice;
+        this.ownerId = ownerId;
     }
 
-    public Double getUnitPrice() 
+    public Long getOwnerId() 
     {
-        return unitPrice;
-    }
-    public void setNumber(Long number) 
-    {
-        this.number = number;
+        return ownerId;
     }
 
-    public Long getNumber() 
-    {
-        return number;
-    }
-
-    public HyUser getHyUser() {
-		return hyUser;
+    public HyOwnerRegistration getHyOwnerRegistration() {
+		return hyOwnerRegistration;
 	}
 
-	public void setHyUser(HyUser hyUser) {
-		this.hyUser = hyUser;
+	public void setHyOwnerRegistration(HyOwnerRegistration hyOwnerRegistration) {
+		this.hyOwnerRegistration = hyOwnerRegistration;
 	}
 
-	public String getState() {
-		return state;
+	public OrderAndProduct getOrderAndProduct() {
+		return orderAndProduct;
 	}
 
-	public void setState(String state) {
-		this.state = state;
-	}
-	
-	public String getFileName() {
-		return fileName;
+	public void setOrderAndProduct(OrderAndProduct orderAndProduct) {
+		this.orderAndProduct = orderAndProduct;
 	}
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
+	public String getNumbers() {
+		return numbers;
 	}
 
-	public Date getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-
-	public Long getProductId() {
-		return productId;
-	}
-
-	public void setProductId(Long productId) {
-		this.productId = productId;
-	}
-
-	public HyProduct getHyProduct() {
-		return hyProduct;
-	}
-
-	public void setHyProduct(HyProduct hyProduct) {
-		this.hyProduct = hyProduct;
+	public void setNumbers(String number) {
+		this.numbers = numbers;
 	}
 
 	@Override
-	public String toString() {
-		return "HyOrder [id=" + id + ", userId=" + userId + ", userPicture=" + userPicture + ", orderNumber="
-				+ orderNumber + ", unitPrice=" + unitPrice + ", number=" + number + ", state=" + state + ", hyUser="
-				+ hyUser + ", hyProduct=" + hyProduct + ", fileName=" + fileName + ", createTime=" + createTime
-				+ ", productId=" + productId + ", hyShop=" + hyShop + ", hyBusiness=" + hyBusiness + "]";
-	}
-
-	
-
-
-
-	
-
-
-	
-
-	
-
-	
+    public String toString() {
+        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+            .append("id", getId())
+            .append("orderNumber", getOrderNumber())
+            .append("orderState", getOrderState())
+            .append("createTime", getCreateTime())
+            .append("refundReason", getRefundReason())
+            .append("refundInstructions", getRefundInstructions())
+            .append("refundAmount", getRefundAmount())
+            .append("productIds", getProductIds())
+            .append("ownerId", getOwnerId())
+            .append("hyOwnerRegistration", getHyOwnerRegistration())
+            .append("orderAndProduct", getOrderAndProduct())
+            .append("numbers", getNumbers())
+            .toString();
+    }
 }

@@ -10,7 +10,7 @@ import com.ruoyi.system.domain.HyOrder;
  * 订单Service接口
  * 
  * @author Administrator
- * @date 2021-03-15
+ * @date 2021-07-15
  */
 public interface IHyOrderService 
 {
@@ -30,21 +30,45 @@ public interface IHyOrderService
      */
     public List<HyOrder> selectHyOrderList(HyOrder hyOrder);
     
-    public HyOrder selectId(HyOrder hyOrder);
-    
     /**
-     * 查询订单列表(测试方法)
+     * 查询订单待付款列表
      * 
      * @param hyOrder 订单
      * @return 订单集合
      */
-    public List<HyOrder> selectHyOrderListTest(HyOrder hyOrder);
+    public List<HyOrder> selectHyOrderListByObligation(HyOrder hyOrder);
+    
     /**
-     * 查询订单装态
-     * @param hyOrder
-     * @return
+     * 查询订单待发货列表
+     * 
+     * @param hyOrder 订单
+     * @return 订单集合
      */
-    public List<HyOrder> selectHyOrderState(HyOrder hyOrder);
+    public List<HyOrder> selectHyOrderListBySend(HyOrder hyOrder);
+    
+    /**
+     * 查询订单待收货列表
+     * 
+     * @param hyOrder 订单
+     * @return 订单集合
+     */
+    public List<HyOrder> selectHyOrderListByCollect(HyOrder hyOrder);
+    
+    /**
+     * 查询订单已完成列表
+     * 
+     * @param hyOrder 订单
+     * @return 订单集合
+     */
+    public List<HyOrder> selectHyOrderListByFinished(HyOrder hyOrder);
+    
+    /**
+     * 查询订单已完成列表
+     * 
+     * @param hyOrder 订单
+     * @return 订单集合
+     */
+    public List<HyOrder> selectHyOrderListByRefunded(HyOrder hyOrder);
 
     /**
      * 新增订单
@@ -60,7 +84,7 @@ public interface IHyOrderService
      * @param hyOrder 订单
      * @return 结果
      */
-    public int updateHyOrder(String ids,HyOrder hyOrder);
+    public int updateHyOrder(HyOrder hyOrder);
 
     /**
      * 批量删除订单
@@ -77,11 +101,6 @@ public interface IHyOrderService
      * @return 结果
      */
     public int deleteHyOrderById(Long id);
-    /**
-     * 删除上传图片
-     * @return
-     */
-	public boolean deleteFile(String fileName);
 	/**
 	 * 导出PDF
 	 * @param response

@@ -7,7 +7,7 @@ import com.ruoyi.system.domain.HyOrder;
  * 订单Mapper接口
  * 
  * @author Administrator
- * @date 2021-03-15
+ * @date 2021-07-15
  */
 public interface HyOrderMapper 
 {
@@ -27,21 +27,45 @@ public interface HyOrderMapper
      */
     public List<HyOrder> selectHyOrderList(HyOrder hyOrder);
     
-    public HyOrder selectId(HyOrder hyOrder);
-    
     /**
-     * 查询订单列表(测试方法)
+     * 查询订单待付款列表
      * 
      * @param hyOrder 订单
      * @return 订单集合
      */
-    public List<HyOrder> selectHyOrderListTest(HyOrder hyOrder);
+    public List<HyOrder> selectHyOrderListByObligation(HyOrder hyOrder);
+    
     /**
-     * 查询订单装态
-     * @param hyOrder
-     * @return
+     * 查询订单待发货列表
+     * 
+     * @param hyOrder 订单
+     * @return 订单集合
      */
-    public List<HyOrder> selectHyOrderState(HyOrder hyOrder);
+    public List<HyOrder> selectHyOrderListBySend(HyOrder hyOrder);
+    
+    /**
+     * 查询订单待收货列表
+     * 
+     * @param hyOrder 订单
+     * @return 订单集合
+     */
+    public List<HyOrder> selectHyOrderListByCollect(HyOrder hyOrder);
+    
+    /**
+     * 查询订单待收货列表
+     * 
+     * @param hyOrder 订单
+     * @return 订单集合
+     */
+    public List<HyOrder> selectHyOrderListByFinished(HyOrder hyOrder);
+    
+    /**
+     * 查询订单已退款列表
+     * 
+     * @param hyOrder 订单
+     * @return 订单集合
+     */
+    public List<HyOrder> selectHyOrderListByRefunded(HyOrder hyOrder);
 
     /**
      * 新增订单

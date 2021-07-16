@@ -126,6 +126,10 @@ public class HyReport extends BaseEntity
     @Excel(name = "接收员表")
     private HyRecipients hyRecipients;
     
+    /** 员工id */
+    @Excel(name = "员工id")
+    private Long userId;
+    
     /** 员工表 */
     @Excel(name = "员工表")
     private SysUser sysUser;
@@ -361,6 +365,14 @@ public class HyReport extends BaseEntity
 		this.reportPicture = reportPicture;
 	}
 
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
 	public SysUser getSysUser() {
 		return sysUser;
 	}
@@ -381,8 +393,9 @@ public class HyReport extends BaseEntity
 				+ reportDuration + ", maintenanceDifficulty=" + maintenanceDifficulty + ", ownerId=" + ownerId
 				+ ", hyOwnerRegistration=" + hyOwnerRegistration + ", quartersId=" + quartersId
 				+ ", hyResidentialQuarters=" + hyResidentialQuarters + ", recipientsId=" + recipientsId
-				+ ", hyRecipients=" + hyRecipients + ", sysUser=" + sysUser + "]";
+				+ ", hyRecipients=" + hyRecipients + ", userId=" + userId + ", sysUser=" + sysUser + "]";
 	}
+
 
 	
 }

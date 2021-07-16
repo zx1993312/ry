@@ -1427,7 +1427,7 @@ var table = {
                     }
             	}
             },
-            // 一键结算
+            /*// 一键结算
             edit2: function(id) {
             	var row=$("#bootstrap-table").bootstrapTable('getSelections');
             	for(var i=0;i<row.length;i++){
@@ -1466,7 +1466,7 @@ var table = {
                     	}
                     }
             	});
-            },
+            },*/
             // 修改信息，以tab页展现
             editTab: function(id) {
             	table.set();

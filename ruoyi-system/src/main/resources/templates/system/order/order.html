@@ -10,35 +10,35 @@
                 <form id="formId">
                     <div class="select-list">
                         <ul>
-                        
                             <li>
                                 <label>订单编号：</label>
                                 <input type="text" name="orderNumber"/>
                             </li>
                             <li>
-                                <label>商品名：</label>
-                                <input type="text" name="hyProduct.productName"/>
-                            </li>
-                            <li>
-                                <label>商家名：</label>
-                                <input type="text" name="hyBusiness.businessName"/>
-                            </li>
-                            <!-- <li>
-                                <label>单价：</label>
-                                <input type="text" name="unitPrice" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
-                            </li>
-                            <li>
-                                <label>数量：</label>
-                                <input type="text" name="number" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
-                            </li> -->
-                            <li>
                                 <label>订单状态：</label>
-                                <select name="state" class="form-control " >
-                                <option value="">请选择</option>
-                                <option value="1">已支付</option>
-                                <option value="2">已预约</option>
-                                <option value="3">已完成</option>
-                                </select>
+                                <select name="orderState" class="form-control " >
+			                      <option value="">请选择</option>
+			                      <option value="1">待付款</option>
+			                      <option value="2">待发货</option>
+			                      <option value="3">待收货</option>
+			                      <option value="4">已完成</option>
+			                      <option value="5">已退款</option>
+			                     </select>
+                            </li>
+                            <li>
+                                <label>退款原因：</label>
+                                <input type="text" name="refundReason"/>
+                            </li>
+                            <li>
+                                <label>退款金额：</label>
+                                <input type="text" name="refundAmount"/>
+                            </li>
+                            <li>
+                                <label>下单人姓名：</label>
+                                <select name="ownerId" th:with="type=${@ownerRegistration.getOwnerRegistration()}">
+									<option value="">请选择</option>
+									<option th:if="data!=null" th:each="data:${type}" th:text="${data.ownerName}" th:value="${data.id}"></option>
+						 	    </select>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -48,11 +48,11 @@
                     </div>
                 </form>
             </div>
-
+            
             <div class="btn-group-sm" id="toolbar" role="group">
-                <!-- <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:order:add">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:order:add">
                     <i class="fa fa-plus"></i> 添加
-                </a> -->
+                </a>
                  <a class="btn btn-primary single disabled" onclick="$.operate.detail()" shiro:hasPermission="system:order:detail">
                     <i class="fa fa-search"></i> 详情
                 </a>
@@ -71,11 +71,11 @@
                 
                 </table>
             </div>
-            <div class="btn-group-sm" id="toolbar" role="group">
+            <!-- <div class="btn-group-sm" id="toolbar" role="group">
              <a style="float: right" class="btn btn-primary multiple disabled" onclick="$.operate.edit2()" shiro:hasPermission="system:order:edit">
                <i class="fa fa-rmb"></i> 一键结算
              </a>
-            </div>
+            </div> -->
         </div>
     </div>
     <th:block th:include="include :: footer" />
@@ -105,56 +105,43 @@
                     field: 'orderNumber',
                     title: '订单编号'
                 },
-                 /* {	
-                	field: 'userPicture',
-                    title: '客户头像',
-                    formatter: function(value, row, index) {
-				    	// 图片预览（注意：如存储在本地直接获取数据库路径，如有配置context-path需要使用ctx+路径）
-				    	// 如：/profile/upload/2019/08/08/3b7a839aced67397bac694d77611ce72.png
-				    		return $.table.imageView("/img/"+value);
-				    		  if(index % 2 == 0){
-					    		return $.table.imageView(value);
-					    	}else {
-					    		return $.table.imageView(value);
-					    	}  
-				    }
-                },
                 {
-                    field: 'hyUser.name',
-                    title: '客户名称'
-                },  */
-                {
-                    field: 'hyProduct.productName',
-                    title: '商品名'
-                },
-                {
-                    field: 'hyBusiness.businessName',
-                    title: '商家名'
-                },
-                {
-                    field: 'unitPrice',
-                    title: '单价'
-                },
-                {
-                    field: 'number',
-                    title: '数量'
-                },
-                {
-                    field: 'state',
+                    field: 'orderState',
                     title: '订单状态',
                     formatter: function(value, item, index) {
                     	switch(value){
-                    		case "" : value =  "";break;
-	                    	case "1" : value =  "已支付";break;
-	                    	case "2" : value =  "已预约";break;
-	                    	case "3" : value =  "已完成";break;
+	                    	case '1' : value =  "待付款";break;
+	                    	case '2' : value =  "待发货";break;
+	                    	case '3' : value =  "待收货";break;
+	                    	case '4' : value =  "已完成";break;
+	                    	case '5' : value =  "已退款";break;
 	                	}
 		            	return value;
 		            }
                 },
                 {
-                    field: 'createTime',
-                    title: '创建时间',
+                    field: 'refundReason',
+                    title: '退款原因'
+                },
+                {
+                    field: 'refundInstructions',
+                    title: '退款说明'
+                },
+                {
+                    field: 'refundAmount',
+                    title: '退款金额'
+                },
+                {
+                    field: 'hyOwnerRegistration.ownerName',
+                    title: '下单人姓名'
+                },
+                {
+                    field: 'hyOwnerRegistration.mobilePhone',
+                    title: '下单人电话'
+                },
+                {
+                    field: 'hyOwnerRegistration.contactAddress',
+                    title: '下单人地址'
                 },
                 {
                     title: '操作',
@@ -162,7 +149,7 @@
                     formatter: function(value, row, index) {
                         var actions = [];
                         actions.push('<a class="btn btn-info btn-xs ' + detailFlag + '" href="javascript:void(0)" onclick="$.operate.detail(\'' + row.id + '\')"><i class="fa fa-search"></i>订单详情</a> ');
-                        actions.push('<a class="btn btn-info btn-xs ' + updateFlag + '" href="javascript:void(0)" onclick="$.operate.edit1(\'' + row.id + '\',\''+row.state+'\')"><i class="fa fa-rmb"></i>商户结算</a> ');
+                        //actions.push('<a class="btn btn-info btn-xs ' + updateFlag + '" href="javascript:void(0)" onclick="$.operate.edit1(\'' + row.id + '\',\''+row.state+'\')"><i class="fa fa-rmb"></i>商户结算</a> ');
                         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
                         return actions.join('');
                     }

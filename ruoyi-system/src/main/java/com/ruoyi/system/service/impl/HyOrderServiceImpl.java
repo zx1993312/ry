@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ResourceUtils;
 
 import com.ruoyi.common.core.text.Convert;
+import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.system.domain.HyOrder;
 import com.ruoyi.system.mapper.HyOrderMapper;
 import com.ruoyi.system.service.IHyOrderService;
@@ -29,7 +30,7 @@ import net.sf.jasperreports.engine.JasperPrint;
  * 订单Service业务层处理
  * 
  * @author Administrator
- * @date 2021-03-15
+ * @date 2021-07-15
  */
 @Service
 public class HyOrderServiceImpl implements IHyOrderService 
@@ -61,27 +62,66 @@ public class HyOrderServiceImpl implements IHyOrderService
         return hyOrderMapper.selectHyOrderList(hyOrder);
     }
     
-    public HyOrder selectId(HyOrder hyOrder) {
-    	return hyOrderMapper.selectId(hyOrder);
-    }
-    
     /**
-     * 查询订单列表（测试方法）
+     * 查询订单待付款列表
      * 
      * @param hyOrder 订单
      * @return 订单
      */
     @Override
-	public List<HyOrder> selectHyOrderListTest(HyOrder hyOrder) {
-		return hyOrderMapper.selectHyOrderListTest(hyOrder);
-	}
-    /**
-     * 查询订单装态
-     */
-    public List<HyOrder> selectHyOrderState(HyOrder hyOrder){
-    	return hyOrderMapper.selectHyOrderState(hyOrder);
+    public List<HyOrder> selectHyOrderListByObligation(HyOrder hyOrder)
+    {
+    	return hyOrderMapper.selectHyOrderListByObligation(hyOrder);
     }
     
+    /**
+     * 查询订单待发货列表
+     * 
+     * @param hyOrder 订单
+     * @return 订单
+     */
+    @Override
+    public List<HyOrder> selectHyOrderListBySend(HyOrder hyOrder)
+    {
+    	return hyOrderMapper.selectHyOrderListBySend(hyOrder);
+    }
+    
+    /**
+     * 查询订单待收货列表
+     * 
+     * @param hyOrder 订单
+     * @return 订单
+     */
+    @Override
+    public List<HyOrder> selectHyOrderListByCollect(HyOrder hyOrder)
+    {
+    	return hyOrderMapper.selectHyOrderListByCollect(hyOrder);
+    }
+    
+    /**
+     * 查询订单已完成列表
+     * 
+     * @param hyOrder 订单
+     * @return 订单
+     */
+    @Override
+    public List<HyOrder> selectHyOrderListByFinished(HyOrder hyOrder)
+    {
+    	return hyOrderMapper.selectHyOrderListByFinished(hyOrder);
+    }
+    
+    /**
+     * 查询订单已完成列表
+     * 
+     * @param hyOrder 订单
+     * @return 订单
+     */
+    @Override
+    public List<HyOrder> selectHyOrderListByRefunded(HyOrder hyOrder)
+    {
+    	return hyOrderMapper.selectHyOrderListByRefunded(hyOrder);
+    }
+
     /**
      * 新增订单
      * 
@@ -92,6 +132,7 @@ public class HyOrderServiceImpl implements IHyOrderService
     @Override
     public int insertHyOrder(HyOrder hyOrder)
     {
+        hyOrder.setCreateTime(DateUtils.getNowDate());
         return hyOrderMapper.insertHyOrder(hyOrder);
     }
 
@@ -103,7 +144,7 @@ public class HyOrderServiceImpl implements IHyOrderService
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public int updateHyOrder(String ids,HyOrder hyOrder)
+    public int updateHyOrder(HyOrder hyOrder)
     {
         return hyOrderMapper.updateHyOrder(hyOrder);
     }
@@ -118,14 +159,6 @@ public class HyOrderServiceImpl implements IHyOrderService
     @Override
     public int deleteHyOrderByIds(String ids)
     {
-    	String ida [] = ids.split(",");
-    	for(String id:ida) {
-    		Long idd = Long.valueOf(id);
-    		HyOrder hyOrder = hyOrderMapper.selectHyOrderById(idd);
-    		String fileName = hyOrder.getUserPicture();
-    		deleteFile(fileName);
-    	}
-    	
         return hyOrderMapper.deleteHyOrderByIds(Convert.toStrArray(ids));
     }
 
@@ -141,27 +174,6 @@ public class HyOrderServiceImpl implements IHyOrderService
     {
         return hyOrderMapper.deleteHyOrderById(id);
     }
-    /**
-     * 删除上传图片
-     * @return
-     */
-	@Override
-	public boolean deleteFile(String fileName) {
-		String fileName1 = "C:\\Users\\Administrator\\Desktop\\hykj\\ry\\ruoyi-admin\\src\\main\\resources\\static\\img\\"+fileName;
-		File file = new File(fileName1);
-		System.out.println("================file================"+file);
-		//判断文件存不存在
-		if(!file.exists()){
-			System.out.println("删除文件失败："+fileName+"不存在！");
-			return false;
-		}else{
-			//判断这是不是一个文件，ps：有可能是文件夹
-			if(file.isFile()){
-				return file.delete();
-			}
-		}
-		return false;
-	}
 	/**
 	 * 导出PDF
 	 */

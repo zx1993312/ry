@@ -1,13 +1,7 @@
 package com.ruoyi.system.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -20,11 +14,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.system.domain.HyOrder;
+import com.ruoyi.system.domain.OrderAndProduct;
+import com.ruoyi.system.mapper.OrderAndProductMapper;
 import com.ruoyi.system.service.IHyOrderService;
 
 import io.swagger.annotations.Api;
@@ -41,7 +35,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 订单Controller
  * 
  * @author Administrator
- * @date 2021-03-15
+ * @date 2021-07-15
  */
 @Controller
 @CrossOrigin
@@ -53,6 +47,9 @@ public class HyOrderController extends BaseController
 
     @Autowired
     private IHyOrderService hyOrderService;
+    
+    @Autowired
+    private OrderAndProductMapper orderAndProductMapper;
 
     @RequiresPermissions("system:order:view")
     @GetMapping()
@@ -76,6 +73,86 @@ public class HyOrderController extends BaseController
         startPage();
         List<HyOrder> list = hyOrderService.selectHyOrderList(hyOrder);
         return getDataTable(list);
+    }
+    
+    /**
+     * 查询订单待付款列表App
+     */
+    @ApiOperation("订单")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyOrder", value = "项目实体类hyOrder", required = true),
+    })
+    @RequiresPermissions("system:order:list")
+    @PostMapping("/listByObligation")
+    @ResponseBody
+    public List<HyOrder> listByObligation(HyOrder hyOrder)
+    {
+    	List<HyOrder> list = hyOrderService.selectHyOrderListByObligation(hyOrder);
+    	return list;
+    }
+    
+    /**
+     * 查询订单待发货列表App
+     */
+    @ApiOperation("订单")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyOrder", value = "项目实体类hyOrder", required = true),
+    })
+    @RequiresPermissions("system:order:list")
+    @PostMapping("/listBySend")
+    @ResponseBody
+    public List<HyOrder> listBySend(HyOrder hyOrder)
+    {
+    	List<HyOrder> list = hyOrderService.selectHyOrderListBySend(hyOrder);
+    	return list;
+    }
+    
+    /**
+     * 查询订单待收货列表App
+     */
+    @ApiOperation("订单")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyOrder", value = "项目实体类hyOrder", required = true),
+    })
+    @RequiresPermissions("system:order:list")
+    @PostMapping("/listByCollect")
+    @ResponseBody
+    public List<HyOrder> listByCollect(HyOrder hyOrder)
+    {
+    	List<HyOrder> list = hyOrderService.selectHyOrderListByCollect(hyOrder);
+    	return list;
+    }
+    
+    /**
+     * 查询订单已完成列表App
+     */
+    @ApiOperation("订单")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyOrder", value = "项目实体类hyOrder", required = true),
+    })
+    @RequiresPermissions("system:order:list")
+    @PostMapping("/listByFinished")
+    @ResponseBody
+    public List<HyOrder> listByFinished(HyOrder hyOrder)
+    {
+    	List<HyOrder> list = hyOrderService.selectHyOrderListByFinished(hyOrder);
+    	return list;
+    }
+    
+    /**
+     * 查询订单已退款列表App
+     */
+    @ApiOperation("订单")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyOrder", value = "项目实体类hyOrder", required = true),
+    })
+    @RequiresPermissions("system:order:list")
+    @PostMapping("/listByRefunded")
+    @ResponseBody
+    public List<HyOrder> listByRefunded(HyOrder hyOrder)
+    {
+    	List<HyOrder> list = hyOrderService.selectHyOrderListByRefunded(hyOrder);
+    	return list;
     }
 
     /**
@@ -120,20 +197,85 @@ public class HyOrderController extends BaseController
     {
         return toAjax(hyOrderService.insertHyOrder(hyOrder));
     }
+    
+    /**
+     * 购物车结算生成订单
+     */
+    @ApiOperation("订单")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyOrder", value = "项目实体类hyOrder", required = true),
+    })
+    @RequiresPermissions("system:order:add")
+    @Log(title = "订单", businessType = BusinessType.INSERT)
+    @PostMapping("/addApp")
+    @ResponseBody
+    public AjaxResult addApp(HyOrder hyOrder)
+    {
+    	int row = hyOrderService.insertHyOrder(hyOrder);
+    	if(row>0) {
+    		String[] productIds = hyOrder.getProductIds().split(",");
+    		List<HyOrder> list = hyOrderService.selectHyOrderList(hyOrder);
+    		hyOrder = list.get(0);
+    		Long orderId = hyOrder.getId();
+    		String[] numbers = hyOrder.getNumbers().split(",");
+    		int i =0;
+    		for(String productId : productIds) {
+    			OrderAndProduct orderAndProduct = new OrderAndProduct();
+    			String number = numbers[i];
+    			orderAndProduct.setOrderId(orderId);
+    			orderAndProduct.setProductId(Long.valueOf(productId));
+    			orderAndProduct.setNumber(Integer.valueOf(number));
+    			orderAndProductMapper.insertOrderAndProduct(orderAndProduct);
+    			i++;
+    		}
+    		return toAjax(1);
+    	}
+    	return toAjax(0);
+    }
 
     /**
-     * 查看订单
+     * 修改订单
      */
     @ApiOperation("订单")
     @ApiImplicitParams({ 
 		@ApiImplicitParam(name = "id", value = "主键id", required = true),
 	})
-    @GetMapping("/detail/{id}")
+    @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Long id, ModelMap mmap)
     {
         HyOrder hyOrder = hyOrderService.selectHyOrderById(id);
         mmap.put("hyOrder", hyOrder);
-        return prefix + "/detail";
+        return prefix + "/edit";
+    }
+    
+    /**
+     * 查看订单
+     */
+    @ApiOperation("订单")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "id", value = "主键id", required = true),
+    })
+    @GetMapping("/detail/{id}")
+    public String detail(@PathVariable("id") Long id, ModelMap mmap)
+    {
+    	HyOrder hyOrder = hyOrderService.selectHyOrderById(id);
+    	mmap.put("hyOrder", hyOrder);
+    	return prefix + "/detail";
+    }
+    
+    /**
+     * 查看订单App
+     */
+    @ApiOperation("订单")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "id", value = "主键id", required = true),
+    })
+    @GetMapping("/detailApp")
+    @ResponseBody
+    public List<HyOrder> detailApp(HyOrder hyOrder)
+    {
+    	List<HyOrder> list = hyOrderService.selectHyOrderList(hyOrder);
+    	return list;
     }
 
     /**
@@ -147,14 +289,9 @@ public class HyOrderController extends BaseController
     @Log(title = "订单", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(String ids,HyOrder hyOrder)
-    {	
-    	/*if(hyOrder.getUserPicture()!=null&&!"".equals(hyOrder.getUserPicture())) {
-    		String fileName = hyOrder.getFileName();
-        	hyOrderService.deleteFile(fileName);
-    	}*/
-    	
-    	return toAjax(hyOrderService.updateHyOrder(ids,hyOrder));
+    public AjaxResult editSave(HyOrder hyOrder)
+    {
+        return toAjax(hyOrderService.updateHyOrder(hyOrder));
     }
 
     /**
@@ -172,48 +309,6 @@ public class HyOrderController extends BaseController
     {
         return toAjax(hyOrderService.deleteHyOrderByIds(ids));
     }
-    /**
-     * 上传图片地址
-     * @param imagepath
-     * @return
-     * @throws IllegalStateException
-     * @throws IOException
-     */
-	@RequestMapping("/uploadFile")
-	@ResponseBody
-	public Map<String, Object> uploadFile(MultipartFile imagepath,HttpServletRequest request) throws IllegalStateException, IOException {
-		System.out.println(imagepath);
-		String mynewpic = null;
-		// 原始图片名称
-		String oldFileName = imagepath.getOriginalFilename(); // 获取上传文件的原名
-		// 存储路径
-		if (imagepath != null && oldFileName != null && oldFileName.length() > 0) {
-			// 我这写的是绝对路径请注意，springboot 用内置tomcat 展示图片会有问题 稍后在看
-			String saveFilePath = System.getProperty("user.dir")+"\\src\\main\\resources\\static\\img";
-			File files = new File(saveFilePath);
-			if (!files.exists()) {
-				files.mkdirs();
-			}
-			// 新的图片名称
-			String newFileName = UUID.randomUUID() + oldFileName.substring(oldFileName.lastIndexOf("."));
-			// 新图片
-			File newFile = new File(saveFilePath + "\\" + newFileName);
-			// 将内存中的数据写入磁盘
-			imagepath.transferTo(newFile);
-			// 将路径名存入全局变量mynewpic
-			mynewpic = newFileName;
-
-			// 将新图片名称返回到前端
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("success", "成功啦");
-			map.put("url", mynewpic);
-			return map;
-		} else {
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("error", "图片不合法");
-			return map;
-		}
-	}
 	/**
 	 * 导出PDF
 	 */

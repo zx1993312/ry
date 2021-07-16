@@ -16,11 +16,9 @@ import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.system.domain.HyOrder;
 import com.ruoyi.system.domain.HyPicture;
 import com.ruoyi.system.domain.HyProduct;
 import com.ruoyi.system.domain.HyUser;
-import com.ruoyi.system.service.IHyOrderService;
 import com.ruoyi.system.service.IHyProductService;
 import com.ruoyi.system.service.IHyUserService;
 
@@ -47,11 +45,11 @@ public class HyShoppingAffirmController extends BaseController
     @Autowired
     private IHyUserService hyUserService;
     
-    @Autowired
+/*    @Autowired
 	private IHyOrderService hyOrderService;
-    
-//    @Autowired
-//	private IHySetMealService hySetMealService;
+*/    
+   /* @Autowired
+	private IHySetMealService hySetMealService;*/
     
     @Autowired
     private IHyProductService hyProductService;
@@ -92,8 +90,8 @@ public class HyShoppingAffirmController extends BaseController
     	HyProduct product = hyProductService.selectHyId(Long.parseLong(id));
 		mmap.put("product", product);
 		
-		HyOrder hyOrder = hyOrderService.selectId(new HyOrder());
-		mmap.put("hyOrder",hyOrder);
+		/*HyOrder hyOrder = hyOrderService.selectId(new HyOrder());
+		mmap.put("hyOrder",hyOrder);*/
         
 		return prefix + "/shoppingAffirm";
 

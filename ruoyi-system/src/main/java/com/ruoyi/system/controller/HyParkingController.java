@@ -74,6 +74,19 @@ public class HyParkingController extends BaseController {
 		}
 		return getDataTable(list,  reList);
 	}
+	
+	/**
+	 * 车位信息 APP
+	 */
+	@ApiOperation("车位资料")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyParkingInf", value = "项目实体类hyParkingInf", required = true), })
+	@RequiresPermissions("system:parking:list")
+	@PostMapping("/listApp")
+	@ResponseBody
+	public List<HyParkingInf> listApp(HyParkingInf hyParkingInf) {
+		List<HyParkingInf> list = hyParkingInfService.selectHyParkingInfList(hyParkingInf);
+		return list;
+	}
 
 	/**
 	 * 导出车位资料 列表
@@ -139,6 +152,19 @@ public class HyParkingController extends BaseController {
 			reList.add(map);
 		}
 		return prefix + "/edit";
+	}
+	
+	/**
+	 *车位信息APP
+	 * 
+	 */
+	@ApiOperation("车位资料")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "id", value = "主键id", required = true), })
+	@GetMapping("/editApp")
+	@ResponseBody
+	public List<HyParkingInf> editApp(HyParkingInf hyParkingInf) {
+		List<HyParkingInf> list = hyParkingInfService.selectHyParkingInfList(hyParkingInf);
+		return list;
 	}
 
 	/**

@@ -29,6 +29,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="quartersId"    column="quarters_id"    />
         <result property="ownerId"    column="owner_id"    />
         <result property="recipientsId"    column="recipients_id"    />
+        <result property="userId"    column="user_id"    />
         <association property="hyOwnerRegistration"
 			column="id" javaType="HyOwnerRegistration"
 			resultMap="HyOwnerRegistrationResult" />
@@ -167,12 +168,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         r.quarters_id,
         r.owner_id,
         r.recipients_id,
+        r.user_id,
         o.owner_name,
         o.mobile_phone,
         q.community_name,
         e.recipients_employee,
         e.recipients_phone,
-        u.user_name 
+        u.user_name
         from 
         hy_report r
         LEFT JOIN hy_owner_registration o ON r.owner_id=o.id
@@ -188,8 +190,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         hy_report r
        LEFT JOIN hy_owner_registration o ON o.owner_id=o.id
        LEFT JOIN hy_residential_quarters q ON r.quarters_id=q.id
-        LEFT JOIN hy_recipients e ON r.recipients_id=e.id
-        left join sys_user u on e.recipients_employee = u.user_id
+       LEFT JOIN hy_recipients e ON r.recipients_id=e.id
+       LEFT JOIN sys_user u on e.recipients_employee = u.user_id
     </sql>
 
     <select id="selectHyReportList" parameterType="HyReport" resultMap="HyReportResult">
@@ -219,6 +221,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="quartersId != null "> and r.quarters_id = #{quartersId}</if>
             <if test="ownerId != null "> and r.owner_id = #{ownerId}</if>
             <if test="recipientsId != null "> and r.recipients_id = #{recipientsId}</if>
+            <if test="userId != null "> and r.user_id = #{userId}</if>
         </where>
     </select>
     
@@ -248,6 +251,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="quartersId != null "> and r.quarters_id = #{quartersId}</if>
             <if test="ownerId != null "> and r.owner_id = #{ownerId}</if>
             <if test="recipientsId != null "> and r.recipients_id = #{recipientsId}</if>
+            <if test="userId != null "> and r.user_id = #{userId}</if>
         </where>
     </select>
     
@@ -277,6 +281,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="quartersId != null "> and r.quarters_id = #{quartersId}</if>
             <if test="ownerId != null "> and r.owner_id = #{ownerId}</if>
             <if test="recipientsId != null "> and r.recipients_id = #{recipientsId}</if>
+            <if test="userId != null "> and r.user_id = #{userId}</if>
         </where>
     </select>
     
@@ -306,6 +311,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="quartersId != null "> and r.quarters_id = #{quartersId}</if>
             <if test="ownerId != null "> and r.owner_id = #{ownerId}</if>
             <if test="recipientsId != null "> and r.recipients_id = #{recipientsId}</if>
+            <if test="userId != null "> and r.user_id = #{userId}</if>
         </where>
     </select>
     
@@ -345,6 +351,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="quartersId != null">quarters_id,</if>
             <if test="ownerId != null">owner_id,</if>
             <if test="recipientsId != null">recipients_id,</if>
+            <if test="userId != null">user_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="reportNumber != null">#{reportNumber},</if>
@@ -370,6 +377,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="quartersId != null">#{quartersId},</if>
             <if test="ownerId != null">#{ownerId},</if>
             <if test="recipientsId != null">#{recipientsId},</if>
+            <if test="userId != null">#{userId},</if>
          </trim>
     </insert>
 
@@ -399,6 +407,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="quartersId != null">quarters_id = #{quartersId},</if>
             <if test="ownerId != null">owner_id = #{ownerId},</if>
             <if test="recipientsId != null">recipients_id = #{recipientsId},</if>
+            <if test="userId != null">user_id = #{userId},</if>
         </trim>
         where id = #{id}
     </update>

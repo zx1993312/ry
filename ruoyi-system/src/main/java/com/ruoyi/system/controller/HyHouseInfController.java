@@ -193,6 +193,18 @@ public class HyHouseInfController extends BaseController {
 		mmap.put("hyHouseInf", hyHouseInf);
 		return prefix + "/edit";
 	}
+	
+	/**
+	 * 房产详细信息App
+	 */
+	@ApiOperation("房产详细信息App")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "id", value = "主键id", required = true), })
+	@GetMapping("/editApp")
+	@ResponseBody
+	public List<HyHouseInf> editApp(HyHouseInf hyHouseInf) {
+		List<HyHouseInf> list = hyHouseInfService.selectHyHouseInfList(hyHouseInf);
+		return list;
+	}
 
 	/**
 	 * 修改保存房屋登记
