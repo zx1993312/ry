@@ -43,7 +43,7 @@ public class HyNodeTaskController extends BaseController
     @Autowired
     private IHyNodeTaskService hyNodeTaskService;
 
-    @RequiresPermissions("system:task:view")
+//    @RequiresPermissions("system:task:view")
     @GetMapping()
     public String task()
     {
@@ -57,8 +57,8 @@ public class HyNodeTaskController extends BaseController
     @ApiImplicitParams({ 
 		@ApiImplicitParam(name = "hyNodeTask", value = "项目实体类hyNodeTask", required = true),
 	})
-    @RequiresPermissions("system:task:list")
-    @PostMapping("/list")
+//    @RequiresPermissions("system:task:list")
+    @RequestMapping("/list")
     @ResponseBody
     public TableDataInfo list(HyNodeTask hyNodeTask)
     {
