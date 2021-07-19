@@ -44,8 +44,8 @@
                                 <label>状态：</label>
                                 <select name="state" class="form-control " >
 	                                <option value="">请选择</option>
-	                                <option value=1>上线</option>
-	                                <option value=2>下线</option>
+	                                <option value="1">上线</option>
+	                                <option value="2">下线</option>
                                 </select>
                             </li>
                             <li>
@@ -123,7 +123,7 @@
                     formatter: function(value, row, index) {
 				    	// 图片预览（注意：如存储在本地直接获取数据库路径，如有配置context-path需要使用ctx+路径）
 				    	// 如：/profile/upload/2019/08/08/3b7a839aced67397bac694d77611ce72.png
-				    		return $.table.imageView(value);
+				    		return $.table.imageView("/img/"+value);
 				    		 /* if(index % 2 == 0){
 					    		return $.table.imageView(value);
 					    	}else {

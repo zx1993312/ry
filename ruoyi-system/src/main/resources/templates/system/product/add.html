@@ -40,21 +40,21 @@
                     <input id="productName" name="productName" class="form-control" type="text">
                 </div>
             </div>
-            <div class="form-group">
+           <!--  <div class="form-group">
 				<label class="col-sm-2 control-label">商品信息缩略图：</label>
 				<div class="col-sm-10">
 					<input name="pictureAddress" id="pic" class="form-control" type="hidden">
 					<a id="url"><img th:src="*{pictureAddress}" style="width: 90px;height: 90px"></a>
 					<input type="file" id="abc">
 				</div>
-			</div>
-            <!-- <div class="form-group">
+			</div> -->
+            <div class="form-group">
                 <label class="font-noraml">商品信息缩略图：</label>
                 <div class="file-loading">
 		            <input type="file" name="imagepath" data-ref="hyPicturePictureAddress"  class="myfile" value=""/> 
 		        </div>
             </div>
-		            <input type="hidden" name="hyPicturePictureAddress" id="remarks" value=""> -->
+		            <input type="hidden" name="hyPicturePictureAddress" id="remarks" value="">
             <div class="form-group">
                 <label class="font-noraml">商品多图：</label>
                 <div class="file-loading">
@@ -106,8 +106,8 @@
                 <div class="col-sm-8">
                     <select id="state" name="state" class="form-control " >
                       <option value="">请选择</option>
-                      <option value=1>上线</option>
-                      <option value=2>下线</option>
+                      <option value="1">上线</option>
+                      <option value="2">下线</option>
                     </select>
                 </div>
             </div>
@@ -161,12 +161,12 @@
         		  $.modal.alertWarning("请先选择商品多图");
         		  return;
         		 }
-        	if ($('#pic').val() == ""|| $('#pic').val() == null) {
+        	if ($('#remarks').val() == ""|| $('#remarks').val() == null) {
         		  $.modal.alertWarning("请先选择商品信息缩略图");
         		  return;
         		 }
-        	//var pictureAddress = $("#remarks").val();
-        	var pictureAddress = $("#pic").val();
+        	var pictureAddress = $("#remarks").val();
+        	//var pictureAddress = $("#pic").val();
         	var imagepaths = $("#imagepaths").val();
         	var shopId = $("#shopId").val();
         	var lableId = $("#lableId").val();
@@ -239,7 +239,7 @@
                 }
             });
         });
-/*         $(document).ready(function () {
+        $(document).ready(function () {
         	//上传商品缩略图操作
 	        $(".myfile").fileinput({
 	        	uploadUrl : prefix + '/uploadFile', //接受请求地址
@@ -285,10 +285,10 @@
 	                response = data.response, reader = data.reader;
 	            console.log("文件正在上传。。。。");
 	        });
-            
-        }); */
+           
+        });
         //上传商品缩略图操作
-        $("#abc").change(function () {
+        /* $("#abc").change(function () {
 			var data = new FormData();
 			data.append("file", $("#abc")[0].files[0]);
 			$.ajax({
@@ -310,7 +310,7 @@
 					alert("图片上传失败。");
 				}
 			});
-		});
+		}); */
       	//上传商品多图操作
          $(document).ready(function () {
         	var imgPath = '';

@@ -41,23 +41,23 @@
                     <input id="productNumber" name="productName" th:field="*{productName}" class="form-control" type="text">
                 </div>
             </div>
-            <div class="form-group">
+           <!--  <div class="form-group">
 				<label class="col-sm-2 control-label">商品信息缩略图：</label>
 				<div class="col-sm-10">
 					<input name="pictureAddress" id="pic" class="form-control" type="hidden">
 					<a id="url"><img th:src="*{hyPicture.pictureAddress}" style="width: 90px;height: 90px"></a>
 					<input type="file" id="abc">
 				</div>
-			</div>
-            <!-- <div class="form-group">
+			</div> -->
+            <div class="form-group">
                 <label class="font-noraml">商品信息缩略图：</label>
                 <div class="file-loading">
 		            <input type="file" name="imagepath" data-ref="hyPicture.pictureAddress"  class="myfile" value=""/> 
 		        </div>
             </div>
             <input type="hidden" name="hyPicture.pictureAddress" id="remarks" value="">
-            <img alt="" th:src="*{hyPicture.pictureAddress}" width="200px" height="200px">
-            <input id="deleteFile" th:value="*{hyPicture.pictureAddress}" type="hidden"> -->
+            <img alt="" th:src="'/img/'+*{hyPicture.pictureAddress}" width="100px" height="100px">
+            <input id="deleteFile" th:value="*{hyPicture.pictureAddress}" type="hidden">
             <div class="form-group">
                 <label class="font-noraml">商品多图：</label>
                 <div class="file-loading">
@@ -65,7 +65,7 @@
 		        </div>
             </div>
 		            <input type="hidden" name="Pictures" id="imagepaths" value="">
-		    <img th:if="data!=null" th:each="data:${list}" alt="" th:src="'/img/'+${data.deatilPicture}" width="90px" height="90px">
+		    <img th:if="data!=null" th:each="data:${list}" alt="" th:src="'/img/'+${data.deatilPicture}" width="100px" height="100px">
             <input id="deleteFiles" th:value="*{hyDeatilPicture.deatilPicture}" type="hidden">
             <div class="form-group">
                 <label class="col-sm-3 control-label">简介：</label>
@@ -111,8 +111,8 @@
                 <div class="col-sm-8">
                     <select id="state" name="state" th:field="*{state}"  class="form-control " >
                        <option value="">请选择</option>
-                       <option value=1>上线</option>
-                       <option value=2>下线</option>
+                       <option value="1">上线</option>
+                       <option value="2">下线</option>
      				</select>
                 </div>
             </div>
@@ -162,7 +162,7 @@
         });
 
         function submitHandler() {
-        	var pictureAddress = $("#pic").val();
+        	var pictureAddress = $("#remarks").val();
         	var imagepaths = $("#imagepaths").val();
         	var id = $("#id").val();
         	var shopId = $("#shopId").val();
@@ -262,7 +262,7 @@
                 $('#' + this.id).summernote('code', content);
             })
         });
-        /* $(document).ready(function () {
+        $(document).ready(function () {
         	//上传商品缩略图操作
 	        $(".myfile").fileinput({
 	        	uploadUrl : prefix + '/uploadFile', //接受请求地址
@@ -309,9 +309,9 @@
 	            console.log("文件正在上传。。。。");
 	        });
             
-        }); */
+        });
       //上传商品缩略图操作
-        $("#abc").change(function () {
+       /*  $("#abc").change(function () {
 			var data = new FormData();
 			data.append("file", $("#abc")[0].files[0]);
 			$.ajax({
@@ -333,7 +333,7 @@
 					alert("图片上传失败。");
 				}
 			});
-		});
+		}); */
       //上传商品多图操作
         $(document).ready(function () {
         	var imgPath = '';
