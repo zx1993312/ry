@@ -97,6 +97,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="productOrderBy != null "> and p.product_order_by = #{productOrderBy}</if>
             <if test="shopId != null "> and p.shop_id = #{shopId}</if>
             <if test="lableId != null "> and p.lable_id = #{lableId}</if>
+            ORDER BY p.product_order_by
     </select>
     
     <select id="selectHyProductById" parameterType="Long" resultMap="HyProductResult">

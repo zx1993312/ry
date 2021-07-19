@@ -10,10 +10,6 @@
                 <form id="formId">
                     <div class="select-list">
                         <ul>
-                        	<li>
-                                <label>商品编号：</label>
-                                <input type="text" name="productNumber"/>
-                            </li>
                             <li>
                                 <label>商品名称：</label>
                                 <select name="productName" class="form-control" th:with="type=${@product.getProduct()}">
@@ -173,8 +169,8 @@
                     formatter: function(value, item, index) {
                     	switch(value){
 	                    	case "" : value =  "请选择";break;
-	                    	case 1 : value =  "上线";break;
-	                    	case 2 : value =  "下线";break;
+	                    	case "1" : value =  "上线";break;
+	                    	case "2" : value =  "下线";break;
 	                	}
 		            	return value;
 		            }
