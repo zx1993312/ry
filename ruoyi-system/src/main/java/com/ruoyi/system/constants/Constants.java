@@ -2,8 +2,6 @@ package com.ruoyi.system.constants;
 
 import java.text.SimpleDateFormat;
 
-import com.ruoyi.system.utils.ReflectUtil;
-
 /**
  * system常量
  * 
@@ -11,8 +9,6 @@ import com.ruoyi.system.utils.ReflectUtil;
  *
  */
 public class Constants {
-
-	public static final ReflectUtil<Object> REFLECT_UTIL = new ReflectUtil<>();// 转换javabean工具类
 
 	public static final String BYTE = "Byte";
 
@@ -32,6 +28,10 @@ public class Constants {
 
 	public static final String STRING = "String";
 
+	public static final int CODE_WIDTH = 300;
+
+	public static final int CODE_HEIGHT = 300;
+
 	public static final SimpleDateFormat TIME_ALL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 时间转换年月日时分秒
 
 	public static final SimpleDateFormat TIME_YEAR = new SimpleDateFormat("yyyy");// 时间转换年
@@ -39,7 +39,7 @@ public class Constants {
 	public static final SimpleDateFormat TIME_MONTH = new SimpleDateFormat("MM");// 时间转换月
 
 	public static final SimpleDateFormat TIME_DAY = new SimpleDateFormat("dd");// 时间转换日
-	
+
 	public static final SimpleDateFormat TIME_YEAR_MONTH = new SimpleDateFormat("yyyy-MM");// 时间转换日
 
 	public static final SimpleDateFormat TIME_YEAR_MONTH_DAY = new SimpleDateFormat("yyyy-MM-dd");// 时间转换年月日

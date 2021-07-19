@@ -24,9 +24,9 @@ import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.system.constants.Constants;
 import com.ruoyi.system.domain.HyCollection;
 import com.ruoyi.system.service.IHyCollectionService;
+import com.ruoyi.system.utils.ReflectUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -69,7 +69,7 @@ public class HyPaymoneyController extends BaseController {
 		List<Map<String, Object>> reList = new ArrayList<>();
 		Map<String, Object> map = new HashMap<>();
 		for (HyCollection hc : list) {
-			map = Constants.REFLECT_UTIL.convertMap(hc);
+			map = ReflectUtil.convertMap(hc);
 			reList.add(map);
 		}
 		return getDataTable(list,  reList);
@@ -89,7 +89,7 @@ public class HyPaymoneyController extends BaseController {
 		List<Map<String, Object>> reList = new ArrayList<>();
 		Map<String, Object> map = new HashMap<>();
 		for (HyCollection hc : list) {
-			map = Constants.REFLECT_UTIL.convertMap(hc);
+			map = ReflectUtil.convertMap(hc);
 			reList.add(map);
 		}
 		return getDataTable(list,  reList);

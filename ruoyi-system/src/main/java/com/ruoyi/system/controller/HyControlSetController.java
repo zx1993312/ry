@@ -24,9 +24,9 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.ShiroUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.system.constants.Constants;
 import com.ruoyi.system.domain.HyControlSet;
 import com.ruoyi.system.service.IHyControlSetService;
+import com.ruoyi.system.utils.ReflectUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -69,10 +69,10 @@ public class HyControlSetController extends BaseController {
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyControlSet hcs : list) {
 			Map<String, Object> map = new HashMap<>();
-			map = Constants.REFLECT_UTIL.convertMap(hcs);
+			map = ReflectUtil.convertMap(hcs);
 			reList.add(map);
 		}
-		return getDataTable(list,  reList);
+		return getDataTable(list, reList);
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class HyControlSetController extends BaseController {
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyControlSet hcs : list) {
 			Map<String, Object> map = new HashMap<>();
-			map = Constants.REFLECT_UTIL.convertMap(hcs);
+			map = ReflectUtil.convertMap(hcs);
 			reList.add(map);
 		}
 
@@ -145,7 +145,7 @@ public class HyControlSetController extends BaseController {
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyControlSet hcs : list) {
 			Map<String, Object> map = new HashMap<>();
-			map = Constants.REFLECT_UTIL.convertMap(hcs);
+			map = ReflectUtil.convertMap(hcs);
 			reList.add(map);
 		}
 		return toAjax(hyControlSetService.updateHyControlSet(hyControlSet));
@@ -163,30 +163,32 @@ public class HyControlSetController extends BaseController {
 	public AjaxResult remove(String ids) {
 		return toAjax(hyControlSetService.deleteHyControlSetByIds(ids));
 	}
+
 	/**
 	 * 导入房屋数据
+	 * 
 	 * @param file
 	 * @param updateSupport
 	 * @return
 	 * @throws Exception
 	 */
 	@Log(title = "用户管理", businessType = BusinessType.IMPORT)
-    @RequiresPermissions("system:registration:import")
-    @PostMapping("/importData")
-    @ResponseBody
-    public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception
-    {
-        ExcelUtil<HyControlSet> util = new ExcelUtil<HyControlSet>(HyControlSet.class);
-        List<HyControlSet> userList = util.importExcel(file.getInputStream());
-        String operName = ShiroUtils.getSysUser().getLoginName();
-        String message = hyControlSetService.importOwnerRegistration(userList, updateSupport, operName);
-        return AjaxResult.success(message);
-    }
+	@RequiresPermissions("system:registration:import")
+	@PostMapping("/importData")
+	@ResponseBody
+	public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception {
+		ExcelUtil<HyControlSet> util = new ExcelUtil<HyControlSet>(HyControlSet.class);
+		List<HyControlSet> userList = util.importExcel(file.getInputStream());
+		String operName = ShiroUtils.getSysUser().getLoginName();
+		String message = hyControlSetService.importOwnerRegistration(userList, updateSupport, operName);
+		return AjaxResult.success(message);
+	}
+
 	@RequiresPermissions("system:set:view")
-	 @GetMapping("/importTemplate")
-	 @ResponseBody
-	 public AjaxResult importTemplate() {
-	  ExcelUtil<HyControlSet> util = new ExcelUtil<HyControlSet>(HyControlSet.class);
-	  return util.importTemplateExcel("管控模型设置");
-	 }
+	@GetMapping("/importTemplate")
+	@ResponseBody
+	public AjaxResult importTemplate() {
+		ExcelUtil<HyControlSet> util = new ExcelUtil<HyControlSet>(HyControlSet.class);
+		return util.importTemplateExcel("管控模型设置");
+	}
 }

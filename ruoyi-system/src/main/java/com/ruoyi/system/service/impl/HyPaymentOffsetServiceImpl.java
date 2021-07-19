@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ruoyi.common.core.text.Convert;
-import com.ruoyi.system.constants.Constants;
 import com.ruoyi.system.domain.HouseAndCost;
 import com.ruoyi.system.domain.HyCost;
 import com.ruoyi.system.domain.HyHouseInf;
@@ -19,6 +18,7 @@ import com.ruoyi.system.mapper.HyHouseInfMapper;
 import com.ruoyi.system.mapper.HyPaymentOffsetMapper;
 import com.ruoyi.system.service.IHyPaymentOffsetService;
 import com.ruoyi.system.utils.ReceivableUtil;
+import com.ruoyi.system.utils.ReflectUtil;
 
 /**
  * 预交冲抵Service业务层处理
@@ -95,7 +95,7 @@ public class HyPaymentOffsetServiceImpl implements IHyPaymentOffsetService {
 			List<HyPaymentOffset> paymentOffsetList = hyPaymentOffsetMapper.selectHyPaymentOffsetListAll(offset);
 			if (paymentOffsetList.size() == 0) {//冲抵没有该条记录 插入操作
 				HyPaymentOffset reOffset = new HyPaymentOffset();
-				reOffset = (HyPaymentOffset) Constants.REFLECT_UTIL.convertBean(new HyPaymentOffset(), hyPaymentOffset);
+				reOffset = (HyPaymentOffset) ReflectUtil.convertBean(new HyPaymentOffset(), hyPaymentOffset);
 				HouseAndCost houseAndCost = new HouseAndCost();
 				houseAndCost.setCostId(Long.valueOf(costId));
 				houseAndCost.setHouseId(hyPaymentOffset.getHouseId());
@@ -193,7 +193,7 @@ public class HyPaymentOffsetServiceImpl implements IHyPaymentOffsetService {
 				hyPaymentOffsetMapper.insertHyPaymentOffset(reOffset);
 			} else {//冲抵已有该条记录  修改操作
 				HyPaymentOffset reOffset = new HyPaymentOffset();
-				reOffset = (HyPaymentOffset) Constants.REFLECT_UTIL.convertBean(new HyPaymentOffset(), hyPaymentOffset);
+				reOffset = (HyPaymentOffset) ReflectUtil.convertBean(new HyPaymentOffset(), hyPaymentOffset);
 				HyPaymentOffset hyPaymentOffsets = paymentOffsetList.get(0);
 				String offsetDate = "";
 				BigDecimal offsetMoney = new BigDecimal(0.00);

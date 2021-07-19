@@ -23,14 +23,14 @@ import lombok.extern.log4j.Log4j2;
  * @param <T>
  */
 @Log4j2
-public class ReflectUtil<T> {
+public class ReflectUtil {
 
 	/**
 	 * JavaBean 转换为Map
 	 * 
 	 * @param <T>需转换的JavaBean
 	 */
-	public Map<String, Object> convertMap(T t) {
+	public static <T> Map<String, Object> convertMap(T t) {
 		try {
 			Map<String, Object> map = new HashMap<>();
 			Field[] fields = t.getClass().getDeclaredFields();
@@ -106,7 +106,7 @@ public class ReflectUtil<T> {
 	 * @return
 	 */
 	@SuppressWarnings("rawtypes")
-	public T convertBean(T t1, T t2) {
+	public static <T> T convertBean(T t1, T t2) {
 		try {
 			if (null == t1 || null == t2) {
 				return null;
@@ -127,10 +127,10 @@ public class ReflectUtil<T> {
 						continue;
 					}
 					if (field2.get(t2) != null && !field2.get(t2).getClass().isPrimitive()) {
-						if (BaseEntity.class.isAssignableFrom(field2.get(t2).getClass())) {//判断字段是否为BaseEntity子类
+						if (BaseEntity.class.isAssignableFrom(field2.get(t2).getClass())) {// 判断字段是否为BaseEntity子类
 							continue;
 						}
-						
+
 						if (field1.getName().equals(field2.getName())) {// 校验字段名称是否相等
 							if (field2.get(t2).getClass() == Date.class) {
 								SetFieldUtil.setFieldValueByFieldName(field1.getName(), t1,

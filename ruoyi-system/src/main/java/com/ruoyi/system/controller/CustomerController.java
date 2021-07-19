@@ -19,7 +19,6 @@ import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.system.constants.Constants;
 import com.ruoyi.system.domain.HouseAndCost;
 import com.ruoyi.system.domain.HyCollection;
 import com.ruoyi.system.domain.HyCost;
@@ -30,6 +29,7 @@ import com.ruoyi.system.mapper.HyCollectionMapper;
 import com.ruoyi.system.mapper.HyCostMapper;
 import com.ruoyi.system.service.CustomerService;
 import com.ruoyi.system.service.impl.HyHouseInfServiceImpl;
+import com.ruoyi.system.utils.ReflectUtil;
 
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -50,13 +50,13 @@ public class CustomerController extends BaseController {
 
 	@Autowired
 	private CustomerService customerService;
-	
+
 	@Autowired
 	private HyHouseInfServiceImpl hyhouseInfServiceImpl;
-	
+
 	@Autowired
 	private HyCostMapper hyCostMapper;
-	
+
 	@Autowired
 	private HyCollectionMapper hyCollectionMapper;
 
@@ -73,8 +73,7 @@ public class CustomerController extends BaseController {
 		for (HyCustomer hyCustomer : list) {
 			List<HyCost> hyCostList = customerService.selectHyCost(hyCustomer.getId());
 			for (int i = 0; i < hyCostList.size(); i++) {
-				ReHyCustomer reHyCustomer = (ReHyCustomer) Constants.REFLECT_UTIL.convertBean(new ReHyCustomer(),
-						hyCustomer);
+				ReHyCustomer reHyCustomer = (ReHyCustomer) ReflectUtil.convertBean(new ReHyCustomer(), hyCustomer);
 
 				reHyCustomer.setMeterName(hyCustomer.getHyMeter().getMeterName());
 				reHyCustomer.setBuildingName(hyCustomer.getHyBuilding().getBuildingName());
@@ -98,7 +97,7 @@ public class CustomerController extends BaseController {
 	public List<HyCost> lists(@RequestParam("id") Long id) {
 		return customerService.selectCostList(id);
 	}
-	
+
 	@RequiresPermissions("system:registration:list")
 	@PostMapping("/houseOrCostId")
 	@ResponseBody
@@ -111,7 +110,7 @@ public class CustomerController extends BaseController {
 		}
 		return relist;
 	}
-	
+
 	@RequiresPermissions("system:registration:list")
 	@PostMapping("/houseOrCostList")
 	@ResponseBody
@@ -123,8 +122,8 @@ public class CustomerController extends BaseController {
 			hyCollection.setCostId(houseAndcost.getCostId());
 			hyCollection.setHouseId(houseAndcost.getHouseId());
 			List<HyCollection> collectionList = hyCollectionMapper.selectHyCollectionList(hyCollection);
-			if(collectionList.size()!=0) {
-				for(HyCollection collection :collectionList) {
+			if (collectionList.size() != 0) {
+				for (HyCollection collection : collectionList) {
 					HyCost hyCost = hyCostMapper.selectHyCostById(collection.getCostId());
 					relist.add(hyCost);
 				}
@@ -149,8 +148,7 @@ public class CustomerController extends BaseController {
 		for (HyCustomer hyCustomer : list) {
 			List<HyCost> hyCostList = customerService.selectHyCost(hyCustomer.getId());
 			for (int i = 0; i < hyCostList.size(); i++) {
-				ReHyCustomer reHyCustomer = (ReHyCustomer) Constants.REFLECT_UTIL.convertBean(new ReHyCustomer(),
-						hyCustomer);
+				ReHyCustomer reHyCustomer = (ReHyCustomer) ReflectUtil.convertBean(new ReHyCustomer(), hyCustomer);
 
 				reHyCustomer.setMeterName(hyCustomer.getHyMeter().getMeterName());
 				reHyCustomer.setBuildingName(hyCustomer.getHyBuilding().getBuildingName());

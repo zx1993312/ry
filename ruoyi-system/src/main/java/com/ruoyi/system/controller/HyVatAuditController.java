@@ -24,9 +24,9 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.ShiroUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.system.constants.Constants;
 import com.ruoyi.system.domain.HyVatAudit;
 import com.ruoyi.system.service.IHyVatAuditService;
+import com.ruoyi.system.utils.ReflectUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -69,11 +69,11 @@ public class HyVatAuditController extends BaseController {
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyVatAudit hva : list) {
 			Map<String, Object> map = new HashMap<>();
-			map = Constants.REFLECT_UTIL.convertMap(hva);
+			map = ReflectUtil.convertMap(hva);
 			reList.add(map);
 		}
 
-		return getDataTable(list,  reList);
+		return getDataTable(list, reList);
 	}
 
 	/**
@@ -100,7 +100,7 @@ public class HyVatAuditController extends BaseController {
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyVatAudit hva : list) {
 			Map<String, Object> map = new HashMap<>();
-			map = Constants.REFLECT_UTIL.convertMap(hva);
+			map = ReflectUtil.convertMap(hva);
 			reList.add(map);
 		}
 		return prefix + "/add";
@@ -145,7 +145,7 @@ public class HyVatAuditController extends BaseController {
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyVatAudit hva : list) {
 			Map<String, Object> map = new HashMap<>();
-			map = Constants.REFLECT_UTIL.convertMap(hva);
+			map = ReflectUtil.convertMap(hva);
 			reList.add(map);
 		}
 		return toAjax(hyVatAuditService.updateHyVatAudit(hyVatAudit));
@@ -163,6 +163,7 @@ public class HyVatAuditController extends BaseController {
 	public AjaxResult remove(String ids) {
 		return toAjax(hyVatAuditService.deleteHyVatAuditByIds(ids));
 	}
+
 	/**
 	 * 导入抄表数据
 	 * 
@@ -182,11 +183,12 @@ public class HyVatAuditController extends BaseController {
 		String message = hyVatAuditService.importHyVatAudit(userList, updateSupport, operName);
 		return AjaxResult.success(message);
 	}
+
 	@RequiresPermissions("system:set:view")
-	 @GetMapping("/importTemplate")
-	 @ResponseBody
-	 public AjaxResult importTemplate() {
-	  ExcelUtil<HyVatAudit> util = new ExcelUtil<HyVatAudit>(HyVatAudit.class);
-	  return util.importTemplateExcel("增值税率审核");
-	 }
+	@GetMapping("/importTemplate")
+	@ResponseBody
+	public AjaxResult importTemplate() {
+		ExcelUtil<HyVatAudit> util = new ExcelUtil<HyVatAudit>(HyVatAudit.class);
+		return util.importTemplateExcel("增值税率审核");
+	}
 }

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ruoyi.common.core.domain.entity.SysDept;
-import com.ruoyi.system.domain.HyShop;
 import com.ruoyi.system.mapper.SysDeptMapper;
 
 @Service("dept")

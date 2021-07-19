@@ -23,9 +23,9 @@ import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.system.constants.Constants;
 import com.ruoyi.system.domain.HySelectMeter;
 import com.ruoyi.system.service.IHySelectMeterService;
+import com.ruoyi.system.utils.ReflectUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -69,7 +69,7 @@ public class HyUpdateSelectMeterController extends BaseController {
 		List<Map<String, Object>> reList = new ArrayList<>();
 		BigDecimal count = new BigDecimal(0);
 		for (HySelectMeter hs : list) {
-			map = Constants.REFLECT_UTIL.convertMap(hs);
+			map = ReflectUtil.convertMap(hs);
 			if (hs != null) {
 				if (hs.getNewMeterConsumption() != null && hs.getOldMeterConsumption() != null) {
 					BigDecimal newMeter = new BigDecimal(hs.getNewMeterConsumption());
@@ -77,7 +77,7 @@ public class HyUpdateSelectMeterController extends BaseController {
 					count = newMeter.subtract(oldMeter);
 				}
 			}
-			map.put("count",  count);
+			map.put("count", count);
 			reList.add(map);
 		}
 		return getDataTable(list, reList);

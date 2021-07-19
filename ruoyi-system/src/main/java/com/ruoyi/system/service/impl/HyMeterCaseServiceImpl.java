@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ruoyi.common.core.text.Convert;
-import com.ruoyi.system.constants.Constants;
 import com.ruoyi.system.domain.HyMeter;
 import com.ruoyi.system.domain.HyMeterCase;
 import com.ruoyi.system.domain.MeterAndCase;
@@ -17,6 +16,7 @@ import com.ruoyi.system.mapper.HyMeterMapper;
 import com.ruoyi.system.service.IHyMeterCaseService;
 import com.ruoyi.system.utils.HyDataUtil;
 import com.ruoyi.system.utils.HyStringUtil;
+import com.ruoyi.system.utils.ReflectUtil;
 
 /**
  * 箱 Service业务层处理
@@ -73,7 +73,7 @@ public class HyMeterCaseServiceImpl implements IHyMeterCaseService {
 	public int insertHyMeterCase(MeterAndCase meterAndCase) {
 
 		HyMeter hyMeter = new HyMeter();
-		HyMeter getHyMeter = (HyMeter) Constants.REFLECT_UTIL.convertBean(hyMeter, meterAndCase);
+		HyMeter getHyMeter = (HyMeter) ReflectUtil.convertBean(hyMeter, meterAndCase);
 
 		HyMeterCase getHyMeterCase = (HyMeterCase) HyDataUtil.setData(HyMeterCase.class,
 				HyStringUtil.getString(meterAndCase.getMeterCaseName()),

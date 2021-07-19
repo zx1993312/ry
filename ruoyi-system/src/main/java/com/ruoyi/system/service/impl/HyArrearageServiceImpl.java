@@ -48,6 +48,7 @@ public class HyArrearageServiceImpl implements IHyArrearageService {
 	/**
 	 * 导出PDF
 	 */
+	@SuppressWarnings("unused")
 	@Override
 	public int downloadPDF(String warm, HttpServletResponse response) throws Exception {
 		// 2、准备数据库连接
@@ -57,7 +58,7 @@ public class HyArrearageServiceImpl implements IHyArrearageService {
 		File rootFile = new File(ResourceUtils.getURL("classpath:").getPath());
 		File templateFile = new File(rootFile, "/pdf_template/arrearage_db.jasper");
 		// 2、准备数据库连接
-		Map params = new HashMap();
+		Map<String, Object> params = new HashMap<String, Object>();
 		String pic = rootFile
 				+ "\\static\\pdfimg\\src=http___i.nibaku.com_img_0_1433531324x2230376662_26.jpg&refer=http___i.nibaku.jpg";
 		params.put("warm", warm);

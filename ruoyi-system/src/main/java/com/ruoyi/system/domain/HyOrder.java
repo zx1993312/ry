@@ -151,7 +151,7 @@ public class HyOrder extends BaseEntity
 		return numbers;
 	}
 
-	public void setNumbers(String number) {
+	public void setNumbers(String numbers) {
 		this.numbers = numbers;
 	}
 

@@ -24,9 +24,9 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.ShiroUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.system.constants.Constants;
 import com.ruoyi.system.domain.HyPastAccount;
 import com.ruoyi.system.service.IHyPastAccountService;
+import com.ruoyi.system.utils.ReflectUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -69,7 +69,7 @@ public class HyPastAccountController extends BaseController {
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyPastAccount hpa : list) {
 			Map<String, Object> map = new HashMap<>();
-			map = Constants.REFLECT_UTIL.convertMap(hpa);
+			map = ReflectUtil.convertMap(hpa);
 			reList.add(map);
 		}
 		return getDataTable(list,  reList);
@@ -99,7 +99,7 @@ public class HyPastAccountController extends BaseController {
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyPastAccount hpa : list) {
 			Map<String, Object> map = new HashMap<>();
-			map = Constants.REFLECT_UTIL.convertMap(hpa);
+			map = ReflectUtil.convertMap(hpa);
 			reList.add(map);
 		}
 		return prefix + "/add";
@@ -131,7 +131,7 @@ public class HyPastAccountController extends BaseController {
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyPastAccount hpa : list) {
 			Map<String, Object> map = new HashMap<>();
-			map = Constants.REFLECT_UTIL.convertMap(hpa);
+			map = ReflectUtil.convertMap(hpa);
 			reList.add(map);
 		}
 		return prefix + "/edit";
@@ -151,7 +151,7 @@ public class HyPastAccountController extends BaseController {
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyPastAccount hpa : list) {
 			Map<String, Object> map = new HashMap<>();
-			map = Constants.REFLECT_UTIL.convertMap(hpa);
+			map = ReflectUtil.convertMap(hpa);
 			reList.add(map);
 		}
 		return toAjax(hyPastAccountService.updateHyPastAccount(hyPastAccount));

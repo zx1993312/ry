@@ -60,7 +60,7 @@ public class HyAdviceChargeServiceImpl implements IHyAdviceChargeService {
 		String pic = rootFile
 				+ "\\static\\pdfimg\\src=http___i.nibaku.com_img_0_1433531324x2230376662_26.jpg&refer=http___i.nibaku.jpg";
 		
-		Map params = new HashMap();
+		Map<String,Object> params = new HashMap<String,Object>();
 		String os = System.getProperty("os.name");
 		if (os.toLowerCase().startsWith("win")) {
 			params.put("pic", pic);

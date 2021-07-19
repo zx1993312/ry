@@ -22,9 +22,9 @@ import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.system.constants.Constants;
 import com.ruoyi.system.domain.HyBillIssuance;
 import com.ruoyi.system.service.IHyBillIssuanceService;
+import com.ruoyi.system.utils.ReflectUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -67,10 +67,10 @@ public class HyBillIssuanceController extends BaseController {
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyBillIssuance hbi : list) {
 			Map<String, Object> map = new HashMap<>();
-			map = Constants.REFLECT_UTIL.convertMap(hbi);
+			map = ReflectUtil.convertMap(hbi);
 			reList.add(map);
 		}
-		return getDataTable(list,  reList);
+		return getDataTable(list, reList);
 	}
 
 	/**
@@ -110,7 +110,7 @@ public class HyBillIssuanceController extends BaseController {
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyBillIssuance hbi : list) {
 			Map<String, Object> map = new HashMap<>();
-			map = Constants.REFLECT_UTIL.convertMap(hbi);
+			map = ReflectUtil.convertMap(hbi);
 			reList.add(map);
 		}
 		return toAjax(hyBillIssuanceService.insertHyBillIssuance(hyBillIssuance));
@@ -129,7 +129,7 @@ public class HyBillIssuanceController extends BaseController {
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyBillIssuance hbi : list) {
 			Map<String, Object> map = new HashMap<>();
-			map = Constants.REFLECT_UTIL.convertMap(hbi);
+			map = ReflectUtil.convertMap(hbi);
 			reList.add(map);
 		}
 		return prefix + "/edit";
@@ -149,7 +149,7 @@ public class HyBillIssuanceController extends BaseController {
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyBillIssuance hbi : list) {
 			Map<String, Object> map = new HashMap<>();
-			map = Constants.REFLECT_UTIL.convertMap(hbi);
+			map = ReflectUtil.convertMap(hbi);
 			reList.add(map);
 		}
 		return toAjax(hyBillIssuanceService.updateHyBillIssuance(hyBillIssuance));

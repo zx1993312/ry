@@ -22,9 +22,9 @@ import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.system.constants.Constants;
 import com.ruoyi.system.domain.HyBillSet;
 import com.ruoyi.system.service.IHyBillSetService;
+import com.ruoyi.system.utils.ReflectUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -104,7 +104,7 @@ public class HyUpdateBillSetTimeController extends BaseController {
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyBillSet hbs : list) {
 			Map<String, Object> map = new HashMap<>();
-			map = Constants.REFLECT_UTIL.convertMap(hbs);
+			map = ReflectUtil.convertMap(hbs);
 			reList.add(map);
 		}
 		return toAjax(hyBillSetService.insertHyBillSet(hyBillSet));
@@ -123,7 +123,7 @@ public class HyUpdateBillSetTimeController extends BaseController {
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyBillSet hbs : list) {
 			Map<String, Object> map = new HashMap<>();
-			map = Constants.REFLECT_UTIL.convertMap(hbs);
+			map = ReflectUtil.convertMap(hbs);
 			reList.add(map);
 		}
 		return prefix + "/edit";
@@ -143,7 +143,7 @@ public class HyUpdateBillSetTimeController extends BaseController {
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyBillSet hbs : list) {
 			Map<String, Object> map = new HashMap<>();
-			map = Constants.REFLECT_UTIL.convertMap(hbs);
+			map = ReflectUtil.convertMap(hbs);
 			reList.add(map);
 		}
 		return toAjax(hyBillSetService.updateHyBillSet(hyBillSet));

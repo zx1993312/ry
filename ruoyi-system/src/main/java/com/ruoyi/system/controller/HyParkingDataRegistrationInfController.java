@@ -15,21 +15,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.system.constants.Constants;
+import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.domain.HyParkingInf;
 import com.ruoyi.system.service.IHyParkingInfService;
+import com.ruoyi.system.utils.ReflectUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-
-import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
  * 车位资料 Controller
@@ -67,7 +67,7 @@ public class HyParkingDataRegistrationInfController extends BaseController {
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyParkingInf hpi : list) {
 			Map<String, Object> map = new HashMap<>();
-			map = Constants.REFLECT_UTIL.convertMap(hpi);
+			map = ReflectUtil.convertMap(hpi);
 			reList.add(map);
 		}
 		return getDataTable(list,  reList);
@@ -99,7 +99,7 @@ public class HyParkingDataRegistrationInfController extends BaseController {
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyParkingInf hpi : list) {
 			Map<String, Object> map = new HashMap<>();
-			map = Constants.REFLECT_UTIL.convertMap(hpi);
+			map = ReflectUtil.convertMap(hpi);
 			reList.add(map);
 		}
 		return prefix + "/add";
@@ -133,7 +133,7 @@ public class HyParkingDataRegistrationInfController extends BaseController {
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyParkingInf hpi : list) {
 			Map<String, Object> map = new HashMap<>();
-			map = Constants.REFLECT_UTIL.convertMap(hpi);
+			map = ReflectUtil.convertMap(hpi);
 			reList.add(map);
 		}
 		return prefix + "/edit";
@@ -154,7 +154,7 @@ public class HyParkingDataRegistrationInfController extends BaseController {
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyParkingInf hpi : list) {
 			Map<String, Object> map = new HashMap<>();
-			map = Constants.REFLECT_UTIL.convertMap(hpi);
+			map = ReflectUtil.convertMap(hpi);
 			reList.add(map);
 		}
 		return toAjax(hyParkingInfService.updateHyParkingInf(hyParkingInf));

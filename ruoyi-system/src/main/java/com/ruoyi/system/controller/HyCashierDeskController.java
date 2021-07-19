@@ -29,7 +29,6 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.ShiroUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.system.constants.Constants;
 import com.ruoyi.system.domain.HouseAndCost;
 import com.ruoyi.system.domain.HyBuilding;
 import com.ruoyi.system.domain.HyCashierDesk;
@@ -46,6 +45,7 @@ import com.ruoyi.system.mapper.HyResidentialQuartersMapper;
 import com.ruoyi.system.service.IHyCashierDeskService;
 import com.ruoyi.system.service.IHyHouseInfService;
 import com.ruoyi.system.utils.ReceivableUtil;
+import com.ruoyi.system.utils.ReflectUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -181,7 +181,7 @@ public class HyCashierDeskController extends BaseController {
 			houseAndCost.setCostId(cost.getId());
 			List<HouseAndCost> houseList = hyCustomerMapper.selectCostIds(houseAndCost);
 			for (int i = 0; i < houseList.size(); i++) {
-				reCost = (HyCost) Constants.REFLECT_UTIL.convertBean(new HyCost(), cost);
+				reCost = (HyCost) ReflectUtil.convertBean(new HyCost(), cost);
 				Long houseId = houseList.get(i).getHouseId();
 				HyHouseInf hyHouseInf = hyHouseInfService.selectHyHouseInfById(houseId);
 				reCost.setHyHouseInf(hyHouseInf);
@@ -447,7 +447,7 @@ public class HyCashierDeskController extends BaseController {
 			houseAndCost.setCostId(cost.getId());
 			List<HouseAndCost> houseList = hyCustomerMapper.selectCostIds(houseAndCost);
 			for (int i = 0; i < houseList.size(); i++) {
-				reCost = (HyCost) Constants.REFLECT_UTIL.convertBean(new HyCost(), cost);
+				reCost = (HyCost) ReflectUtil.convertBean(new HyCost(), cost);
 				Long houseId = houseList.get(i).getHouseId();
 				HyHouseInf hyHouseInf = hyHouseInfService.selectHyHouseInfById(houseId);
 				reCost.setHyHouseInf(hyHouseInf);

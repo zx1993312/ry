@@ -24,9 +24,9 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.ShiroUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.system.constants.Constants;
 import com.ruoyi.system.domain.HyOwnerRegistration;
 import com.ruoyi.system.service.IHyOwnerRegistrationService;
+import com.ruoyi.system.utils.ReflectUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -70,7 +70,7 @@ public class HyOwnerRegistrationController extends BaseController {
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyOwnerRegistration hor : list) {
 			Map<String, Object> map = new HashMap<>();
-			map = Constants.REFLECT_UTIL.convertMap(hor);
+			map = ReflectUtil.convertMap(hor);
 			reList.add(map);
 		}
 		return getDataTable(list, reList);
@@ -108,7 +108,7 @@ public class HyOwnerRegistrationController extends BaseController {
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyOwnerRegistration hor : list) {
 			Map<String, Object> map = new HashMap<>();
-			map = Constants.REFLECT_UTIL.convertMap(hor);
+			map = ReflectUtil.convertMap(hor);
 			reList.add(map);
 		}
 		return prefix + "/add";
@@ -129,7 +129,7 @@ public class HyOwnerRegistrationController extends BaseController {
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyOwnerRegistration hor : list) {
 			Map<String, Object> map = new HashMap<>();
-			map = Constants.REFLECT_UTIL.convertMap(hor);
+			map = ReflectUtil.convertMap(hor);
 			reList.add(map);
 		}
 		return toAjax(hyOwnerRegistrationService.insertHyOwnerRegistration(hyOwnerRegistration));
@@ -148,7 +148,7 @@ public class HyOwnerRegistrationController extends BaseController {
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyOwnerRegistration hor : list) {
 			Map<String, Object> map = new HashMap<>();
-			map = Constants.REFLECT_UTIL.convertMap(hor);
+			map = ReflectUtil.convertMap(hor);
 			reList.add(map);
 		}
 		return prefix + "/edit";
@@ -169,7 +169,7 @@ public class HyOwnerRegistrationController extends BaseController {
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyOwnerRegistration hor : list) {
 			Map<String, Object> map = new HashMap<>();
-			map = Constants.REFLECT_UTIL.convertMap(hor);
+			map = ReflectUtil.convertMap(hor);
 			reList.add(map);
 		}
 		return toAjax(hyOwnerRegistrationService.updateHyOwnerRegistration(hyOwnerRegistration));

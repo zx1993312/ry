@@ -118,13 +118,14 @@ public class HyCostServiceImpl implements IHyCostService {
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public int insertHyCost(HyCost hyCost) {
-/*		OwnerAndCost ownerAndCost = new OwnerAndCost();
-		Long ownerId = hyCost.getOwnerAndCost().getOwnerId();
-		String a = hyCostMapper.selectNextValue("hy_database", "hy_cost");
-		Long costId = Long.valueOf(a);
-		ownerAndCost.setCostId(costId);
-		ownerAndCost.setOwnerId(ownerId);
-		ownerAndCostMapper.insertOwnerAndCost(ownerAndCost);*/
+		/*
+		 * OwnerAndCost ownerAndCost = new OwnerAndCost(); Long ownerId =
+		 * hyCost.getOwnerAndCost().getOwnerId(); String a =
+		 * hyCostMapper.selectNextValue("hy_database", "hy_cost"); Long costId =
+		 * Long.valueOf(a); ownerAndCost.setCostId(costId);
+		 * ownerAndCost.setOwnerId(ownerId);
+		 * ownerAndCostMapper.insertOwnerAndCost(ownerAndCost);
+		 */
 		return hyCostMapper.insertHyCost(hyCost);
 	}
 
@@ -137,12 +138,12 @@ public class HyCostServiceImpl implements IHyCostService {
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public int updateHyCost(HyCost hyCost) {
-		/*Long ownerId = hyCost.getOwnerAndCost().getOwnerId();
-		Long costId = hyCost.getId();
-		OwnerAndCost ownerAndCost = new OwnerAndCost();
-		ownerAndCost.setOwnerId(ownerId);
-		ownerAndCost.setCostId(costId);
-		ownerAndCostMapper.updateOwnerAndCost(ownerAndCost);*/
+		/*
+		 * Long ownerId = hyCost.getOwnerAndCost().getOwnerId(); Long costId =
+		 * hyCost.getId(); OwnerAndCost ownerAndCost = new OwnerAndCost();
+		 * ownerAndCost.setOwnerId(ownerId); ownerAndCost.setCostId(costId);
+		 * ownerAndCostMapper.updateOwnerAndCost(ownerAndCost);
+		 */
 		return hyCostMapper.updateHyCost(hyCost);
 	}
 
@@ -293,19 +294,22 @@ public class HyCostServiceImpl implements IHyCostService {
 	}
 
 	@Override
-	public int downloadPDF(HttpServletResponse response) throws Exception{
-		//1、获取模版文件
-	    File rootFile = new File(ResourceUtils.getURL("classpath:").getPath());
-	    File templateFile = new File(rootFile,"/pdf_template/cost_db.jasper");
-	    //2、准备数据库连接
-	    Map params = new HashMap();
-	    JasperPrint jasperPrint =JasperFillManager.fillReport(new FileInputStream(templateFile),params,getCon());
-	    JasperExportManager.exportReportToPdfStream(jasperPrint,new FileOutputStream("d:\\收费率报表.pdf"));
-	    return 1;
+	public int downloadPDF(HttpServletResponse response) throws Exception {
+		// 1、获取模版文件
+		File rootFile = new File(ResourceUtils.getURL("classpath:").getPath());
+		File templateFile = new File(rootFile, "/pdf_template/cost_db.jasper");
+		// 2、准备数据库连接
+		Map<String, Object> params = new HashMap<String, Object>();
+		JasperPrint jasperPrint = JasperFillManager.fillReport(new FileInputStream(templateFile), params, getCon());
+		JasperExportManager.exportReportToPdfStream(jasperPrint, new FileOutputStream("d:\\收费率报表.pdf"));
+		return 1;
 	}
-	private Connection getCon() throws Exception{
-	    Class.forName("com.mysql.cj.jdbc.Driver");
-	    Connection connection = DriverManager.getConnection("jdbc:mysql://39.105.185.22:3306/hy_database?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8","root","hangyu123.root");
-	    return connection;
+
+	private Connection getCon() throws Exception {
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection connection = DriverManager.getConnection(
+				"jdbc:mysql://39.105.185.22:3306/hy_database?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8",
+				"root", "hangyu123.root");
+		return connection;
 	}
 }

@@ -25,7 +25,6 @@ import org.springframework.util.ResourceUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.ruoyi.common.core.text.Convert;
-import com.ruoyi.system.constants.Constants;
 import com.ruoyi.system.domain.HouseAndCost;
 import com.ruoyi.system.domain.HyCollection;
 import com.ruoyi.system.domain.HyCost;
@@ -35,6 +34,7 @@ import com.ruoyi.system.mapper.HyCustomerMapper;
 import com.ruoyi.system.service.IHyCollectionService;
 import com.ruoyi.system.utils.HyPrintPDFUtil;
 import com.ruoyi.system.utils.ReceivableUtil;
+import com.ruoyi.system.utils.ReflectUtil;
 
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jasperreports.engine.JREmptyDataSource;
@@ -64,7 +64,6 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 	@Autowired
 	private HyCustomerMapper hyCustomerMapper;
 
-	
 	/**
 	 * 查询收款管理 Collection management
 	 * 
@@ -137,16 +136,16 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 			if (m + n > 12) {
 				String z = y + 1 + "";
 				String p = m + n - 12 + "";
-				payFeeDate = z + "-0" + p+"-"+c;
+				payFeeDate = z + "-0" + p + "-" + c;
 			} else {
 				String p = m + n + "";
 				if (Integer.parseInt(p) > 9) {
-					payFeeDate = b + "-" + p+"-"+c;
+					payFeeDate = b + "-" + p + "-" + c;
 				} else {
-					payFeeDate = b + "-0" + p+"-"+c;
+					payFeeDate = b + "-0" + p + "-" + c;
 				}
 			}
-			beginFeeDate = b+"-"+a+"-"+c;
+			beginFeeDate = b + "-" + a + "-" + c;
 			houseAndCost.setPayFeeDate(payFeeDate);
 			houseAndCost.setBeginFeeDate(beginFeeDate);
 			hyCustomerMapper.updateHouseAndCost(houseAndCost);
@@ -162,7 +161,7 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 		}
 
 	}
-	
+
 	/**
 	 * 新增收款管理 Collection management App
 	 * 
@@ -175,8 +174,7 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 	 */
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public int insertHyCollection(HyCollection hyCollection)
-		{
+	public int insertHyCollection(HyCollection hyCollection) {
 		Long costId = hyCollection.getCostId();
 		Long houseId = hyCollection.getHouseId();
 		Long ownerId = hyCollection.getOwnerId();
@@ -201,16 +199,16 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 			if (m + n > 12) {
 				String z = y + 1 + "";
 				String p = m + n - 12 + "";
-				payFeeDate = z + "-0" + p+"-"+c;
+				payFeeDate = z + "-0" + p + "-" + c;
 			} else {
 				String p = m + n + "";
 				if (Integer.parseInt(p) > 9) {
-					payFeeDate = b + "-" + p+"-"+c;
+					payFeeDate = b + "-" + p + "-" + c;
 				} else {
-					payFeeDate = b + "-0" + p+"-"+c;
+					payFeeDate = b + "-0" + p + "-" + c;
 				}
 			}
-			beginFeeDate = b+"-"+a+"-"+c;
+			beginFeeDate = b + "-" + a + "-" + c;
 			houseAndCost.setPayFeeDate(payFeeDate);
 			houseAndCost.setBeginFeeDate(beginFeeDate);
 			hyCustomerMapper.updateHouseAndCost(houseAndCost);
@@ -219,7 +217,7 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 		} else {
 			return 0;
 		}
-		
+
 	}
 
 	/**
@@ -261,16 +259,16 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 			if (m + n > 12) {
 				String z = y + 1 + "";
 				String p = m + n - 12 + "";
-				payFeeDate = z + "-0" + p+"-"+c;
+				payFeeDate = z + "-0" + p + "-" + c;
 			} else {
 				String p = m + n + "";
 				if (Integer.parseInt(p) > 9) {
-					payFeeDate = b + "-" + p+"-"+c;
+					payFeeDate = b + "-" + p + "-" + c;
 				} else {
-					payFeeDate = b + "-0" + p+"-"+c;
+					payFeeDate = b + "-0" + p + "-" + c;
 				}
 			}
-			beginFeeDate = b+"-"+a+"-"+c;
+			beginFeeDate = b + "-" + a + "-" + c;
 			houseAndCost.setPayFeeDate(payFeeDate);
 			houseAndCost.setBeginFeeDate(beginFeeDate);
 			hyCustomerMapper.updateHouseAndCost(houseAndCost);
@@ -302,13 +300,13 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 			if (m + n > 12) {
 				String z = y + 1 + "";
 				String p = m + n - 12 + "";
-				payFeeDate = z + "-0" + p+"-"+c;
+				payFeeDate = z + "-0" + p + "-" + c;
 			} else {
 				String p = m + n + "";
 				if (Integer.parseInt(p) > 9) {
-					payFeeDate = b + "-" + p+"-"+c;
+					payFeeDate = b + "-" + p + "-" + c;
 				} else {
-					payFeeDate = b + "-0" + p+"-"+c;
+					payFeeDate = b + "-0" + p + "-" + c;
 				}
 			}
 			houseAndCost.setPayFeeDate(payFeeDate);
@@ -343,16 +341,16 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 				BigDecimal calculationStandard = hyCost.getCalculationStandard();
 				String calculationMehod = hyCost.getCalculationMehod();
 				BigDecimal bilingArea = hyCost.getHyHouseInf().getBilingArea();
-				BigDecimal amountReceivable = ReceivableUtil.getReceivable(calculationStandard, calculationMehod, bilingArea);
-				if(hyCost.getHouseAndCost().getDiscount()!=null) {
+				BigDecimal amountReceivable = ReceivableUtil.getReceivable(calculationStandard, calculationMehod,
+						bilingArea);
+				if (hyCost.getHouseAndCost().getDiscount() != null) {
 					amountReceivable = amountReceivable.multiply(hyCost.getHouseAndCost().getDiscount());
 				}
 				Long houseId = hyCost.getHyCollection().getHouseId();
 				Long ownerId = hyCost.getHyCollection().getOwnerId();
 				String str = hyCost.getHyHouseInf().getHouseNumber() + hyCost.getHyHouseInf().getOwnerId();
 				Long costId = Long.valueOf(String.valueOf(ida).split(str)[0]);
-				HyCollection collection = (HyCollection) Constants.REFLECT_UTIL.convertBean(new HyCollection(),
-						hyCollection);
+				HyCollection collection = (HyCollection) ReflectUtil.convertBean(new HyCollection(), hyCollection);
 				collection.setCostId(costId);
 				collection.setHouseId(houseId);
 				collection.setOwnerId(ownerId);
@@ -375,16 +373,16 @@ public class HyCollectionServiceImpl implements IHyCollectionService {
 					if (m + n > 12) {
 						String z = y + 1 + "";
 						String p = m + n - 12 + "";
-						payFeeDate = z + "-0" + p+"-"+c;
+						payFeeDate = z + "-0" + p + "-" + c;
 					} else {
 						String p = m + n + "";
 						if (Integer.parseInt(p) > 9) {
-							payFeeDate = b + "-" + p+"-"+c;
+							payFeeDate = b + "-" + p + "-" + c;
 						} else {
-							payFeeDate = b + "-0" + p+"-"+c;
+							payFeeDate = b + "-0" + p + "-" + c;
 						}
 					}
-					beginFeeDate = b+"-"+a+"-"+c;
+					beginFeeDate = b + "-" + a + "-" + c;
 					houseAndCost.setPayFeeDate(payFeeDate);
 					houseAndCost.setBeginFeeDate(beginFeeDate);
 					hyCustomerMapper.updateHouseAndCost(houseAndCost);

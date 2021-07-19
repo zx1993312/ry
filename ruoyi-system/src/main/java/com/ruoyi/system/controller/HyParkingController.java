@@ -24,9 +24,9 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.ShiroUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.system.constants.Constants;
 import com.ruoyi.system.domain.HyParkingInf;
 import com.ruoyi.system.service.IHyParkingInfService;
+import com.ruoyi.system.utils.ReflectUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -69,7 +69,7 @@ public class HyParkingController extends BaseController {
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyParkingInf hpi : list) {
 			Map<String, Object> map = new HashMap<>();
-			map = Constants.REFLECT_UTIL.convertMap(hpi);
+			map = ReflectUtil.convertMap(hpi);
 			reList.add(map);
 		}
 		return getDataTable(list,  reList);
@@ -114,7 +114,7 @@ public class HyParkingController extends BaseController {
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyParkingInf hpi : list) {
 			Map<String, Object> map = new HashMap<>();
-			map = Constants.REFLECT_UTIL.convertMap(hpi);
+			map = ReflectUtil.convertMap(hpi);
 			reList.add(map);
 		}
 		return prefix + "/add";
@@ -148,7 +148,7 @@ public class HyParkingController extends BaseController {
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyParkingInf hpi : list) {
 			Map<String, Object> map = new HashMap<>();
-			map = Constants.REFLECT_UTIL.convertMap(hpi);
+			map = ReflectUtil.convertMap(hpi);
 			reList.add(map);
 		}
 		return prefix + "/edit";
@@ -182,7 +182,7 @@ public class HyParkingController extends BaseController {
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyParkingInf hpi : list) {
 			Map<String, Object> map = new HashMap<>();
-			map = Constants.REFLECT_UTIL.convertMap(hpi);
+			map = ReflectUtil.convertMap(hpi);
 			reList.add(map);
 		}
 		return toAjax(hyParkingInfService.updateHyParkingInf(hyParkingInf));

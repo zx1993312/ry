@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.page.TableDataInfo;
-import com.ruoyi.system.constants.Constants;
 import com.ruoyi.system.domain.HyChargeSubjectSet;
 import com.ruoyi.system.service.IHyChargeSubjectSetService;
+import com.ruoyi.system.utils.ReflectUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -61,7 +61,7 @@ public class HySelectSubjectController extends BaseController{
 		List<Map<String, Object>> reList = new ArrayList<>();
 		for (HyChargeSubjectSet hcs : list) {
 			Map<String, Object> map = new HashMap<>();
-			map = Constants.REFLECT_UTIL.convertMap(hcs);
+			map = ReflectUtil.convertMap(hcs);
 			reList.add(map);
 		}
 		return getDataTable(list,  reList);
