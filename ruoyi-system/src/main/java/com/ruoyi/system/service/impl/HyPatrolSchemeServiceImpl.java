@@ -46,6 +46,42 @@ public class HyPatrolSchemeServiceImpl implements IHyPatrolSchemeService
     }
     
     /**
+     * 查询巡检计划未完成列表
+     * 
+     * @param hyPatrolScheme 巡检计划
+     * @return 巡检计划
+     */
+    @Override
+    public List<HyPatrolScheme> selectHyPatrolSchemeListByUnfinished(HyPatrolScheme hyPatrolScheme)
+    {
+    	return hyPatrolSchemeMapper.selectHyPatrolSchemeListByUnfinished(hyPatrolScheme);
+    }
+    
+    /**
+     * 查询巡检计划进行中列表
+     * 
+     * @param hyPatrolScheme 巡检计划
+     * @return 巡检计划
+     */
+    @Override
+    public List<HyPatrolScheme> selectHyPatrolSchemeListByUnderway(HyPatrolScheme hyPatrolScheme)
+    {
+    	return hyPatrolSchemeMapper.selectHyPatrolSchemeListByUnderway(hyPatrolScheme);
+    }
+    
+    /**
+     * 查询巡检计划已完成列表
+     * 
+     * @param hyPatrolScheme 巡检计划
+     * @return 巡检计划
+     */
+    @Override
+    public List<HyPatrolScheme> selectHyPatrolSchemeListByFinished(HyPatrolScheme hyPatrolScheme)
+    {
+    	return hyPatrolSchemeMapper.selectHyPatrolSchemeListByFinished(hyPatrolScheme);
+    }
+    
+    /**
      * 查询巡检计划明细列表
      * 
      * @param hyPatrolScheme 巡检计划

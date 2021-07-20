@@ -218,15 +218,14 @@ public class HyOrderController extends BaseController
     		hyOrder = list.get(0);
     		Long orderId = hyOrder.getId();
     		String[] numbers = hyOrder.getNumbers().split(",");
-    		int i =0;
-    		for(String productId : productIds) {
+    		for(int i=0;i<productIds.length;i++) {
     			OrderAndProduct orderAndProduct = new OrderAndProduct();
     			String number = numbers[i];
+    			String productId = productIds[i];
     			orderAndProduct.setOrderId(orderId);
     			orderAndProduct.setProductId(Long.valueOf(productId));
     			orderAndProduct.setNumber(Integer.valueOf(number));
     			orderAndProductMapper.insertOrderAndProduct(orderAndProduct);
-    			i++;
     		}
     		return toAjax(1);
     	}

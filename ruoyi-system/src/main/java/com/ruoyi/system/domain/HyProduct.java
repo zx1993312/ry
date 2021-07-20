@@ -64,7 +64,6 @@ public class HyProduct extends BaseEntity
     private Long shopId;
     
     /**店铺表*/
-    @Excel(name="店铺表")
     private HyShop hyShop;
     
     /** 标签id */
@@ -72,25 +71,26 @@ public class HyProduct extends BaseEntity
     private Long lableId;
     
     /**标签表*/
-    @Excel(name="标签表")
     private HyLable hyLable;
     
     /**图片表*/
-    @Excel(name="图片表")
     private HyPicture hyPicture;
     
     /**商品详情的图片表*/
-    @Excel(name="商品详情的图片表")
     private HyDeatilPicture hyDeatilPicture;
     
     /**商品缩略图地址*/
-    @Excel(name="图片地址")
     private String fileName;
     
     /**商品多图地址*/
-    @Excel(name="图片地址")
     private String deleteFiles;
-
+    
+    /**商品id组*/
+    private String ids;
+    
+    /**数量组*/
+    private String numbers;
+    
     public void setId(Long id) 
     {
         this.id = id;
@@ -257,6 +257,22 @@ public class HyProduct extends BaseEntity
 		this.deleteFiles = deleteFiles;
 	}
 
+	public String getIds() {
+		return ids;
+	}
+
+	public void setIds(String ids) {
+		this.ids = ids;
+	}
+
+	public String getNumbers() {
+		return numbers;
+	}
+
+	public void setNumbers(String numbers) {
+		this.numbers = numbers;
+	}
+
 	@Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -278,6 +294,8 @@ public class HyProduct extends BaseEntity
             .append("hyPicture", getHyPicture())
             .append("fileName", getFileName())
             .append("deleteFiles", getDeleteFiles())
+            .append("ids", getIds())
+            .append("numbers", getNumbers())
             .toString();
     }
 }

@@ -2,6 +2,8 @@ package com.ruoyi.system.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,6 +81,22 @@ public class HyProductController extends BaseController
         return getDataTable(list);
     }
     
+    /**
+     * 查询商品列表App
+     */
+    @ApiOperation("商品")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyProduct", value = "项目实体类hyProduct", required = true),
+    })
+    @RequiresPermissions("system:product:list")
+    @PostMapping("/listApp")
+    @ResponseBody
+    public List<HyProduct> listApp(HyProduct hyProduct)
+    {
+    	List<HyProduct> list = hyProductService.selectHyProductList(hyProduct);
+    	return list;
+    }
+    
 
 
     /**
@@ -142,6 +160,57 @@ public class HyProductController extends BaseController
         mmap.put("list", list);
         return prefix + "/edit";
     }
+    
+    /**
+     * 修改商品App
+     */
+    @ApiOperation("商品")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "id", value = "主键id", required = true),
+    })
+    @GetMapping("/editApp")
+    @ResponseBody
+    public List<Map<String, Object>> editApp(HyProduct hyProduct)
+    {
+    	List<Map<String, Object>> productList = new ArrayList<Map<String, Object>>();
+    	Map<String, Object> map = new HashMap<String, Object>();
+    	hyProduct = hyProductService.selectHyProductList(hyProduct).get(0);
+    	HyDeatilPicture hyDeatilPicture = new HyDeatilPicture();
+    	hyDeatilPicture.setProductId(hyProduct.getId());
+    	List<HyDeatilPicture> deatilPictureList  = hyDeatilPictureService.selectHyDeatilPictureList(hyDeatilPicture);
+    	map.put("hyProduct", hyProduct);
+    	map.put("deatilPictureList", deatilPictureList);
+    	productList.add(map);
+    	return productList;
+    }
+    
+    /**
+     * 统计App
+     */
+    @ApiOperation("商品")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "id", value = "主键id", required = true),
+    })
+    @GetMapping("/statistics")
+    @ResponseBody
+    public List<Map<String, Object>> statistics()
+    {
+    	List<Map<String, Object>> productList = new ArrayList<Map<String, Object>>();
+    	Map<String, Object> map = new HashMap<String, Object>();
+    	List<HyProduct> list = hyProductService.selectHyProductList(new HyProduct());
+    	BigDecimal currentPriceCount = new BigDecimal(0.00);
+    	Long soldNumberCount = Long.valueOf(0);
+    	for(HyProduct product : list) {
+    		Long soldNumber = product.getSoldNumber();
+    		BigDecimal currentPrice = product.getCurrentPrice();
+    		currentPriceCount = currentPriceCount.add(currentPrice.multiply(new BigDecimal(soldNumber)));
+    		soldNumberCount = soldNumberCount+soldNumber;
+    	}
+    	map.put("currentPriceCount", currentPriceCount);
+    	map.put("soldNumberCount", soldNumberCount);
+    	productList.add(map);
+    	return productList;
+    }
 
     /**
      * 修改保存商品
@@ -162,6 +231,68 @@ public class HyProductController extends BaseController
     	}
     	
     	return toAjax(hyProductService.updateHyProduct(hyProduct));
+    }
+    
+    /**
+     * 支付修改商品已售库存数量
+     */
+    @ApiOperation("商品")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyProduct", value = "项目实体类hyProduct", required = true),
+    })
+    @RequiresPermissions("system:product:edit")
+    @Log(title = "商品", businessType = BusinessType.UPDATE)
+    @PostMapping("/editAppByPay")
+    @ResponseBody
+    public AjaxResult editAppByPay(HyProduct hyProduct)
+    {
+    	String[] ids = hyProduct.getIds().split(",");
+    	String[] numbers = hyProduct.getNumbers().split(",");
+    	for(int i=0;i<ids.length;i++) {
+    		String id = ids[i];
+    		hyProduct.setId(Long.valueOf(id));
+    		String number = numbers[i];
+    		HyProduct product = hyProductService.selectHyProductById(Long.valueOf(id));
+    		Long soldNumber = product.getSoldNumber();
+    		Long stockNumber = product.getStockNumber();
+    		soldNumber = soldNumber + Long.valueOf(number);
+    		stockNumber = stockNumber - Long.valueOf(number);
+    		hyProduct.setSoldNumber(soldNumber);
+    		hyProduct.setStockNumber(stockNumber);
+    		hyProductService.updateHyProduct(hyProduct);
+		}
+    	return toAjax(1);
+    }
+    
+    /**
+     * 退款修改商品已售库存数量
+     */
+    @ApiOperation("商品")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyProduct", value = "项目实体类hyProduct", required = true),
+    })
+    @RequiresPermissions("system:product:edit")
+    @Log(title = "商品", businessType = BusinessType.UPDATE)
+    @PostMapping("/editAppByRefund")
+    @ResponseBody
+    public AjaxResult editAppByRefund(HyProduct hyProduct)
+    {
+    	String[] ids = hyProduct.getIds().split(",");
+    	String[] numbers = hyProduct.getNumbers().split(",");
+    	for(int i=0;i<ids.length;i++) {
+    		String id = ids[i];
+    		hyProduct.setId(Long.valueOf(id));
+    		String number = numbers[i];
+    		HyProduct product = hyProductService.selectHyProductById(Long.valueOf(id));
+    		Long soldNumber = product.getSoldNumber();
+    		Long stockNumber = product.getStockNumber();
+    		soldNumber = soldNumber - Long.valueOf(number);
+    		stockNumber = stockNumber + Long.valueOf(number);
+    		hyProduct.setSoldNumber(soldNumber);
+    		hyProduct.setStockNumber(stockNumber);
+    		hyProductService.updateHyProduct(hyProduct);
+    	}
+    	return toAjax(1);
     }
 
     /**

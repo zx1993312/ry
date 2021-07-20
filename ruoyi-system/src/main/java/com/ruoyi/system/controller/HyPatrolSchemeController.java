@@ -87,6 +87,55 @@ public class HyPatrolSchemeController extends BaseController
     	List<HyPatrolScheme> list = hyPatrolSchemeService.selectHyPatrolSchemeDetailList(hyPatrolScheme);
     	return getDataTable(list);
     }
+    
+    
+    /**
+     * 查询巡检计划未完成列表
+     */
+    @ApiOperation("巡检计划")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyPatrolScheme", value = "项目实体类hyPatrolScheme", required = true),
+    })
+    @RequiresPermissions("system:scheme:list")
+    @PostMapping("/listByUnfinished")
+    @ResponseBody
+    public List<HyPatrolScheme> listByUnfinished(HyPatrolScheme hyPatrolScheme)
+    {
+    	List<HyPatrolScheme> list = hyPatrolSchemeService.selectHyPatrolSchemeListByUnfinished(hyPatrolScheme);
+    	return list;
+    }
+    
+    /**
+     * 查询巡检计划进行中列表
+     */
+    @ApiOperation("巡检计划")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyPatrolScheme", value = "项目实体类hyPatrolScheme", required = true),
+    })
+    @RequiresPermissions("system:scheme:list")
+    @PostMapping("/listByUnderway")
+    @ResponseBody
+    public List<HyPatrolScheme> listByUnderway(HyPatrolScheme hyPatrolScheme)
+    {
+    	List<HyPatrolScheme> list = hyPatrolSchemeService.selectHyPatrolSchemeListByUnderway(hyPatrolScheme);
+    	return list;
+    }
+    
+    /**
+     * 查询巡检计划已完成列表
+     */
+    @ApiOperation("巡检计划")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyPatrolScheme", value = "项目实体类hyPatrolScheme", required = true),
+    })
+    @RequiresPermissions("system:scheme:list")
+    @PostMapping("/listByFinished")
+    @ResponseBody
+    public List<HyPatrolScheme> listByFinished(HyPatrolScheme hyPatrolScheme)
+    {
+    	List<HyPatrolScheme> list = hyPatrolSchemeService.selectHyPatrolSchemeListByFinished(hyPatrolScheme);
+    	return list;
+    }
 
     /**
      * 导出巡检计划列表

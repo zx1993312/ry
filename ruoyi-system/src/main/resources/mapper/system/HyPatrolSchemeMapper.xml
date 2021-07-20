@@ -203,6 +203,90 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
     
+    <select id="selectHyPatrolSchemeListByUnfinished" parameterType="HyPatrolScheme" resultMap="HyPatrolSchemeResult">
+        <include refid="selectHyPatrolSchemeVo"/>
+        <where>  
+            <if test="documentNumber != null  and documentNumber != ''"> and s.document_number = #{documentNumber}</if>
+            <if test="plannedTime != null  and plannedTime != ''"> and s.planned_time = #{plannedTime}</if>
+            <if test="planRange != null  and planRange != ''"> and s.plan_range = #{planRange}</if>
+            <if test="planAnnual != null and planAnnual != ''"> and s.plan_annual = #{planAnnual}</if>
+            <if test="planner != null  and planner != ''"> and s.planner = #{planner}</if>
+            <if test="checkPeople != null  and checkPeople != ''"> and s.check_people = #{checkPeople}</if>
+            <if test="inspectionTime != null "> and s.inspection_time = #{inspectionTime}</if>
+            <if test="makeTime != null "> and s.make_time = #{makeTime}</if>
+            <if test="documentMaker != null  and documentMaker != ''"> and s.document_maker = #{documentMaker}</if>
+            <if test="revisionTime != null "> and s.revision_time = #{revisionTime}</if>
+            <if test="reviser != null  and reviser != ''"> and s.reviser = #{reviser}</if>
+            <if test="isCheck != null  and isCheck != ''"> and s.is_check = #{isCheck}</if>
+            <if test="auditTime != null "> and s.audit_time = #{auditTime}</if>
+            <if test="auditor != null  and auditor != ''"> and s.auditor = #{auditor}</if>
+            <if test="actualInspectionTime != null "> and s.actual_inspection_time = #{actualInspectionTime}</if>
+            and s.inspection_status = "1"
+            <if test="changeStatus != null  and changeStatus != ''"> and s.change_status = #{changeStatus}</if>
+            <if test="inspectionInstructions != null  and inspectionInstructions != ''"> and s.inspection_instructions = #{inspectionInstructions}</if>
+            <if test="deptId != null "> and s.dept_id = #{deptId}</if>
+            <if test="hyInspectionRoute != null and hyInspectionRoute != ''">
+				<if test="hyInspectionRoute.routeName != null and hyInspectionRoute.routeName !=''"> and r.route_name = #{hyInspectionRoute.routeName}</if>
+			</if>
+        </where>
+    </select>
+    
+    <select id="selectHyPatrolSchemeListByUnderway" parameterType="HyPatrolScheme" resultMap="HyPatrolSchemeResult">
+        <include refid="selectHyPatrolSchemeVo"/>
+        <where>  
+            <if test="documentNumber != null  and documentNumber != ''"> and s.document_number = #{documentNumber}</if>
+            <if test="plannedTime != null  and plannedTime != ''"> and s.planned_time = #{plannedTime}</if>
+            <if test="planRange != null  and planRange != ''"> and s.plan_range = #{planRange}</if>
+            <if test="planAnnual != null and planAnnual != ''"> and s.plan_annual = #{planAnnual}</if>
+            <if test="planner != null  and planner != ''"> and s.planner = #{planner}</if>
+            <if test="checkPeople != null  and checkPeople != ''"> and s.check_people = #{checkPeople}</if>
+            <if test="inspectionTime != null "> and s.inspection_time = #{inspectionTime}</if>
+            <if test="makeTime != null "> and s.make_time = #{makeTime}</if>
+            <if test="documentMaker != null  and documentMaker != ''"> and s.document_maker = #{documentMaker}</if>
+            <if test="revisionTime != null "> and s.revision_time = #{revisionTime}</if>
+            <if test="reviser != null  and reviser != ''"> and s.reviser = #{reviser}</if>
+            <if test="isCheck != null  and isCheck != ''"> and s.is_check = #{isCheck}</if>
+            <if test="auditTime != null "> and s.audit_time = #{auditTime}</if>
+            <if test="auditor != null  and auditor != ''"> and s.auditor = #{auditor}</if>
+            <if test="actualInspectionTime != null "> and s.actual_inspection_time = #{actualInspectionTime}</if>
+            and s.inspection_status = "2"
+            <if test="changeStatus != null  and changeStatus != ''"> and s.change_status = #{changeStatus}</if>
+            <if test="inspectionInstructions != null  and inspectionInstructions != ''"> and s.inspection_instructions = #{inspectionInstructions}</if>
+            <if test="deptId != null "> and s.dept_id = #{deptId}</if>
+            <if test="hyInspectionRoute != null and hyInspectionRoute != ''">
+				<if test="hyInspectionRoute.routeName != null and hyInspectionRoute.routeName !=''"> and r.route_name = #{hyInspectionRoute.routeName}</if>
+			</if>
+        </where>
+    </select>
+    
+    <select id="selectHyPatrolSchemeListByFinished" parameterType="HyPatrolScheme" resultMap="HyPatrolSchemeResult">
+        <include refid="selectHyPatrolSchemeVo"/>
+        <where>  
+            <if test="documentNumber != null  and documentNumber != ''"> and s.document_number = #{documentNumber}</if>
+            <if test="plannedTime != null  and plannedTime != ''"> and s.planned_time = #{plannedTime}</if>
+            <if test="planRange != null  and planRange != ''"> and s.plan_range = #{planRange}</if>
+            <if test="planAnnual != null and planAnnual != ''"> and s.plan_annual = #{planAnnual}</if>
+            <if test="planner != null  and planner != ''"> and s.planner = #{planner}</if>
+            <if test="checkPeople != null  and checkPeople != ''"> and s.check_people = #{checkPeople}</if>
+            <if test="inspectionTime != null "> and s.inspection_time = #{inspectionTime}</if>
+            <if test="makeTime != null "> and s.make_time = #{makeTime}</if>
+            <if test="documentMaker != null  and documentMaker != ''"> and s.document_maker = #{documentMaker}</if>
+            <if test="revisionTime != null "> and s.revision_time = #{revisionTime}</if>
+            <if test="reviser != null  and reviser != ''"> and s.reviser = #{reviser}</if>
+            <if test="isCheck != null  and isCheck != ''"> and s.is_check = #{isCheck}</if>
+            <if test="auditTime != null "> and s.audit_time = #{auditTime}</if>
+            <if test="auditor != null  and auditor != ''"> and s.auditor = #{auditor}</if>
+            <if test="actualInspectionTime != null "> and s.actual_inspection_time = #{actualInspectionTime}</if>
+            and s.inspection_status = "3"
+            <if test="changeStatus != null  and changeStatus != ''"> and s.change_status = #{changeStatus}</if>
+            <if test="inspectionInstructions != null  and inspectionInstructions != ''"> and s.inspection_instructions = #{inspectionInstructions}</if>
+            <if test="deptId != null "> and s.dept_id = #{deptId}</if>
+            <if test="hyInspectionRoute != null and hyInspectionRoute != ''">
+				<if test="hyInspectionRoute.routeName != null and hyInspectionRoute.routeName !=''"> and r.route_name = #{hyInspectionRoute.routeName}</if>
+			</if>
+        </where>
+    </select>
+    
     <select id="selectHyPatrolSchemeDetailList" parameterType="HyPatrolScheme" resultMap="HyPatrolSchemeResult">
         <include refid="selectHyPatrolSchemeVo"/>
     </select>

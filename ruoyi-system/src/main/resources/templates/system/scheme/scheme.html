@@ -188,6 +188,19 @@
                     title: '巡检人'
                 },
                 {
+                    field: 'inspectionStatus',
+                    title: '巡检状态',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case "" : value =  "请选择";break;
+	                    	case "1" : value =  "未完成";break;
+	                    	case "2" : value =  "进行中";break;
+	                    	case "3" : value =  "已完成";break;
+	                	}
+		            	return value;
+		            }
+                },
+                {
                     field: 'remark',
                     title: '备注'
                 },
