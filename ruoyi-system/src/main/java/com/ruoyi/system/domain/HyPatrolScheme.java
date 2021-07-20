@@ -5,6 +5,7 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
+import com.ruoyi.common.core.domain.entity.SysDept;
 
 /**
  * 巡检计划对象 hy_patrol_scheme
@@ -100,6 +101,10 @@ public class HyPatrolScheme extends BaseEntity
     @Excel(name = "组织机构id")
     private Long deptId;
     
+    /** 组织机构表 */
+    @Excel(name = "组织机构表")
+    private SysDept sysDept;
+    
     /** 项目id */
     @Excel(name = "项目id")
     private Long parentId;
@@ -110,7 +115,7 @@ public class HyPatrolScheme extends BaseEntity
     
     /** 节点巡检表 */
     @Excel(name = "节点巡检表")
-    private HyCheckeNode hyCheckeNode;
+    private HyCheckNode hyCheckNode;
     
     /** 巡检项目表 */
     @Excel(name = "巡检项目表")
@@ -314,6 +319,14 @@ public class HyPatrolScheme extends BaseEntity
     }
 
 
+	public SysDept getSysDept() {
+		return sysDept;
+	}
+
+	public void setSysDept(SysDept sysDept) {
+		this.sysDept = sysDept;
+	}
+
 	public Long getParentId() {
 		return parentId;
 	}
@@ -346,12 +359,12 @@ public class HyPatrolScheme extends BaseEntity
 		this.hyPollingPeriod = hyPollingPeriod;
 	}
 
-	public HyCheckeNode getHyCheckeNode() {
-		return hyCheckeNode;
+	public HyCheckNode getHyCheckNode() {
+		return hyCheckNode;
 	}
 
-	public void setHyCheckeNode(HyCheckeNode hyCheckeNode) {
-		this.hyCheckeNode = hyCheckeNode;
+	public void setHyCheckNode(HyCheckNode hyCheckNode) {
+		this.hyCheckNode = hyCheckNode;
 	}
 
 	public HyCheckeProject getHyCheckeProject() {
@@ -386,11 +399,13 @@ public class HyPatrolScheme extends BaseEntity
 				+ documentMaker + ", revisionTime=" + revisionTime + ", reviser=" + reviser + ", isCheck=" + isCheck
 				+ ", auditTime=" + auditTime + ", auditor=" + auditor + ", actualInspectionTime=" + actualInspectionTime
 				+ ", inspectionStatus=" + inspectionStatus + ", changeStatus=" + changeStatus
-				+ ", inspectionInstructions=" + inspectionInstructions + ", deptId=" + deptId + ", hyCheckeNode="
-				+ hyCheckeNode + ", hyCheckeProject=" + hyCheckeProject + ", hyInspectionRoute=" + hyInspectionRoute
+				+ ", inspectionInstructions=" + inspectionInstructions + ", deptId=" + deptId + ", sysDept=" + sysDept
+				+ ", parentId=" + parentId + ", propertyId=" + propertyId + ", hyCheckNode=" + hyCheckNode
+				+ ", hyCheckeProject=" + hyCheckeProject + ", hyInspectionRoute=" + hyInspectionRoute
 				+ ", hyInspectionDetail=" + hyInspectionDetail + ", hyPollingPeriod=" + hyPollingPeriod
 				+ ", hyInspectionResult=" + hyInspectionResult + "]";
 	}
+
 
 
 

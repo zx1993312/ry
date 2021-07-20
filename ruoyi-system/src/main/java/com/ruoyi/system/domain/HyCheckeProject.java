@@ -6,7 +6,7 @@ import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
- * 巡检项目对象 hy_checke_project
+ * 巡检项目对象 hy_check_project
  * 
  * @author Administrator
  * @date 2021-04-25
@@ -72,7 +72,7 @@ public class HyCheckeProject extends BaseEntity
     
     /** 巡检节点表 */
     @Excel(name = "巡检节点表")
-    private HyCheckeNode hyCheckeNode;
+    private HyCheckNode hyCheckNode;
     
     /** 节点巡检任务表 */
     @Excel(name = "节点巡检任务表")
@@ -209,12 +209,12 @@ public class HyCheckeProject extends BaseEntity
         return nodeId;
     }
 
-    public HyCheckeNode getHyCheckeNode() {
-		return hyCheckeNode;
+    public HyCheckNode getHyCheckNode() {
+		return hyCheckNode;
 	}
 
-	public void setHyCheckeNode(HyCheckeNode hyCheckeNode) {
-		this.hyCheckeNode = hyCheckeNode;
+	public void setHyCheckNode(HyCheckNode hyCheckNode) {
+		this.hyCheckNode = hyCheckNode;
 	}
 
 	public HyNodeTask getHyNodeTask() {
@@ -252,7 +252,7 @@ public class HyCheckeProject extends BaseEntity
             .append("patrolLongitude", getPatrolLongitude())
             .append("patrolLatitude", getPatrolLatitude())
             .append("nodeId", getNodeId())
-            .append("hyCheckeNode", getHyCheckeNode())
+            .append("hyCheckNode", getHyCheckNode())
             .append("hyNodeTask", getHyNodeTask())
             .append("hyPatrolScheme", getHyPatrolScheme())
             .toString();

@@ -10,21 +10,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="inspectionWay"    column="inspection_way"    />
         <result property="remark"    column="remark"    />
         <result property="nodeId"    column="node_id"    />
-        <association property="hyCheckeNode" column="id"
-			javaType="HyCheckeNode" resultMap="HyCheckeNodeResult" />
+        <association property="hyCheckNode" column="id"
+			javaType="HyCheckNode" resultMap="HyCheckNodeResult" />
+		<association property="sysDept" column="id"
+			javaType="SysDept" resultMap="SysDeptResult" />
     </resultMap>
 
-	<resultMap type="HyCheckeNode" id="HyCheckeNodeResult">
+	<resultMap type="HyCheckNode" id="HyCheckNodeResult">
         <result property="id"    column="id"    />
         <result property="name"    column="name"    />
-        <result property="address"    column="address"    />
-        <result property="scanCode"    column="scan_code"    />
-        <result property="longitude"    column="longitude"    />
-        <result property="latitude"    column="latitude"    />
-        <result property="remark"    column="remark"    />
-        <result property="deptId"    column="dept_id"    />
-        <association property="sysDept" column="id"
-			javaType="SysDept" resultMap="SysDeptResult" />
+        <result property="nodeAddress"    column="node_address"    />
+        <result property="nodeLongitude"    column="node_longitude"    />
+        <result property="nodeLatitude"    column="node_latitude"    />
+        <result property="nodeRemark"    column="node_remark"    />
     </resultMap>
 	
 	<resultMap type="SysDept" id="SysDeptResult">
@@ -50,13 +48,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         t.remark, 
         t.node_id,
         n.name,
-        n.address,
-        n.scan_code,
+        n.node_address,
         d.dept_name
         from 
         hy_node_task t
-        LEFT JOIN  hy_checke_node n ON t.node_id = n.id
-        LEFT JOIN sys_dept d ON n.dept_id = d.dept_id
+        LEFT JOIN  hy_check_node n ON t.node_id = n.id
     </sql>
 
     <select id="selectHyNodeTaskList" parameterType="HyNodeTask" resultMap="HyNodeTaskResult">
@@ -65,9 +61,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="taskName != null  and taskName != ''"> and t.task_name like concat('%', #{taskName}, '%')</if>
             <if test="inspectionWay != null  and inspectionWay != ''"> and t.inspection_way = #{inspectionWay}</if>
             <if test="nodeId != null "> and t.node_id = #{nodeId}</if>
-            <if test="hyCheckeNode != null and hyCheckeNode != ''">
-            	<if test="hyCheckeNode.deptId != null"> and n.dept_id = #{hyCheckeNode.deptId}</if>
-            </if>
         </where>
     </select>
     

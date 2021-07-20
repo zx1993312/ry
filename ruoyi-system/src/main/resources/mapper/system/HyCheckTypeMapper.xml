@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyCheckTypeMapper">
+    
+    <resultMap type="HyCheckType" id="HyCheckTypeResult">
+        <result property="id"    column="id"    />
+        <result property="checkType"    column="check_type"    />
+    </resultMap>
+
+    <sql id="selectHyCheckTypeVo">
+        select id, check_type from hy_check_type
+    </sql>
+
+    <select id="selectHyCheckTypeList" parameterType="HyCheckType" resultMap="HyCheckTypeResult">
+        <include refid="selectHyCheckTypeVo"/>
+        <where>  
+            <if test="checkType != null  and checkType != ''"> and check_type = #{checkType}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyCheckTypeById" parameterType="Long" resultMap="HyCheckTypeResult">
+        <include refid="selectHyCheckTypeVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyCheckType" parameterType="HyCheckType" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_check_type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="checkType != null">check_type,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="checkType != null">#{checkType},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyCheckType" parameterType="HyCheckType">
+        update hy_check_type
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="checkType != null">check_type = #{checkType},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyCheckTypeById" parameterType="Long">
+        delete from hy_check_type where id = #{id}
+    </delete>
+
+    <delete id="deleteHyCheckTypeByIds" parameterType="String">
+        delete from hy_check_type where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -4,9 +4,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.ruoyi.system.mapper.HyCheckeNodeMapper;
-import com.ruoyi.system.domain.HyCheckeNode;
-import com.ruoyi.system.service.IHyCheckeNodeService;
+
+import com.ruoyi.system.domain.HyCheckNode;
+import com.ruoyi.system.mapper.HyCheckNodeMapper;
+import com.ruoyi.system.service.IHyCheckNodeService;
 import com.ruoyi.common.core.text.Convert;
 
 /**
@@ -16,10 +17,10 @@ import com.ruoyi.common.core.text.Convert;
  * @date 2021-04-25
  */
 @Service
-public class HyCheckeNodeServiceImpl implements IHyCheckeNodeService 
+public class HyCheckNodeServiceImpl implements IHyCheckNodeService 
 {
     @Autowired
-    private HyCheckeNodeMapper hyCheckeNodeMapper;
+    private HyCheckNodeMapper hyCheckNodeMapper;
 
     /**
      * 查询巡检节点
@@ -28,47 +29,47 @@ public class HyCheckeNodeServiceImpl implements IHyCheckeNodeService
      * @return 巡检节点
      */
     @Override
-    public HyCheckeNode selectHyCheckeNodeById(Long id)
+    public HyCheckNode selectHyCheckNodeById(Long id)
     {
-        return hyCheckeNodeMapper.selectHyCheckeNodeById(id);
+        return hyCheckNodeMapper.selectHyCheckNodeById(id);
     }
 
     /**
      * 查询巡检节点列表
      * 
-     * @param hyCheckeNode 巡检节点
+     * @param hyCheckNode 巡检节点
      * @return 巡检节点
      */
     @Override
-    public List<HyCheckeNode> selectHyCheckeNodeList(HyCheckeNode hyCheckeNode)
+    public List<HyCheckNode> selectHyCheckNodeList(HyCheckNode hyCheckNode)
     {
-        return hyCheckeNodeMapper.selectHyCheckeNodeList(hyCheckeNode);
+        return hyCheckNodeMapper.selectHyCheckNodeList(hyCheckNode);
     }
 
     /**
      * 新增巡检节点
      * 
-     * @param hyCheckeNode 巡检节点
+     * @param hyCheckNode 巡检节点
      * @return 结果
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public int insertHyCheckeNode(HyCheckeNode hyCheckeNode)
+    public int insertHyCheckNode(HyCheckNode hyCheckNode)
     {
-        return hyCheckeNodeMapper.insertHyCheckeNode(hyCheckeNode);
+        return hyCheckNodeMapper.insertHyCheckNode(hyCheckNode);
     }
 
     /**
      * 修改巡检节点
      * 
-     * @param hyCheckeNode 巡检节点
+     * @param hyCheckNode 巡检节点
      * @return 结果
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public int updateHyCheckeNode(HyCheckeNode hyCheckeNode)
+    public int updateHyCheckNode(HyCheckNode hyCheckNode)
     {
-        return hyCheckeNodeMapper.updateHyCheckeNode(hyCheckeNode);
+        return hyCheckNodeMapper.updateHyCheckNode(hyCheckNode);
     }
 
     /**
@@ -79,9 +80,9 @@ public class HyCheckeNodeServiceImpl implements IHyCheckeNodeService
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public int deleteHyCheckeNodeByIds(String ids)
+    public int deleteHyCheckNodeByIds(String ids)
     {
-        return hyCheckeNodeMapper.deleteHyCheckeNodeByIds(Convert.toStrArray(ids));
+        return hyCheckNodeMapper.deleteHyCheckNodeByIds(Convert.toStrArray(ids));
     }
 
     /**
@@ -92,8 +93,8 @@ public class HyCheckeNodeServiceImpl implements IHyCheckeNodeService
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public int deleteHyCheckeNodeById(Long id)
+    public int deleteHyCheckNodeById(Long id)
     {
-        return hyCheckeNodeMapper.deleteHyCheckeNodeById(id);
+        return hyCheckNodeMapper.deleteHyCheckNodeById(id);
     }
 }

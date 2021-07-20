@@ -19,23 +19,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="patrolLongitude"    column="patrol_longitude"    />
         <result property="patrolLatitude"    column="patrol_latitude"    />
         <result property="nodeId"    column="node_id"    />
-        <association property="hyCheckeNode" column="id"
-			javaType="HyCheckeNode" resultMap="HyCheckeNodeResult" />
+        <association property="hyCheckNode" column="id"
+			javaType="HyCheckNode" resultMap="HyCheckNodeResult" />
 		<association property="hyNodeTask" column="id"
 			javaType="HyNodeTask" resultMap="HyNodeTaskResult" />
 		<association property="hyPatrolScheme" column="id"
 			javaType="HyPatrolScheme" resultMap="HyPatrolSchemeResult" />
     </resultMap>
     
-    <resultMap type="HyCheckeNode" id="HyCheckeNodeResult">
+    <resultMap type="HyCheckNode" id="HyCheckNodeResult">
         <result property="id"    column="id"    />
         <result property="name"    column="name"    />
-        <result property="address"    column="address"    />
-        <result property="scanCode"    column="scan_code"    />
-        <result property="longitude"    column="longitude"    />
-        <result property="latitude"    column="latitude"    />
-        <result property="remark"    column="remark"    />
-        <result property="deptId"    column="dept_id"    />
+        <result property="nodeAddress"    column="node_address"    />
+        <result property="nodeLongitude"    column="node_longitude"    />
+        <result property="nodeLatitude"    column="node_latitude"    />
+        <result property="nodeRemark"    column="node_remark"    />
     </resultMap>
 	
 	<resultMap type="HyNodeTask" id="HyNodeTaskResult">
@@ -89,10 +87,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         n.name,
         t.task_name,
         s.inspection_time,
-        n.address
+        n.node_address
         from 
         hy_checke_project c
-        LEFT JOIN hy_checke_node n ON c.node_id = n.id
+        LEFT JOIN hy_check_node n ON c.node_id = n.id
         LEFT JOIN hy_node_task t ON t.node_id = n.id
         LEFT JOIN hy_inspection_detail d ON d.task_id = t.id
         LEFT JOIN hy_inspection_route r ON d.route_id = r.id
@@ -115,8 +113,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="patrolLongitude != null  and patrolLongitude != ''"> and c.patrol_longitude = #{patrolLongitude}</if>
             <if test="patrolLatitude != null  and patrolLatitude != ''"> and c.patrol_latitude = #{patrolLatitude}</if>
             <if test="nodeId != null "> and c.node_id = #{nodeId}</if>
-            <if test="hyCheckeNode != null and hyCheckeNode != ''">
-            	<if test="hyCheckeNode.name != null and hyCheckeNode.name != ''"> and n.name = #{hyCheckeNode.name}</if>
+            <if test="hyCheckNode != null and hyCheckNode != ''">
+            	<if test="hyCheckNode.name != null and hyCheckNode.name != ''"> and n.name = #{hyCheckNode.name}</if>
             </if>
         </where>
     </select>

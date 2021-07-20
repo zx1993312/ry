@@ -26,23 +26,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="changeStatus"    column="change_status"    />
         <result property="inspectionInstructions"    column="inspection_instructions"    />
         <result property="deptId"    column="deptId"    />
-        <association property="hyCheckeNode" column="id"
-			javaType="HyCheckeNode" resultMap="HyCheckeNodeResult" />
+        <association property="hyCheckNode" column="id"
+			javaType="HyCheckNode" resultMap="HyCheckNodeResult" />
         <association property="hyCheckeProject" column="id"
 			javaType="HyCheckeProject" resultMap="HyCheckeProjectResult" />
         <association property="hyInspectionDetail" column="id"
 			javaType="HyInspectionDetail" resultMap="HyInspectionDetailResult" />
     </resultMap>
 	
-	<resultMap type="HyCheckeNode" id="HyCheckeNodeResult">
-        <result property="id"    column="id"    />
+	<resultMap type="HyCheckNode" id="HyCheckNodeResult">
+         <result property="id"    column="id"    />
         <result property="name"    column="name"    />
-        <result property="address"    column="address"    />
-        <result property="scanCode"    column="scan_code"    />
-        <result property="longitude"    column="longitude"    />
-        <result property="latitude"    column="latitude"    />
-        <result property="remark"    column="remark"    />
-        <result property="deptId"    column="dept_id"    />
+        <result property="nodeAddress"    column="node_address"    />
+        <result property="nodeLongitude"    column="node_longitude"    />
+        <result property="nodeLatitude"    column="node_latitude"    />
+        <result property="nodeRemark"    column="node_remark"    />
     </resultMap>
 	
 	<resultMap type="HyCheckeProject" id="HyCheckeProjectResult">
@@ -95,7 +93,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			p.dept_id,
 			d.code,
 			n.name,
-			n.address,
+			n.node_address,
 			c.explains,
 			d.inspection_time,
 			c.type,

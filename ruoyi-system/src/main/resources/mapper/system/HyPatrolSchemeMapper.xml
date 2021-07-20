@@ -32,14 +32,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			javaType="HyInspectionRoute" resultMap="HyInspectionRouteResult" />
         <association property="hyPollingPeriod" column="id"
 			javaType="HyPollingPeriod" resultMap="HyPollingPeriodResult" />
-        <association property="hyCheckeNode" column="id"
-			javaType="HyCheckeNode" resultMap="HyCheckeNodeResult" />
+        <association property="hyCheckNode" column="id"
+			javaType="HyCheckNode" resultMap="HyCheckNodeResult" />
         <association property="hyCheckeProject" column="id"
 			javaType="HyCheckeProject" resultMap="HyCheckeProjectResult" />
         <association property="hyInspectionDetail" column="id"
 			javaType="HyInspectionDetail" resultMap="HyInspectionDetailResult" />
         <association property="hyInspectionResult" column="id"
 			javaType="HyInspectionResult" resultMap="HyInspectionResultResult" />
+		<association property="sysDept" column="id"
+			javaType="SysDept" resultMap="SysDeptResult" />
     </resultMap>
     
     <resultMap type="HyInspectionResult" id="HyInspectionResultResult">
@@ -76,17 +78,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="nodeId"    column="node_id"    />
     </resultMap>
 	
-	<resultMap type="HyCheckeNode" id="HyCheckeNodeResult">
+	<resultMap type="HyCheckNode" id="HyCheckNodeResult">
         <result property="id"    column="id"    />
         <result property="name"    column="name"    />
-        <result property="address"    column="address"    />
-        <result property="scanCode"    column="scan_code"    />
-        <result property="longitude"    column="longitude"    />
-        <result property="latitude"    column="latitude"    />
-        <result property="remark"    column="remark"    />
-        <result property="deptId"    column="dept_id"    />
-        <association property="sysDept" column="id"
-			javaType="SysDept" resultMap="SysDeptResult" />
+        <result property="nodeAddress"    column="node_address"    />
+        <result property="nodeLongitude"    column="node_longitude"    />
+        <result property="nodeLatitude"    column="node_latitude"    />
+        <result property="nodeRemark"    column="node_remark"    />
     </resultMap>
     
     <resultMap type="SysDept" id="SysDeptResult">
@@ -149,10 +147,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         r.route_name,
         p.period_name,
         n.name,
-        n.longitude,
-        n.latitude,
+        n.node_longitude,
+        n.node_latitude,
         c.explains,
-        n.address,
+        n.node_address,
         c.type,
         c.standard,
         c.measured_value,

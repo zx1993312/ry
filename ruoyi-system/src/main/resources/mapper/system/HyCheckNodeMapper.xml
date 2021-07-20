@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyCheckNodeMapper">
+    
+    <resultMap type="HyCheckNode" id="HyCheckNodeResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="nodeAddress"    column="node_address"    />
+        <result property="nodeLongitude"    column="node_longitude"    />
+        <result property="nodeLatitude"    column="node_latitude"    />
+        <result property="nodeRemark"    column="node_remark"    />
+    </resultMap>
+
+    <sql id="selectHyCheckNodeVo">
+        select id, name, node_address, node_longitude, node_latitude, node_remark from hy_check_node
+    </sql>
+
+    <select id="selectHyCheckNodeList" parameterType="HyCheckNode" resultMap="HyCheckNodeResult">
+        <include refid="selectHyCheckNodeVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="nodeAddress != null  and nodeAddress != ''"> and node_address = #{nodeAddress}</if>
+            <if test="nodeLongitude != null  and nodeLongitude != ''"> and node_longitude = #{nodeLongitude}</if>
+            <if test="nodeLatitude != null  and nodeLatitude != ''"> and node_latitude = #{nodeLatitude}</if>
+            <if test="nodeRemark != null  and nodeRemark != ''"> and node_remark = #{nodeRemark}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyCheckNodeById" parameterType="Long" resultMap="HyCheckNodeResult">
+        <include refid="selectHyCheckNodeVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyCheckNode" parameterType="HyCheckNode" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_check_node
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="nodeAddress != null">node_address,</if>
+            <if test="nodeLongitude != null">node_longitude,</if>
+            <if test="nodeLatitude != null">node_latitude,</if>
+            <if test="nodeRemark != null">node_remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="nodeAddress != null">#{nodeAddress},</if>
+            <if test="nodeLongitude != null">#{nodeLongitude},</if>
+            <if test="nodeLatitude != null">#{nodeLatitude},</if>
+            <if test="nodeRemark != null">#{nodeRemark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyCheckNode" parameterType="HyCheckNode">
+        update hy_check_node
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="nodeAddress != null">node_address = #{nodeAddress},</if>
+            <if test="nodeLongitude != null">node_longitude = #{nodeLongitude},</if>
+            <if test="nodeLatitude != null">node_latitude = #{nodeLatitude},</if>
+            <if test="nodeRemark != null">node_remark = #{nodeRemark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyCheckNodeById" parameterType="Long">
+        delete from hy_check_node where id = #{id}
+    </delete>
+
+    <delete id="deleteHyCheckNodeByIds" parameterType="String">
+        delete from hy_check_node where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

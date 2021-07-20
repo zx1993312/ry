@@ -13,9 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.system.domain.HyCheckeNode;
-import com.ruoyi.system.service.IHyCheckeNodeService;
-
+import com.ruoyi.system.domain.HyCheckNode;
+import com.ruoyi.system.service.IHyCheckNodeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -36,12 +35,12 @@ import com.ruoyi.common.core.page.TableDataInfo;
 @CrossOrigin
 @RequestMapping("/system/node")
 @Api(tags = "巡检节点Controller")
-public class HyCheckeNodeController extends BaseController
+public class HyCheckNodeController extends BaseController
 {
     private String prefix = "system/node";
 
     @Autowired
-    private IHyCheckeNodeService hyCheckeNodeService;
+    private IHyCheckNodeService hyCheckNodeService;
 
     @RequiresPermissions("system:node:view")
     @GetMapping()
@@ -55,15 +54,15 @@ public class HyCheckeNodeController extends BaseController
      */
     @ApiOperation("巡检节点")
     @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyCheckeNode", value = "项目实体类hyCheckeNode", required = true),
+		@ApiImplicitParam(name = "hyCheckNode", value = "项目实体类hyCheckNode", required = true),
 	})
     @RequiresPermissions("system:node:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(HyCheckeNode hyCheckeNode)
+    public TableDataInfo list(HyCheckNode hyCheckNode)
     {
         startPage();
-        List<HyCheckeNode> list = hyCheckeNodeService.selectHyCheckeNodeList(hyCheckeNode);
+        List<HyCheckNode> list = hyCheckNodeService.selectHyCheckNodeList(hyCheckNode);
         return getDataTable(list);
     }
     
@@ -72,14 +71,14 @@ public class HyCheckeNodeController extends BaseController
      */
     @ApiOperation("巡检节点")
     @ApiImplicitParams({ 
-    	@ApiImplicitParam(name = "hyCheckeNode", value = "项目实体类hyCheckeNode", required = true),
+    	@ApiImplicitParam(name = "hyCheckNode", value = "项目实体类hyCheckNode", required = true),
     })
     @RequiresPermissions("system:node:list")
     @PostMapping("/lists")
     @ResponseBody
-    public List<HyCheckeNode> lists(HyCheckeNode hyCheckeNode)
+    public List<HyCheckNode> lists(HyCheckNode hyCheckNode)
     {
-    	List<HyCheckeNode> list = hyCheckeNodeService.selectHyCheckeNodeList(hyCheckeNode);
+    	List<HyCheckNode> list = hyCheckNodeService.selectHyCheckNodeList(hyCheckNode);
     	return list;
     }
 
@@ -88,16 +87,16 @@ public class HyCheckeNodeController extends BaseController
      */
     @ApiOperation("巡检节点")
     @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyCheckeNode", value = "项目实体类hyCheckeNode", required = true),
+		@ApiImplicitParam(name = "hyCheckNode", value = "项目实体类hyCheckNode", required = true),
 	})
     @RequiresPermissions("system:node:export")
     @Log(title = "巡检节点", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ResponseBody
-    public AjaxResult export(HyCheckeNode hyCheckeNode)
+    public AjaxResult export(HyCheckNode hyCheckNode)
     {
-        List<HyCheckeNode> list = hyCheckeNodeService.selectHyCheckeNodeList(hyCheckeNode);
-        ExcelUtil<HyCheckeNode> util = new ExcelUtil<HyCheckeNode>(HyCheckeNode.class);
+        List<HyCheckNode> list = hyCheckNodeService.selectHyCheckNodeList(hyCheckNode);
+        ExcelUtil<HyCheckNode> util = new ExcelUtil<HyCheckNode>(HyCheckNode.class);
         return util.exportExcel(list, "node");
     }
 
@@ -115,15 +114,15 @@ public class HyCheckeNodeController extends BaseController
      */
     @ApiOperation("巡检节点")
     @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyCheckeNode", value = "项目实体类hyCheckeNode", required = true),
+		@ApiImplicitParam(name = "hyCheckNode", value = "项目实体类hyCheckNode", required = true),
 	})
     @RequiresPermissions("system:node:add")
     @Log(title = "巡检节点", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
-    public AjaxResult addSave(HyCheckeNode hyCheckeNode)
+    public AjaxResult addSave(HyCheckNode hyCheckNode)
     {
-        return toAjax(hyCheckeNodeService.insertHyCheckeNode(hyCheckeNode));
+        return toAjax(hyCheckNodeService.insertHyCheckNode(hyCheckNode));
     }
 
     /**
@@ -136,8 +135,8 @@ public class HyCheckeNodeController extends BaseController
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Long id, ModelMap mmap)
     {
-        HyCheckeNode hyCheckeNode = hyCheckeNodeService.selectHyCheckeNodeById(id);
-        mmap.put("hyCheckeNode", hyCheckeNode);
+        HyCheckNode hyCheckNode = hyCheckNodeService.selectHyCheckNodeById(id);
+        mmap.put("hyCheckNode", hyCheckNode);
         return prefix + "/edit";
     }
 
@@ -146,15 +145,15 @@ public class HyCheckeNodeController extends BaseController
      */
     @ApiOperation("巡检节点")
     @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyCheckeNode", value = "项目实体类hyCheckeNode", required = true),
+		@ApiImplicitParam(name = "hyCheckNode", value = "项目实体类hyCheckNode", required = true),
 	})
     @RequiresPermissions("system:node:edit")
     @Log(title = "巡检节点", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(HyCheckeNode hyCheckeNode)
+    public AjaxResult editSave(HyCheckNode hyCheckNode)
     {
-        return toAjax(hyCheckeNodeService.updateHyCheckeNode(hyCheckeNode));
+        return toAjax(hyCheckNodeService.updateHyCheckNode(hyCheckNode));
     }
 
     /**
@@ -170,6 +169,6 @@ public class HyCheckeNodeController extends BaseController
     @ResponseBody
     public AjaxResult remove(String ids)
     {
-        return toAjax(hyCheckeNodeService.deleteHyCheckeNodeByIds(ids));
+        return toAjax(hyCheckNodeService.deleteHyCheckNodeByIds(ids));
     }
 }

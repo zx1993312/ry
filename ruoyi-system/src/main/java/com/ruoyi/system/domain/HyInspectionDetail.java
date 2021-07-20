@@ -43,7 +43,7 @@ public class HyInspectionDetail extends BaseEntity
     
     /** 巡检节点表 */
     @Excel(name = "巡检节点表")
-    private HyCheckeNode hyCheckeNode;
+    private HyCheckNode hyCheckNode;
 
     public void setId(Long id) 
     {
@@ -99,12 +99,12 @@ public class HyInspectionDetail extends BaseEntity
 		this.hyNodeTask = hyNodeTask;
 	}
 
-	public HyCheckeNode getHyCheckeNode() {
-		return hyCheckeNode;
+	public HyCheckNode getHyCheckNode() {
+		return hyCheckNode;
 	}
 
-	public void setHyCheckeNode(HyCheckeNode hyCheckeNode) {
-		this.hyCheckeNode = hyCheckeNode;
+	public void setHyCheckNode(HyCheckNode hyCheckNode) {
+		this.hyCheckNode = hyCheckNode;
 	}
 
 	@Override
@@ -117,7 +117,7 @@ public class HyInspectionDetail extends BaseEntity
             .append("routeId", getRouteId())
             .append("taskId", getTaskId())
             .append("hyNodeTask", getHyNodeTask())
-            .append("hyCheckeNode", getHyCheckeNode())
+            .append("hyCheckNode", getHyCheckNode())
             .toString();
     }
 }

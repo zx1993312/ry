@@ -3,27 +3,8 @@
 <head>
     <th:block th:include="include :: header('巡检节点列表')" />
     <th:block th:include="include :: layout-latest-css" />
-	<th:block th:include="include :: ztree-css" />
 </head>
 <body class="gray-bg">
-<div class="ui-layout-west">
-	<div class="box box-main">
-			<div class="box-header">
-				<div class="box-title">
-					<i class="fa icon-grid"></i> 组织机构
-				</div>
-				<div class="box-tools pull-right">
-				    <a type="button" class="btn btn-box-tool" href="#" onclick="costProject()" title="管理部门"><i class="fa fa-edit"></i></a>
-					<button type="button" class="btn btn-box-tool" id="btnExpand" title="展开" style="display:none;"><i class="fa fa-chevron-up"></i></button>
-					<button type="button" class="btn btn-box-tool" id="btnCollapse" title="折叠"><i class="fa fa-chevron-down"></i></button>
-					<button type="button" class="btn btn-box-tool" id="btnRefresh" title="刷新部门"><i class="fa fa-refresh"></i></button>
-				</div>
-			</div>
-			<div class="ui-layout-content">
-				<div id="tree" class="ztree"></div>
-			</div>
-		</div>
-	</div>
 	<div class="ui-layout-center">
      <div class="container-div">
         <div class="row">
@@ -32,35 +13,21 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                <input type="hidden" id="deptId" name="deptId">
-                            </li>
-                            <li>
                                 <label>巡检节点名称：</label>
                                 <input type="text" name="name"/>
                             </li>
                             <li>
                                 <label>巡检节点地址：</label>
-                                <input type="text" name="address"/>
-                            </li>
-                            <li>
-                                <label>扫描码：</label>
-                                <input type="text" name="scanCode"/>
+                                <input type="text" name="nodeAddress"/>
                             </li>
                             <li>
                                 <label>经度：</label>
-                                <input type="text" name="longitude"/>
+                                <input type="text" name="nodeLongitude"/>
                             </li>
                             <li>
                                 <label>纬度：</label>
-                                <input type="text" name="latitude"/>
+                                <input type="text" name="nodeLatitude"/>
                             </li>
-                            <!-- <li>
-                                <label>组织机构：</label>
-                                <select name="deptId" class="form-control" th:with="type=${@dept.getDepts()}">
-										<option value="">请选择</option>
-										<option th:if="data!=null" th:each="data : ${type}" th:text="${data.deptName}" th:value="${data.deptId}"></option>
-								</select>
-                            </li> -->
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                                 <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
@@ -92,123 +59,61 @@
      </div>
     <th:block th:include="include :: footer" />
     <th:block th:include="include :: layout-latest-js" />
-	<th:block th:include="include :: ztree-js" />
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('system:node:edit')}]];
         var removeFlag = [[${@permission.hasPermi('system:node:remove')}]];
         var prefix = ctx + "system/node";
 
 		$(function() {
-		    var panehHidden = false;
-		    if ($(this).width() < 769) {
-		        panehHidden = true;
-		    }
-		    $('body').layout({ initClosed: panehHidden, west__size: 185 });
-	     	// 回到顶部绑定
-	    	if ($.fn.toTop !== undefined) {
-	    		var opt = {
-	    			win:$('.ui-layout-center'),
-	    			doc:$('.ui-layout-center')
-	    		};
-	    		$('#scroll-up').toTop(opt);
-	    	}
-		    queryNodeList();
-		    queryDeptTree();
-		});
-        
-        function queryNodeList() {
             var options = {
-                url: prefix + "/list",
-                createUrl: prefix + "/add",
-                updateUrl: prefix + "/edit/{id}",
-                removeUrl: prefix + "/remove",
-                exportUrl: prefix + "/export",
-                modalName: "巡检节点",
-                columns: [{
-                    checkbox: true
-                },
-                {
-                    field: 'id',
-                    title: '巡检节点id',
-                    visible: false
-                },
-                {
-                    field: 'name',
-                    title: '巡检节点名称'
-                },
-                {
-                    field: 'address',
-                    title: '巡检节点地址'
-                },
-                {
-                    field: 'scanCode',
-                    title: '扫描码'
-                },
-                {
-                    field: 'longitude',
-                    title: '经度'
-                },
-                {
-                    field: 'latitude',
-                    title: '纬度'
-                },
-                {
-                    field: 'remark',
-                    title: '备注'
-                },
-                {
-                    field: 'sysDept.deptName',
-                    title: '组织机构'
-                },
-                {
-                    title: '操作',
-                    align: 'center',
-                    formatter: function(value, row, index) {
-                        var actions = [];
-                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
-                        return actions.join('');
-                    }
-                }]
-            };
-            $.table.init(options);
-        }
-       
-        
-        
-        //组织架构
-        function queryDeptTree()
-		{
-			var url = ctx + "system/dept/treeData";
-			var options = {
-		        url: url,
-		        expandLevel: 2,
-		        onClick : zOnClick
-		    };
-			$.tree.init(options);
-			
-			function zOnClick(event, treeId, treeNode) {
-				$("#deptId").val(treeNode.id);
-				$.table.search();
-			}
-		}
-        
-		
-		$('#btnExpand').click(function() {
-			$._tree.expandAll(true);
-		    $(this).hide();
-		    $('#btnCollapse').show();
+                    url: prefix + "/list",
+                    createUrl: prefix + "/add",
+                    updateUrl: prefix + "/edit/{id}",
+                    removeUrl: prefix + "/remove",
+                    exportUrl: prefix + "/export",
+                    modalName: "巡检节点",
+                    columns: [{
+                        checkbox: true
+                    },
+                    {
+                        field: 'id',
+                        title: '巡检节点id',
+                        visible: false
+                    },
+                    {
+                        field: 'name',
+                        title: '巡检节点名称'
+                    },
+                    {
+                        field: 'nodeAddress',
+                        title: '巡检节点地址'
+                    },
+                    {
+                        field: 'nodeLongitude',
+                        title: '经度'
+                    },
+                    {
+                        field: 'nodeLatitude',
+                        title: '纬度'
+                    },
+                    {
+                        field: 'nodeRemark',
+                        title: '备注'
+                    },
+                    {
+                        title: '操作',
+                        align: 'center',
+                        formatter: function(value, row, index) {
+                            var actions = [];
+                            actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                            actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                            return actions.join('');
+                        }
+                    }]
+                };
+                $.table.init(options);
 		});
-		
-		$('#btnCollapse').click(function() {
-			$._tree.expandAll(false);
-		    $(this).hide();
-		    $('#btnExpand').show();
-		});
-		
-		$('#btnRefresh').click(function() {
-			queryDeptTree();
-		});
+        
     </script>
 </body>
 </html>

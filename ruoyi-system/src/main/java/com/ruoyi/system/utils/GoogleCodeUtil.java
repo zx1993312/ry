@@ -71,4 +71,10 @@ public class GoogleCodeUtil {
 			e.printStackTrace();
 		}
 	}
+	
+	public static void main(String[] args) {
+		String a = "11111";
+		String content = "http://192.168.0.111:8081/#/qualityInspection?uuu="+a;
+		creatCode(content);
+	}
 }
