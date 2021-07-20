@@ -66,6 +66,54 @@ public class HyMaintenanceplanController extends BaseController
         List<HyMaintenanceplan> list = hyMaintenanceplanService.selectHyMaintenanceplanList(hyMaintenanceplan);
         return getDataTable(list);
     }
+    
+    /**
+     * 查询设备保养计划未完成列表
+     */
+    @ApiOperation("设备保养计划")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyMaintenanceplan", value = "项目实体类hyMaintenanceplan", required = true),
+    })
+    @RequiresPermissions("system:maintenanceplan:list")
+    @PostMapping("/listByUnfinished")
+    @ResponseBody
+    public List<HyMaintenanceplan> listByUnfinished(HyMaintenanceplan hyMaintenanceplan)
+    {
+    	List<HyMaintenanceplan> list = hyMaintenanceplanService.selectHyMaintenanceplanListByUnfinished(hyMaintenanceplan);
+    	return list;
+    }
+    
+    /**
+     * 查询设备保养计划进行中列表
+     */
+    @ApiOperation("设备保养计划")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyMaintenanceplan", value = "项目实体类hyMaintenanceplan", required = true),
+    })
+    @RequiresPermissions("system:maintenanceplan:list")
+    @PostMapping("/listByUnderway")
+    @ResponseBody
+    public List<HyMaintenanceplan> listByUnderway(HyMaintenanceplan hyMaintenanceplan)
+    {
+    	List<HyMaintenanceplan> list = hyMaintenanceplanService.selectHyMaintenanceplanListByUnderway(hyMaintenanceplan);
+    	return list;
+    }
+    
+    /**
+     * 查询设备保养计划已完成列表
+     */
+    @ApiOperation("设备保养计划")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyMaintenanceplan", value = "项目实体类hyMaintenanceplan", required = true),
+    })
+    @RequiresPermissions("system:maintenanceplan:list")
+    @PostMapping("/listByFinished")
+    @ResponseBody
+    public List<HyMaintenanceplan> listByFinished(HyMaintenanceplan hyMaintenanceplan)
+    {
+    	List<HyMaintenanceplan> list = hyMaintenanceplanService.selectHyMaintenanceplanListByFinished(hyMaintenanceplan);
+    	return list;
+    }
 
     /**
      * 导出设备保养计划列表

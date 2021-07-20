@@ -237,6 +237,19 @@
                     title: '计划日期'
                 },
                 {
+                    field: 'planStatus',
+                    title: '计划状态',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case "" : value =  "请选择";break;
+	                    	case "1" : value =  "未完成";break;
+	                    	case "2" : value =  "进行中";break;
+	                    	case "3" : value =  "已完成";break;
+	                	}
+		            	return value;
+		            }
+                },
+                {
                     field: 'hyEquipment.equipmentName',
                     title: '设备类别'
                 },

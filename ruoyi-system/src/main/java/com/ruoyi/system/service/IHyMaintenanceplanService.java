@@ -26,6 +26,30 @@ public interface IHyMaintenanceplanService
      * @return 设备保养计划集合
      */
     public List<HyMaintenanceplan> selectHyMaintenanceplanList(HyMaintenanceplan hyMaintenanceplan);
+    
+    /**
+     * 查询设备保养计划未完成列表
+     * 
+     * @param hyMaintenanceplan 设备保养计划
+     * @return 设备保养计划集合
+     */
+    public List<HyMaintenanceplan> selectHyMaintenanceplanListByUnfinished(HyMaintenanceplan hyMaintenanceplan);
+    
+    /**
+     * 查询设备保养计划进行中列表
+     * 
+     * @param hyMaintenanceplan 设备保养计划
+     * @return 设备保养计划集合
+     */
+    public List<HyMaintenanceplan> selectHyMaintenanceplanListByUnderway(HyMaintenanceplan hyMaintenanceplan);
+    
+    /**
+     * 查询设备保养计划已完成列表
+     * 
+     * @param hyMaintenanceplan 设备保养计划
+     * @return 设备保养计划集合
+     */
+    public List<HyMaintenanceplan> selectHyMaintenanceplanListByFinished(HyMaintenanceplan hyMaintenanceplan);
 
     /**
      * 新增设备保养计划

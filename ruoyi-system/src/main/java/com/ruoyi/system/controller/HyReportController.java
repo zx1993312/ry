@@ -120,6 +120,70 @@ public class HyReportController extends BaseController
     	List<HyReport> list = hyReportService.selectHyReportListByYWC(hyReport);
     	return list;
     }
+    
+    /**
+     * 查询待完成报事管理列表任务
+     */
+    @ApiOperation("报事管理")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyReport", value = "项目实体类hyReport", required = true),
+    })
+    @RequiresPermissions("system:report:list")
+    @PostMapping("/listByWait")
+    @ResponseBody
+    public List<HyReport> listByWait(HyReport hyReport)
+    {
+    	List<HyReport> list = hyReportService.selectHyReportListByWait(hyReport);
+    	return list;
+    }
+    
+    /**
+     * 查询进行中报事管理列表任务
+     */
+    @ApiOperation("报事管理")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyReport", value = "项目实体类hyReport", required = true),
+    })
+    @RequiresPermissions("system:report:list")
+    @PostMapping("/listByUnderway")
+    @ResponseBody
+    public List<HyReport> listByUnderway(HyReport hyReport)
+    {
+    	List<HyReport> list = hyReportService.selectHyReportListByUnderway(hyReport);
+    	return list;
+    }
+    
+    /**
+     * 查询已完成报事管理列表任务
+     */
+    @ApiOperation("报事管理")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyReport", value = "项目实体类hyReport", required = true),
+    })
+    @RequiresPermissions("system:report:list")
+    @PostMapping("/listByFinished")
+    @ResponseBody
+    public List<HyReport> listByFinished(HyReport hyReport)
+    {
+    	List<HyReport> list = hyReportService.selectHyReportListByFinished(hyReport);
+    	return list;
+    }
+    
+    /**
+     * 查询未完成报事管理列表任务
+     */
+    @ApiOperation("报事管理")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyReport", value = "项目实体类hyReport", required = true),
+    })
+    @RequiresPermissions("system:report:list")
+    @PostMapping("/listByUnfinished")
+    @ResponseBody
+    public List<HyReport> listByUnfinished(HyReport hyReport)
+    {
+    	List<HyReport> list = hyReportService.selectHyReportListByUnfinished(hyReport);
+    	return list;
+    }
 
     /**
      * 导出报事管理列表

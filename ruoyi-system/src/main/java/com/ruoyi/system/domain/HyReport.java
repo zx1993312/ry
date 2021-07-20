@@ -61,6 +61,10 @@ public class HyReport extends BaseEntity
     /** 状态 */
     @Excel(name = "状态")
     private String reportState;
+    
+    /** 任务状态 */
+    @Excel(name = "任务状态")
+    private String reportStatus;
 
     /** 审核 */
     @Excel(name = "审核")
@@ -207,7 +211,16 @@ public class HyReport extends BaseEntity
     {
         return reportState;
     }
-    public void setReportAudit(String reportAudit) 
+    
+    public String getReportStatus() {
+		return reportStatus;
+	}
+
+	public void setReportStatus(String reportStatus) {
+		this.reportStatus = reportStatus;
+	}
+
+	public void setReportAudit(String reportAudit) 
     {
         this.reportAudit = reportAudit;
     }
@@ -386,15 +399,16 @@ public class HyReport extends BaseEntity
 		return "HyReport [id=" + id + ", reportNumber=" + reportNumber + ", reportAddress=" + reportAddress
 				+ ", reportArea=" + reportArea + ", reportLevel=" + reportLevel + ", reportClassify=" + reportClassify
 				+ ", reportContent=" + reportContent + ", reportDescription=" + reportDescription + ", reportDate="
-				+ reportDate + ", reportQuality=" + reportQuality + ", reportState=" + reportState + ", reportAudit="
-				+ reportAudit + ", reportEvaluate=" + reportEvaluate + ", reportCost=" + reportCost
-				+ ", reportConsumable=" + reportConsumable + ", reportTotal=" + reportTotal + ", reportVisit="
-				+ reportVisit + ", reportPush=" + reportPush + ", reportPicture=" + reportPicture + ", reportDuration="
-				+ reportDuration + ", maintenanceDifficulty=" + maintenanceDifficulty + ", ownerId=" + ownerId
-				+ ", hyOwnerRegistration=" + hyOwnerRegistration + ", quartersId=" + quartersId
+				+ reportDate + ", reportQuality=" + reportQuality + ", reportState=" + reportState + ", reportStatus="
+				+ reportStatus + ", reportAudit=" + reportAudit + ", reportEvaluate=" + reportEvaluate + ", reportCost="
+				+ reportCost + ", reportConsumable=" + reportConsumable + ", reportTotal=" + reportTotal
+				+ ", reportVisit=" + reportVisit + ", reportPush=" + reportPush + ", reportPicture=" + reportPicture
+				+ ", reportDuration=" + reportDuration + ", maintenanceDifficulty=" + maintenanceDifficulty
+				+ ", ownerId=" + ownerId + ", hyOwnerRegistration=" + hyOwnerRegistration + ", quartersId=" + quartersId
 				+ ", hyResidentialQuarters=" + hyResidentialQuarters + ", recipientsId=" + recipientsId
 				+ ", hyRecipients=" + hyRecipients + ", userId=" + userId + ", sysUser=" + sysUser + "]";
 	}
+
 
 
 	

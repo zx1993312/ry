@@ -176,6 +176,20 @@
 		            }
                 },
                 {
+                    field: 'reportStatus',
+                    title: '任务状态',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case "" : value =  "请选择";break;
+	                    	case "1" : value =  "待完成";break;
+	                    	case "2" : value =  "进行中";break;
+	                    	case "3" : value =  "已完成";break;
+	                    	case "4" : value =  "未完成";break;
+	                	}
+		            	return value;
+		            }
+                },
+                {
                     field: 'reportAudit',
                     title: '审核',
                     formatter: function(value, item, index) {

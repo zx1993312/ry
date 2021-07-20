@@ -77,7 +77,50 @@ public class HyReportServiceImpl implements IHyReportService
     public List<HyReport> selectHyReportListByYWC(HyReport hyReport) {
     	return hyReportMapper.selectHyReportListByYWC(hyReport);
     }
-
+    
+    /**
+     * 查询待完成报事管理列表任务
+     * 
+     * @param hyReport 报事管理
+     * @return 报事管理
+     */
+    @Override
+    public List<HyReport> selectHyReportListByWait(HyReport hyReport) {
+    	return hyReportMapper.selectHyReportListByWait(hyReport);
+    }
+    
+    /**
+     * 查询进行中报事管理列表任务
+     * 
+     * @param hyReport 报事管理
+     * @return 报事管理
+     */
+    @Override
+    public List<HyReport> selectHyReportListByUnderway(HyReport hyReport) {
+    	return hyReportMapper.selectHyReportListByUnderway(hyReport);
+    }
+    
+    /**
+     * 查询已完成报事管理列表任务
+     * 
+     * @param hyReport 报事管理
+     * @return 报事管理
+     */
+    @Override
+    public List<HyReport> selectHyReportListByFinished(HyReport hyReport) {
+    	return hyReportMapper.selectHyReportListByFinished(hyReport);
+    }
+    
+    /**
+     * 查询未完成报事管理列表任务
+     * 
+     * @param hyReport 报事管理
+     * @return 报事管理
+     */
+    @Override
+    public List<HyReport> selectHyReportListByUnfinished(HyReport hyReport) {
+    	return hyReportMapper.selectHyReportListByUnfinished(hyReport);
+    }
 
     /**
      * 新增报事管理

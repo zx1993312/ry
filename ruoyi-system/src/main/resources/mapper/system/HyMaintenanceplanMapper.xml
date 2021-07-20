@@ -9,6 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="planCode"    column="plan_code"    />
         <result property="planName"    column="plan_name"    />
         <result property="planDate"    column="plan_date"    />
+        <result property="planStatus"    column="plan_status"    />
         <result property="maintainType"    column="maintain_type"    />
         <result property="maintainLevel"    column="maintain_level"    />
         <result property="maintainPeriod"    column="maintain_period"    />
@@ -92,6 +93,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         m.plan_code, 
         m.plan_name, 
         m.plan_date, 
+        m.plan_status, 
         m.maintain_type, 
         m.maintain_level, 
         m.maintain_period, 
@@ -125,6 +127,88 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="planCode != null  and planCode != ''"> and m.plan_code = #{planCode}</if>
             <if test="planName != null  and planName != ''"> and m.plan_name like concat('%', #{planName}, '%')</if>
             <if test="planDate != null "> and m.plan_date = #{planDate}</if>
+            <if test="planStatus != null and planStatus != ''"> and m.plan_status = #{planStatus}</if>
+            <if test="maintainType != null  and maintainType != ''"> and m.maintain_type = #{maintainType}</if>
+            <if test="maintainLevel != null  and maintainLevel != ''"> and m.maintain_level = #{maintainLevel}</if>
+            <if test="maintainPeriod != null  and maintainPeriod != ''"> and m.maintain_period = #{maintainPeriod}</if>
+            <if test="planRemark != null  and planRemark != ''"> and m.plan_remark = #{planRemark}</if>
+            <if test="isAudit != null  and isAudit != ''"> and m.is_audit = #{isAudit}</if>
+            <if test="plansClose != null  and plansClose != ''"> and m.plans_close = #{plansClose}</if>
+            <if test="closedType != null  and closedType != ''"> and m.closed_type = #{closedType}</if>
+            <if test="preparedBy != null  and preparedBy != ''"> and m.prepared_by = #{preparedBy}</if>
+            <if test="makeTime != null "> and m.make_time = #{makeTime}</if>
+            <if test="reviser != null  and reviser != ''"> and m.reviser = #{reviser}</if>
+            <if test="revisionTime != null "> and m.revision_time = #{revisionTime}</if>
+            <if test="content != null  and content != ''"> and m.content = #{content}</if>
+            <if test="specializedDepartment != null  and specializedDepartment != ''"> and m.specialized_department = #{specializedDepartment}</if>
+            <if test="planNumber != null  and planNumber != ''"> and m.plan_number = #{planNumber}</if>
+            <if test="equipmentId != null "> and m.equipment_id = #{equipmentId}</if>
+            <if test="deptId != null "> and m.dept_id = #{deptId}</if>
+            <if test="userId != null "> and m.user_id = #{userId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyMaintenanceplanListByUnfinished" parameterType="HyMaintenanceplan" resultMap="HyMaintenanceplanResult">
+        <include refid="selectHyMaintenanceplanVo"/>
+        <where>  
+            <if test="planCode != null  and planCode != ''"> and m.plan_code = #{planCode}</if>
+            <if test="planName != null  and planName != ''"> and m.plan_name like concat('%', #{planName}, '%')</if>
+            <if test="planDate != null "> and m.plan_date = #{planDate}</if>
+            and m.plan_status = "1"
+            <if test="maintainType != null  and maintainType != ''"> and m.maintain_type = #{maintainType}</if>
+            <if test="maintainLevel != null  and maintainLevel != ''"> and m.maintain_level = #{maintainLevel}</if>
+            <if test="maintainPeriod != null  and maintainPeriod != ''"> and m.maintain_period = #{maintainPeriod}</if>
+            <if test="planRemark != null  and planRemark != ''"> and m.plan_remark = #{planRemark}</if>
+            <if test="isAudit != null  and isAudit != ''"> and m.is_audit = #{isAudit}</if>
+            <if test="plansClose != null  and plansClose != ''"> and m.plans_close = #{plansClose}</if>
+            <if test="closedType != null  and closedType != ''"> and m.closed_type = #{closedType}</if>
+            <if test="preparedBy != null  and preparedBy != ''"> and m.prepared_by = #{preparedBy}</if>
+            <if test="makeTime != null "> and m.make_time = #{makeTime}</if>
+            <if test="reviser != null  and reviser != ''"> and m.reviser = #{reviser}</if>
+            <if test="revisionTime != null "> and m.revision_time = #{revisionTime}</if>
+            <if test="content != null  and content != ''"> and m.content = #{content}</if>
+            <if test="specializedDepartment != null  and specializedDepartment != ''"> and m.specialized_department = #{specializedDepartment}</if>
+            <if test="planNumber != null  and planNumber != ''"> and m.plan_number = #{planNumber}</if>
+            <if test="equipmentId != null "> and m.equipment_id = #{equipmentId}</if>
+            <if test="deptId != null "> and m.dept_id = #{deptId}</if>
+            <if test="userId != null "> and m.user_id = #{userId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyMaintenanceplanListByUnderway" parameterType="HyMaintenanceplan" resultMap="HyMaintenanceplanResult">
+        <include refid="selectHyMaintenanceplanVo"/>
+        <where>  
+            <if test="planCode != null  and planCode != ''"> and m.plan_code = #{planCode}</if>
+            <if test="planName != null  and planName != ''"> and m.plan_name like concat('%', #{planName}, '%')</if>
+            <if test="planDate != null "> and m.plan_date = #{planDate}</if>
+            and m.plan_status = "2"
+            <if test="maintainType != null  and maintainType != ''"> and m.maintain_type = #{maintainType}</if>
+            <if test="maintainLevel != null  and maintainLevel != ''"> and m.maintain_level = #{maintainLevel}</if>
+            <if test="maintainPeriod != null  and maintainPeriod != ''"> and m.maintain_period = #{maintainPeriod}</if>
+            <if test="planRemark != null  and planRemark != ''"> and m.plan_remark = #{planRemark}</if>
+            <if test="isAudit != null  and isAudit != ''"> and m.is_audit = #{isAudit}</if>
+            <if test="plansClose != null  and plansClose != ''"> and m.plans_close = #{plansClose}</if>
+            <if test="closedType != null  and closedType != ''"> and m.closed_type = #{closedType}</if>
+            <if test="preparedBy != null  and preparedBy != ''"> and m.prepared_by = #{preparedBy}</if>
+            <if test="makeTime != null "> and m.make_time = #{makeTime}</if>
+            <if test="reviser != null  and reviser != ''"> and m.reviser = #{reviser}</if>
+            <if test="revisionTime != null "> and m.revision_time = #{revisionTime}</if>
+            <if test="content != null  and content != ''"> and m.content = #{content}</if>
+            <if test="specializedDepartment != null  and specializedDepartment != ''"> and m.specialized_department = #{specializedDepartment}</if>
+            <if test="planNumber != null  and planNumber != ''"> and m.plan_number = #{planNumber}</if>
+            <if test="equipmentId != null "> and m.equipment_id = #{equipmentId}</if>
+            <if test="deptId != null "> and m.dept_id = #{deptId}</if>
+            <if test="userId != null "> and m.user_id = #{userId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyMaintenanceplanListByFinished" parameterType="HyMaintenanceplan" resultMap="HyMaintenanceplanResult">
+        <include refid="selectHyMaintenanceplanVo"/>
+        <where>  
+            <if test="planCode != null  and planCode != ''"> and m.plan_code = #{planCode}</if>
+            <if test="planName != null  and planName != ''"> and m.plan_name like concat('%', #{planName}, '%')</if>
+            <if test="planDate != null "> and m.plan_date = #{planDate}</if>
+            and m.plan_status = "3"
             <if test="maintainType != null  and maintainType != ''"> and m.maintain_type = #{maintainType}</if>
             <if test="maintainLevel != null  and maintainLevel != ''"> and m.maintain_level = #{maintainLevel}</if>
             <if test="maintainPeriod != null  and maintainPeriod != ''"> and m.maintain_period = #{maintainPeriod}</if>
@@ -156,6 +240,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="planCode != null">plan_code,</if>
             <if test="planName != null">plan_name,</if>
             <if test="planDate != null">plan_date,</if>
+            <if test="planStatus != null">plan_status,</if>
             <if test="maintainType != null">maintain_type,</if>
             <if test="maintainLevel != null">maintain_level,</if>
             <if test="maintainPeriod != null">maintain_period,</if>
@@ -178,6 +263,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="planCode != null">#{planCode},</if>
             <if test="planName != null">#{planName},</if>
             <if test="planDate != null">#{planDate},</if>
+            <if test="planStatus != null">#{planStatus},</if>
             <if test="maintainType != null">#{maintainType},</if>
             <if test="maintainLevel != null">#{maintainLevel},</if>
             <if test="maintainPeriod != null">#{maintainPeriod},</if>
@@ -204,6 +290,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="planCode != null">plan_code = #{planCode},</if>
             <if test="planName != null">plan_name = #{planName},</if>
             <if test="planDate != null">plan_date = #{planDate},</if>
+            <if test="planStatus != null">plan_status = #{planStatus},</if>
             <if test="maintainType != null">maintain_type = #{maintainType},</if>
             <if test="maintainLevel != null">maintain_level = #{maintainLevel},</if>
             <if test="maintainPeriod != null">maintain_period = #{maintainPeriod},</if>

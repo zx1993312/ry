@@ -46,6 +46,42 @@ public class HyMaintenanceplanServiceImpl implements IHyMaintenanceplanService
     {
         return hyMaintenanceplanMapper.selectHyMaintenanceplanList(hyMaintenanceplan);
     }
+    
+    /**
+     * 查询设备保养计划未完成列表
+     * 
+     * @param hyMaintenanceplan 设备保养计划
+     * @return 设备保养计划
+     */
+    @Override
+    public List<HyMaintenanceplan> selectHyMaintenanceplanListByUnfinished(HyMaintenanceplan hyMaintenanceplan)
+    {
+    	return hyMaintenanceplanMapper.selectHyMaintenanceplanListByUnfinished(hyMaintenanceplan);
+    }
+    
+    /**
+     * 查询设备保养计划进行中列表
+     * 
+     * @param hyMaintenanceplan 设备保养计划
+     * @return 设备保养计划
+     */
+    @Override
+    public List<HyMaintenanceplan> selectHyMaintenanceplanListByUnderway(HyMaintenanceplan hyMaintenanceplan)
+    {
+    	return hyMaintenanceplanMapper.selectHyMaintenanceplanListByUnderway(hyMaintenanceplan);
+    }
+    
+    /**
+     * 查询设备保养计划已完成列表
+     * 
+     * @param hyMaintenanceplan 设备保养计划
+     * @return 设备保养计划
+     */
+    @Override
+    public List<HyMaintenanceplan> selectHyMaintenanceplanListByFinished(HyMaintenanceplan hyMaintenanceplan)
+    {
+    	return hyMaintenanceplanMapper.selectHyMaintenanceplanListByFinished(hyMaintenanceplan);
+    }
 
     /**
      * 新增设备保养计划

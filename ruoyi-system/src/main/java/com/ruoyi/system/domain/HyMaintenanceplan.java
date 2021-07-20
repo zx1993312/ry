@@ -39,6 +39,10 @@ public class HyMaintenanceplan extends BaseEntity
     @Excel(name = "计划日期", width = 30, dateFormat = "yyyy-MM-dd")
     private Date planDate;
 
+    /** 计划状态 */
+    @Excel(name = "计划状态")
+    private String planStatus;
+
     /** 设备保养类别 */
     @Excel(name = "设备保养类别")
     private String maintainType;
@@ -54,7 +58,7 @@ public class HyMaintenanceplan extends BaseEntity
     /** 备注 */
     @Excel(name = "备注")
     private String planRemark;
-
+    
     /** 是否审核 */
     @Excel(name = "是否审核")
     private String isAudit;
@@ -157,7 +161,16 @@ public class HyMaintenanceplan extends BaseEntity
     {
         return planDate;
     }
-    public void setMaintainType(String maintainType) 
+    
+    public String getPlanStatus() {
+		return planStatus;
+	}
+
+	public void setPlanStatus(String planStatus) {
+		this.planStatus = planStatus;
+	}
+
+	public void setMaintainType(String maintainType) 
     {
         this.maintainType = maintainType;
     }
@@ -342,6 +355,7 @@ public class HyMaintenanceplan extends BaseEntity
             .append("planCode", getPlanCode())
             .append("planName", getPlanName())
             .append("planDate", getPlanDate())
+            .append("planStatus", getPlanStatus())
             .append("maintainType", getMaintainType())
             .append("maintainLevel", getMaintainLevel())
             .append("maintainPeriod", getMaintainPeriod())

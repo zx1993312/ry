@@ -16,6 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="reportDate"    column="report_date"    />
         <result property="reportQuality"    column="report_quality"    />
         <result property="reportState"    column="report_state"    />
+        <result property="reportStatus"    column="report_status"    />
         <result property="reportAudit"    column="report_audit"    />
         <result property="reportEvaluate"    column="report_evaluate"    />
         <result property="reportCost"    column="report_cost"    />
@@ -155,6 +156,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         r.report_date, 
         r.report_quality, 
         r.report_state, 
+        r.report_status, 
         r.report_audit, 
         r.report_evaluate, 
         r.report_cost, 
@@ -208,6 +210,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="reportDate != null "> and r.report_date = #{reportDate}</if>
             <if test="reportQuality != null  and reportQuality != ''"> and r.report_quality = #{reportQuality}</if>
             <if test="reportState != null  and reportState != ''"> and r.report_state = #{reportState}</if>
+            <if test="reportStatus != null  and reportStatus != ''"> and r.report_status = #{reportStatus}</if>
             <if test="reportAudit != null  and reportAudit != ''"> and r.report_audit = #{reportAudit}</if>
             <if test="reportEvaluate != null  and reportEvaluate != ''"> and r.report_evaluate = #{reportEvaluate}</if>
             <if test="reportCost != null "> and r.report_cost = #{reportCost}</if>
@@ -238,6 +241,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="reportDate != null "> and r.report_date = #{reportDate}</if>
             <if test="reportQuality != null  and reportQuality != ''"> and r.report_quality = #{reportQuality}</if>
             and r.report_state = "1"
+            <if test="reportStatus != null  and reportStatus != ''"> and r.report_status = #{reportStatus}</if>
             <if test="reportAudit != null  and reportAudit != ''"> and r.report_audit = #{reportAudit}</if>
             <if test="reportEvaluate != null  and reportEvaluate != ''"> and r.report_evaluate = #{reportEvaluate}</if>
             <if test="reportCost != null "> and r.report_cost = #{reportCost}</if>
@@ -268,6 +272,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="reportDate != null "> and r.report_date = #{reportDate}</if>
             <if test="reportQuality != null  and reportQuality != ''"> and r.report_quality = #{reportQuality}</if>
             and r.report_state = "2"
+            <if test="reportStatus != null  and reportStatus != ''"> and r.report_status = #{reportStatus}</if>
             <if test="reportAudit != null  and reportAudit != ''"> and r.report_audit = #{reportAudit}</if>
             <if test="reportEvaluate != null  and reportEvaluate != ''"> and r.report_evaluate = #{reportEvaluate}</if>
             <if test="reportCost != null "> and r.report_cost = #{reportCost}</if>
@@ -298,6 +303,131 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="reportDate != null "> and r.report_date = #{reportDate}</if>
             <if test="reportQuality != null  and reportQuality != ''"> and r.report_quality = #{reportQuality}</if>
             and r.report_state = "3"
+            <if test="reportStatus != null  and reportStatus != ''"> and r.report_status = #{reportStatus}</if>
+            <if test="reportAudit != null  and reportAudit != ''"> and r.report_audit = #{reportAudit}</if>
+            <if test="reportEvaluate != null  and reportEvaluate != ''"> and r.report_evaluate = #{reportEvaluate}</if>
+            <if test="reportCost != null "> and r.report_cost = #{reportCost}</if>
+            <if test="reportConsumable != null "> and r.report_consumable = #{reportConsumable}</if>
+            <if test="reportTotal != null "> and r.report_total = #{reportTotal}</if>
+            <if test="reportVisit != null  and reportVisit != ''"> and r.report_visit = #{reportVisit}</if>
+            <if test="reportPush != null  and reportPush != ''"> and r.report_push = #{reportPush}</if>
+            <if test="reportPicture != null  and reportPicture != ''"> and r.report_picture = #{reportPicture}</if>
+            <if test="reportDuration != null  and reportDuration != ''"> and r.report_duration = #{reportDuration}</if>
+            <if test="maintenanceDifficulty != null  and maintenanceDifficulty != ''"> and r.maintenance_difficulty = #{maintenanceDifficulty}</if>
+            <if test="quartersId != null "> and r.quarters_id = #{quartersId}</if>
+            <if test="ownerId != null "> and r.owner_id = #{ownerId}</if>
+            <if test="recipientsId != null "> and r.recipients_id = #{recipientsId}</if>
+            <if test="userId != null "> and r.user_id = #{userId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyReportListByWait" parameterType="HyReport" resultMap="HyReportResult">
+        <include refid="selectHyReportVo"/>
+        <where>  
+            <if test="reportNumber != null  and reportNumber != ''"> and r.report_number = #{reportNumber}</if>
+            <if test="reportAddress != null  and reportAddress != ''"> and r.report_address = #{reportAddress}</if>
+            <if test="reportArea != null  and reportArea != ''"> and r.report_area = #{reportArea}</if>
+            <if test="reportLevel != null  and reportLevel != ''"> and r.report_level = #{reportLevel}</if>
+            <if test="reportClassify != null  and reportClassify != ''"> and r.report_classify = #{reportClassify}</if>
+            <if test="reportContent != null  and reportContent != ''"> and r.report_content = #{reportContent}</if>
+            <if test="reportDescription != null  and reportDescription != ''"> and r.report_description = #{reportDescription}</if>
+            <if test="reportDate != null "> and r.report_date = #{reportDate}</if>
+            <if test="reportQuality != null  and reportQuality != ''"> and r.report_quality = #{reportQuality}</if>
+            and r.report_state = "2"
+            and r.report_status = "1"
+            <if test="reportAudit != null  and reportAudit != ''"> and r.report_audit = #{reportAudit}</if>
+            <if test="reportEvaluate != null  and reportEvaluate != ''"> and r.report_evaluate = #{reportEvaluate}</if>
+            <if test="reportCost != null "> and r.report_cost = #{reportCost}</if>
+            <if test="reportConsumable != null "> and r.report_consumable = #{reportConsumable}</if>
+            <if test="reportTotal != null "> and r.report_total = #{reportTotal}</if>
+            <if test="reportVisit != null  and reportVisit != ''"> and r.report_visit = #{reportVisit}</if>
+            <if test="reportPush != null  and reportPush != ''"> and r.report_push = #{reportPush}</if>
+            <if test="reportPicture != null  and reportPicture != ''"> and r.report_picture = #{reportPicture}</if>
+            <if test="reportDuration != null  and reportDuration != ''"> and r.report_duration = #{reportDuration}</if>
+            <if test="maintenanceDifficulty != null  and maintenanceDifficulty != ''"> and r.maintenance_difficulty = #{maintenanceDifficulty}</if>
+            <if test="quartersId != null "> and r.quarters_id = #{quartersId}</if>
+            <if test="ownerId != null "> and r.owner_id = #{ownerId}</if>
+            <if test="recipientsId != null "> and r.recipients_id = #{recipientsId}</if>
+            <if test="userId != null "> and r.user_id = #{userId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyReportListByUnderway" parameterType="HyReport" resultMap="HyReportResult">
+        <include refid="selectHyReportVo"/>
+        <where>  
+            <if test="reportNumber != null  and reportNumber != ''"> and r.report_number = #{reportNumber}</if>
+            <if test="reportAddress != null  and reportAddress != ''"> and r.report_address = #{reportAddress}</if>
+            <if test="reportArea != null  and reportArea != ''"> and r.report_area = #{reportArea}</if>
+            <if test="reportLevel != null  and reportLevel != ''"> and r.report_level = #{reportLevel}</if>
+            <if test="reportClassify != null  and reportClassify != ''"> and r.report_classify = #{reportClassify}</if>
+            <if test="reportContent != null  and reportContent != ''"> and r.report_content = #{reportContent}</if>
+            <if test="reportDescription != null  and reportDescription != ''"> and r.report_description = #{reportDescription}</if>
+            <if test="reportDate != null "> and r.report_date = #{reportDate}</if>
+            <if test="reportQuality != null  and reportQuality != ''"> and r.report_quality = #{reportQuality}</if>
+            and r.report_state = "2"
+            and r.report_status = "2"
+            <if test="reportAudit != null  and reportAudit != ''"> and r.report_audit = #{reportAudit}</if>
+            <if test="reportEvaluate != null  and reportEvaluate != ''"> and r.report_evaluate = #{reportEvaluate}</if>
+            <if test="reportCost != null "> and r.report_cost = #{reportCost}</if>
+            <if test="reportConsumable != null "> and r.report_consumable = #{reportConsumable}</if>
+            <if test="reportTotal != null "> and r.report_total = #{reportTotal}</if>
+            <if test="reportVisit != null  and reportVisit != ''"> and r.report_visit = #{reportVisit}</if>
+            <if test="reportPush != null  and reportPush != ''"> and r.report_push = #{reportPush}</if>
+            <if test="reportPicture != null  and reportPicture != ''"> and r.report_picture = #{reportPicture}</if>
+            <if test="reportDuration != null  and reportDuration != ''"> and r.report_duration = #{reportDuration}</if>
+            <if test="maintenanceDifficulty != null  and maintenanceDifficulty != ''"> and r.maintenance_difficulty = #{maintenanceDifficulty}</if>
+            <if test="quartersId != null "> and r.quarters_id = #{quartersId}</if>
+            <if test="ownerId != null "> and r.owner_id = #{ownerId}</if>
+            <if test="recipientsId != null "> and r.recipients_id = #{recipientsId}</if>
+            <if test="userId != null "> and r.user_id = #{userId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyReportListByFinished" parameterType="HyReport" resultMap="HyReportResult">
+        <include refid="selectHyReportVo"/>
+        <where>  
+            <if test="reportNumber != null  and reportNumber != ''"> and r.report_number = #{reportNumber}</if>
+            <if test="reportAddress != null  and reportAddress != ''"> and r.report_address = #{reportAddress}</if>
+            <if test="reportArea != null  and reportArea != ''"> and r.report_area = #{reportArea}</if>
+            <if test="reportLevel != null  and reportLevel != ''"> and r.report_level = #{reportLevel}</if>
+            <if test="reportClassify != null  and reportClassify != ''"> and r.report_classify = #{reportClassify}</if>
+            <if test="reportContent != null  and reportContent != ''"> and r.report_content = #{reportContent}</if>
+            <if test="reportDescription != null  and reportDescription != ''"> and r.report_description = #{reportDescription}</if>
+            <if test="reportDate != null "> and r.report_date = #{reportDate}</if>
+            <if test="reportQuality != null  and reportQuality != ''"> and r.report_quality = #{reportQuality}</if>
+            and r.report_state = "3"
+            and r.report_status = "3"
+            <if test="reportAudit != null  and reportAudit != ''"> and r.report_audit = #{reportAudit}</if>
+            <if test="reportEvaluate != null  and reportEvaluate != ''"> and r.report_evaluate = #{reportEvaluate}</if>
+            <if test="reportCost != null "> and r.report_cost = #{reportCost}</if>
+            <if test="reportConsumable != null "> and r.report_consumable = #{reportConsumable}</if>
+            <if test="reportTotal != null "> and r.report_total = #{reportTotal}</if>
+            <if test="reportVisit != null  and reportVisit != ''"> and r.report_visit = #{reportVisit}</if>
+            <if test="reportPush != null  and reportPush != ''"> and r.report_push = #{reportPush}</if>
+            <if test="reportPicture != null  and reportPicture != ''"> and r.report_picture = #{reportPicture}</if>
+            <if test="reportDuration != null  and reportDuration != ''"> and r.report_duration = #{reportDuration}</if>
+            <if test="maintenanceDifficulty != null  and maintenanceDifficulty != ''"> and r.maintenance_difficulty = #{maintenanceDifficulty}</if>
+            <if test="quartersId != null "> and r.quarters_id = #{quartersId}</if>
+            <if test="ownerId != null "> and r.owner_id = #{ownerId}</if>
+            <if test="recipientsId != null "> and r.recipients_id = #{recipientsId}</if>
+            <if test="userId != null "> and r.user_id = #{userId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyReportListByUnfinished" parameterType="HyReport" resultMap="HyReportResult">
+        <include refid="selectHyReportVo"/>
+        <where>  
+            <if test="reportNumber != null  and reportNumber != ''"> and r.report_number = #{reportNumber}</if>
+            <if test="reportAddress != null  and reportAddress != ''"> and r.report_address = #{reportAddress}</if>
+            <if test="reportArea != null  and reportArea != ''"> and r.report_area = #{reportArea}</if>
+            <if test="reportLevel != null  and reportLevel != ''"> and r.report_level = #{reportLevel}</if>
+            <if test="reportClassify != null  and reportClassify != ''"> and r.report_classify = #{reportClassify}</if>
+            <if test="reportContent != null  and reportContent != ''"> and r.report_content = #{reportContent}</if>
+            <if test="reportDescription != null  and reportDescription != ''"> and r.report_description = #{reportDescription}</if>
+            <if test="reportDate != null "> and r.report_date = #{reportDate}</if>
+            <if test="reportQuality != null  and reportQuality != ''"> and r.report_quality = #{reportQuality}</if>
+            and r.report_state = "3"
+            and r.report_status = "4"
             <if test="reportAudit != null  and reportAudit != ''"> and r.report_audit = #{reportAudit}</if>
             <if test="reportEvaluate != null  and reportEvaluate != ''"> and r.report_evaluate = #{reportEvaluate}</if>
             <if test="reportCost != null "> and r.report_cost = #{reportCost}</if>
@@ -337,8 +467,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="reportDescription != null">report_description,</if>
             report_date,
             <if test="reportQuality != null">report_quality,</if>
-            report_state,
-            report_audit,
+            <if test="reportState != null">report_state,</if>
+            <if test="reportStatus != null">report_status,</if>
+            <if test="reportAudit != null">report_audit,</if>
             <if test="reportEvaluate != null">report_evaluate,</if>
             <if test="reportCost != null">report_cost,</if>
             <if test="reportConsumable != null">report_consumable,</if>
@@ -363,8 +494,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="reportDescription != null">#{reportDescription},</if>
             NOW(),
             <if test="reportQuality != null">#{reportQuality},</if>
-            "1",
-            "1",
+            <if test="reportState != null">#{reportState},</if>
+            <if test="reportStatus != null">#{reportStatus},</if>
+            <if test="reportAudit != null">#{reportAudit},</if>
             <if test="reportEvaluate != null">#{reportEvaluate},</if>
             <if test="reportCost != null">#{reportCost},</if>
             <if test="reportConsumable != null">#{reportConsumable},</if>
@@ -394,6 +526,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             report_date = NOW(),
             <if test="reportQuality != null">report_quality = #{reportQuality},</if>
             <if test="reportState != null">report_state = #{reportState},</if>
+            <if test="reportStatus != null">report_status = #{reportStatus},</if>
             <if test="reportAudit != null">report_audit = #{reportAudit},</if>
             <if test="reportEvaluate != null">report_evaluate = #{reportEvaluate},</if>
             <if test="reportCost != null">report_cost = #{reportCost},</if>
