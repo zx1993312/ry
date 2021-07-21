@@ -1,6 +1,9 @@
 package com.ruoyi.system.mapper;
 
 import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.ruoyi.system.domain.TaskAndNode;
 
 /**
@@ -58,7 +61,7 @@ public interface TaskAndNodeMapper
      * @param taskId 巡检任务和巡检节点关联ID
      * @return 结果
      */
-    public int deleteTaskAndNodeByNodeIdAndTaskId(Long nodeId,Long taskId);
+    public int deleteTaskAndNodeByNodeIdAndTaskId(@Param("nodeId") Long nodeId,@Param("taskId") Long taskId);
 
     /**
      * 批量删除巡检任务和巡检节点关联

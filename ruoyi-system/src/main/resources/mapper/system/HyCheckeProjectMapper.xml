@@ -39,9 +39,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap type="HyNodeTask" id="HyNodeTaskResult">
         <result property="id"    column="id"    />
         <result property="taskName"    column="task_name"    />
-        <result property="inspectionWay"    column="inspection_way"    />
-        <result property="remark"    column="remark"    />
-        <result property="nodeId"    column="node_id"    />
+        <result property="taskTime"    column="task_time"    />
+        <result property="taskRemark"    column="task_remark"    />
+        <result property="taskStatus"    column="task_status"    />
+        <result property="userId"    column="user_id"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="typeId"    column="type_id"    />
     </resultMap>
 	
 	<resultMap type="HyPatrolScheme" id="HyPatrolSchemeResult">
@@ -91,7 +94,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         from 
         hy_checke_project c
         LEFT JOIN hy_check_node n ON c.node_id = n.id
-        LEFT JOIN hy_node_task t ON t.node_id = n.id
+        LEFT JOIN task_and_node a ON a.node_id = n.id
+        LEFT JOIN hy_node_task t ON a.task_id = t.id
         LEFT JOIN hy_inspection_detail d ON d.task_id = t.id
         LEFT JOIN hy_inspection_route r ON d.route_id = r.id
         LEFT JOIN hy_patrol_scheme s ON r.scheme_id = s.id

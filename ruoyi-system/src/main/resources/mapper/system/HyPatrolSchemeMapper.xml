@@ -167,7 +167,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         LEFT JOIN hy_polling_period p ON  p.scheme_id=s.id
         LEFT JOIN hy_inspection_detail d ON  d.route_id=r.id
         LEFT JOIN hy_node_task t ON  d.task_id=t.id
-        LEFT JOIN hy_check_node n ON  t.node_id=n.id
+        LEFT JOIN task_and_node a ON a.task_id = t.id
+        LEFT JOIN hy_check_node n ON  a.node_id=n.id
         LEFT JOIN hy_checke_project c ON  c.node_id=n.id
         LEFT JOIN hy_inspection_result h ON  h.scheme_id=s.id
         LEFT JOIN sys_dept e ON  s.dept_id=e.dept_id
