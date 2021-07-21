@@ -115,6 +115,45 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
     
+    <select id="selectHyNodeTaskListByUnfinished" parameterType="HyNodeTask" resultMap="HyNodeTaskResult">
+        <include refid="selectHyNodeTaskVo"/>
+        <where>  
+            <if test="taskName != null  and taskName != ''"> and t.task_name like concat('%', #{taskName}, '%')</if>
+            <if test="taskTime != null  and taskTime != ''"> and t.task_time = #{taskTime}</if>
+            <if test="taskRemark != null  and taskRemark != ''"> and t.task_remark = #{taskRemark}</if>
+            and t.task_status = "1"
+            <if test="userId != null "> and t.user_id = #{userId}</if>
+            <if test="deptId != null "> and t.dept_id = #{deptId}</if>
+            <if test="typeId != null "> and t.type_id = #{typeId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyNodeTaskListByUnderway" parameterType="HyNodeTask" resultMap="HyNodeTaskResult">
+        <include refid="selectHyNodeTaskVo"/>
+        <where>  
+            <if test="taskName != null  and taskName != ''"> and t.task_name like concat('%', #{taskName}, '%')</if>
+            <if test="taskTime != null  and taskTime != ''"> and t.task_time = #{taskTime}</if>
+            <if test="taskRemark != null  and taskRemark != ''"> and t.task_remark = #{taskRemark}</if>
+            and t.task_status = "2"
+            <if test="userId != null "> and t.user_id = #{userId}</if>
+            <if test="deptId != null "> and t.dept_id = #{deptId}</if>
+            <if test="typeId != null "> and t.type_id = #{typeId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyNodeTaskListByFinished" parameterType="HyNodeTask" resultMap="HyNodeTaskResult">
+        <include refid="selectHyNodeTaskVo"/>
+        <where>  
+            <if test="taskName != null  and taskName != ''"> and t.task_name like concat('%', #{taskName}, '%')</if>
+            <if test="taskTime != null  and taskTime != ''"> and t.task_time = #{taskTime}</if>
+            <if test="taskRemark != null  and taskRemark != ''"> and t.task_remark = #{taskRemark}</if>
+            and t.task_status = "3"
+            <if test="userId != null "> and t.user_id = #{userId}</if>
+            <if test="deptId != null "> and t.dept_id = #{deptId}</if>
+            <if test="typeId != null "> and t.type_id = #{typeId}</if>
+        </where>
+    </select>
+    
     <select id="selectHyNodeTaskById" parameterType="Long" resultMap="HyNodeTaskResult">
         <include refid="selectHyNodeTaskVo"/>
         where t.id = #{id}

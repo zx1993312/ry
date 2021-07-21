@@ -69,6 +69,54 @@ public class HyNodeTaskController extends BaseController
         List<HyNodeTask> list = hyNodeTaskService.selectHyNodeTaskList(hyNodeTask);
         return getDataTable(list);
     }
+    
+    /**
+     * 查询节点巡检任务未完成列表
+     */
+    @ApiOperation("节点巡检任务")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyNodeTask", value = "项目实体类hyNodeTask", required = true),
+    })
+    @RequiresPermissions("system:task:list")
+    @PostMapping("/listByUnfinished")
+    @ResponseBody
+    public List<HyNodeTask> listByUnfinished(HyNodeTask hyNodeTask)
+    {
+    	List<HyNodeTask> list = hyNodeTaskService.selectHyNodeTaskListByUnfinished(hyNodeTask);
+    	return list;
+    }
+    
+    /**
+     * 查询节点巡检任务进行中列表
+     */
+    @ApiOperation("节点巡检任务")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyNodeTask", value = "项目实体类hyNodeTask", required = true),
+    })
+    @RequiresPermissions("system:task:list")
+    @PostMapping("/listByUnderway")
+    @ResponseBody
+    public List<HyNodeTask> listByUnderway(HyNodeTask hyNodeTask)
+    {
+    	List<HyNodeTask> list = hyNodeTaskService.selectHyNodeTaskListByUnderway(hyNodeTask);
+    	return list;
+    }
+    
+    /**
+     * 查询节点巡检任务已完成列表
+     */
+    @ApiOperation("节点巡检任务")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyNodeTask", value = "项目实体类hyNodeTask", required = true),
+    })
+    @RequiresPermissions("system:task:list")
+    @PostMapping("/listByFinished")
+    @ResponseBody
+    public List<HyNodeTask> listByFinished(HyNodeTask hyNodeTask)
+    {
+    	List<HyNodeTask> list = hyNodeTaskService.selectHyNodeTaskListByFinished(hyNodeTask);
+    	return list;
+    }
 
     /**
      * 导出节点巡检任务列表

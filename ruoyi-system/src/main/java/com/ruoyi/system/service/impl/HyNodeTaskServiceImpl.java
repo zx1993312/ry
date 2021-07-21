@@ -55,6 +55,42 @@ public class HyNodeTaskServiceImpl implements IHyNodeTaskService
     {
         return hyNodeTaskMapper.selectHyNodeTaskList(hyNodeTask);
     }
+    
+    /**
+     * 查询节点巡检任务未完成列表
+     * 
+     * @param hyNodeTask 节点巡检任务
+     * @return 节点巡检任务
+     */
+    @Override
+    public List<HyNodeTask> selectHyNodeTaskListByUnfinished(HyNodeTask hyNodeTask)
+    {
+    	return hyNodeTaskMapper.selectHyNodeTaskListByUnfinished(hyNodeTask);
+    }
+    
+    /**
+     * 查询节点巡检任务进行中列表
+     * 
+     * @param hyNodeTask 节点巡检任务
+     * @return 节点巡检任务
+     */
+    @Override
+    public List<HyNodeTask> selectHyNodeTaskListByUnderway(HyNodeTask hyNodeTask)
+    {
+    	return hyNodeTaskMapper.selectHyNodeTaskListByUnderway(hyNodeTask);
+    }
+    
+    /**
+     * 查询节点巡检任务已完成列表
+     * 
+     * @param hyNodeTask 节点巡检任务
+     * @return 节点巡检任务
+     */
+    @Override
+    public List<HyNodeTask> selectHyNodeTaskListByFinished(HyNodeTask hyNodeTask)
+    {
+    	return hyNodeTaskMapper.selectHyNodeTaskListByFinished(hyNodeTask);
+    }
 
     /**
      * 新增节点巡检任务
@@ -69,19 +105,21 @@ public class HyNodeTaskServiceImpl implements IHyNodeTaskService
     	int row = 0;
     	row = hyNodeTaskMapper.insertHyNodeTask(hyNodeTask);
     	if(row>0) {
-    		String[] nodeIds = hyNodeTask.getNodeIds().split(",");
-    		hyNodeTask = hyNodeTaskMapper.selectHyNodeTaskList(hyNodeTask).get(0);
-    		Long taskId = hyNodeTask.getId();
-        	for(String nodeId : nodeIds) {
-        		TaskAndNode taskAndNode = new TaskAndNode();
-        		taskAndNode.setNodeId(Long.valueOf(nodeId));
-        		taskAndNode.setTaskId(taskId);
-        		List<TaskAndNode> list = taskAndNodeMapper.selectTaskAndNodeList(taskAndNode);
-        		if(list.size()==0) {
-        			taskAndNode.setIsInspection("0");
-        			taskAndNodeMapper.insertTaskAndNode(taskAndNode);
-        		}
-        	}
+    		if(hyNodeTask.getNodeIds()!=null&&!"".equals(hyNodeTask.getNodeIds())) {
+	    		String[] nodeIds = hyNodeTask.getNodeIds().split(",");
+	    		hyNodeTask = hyNodeTaskMapper.selectHyNodeTaskList(hyNodeTask).get(0);
+	    		Long taskId = hyNodeTask.getId();
+	        	for(String nodeId : nodeIds) {
+	        		TaskAndNode taskAndNode = new TaskAndNode();
+	        		taskAndNode.setNodeId(Long.valueOf(nodeId));
+	        		taskAndNode.setTaskId(taskId);
+	        		List<TaskAndNode> list = taskAndNodeMapper.selectTaskAndNodeList(taskAndNode);
+	        		if(list.size()==0) {
+	        			taskAndNode.setIsInspection("0");
+	        			taskAndNodeMapper.insertTaskAndNode(taskAndNode);
+	        		}
+	        	}
+    		}
     	}
     	
         return row;
@@ -97,36 +135,38 @@ public class HyNodeTaskServiceImpl implements IHyNodeTaskService
     @Override
     public int updateHyNodeTask(HyNodeTask hyNodeTask)
     {
-    	String[] nodeIds = hyNodeTask.getNodeIds().split(",");
-    	Long taskId = hyNodeTask.getId();
-    	List<HyCheckNode> checkNodeList = hyCheckNodeMapper.selectHyCheckNodeList(new HyCheckNode());
-    	String ids = "";
-    	for(HyCheckNode checkNode : checkNodeList) {
-    		Long nodeId = checkNode.getId();
-    		ids = ids + nodeId + ",";
-    	} 
-    	String[] id = ids.split(",");
-    	String[] iii = minus(nodeIds, id);
-    	for(String i : iii) {
-    		TaskAndNode taskAndNode = new TaskAndNode();
-    		taskAndNode.setTaskId(taskId);
-    		taskAndNode.setNodeId(Long.valueOf(i));
-    		List<TaskAndNode> list = taskAndNodeMapper.selectTaskAndNodeList(taskAndNode);
-    		if(list!=null) {
-    			taskAndNodeMapper.deleteTaskAndNodeByNodeIdAndTaskId(Long.valueOf(i),taskId);
-    		}
-    	}
-    	for(String nodeId : nodeIds) {
-    		TaskAndNode taskAndNode = new TaskAndNode();
-    		taskAndNode.setTaskId(taskId);
-    		taskAndNode.setNodeId(Long.valueOf(nodeId));
-    		List<TaskAndNode> list = taskAndNodeMapper.selectTaskAndNodeList(taskAndNode);
-    		
-    		if(list.size()==0) {
-    			taskAndNode.setIsInspection("0");
-    			taskAndNodeMapper.insertTaskAndNode(taskAndNode);
-    		}
-    		
+    	if(hyNodeTask.getNodeIds()!=null&&!"".equals(hyNodeTask.getNodeIds())) {
+    		String[] nodeIds = hyNodeTask.getNodeIds().split(",");
+        	Long taskId = hyNodeTask.getId();
+        	List<HyCheckNode> checkNodeList = hyCheckNodeMapper.selectHyCheckNodeList(new HyCheckNode());
+        	String ids = "";
+        	for(HyCheckNode checkNode : checkNodeList) {
+        		Long nodeId = checkNode.getId();
+        		ids = ids + nodeId + ",";
+        	} 
+        	String[] id = ids.split(",");
+        	String[] iii = minus(nodeIds, id);
+        	for(String i : iii) {
+        		TaskAndNode taskAndNode = new TaskAndNode();
+        		taskAndNode.setTaskId(taskId);
+        		taskAndNode.setNodeId(Long.valueOf(i));
+        		List<TaskAndNode> list = taskAndNodeMapper.selectTaskAndNodeList(taskAndNode);
+        		if(list!=null) {
+        			taskAndNodeMapper.deleteTaskAndNodeByNodeIdAndTaskId(Long.valueOf(i),taskId);
+        		}
+        	}
+        	for(String nodeId : nodeIds) {
+        		TaskAndNode taskAndNode = new TaskAndNode();
+        		taskAndNode.setTaskId(taskId);
+        		taskAndNode.setNodeId(Long.valueOf(nodeId));
+        		List<TaskAndNode> list = taskAndNodeMapper.selectTaskAndNodeList(taskAndNode);
+        		
+        		if(list.size()==0) {
+        			taskAndNode.setIsInspection("0");
+        			taskAndNodeMapper.insertTaskAndNode(taskAndNode);
+        		}
+        		
+        	}
     	}
         return hyNodeTaskMapper.updateHyNodeTask(hyNodeTask);
     }

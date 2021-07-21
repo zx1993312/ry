@@ -26,6 +26,30 @@ public interface HyNodeTaskMapper
      * @return 节点巡检任务集合
      */
     public List<HyNodeTask> selectHyNodeTaskList(HyNodeTask hyNodeTask);
+    
+    /**
+     * 查询节点巡检任务未完成列表
+     * 
+     * @param hyNodeTask 节点巡检任务
+     * @return 节点巡检任务集合
+     */
+    public List<HyNodeTask> selectHyNodeTaskListByUnfinished(HyNodeTask hyNodeTask);
+    
+    /**
+     * 查询节点巡检任务进行中列表
+     * 
+     * @param hyNodeTask 节点巡检任务
+     * @return 节点巡检任务集合
+     */
+    public List<HyNodeTask> selectHyNodeTaskListByUnderway(HyNodeTask hyNodeTask);
+    
+    /**
+     * 查询节点巡检任务已完成列表
+     * 
+     * @param hyNodeTask 节点巡检任务
+     * @return 节点巡检任务集合
+     */
+    public List<HyNodeTask> selectHyNodeTaskListByFinished(HyNodeTask hyNodeTask);
 
     /**
      * 新增节点巡检任务
