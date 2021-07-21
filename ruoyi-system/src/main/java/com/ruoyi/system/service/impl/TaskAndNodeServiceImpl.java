@@ -92,8 +92,8 @@ public class TaskAndNodeServiceImpl implements ITaskAndNodeService
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public int deleteTaskAndNodeById(Long nodeId)
+    public int deleteTaskAndNodeById(Long taskId)
     {
-        return taskAndNodeMapper.deleteTaskAndNodeById(nodeId);
+        return taskAndNodeMapper.deleteTaskAndNodeById(taskId);
     }
 }

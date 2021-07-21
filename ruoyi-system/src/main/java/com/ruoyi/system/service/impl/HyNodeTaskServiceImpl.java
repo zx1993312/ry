@@ -172,6 +172,7 @@ public class HyNodeTaskServiceImpl implements IHyNodeTaskService
     @Override
     public int deleteHyNodeTaskByIds(String ids)
     {
+    	taskAndNodeMapper.deleteTaskAndNodeByIds(Convert.toStrArray(ids));
         return hyNodeTaskMapper.deleteHyNodeTaskByIds(Convert.toStrArray(ids));
     }
 
@@ -185,6 +186,7 @@ public class HyNodeTaskServiceImpl implements IHyNodeTaskService
     @Override
     public int deleteHyNodeTaskById(Long id)
     {
+    	taskAndNodeMapper.deleteTaskAndNodeById(id);
         return hyNodeTaskMapper.deleteHyNodeTaskById(id);
     }
 }

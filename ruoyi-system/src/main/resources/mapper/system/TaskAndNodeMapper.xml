@@ -52,7 +52,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteTaskAndNodeById" parameterType="Long">
-        delete from task_and_node where node_id = #{nodeId}
+        delete from task_and_node where task_id = #{taskId}
     </delete>
     
     <delete id="deleteTaskAndNodeByNodeIdAndTaskId" parameterType="Long">
@@ -60,9 +60,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteTaskAndNodeByIds" parameterType="String">
-        delete from task_and_node where node_id in 
-        <foreach item="nodeId" collection="array" open="(" separator="," close=")">
-            #{nodeId}
+        delete from task_and_node where task_id in 
+        <foreach item="taskId" collection="array" open="(" separator="," close=")">
+            #{taskId}
         </foreach>
     </delete>
 

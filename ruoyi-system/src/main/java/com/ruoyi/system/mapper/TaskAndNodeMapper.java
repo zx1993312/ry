@@ -52,7 +52,7 @@ public interface TaskAndNodeMapper
      * @param taskId 巡检任务和巡检节点关联ID
      * @return 结果
      */
-    public int deleteTaskAndNodeById(Long nodeId);
+    public int deleteTaskAndNodeById(Long taskId);
     
     
     /**
