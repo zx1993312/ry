@@ -5,7 +5,6 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.system.domain.HyNodeTask;
+import com.ruoyi.system.domain.TaskAndNode;
 import com.ruoyi.system.service.IHyNodeTaskService;
+import com.ruoyi.system.service.ITaskAndNodeService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -30,10 +31,9 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 节点巡检任务Controller
  * 
  * @author Administrator
- * @date 2021-04-25
+ * @date 2021-07-21
  */
 @Controller
-@CrossOrigin
 @RequestMapping("/system/task")
 @Api(tags = "节点巡检任务Controller")
 public class HyNodeTaskController extends BaseController
@@ -42,8 +42,11 @@ public class HyNodeTaskController extends BaseController
 
     @Autowired
     private IHyNodeTaskService hyNodeTaskService;
+    
+    @Autowired
+    private ITaskAndNodeService taskAndNodeService;
 
-//    @RequiresPermissions("system:task:view")
+    @RequiresPermissions("system:task:view")
     @GetMapping()
     public String task()
     {
@@ -57,8 +60,8 @@ public class HyNodeTaskController extends BaseController
     @ApiImplicitParams({ 
 		@ApiImplicitParam(name = "hyNodeTask", value = "项目实体类hyNodeTask", required = true),
 	})
-//    @RequiresPermissions("system:task:list")
-    @RequestMapping("/list")
+    @RequiresPermissions("system:task:list")
+    @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(HyNodeTask hyNodeTask)
     {
@@ -121,6 +124,15 @@ public class HyNodeTaskController extends BaseController
     public String edit(@PathVariable("id") Long id, ModelMap mmap)
     {
         HyNodeTask hyNodeTask = hyNodeTaskService.selectHyNodeTaskById(id);
+        TaskAndNode taskAndNode = new TaskAndNode();
+        taskAndNode.setTaskId(id);
+        String nodeIds ="";
+        List<TaskAndNode> taskAndNodeList = taskAndNodeService.selectTaskAndNodeList(taskAndNode);
+        for(TaskAndNode list : taskAndNodeList) {
+        	Long nodeId = list.getNodeId();
+        	nodeIds = nodeIds + nodeId +",";
+        }
+        hyNodeTask.setNodeIds(nodeIds);
         mmap.put("hyNodeTask", hyNodeTask);
         return prefix + "/edit";
     }

@@ -47,7 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         from 
         hy_inspection_detail d
         LEFT JOIN hy_node_task t ON d.task_id = t.id
-        LEFT JOIN hy_checke_node n ON t.node_id = n.id
+        LEFT JOIN hy_check_node n ON t.node_id = n.id
     </sql>
 
     <select id="selectHyInspectionDetailList" parameterType="HyInspectionDetail" resultMap="HyInspectionDetailResult">

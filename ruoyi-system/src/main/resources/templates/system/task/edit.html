@@ -8,35 +8,74 @@
         <form class="form-horizontal m" id="form-task-edit" th:object="${hyNodeTask}">
             <input name="id" th:field="*{id}" type="hidden">
             <div class="form-group">    
-                <label class="col-sm-2 control-label">名称：</label>
-                <div class="col-sm-4">
+                <label class="col-sm-3 control-label">计划名称：</label>
+                <div class="col-sm-8">
                     <input name="taskName" th:field="*{taskName}" class="form-control" type="text">
                 </div>
-                <label class="col-sm-2 control-label">巡检节点：</label>
-                <div class="col-sm-4">
-                    <select id="nodeId" name="nodeId" th:field="*{nodeId}" class="form-control" th:with="type=${@node.getNode()}" onchange="changeAddress()">
-						<option value="">请选择</option>
-						<option th:if="data!=null" th:each="data:${type}" th:text="${data.name}" th:value="${data.id}"></option>
-			 	    </select>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">巡检时间：</label>
+                <div class="col-sm-8">
+                    <select name="taskTime" th:field="*{taskTime}" class="form-control">
+                        <option value="">请选择</option>
+                        <option value="1">天</option>
+                        <option value="2">周</option>
+                        <option value="3">月</option>
+                    </select>
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-2 control-label">巡检方式：</label>
-                <div class="col-sm-2">
-                    <input name="inspectionWay" th:field="*{inspectionWay}" value="1" type="radio">设备巡检
-                </div>
-                <div class="col-sm-2">
-                    <input name="inspectionWay" th:field="*{inspectionWay}" value="2" type="radio">区域巡检
-                </div>
-                <label class="col-sm-2 control-label">备注：</label>
-                <div class="col-sm-4">
-                    <input name="remark" th:field="*{remark}" class="form-control" type="text">
+                <label class="col-sm-3 control-label">任务备注：</label>
+                <div class="col-sm-8">
+                    <input name="taskRemark" th:field="*{taskRemark}" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-2 control-label">地址：</label>
-                <div class="col-sm-4">
-                    <input id="address" th:field="*{hyCheckeNode.nodeAddress}" class="form-control" type="text" disabled="disabled">
+                <label class="col-sm-3 control-label">任务状态：</label>
+                <div class="col-sm-8">
+                     <select name="taskStatus" th:field="*{taskStatus}" class="form-control">
+                          <option value="">请选择</option>
+                          <option value="1">未完成</option>
+                          <option value="2">进行中</option>
+                          <option value="3">已完成</option>
+                      </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">巡检节点：</label>
+                <div class="col-sm-8">
+                	<div class="col-sm-9" th:with="type=${@node.getNode()}">
+                    <label  th:each="dict : ${type}" class="check-box">
+                    	<input name="nodeIds" type="checkbox" th:checked="${#arrays.contains(#strings.arraySplit(hyNodeTask.nodeIds,','),#strings.toString(dict.id))}" th:text="${dict.name}" th:value="${dict.id}">
+                    </label>
+        			</div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">巡检人：</label>
+                <div class="col-sm-8">
+                    <select name="userId" th:field="*{userId}" class="form-control" th:with="type=${@user.getUser()}">
+							<option value="">请选择</option>
+							<option th:if="data!=null" th:each="data : ${type}" th:text="${data.userName}" th:value="${data.userId}"></option>
+					 </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">部门：</label>
+                <div class="col-sm-8">
+                    <select name="deptId" th:field="*{deptId}" class="form-control" th:with="type=${@dept.getDepts()}">
+							<option value="">请选择</option>
+							<option th:if="data!=null" th:each="data : ${type}" th:text="${data.deptName}" th:value="${data.deptId}"></option>
+					 </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">巡检类型：</label>
+                <div class="col-sm-8">
+                    <select name="typeId" th:field="*{typeId}" class="form-control" th:with="type=${@type.getType()}">
+							<option value="">请选择</option>
+							<option th:if="data!=null" th:each="data : ${type}" th:text="${data.checkType}" th:value="${data.id}"></option>
+					 </select>
                 </div>
             </div>
         </form>
@@ -45,22 +84,6 @@
     <script th:inline="javascript">
         var prefix = ctx + "system/task";
         $("#form-task-edit").validate({
-        	rules : {
-        		taskName : {
-					required : true,
-					maxlength:20,
-				},
-				inspectionWay : {
-					maxlength:20,
-				},
-				remark : {
-					maxlength:255,
-				},
-				nodeId : {
-					required : true,
-					maxlength:11,
-				},
-			},
             focusCleanup: true
         });
 
@@ -68,41 +91,7 @@
             if ($.validate.form()) {
                 $.operate.save(prefix + "/edit", $('#form-task-edit').serialize());
             }
-        };
-		function changeAddress(){
-   			$.ajax({
-                url: prefix1 + "/lists",
-                data: {id : $("#nodeId").val()},
-                dataType : 'json',
-                type: 'POST',
-                success: function (result) {
-                	var optArr = [];
-                	$("#address").empty();
-					$("#address").val(result[0].address);
-					$("#depts").empty();
-					$("#depts").val(result[0].deptId);
-                    // 缺一不可  
-                    $("#address").selectpicker('refresh');
-                    $("#address").selectpicker('render');
-                    $("#depts").selectpicker('refresh');
-                    $("#depts").selectpicker('render');
-                }
-            });
-   			$.ajax({
-			    url: prefix2 + "/lists",
-			    data: {deptId : $("#depts").val()},
-			    dataType : 'json',
-			    type: 'POST',
-			    success: function (result) {
-			    	$("#dept").empty();
-					$("#dept").val(result[0].deptName);
-			                    // 缺一不可  
-			                    $("#dept").selectpicker('refresh');
-			                    $("#dept").selectpicker('render');
-					   	}
-			});
-   			
-        };
+        }
     </script>
 </body>
 </html>

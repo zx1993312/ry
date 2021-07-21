@@ -7,16 +7,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="HyNodeTask" id="HyNodeTaskResult">
         <result property="id"    column="id"    />
         <result property="taskName"    column="task_name"    />
-        <result property="inspectionWay"    column="inspection_way"    />
-        <result property="remark"    column="remark"    />
-        <result property="nodeId"    column="node_id"    />
+        <result property="taskTime"    column="task_time"    />
+        <result property="taskRemark"    column="task_remark"    />
+        <result property="taskStatus"    column="task_status"    />
+        <result property="userId"    column="user_id"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="typeId"    column="type_id"    />
         <association property="hyCheckNode" column="id"
 			javaType="HyCheckNode" resultMap="HyCheckNodeResult" />
-		<association property="sysDept" column="id"
+        <association property="sysUser" column="id"
+			javaType="SysUser" resultMap="SysUserResult" />
+        <association property="sysDept" column="id"
 			javaType="SysDept" resultMap="SysDeptResult" />
+        <association property="hyCheckType" column="id"
+			javaType="HyCheckType" resultMap="HyCheckTypeResult" />
     </resultMap>
-
-	<resultMap type="HyCheckNode" id="HyCheckNodeResult">
+    
+    <resultMap type="HyCheckNode" id="HyCheckNodeResult">
         <result property="id"    column="id"    />
         <result property="name"    column="name"    />
         <result property="nodeAddress"    column="node_address"    />
@@ -24,6 +31,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="nodeLatitude"    column="node_latitude"    />
         <result property="nodeRemark"    column="node_remark"    />
     </resultMap>
+    
+    <resultMap type="SysUser" id="SysUserResult">
+		<id     property="userId"        column="user_id"         />
+		<result property="deptId"        column="dept_id"         />
+		<result property="loginName"     column="login_name"      />
+		<result property="userName"      column="user_name"       />
+		<result property="userType"      column="user_type"       />
+		<result property="email"         column="email"           />
+		<result property="phonenumber"   column="phonenumber"     />
+		<result property="sex"           column="sex"             />
+		<result property="avatar"        column="avatar"          />
+		<result property="password"      column="password"        />
+		<result property="salt"          column="salt"            />
+		<result property="status"        column="status"          />
+		<result property="delFlag"       column="del_flag"        />
+		<result property="loginIp"       column="login_ip"        />
+		<result property="loginDate"     column="login_date"      />
+		<result property="pwdUpdateDate" column="pwd_update_date" />
+		<result property="createBy"      column="create_by"       />
+		<result property="createTime"    column="create_time"     />
+		<result property="updateBy"      column="update_by"       />
+		<result property="updateTime"    column="update_time"     />
+		<result property="remark"        column="remark"          />
+	</resultMap>
 	
 	<resultMap type="SysDept" id="SysDeptResult">
 		<id     property="deptId"     column="dept_id"     />
@@ -38,29 +69,49 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="delFlag"    column="del_flag"    />
 		<result property="parentName" column="parent_name" />
 		<result property="createBy"   column="create_by"   />
+		<result property="createTime" column="create_time" />
+		<result property="updateBy"   column="update_by"   />
+		<result property="updateTime" column="update_time" />
 	</resultMap>
+	
+	<resultMap type="HyCheckType" id="HyCheckTypeResult">
+        <result property="id"    column="id"    />
+        <result property="checkType"    column="check_type"    />
+    </resultMap>
 
     <sql id="selectHyNodeTaskVo">
         select 
         t.id, 
         t.task_name, 
-        t.inspection_way, 
-        t.remark, 
-        t.node_id,
-        n.name,
-        n.node_address,
-        d.dept_name
+        t.task_time, 
+        t.task_remark, 
+        t.task_status, 
+        t.user_id, 
+        t.dept_id, 
+        t.type_id, 
+        n.name, 
+        u.user_name, 
+        d.dept_name, 
+        hct.check_type 
         from 
         hy_node_task t
-        LEFT JOIN  hy_check_node n ON t.node_id = n.id
+        LEFT JOIN task_and_node a ON a.task_id = t.id
+        LEFT JOIN hy_check_node n ON a.node_id = n.id
+        LEFT JOIN sys_user u ON t.user_id = u.user_id
+        LEFT JOIN sys_dept d ON t.dept_id = d.dept_id
+        LEFT JOIN hy_check_type hct ON t.type_id = hct.id
     </sql>
 
     <select id="selectHyNodeTaskList" parameterType="HyNodeTask" resultMap="HyNodeTaskResult">
         <include refid="selectHyNodeTaskVo"/>
         <where>  
             <if test="taskName != null  and taskName != ''"> and t.task_name like concat('%', #{taskName}, '%')</if>
-            <if test="inspectionWay != null  and inspectionWay != ''"> and t.inspection_way = #{inspectionWay}</if>
-            <if test="nodeId != null "> and t.node_id = #{nodeId}</if>
+            <if test="taskTime != null  and taskTime != ''"> and t.task_time = #{taskTime}</if>
+            <if test="taskRemark != null  and taskRemark != ''"> and t.task_remark = #{taskRemark}</if>
+            <if test="taskStatus != null  and taskStatus != ''"> and t.task_status = #{taskStatus}</if>
+            <if test="userId != null "> and t.user_id = #{userId}</if>
+            <if test="deptId != null "> and t.dept_id = #{deptId}</if>
+            <if test="typeId != null "> and t.type_id = #{typeId}</if>
         </where>
     </select>
     
@@ -73,15 +124,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         insert into hy_node_task
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="taskName != null">task_name,</if>
-            <if test="inspectionWay != null">inspection_way,</if>
-            <if test="remark != null">remark,</if>
-            <if test="nodeId != null">node_id,</if>
+            <if test="taskTime != null">task_time,</if>
+            <if test="taskRemark != null">task_remark,</if>
+            <if test="taskStatus != null">task_status,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="typeId != null">type_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="taskName != null">#{taskName},</if>
-            <if test="inspectionWay != null">#{inspectionWay},</if>
-            <if test="remark != null">#{remark},</if>
-            <if test="nodeId != null">#{nodeId},</if>
+            <if test="taskTime != null">#{taskTime},</if>
+            <if test="taskRemark != null">#{taskRemark},</if>
+            <if test="taskStatus != null">#{taskStatus},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="typeId != null">#{typeId},</if>
          </trim>
     </insert>
 
@@ -89,9 +146,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update hy_node_task
         <trim prefix="SET" suffixOverrides=",">
             <if test="taskName != null">task_name = #{taskName},</if>
-            <if test="inspectionWay != null">inspection_way = #{inspectionWay},</if>
-            <if test="remark != null">remark = #{remark},</if>
-            <if test="nodeId != null">node_id = #{nodeId},</if>
+            <if test="taskTime != null">task_time = #{taskTime},</if>
+            <if test="taskRemark != null">task_remark = #{taskRemark},</if>
+            <if test="taskStatus != null">task_status = #{taskStatus},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="typeId != null">type_id = #{typeId},</if>
         </trim>
         where id = #{id}
     </update>

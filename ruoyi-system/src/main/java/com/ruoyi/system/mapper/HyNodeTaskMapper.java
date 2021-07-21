@@ -7,7 +7,7 @@ import com.ruoyi.system.domain.HyNodeTask;
  * 节点巡检任务Mapper接口
  * 
  * @author Administrator
- * @date 2021-04-25
+ * @date 2021-07-21
  */
 public interface HyNodeTaskMapper 
 {

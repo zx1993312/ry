@@ -3,7 +3,7 @@
 <head>
     <th:block th:include="include :: header('节点巡检任务列表')" />
     <th:block th:include="include :: layout-latest-css" />
-	<th:block th:include="include :: ztree-css" />
+    <th:block th:include="include :: ztree-css" />
 </head>
 <body class="gray-bg">
 <div class="ui-layout-west">
@@ -32,23 +32,47 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                <label>名称：</label>
-                                <input type="text" name="TaskName"/>
+                                <label>计划名称：</label>
+                                <input type="text" name="taskName"/>
                             </li>
                             <li>
-                                <label>巡检方式：</label>
-                                <select name="inspectionWay" class="form-control " >
-                                <option value="">请选择</option>
-                                <option value="1">设备巡检</option>
-                                <option value="2">区域巡检</option>
+                                <label>巡检时间：</label>
+                                <select name="taskTime">
+                                    <option value="">请选择</option>
+                                    <option value="1">天</option>
+                                    <option value="2">周</option>
+                                    <option value="3">月</option>
                                 </select>
                             </li>
                             <li>
-                                <label>巡检节点名称：</label>
-                                <select id="nodeId" name="nodeId" class="form-control" th:with="type=${@node.getNode()}">
-									<option value="">请选择</option>
-									<option th:if="data!=null" th:each="data:${type}" th:text="${data.name}" th:value="${data.id}"></option>
-						 	    </select>
+                                <label>任务备注：</label>
+                                <input type="text" name="taskRemark"/>
+                            </li>
+                            <li>
+                                <label>任务状态：</label>
+                                <select name="taskStatus">
+                                    <option value="">请选择</option>
+                                    <option value="1">未完成</option>
+                                    <option value="2">进行中</option>
+                                    <option value="3">已完成</option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>巡检人：</label>
+                                <select name="userId" class="form-control" th:with="type=${@user.getUser()}">
+										<option value="">请选择</option>
+										<option th:if="data!=null" th:each="data : ${type}" th:text="${data.userName}" th:value="${data.userId}"></option>
+								 </select>
+                            </li>
+                            
+                            <input type="hidden" name="deptId" id="deptId"/>
+                            
+                            <li>
+                                <label>巡检类型：</label>
+                                <select name="typeId" class="form-control" th:with="type=${@type.getType()}">
+										<option value="">请选择</option>
+										<option th:if="data!=null" th:each="data : ${type}" th:text="${data.checkType}" th:value="${data.id}"></option>
+								 </select>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -60,7 +84,7 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.addOtherWidth()" shiro:hasPermission="system:task:add">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:task:add">
                     <i class="fa fa-plus"></i> 添加
                 </a>
                 <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:task:edit">
@@ -81,13 +105,14 @@
     </div>
     <th:block th:include="include :: footer" />
     <th:block th:include="include :: layout-latest-js" />
-	<th:block th:include="include :: ztree-js" />
+    <th:block th:include="include :: ztree-js" />
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('system:task:edit')}]];
         var removeFlag = [[${@permission.hasPermi('system:task:remove')}]];
         var prefix = ctx + "system/task";
-
+        
         $(function() {
+        	
         	var panehHidden = false;
 		    if ($(this).width() < 769) {
 		        panehHidden = true;
@@ -103,8 +128,9 @@
 	    	}
 		    queryTaskList();
 		    queryDeptTree();
-		});
-        function queryTaskList(){
+        });
+
+        function queryTaskList() {
             var options = {
                 url: prefix + "/list",
                 createUrl: prefix + "/add",
@@ -122,27 +148,49 @@
                 },
                 {
                     field: 'taskName',
-                    title: '名称'
+                    title: '计划名称'
                 },
                 {
-                    field: 'inspectionWay',
-                    title: '巡检方式',
+                    field: 'taskTime',
+                    title: '巡检时间',
                     formatter: function(value, item, index) {
                     	switch(value){
 	                    	case "" : value =  "请选择";break;
-	                    	case "1" : value =  "设备巡检";break;
-	                    	case "2" : value =  "区域巡检";break;
+	                    	case "1" : value =  "天";break;
+	                    	case "2" : value =  "周";break;
+	                    	case "3" : value =  "月";break;
 	                	}
 		            	return value;
 		            }
                 },
                 {
-                    field: 'hyCheckeNode.name',
-                    title: '巡检节点名称'
+                    field: 'taskRemark',
+                    title: '任务备注'
                 },
                 {
-                    field: 'remark',
-                    title: '备注'
+                    field: 'taskStatus',
+                    title: '任务状态',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case "" : value =  "请选择";break;
+	                    	case "1" : value =  "未完成";break;
+	                    	case "2" : value =  "进行中";break;
+	                    	case "3" : value =  "已完成";break;
+	                	}
+		            	return value;
+		            }
+                },
+                {
+                    field: 'sysUser.userName',
+                    title: '巡检人名称'
+                },
+                {
+                    field: 'sysDept.deptName',
+                    title: '部门名称'
+                },
+                {
+                    field: 'hyCheckType.checkType',
+                    title: '巡检类型'
                 },
                 {
                     title: '操作',
@@ -156,7 +204,7 @@
                 }]
             };
             $.table.init(options);
-        }
+        };
       //组织架构
         function queryDeptTree()
 		{

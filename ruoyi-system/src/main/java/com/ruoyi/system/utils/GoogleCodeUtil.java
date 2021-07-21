@@ -3,7 +3,6 @@ package com.ruoyi.system.utils;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.nio.file.Path;
-import java.util.Date;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
@@ -21,9 +20,21 @@ import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.ruoyi.system.constants.Constants;
 
+/**
+ * 
+ * @author 徐世龙
+ *
+ */
 public class GoogleCodeUtil {
 
-	public static void creatCode(String content) {
+	/**
+	 * 创建二维码方法
+	 * 
+	 * @param content 二维码内容
+	 * @param outFilePath 输出路径
+	 * @param FileName 文件名
+	 */
+	public static void creatCode(String content, String outFilePath, String fileName) {
 		String format = "png"; // 二维码图片格式
 		// String content = "http://39.105.185.22:8080/system/task"; // 二维码内容
 
@@ -37,7 +48,7 @@ public class GoogleCodeUtil {
 			BitMatrix bitMatrix = new MultiFormatWriter().encode(content, BarcodeFormat.QR_CODE, Constants.CODE_WIDTH,
 					Constants.CODE_HEIGHT);
 
-			Path file = new File("E:/" + new Date().getTime() + "img.png").toPath();
+			Path file = new File(outFilePath + fileName).toPath();
 
 			MatrixToImageWriter.writeToPath(bitMatrix, format, file);
 			// MatrixToImageWriter.writeToStream(bitMatrix, format, stream);
@@ -71,10 +82,5 @@ public class GoogleCodeUtil {
 			e.printStackTrace();
 		}
 	}
-	
-	public static void main(String[] args) {
-		String a = "11111";
-		String content = "http://192.168.0.111:8081/#/qualityInspection?uuu="+a;
-		creatCode(content);
-	}
+
 }

@@ -2,462 +2,86 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
     <th:block th:include="include :: header('新增节点巡检任务')" />
-    <th:block th:include="include :: select2-css" />
-	<th:block th:include="include :: bootstrap-select-css" />
 </head>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
         <form class="form-horizontal m" id="form-task-add">
             <div class="form-group">    
-                <label class="col-sm-2 control-label">名称：</label>
-                <div class="col-sm-4">
+                <label class="col-sm-3 control-label">计划名称：</label>
+                <div class="col-sm-8">
                     <input name="taskName" class="form-control" type="text">
                 </div>
-                <label class="col-sm-2 control-label">巡检节点：</label>
-                <div class="col-sm-4">
-                    <select id="nodeId" name="nodeId" class="form-control" th:with="type=${@node.getNode()}" onchange="changeAddress()">
-						<option value="">请选择</option>
-						<option th:if="data!=null" th:each="data:${type}" th:text="${data.name}" th:value="${data.id}"></option>
-			 	    </select>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">巡检时间：</label>
+                <div class="col-sm-8">
+                    <select name="taskTime" class="form-control">
+                        <option value="">请选择</option>
+                        <option value="1">天</option>
+                        <option value="2">周</option>
+                        <option value="3">月</option>
+                    </select>
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-2 control-label">巡检方式：</label>
-                <div class="col-sm-2">
-                    <input name="inspectionWay" value="1" type="radio" checked="checked">设备巡检
-                </div>
-                <div class="col-sm-2">
-                    <input name="inspectionWay" value="2" type="radio">区域巡检
-                </div>
-                <label class="col-sm-2 control-label">备注：</label>
-                <div class="col-sm-4">
-                    <input name="remark" class="form-control" type="text">
+                <label class="col-sm-3 control-label">任务备注：</label>
+                <div class="col-sm-8">
+                    <input name="taskRemark" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-2 control-label">组织机构：</label>
-                 <div class="col-sm-4">
-                    <input id="dept" class="form-control" type="text" disabled="disabled">
-                    <input id="depts" class="form-control" type="hidden" disabled="disabled">
-                </div>
-                <label class="col-sm-2 control-label">地址：</label>
-                <div class="col-sm-4">
-                    <input id="address" class="form-control" type="text" disabled="disabled">
+                <label class="col-sm-3 control-label">任务状态：</label>
+                <div class="col-sm-8">
+                     <select name="taskStatus" class="form-control">
+                          <option value="">请选择</option>
+                          <option value="1">未完成</option>
+                          <option value="2">进行中</option>
+                          <option value="3">已完成</option>
+                      </select>
                 </div>
             </div>
-            
-            <div class="col-sm-12 select-table table-striped">
-			    <div class="col-sm-12 select-table table-striped">
-			    	<div style="width: 50%;float: left;overflow-y:scroll;" >
-			    		<table class="table table-bordered table-hover">
-			    			<thead>
-			    				<tr>
-			    					<td></td>
-			    					<td>设备档案</td>
-			    				</tr>
-			    			</thead>
-			    			<tbody>
-			    				<tr style="height: 60px;">
-						    		<td style="width: 10%;">1</td>
-						    	</tr>
-						    	<tr style="height: 60px;">
-						    		<td>2</td>
-						    	</tr>
-						    	<tr style="height: 60px;">
-						    		<td>3</td>
-						    	</tr>
-						    	<tr style="height: 60px;">
-						    		<td>4</td>
-						    	</tr>
-						    	<tr style="height: 60px;">
-						    		<td>5</td>
-						    	</tr>
-						    	<tr style="height: 60px;">
-						    		<td>6</td>
-						    	</tr>
-						    	<tr style="height: 60px;">
-						    		<td>7</td>
-						    	</tr>
-						    	<tr style="height: 60px;">
-						    		<td>8</td>
-						    	</tr>
-						    	<tr style="height: 60px;">
-						    		<td>9</td>
-						    	</tr>
-						    	<tr style="height: 60px;">
-						    		<td>10</td>
-						    	</tr>
-						    	<tr style="height: 60px;">
-						    		<td>11</td>
-						    	</tr>
-			    			</tbody>
-					    </table>
-			    	</div>
-				    <div style="width: 50%; float: right;overflow-y:scroll;" >
-			    		<table class="table table-bordered table-hover">
-			    			<caption style="background-color: #F2F2F2;"><span style="margin-left: 45%;">巡检项目内容</span></caption>
-			    			<thead>
-			    				<tr>
-			    					<td></td>
-			    					<td>巡检类别</td>
-			    					<td style="width: 100px;">标准</td>
-			    					<td>是否测量</td>
-			    					<td>参考值</td>
-			    					<td>参考值2</td>
-			    					<td>是否停检</td>
-			    				</tr>
-			    			</thead>
-			    			<tbody>
-			    				<tr>
-						    		<td>1</td>
-						    		<td>
-					    				<div class="form-group">
-				                            <select class="form-control">
-						    					<option value=""></option>
-												<option value="1">设备巡检</option>
-												<option value="2">秩序巡检</option>
-												<option value="3">环境巡检</option>
-												<option value="4">绿化巡检</option>
-												<option value="5">安防巡检</option>
-									 	    </select>
-				                        </div>
-						    		</td>
-						    		<td></td>
-						    		<td>
-										<div class="check-box">
-								            <label class="check-box">
-                							<input type="checkbox" value="1" id="">
-                							</label>
-								        </div>
-						    		</td>
-						    		<td></td>
-						    		<td></td>
-						    		<td>
-						    		<div class="check-box">
-								            <label class="check-box">
-                							<input type="checkbox" value="1" id="">
-                							</label>
-								        </div>
-						    		</td>
-						    	</tr>
-						    	<tr>
-						    		<td>2</td>
-						    		<td>
-					    				<div class="form-group">
-				                            <select class="form-control">
-						    					<option value=""></option>
-												<option value="1">设备巡检</option>
-												<option value="2">秩序巡检</option>
-												<option value="3">环境巡检</option>
-												<option value="4">绿化巡检</option>
-												<option value="5">安防巡检</option>
-									 	    </select>
-				                        </div>
-						    		</td>
-						    		<td></td>
-						    		<td>
-						    		<div class="check-box">
-								            <label class="check-box">
-                							<input type="checkbox" value="1" id="">
-                							</label>
-								        </div>
-						    		</td>
-						    		<td></td>
-						    		<td></td>
-						    		<td>
-						    		<div class="check-box">
-								            <label class="check-box">
-                							<input type="checkbox" value="1" id="">
-                							</label>
-								        </div>
-						    		</td>
-						    	</tr>
-						    	<tr>
-						    		<td>3</td>
-						    		<td>
-					    				<div class="form-group">
-				                            <select class="form-control">
-						    					<option value=""></option>
-												<option value="1">设备巡检</option>
-												<option value="2">秩序巡检</option>
-												<option value="3">环境巡检</option>
-												<option value="4">绿化巡检</option>
-												<option value="5">安防巡检</option>
-									 	    </select>
-				                        </div>
-						    		</td>
-						    		<td></td>
-						    		<td>
-						    		<div class="check-box">
-								            <label class="check-box">
-                							<input type="checkbox" value="1" id="">
-                							</label>
-								        </div>
-						    		</td>
-						    		<td></td>
-						    		<td></td>
-						    		<td>
-						    		<div class="check-box">
-								            <label class="check-box">
-                							<input type="checkbox" value="1" id="">
-                							</label>
-								        </div>
-						    		</td>
-						    	</tr>
-						    	<tr>
-						    		<td>4</td>
-						    		<td>
-					    				<div class="form-group">
-				                            <select class="form-control">
-						    					<option value=""></option>
-												<option value="1">设备巡检</option>
-												<option value="2">秩序巡检</option>
-												<option value="3">环境巡检</option>
-												<option value="4">绿化巡检</option>
-												<option value="5">安防巡检</option>
-									 	    </select>
-				                        </div>
-						    		</td>
-						    		<td></td>
-						    		<td>
-						    		<div class="check-box">
-								            <label class="check-box">
-                							<input type="checkbox" value="1" id="">
-                							</label>
-								        </div>
-						    		</td>
-						    		<td></td>
-						    		<td></td>
-						    		<td>
-						    		<div class="check-box">
-								            <label class="check-box">
-                							<input type="checkbox" value="1" id="">
-                							</label>
-								        </div>
-						    		</td>
-						    	</tr>
-						    	<tr>
-						    		<td>5</td>
-						    		<td>
-					    				<div class="form-group">
-				                            <select class="form-control">
-						    					<option value=""></option>
-												<option value="1">设备巡检</option>
-												<option value="2">秩序巡检</option>
-												<option value="3">环境巡检</option>
-												<option value="4">绿化巡检</option>
-												<option value="5">安防巡检</option>
-									 	    </select>
-				                        </div>
-						    		</td>
-						    		<td></td>
-						    		<td>
-						    		<div class="check-box">
-								            <label class="check-box">
-                							<input type="checkbox" value="1" id="">
-                							</label>
-								        </div>
-						    		</td>
-						    		<td></td>
-						    		<td></td>
-						    		<td>
-						    		<div class="check-box">
-								            <label class="check-box">
-                							<input type="checkbox" value="1" id="">
-                							</label>
-								        </div>
-						    		</td>
-						    	</tr>
-						    	<tr>
-						    		<td>6</td>
-						    		<td>
-					    				<div class="form-group">
-				                            <select class="form-control">
-						    					<option value=""></option>
-												<option value="1">设备巡检</option>
-												<option value="2">秩序巡检</option>
-												<option value="3">环境巡检</option>
-												<option value="4">绿化巡检</option>
-												<option value="5">安防巡检</option>
-									 	    </select>
-				                        </div>
-						    		</td>
-						    		<td></td>
-						    		<td>
-						    		<div class="check-box">
-								            <label class="check-box">
-                							<input type="checkbox" value="1" id="">
-                							</label>
-								        </div>
-						    		</td>
-						    		<td></td>
-						    		<td></td>
-						    		<td>
-						    		<div class="check-box">
-								            <label class="check-box">
-                							<input type="checkbox" value="1" id="">
-                							</label>
-								        </div>
-						    		</td>
-						    	</tr>
-						    	<tr>
-						    		<td>7</td>
-						    		<td>
-					    				<div class="form-group">
-				                            <select class="form-control">
-						    					<option value=""></option>
-												<option value="1">设备巡检</option>
-												<option value="2">秩序巡检</option>
-												<option value="3">环境巡检</option>
-												<option value="4">绿化巡检</option>
-												<option value="5">安防巡检</option>
-									 	    </select>
-				                        </div>
-						    		</td>
-						    		<td></td>
-						    		<td>
-						    		<div class="check-box">
-								            <label class="check-box">
-                							<input type="checkbox" value="1" id="">
-                							</label>
-								        </div>
-						    		</td>
-						    		<td></td>
-						    		<td></td>
-						    		<td>
-						    		<div class="check-box">
-								            <label class="check-box">
-                							<input type="checkbox" value="1" id="">
-                							</label>
-								        </div>
-						    		</td>
-						    	</tr>
-						    	<tr>
-						    		<td>8</td>
-						    		<td>
-					    				<div class="form-group">
-				                            <select class="form-control">
-						    					<option value=""></option>
-												<option value="1">设备巡检</option>
-												<option value="2">秩序巡检</option>
-												<option value="3">环境巡检</option>
-												<option value="4">绿化巡检</option>
-												<option value="5">安防巡检</option>
-									 	    </select>
-				                        </div>
-						    		</td>
-						    		<td></td>
-						    		<td>
-						    		<div class="check-box">
-								            <label class="check-box">
-                							<input type="checkbox" value="1" id="">
-                							</label>
-								        </div>
-						    		</td>
-						    		<td></td>
-						    		<td></td>
-						    		<td>
-						    		<div class="check-box">
-								            <label class="check-box">
-                							<input type="checkbox" value="1" id="">
-                							</label>
-								        </div>
-						    		</td>
-						    	</tr>
-						    	<tr>
-						    		<td>9</td>
-						    		<td>
-					    				<div class="form-group">
-				                            <select class="form-control">
-						    					<option value=""></option>
-												<option value="1">设备巡检</option>
-												<option value="2">秩序巡检</option>
-												<option value="3">环境巡检</option>
-												<option value="4">绿化巡检</option>
-												<option value="5">安防巡检</option>
-									 	    </select>
-				                        </div>
-						    		</td>
-						    		<td></td>
-						    		<td>
-						    		<div class="check-box">
-								            <label class="check-box">
-                							<input type="checkbox" value="1" id="">
-                							</label>
-								        </div>
-						    		</td>
-						    		<td></td>
-						    		<td></td>
-						    		<td>
-						    		<div class="check-box">
-								            <label class="check-box">
-                							<input type="checkbox" value="1" id="">
-                							</label>
-								        </div>
-						    		</td>
-						    	</tr>
-						    	<tr>
-						    		<td>10</td>
-						    		<td>
-					    				<div class="form-group">
-				                            <select class="form-control">
-						    					<option value=""></option>
-												<option value="1">设备巡检</option>
-												<option value="2">秩序巡检</option>
-												<option value="3">环境巡检</option>
-												<option value="4">绿化巡检</option>
-												<option value="5">安防巡检</option>
-									 	    </select>
-				                        </div>
-						    		</td>
-						    		<td></td>
-						    		<td>
-						    		<div class="check-box">
-								            <label class="check-box">
-                							<input type="checkbox" value="1" id="">
-                							</label>
-								        </div>
-						    		</td>
-						    		<td></td>
-						    		<td></td>
-						    		<td>
-						    		<div class="check-box">
-								            <label class="check-box">
-                							<input type="checkbox" value="1" id="">
-                							</label>
-								        </div>
-						    		</td>
-						    	</tr>
-			    			</tbody>
-					    </table>
-			    	</div>
-				</div>
-			</div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">巡检节点：</label>
+                <div class="col-sm-8">
+                	<div class="col-sm-9" th:with="type=${@node.getNode()}">
+                    <label  th:each="dict : ${type}" class="check-box">
+                    	<input name="nodeIds" type="checkbox" th:text="${dict.name}" th:value="${dict.id}">
+                    </label>
+        			</div>
+                </div>
+            </div>
+			<div class="form-group">    
+			    <label class="col-sm-3 control-label">选择部门：</label>
+                	<div class="col-sm-8">
+	                	<select name="deptId" id="dept" class="form-control m-b" th:with="type=${@dept.getDepts()}" onchange="changeUser()">
+	                  		<option value="">请选择</option>
+	                  		<option th:each="dict : ${type}" th:text="${dict.deptName}" th:value="${dict.deptId}"></option>
+	                	</select>
+                	</div>
+            </div>
+            <div class="form-group">    
+               <label class="col-sm-3 control-label">选择巡检人：</label>
+               	<div class="col-sm-8">
+	                <select class="form-control m-b" name="userId" id="user" disabled="disabled">
+	                  <option value="">请选择</option>
+	                </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">巡检类型：</label>
+                <div class="col-sm-8">
+                    <select name="typeId" class="form-control" th:with="type=${@type.getType()}">
+							<option value="">请选择</option>
+							<option th:if="data!=null" th:each="data : ${type}" th:text="${data.checkType}" th:value="${data.id}"></option>
+					 </select>
+                </div>
+            </div>
         </form>
     </div>
     <th:block th:include="include :: footer" />
-    <th:block th:include="include :: select2-js" />
-    <th:block th:include="include :: bootstrap-select-js" />
-    
     <script th:inline="javascript">
         var prefix = ctx + "system/task"
         $("#form-task-add").validate({
-        	rules : {
-        		taskName : {
-					required : true,
-					maxlength:20,
-				},
-				inspectionWay : {
-					maxlength:20,
-				},
-				remark : {
-					maxlength:255,
-				},
-				nodeId : {
-					required : true,
-					maxlength:11,
-				},
-			},
             focusCleanup: true
         });
 
@@ -465,44 +89,33 @@
             if ($.validate.form()) {
                 $.operate.save(prefix + "/add", $('#form-task-add').serialize());
             }
-        };
-        var prefix1 = ctx + "system/node"
-        var prefix2 = ctx + "system/dept"
-		function changeAddress(){
+        }
+        
+   		var prefix1 = ctx + "system/user"
+   		function changeUser(){
+   			$("#user").removeAttr("disabled");
    			$.ajax({
                 url: prefix1 + "/lists",
-                data: {id : $("#nodeId").val()},
+                data: {deptId : $("#dept").val()},
                 dataType : 'json',
                 type: 'POST',
                 success: function (result) {
+                	console.log(result);
                 	var optArr = [];
-                	$("#address").empty();
-					$("#address").val(result[0].address);
-					$("#depts").empty();
-					$("#depts").val(result[0].deptId);
+                	$("#user").empty();
+					$("#user").append("<option value=\"\">请选择</option>");
+                    for (var i = 0; i < result.length; i++) {
+                    	$("#user").append("<option value=" + result[i].userId + ">" + result[i].userName + "</option>");
+                    }
+                        
                     // 缺一不可  
-                    $("#address").selectpicker('refresh');
-                    $("#address").selectpicker('render');
-                    $("#depts").selectpicker('refresh');
-                    $("#depts").selectpicker('render');
+                    $("#user").selectpicker('refresh');
+                    $("#user").selectpicker('render');
+
+					console.log(result);
                 }
             });
-   			$.ajax({
-			    url: prefix2 + "/lists",
-			    data: {deptId : $("#depts").val()},
-			    dataType : 'json',
-			    type: 'POST',
-			    success: function (result) {
-			    	$("#dept").empty();
-					$("#dept").val(result[0].deptName);
-			                    // 缺一不可  
-			                    $("#dept").selectpicker('refresh');
-			                    $("#dept").selectpicker('render');
-					   	}
-			});
-   			
-        };
+   		}
     </script>
-    
 </body>
 </html>
