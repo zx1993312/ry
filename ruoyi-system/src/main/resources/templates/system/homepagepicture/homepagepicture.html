@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('首页轮播图列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>状态：</label>
+                                <select name="state" class="form-control " >
+	                                <option value="">请选择</option>
+	                                <option value="1">上线</option>
+	                                <option value="2">下线</option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>权重：</label>
+                                <input type="text" name="orderBy"/>
+                            </li>
+                            <li>
+                                <label>上线时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择上线时间" name="onlineTime"/>
+                            </li>
+                            <li>
+                                <label>下线时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择下线时间" name="logoutTime"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:homepagepicture:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:homepagepicture:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:homepagepicture:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:homepagepicture:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:homepagepicture:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:homepagepicture:remove')}]];
+        var prefix = ctx + "system/homepagepicture";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "首页轮播图",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '首页轮播图id',
+                    visible: false
+                },
+                {
+                    field: 'picture',
+                    title: '首页轮播图',
+                    formatter: function(value, row, index) {
+				    	// 图片预览（注意：如存储在本地直接获取数据库路径，如有配置context-path需要使用ctx+路径）
+				    	// 如：/profile/upload/2019/08/08/3b7a839aced67397bac694d77611ce72.png
+				    		return $.table.imageView("/img/"+value);
+				    		 /* if(index % 2 == 0){
+					    		return $.table.imageView(value);
+					    	}else {
+					    		return $.table.imageView(value);
+					    	}  */
+				    }
+                },
+                {
+                    field: 'state',
+                    title: '状态',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case "" : value =  "请选择";break;
+	                    	case "1" : value =  "上线";break;
+	                    	case "2" : value =  "下线";break;
+	                	}
+		            	return value;
+		            }
+                },
+                {
+                    field: 'orderBy',
+                    title: '权重'
+                },
+                {
+                    field: 'onlineTime',
+                    title: '上线时间'
+                },
+                {
+                    field: 'logoutTime',
+                    title: '下线时间'
+                },
+                {
+                    field: 'createTime',
+                    title: '创建时间'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

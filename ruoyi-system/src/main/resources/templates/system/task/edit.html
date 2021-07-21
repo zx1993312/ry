@@ -52,20 +52,20 @@
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">巡检人：</label>
-                <div class="col-sm-8">
-                    <select name="userId" th:field="*{userId}" class="form-control" th:with="type=${@user.getUser()}">
-							<option value="">请选择</option>
-							<option th:if="data!=null" th:each="data : ${type}" th:text="${data.userName}" th:value="${data.userId}"></option>
-					 </select>
-                </div>
+			    <label class="col-sm-3 control-label">选择部门：</label>
+                	<div class="col-sm-8">
+	                	<select name="deptId" id="dept" th:field="*{deptId}" class="form-control m-b" th:with="type=${@dept.getDepts()}" onchange="changeUser()">
+	                  		<option value="">请选择</option>
+	                  		<option th:each="dict : ${type}" th:text="${dict.deptName}" th:value="${dict.deptId}"></option>
+	                	</select>
+                	</div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">部门：</label>
-                <div class="col-sm-8">
-                    <select name="deptId" th:field="*{deptId}" class="form-control" th:with="type=${@dept.getDepts()}">
+               <label class="col-sm-3 control-label">选择巡检人：</label>
+               	<div class="col-sm-8">
+	                <select id="user" name="userId" th:field="*{userId}" class="form-control" th:with="type=${@user.getUser()}">
 							<option value="">请选择</option>
-							<option th:if="data!=null" th:each="data : ${type}" th:text="${data.deptName}" th:value="${data.deptId}"></option>
+							<option th:if="data!=null" th:each="data : ${type}" th:text="${data.userName}" th:value="${data.userId}"></option>
 					 </select>
                 </div>
             </div>
@@ -92,6 +92,31 @@
                 $.operate.save(prefix + "/edit", $('#form-task-edit').serialize());
             }
         }
+        var prefix1 = ctx + "system/user"
+   		function changeUser(){
+   			$("#user").removeAttr("disabled");
+   			$.ajax({
+                url: prefix1 + "/lists",
+                data: {deptId : $("#dept").val()},
+                dataType : 'json',
+                type: 'POST',
+                success: function (result) {
+                	console.log(result);
+                	var optArr = [];
+                	$("#user").empty();
+					$("#user").append("<option value=\"\">请选择</option>");
+                    for (var i = 0; i < result.length; i++) {
+                    	$("#user").append("<option value=" + result[i].userId + ">" + result[i].userName + "</option>");
+                    }
+                        
+                    // 缺一不可  
+                    $("#user").selectpicker('refresh');
+                    $("#user").selectpicker('render');
+
+					console.log(result);
+                }
+            });
+   		}
     </script>
 </body>
 </html>
