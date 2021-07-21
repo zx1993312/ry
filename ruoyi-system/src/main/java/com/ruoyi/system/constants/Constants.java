@@ -27,11 +27,17 @@ public class Constants {
 	public static final String CHARACTER = "Character";
 
 	public static final String STRING = "String";
+	
+	public static final String CRON_DAY = "0 */1 * * * ?";//每天
+	
+	public static final String CRON_WEEK = "";//每周
+	
+	public static final String CRON_MONTH = "";//每月
 
 	public static final int CODE_WIDTH = 300;
 
 	public static final int CODE_HEIGHT = 300;
-
+	
 	public static final SimpleDateFormat TIME_ALL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 时间转换年月日时分秒
 
 	public static final SimpleDateFormat TIME_YEAR = new SimpleDateFormat("yyyy");// 时间转换年

@@ -2,6 +2,7 @@ package com.ruoyi.system.controller;
 
 import java.util.List;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.exception.job.TaskException;
 import com.ruoyi.system.domain.HyNodeTask;
 import com.ruoyi.system.domain.TaskAndNode;
 import com.ruoyi.system.service.IHyNodeTaskService;
@@ -36,184 +38,161 @@ import com.ruoyi.common.core.page.TableDataInfo;
 @Controller
 @RequestMapping("/system/task")
 @Api(tags = "节点巡检任务Controller")
-public class HyNodeTaskController extends BaseController
-{
-    private String prefix = "system/task";
+public class HyNodeTaskController extends BaseController {
+	private String prefix = "system/task";
 
-    @Autowired
-    private IHyNodeTaskService hyNodeTaskService;
-    
-    @Autowired
-    private ITaskAndNodeService taskAndNodeService;
+	@Autowired
+	private IHyNodeTaskService hyNodeTaskService;
 
-    @RequiresPermissions("system:task:view")
-    @GetMapping()
-    public String task()
-    {
-        return prefix + "/task";
-    }
+	@Autowired
+	private ITaskAndNodeService taskAndNodeService;
 
-    /**
-     * 查询节点巡检任务列表
-     */
-    @ApiOperation("节点巡检任务")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyNodeTask", value = "项目实体类hyNodeTask", required = true),
-	})
-    @RequiresPermissions("system:task:list")
-    @PostMapping("/list")
-    @ResponseBody
-    public TableDataInfo list(HyNodeTask hyNodeTask)
-    {
-        startPage();
-        List<HyNodeTask> list = hyNodeTaskService.selectHyNodeTaskList(hyNodeTask);
-        return getDataTable(list);
-    }
-    
-    /**
-     * 查询节点巡检任务未完成列表
-     */
-    @ApiOperation("节点巡检任务")
-    @ApiImplicitParams({ 
-    	@ApiImplicitParam(name = "hyNodeTask", value = "项目实体类hyNodeTask", required = true),
-    })
-    @RequiresPermissions("system:task:list")
-    @PostMapping("/listByUnfinished")
-    @ResponseBody
-    public List<HyNodeTask> listByUnfinished(HyNodeTask hyNodeTask)
-    {
-    	List<HyNodeTask> list = hyNodeTaskService.selectHyNodeTaskListByUnfinished(hyNodeTask);
-    	return list;
-    }
-    
-    /**
-     * 查询节点巡检任务进行中列表
-     */
-    @ApiOperation("节点巡检任务")
-    @ApiImplicitParams({ 
-    	@ApiImplicitParam(name = "hyNodeTask", value = "项目实体类hyNodeTask", required = true),
-    })
-    @RequiresPermissions("system:task:list")
-    @PostMapping("/listByUnderway")
-    @ResponseBody
-    public List<HyNodeTask> listByUnderway(HyNodeTask hyNodeTask)
-    {
-    	List<HyNodeTask> list = hyNodeTaskService.selectHyNodeTaskListByUnderway(hyNodeTask);
-    	return list;
-    }
-    
-    /**
-     * 查询节点巡检任务已完成列表
-     */
-    @ApiOperation("节点巡检任务")
-    @ApiImplicitParams({ 
-    	@ApiImplicitParam(name = "hyNodeTask", value = "项目实体类hyNodeTask", required = true),
-    })
-    @RequiresPermissions("system:task:list")
-    @PostMapping("/listByFinished")
-    @ResponseBody
-    public List<HyNodeTask> listByFinished(HyNodeTask hyNodeTask)
-    {
-    	List<HyNodeTask> list = hyNodeTaskService.selectHyNodeTaskListByFinished(hyNodeTask);
-    	return list;
-    }
+	@RequiresPermissions("system:task:view")
+	@GetMapping()
+	public String task() {
+		return prefix + "/task";
+	}
 
-    /**
-     * 导出节点巡检任务列表
-     */
-    @ApiOperation("节点巡检任务")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyNodeTask", value = "项目实体类hyNodeTask", required = true),
-	})
-    @RequiresPermissions("system:task:export")
-    @Log(title = "节点巡检任务", businessType = BusinessType.EXPORT)
-    @PostMapping("/export")
-    @ResponseBody
-    public AjaxResult export(HyNodeTask hyNodeTask)
-    {
-        List<HyNodeTask> list = hyNodeTaskService.selectHyNodeTaskList(hyNodeTask);
-        ExcelUtil<HyNodeTask> util = new ExcelUtil<HyNodeTask>(HyNodeTask.class);
-        return util.exportExcel(list, "task");
-    }
+	/**
+	 * 查询节点巡检任务列表
+	 */
+	@ApiOperation("节点巡检任务")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyNodeTask", value = "项目实体类hyNodeTask", required = true), })
+	@RequiresPermissions("system:task:list")
+	@PostMapping("/list")
+	@ResponseBody
+	public TableDataInfo list(HyNodeTask hyNodeTask) {
+		startPage();
+		List<HyNodeTask> list = hyNodeTaskService.selectHyNodeTaskList(hyNodeTask);
+		return getDataTable(list);
+	}
 
-    /**
-     * 新增节点巡检任务
-     */
-    @GetMapping("/add")
-    public String add()
-    {
-        return prefix + "/add";
-    }
+	/**
+	 * 查询节点巡检任务未完成列表
+	 */
+	@ApiOperation("节点巡检任务")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyNodeTask", value = "项目实体类hyNodeTask", required = true), })
+	@RequiresPermissions("system:task:list")
+	@PostMapping("/listByUnfinished")
+	@ResponseBody
+	public List<HyNodeTask> listByUnfinished(HyNodeTask hyNodeTask) {
+		List<HyNodeTask> list = hyNodeTaskService.selectHyNodeTaskListByUnfinished(hyNodeTask);
+		return list;
+	}
 
-    /**
-     * 新增保存节点巡检任务
-     */
-    @ApiOperation("节点巡检任务")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyNodeTask", value = "项目实体类hyNodeTask", required = true),
-	})
-    @RequiresPermissions("system:task:add")
-    @Log(title = "节点巡检任务", businessType = BusinessType.INSERT)
-    @PostMapping("/add")
-    @ResponseBody
-    public AjaxResult addSave(HyNodeTask hyNodeTask)
-    {
-        return toAjax(hyNodeTaskService.insertHyNodeTask(hyNodeTask));
-    }
+	/**
+	 * 查询节点巡检任务进行中列表
+	 */
+	@ApiOperation("节点巡检任务")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyNodeTask", value = "项目实体类hyNodeTask", required = true), })
+	@RequiresPermissions("system:task:list")
+	@PostMapping("/listByUnderway")
+	@ResponseBody
+	public List<HyNodeTask> listByUnderway(HyNodeTask hyNodeTask) {
+		List<HyNodeTask> list = hyNodeTaskService.selectHyNodeTaskListByUnderway(hyNodeTask);
+		return list;
+	}
 
-    /**
-     * 修改节点巡检任务
-     */
-    @ApiOperation("节点巡检任务")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "id", value = "主键id", required = true),
-	})
-    @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Long id, ModelMap mmap)
-    {
-        HyNodeTask hyNodeTask = hyNodeTaskService.selectHyNodeTaskById(id);
-        TaskAndNode taskAndNode = new TaskAndNode();
-        taskAndNode.setTaskId(id);
-        String nodeIds ="";
-        List<TaskAndNode> taskAndNodeList = taskAndNodeService.selectTaskAndNodeList(taskAndNode);
-        for(TaskAndNode list : taskAndNodeList) {
-        	Long nodeId = list.getNodeId();
-        	nodeIds = nodeIds + nodeId +",";
-        }
-        hyNodeTask.setNodeIds(nodeIds);
-        mmap.put("hyNodeTask", hyNodeTask);
-        return prefix + "/edit";
-    }
+	/**
+	 * 查询节点巡检任务已完成列表
+	 */
+	@ApiOperation("节点巡检任务")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyNodeTask", value = "项目实体类hyNodeTask", required = true), })
+	@RequiresPermissions("system:task:list")
+	@PostMapping("/listByFinished")
+	@ResponseBody
+	public List<HyNodeTask> listByFinished(HyNodeTask hyNodeTask) {
+		List<HyNodeTask> list = hyNodeTaskService.selectHyNodeTaskListByFinished(hyNodeTask);
+		return list;
+	}
 
-    /**
-     * 修改保存节点巡检任务
-     */
-    @ApiOperation("节点巡检任务")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "hyNodeTask", value = "项目实体类hyNodeTask", required = true),
-	})
-    @RequiresPermissions("system:task:edit")
-    @Log(title = "节点巡检任务", businessType = BusinessType.UPDATE)
-    @PostMapping("/edit")
-    @ResponseBody
-    public AjaxResult editSave(HyNodeTask hyNodeTask)
-    {
-        return toAjax(hyNodeTaskService.updateHyNodeTask(hyNodeTask));
-    }
+	/**
+	 * 导出节点巡检任务列表
+	 */
+	@ApiOperation("节点巡检任务")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyNodeTask", value = "项目实体类hyNodeTask", required = true), })
+	@RequiresPermissions("system:task:export")
+	@Log(title = "节点巡检任务", businessType = BusinessType.EXPORT)
+	@PostMapping("/export")
+	@ResponseBody
+	public AjaxResult export(HyNodeTask hyNodeTask) {
+		List<HyNodeTask> list = hyNodeTaskService.selectHyNodeTaskList(hyNodeTask);
+		ExcelUtil<HyNodeTask> util = new ExcelUtil<HyNodeTask>(HyNodeTask.class);
+		return util.exportExcel(list, "task");
+	}
 
-    /**
-     * 删除节点巡检任务
-     */
-    @ApiOperation("节点巡检任务")
-    @ApiImplicitParams({ 
-		@ApiImplicitParam(name = "ids", value = "ids", required = true),
-	})
-    @RequiresPermissions("system:task:remove")
-    @Log(title = "节点巡检任务", businessType = BusinessType.DELETE)
-    @PostMapping( "/remove")
-    @ResponseBody
-    public AjaxResult remove(String ids)
-    {
-        return toAjax(hyNodeTaskService.deleteHyNodeTaskByIds(ids));
-    }
+	/**
+	 * 新增节点巡检任务
+	 */
+	@GetMapping("/add")
+	public String add() {
+		return prefix + "/add";
+	}
+
+	/**
+	 * 新增保存节点巡检任务
+	 */
+	@ApiOperation("节点巡检任务")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyNodeTask", value = "项目实体类hyNodeTask", required = true), })
+	@RequiresPermissions("system:task:add")
+	@Log(title = "节点巡检任务", businessType = BusinessType.INSERT)
+	@PostMapping("/add")
+	@ResponseBody
+	public AjaxResult addSave(HyNodeTask hyNodeTask) {
+		try {
+			return toAjax(hyNodeTaskService.insertHyNodeTask(hyNodeTask));
+		} catch (SchedulerException e) {
+			e.printStackTrace();
+		} catch (TaskException e) {
+			e.printStackTrace();
+		}
+		return toAjax(0);
+	}
+
+	/**
+	 * 修改节点巡检任务
+	 */
+	@ApiOperation("节点巡检任务")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "id", value = "主键id", required = true), })
+	@GetMapping("/edit/{id}")
+	public String edit(@PathVariable("id") Long id, ModelMap mmap) {
+		HyNodeTask hyNodeTask = hyNodeTaskService.selectHyNodeTaskById(id);
+		TaskAndNode taskAndNode = new TaskAndNode();
+		taskAndNode.setTaskId(id);
+		String nodeIds = "";
+		List<TaskAndNode> taskAndNodeList = taskAndNodeService.selectTaskAndNodeList(taskAndNode);
+		for (TaskAndNode list : taskAndNodeList) {
+			Long nodeId = list.getNodeId();
+			nodeIds = nodeIds + nodeId + ",";
+		}
+		hyNodeTask.setNodeIds(nodeIds);
+		mmap.put("hyNodeTask", hyNodeTask);
+		return prefix + "/edit";
+	}
+
+	/**
+	 * 修改保存节点巡检任务
+	 */
+	@ApiOperation("节点巡检任务")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "hyNodeTask", value = "项目实体类hyNodeTask", required = true), })
+	@RequiresPermissions("system:task:edit")
+	@Log(title = "节点巡检任务", businessType = BusinessType.UPDATE)
+	@PostMapping("/edit")
+	@ResponseBody
+	public AjaxResult editSave(HyNodeTask hyNodeTask) {
+		return toAjax(hyNodeTaskService.updateHyNodeTask(hyNodeTask));
+	}
+
+	/**
+	 * 删除节点巡检任务
+	 */
+	@ApiOperation("节点巡检任务")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "ids", value = "ids", required = true), })
+	@RequiresPermissions("system:task:remove")
+	@Log(title = "节点巡检任务", businessType = BusinessType.DELETE)
+	@PostMapping("/remove")
+	@ResponseBody
+	public AjaxResult remove(String ids) {
+		return toAjax(hyNodeTaskService.deleteHyNodeTaskByIds(ids));
+	}
 }
