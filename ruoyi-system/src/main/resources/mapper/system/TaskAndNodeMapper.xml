@@ -50,6 +50,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </trim>
         where task_id = #{taskId}
     </update>
+    
+    <update id="updateTaskAndNodeByTaskIdAndNodeId" parameterType="TaskAndNode">
+        update task_and_node
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="isInspection != null">is_inspection = #{isInspection},</if>
+        </trim>
+        where task_id = #{taskId} and node_id = #{nodeId}
+    </update>
 
     <delete id="deleteTaskAndNodeById" parameterType="Long">
         delete from task_and_node where task_id = #{taskId}

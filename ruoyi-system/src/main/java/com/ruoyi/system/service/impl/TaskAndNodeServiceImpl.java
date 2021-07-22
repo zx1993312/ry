@@ -70,6 +70,19 @@ public class TaskAndNodeServiceImpl implements ITaskAndNodeService
     {
         return taskAndNodeMapper.updateTaskAndNode(taskAndNode);
     }
+    
+    /**
+     * 修改是否巡检状态通过任务id和节点id
+     * 
+     * @param taskAndNode 巡检任务和巡检节点关联
+     * @return 结果
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public int updateTaskAndNodeByTaskIdAndNodeId(TaskAndNode taskAndNode)
+    {
+    	return taskAndNodeMapper.updateTaskAndNodeByTaskIdAndNodeId(taskAndNode);
+    }
 
     /**
      * 删除巡检任务和巡检节点关联对象

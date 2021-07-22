@@ -64,6 +64,22 @@ public class TaskAndNodeController extends BaseController
         List<TaskAndNode> list = taskAndNodeService.selectTaskAndNodeList(taskAndNode);
         return getDataTable(list);
     }
+    
+    /**
+     * 查询巡检任务和巡检节点是否有关联
+     */
+    @ApiOperation("巡检任务和巡检节点关联")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "taskAndNode", value = "项目实体类taskAndNode", required = true),
+    })
+    @RequiresPermissions("system:node:list")
+    @PostMapping("/listApp")
+    @ResponseBody
+    public List<TaskAndNode> listApp(TaskAndNode taskAndNode)
+    {
+    	List<TaskAndNode> list = taskAndNodeService.selectTaskAndNodeList(taskAndNode);
+    	return list;
+    }
 
     /**
      * 导出巡检任务和巡检节点关联列表
@@ -137,6 +153,22 @@ public class TaskAndNodeController extends BaseController
     public AjaxResult editSave(TaskAndNode taskAndNode)
     {
         return toAjax(taskAndNodeService.updateTaskAndNode(taskAndNode));
+    }
+    
+    /**
+     * 修改是否巡检状态通过任务id和节点id
+     */
+    @ApiOperation("巡检任务和巡检节点关联")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "taskAndNode", value = "项目实体类taskAndNode", required = true),
+    })
+    @RequiresPermissions("system:node:edit")
+    @Log(title = "巡检任务和巡检节点关联", businessType = BusinessType.UPDATE)
+    @PostMapping("/editApp")
+    @ResponseBody
+    public AjaxResult editApp(TaskAndNode taskAndNode)
+    {
+    	return toAjax(taskAndNodeService.updateTaskAndNodeByTaskIdAndNodeId(taskAndNode));
     }
 
     /**

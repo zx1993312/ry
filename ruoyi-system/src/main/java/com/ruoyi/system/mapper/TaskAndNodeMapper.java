@@ -45,6 +45,14 @@ public interface TaskAndNodeMapper
      * @return 结果
      */
     public int updateTaskAndNode(TaskAndNode taskAndNode);
+    
+    /**
+     * 修改是否巡检状态通过任务id和节点id
+     * 
+     * @param taskAndNode 巡检任务和巡检节点关联
+     * @return 结果
+     */
+    public int updateTaskAndNodeByTaskIdAndNodeId(TaskAndNode taskAndNode);
 
     /**
      * 删除巡检任务和巡检节点关联
