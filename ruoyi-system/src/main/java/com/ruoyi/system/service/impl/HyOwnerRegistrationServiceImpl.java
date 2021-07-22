@@ -1,5 +1,6 @@
 package com.ruoyi.system.service.impl;
 
+import java.io.File;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +68,10 @@ public class HyOwnerRegistrationServiceImpl implements IHyOwnerRegistrationServi
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public int updateHyOwnerRegistration(HyOwnerRegistration hyOwnerRegistration) {
+		if(hyOwnerRegistration.getOwnerPicture()!=null&&!"".equals(hyOwnerRegistration.getOwnerPicture())) {
+    		String fileName = hyOwnerRegistration.getDeleteFile();
+    		deleteFile(fileName);
+    	}
 		return hyOwnerRegistrationMapper.updateHyOwnerRegistration(hyOwnerRegistration);
 	}
 
@@ -79,6 +84,12 @@ public class HyOwnerRegistrationServiceImpl implements IHyOwnerRegistrationServi
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public int deleteHyOwnerRegistrationByIds(String ids) {
+		String[] idz = ids.split(",");
+    	for(String id : idz) {
+    		HyOwnerRegistration hyOwnerRegistration = hyOwnerRegistrationMapper.selectHyOwnerRegistrationById(Long.valueOf(id));
+    		String deleteFile = hyOwnerRegistration.getOwnerPicture();
+    		deleteFile(deleteFile);
+    	}
 		return hyOwnerRegistrationMapper.deleteHyOwnerRegistrationByIds(Convert.toStrArray(ids));
 	}
 
@@ -91,6 +102,9 @@ public class HyOwnerRegistrationServiceImpl implements IHyOwnerRegistrationServi
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public int deleteHyOwnerRegistrationById(Long id) {
+		HyOwnerRegistration hyOwnerRegistration = hyOwnerRegistrationMapper.selectHyOwnerRegistrationById(id);
+		String deleteFile = hyOwnerRegistration.getOwnerPicture();
+		deleteFile(deleteFile);
 		return hyOwnerRegistrationMapper.deleteHyOwnerRegistrationById(id);
 	}
 
@@ -141,6 +155,27 @@ public class HyOwnerRegistrationServiceImpl implements IHyOwnerRegistrationServi
 		
 		
 		return successMsg.toString();
+	}
+	
+	/**
+     * 删除上传图片
+     * @return
+     */
+	@Override
+	public boolean deleteFile(String fileName) {
+		String fileName1 = System.getProperty("user.dir")+"\\src\\main\\resources\\static\\img\\"+fileName;
+		File file = new File(fileName1);
+		//判断文件存不存在
+		if(!file.exists()){
+			System.out.println("删除文件失败："+fileName+"不存在！");
+			return false;
+		}else{
+			//判断这是不是一个文件，ps：有可能是文件夹
+			if(file.isFile()){
+				return file.delete();
+			}
+		}
+		return false;
 	}
 
 }

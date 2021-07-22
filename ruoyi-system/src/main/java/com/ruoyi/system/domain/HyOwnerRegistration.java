@@ -23,6 +23,22 @@ public class HyOwnerRegistration extends BaseEntity
     /** 主键 */
     private Long id;
 
+    /** 登录账号 */
+    @Excel(name = "登录账号")
+    private String loginUsername;
+    
+    /** 登录密码 */
+    @Excel(name = "登录密码")
+    private String loginPassword;
+    
+    /** 昵称 */
+    @Excel(name = "昵称")
+    private String nickName;
+    
+    /** 头像 */
+    @Excel(name = "头像")
+    private String ownerPicture;
+    
     /** 业主名称 */
     @Excel(name = "业主名称")
     private String ownerName;
@@ -174,6 +190,10 @@ public class HyOwnerRegistration extends BaseEntity
     @Excel(name = "项目管理表")
     private HyProject hyProject;
     
+    /** 删除文件 */
+    @Excel(name = "删除文件")
+    private String deleteFile;
+    
     public void setId(Long id) 
     {
         this.id = id;
@@ -183,7 +203,40 @@ public class HyOwnerRegistration extends BaseEntity
     {
         return id;
     }
-    public void setOwnerName(String ownerName) 
+    
+    public String getLoginUsername() {
+		return loginUsername;
+	}
+
+	public void setLoginUsername(String loginUsername) {
+		this.loginUsername = loginUsername;
+	}
+
+	public String getLoginPassword() {
+		return loginPassword;
+	}
+
+	public void setLoginPassword(String loginPassword) {
+		this.loginPassword = loginPassword;
+	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+
+	public String getOwnerPicture() {
+		return ownerPicture;
+	}
+
+	public void setOwnerPicture(String ownerPicture) {
+		this.ownerPicture = ownerPicture;
+	}
+
+	public void setOwnerName(String ownerName) 
     {
         this.ownerName = ownerName;
     }
@@ -515,10 +568,22 @@ public class HyOwnerRegistration extends BaseEntity
 	}
 
 
+	public String getDeleteFile() {
+		return deleteFile;
+	}
+
+	public void setDeleteFile(String deleteFile) {
+		this.deleteFile = deleteFile;
+	}
+
 	@Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
+            .append("loginUsername", getLoginUsername())
+            .append("loginPassword", getLoginPassword())
+            .append("nickName", getNickName())
+            .append("ownerPicture", getOwnerPicture())
             .append("ownerName", getOwnerName())
             .append("fixedTelephone", getFixedTelephone())
             .append("mobilePhone", getMobilePhone())
@@ -556,6 +621,7 @@ public class HyOwnerRegistration extends BaseEntity
             .append("bankAccountName", getBankAccountName())
             .append("projectId", getProjectId())
             .append("hyProject", getHyProject())
+            .append("deleteFile", getDeleteFile())
             .toString();
     }
 }

@@ -1,9 +1,12 @@
 package com.ruoyi.system.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,14 +106,7 @@ public class HyOwnerRegistrationController extends BaseController {
 	 * 新增业主资料登记
 	 */
 	@GetMapping("/add")
-	public String add(HyOwnerRegistration hyOwnerRegistration) {
-		List<HyOwnerRegistration> list = hyOwnerRegistrationService.selectHyOwnerRegistrationList(hyOwnerRegistration);
-		List<Map<String, Object>> reList = new ArrayList<>();
-		for (HyOwnerRegistration hor : list) {
-			Map<String, Object> map = new HashMap<>();
-			map = ReflectUtil.convertMap(hor);
-			reList.add(map);
-		}
+	public String add() {
 		return prefix + "/add";
 	}
 
@@ -125,12 +121,12 @@ public class HyOwnerRegistrationController extends BaseController {
 	@PostMapping("/add")
 	@ResponseBody
 	public AjaxResult addSave(HyOwnerRegistration hyOwnerRegistration) {
-		List<HyOwnerRegistration> list = hyOwnerRegistrationService.selectHyOwnerRegistrationList(hyOwnerRegistration);
-		List<Map<String, Object>> reList = new ArrayList<>();
-		for (HyOwnerRegistration hor : list) {
-			Map<String, Object> map = new HashMap<>();
-			map = ReflectUtil.convertMap(hor);
-			reList.add(map);
+		HyOwnerRegistration ownerRegistration = new HyOwnerRegistration();
+		ownerRegistration.setOwnerName(hyOwnerRegistration.getOwnerName());
+		ownerRegistration.setIdCardNum(hyOwnerRegistration.getIdCardNum());
+		List<HyOwnerRegistration> list = hyOwnerRegistrationService.selectHyOwnerRegistrationList(ownerRegistration);
+		if(list.size()!=0) {
+			return AjaxResult.error("业主名或业主身份证号重复请重新输入!");
 		}
 		return toAjax(hyOwnerRegistrationService.insertHyOwnerRegistration(hyOwnerRegistration));
 	}
@@ -144,14 +140,19 @@ public class HyOwnerRegistrationController extends BaseController {
 	public String edit(@PathVariable("id") Long id, ModelMap mmap) {
 		HyOwnerRegistration hyOwnerRegistration = hyOwnerRegistrationService.selectHyOwnerRegistrationById(id);
 		mmap.put("hyOwnerRegistration", hyOwnerRegistration);
-		List<HyOwnerRegistration> list = hyOwnerRegistrationService.selectHyOwnerRegistrationList(hyOwnerRegistration);
-		List<Map<String, Object>> reList = new ArrayList<>();
-		for (HyOwnerRegistration hor : list) {
-			Map<String, Object> map = new HashMap<>();
-			map = ReflectUtil.convertMap(hor);
-			reList.add(map);
-		}
 		return prefix + "/edit";
+	}
+	
+	/**
+	 * 修改业主资料登记App
+	 */
+	@ApiOperation("业主资料登记")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "id", value = "主键id", required = true), })
+	@GetMapping("/editApp")
+	@ResponseBody
+	public List<HyOwnerRegistration> editApp(HyOwnerRegistration hyOwnerRegistration) {
+		List<HyOwnerRegistration> list = hyOwnerRegistrationService.selectHyOwnerRegistrationList(hyOwnerRegistration);
+		return list;
 	}
 
 	/**
@@ -165,12 +166,12 @@ public class HyOwnerRegistrationController extends BaseController {
 	@PostMapping("/edit")
 	@ResponseBody
 	public AjaxResult editSave(HyOwnerRegistration hyOwnerRegistration) {
-		List<HyOwnerRegistration> list = hyOwnerRegistrationService.selectHyOwnerRegistrationList(hyOwnerRegistration);
-		List<Map<String, Object>> reList = new ArrayList<>();
-		for (HyOwnerRegistration hor : list) {
-			Map<String, Object> map = new HashMap<>();
-			map = ReflectUtil.convertMap(hor);
-			reList.add(map);
+		HyOwnerRegistration ownerRegistration = new HyOwnerRegistration();
+		ownerRegistration.setOwnerName(hyOwnerRegistration.getOwnerName());
+		ownerRegistration.setIdCardNum(hyOwnerRegistration.getIdCardNum());
+		List<HyOwnerRegistration> list = hyOwnerRegistrationService.selectHyOwnerRegistrationList(ownerRegistration);
+		if(list.size()!=0) {
+			return AjaxResult.error("业主名或业主身份证号重复请重新输入!");
 		}
 		return toAjax(hyOwnerRegistrationService.updateHyOwnerRegistration(hyOwnerRegistration));
 	}
@@ -189,7 +190,7 @@ public class HyOwnerRegistrationController extends BaseController {
 	}
 
 	/**
-	 * 导入房屋数据
+	 * 导入业主数据
 	 * 
 	 * @param file
 	 * @param updateSupport
@@ -214,5 +215,48 @@ public class HyOwnerRegistrationController extends BaseController {
 	public AjaxResult importTemplate() {
 		ExcelUtil<HyOwnerRegistration> util = new ExcelUtil<HyOwnerRegistration>(HyOwnerRegistration.class);
 		return util.importTemplateExcel("业主资料登记");
+	}
+	
+	 /**
+     * 头像
+     * @param imagepath
+     * @return
+     * @throws IllegalStateException
+     * @throws IOException
+     */
+	@RequestMapping("/uploadFile")
+	@ResponseBody
+	public Map<String, Object> uploadFile(MultipartFile imagepath) throws IllegalStateException, IOException {
+		System.out.println(imagepath);
+		String mynewpic = null;
+		// 原始图片名称
+		String oldFileName = imagepath.getOriginalFilename(); // 获取上传文件的原名
+		// 存储路径
+		if (imagepath != null && oldFileName != null && oldFileName.length() > 0) {
+			// 我这写的是绝对路径请注意，springboot 用内置tomcat 展示图片会有问题 稍后在看
+			String saveFilePath = System.getProperty("user.dir")+"\\src\\main\\resources\\static\\img";
+			File files = new File(saveFilePath);
+			if (!files.exists()) {
+				files.mkdirs();
+			}
+			// 新的图片名称
+			String newFileName = UUID.randomUUID() + oldFileName.substring(oldFileName.lastIndexOf("."));
+			// 新图片
+			File newFile = new File(saveFilePath + "\\" + newFileName);
+			// 将内存中的数据写入磁盘
+			imagepath.transferTo(newFile);
+			// 将路径名存入全局变量mynewpic
+			mynewpic = newFileName;
+
+			// 将新图片名称返回到前端
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("success", "成功啦");
+			map.put("url", mynewpic);
+			return map;
+		} else {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("error", "图片不合法");
+			return map;
+		}
 	}
 }

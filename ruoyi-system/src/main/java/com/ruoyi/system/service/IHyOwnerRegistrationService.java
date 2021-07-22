@@ -64,5 +64,11 @@ public interface IHyOwnerRegistrationService
 
 	public String importOwnerRegistration(List<HyOwnerRegistration> hyOwnerRegistrationList, boolean updateSupport,
 			String operName);
+	
+	/**
+     * 删除上传图片
+     * @return
+     */
+	public boolean deleteFile(String fileName);
 
 }

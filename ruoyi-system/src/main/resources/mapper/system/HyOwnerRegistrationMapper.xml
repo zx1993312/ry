@@ -7,10 +7,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap type="HyOwnerRegistration"
 		id="HyOwnerRegistrationResult">
 		<result property="id" column="id" />
+		<result property="loginUsername" column="login_username" />
+		<result property="loginPassword" column="login_password" />
+		<result property="nickName" column="nick_name" />
+		<result property="ownerPicture" column="owner_picture" />
 		<result property="ownerName" column="owner_name" />
 		<result property="fixedTelephone" column="fixed_telephone" />
 		<result property="mobilePhone" column="mobile_phone" />
 		<result property="idCardNum" column="id_card_num" />
+		<result property="idCardAddress" column="id_card_address" />
 		<result property="suplierCategory" column="suplier_category" />
 		<result property="lockedNot" column="locked_not" />
 		<result property="accessNum" column="access_num" />
@@ -59,10 +64,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<sql id="selectHyOwnerRegistrationVo">
 		select
 		o.id,
+		o.login_username,
+		o.login_password,
+		o.nick_name,
+		o.owner_picture,
 		o.owner_name,
 		o.fixed_telephone,
 		o.mobile_phone,
 		o.id_card_num,
+		o.id_card_address,
 		o.suplier_category,
 		o.locked_not,
 		o.access_num,
@@ -106,10 +116,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<include refid="selectHyOwnerRegistrationVo" />
 		<where>
 		<if test="id != null  and id != ''"> and o.id = #{id}</if>
+		<if test="loginUsername != null and loginUsername != ''"> and o.login_username = #{loginUsername}</if>
+		<if test="loginPassword != null and loginPassword != ''"> and o.login_password = #{loginPassword}</if>
+		<if test="nickName != null and nickName != ''"> and o.nick_name = #{nickName}</if>
+		<if test="ownerPicture != null and ownerPicture != ''"> and o.owner_picture = #{ownerPicture}</if>
 		<if test="ownerName != null  and ownerName != ''"> and o.owner_name like concat('%', #{ownerName}, '%')</if>
 		<if test="fixedTelephone != null "> and o.fixed_telephone = #{fixedTelephone}</if>
-		<if test="mobilePhone != null "> and o.mobile_phone = #{mobilePhone}</if>
+		<if test="mobilePhone != null and mobilePhone != ''"> and o.mobile_phone = #{mobilePhone}</if>
 		<if test="idCardNum != null  and idCardNum != ''"> and o.id_card_num = #{idCardNum}</if>
+		<if test="idCardAddress != null  and idCardAddress != ''"> and o.id_card_address = #{idCardAddress}</if>
 		<if test="suplierCategory != null "> and o.suplier_category = #{suplierCategory}</if>
 		<if test="lockedNot != null "> and o.locked_not = #{lockedNot}</if>
 		<if test="accessNum != null "> and o.access_num = #{accessNum}</if>
@@ -159,7 +174,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into hy_owner_registration
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">id,</if>
+			<if test="loginUsername != null">login_username,</if>
+			<if test="loginPassword != null">login_password,</if>
+			<if test="nickName != null">nick_name,</if>
+			<if test="ownerPicture != null">owner_picture,</if>
 			<if test="ownerName != null">owner_name,</if>
+			<if test="idCardAddress != null">id_card_address,</if>
 			<if test="fixedTelephone != null">fixed_telephone,</if>
 			<if test="mobilePhone != null">mobile_phone,</if>
 			<if test="idCardNum != null">id_card_num,</if>
@@ -197,7 +217,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null">#{id},</if>
+			<if test="loginUsername != null">#{loginUsername},</if>
+			<if test="loginPassword != null">#{loginPassword},</if>
+			<if test="nickName != null">#{nickName},</if>
+			<if test="ownerPicture != null">#{ownerPicture},</if>
 			<if test="ownerName != null">#{ownerName},</if>
+			<if test="idCardAddress != null">#{idCardAddress},</if>
 			<if test="fixedTelephone != null">#{fixedTelephone},</if>
 			<if test="mobilePhone != null">#{mobilePhone},</if>
 			<if test="idCardNum != null">#{idCardNum},</if>
@@ -239,10 +264,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		parameterType="HyOwnerRegistration">
 		update hy_owner_registration
 		<trim prefix="SET" suffixOverrides=",">
+			<if test="loginUsername != null">login_username = #{loginUsername},</if>
+			<if test="loginPassword != null">login_password = #{loginPassword},</if>
+			<if test="nickName != null">nick_name = #{nickName},</if>
+			<if test="ownerPicture != null and ownerPicture != ''">owner_picture = #{ownerPicture},</if>
 			<if test="ownerName != null">owner_name = #{ownerName},</if>
 			<if test="fixedTelephone != null">fixed_telephone = #{fixedTelephone},</if>
 			<if test="mobilePhone != null">mobile_phone = #{mobilePhone},</if>
 			<if test="idCardNum != null">id_card_num = #{idCardNum},</if>
+			<if test="idCardAddress != null">id_card_address = #{idCardAddress},</if>
 			<if test="suplierCategory != null">suplier_category = #{suplierCategory},</if>
 			<if test="lockedNot != null">locked_not = #{lockedNot},</if>
 			<if test="accessNum != null">access_num = #{accessNum},</if>

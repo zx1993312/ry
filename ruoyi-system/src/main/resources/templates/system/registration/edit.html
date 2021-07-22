@@ -3,12 +3,43 @@
 <head>
 <th:block th:include="include :: header('修改业主资料登记')" />
 <th:block th:include="include :: datetimepicker-css" />
+<th:block th:include="include :: bootstrap-fileinput-css" />
 </head>
 <body class="white-bg">
 	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
 		<form class="form-horizontal m" id="form-registration-edit"
 			th:object="${hyOwnerRegistration}">
 			<input name="id" th:field="*{id}" type="hidden">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">登录账号：</label>
+				<div class="col-sm-8">
+					<input th:field="*{loginUsername}" name="loginUsername" class="form-control"
+						type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">登录密码：</label>
+				<div class="col-sm-8">
+					<input th:field="*{loginPassword}" name="loginPassword" class="form-control"
+						type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">昵称：</label>
+				<div class="col-sm-8">
+					<input th:field="*{nickName}" name="nickName" class="form-control"
+						type="text">
+				</div>
+			</div>
+			<div class="form-group">
+                <label class="font-noraml">头像：</label>
+                <div class="file-loading">
+		            <input type="file" name="imagepath" data-ref="ownerPicture"  class="myfile" value=""/> 
+		        </div>
+            </div>
+            <input type="hidden" name="ownerPicture">
+            <img alt="" th:src="'/img/'+*{ownerPicture}" width="100px" height="100px">
+            <input name="deleteFile" th:value="*{ownerPicture}" type="hidden">
 			<div class="form-group">
 				<label class="col-sm-3 control-label">业主名称：</label>
 				<div class="col-sm-8">
@@ -17,17 +48,29 @@
 				</div>
 			</div>
 			<div class="form-group">
+				<label class="col-sm-3 control-label">性别：</label>
+				<div class="col-sm-8">
+						<select id="gender" name="gender"  th:field="*{gender}" 
+						class="form-control "
+						th:with="type=${@dict.getType('sys_user_sex')}">
+						<option value="">请选择</option>
+						<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+							th:value="${dict.dictValue}"></option>
+					</select>
+				</div>
+			</div>
+			<!-- <div class="form-group">
 				<label class="col-sm-3 control-label">固定电话：</label>
 				<div class="col-sm-8">
 					<input id="fixedTelephone"  name="fixedTelephone" th:field="*{fixedTelephone}"
 						class="form-control" type="text">
 				</div>
-			</div>
+			</div> -->
 			<div class="form-group">
 				<label class="col-sm-3 control-label">移动电话：</label>
 				<div class="col-sm-8">
 					<input id="mobilePhone" name="mobilePhone" th:field="*{mobilePhone}"
-						class="form-control" type="text">
+						class="form-control" type="text" onkeyup="this.value=this.value.replace(/\D/g,'')">
 				</div>
 			</div>
 			<div class="form-group">
@@ -44,7 +87,7 @@
 						type="text">
 				</div>
 			</div>
-			<div class="form-group">
+			<!-- <div class="form-group">
 				<label class="col-sm-3 control-label">供应商类别：</label>
 				<div class="col-sm-8">
 					<input id="suplierCategory" name="suplierCategory" th:field="*{suplierCategory}"
@@ -162,18 +205,7 @@
 						type="text">
 				</div>
 			</div>
-			<div class="form-group">
-				<label class="col-sm-3 control-label">性别：</label>
-				<div class="col-sm-8">
-						<select id="gender" name="gender"  th:field="*{gender}" 
-						class="form-control "
-						th:with="type=${@dict.getType('sys_user_sex')}">
-						<option value="">请选择</option>
-						<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
-							th:value="${dict.dictValue}"></option>
-					</select>
-				</div>
-			</div>
+			
 			<div class="form-group">
 				<label class="col-sm-3 control-label">国籍：</label>
 				<div class="col-sm-8">
@@ -281,152 +313,51 @@
 	                  		<option th:each="dict : ${type}" th:text="${dict.projectName}" th:value="${dict.id}"></option>
 	                </select>
 				</div>
-			</div>
+			</div> -->
 		</form>
 	</div>
 	<th:block th:include="include :: footer" />
 	<th:block th:include="include :: datetimepicker-js" />
+	<th:block th:include="include :: bootstrap-fileinput-js" />
 	<script th:inline="javascript">
 		var prefix = ctx + "system/registration";
 		$("#form-registration-edit").validate({
 			onkeyup:false,
-        	rules:{
-        		ownerName:{
-        			required:true,
-        			maxlength:20,
-        		},
-        		houseNum:{
-        			required:true,
-        			maxlength:20,
-        		},
-        		mobilePhone:{
-        			isPhone:true,
-        			
-        		},
-        		fixedTelephone:{
-        			isTel:true,
-        		},
-        		idCardNum:{
-        			required:true,
-        			maxlength:40,
-        		},
-        		ownerId:{
-        			isUserName:true,
-        		},
-        		ownerHobby:{
-        			
-        			maxlength:30,
-        		},
-        		postalCode:{
-        			number:true,
-        			required:true,
-        			maxlength:6,
-        		},
-        		taxpayerNum:{
-        			required:true,
-        			maxlength:255,
-        		},
-        		ownerAddPhone:{
-        			required:true,
-        			maxlength:30,
-        		},
-        		eMail:{
-        			email:true,
-        		},
-        		suplierCategory:{
-        			number:true,
-        			required:true,
-        			maxlength:3,
-        		},
-        		faxPhone:{
-        			isTel:true,
-        			
-        		},
-        		accessNum:{
-        			number:true,
-        			required:true,
-        			maxlength:30,
-        		},
-        		certificateName:{
-        			required:true,
-        			maxlength:50,
-        		},
-        		coOwner:{
-        			
-        			maxlength:30,
-        		},
-        		customerCategoy:{
-        			number:true,
-        			required:true,
-        			maxlength:3,
-        		},
-        		contactAddress:{
-        			required:true,
-        			maxlength:255,
-        		},
-        		postalPreson:{
-        			required:true,
-        			maxlength:50,
-        		},
-        		phoneAccount:{
-        			isPhone:true,
-        			required:true,
-        			maxlength:30,
-        		},
-        		bindingPhoneNum:{
-        			isPhone:true,
-        			required:true,
-        			maxlength:30,
-        		},
-        		ownerIdentification:{
-        			number:true,
-        			required:true,
-        			maxlength:3,
-        		},
-        		firName:{
-        			required:true,
-        			maxlength:10,
-        		},
-        		secName:{
-        			required:true,
-        			maxlength:10,
-        		},
-        		gender:{
-        			required:true,
-        			maxlength:1,
-        		},
-        		nationality:{
-        			required:true,
-        			maxlength:20,
-        		},
-        		workUnit:{
-        			required:true,
-        			maxlength:30,
-        		},
-        		ownerJob:{
-        			required:true,
-        			maxlength:30,
-        		},
-        		bankAccount:{
-        			required:true,
-        			maxlength:30,
-        		},
-        		collectionCategory:{
-        			number:true,
-        			required:true,
-        			maxlength:2,
-        		},
-        		bankNum:{
-        			number:true,
-        			required:true,
-        			maxlength:30,
-        		},
-        		bankAccountName:{
-        			required:true,
-        			maxlength:30,
-        		},
-        	},
-			
+			rules : {
+				loginUsername : {
+					required : true,
+					maxlength : 255,
+				},
+				loginPassword : {
+					required : true,
+					maxlength : 255,
+				},
+				ownerPicture : {
+					required : true,
+					maxlength : 255,
+				},
+				ownerName : {
+					required : true,
+					maxlength : 20,
+				},
+				gender : {
+					required : true,
+				},
+				mobilePhone : {
+					required : true,
+					minlength : 11,
+					maxlength : 11,
+				},
+				idCardNum : {
+					required : true,
+					minlength : 18,
+					maxlength : 18,
+				},
+				idCardAddress : {
+					required : true,
+					maxlength : 255,
+				},
+			},
 			focusCleanup : true
 		});
 
@@ -442,6 +373,55 @@
 			minView : "month",
 			autoclose : true
 		});
+		
+        $(document).ready(function () {
+        	//上传头像操作
+	        $(".myfile").fileinput({
+	        	uploadUrl : prefix + '/uploadFile', //接受请求地址
+	            uploadAsync: true, //默认异步上传
+	            showUpload: true, //是否显示上传按钮,跟随文本框的那个
+	            showRemove: false, //显示移除按钮,跟随文本框的那个
+	            showCaption: true,//是否显示标题,就是那个文本框
+	            showPreview: true, //是否显示预览,不写默认为true
+	            dropZoneEnabled: false,//是否显示拖拽区域，默认不写为true，但是会占用很大区域
+	            //minImageWidth: 50, //图片的最小宽度
+	            //minImageHeight: 50,//图片的最小高度
+	            //maxImageWidth: 1000,//图片的最大宽度
+	            //maxImageHeight: 1000,//图片的最大高度
+	            //maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
+	            //minFileCount: 0,
+	            maxFileCount: 1, //表示允许同时上传的最大文件个数
+	            enctype: 'multipart/form-data',
+	            validateInitialCount: true,
+	            previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+	            msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+	            allowedFileTypes: ['image'],//配置允许文件上传的类型
+	            allowedPreviewTypes: ['image'],//配置所有的被预览文件类型
+	            allowedPreviewMimeTypes: ['jpg', 'png', 'gif'],//控制被预览的所有mime类型
+	            language: 'zh'
+	        })
+	        //异步上传返回结果处理
+	        $('.myfile').on('fileerror', function (event, data, msg) {
+	            console.log("fileerror");
+	            console.log(data);
+	        });
+	        //异步上传返回结果处理
+	        $(".myfile").on("fileuploaded", function (event, data, previewId, index) {
+	            console.log(data.response.url);
+	            var ref = $(this).attr("data-ref");
+	            var aa = $("input[name='" + ref + "']").val(data.response.url);
+	            var jsonData = JSON.stringify(aa);// 转成JSON格式
+	            var result = $.parseJSON(jsonData);// 转成JSON对象
+	        });
+
+	        //上传前
+	        $('.myfile').on('filepreupload', function (event, data, previewId, index) {
+	            var form = data.form, mynewpic = data.mynewpic, extra = data.extra,
+	                response = data.response, reader = data.reader;
+	            console.log("文件正在上传。。。。");
+	        });
+           
+        });
 	</script>
 </body>
 </html>

@@ -13,13 +13,13 @@
 						<ul>
 							<li><label>业主名称：</label> <input type="text" name="ownerName" />
 							</li>
-							<li><label>固定电话：</label> <input type="text"
-								name="fixedTelephone" onkeyup="this.value=this.value.replace(/\D/g,'')"/></li>
+							<!-- <li><label>固定电话：</label> <input type="text"
+								name="fixedTelephone" onkeyup="this.value=this.value.replace(/\D/g,'')"/></li> -->
 							<li><label>移动电话：</label> <input type="text"
 								name="mobilePhone" onkeyup="this.value=this.value.replace(/\D/g,'')"/></li>
 							<li><label>证件号码：</label> <input type="text" name="idCardNum" />
 							</li>
-							<li><label>供应商类别：</label> <input type="text"
+							<!-- <li><label>供应商类别：</label> <input type="text"
 								name="suplierCategory" onkeyup="this.value=this.value.replace(/\D/g,'')"/></li>
 							<li><label>是否锁定：</label> <select name="lockedNot"
 								class="form-control "
@@ -55,7 +55,7 @@
 							<li><label>业主标识：</label> <input type="text"
 								name="ownerIdentification" onkeyup="this.value=this.value.replace(/\D/g,'')"/></li>
 							<li><label>姓：</label> <input type="text" name="firName" /></li>
-							<li><label>名：</label> <input type="text" name="secName" /></li>
+							<li><label>名：</label> <input type="text" name="secName" /></li> -->
 							<li><label>性别：</label> <select id="gender" name="gender"
 								class="form-control "
 								th:with="type=${@dict.getType('sys_user_sex')}">
@@ -63,7 +63,7 @@
 									<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
 										th:value="${dict.dictValue}"></option>
 							</select></li>
-							<li><label>国籍：</label> <input type="text" name="nationality" />
+							<!-- <li><label>国籍：</label> <input type="text" name="nationality" />
 							</li>
 							<li><label>出生日期：</label> <input type="text"
 								class="time-input" placeholder="请选择出生日期" name="birthDate" /></li>
@@ -93,12 +93,12 @@
 							<li><label>开户行行号：</label> <input type="text" name="bankNum" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
 							</li>
 							<li><label>银行户名：</label> <input type="text"
-								name="bankAccountName" /></li>
+								name="bankAccountName" /></li>-->
 							<li><a class="btn btn-primary btn-rounded btn-sm"
 								onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
 								<a class="btn btn-warning btn-rounded btn-sm"
 								onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
-							</li>
+							</li> 
 						</ul>
 					</div>
 				</form>
@@ -173,18 +173,51 @@
                     title: '主键',
                     visible: false
                 },
-                {
+                /* {
                     field: 'hyProject.projectName',
                     title: '所属项目'
+                }, */
+                {
+                    field: 'loginUsername',
+                    title: '登录账号'
+                },
+                {
+                    field: 'loginPassword',
+                    title: '登录密码'
+                },
+                {
+                    field: 'nickName',
+                    title: '昵称'
+                },
+                {
+                    field: 'ownerPicture',
+                    title: '头像',
+                    formatter: function(value, row, index) {
+                    	if(value!=null){
+                    		return $.table.imageView("/img/"+value);
+                    	}
+				    }
                 },
                 {
                     field: 'ownerName',
                     title: '业主名称'
                 },
                 {
+                    field: 'gender',
+                    title: '性别',
+                    formatter: function(value, item, index) {
+                    	switch(value){
+	                    	case 0 : value =  "男";break;
+	                    	case 1 : value =  "女";break;
+	                    	case 2 : value =  "未知";break;
+	                	}
+		            	return value;
+		            }
+                },
+               /*  {
                     field: 'fixedTelephone',
                     title: '固定电话'
-                },
+                }, */
                 {
                     field: 'mobilePhone',
                     title: '移动电话'
@@ -197,7 +230,7 @@
                     field: 'idCardAddress',
                     title: '身份证地址'
                 },
-                {
+                /* {
                     field: 'suplierCategory',
                     title: '供应商类别'
                 },
@@ -270,10 +303,6 @@
                     title: '名'
                 },
                 {
-                    field: 'gender',
-                    title: '性别'
-                },
-                {
                     field: 'nationality',
                     title: '国籍'
                 },
@@ -335,7 +364,7 @@
                 {
                     field: 'bankAccountName',
                     title: '银行户名'
-                },
+                }, */
                 {
                     title: '操作',
                     align: 'center',
