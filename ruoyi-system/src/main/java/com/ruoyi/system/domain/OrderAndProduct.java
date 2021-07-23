@@ -19,8 +19,8 @@ public class OrderAndProduct extends BaseEntity
     @Excel(name = "订单id")
     private Long orderId;
 
-    /** 产品id */
-    @Excel(name = "产品id")
+    /** 商品id */
+    @Excel(name = "商品id")
     private Long productId;
 
     /** 数量 */

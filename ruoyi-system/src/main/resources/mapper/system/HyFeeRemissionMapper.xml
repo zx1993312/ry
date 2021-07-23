@@ -23,7 +23,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="offsetModificationRecord"    column="offset_modification_record"    />
         <result property="auditStatus"    column="audit_status"    />
         <result property="taxRate"    column="tax_rate"    />
-        <result property="feeDate"    column="fee_date"    />
         <result property="dueDate"    column="due_date"    />
         <result property="remissionYear"    column="remission_year"    />
         <result property="remissionMonth"    column="remission_month"    />
@@ -98,7 +97,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="auditResultsReason"
 			column="audit_results_reason" />
 		<result property="feeDateOld" column="fee_date_old" />
-		<result property="feeDate" column="fee_date" />
 		<result property="dueDateOld" column="due_date_old" />
 		<result property="dueDate" column="due_date" />
 		<result property="amountReceivableOld"
@@ -154,7 +152,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			f.offset_modification_record,
 			f.audit_status,
 			f.tax_rate,
-			f.fee_date,
 			f.due_date,
 			f.remission_year,
 			f.remission_month,
@@ -218,7 +215,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="offsetModificationRecord != null  and offsetModificationRecord != ''"> and offset_modification_record = #{offsetModificationRecord}</if>
             <if test="auditStatus != null "> and f.audit_status = #{auditStatus}</if>
             <if test="taxRate != null "> and f.tax_rate = #{taxRate}</if>
-            <if test="feeDate != null "> and f.fee_date = #{feeDate}</if>
             <if test="dueDate != null "> and f.due_date = #{dueDate}</if>
             <if test="remissionYear != null  and remissionYear != ''"> and f.remission_year = #{remissionYear}</if>
             <if test="remissionMonth != null  and remissionMonth != ''"> and f.remission_month = #{remissionMonth}</if>
@@ -281,7 +277,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="offsetModificationRecord != null">offset_modification_record,</if>
             <if test="auditStatus != null">audit_status,</if>
             <if test="taxRate != null">tax_rate,</if>
-            <if test="feeDate != null">fee_date,</if>
             <if test="dueDate != null">due_date,</if>
             <if test="remissionYear != null">remission_year,</if>
             <if test="remissionMonth != null">remission_month,</if>
@@ -321,7 +316,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="offsetModificationRecord != null">#{offsetModificationRecord},</if>
             <if test="auditStatus != null">#{auditStatus},</if>
             <if test="taxRate != null">#{taxRate},</if>
-            <if test="feeDate != null">#{feeDate},</if>
             <if test="dueDate != null">#{dueDate},</if>
             <if test="remissionYear != null">#{remissionYear},</if>
             <if test="remissionMonth != null">#{remissionMonth},</if>
@@ -365,7 +359,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="offsetModificationRecord != null">offset_modification_record = #{offsetModificationRecord},</if>
             <if test="auditStatus != null">audit_status = #{auditStatus},</if>
             <if test="taxRate != null">tax_rate = #{taxRate},</if>
-            <if test="feeDate != null">fee_date = #{feeDate},</if>
             <if test="dueDate != null">due_date = #{dueDate},</if>
             <if test="remissionYear != null">remission_year = #{remissionYear},</if>
             <if test="remissionMonth != null">remission_month = #{remissionMonth},</if>
