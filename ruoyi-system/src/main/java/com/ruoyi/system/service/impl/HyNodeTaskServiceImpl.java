@@ -135,7 +135,7 @@ public class HyNodeTaskServiceImpl implements IHyNodeTaskService {
 					SysJob job = new SysJob();
 					job.setJobName(hyNodeTask.getTaskName());
 					job.setJobGroup("DEFAULT");
-					job.setInvokeTarget("hangYuTask.update");
+					job.setInvokeTarget("hangYuTaskUtil.updateTaskAndNode()");
 					job.setMisfirePolicy("1");
 					job.setConcurrent("1");
 					job.setStatus("0");
