@@ -64,4 +64,21 @@ public interface SysJobMapper
      * @return 结果
      */
     public int insertJob(SysJob job);
+
+    /**
+     * 删除调度任务根据InvokeTarget
+     * 
+     * @param string
+     * @return
+     */
+	public int deleteJobByInvokeTarget(String invokeTarget);
+
+	/**
+     * 修改调度任务信息根据InvokeTarget
+     * 
+     * @param job 调度任务信息
+     * @return 结果
+     */
+	public int updateJobByInvokeTarget(SysJob job);
+
 }
