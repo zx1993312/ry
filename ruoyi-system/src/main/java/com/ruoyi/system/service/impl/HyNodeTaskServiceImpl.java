@@ -20,6 +20,7 @@ import com.ruoyi.system.service.IHyNodeTaskService;
 import com.ruoyi.common.constant.ScheduleConstants;
 import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.common.exception.job.TaskException;
+import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.quartz.domain.SysJob;
 import com.ruoyi.quartz.mapper.SysJobMapper;
 import com.ruoyi.quartz.util.ScheduleUtils;
@@ -129,14 +130,27 @@ public class HyNodeTaskServiceImpl implements IHyNodeTaskService {
 						taskAndNode.setIsInspection("0");
 						taskAndNodeMapper.insertTaskAndNode(taskAndNode);
 					}
+				}
+				if (StringUtils.isNotEmpty(hyNodeTask.getTaskName())) {
 					SysJob job = new SysJob();
 					job.setJobName(hyNodeTask.getTaskName());
 					job.setJobGroup("DEFAULT");
-					job.setInvokeTarget("testTask.ryNoParams");
+					job.setInvokeTarget("hangYuTask.update");
 					job.setMisfirePolicy("1");
 					job.setConcurrent("1");
 					job.setStatus("0");
-					job.setCronExpression(Constants.CRON_DAY);
+					switch (hyNodeTask.getTaskTime()) {
+					case "1":
+						job.setCronExpression(Constants.CRON_DAY);
+						break;
+					case "2":
+						job.setCronExpression(Constants.CRON_WEEK);
+						break;
+					case "3":
+						job.setCronExpression(Constants.CRON_MONTH);
+						break;
+					}
+
 					row = jobMapper.insertJob(job);
 					if (ScheduleConstants.Status.NORMAL.getValue().equals(job.getStatus())) {
 						Long jobId = job.getJobId();
@@ -151,6 +165,7 @@ public class HyNodeTaskServiceImpl implements IHyNodeTaskService {
 						ScheduleUtils.createScheduleJob(scheduler, job);
 					}
 				}
+
 			}
 		}
 

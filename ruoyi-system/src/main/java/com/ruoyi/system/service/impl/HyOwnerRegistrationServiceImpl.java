@@ -68,10 +68,10 @@ public class HyOwnerRegistrationServiceImpl implements IHyOwnerRegistrationServi
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public int updateHyOwnerRegistration(HyOwnerRegistration hyOwnerRegistration) {
-		if(hyOwnerRegistration.getOwnerPicture()!=null&&!"".equals(hyOwnerRegistration.getOwnerPicture())) {
-    		String fileName = hyOwnerRegistration.getDeleteFile();
-    		deleteFile(fileName);
-    	}
+		if (hyOwnerRegistration.getAvatar() != null && !"".equals(hyOwnerRegistration.getAvatar())) {
+			String fileName = hyOwnerRegistration.getDeleteFile();
+			deleteFile(fileName);
+		}
 		return hyOwnerRegistrationMapper.updateHyOwnerRegistration(hyOwnerRegistration);
 	}
 
@@ -85,11 +85,12 @@ public class HyOwnerRegistrationServiceImpl implements IHyOwnerRegistrationServi
 	@Transactional(rollbackFor = Exception.class)
 	public int deleteHyOwnerRegistrationByIds(String ids) {
 		String[] idz = ids.split(",");
-    	for(String id : idz) {
-    		HyOwnerRegistration hyOwnerRegistration = hyOwnerRegistrationMapper.selectHyOwnerRegistrationById(Long.valueOf(id));
-    		String deleteFile = hyOwnerRegistration.getOwnerPicture();
-    		deleteFile(deleteFile);
-    	}
+		for (String id : idz) {
+			HyOwnerRegistration hyOwnerRegistration = hyOwnerRegistrationMapper
+					.selectHyOwnerRegistrationById(Long.valueOf(id));
+			String deleteFile = hyOwnerRegistration.getAvatar();
+			deleteFile(deleteFile);
+		}
 		return hyOwnerRegistrationMapper.deleteHyOwnerRegistrationByIds(Convert.toStrArray(ids));
 	}
 
@@ -103,7 +104,7 @@ public class HyOwnerRegistrationServiceImpl implements IHyOwnerRegistrationServi
 	@Transactional(rollbackFor = Exception.class)
 	public int deleteHyOwnerRegistrationById(Long id) {
 		HyOwnerRegistration hyOwnerRegistration = hyOwnerRegistrationMapper.selectHyOwnerRegistrationById(id);
-		String deleteFile = hyOwnerRegistration.getOwnerPicture();
+		String deleteFile = hyOwnerRegistration.getAvatar();
 		deleteFile(deleteFile);
 		return hyOwnerRegistrationMapper.deleteHyOwnerRegistrationById(id);
 	}
@@ -112,7 +113,8 @@ public class HyOwnerRegistrationServiceImpl implements IHyOwnerRegistrationServi
 	 * 
 	 */
 	@Override
-	public String importOwnerRegistration(List<HyOwnerRegistration> hyOwnerRegistrationList, boolean updateSupport, String operName) {
+	public String importOwnerRegistration(List<HyOwnerRegistration> hyOwnerRegistrationList, boolean updateSupport,
+			String operName) {
 		if (StringUtils.isNull(hyOwnerRegistrationList) || hyOwnerRegistrationList.size() == 0) {
 			throw new BusinessException("导入楼宇数据不能为空！");
 		}
@@ -122,16 +124,19 @@ public class HyOwnerRegistrationServiceImpl implements IHyOwnerRegistrationServi
 		StringBuilder failureMsg = new StringBuilder();
 		for (HyOwnerRegistration hyOwnerRegistration : hyOwnerRegistrationList) {
 			List<HyOwnerRegistration> dataList = this.selectHyOwnerRegistrationList(hyOwnerRegistration);
-			
-			//判断这些是否为空
-			/*if (StringUtils.isNull(hyOwnerRegistration.getOwnerName()) || StringUtils.isNull(hyOwnerRegistration.getId())
-					|| StringUtils.isNull(hyOwnerRegistration.getFixedTelephone())
-					|| StringUtils.isNull(hyOwnerRegistration.getMobilePhone())|| StringUtils.isNull(hyOwnerRegistration.getIdCardNum())) {
-				failureMsg.insert(0, "很抱歉，导入失败！共 " + failureNum + " 条数据格式不正确，错误如下：");
-				throw new BusinessException(failureMsg.toString());
-			}*/
-			
-			//查询数据是否存在
+
+			// 判断这些是否为空
+			/*
+			 * if (StringUtils.isNull(hyOwnerRegistration.getOwnerName()) ||
+			 * StringUtils.isNull(hyOwnerRegistration.getId()) ||
+			 * StringUtils.isNull(hyOwnerRegistration.getFixedTelephone()) ||
+			 * StringUtils.isNull(hyOwnerRegistration.getMobilePhone())||
+			 * StringUtils.isNull(hyOwnerRegistration.getIdCardNum())) {
+			 * failureMsg.insert(0, "很抱歉，导入失败！共 " + failureNum + " 条数据格式不正确，错误如下："); throw
+			 * new BusinessException(failureMsg.toString()); }
+			 */
+
+			// 查询数据是否存在
 			if (dataList == null || dataList.size() == 0) {
 				this.insertHyOwnerRegistration(hyOwnerRegistration);
 				successNum++;
@@ -152,26 +157,26 @@ public class HyOwnerRegistrationServiceImpl implements IHyOwnerRegistrationServi
 		} else {
 			successMsg.insert(0, "恭喜您，数据已全部导入成功！共 " + successNum + " 条，数据如下：");
 		}
-		
-		
+
 		return successMsg.toString();
 	}
-	
+
 	/**
-     * 删除上传图片
-     * @return
-     */
+	 * 删除上传图片
+	 * 
+	 * @return
+	 */
 	@Override
 	public boolean deleteFile(String fileName) {
-		String fileName1 = System.getProperty("user.dir")+"\\src\\main\\resources\\static\\img\\"+fileName;
+		String fileName1 = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\img\\" + fileName;
 		File file = new File(fileName1);
-		//判断文件存不存在
-		if(!file.exists()){
-			System.out.println("删除文件失败："+fileName+"不存在！");
+		// 判断文件存不存在
+		if (!file.exists()) {
+			System.out.println("删除文件失败：" + fileName + "不存在！");
 			return false;
-		}else{
-			//判断这是不是一个文件，ps：有可能是文件夹
-			if(file.isFile()){
+		} else {
+			// 判断这是不是一个文件，ps：有可能是文件夹
+			if (file.isFile()) {
 				return file.delete();
 			}
 		}

@@ -1,11 +1,13 @@
 package com.ruoyi.system.domain;
 
 import java.util.Date;
-import com.fasterxml.jackson.annotation.JsonFormat;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ruoyi.common.annotation.Excel;
-import com.ruoyi.common.core.domain.BaseEntity;
+import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.system.annotation.EnumAnn;
 import com.ruoyi.system.enums.ControlEnum;
 import com.ruoyi.system.enums.SexEnum;
@@ -16,28 +18,16 @@ import com.ruoyi.system.enums.SexEnum;
  * @author Administrator
  * @date 2021-01-09
  */
-public class HyOwnerRegistration extends BaseEntity
+public class HyOwnerRegistration extends SysUser
 {
     private static final long serialVersionUID = 1L;
 
     /** 主键 */
     private Long id;
 
-    /** 登录账号 */
-    @Excel(name = "登录账号")
-    private String loginUsername;
-    
-    /** 登录密码 */
-    @Excel(name = "登录密码")
-    private String loginPassword;
-    
     /** 昵称 */
     @Excel(name = "昵称")
     private String nickName;
-    
-    /** 头像 */
-    @Excel(name = "头像")
-    private String ownerPicture;
     
     /** 业主名称 */
     @Excel(name = "业主名称")
@@ -204,36 +194,12 @@ public class HyOwnerRegistration extends BaseEntity
         return id;
     }
     
-    public String getLoginUsername() {
-		return loginUsername;
-	}
-
-	public void setLoginUsername(String loginUsername) {
-		this.loginUsername = loginUsername;
-	}
-
-	public String getLoginPassword() {
-		return loginPassword;
-	}
-
-	public void setLoginPassword(String loginPassword) {
-		this.loginPassword = loginPassword;
-	}
-
 	public String getNickName() {
 		return nickName;
 	}
 
 	public void setNickName(String nickName) {
 		this.nickName = nickName;
-	}
-
-	public String getOwnerPicture() {
-		return ownerPicture;
-	}
-
-	public void setOwnerPicture(String ownerPicture) {
-		this.ownerPicture = ownerPicture;
 	}
 
 	public void setOwnerName(String ownerName) 
@@ -580,10 +546,7 @@ public class HyOwnerRegistration extends BaseEntity
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
-            .append("loginUsername", getLoginUsername())
-            .append("loginPassword", getLoginPassword())
             .append("nickName", getNickName())
-            .append("ownerPicture", getOwnerPicture())
             .append("ownerName", getOwnerName())
             .append("fixedTelephone", getFixedTelephone())
             .append("mobilePhone", getMobilePhone())
