@@ -17,6 +17,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			javaType="HyOwnerRegistration" resultMap="HyOwnerRegistrationResult" />
         <association property="orderAndProduct" column="id" 
 			javaType="OrderAndProduct" resultMap="OrderAndProductResult" />
+        <association property="hyProduct" column="id" 
+			javaType="HyProduct" resultMap="HyProductResult" />
+        <association property="hyPicture" column="id" 
+			javaType="HyPicture" resultMap="HyPictureResult" />
+    </resultMap>
+    
+     <resultMap type="HyPicture" id="HyPictureResult">
+        <result property="id"    column="id"    />
+        <result property="pictureAddress"    column="picture_address"    />
+        <result property="productId"    column="product_id"    />
+    </resultMap>
+    
+    <resultMap type="HyProduct" id="HyProductResult">
+        <result property="id"    column="id"    />
+        <result property="productNumber"    column="product_number"    />
+        <result property="productName"    column="product_name"    />
+        <result property="briefIntroduction"    column="brief_introduction"    />
+        <result property="productType"    column="product_type"    />
+        <result property="originalPrice"    column="original_price"    />
+        <result property="currentPrice"    column="current_price"    />
+        <result property="soldNumber"    column="sold_number"    />
+        <result property="stockNumber"    column="stock_number"    />
+        <result property="state"    column="state"    />
+        <result property="productOrderBy"    column="product_order_by"    />
+        <result property="shopId"    column="shop_id"    />
+        <result property="lableId"    column="lable_id"    />
     </resultMap>
     
     <resultMap type="OrderAndProduct" id="OrderAndProductResult">
@@ -81,11 +107,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         r.mobile_phone, 
         r.contact_address, 
         a.product_id, 
-        a.number 
+        a.number, 
+        p.product_name, 
+        p.current_price, 
+        c.picture_address
         from 
         hy_order o
         LEFT JOIN  hy_owner_registration r ON o.owner_id = r.id
         LEFT JOIN  order_and_product a ON o.id = a.order_id
+        LEFT JOIN  hy_product p ON p.id = a.product_id
+        LEFT JOIN  hy_picture c ON p.id = c.product_id
     </sql>
 
     <select id="selectHyOrderList" parameterType="HyOrder" resultMap="HyOrderResult">

@@ -51,6 +51,14 @@ public class HyOrder extends BaseEntity
     @Excel(name = "业主表")
     private HyOwnerRegistration hyOwnerRegistration;
     
+    /** 商品表 */
+    @Excel(name = "商品表")
+    private HyProduct hyProduct;
+    
+    /** 商品缩略图表 */
+    @Excel(name = "商品缩略图表")
+    private HyPicture hyPicture;
+    
     /** 订单商品中间表 */
     @Excel(name = "订单商品中间表")
     private OrderAndProduct orderAndProduct;
@@ -140,6 +148,22 @@ public class HyOrder extends BaseEntity
 		this.hyOwnerRegistration = hyOwnerRegistration;
 	}
 
+	public HyProduct getHyProduct() {
+		return hyProduct;
+	}
+
+	public void setHyProduct(HyProduct hyProduct) {
+		this.hyProduct = hyProduct;
+	}
+
+	public HyPicture getHyPicture() {
+		return hyPicture;
+	}
+
+	public void setHyPicture(HyPicture hyPicture) {
+		this.hyPicture = hyPicture;
+	}
+
 	public OrderAndProduct getOrderAndProduct() {
 		return orderAndProduct;
 	}
@@ -169,6 +193,8 @@ public class HyOrder extends BaseEntity
             .append("productIds", getProductIds())
             .append("ownerId", getOwnerId())
             .append("hyOwnerRegistration", getHyOwnerRegistration())
+            .append("hyProduct", getHyProduct())
+            .append("hyPicture", getHyPicture())
             .append("orderAndProduct", getOrderAndProduct())
             .append("numbers", getNumbers())
             .toString();
