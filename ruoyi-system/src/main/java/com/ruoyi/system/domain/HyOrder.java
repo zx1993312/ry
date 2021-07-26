@@ -22,7 +22,7 @@ public class HyOrder extends BaseEntity
     /** 订单编号 */
     @Excel(name = "订单编号")
     private String orderNumber;
-
+    
     /** 订单状态 */
     @Excel(name = "订单状态")
     private String orderState;
@@ -76,7 +76,8 @@ public class HyOrder extends BaseEntity
     {
         return orderNumber;
     }
-    public void setOrderState(String orderState) 
+    
+	public void setOrderState(String orderState) 
     {
         this.orderState = orderState;
     }

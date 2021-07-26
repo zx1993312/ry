@@ -117,6 +117,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectHyOrderVo"/>
         <where>  
             <if test="orderNumber != null  and orderNumber != ''"> and o.order_number = #{orderNumber}</if>
+             <if test="commercialSpecification != null  and commercialSpecification != ''"> and o.commercial_specification = #{commercialSpecification}</if>
             and o.order_state = "2"
             <if test="refundReason != null  and refundReason != ''"> and o.refund_reason = #{refundReason}</if>
             <if test="refundInstructions != null  and refundInstructions != ''"> and o.refund_instructions = #{refundInstructions}</if>
@@ -142,6 +143,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
             <if test="orderNumber != null  and orderNumber != ''"> and o.order_number = #{orderNumber}</if>
             and o.order_state = "4"
+            <if test="refundReason != null  and refundReason != ''"> and o.refund_reason = #{refundReason}</if>
+            <if test="refundInstructions != null  and refundInstructions != ''"> and o.refund_instructions = #{refundInstructions}</if>
+            <if test="refundAmount != null "> and o.refund_amount = #{refundAmount}</if>
+            <if test="ownerId != null "> and o.owner_id = #{ownerId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyOrderListByRefunded" parameterType="HyOrder" resultMap="HyOrderResult">
+        <include refid="selectHyOrderVo"/>
+        <where>  
+            <if test="orderNumber != null  and orderNumber != ''"> and o.order_number = #{orderNumber}</if>
+            and o.order_state = "5"
             <if test="refundReason != null  and refundReason != ''"> and o.refund_reason = #{refundReason}</if>
             <if test="refundInstructions != null  and refundInstructions != ''"> and o.refund_instructions = #{refundInstructions}</if>
             <if test="refundAmount != null "> and o.refund_amount = #{refundAmount}</if>

@@ -25,7 +25,7 @@ public class HyShoppingCart extends BaseEntity
     /** 商品id */
     @Excel(name = "商品id")
     private Long productId;
-
+    
     public void setId(Long id) 
     {
         this.id = id;
@@ -54,7 +54,7 @@ public class HyShoppingCart extends BaseEntity
         return productId;
     }
 
-    @Override
+	@Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
