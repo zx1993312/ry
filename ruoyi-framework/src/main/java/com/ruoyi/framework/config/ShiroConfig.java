@@ -284,6 +284,9 @@ public class ShiroConfig
         // 不需要拦截的访问
         filterChainDefinitionMap.put("/login", "anon,captchaValidate");
         filterChainDefinitionMap.put("/system/task/**", "anon,captchaValidate");
+        filterChainDefinitionMap.put("/system/order/**", "anon,captchaValidate");
+        filterChainDefinitionMap.put("/system/label/**", "anon,captchaValidate");
+        filterChainDefinitionMap.put("/system/product/**", "anon,captchaValidate");
         // 注册相关
         filterChainDefinitionMap.put("/register", "anon,captchaValidate");
         // 系统权限列表

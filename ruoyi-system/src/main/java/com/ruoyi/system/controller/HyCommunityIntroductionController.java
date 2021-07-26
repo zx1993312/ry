@@ -1,6 +1,12 @@
 package com.ruoyi.system.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +17,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.system.domain.HyCommunityIntroduction;
@@ -187,4 +195,47 @@ public class HyCommunityIntroductionController extends BaseController
     {
         return toAjax(hyCommunityIntroductionService.deleteHyCommunityIntroductionByIds(ids));
     }
+    
+    /**
+	 * 上传物业简介多图
+	 * @param imagepath
+	 * @return
+	 * @throws IllegalStateException
+	 * @throws IOException
+	 */
+	@RequestMapping("/uploadFile2")
+	@ResponseBody
+	public Map<String, Object> uploadFile2(MultipartFile imagepaths) throws IllegalStateException, IOException {
+		System.out.println(imagepaths);
+		String mynewpic = null;
+		// 原始图片名称
+		String oldFileName = imagepaths.getOriginalFilename(); // 获取上传文件的原名
+		// 存储路径
+		if (imagepaths != null && oldFileName != null && oldFileName.length() > 0) {
+			// 我这写的是绝对路径请注意，springboot 用内置tomcat 展示图片会有问题 稍后在看
+			String saveFilePath = System.getProperty("user.dir")+"\\src\\main\\resources\\static\\img";
+			File files = new File(saveFilePath);
+			if (!files.exists()) {
+				files.mkdirs();
+			}
+			// 新的图片名称
+			String newFileName = UUID.randomUUID() + oldFileName.substring(oldFileName.lastIndexOf("."));
+			// 新图片
+			File newFile = new File(saveFilePath + "\\" + newFileName);
+			// 将内存中的数据写入磁盘
+			imagepaths.transferTo(newFile);
+			// 将路径名存入全局变量mynewpic
+			mynewpic = newFileName;
+			
+			// 将新图片名称返回到前端
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("success", "成功啦");
+			map.put("url", mynewpic);
+			return map;
+		} else {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("error", "图片不合法");
+			return map;
+		}
+	}
 }
