@@ -25,6 +25,9 @@ public class HyCommunityIntroduction extends BaseEntity
     /** 简介内容 */
     @Excel(name = "简介内容")
     private String introduction;
+    
+    /** 物业简介图片表 */
+    private HyIntroductionpictures hyIntroductionpictures;
     public void setId(Long id) 
     {
         this.id = id;
@@ -52,12 +55,21 @@ public class HyCommunityIntroduction extends BaseEntity
 		this.introduction = introduction;
 	}
 
+	public HyIntroductionpictures getHyIntroductionpictures() {
+		return hyIntroductionpictures;
+	}
+
+	public void setHyIntroductionpictures(HyIntroductionpictures hyIntroductionpictures) {
+		this.hyIntroductionpictures = hyIntroductionpictures;
+	}
+
 	@Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
             .append("introductionPhotoAddress", getIntroductionPhotoAddress())
             .append("introduction", getIntroduction())
+            .append("hyIntroductionpictures", getHyIntroductionpictures())
             .toString();
     }
 }

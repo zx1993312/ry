@@ -22,7 +22,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.system.domain.HyCommunityIntroduction;
+import com.ruoyi.system.domain.HyIntroductionpictures;
 import com.ruoyi.system.service.IHyCommunityIntroductionService;
+import com.ruoyi.system.service.IHyIntroductionpicturesService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -50,6 +52,9 @@ public class HyCommunityIntroductionController extends BaseController
 
     @Autowired
     private IHyCommunityIntroductionService hyCommunityIntroductionService;
+    
+    @Autowired
+    private IHyIntroductionpicturesService hyIntroductionpicturesService;
 
     @RequiresPermissions("system:introduction:view")
     @GetMapping()
@@ -132,6 +137,7 @@ public class HyCommunityIntroductionController extends BaseController
     public AjaxResult addSave(HyCommunityIntroduction hyCommunityIntroduction)
     {
         return toAjax(hyCommunityIntroductionService.insertHyCommunityIntroduction(hyCommunityIntroduction));
+        
     }
 
     /**
@@ -145,6 +151,10 @@ public class HyCommunityIntroductionController extends BaseController
     public String edit(@PathVariable("id") Long id, ModelMap mmap)
     {
         HyCommunityIntroduction hyCommunityIntroduction = hyCommunityIntroductionService.selectHyCommunityIntroductionById(id);
+        HyIntroductionpictures hyIntroductionpictures = new HyIntroductionpictures();
+        hyIntroductionpictures.setIntroductionId(id);
+        List<HyIntroductionpictures> list = hyIntroductionpicturesService.selectHyIntroductionpicturesList(hyIntroductionpictures);
+        mmap.put("list", list);
         mmap.put("hyCommunityIntroduction", hyCommunityIntroduction);
         return prefix + "/edit";
     }

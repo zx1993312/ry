@@ -110,24 +110,16 @@ public class HyProductServiceImpl implements IHyProductService {
 				hyDeatilPicture = lists;
 	    		String deleteFiles = hyDeatilPicture.getDeatilPicture();
 	    		deleteFile(deleteFiles);
+	    		hyDeatilPictureMapper.deleteHyDeatilPictureById(hyDeatilPicture.getId());
 			}
 			String deatilPictures = hyProduct.getHyDeatilPicture().getDeatilPicture();
 			String pictureAdd = deatilPictures.substring(0,deatilPictures.length()-1);
 			String[]pictureArr = pictureAdd.split(",");
-			int i =0;
 			for(String picture:pictureArr) {
 				HyDeatilPicture hyDeatilPictures =new HyDeatilPicture();
-				if(list1.size()>i) {
-					hyDeatilPictures = list1.get(i);
-					hyDeatilPictures.setDeatilPicture(picture);
-					hyDeatilPictureMapper.updateHyDeatilPicture(hyDeatilPictures);
-				}
-				if(list1.size()<=i) {
 				hyDeatilPictures.setDeatilPicture(picture);
 				hyDeatilPictures.setProductId(productId);
 				hyDeatilPictureMapper.insertHyDeatilPicture(hyDeatilPictures);
-				}
-				i++;
 			}
 		}
 		if(hyProduct.getHyPicture().getPictureAddress()!=null && !"".equals(hyProduct.getHyPicture().getPictureAddress())) {
@@ -165,25 +157,20 @@ public class HyProductServiceImpl implements IHyProductService {
 	public int deleteHyProductByIds(String ids) {
 		String ida [] = ids.split(",");
     	for(String id:ida) {
-    		Long idd = Long.valueOf(id);
-    		HyProduct hyProduct = hyProductMapper.selectHyProductById(idd);
-    		String fileName = hyProduct.getHyPicture().getPictureAddress();
-    		deleteFile(fileName);
     		HyPicture hyPicture = new HyPicture();
-    		hyPicture.setProductId(idd);
+    		hyPicture.setProductId(Long.valueOf(id));
     		List<HyPicture> list =  hyPictureMapper.selectHyPictureList(hyPicture);
     		hyPicture = list.get(0);
-    		Long idf = hyPicture.getId();
-    		hyPictureMapper.deleteHyPictureById(idf);
+    		String fileName = hyPicture.getPictureAddress();
+    		deleteFile(fileName);
+    		hyPictureMapper.deleteHyPictureById(hyPicture.getId());
     		HyDeatilPicture hyDeatilPicture = new HyDeatilPicture();
-    		hyDeatilPicture.setProductId(idd);
-    		List<HyDeatilPicture> list1 =  hyDeatilPictureMapper.selectHyDeatilPictureList(hyDeatilPicture);
-    		for(HyDeatilPicture lists:list1) {
-    			hyDeatilPicture = lists;
-        		Long idg = hyDeatilPicture.getId();
-        		String deleteFiles = hyDeatilPicture.getDeatilPicture();
+    		hyDeatilPicture.setProductId(Long.valueOf(id));
+    		List<HyDeatilPicture> deatilPictureList =  hyDeatilPictureMapper.selectHyDeatilPictureList(hyDeatilPicture);
+    		for(HyDeatilPicture deatilPicture : deatilPictureList) {
+        		String deleteFiles = deatilPicture.getDeatilPicture();
         		deleteFile(deleteFiles);
-        		hyDeatilPictureMapper.deleteHyDeatilPictureById(idg);
+        		hyDeatilPictureMapper.deleteHyDeatilPictureById(deatilPicture.getId());
     		}
     	}
     	
@@ -200,6 +187,21 @@ public class HyProductServiceImpl implements IHyProductService {
 	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int deleteHyProductById(Long id) {
+		HyPicture hyPicture = new HyPicture();
+		hyPicture.setProductId(id);
+		List<HyPicture> list =  hyPictureMapper.selectHyPictureList(hyPicture);
+		hyPicture = list.get(0);
+		String fileName = hyPicture.getPictureAddress();
+		deleteFile(fileName);
+		hyPictureMapper.deleteHyPictureById(hyPicture.getId());
+		HyDeatilPicture hyDeatilPicture = new HyDeatilPicture();
+		hyDeatilPicture.setProductId(id);
+		List<HyDeatilPicture> deatilPictureList =  hyDeatilPictureMapper.selectHyDeatilPictureList(hyDeatilPicture);
+		for(HyDeatilPicture deatilPicture : deatilPictureList) {
+    		String deleteFiles = deatilPicture.getDeatilPicture();
+    		deleteFile(deleteFiles);
+    		hyDeatilPictureMapper.deleteHyDeatilPictureById(deatilPicture.getId());
+		}
 		return hyProductMapper.deleteHyProductById(id);
 	}
 	

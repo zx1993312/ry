@@ -58,4 +58,10 @@ public interface IHyCommunityIntroductionService
      * @return 结果
      */
     public int deleteHyCommunityIntroductionById(Long id);
+    /**
+     * 删除上图片
+     * @param fileName
+     * @return
+     */
+	boolean deleteFile(String fileName);
 }

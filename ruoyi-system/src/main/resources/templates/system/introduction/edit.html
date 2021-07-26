@@ -3,19 +3,21 @@
 <head>
     <th:block th:include="include :: header('修改社区简介')" />
     <th:block th:include="include :: summernote-css" />
+    <th:block th:include="include :: bootstrap-fileinput-css" />
 </head>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
         <form class="form-horizontal m" id="form-introduction-edit" th:object="${hyCommunityIntroduction}">
             <input name="id" th:field="*{id}" type="hidden">
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">简介图片地址：</label>
-                <div class="col-sm-8">
-                	<input name="introductionPhotoAddress" id="pic" class="form-control" type="hidden">
-					<a id="url"><img th:src="'/img/'+*{introductionPhotoAddress}" style="width: 90px;height: 90px"></a>
-					<input type="file" id="abc">
-                </div>
+            <div class="form-group">
+                <label class="font-noraml">简介图片：</label>
+                <div class="file-loading">
+		            <input type="file" name="imagepaths" data-ref="introductionPhotoAddress"  class="yourfile" value=""/> 
+		        </div>
             </div>
+		            <input type="hidden" name="introductionPhotoAddress">
+		    <img th:if="data!=null" th:each="data:${list}" alt="" th:src="'/img/'+${data.introductionPicture}" width="100px" height="100px">
+            <input id="deleteFiles" th:value="*{introductionPhotoAddress}" type="hidden">
             <div class="form-group">    
                 <label class="col-sm-3 control-label">简介内容：</label>
                 <div class="col-sm-8">
@@ -27,6 +29,7 @@
     </div>
     <th:block th:include="include :: footer" />
     <th:block th:include="include :: summernote-js" />
+    <th:block th:include="include :: bootstrap-fileinput-js" />
     <script th:inline="javascript">
         var prefix = ctx + "system/introduction";
         $("#form-introduction-edit").validate({
@@ -110,6 +113,56 @@
                 var content = $("input[name='" + this.id + "']").val();
                 $('#' + this.id).summernote('code', content);
             })
+        });
+        //上传物业图片操作
+        $(document).ready(function () {
+        	var imgPath = '';
+	        $(".yourfile").fileinput({
+	        	uploadUrl : prefix + '/uploadFile2', //接受请求地址
+	            uploadAsync: true, //默认异步上传
+	            showUpload: true, //是否显示上传按钮,跟随文本框的那个
+	            showRemove: false, //显示移除按钮,跟随文本框的那个
+	            showCaption: true,//是否显示标题,就是那个文本框
+	            showPreview: true, //是否显示预览,不写默认为true
+	            dropZoneEnabled: false,//是否显示拖拽区域，默认不写为true，但是会占用很大区域
+	            //minImageWidth: 50, //图片的最小宽度
+	            //minImageHeight: 50,//图片的最小高度
+	            //maxImageWidth: 1000,//图片的最大宽度
+	            //maxImageHeight: 1000,//图片的最大高度
+	            //maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
+	            //minFileCount: 0,
+	            maxFileCount: 6, //表示允许同时上传的最大文件个数
+	            enctype: 'multipart/form-data',
+	            validateInitialCount: true,
+	            previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+	            msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+	            allowedFileTypes: ['image'],//配置允许文件上传的类型
+	            allowedPreviewTypes: ['image'],//配置所有的被预览文件类型
+	            allowedPreviewMimeTypes: ['jpg', 'png', 'gif'],//控制被预览的所有mime类型
+	            language: 'zh'
+	        })
+	        //异步上传返回结果处理
+	        $('.yourfile').on('fileerror', function (event, data, msg) {
+	            console.log("fileerror");
+	            console.log(data);
+	        });
+	        //异步上传返回结果处理
+	        $(".yourfile").on("fileuploaded", function (event, data, previewId, index) {
+	        	imgPath += data.response.url + ",";
+	            console.log(data.response.url);
+	            var ref = $(this).attr("data-ref");
+	            var aa = $("input[name='" + ref + "']").val(imgPath);
+	            var jsonData = JSON.stringify(aa);// 转成JSON格式
+	            var result = $.parseJSON(jsonData);// 转成JSON对象
+	        });
+
+	        //上传前
+	        $('.yourfile').on('filepreupload', function (event, data, previewId, index) {
+	            var form = data.form, mynewpic = data.mynewpic, extra = data.extra,
+	                response = data.response, reader = data.reader;
+	            console.log("文件正在上传。。。。");
+	        });
+            
         });
     </script>
 </body>

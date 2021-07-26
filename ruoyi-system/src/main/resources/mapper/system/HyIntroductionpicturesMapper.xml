@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyIntroductionpicturesMapper">
+    
+    <resultMap type="HyIntroductionpictures" id="HyIntroductionpicturesResult">
+        <result property="id"    column="id"    />
+        <result property="introductionPicture"    column="introduction_picture"    />
+        <result property="introductionId"    column="introduction_id"    />
+    </resultMap>
+
+    <sql id="selectHyIntroductionpicturesVo">
+        select id, introduction_picture, introduction_id from hy_introductionpictures
+    </sql>
+
+    <select id="selectHyIntroductionpicturesList" parameterType="HyIntroductionpictures" resultMap="HyIntroductionpicturesResult">
+        <include refid="selectHyIntroductionpicturesVo"/>
+        <where>  
+            <if test="introductionPicture != null  and introductionPicture != ''"> and introduction_picture = #{introductionPicture}</if>
+            <if test="introductionId != null "> and introduction_id = #{introductionId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyIntroductionpicturesById" parameterType="Long" resultMap="HyIntroductionpicturesResult">
+        <include refid="selectHyIntroductionpicturesVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyIntroductionpictures" parameterType="HyIntroductionpictures" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_introductionpictures
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="introductionPicture != null">introduction_picture,</if>
+            <if test="introductionId != null">introduction_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="introductionPicture != null">#{introductionPicture},</if>
+            <if test="introductionId != null">#{introductionId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyIntroductionpictures" parameterType="HyIntroductionpictures">
+        update hy_introductionpictures
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="introductionPicture != null">introduction_picture = #{introductionPicture},</if>
+            <if test="introductionId != null">introduction_id = #{introductionId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyIntroductionpicturesById" parameterType="Long">
+        delete from hy_introductionpictures where id = #{id}
+    </delete>
+
+    <delete id="deleteHyIntroductionpicturesByIds" parameterType="String">
+        delete from hy_introductionpictures where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

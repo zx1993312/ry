@@ -1,14 +1,19 @@
 package com.ruoyi.system.service.impl;
 
+import java.io.File;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ruoyi.system.mapper.HyCommunityIntroductionMapper;
-import com.ruoyi.system.domain.HyCommunityIntroduction;
-import com.ruoyi.system.service.IHyCommunityIntroductionService;
 import com.ruoyi.common.core.text.Convert;
+import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.system.domain.HyCommunityIntroduction;
+import com.ruoyi.system.domain.HyIntroductionpictures;
+import com.ruoyi.system.mapper.HyCommunityIntroductionMapper;
+import com.ruoyi.system.mapper.HyIntroductionpicturesMapper;
+import com.ruoyi.system.service.IHyCommunityIntroductionService;
 
 /**
  * 社区简介Service业务层处理
@@ -21,6 +26,9 @@ public class HyCommunityIntroductionServiceImpl implements IHyCommunityIntroduct
 {
     @Autowired
     private HyCommunityIntroductionMapper hyCommunityIntroductionMapper;
+    
+    @Autowired
+    private HyIntroductionpicturesMapper hyIntroductionpicturesMapper;
 
     /**
      * 查询社区简介
@@ -56,7 +64,22 @@ public class HyCommunityIntroductionServiceImpl implements IHyCommunityIntroduct
     @Override
     public int insertHyCommunityIntroduction(HyCommunityIntroduction hyCommunityIntroduction)
     {
-        return hyCommunityIntroductionMapper.insertHyCommunityIntroduction(hyCommunityIntroduction);
+    	int row = 0;
+    	row = hyCommunityIntroductionMapper.insertHyCommunityIntroduction(hyCommunityIntroduction);
+    	if(row>0) {
+    		if(StringUtils.isNotEmpty(hyCommunityIntroduction.getIntroductionPhotoAddress())) {
+    			String[] introductionPhotoAddress = hyCommunityIntroduction.getIntroductionPhotoAddress().split(",");
+    			hyCommunityIntroduction = hyCommunityIntroductionMapper.selectHyCommunityIntroductionList(hyCommunityIntroduction).get(0);
+    			Long introductionId = hyCommunityIntroduction.getId();
+            	for(String introductionPicture : introductionPhotoAddress) {
+            		HyIntroductionpictures hyIntroductionpictures = new HyIntroductionpictures();
+            		hyIntroductionpictures.setIntroductionPicture(introductionPicture);
+            		hyIntroductionpictures.setIntroductionId(introductionId);
+            		hyIntroductionpicturesMapper.insertHyIntroductionpictures(hyIntroductionpictures);
+            	}
+    		}
+    	}
+        return row;
     }
 
     /**
@@ -69,6 +92,25 @@ public class HyCommunityIntroductionServiceImpl implements IHyCommunityIntroduct
     @Override
     public int updateHyCommunityIntroduction(HyCommunityIntroduction hyCommunityIntroduction)
     {
+    	Long introductionId = hyCommunityIntroduction.getId();
+    	if(StringUtils.isNotEmpty(hyCommunityIntroduction.getIntroductionPhotoAddress())) {
+    		String[] introductionPhotoAddress = hyCommunityIntroduction.getIntroductionPhotoAddress().split(",");
+    		HyIntroductionpictures hyIntroductionpictures = new HyIntroductionpictures();
+    		hyIntroductionpictures.setIntroductionId(introductionId);
+    		List<HyIntroductionpictures> list = hyIntroductionpicturesMapper.selectHyIntroductionpicturesList(hyIntroductionpictures);
+    		for(HyIntroductionpictures introductionpictures : list) {
+    			String deletePicture = introductionpictures.getIntroductionPicture();
+    			deleteFile(deletePicture);
+    			hyIntroductionpicturesMapper.deleteHyIntroductionpicturesById(introductionpictures.getId());
+    		}
+			for(String introductionPicture : introductionPhotoAddress) {
+				HyIntroductionpictures introductionpictures = new HyIntroductionpictures();
+				introductionpictures.setIntroductionPicture(introductionPicture);
+				introductionpictures.setIntroductionId(introductionId);
+				hyIntroductionpicturesMapper.insertHyIntroductionpictures(introductionpictures);
+			}
+    	};
+    	
         return hyCommunityIntroductionMapper.updateHyCommunityIntroduction(hyCommunityIntroduction);
     }
 
@@ -82,6 +124,17 @@ public class HyCommunityIntroductionServiceImpl implements IHyCommunityIntroduct
     @Override
     public int deleteHyCommunityIntroductionByIds(String ids)
     {
+    	String ida [] = ids.split(",");
+    	for(String id:ida) {
+    		HyIntroductionpictures hyIntroductionpictures = new HyIntroductionpictures();
+    		hyIntroductionpictures.setIntroductionId(Long.valueOf(id));
+    		List<HyIntroductionpictures> list = hyIntroductionpicturesMapper.selectHyIntroductionpicturesList(hyIntroductionpictures);
+    		for(HyIntroductionpictures introductionpictures : list) {
+        		String deleteFiles = introductionpictures.getIntroductionPicture();
+        		deleteFile(deleteFiles);
+        		hyIntroductionpicturesMapper.deleteHyIntroductionpicturesById(introductionpictures.getId());
+    		}
+    	}
         return hyCommunityIntroductionMapper.deleteHyCommunityIntroductionByIds(Convert.toStrArray(ids));
     }
 
@@ -95,6 +148,35 @@ public class HyCommunityIntroductionServiceImpl implements IHyCommunityIntroduct
     @Override
     public int deleteHyCommunityIntroductionById(Long id)
     {
+    	HyIntroductionpictures hyIntroductionpictures = new HyIntroductionpictures();
+		hyIntroductionpictures.setIntroductionId(id);
+		List<HyIntroductionpictures> list = hyIntroductionpicturesMapper.selectHyIntroductionpicturesList(hyIntroductionpictures);
+		for(HyIntroductionpictures introductionpictures : list) {
+    		String deleteFiles = introductionpictures.getIntroductionPicture();
+    		deleteFile(deleteFiles);
+    		hyIntroductionpicturesMapper.deleteHyIntroductionpicturesById(introductionpictures.getId());
+		}
         return hyCommunityIntroductionMapper.deleteHyCommunityIntroductionById(id);
     }
+    
+    /**
+     * 删除上传图片
+     * @return
+     */
+	@Override
+	public boolean deleteFile(String fileName) {
+		String fileName1 = System.getProperty("user.dir")+"\\src\\main\\resources\\static\\img\\"+fileName;
+		File file = new File(fileName1);
+		//判断文件存不存在
+		if(!file.exists()){
+			System.out.println("删除文件失败："+fileName+"不存在！");
+			return false;
+		}else{
+			//判断这是不是一个文件，ps：有可能是文件夹
+			if(file.isFile()){
+				return file.delete();
+			}
+		}
+		return false;
+	}
 }

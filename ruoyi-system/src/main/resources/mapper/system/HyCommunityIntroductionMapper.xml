@@ -6,43 +6,48 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <resultMap type="HyCommunityIntroduction" id="HyCommunityIntroductionResult">
         <result property="id"    column="id"    />
-        <result property="introductionPhotoAddress"    column="introduction_photo_address"    />
         <result property="introduction"    column="introduction"    />
+        <association property="hyIntroductionpictures" column="id"
+			javaType="HyIntroductionpictures" resultMap="HyIntroductionpicturesResult" />
+    </resultMap>
+    
+    <resultMap type="HyIntroductionpictures" id="HyIntroductionpicturesResult">
+        <result property="id"    column="id"    />
+        <result property="introductionPicture"    column="introduction_picture"    />
+        <result property="introductionId"    column="introduction_id"    />
     </resultMap>
 	
     <sql id="selectHyCommunityIntroductionVo">
         select 
-        id, 
-        introduction_photo_address, 
-        introduction
+        i.id, 
+        i.introduction, 
+        p.introduction_picture 
         from 
-        hy_community_introduction
+        hy_community_introduction i
+        LEFT JOIN hy_introductionpictures p ON p.introduction_id = i.id
     </sql>
 
     <select id="selectHyCommunityIntroductionList" parameterType="HyCommunityIntroduction" resultMap="HyCommunityIntroductionResult">
         <include refid="selectHyCommunityIntroductionVo"/>
         <where>  
-            <if test="id != null  and id != ''"> and id = #{id}</if>
-            <if test="introductionPhotoAddress != null  and introductionPhotoAddress != ''"> and introduction_photo_address = #{introductionPhotoAddress}</if>
-            <if test="introduction != null "> and introduction = #{introduction}</if>
+            <if test="id != null  and id != ''"> and i.id = #{id}</if>
+            <if test="introduction != null "> and i.introduction = #{introduction}</if>
         </where>
     </select>
     
     <select id="selectHyCommunityIntroductionById" parameterType="Long" resultMap="HyCommunityIntroductionResult">
         <include refid="selectHyCommunityIntroductionVo"/>
-        where id = #{id}
+        where i.id = #{id}
     </select>
         
     <insert id="insertHyCommunityIntroduction" parameterType="HyCommunityIntroduction">
         insert into hy_community_introduction
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
-            <if test="introductionPhotoAddress != null">introduction_photo_address,</if>
             <if test="introduction != null">introduction,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id},</if>
-            <if test="introductionPhotoAddress != null">#{introductionPhotoAddress},</if>
             <if test="introduction != null">#{introduction},</if>
          </trim>
     </insert>
@@ -50,7 +55,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateHyCommunityIntroduction" parameterType="HyCommunityIntroduction">
         update hy_community_introduction
         <trim prefix="SET" suffixOverrides=",">
-            <if test="introductionPhotoAddress != null and introductionPhotoAddress!=''">introduction_photo_address = #{introductionPhotoAddress},</if>
             <if test="introduction != null and introduction!=''">introduction = #{introduction},</if>
         </trim>
         where id = #{id}
