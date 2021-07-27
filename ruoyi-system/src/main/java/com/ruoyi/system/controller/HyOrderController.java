@@ -82,7 +82,6 @@ public class HyOrderController extends BaseController
     @ApiImplicitParams({ 
     	@ApiImplicitParam(name = "hyOrder", value = "项目实体类hyOrder", required = true),
     })
-    @RequiresPermissions("system:order:list")
     @PostMapping("/listByObligation")
     @ResponseBody
     public List<HyOrder> listByObligation(HyOrder hyOrder)
@@ -98,7 +97,6 @@ public class HyOrderController extends BaseController
     @ApiImplicitParams({ 
     	@ApiImplicitParam(name = "hyOrder", value = "项目实体类hyOrder", required = true),
     })
-    @RequiresPermissions("system:order:list")
     @PostMapping("/listBySend")
     @ResponseBody
     public List<HyOrder> listBySend(HyOrder hyOrder)
@@ -114,7 +112,6 @@ public class HyOrderController extends BaseController
     @ApiImplicitParams({ 
     	@ApiImplicitParam(name = "hyOrder", value = "项目实体类hyOrder", required = true),
     })
-    @RequiresPermissions("system:order:list")
     @PostMapping("/listByCollect")
     @ResponseBody
     public List<HyOrder> listByCollect(HyOrder hyOrder)
@@ -130,7 +127,6 @@ public class HyOrderController extends BaseController
     @ApiImplicitParams({ 
     	@ApiImplicitParam(name = "hyOrder", value = "项目实体类hyOrder", required = true),
     })
-    @RequiresPermissions("system:order:list")
     @PostMapping("/listByFinished")
     @ResponseBody
     public List<HyOrder> listByFinished(HyOrder hyOrder)
@@ -146,7 +142,6 @@ public class HyOrderController extends BaseController
     @ApiImplicitParams({ 
     	@ApiImplicitParam(name = "hyOrder", value = "项目实体类hyOrder", required = true),
     })
-    @RequiresPermissions("system:order:list")
     @PostMapping("/listByRefunded")
     @ResponseBody
     public List<HyOrder> listByRefunded(HyOrder hyOrder)

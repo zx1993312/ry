@@ -88,7 +88,6 @@ public class HyProductController extends BaseController
     @ApiImplicitParams({ 
     	@ApiImplicitParam(name = "hyProduct", value = "项目实体类hyProduct", required = true),
     })
-    @RequiresPermissions("system:product:list")
     @PostMapping("/listApp")
     @ResponseBody
     public List<HyProduct> listApp(HyProduct hyProduct)

@@ -72,7 +72,6 @@ public class HyLableController extends BaseController
     @ApiImplicitParams({ 
     	@ApiImplicitParam(name = "hyLable", value = "项目实体类hyLable", required = true),
     })
-    @RequiresPermissions("system:lable:list")
     @PostMapping("/listApp")
     @ResponseBody
     public List<HyLable> listApp(HyLable hyLable)
