@@ -142,6 +142,22 @@ public class HyCommunityActivityController extends BaseController
     {
     	return toAjax(hyCommunityActivityService.insertOwnerAndActivity(ownerAndActivity));
     }
+    
+    /**
+     * 取消报名接口
+     */
+    @ApiOperation("取消报名接口")
+    @ApiImplicitParams({ 
+    	@ApiImplicitParam(name = "hyCommunityActivity", value = "项目实体类hyCommunityActivity", required = true),
+    })
+    @RequiresPermissions("system:activity:add")
+    @Log(title = "取消报名接口", businessType = BusinessType.INSERT)
+    @PostMapping("/cancelApp")
+    @ResponseBody
+    public AjaxResult cancelApp(OwnerAndActivity ownerAndActivity)
+    {
+    	return toAjax(hyCommunityActivityService.deleteOwnerAndActivity(ownerAndActivity));
+    }
 
     /**
      * 修改社区活动

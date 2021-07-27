@@ -43,6 +43,14 @@ public interface IHyCommunityActivityService
      * @return 结果
      */
     public int insertOwnerAndActivity(OwnerAndActivity ownerAndActivity);
+    
+    /**
+     * 取消报名
+     * 
+     * @param ownerAndActivity 取消报名
+     * @return 结果
+     */
+    public int deleteOwnerAndActivity(OwnerAndActivity ownerAndActivity);
 
     /**
      * 修改社区活动

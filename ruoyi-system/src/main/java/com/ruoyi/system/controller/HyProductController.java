@@ -29,8 +29,10 @@ import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.domain.HyDeatilPicture;
 import com.ruoyi.system.domain.HyProduct;
+import com.ruoyi.system.domain.ProductAndSpecification;
 import com.ruoyi.system.service.IHyDeatilPictureService;
 import com.ruoyi.system.service.IHyProductService;
+import com.ruoyi.system.service.IProductAndSpecificationService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -56,6 +58,9 @@ public class HyProductController extends BaseController
     
     @Autowired
     private IHyDeatilPictureService hyDeatilPictureService;
+    
+    @Autowired
+    private IProductAndSpecificationService productAndSpecificationService;
 
     @RequiresPermissions("system:product:view")
     @GetMapping()
@@ -154,9 +159,17 @@ public class HyProductController extends BaseController
         HyProduct hyProduct = hyProductService.selectHyProductById(id);
         HyDeatilPicture hyDeatilPicture = new HyDeatilPicture();
         hyDeatilPicture.setProductId(id);
-        List<HyDeatilPicture> list  = hyDeatilPictureService.selectHyDeatilPictureList(hyDeatilPicture);
+        List<HyDeatilPicture> deatilPicturelist  = hyDeatilPictureService.selectHyDeatilPictureList(hyDeatilPicture);
+        ProductAndSpecification productAndSpecification = new ProductAndSpecification();
+        productAndSpecification.setProductId(id);
+        String specificationIds = "";
+        List<ProductAndSpecification> productAndSpecificationlist = productAndSpecificationService.selectProductAndSpecificationList(productAndSpecification);
+        for(ProductAndSpecification pas : productAndSpecificationlist) {
+        	specificationIds = specificationIds + pas.getSpecificationId()+",";
+        }
+        hyProduct.setSpecificationIds(specificationIds);
         mmap.put("hyProduct", hyProduct);
-        mmap.put("list", list);
+        mmap.put("list", deatilPicturelist);
         return prefix + "/edit";
     }
     
@@ -177,6 +190,14 @@ public class HyProductController extends BaseController
     	HyDeatilPicture hyDeatilPicture = new HyDeatilPicture();
     	hyDeatilPicture.setProductId(hyProduct.getId());
     	List<HyDeatilPicture> deatilPictureList  = hyDeatilPictureService.selectHyDeatilPictureList(hyDeatilPicture);
+    	ProductAndSpecification productAndSpecification = new ProductAndSpecification();
+        productAndSpecification.setProductId(hyProduct.getId());
+        String specificationIds = "";
+        List<ProductAndSpecification> productAndSpecificationlist = productAndSpecificationService.selectProductAndSpecificationList(productAndSpecification);
+        for(ProductAndSpecification pas : productAndSpecificationlist) {
+        	specificationIds = specificationIds + pas.getSpecificationId()+",";
+        }
+        hyProduct.setSpecificationIds(specificationIds);
     	map.put("hyProduct", hyProduct);
     	map.put("deatilPictureList", deatilPictureList);
     	productList.add(map);

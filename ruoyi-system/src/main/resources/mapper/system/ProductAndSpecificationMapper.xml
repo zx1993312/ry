@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.ProductAndSpecificationMapper">
+    
+    <resultMap type="ProductAndSpecification" id="ProductAndSpecificationResult">
+        <result property="productId"    column="product_id"    />
+        <result property="specificationId"    column="specification_id"    />
+    </resultMap>
+
+    <sql id="selectProductAndSpecificationVo">
+        select product_id, specification_id from product_and_specification
+    </sql>
+
+    <select id="selectProductAndSpecificationList" parameterType="ProductAndSpecification" resultMap="ProductAndSpecificationResult">
+        <include refid="selectProductAndSpecificationVo"/>
+        <where>  
+            <if test="productId != null "> and product_id = #{productId}</if>
+            <if test="specificationId != null "> and specification_id = #{specificationId}</if>
+        </where>
+    </select>
+    
+    <select id="selectProductAndSpecificationById" parameterType="Long" resultMap="ProductAndSpecificationResult">
+        <include refid="selectProductAndSpecificationVo"/>
+        where product_id = #{productId}
+    </select>
+        
+    <insert id="insertProductAndSpecification" parameterType="ProductAndSpecification">
+        insert into product_and_specification
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="productId != null">product_id,</if>
+            <if test="specificationId != null">specification_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="productId != null">#{productId},</if>
+            <if test="specificationId != null">#{specificationId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateProductAndSpecification" parameterType="ProductAndSpecification">
+        update product_and_specification
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="specificationId != null">specification_id = #{specificationId},</if>
+        </trim>
+        where product_id = #{productId}
+    </update>
+
+    <delete id="deleteProductIdAndSpecificationId" parameterType="Long">
+        delete from product_and_specification where product_id = #{productId} and specification_id = #{specificationId}
+    </delete>
+    
+    <delete id="deleteProductAndSpecificationById" parameterType="Long">
+        delete from product_and_specification where product_id = #{productId}
+    </delete>
+
+    <delete id="deleteProductAndSpecificationByIds" parameterType="String">
+        delete from product_and_specification where product_id in 
+        <foreach item="productId" collection="array" open="(" separator="," close=")">
+            #{productId}
+        </foreach>
+    </delete>
+
+</mapper>

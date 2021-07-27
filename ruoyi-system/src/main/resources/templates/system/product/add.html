@@ -28,6 +28,16 @@
 			 	    </select>
                </div>
             </div>
+			<div class="form-group">    
+                <label class="col-sm-3 control-label">商品规格：</label>
+                <div class="col-sm-8">
+                    <div class="col-sm-9" th:with="type=${@specification.getSpecification()}">
+                    <label  th:each="dict : ${type}" class="check-box">
+                    	<input id="specificationIds" name="specificationIds" type="checkbox" th:text="${dict.specification}" th:value="${dict.id}">
+                    </label>
+        			</div>
+                </div>
+            </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">商品编号：</label>
                 <div class="col-sm-8">
@@ -180,6 +190,7 @@
         	var stockNumber = $("#stockNumber").val();
         	var state = $("#state").val();
         	var productOrderBy = $("#productOrderBy").val();
+        	var specificationIds = $("#specificationIds").val();
         	$.ajax({
                 type: "post",
                 datatype: "json",
@@ -188,7 +199,7 @@
                 	"productNumber":productNumber,"productName":productName,"briefIntroduction":briefIntroduction,
                 	"productType":productType,"originalPrice":originalPrice,"currentPrice":currentPrice,
                 	"soldNumber":soldNumber,"stockNumber":stockNumber,"state":state,"shopId":shopId,"lableId":lableId,
-                	"productOrderBy":productOrderBy},
+                	"productOrderBy":productOrderBy,"specificationIds":specificationIds},
                 async: true,
                 success: function (result) {
                     //console.log(result);

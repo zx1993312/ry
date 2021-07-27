@@ -85,6 +85,19 @@ public class HyCommunityActivityServiceImpl implements IHyCommunityActivityServi
     		return 0;
     	}
 	}
+    
+    /**
+     * 取消报名
+     * 
+     * @param ownerAndActivity 取消报名
+     * @return 报名
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public int deleteOwnerAndActivity(OwnerAndActivity ownerAndActivity) {
+    	
+    		return hyCommunityActivityMapper.deleteOwnerAndActivity(ownerAndActivity);
+    }
 
     /**
      * 修改社区活动

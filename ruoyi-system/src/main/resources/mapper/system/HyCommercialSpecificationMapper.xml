@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HyCommercialSpecificationMapper">
+    
+    <resultMap type="HyCommercialSpecification" id="HyCommercialSpecificationResult">
+        <result property="id"    column="id"    />
+        <result property="specification"    column="specification"    />
+    </resultMap>
+
+    <sql id="selectHyCommercialSpecificationVo">
+        select id, specification from hy_commercial_specification
+    </sql>
+
+    <select id="selectHyCommercialSpecificationList" parameterType="HyCommercialSpecification" resultMap="HyCommercialSpecificationResult">
+        <include refid="selectHyCommercialSpecificationVo"/>
+        <where>  
+            <if test="specification != null  and specification != ''"> and specification = #{specification}</if>
+        </where>
+    </select>
+    
+    <select id="selectHyCommercialSpecificationById" parameterType="Long" resultMap="HyCommercialSpecificationResult">
+        <include refid="selectHyCommercialSpecificationVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHyCommercialSpecification" parameterType="HyCommercialSpecification" useGeneratedKeys="true" keyProperty="id">
+        insert into hy_commercial_specification
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="specification != null">specification,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="specification != null">#{specification},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHyCommercialSpecification" parameterType="HyCommercialSpecification">
+        update hy_commercial_specification
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="specification != null">specification = #{specification},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHyCommercialSpecificationById" parameterType="Long">
+        delete from hy_commercial_specification where id = #{id}
+    </delete>
+
+    <delete id="deleteHyCommercialSpecificationByIds" parameterType="String">
+        delete from hy_commercial_specification where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

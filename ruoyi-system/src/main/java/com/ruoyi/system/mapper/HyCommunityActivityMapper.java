@@ -45,6 +45,14 @@ public interface HyCommunityActivityMapper
     public int insertOwnerAndActivity(OwnerAndActivity ownerAndActivity);
     
     /**
+     * 取消报名
+     * 
+     * @param ownerAndActivity 取消报名
+     * @return 结果
+     */
+    public int deleteOwnerAndActivity(OwnerAndActivity ownerAndActivity);
+    
+    /**
      * 查限制人数
      * 
      * @param ownerAndActivity 查限制人数

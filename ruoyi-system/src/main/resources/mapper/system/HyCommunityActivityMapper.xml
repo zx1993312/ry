@@ -112,6 +112,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </update>
 
+    <delete id="deleteOwnerAndActivity" parameterType="OwnerAndActivity">
+        delete from owner_and_activity where activity_id = #{activityId} and owner_id = #{ownerId}
+    </delete>
+    
     <delete id="deleteHyCommunityActivityById" parameterType="Long">
         delete from hy_community_activity where id = #{id}
     </delete>

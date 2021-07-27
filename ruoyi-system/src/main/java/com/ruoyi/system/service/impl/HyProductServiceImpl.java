@@ -9,13 +9,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.system.domain.HyCommercialSpecification;
 import com.ruoyi.system.domain.HyDeatilPicture;
 import com.ruoyi.system.domain.HyPicture;
 import com.ruoyi.system.domain.HyProduct;
+import com.ruoyi.system.domain.ProductAndSpecification;
+import com.ruoyi.system.mapper.HyCommercialSpecificationMapper;
 import com.ruoyi.system.mapper.HyDeatilPictureMapper;
 import com.ruoyi.system.mapper.HyPictureMapper;
 import com.ruoyi.system.mapper.HyProductMapper;
+import com.ruoyi.system.mapper.ProductAndSpecificationMapper;
 import com.ruoyi.system.service.IHyProductService;
+import com.ruoyi.system.utils.HyListUtil;
 
 /**
  * 商品Service业务层处理
@@ -30,6 +35,12 @@ public class HyProductServiceImpl implements IHyProductService {
 
 	@Autowired
     private HyPictureMapper hyPictureMapper;
+	
+	@Autowired
+	private ProductAndSpecificationMapper productAndSpecificationMapper;
+	
+	@Autowired
+	private HyCommercialSpecificationMapper hyCommercialSpecificationMapper;
 	
 	@Autowired
     private HyDeatilPictureMapper hyDeatilPictureMapper;
@@ -65,11 +76,18 @@ public class HyProductServiceImpl implements IHyProductService {
 	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int insertHyProduct(HyProduct hyProduct) {
+		String[] specificationIds = hyProduct.getSpecificationIds().split(",");
 		HyPicture hyPicture = new HyPicture();
 		String pictureAddress = hyProduct.getHyPicture().getPictureAddress();
 		hyPicture.setPictureAddress(pictureAddress);
 		String a = hyProductMapper.selectNextValue("hy_database", "hy_product");
 		Long productId = Long.valueOf(a);
+		for(String specificationId : specificationIds) {
+			ProductAndSpecification productAndSpecification = new ProductAndSpecification();
+			productAndSpecification.setProductId(productId);
+			productAndSpecification.setSpecificationId(Long.valueOf(specificationId));
+			productAndSpecificationMapper.insertProductAndSpecification(productAndSpecification);
+		}
 		hyPicture.setProductId(productId);
 		HyDeatilPicture hyDeatilPicture = new HyDeatilPicture();
 		String picturesAddress = hyProduct.getHyDeatilPicture().getDeatilPicture();
@@ -102,6 +120,37 @@ public class HyProductServiceImpl implements IHyProductService {
 	@Override
 	public int updateHyProduct(HyProduct hyProduct) {
 		Long productId = hyProduct.getId();
+		if(StringUtils.isNotEmpty(hyProduct.getSpecificationIds())) {
+			String[] specificationIds = hyProduct.getSpecificationIds().split(",");
+ 			List<HyCommercialSpecification> commercialSpecificationList = hyCommercialSpecificationMapper.selectHyCommercialSpecificationList(new HyCommercialSpecification());
+ 			String ids = "";
+			for (HyCommercialSpecification commercialSpecification : commercialSpecificationList) {
+				Long specificationId = commercialSpecification.getId();
+				ids = ids + specificationId + ",";
+			}
+			String[] id = ids.split(",");
+			String[] iii = HyListUtil.minus(specificationIds, id);
+			for (String i : iii) {
+				ProductAndSpecification pas = new ProductAndSpecification();
+				pas.setProductId(productId);
+				pas.setSpecificationId(Long.valueOf(i));
+				List<ProductAndSpecification> list = productAndSpecificationMapper.selectProductAndSpecificationList(pas);
+				if (list != null) {
+					productAndSpecificationMapper.deleteProductIdAndSpecificationId(productId,Long.valueOf(i));
+				}
+			}
+			for (String specificationId : specificationIds) {
+				ProductAndSpecification pas = new ProductAndSpecification();
+				pas.setProductId(productId);
+				pas.setSpecificationId(Long.valueOf(specificationId));
+				List<ProductAndSpecification> list = productAndSpecificationMapper.selectProductAndSpecificationList(pas);
+
+				if (list.size() == 0) {
+					productAndSpecificationMapper.insertProductAndSpecification(pas);
+				}
+
+			}
+		}
 		if(hyProduct.getHyDeatilPicture().getDeatilPicture()!=null && !"".equals(hyProduct.getHyDeatilPicture().getDeatilPicture())) {
 			HyDeatilPicture hyDeatilPicture = new HyDeatilPicture();
 			hyDeatilPicture.setProductId(productId);

@@ -34,7 +34,7 @@ public class HyProduct extends BaseEntity
     /** 商品类型 */
     @Excel(name = "商品类型")
     private String productType;
-
+    
     /** 原价 */
     @Excel(name = "原价")
     private BigDecimal originalPrice;
@@ -90,6 +90,9 @@ public class HyProduct extends BaseEntity
     
     /**数量组*/
     private String numbers;
+    
+    /** 商品规格id组 */
+    private String specificationIds;
     
     public void setId(Long id) 
     {
@@ -273,6 +276,14 @@ public class HyProduct extends BaseEntity
 		this.numbers = numbers;
 	}
 
+	public String getSpecificationIds() {
+		return specificationIds;
+	}
+
+	public void setSpecificationIds(String specificationIds) {
+		this.specificationIds = specificationIds;
+	}
+
 	@Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -296,6 +307,7 @@ public class HyProduct extends BaseEntity
             .append("deleteFiles", getDeleteFiles())
             .append("ids", getIds())
             .append("numbers", getNumbers())
+            .append("specificationIds", getSpecificationIds())
             .toString();
     }
 }
